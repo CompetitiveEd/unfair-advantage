@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1: The Intelligence Layer — The Unfair Advantage</title>
+
+<meta property="og:title" content="Week 1: The Intelligence Layer — Full Deep Dive">
+<meta property="og:description" content="Stop using AI to write. Start using it to see. Transform your pre-meeting research in 20 minutes.">
+<meta property="og:type" content="article">
+<meta name="author" content="David Matthews">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #111318;
+    --ink-mid: #3a3d46;
+    --ink-soft: #6e717a;
+    --cream: #f5f2ed;
+    --cream-warm: #ebe7e0;
+    --white: #fdfcfa;
+    --accent-deep: #1b3a5c;
+    --accent-mid: #2c6da0;
+    --gold: #b8874f;
+    --gold-pale: #e8d5b7;
+    --red-pale: #fdf0ee;
+    --red-border: #f0c8c0;
+    --green-pale: #eef7f2;
+    --green-border: #b8dcc8;
+    --blue-pale: #eef3f8;
+    --blue-border: #c2d8e8;
+    --border: #ddd9d2;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ══════ STICKY HEADER ══════ */
+  .sticky-nav {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    background: rgba(17, 19, 24, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .sticky-nav.visible { top: 0; }
+  .sticky-nav span { color: var(--gold-pale); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .sticky-nav a { color: #fff; text-decoration: none; font-size: 12px; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 4px; transition: 0.3s; }
+  .sticky-nav a:hover { background: var(--gold); }
+
+  /* ══════ HERO ══════ */
+  .hero {
+    background: var(--ink);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    padding: 92px 0 64px;
+  }
+  .hero::before {
+    content:'';
+    position:absolute;
+    top:-140px; right:-100px;
+    width:520px; height:520px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  .hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pill {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:100px;
+    padding:7px 18px;
+    margin-bottom:32px;
+  }
+  .pill-dot {
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--gold);
+    animation: blink 2.2s ease infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .pill span {
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.6);
+  }
+
+  .hero h1 {
+    font-family:'Playfair Display', serif;
+    font-size:54px;
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:-0.8px;
+    margin-bottom:10px;
+  }
+  .hero h1 em {
+    font-style:italic;
+    color:var(--gold-pale);
+  }
+  .hero .sub {
+    font-size:18px;
+    font-weight:300;
+    color:rgba(255,255,255,0.5);
+    max-width:540px;
+    line-height:1.55;
+    margin-bottom:38px;
+  }
+
+  .hero-bar {
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding-top:24px;
+    border-top:1px solid rgba(255,255,255,0.09);
+  }
+  .avatar {
+    width:40px; height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--gold), var(--accent-mid));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700; font-size:17px; color:#fff;
+  }
+  .hero-bar .meta { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.5; }
+
+  /* ══════ BODY ══════ */
+  .body {
+    max-width:760px;
+    margin:0 auto;
+    padding:56px 36px 100px;
+  }
+
+  .divider {
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:64px 0 18px;
+  }
+  .divider .line { flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent); }
+  .divider span { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--ink-soft); }
+
+  h2 { font-family:'Playfair Display',serif; font-size:36px; margin-bottom:24px; color:var(--ink); }
+  h3 { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent-deep); margin:40px 0 16px; }
+
+  p { font-size:17px; color:var(--ink-mid); margin-bottom:20px; }
+  p.lead { font-size:20px; color:var(--ink); font-weight:400; margin-bottom:32px; }
+
+  /* ══════ TOOLS GRID ══════ */
+  .tool-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 32px 0;
+  }
+  .tool-box {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .tool-box strong { display: block; color: var(--accent-deep); font-size: 15px; margin-bottom: 4px; }
+  .tool-box span { font-size: 12px; color: var(--ink-soft); }
+
+  /* ══════ COMPARISON ══════ */
+  .compare {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:32px 0;
+  }
+  .compare .col { border-radius:12px; padding:24px; box-shadow: var(--shadow); }
+  .col.old { background:#faf7f2; border:1px solid var(--border); }
+  .col.new { background:var(--blue-pale); border:1px solid var(--blue-border); }
+  .compare li { list-style:none; font-size:15px; margin-bottom:10px; display:flex; gap:10px; }
+
+  /* ══════ HIERARCHY ════
