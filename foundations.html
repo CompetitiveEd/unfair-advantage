@@ -321,5 +321,41 @@ For each pillar:
             <p><a href="https://www.linkedin.com/in/david-a-matthews/" target="_blank">LinkedIn</a> | <a href="https://aiisnotyourcheerleader.substack.com" target="_blank">Substack</a> | <a href="contact.html">Contact</a></p>
         </div>
     </footer>
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+                const hamburger = document.querySelector('.hamburger');
+                const navLinks = document.querySelector('.nav-links');
+                const body = document.body;
+                // Toggle menu when hamburger is clicked
+                if (hamburger) {
+                            hamburger.addEventListener('click', function() {
+                                            hamburger.classList.toggle('active');
+                                            navLinks.classList.toggle('active');
+                                            body.classList.toggle('menu-open');
+                            });
+                }
+                // Close menu when a link is clicked
+                const navItems = document.querySelectorAll('.nav-links a');
+                navItems.forEach(item => {
+                            item.addEventListener('click', function() {
+                                            hamburger.classList.remove('active');
+                                            navLinks.classList.remove('active');
+                                            body.classList.remove('menu-open');
+                            });
+                });
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                            const isClickInsideNav = navLinks.contains(event.target);
+                            const isClickOnHamburger = hamburger.contains(event.target);
+                            if (!isClickInsideNav && !isClickOnHamburger && navLinks.classList.contains('active')) {
+                                            hamburger.classList.remove('active');
+                                            navLinks.classList.remove('active');
+                                            body.classList.remove('menu-open');
+                            }
+                });
+        });
+    </script>
+    </script>
 </body>
 </html>
