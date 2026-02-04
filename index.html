@@ -5,11 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Week 1: The Intelligence Layer — The Unfair Advantage</title>
 
-<meta property="og:title" content="Week 1: The Intelligence Layer — Full Deep Dive">
-<meta property="og:description" content="Stop using AI to write. Start using it to see. Transform your pre-meeting research in 20 minutes.">
+<!-- OpenGraph / Social Sharing Metadata -->
+<meta property="og:title" content="The Intelligence Layer: Build the Depth That Wins">
+<meta property="og:description" content="Win trust before you walk in the room. How to compress 4 hours of research into 20 minutes while deepening understanding. Week 1 of The Unfair Advantage Series.">
+<meta property="og:image" content="https://your-github-url.github.io/unfair-advantage/week1-og-image.jpg">
+<meta property="og:url" content="https://your-github-url.github.io/unfair-advantage/week1">
 <meta property="og:type" content="article">
-<meta name="author" content="David Matthews">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Intelligence Layer: Build the Depth That Wins">
+<meta name="twitter:description" content="Win trust before you walk in the room. Week 1 of The Unfair Advantage Series.">
+<meta name="twitter:image" content="https://your-github-url.github.io/unfair-advantage/week1-og-image.jpg">
 
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -32,6 +39,7 @@
     --blue-border: #c2d8e8;
     --border: #ddd9d2;
     --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+    --shadow-float: 0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -45,32 +53,70 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .sticky-nav {
+  /* ══════ STICKY HEADER (Gemini Enhancement) ══════ */
+  .sticky-header {
     position: fixed;
-    top: -100px;
+    top: 0;
     left: 0;
-    width: 100%;
-    background: rgba(17, 19, 24, 0.98);
-    backdrop-filter: blur(10px);
-    padding: 12px 24px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    right: 0;
+    background: rgba(17, 19, 24, 0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 0;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
   }
-  .sticky-nav.visible { top: 0; }
-  .sticky-nav span { color: var(--gold-pale); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-  .sticky-nav a { color: #fff; text-decoration: none; font-size: 12px; border: 1px solid var(--gold); padding: 5px 12px; border-radius: 4px; transition: 0.3s; }
-  .sticky-nav a:hover { background: var(--gold); }
+  .sticky-header.visible {
+    transform: translateY(0);
+  }
+  .sticky-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sticky-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sticky-badge {
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .sticky-nav {
+    display: flex;
+    gap: 16px;
+  }
+  .sticky-link {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .sticky-link:hover {
+    color: var(--gold-pale);
+  }
 
+  /* ══════ HERO ══════ */
   .hero {
     background: var(--ink);
     color: #fff;
     position: relative;
     overflow: hidden;
-    padding: 92px 0 64px;
+    padding: 72px 0 64px;
   }
   .hero::before {
     content:'';
@@ -79,6 +125,14 @@
     width:520px; height:520px;
     border-radius:50%;
     border:1px solid rgba(255,255,255,0.05);
+  }
+  .hero::after {
+    content:'';
+    position:absolute;
+    bottom:-180px; left:-60px;
+    width:380px; height:380px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.035);
   }
   .hero-inner {
     max-width: 760px;
@@ -115,13 +169,16 @@
 
   .hero h1 {
     font-family:'Playfair Display', serif;
-    font-size:54px;
+    font-size:50px;
     font-weight:700;
     line-height:1.08;
     letter-spacing:-0.8px;
     margin-bottom:10px;
   }
-  .hero h1 em { font-style:italic; color:var(--gold-pale); }
+  .hero h1 em {
+    font-style:italic;
+    color:var(--gold-pale);
+  }
   .hero .sub {
     font-size:18px;
     font-weight:300;
@@ -147,7 +204,27 @@
     font-weight:700; font-size:17px; color:#fff;
   }
   .hero-bar .meta { font-size:13px; color:rgba(255,255,255,0.45); line-height:1.5; }
+  .hero-bar .meta strong { color:rgba(255,255,255,0.82); font-weight:600; }
 
+  /* ══════ PROGRESS ══════ */
+  .progress {
+    background:var(--ink);
+    padding-bottom:0;
+  }
+  .progress-inner {
+    max-width:760px;
+    margin:0 auto;
+    padding:0 36px;
+    display:flex; gap:5px;
+  }
+  .prog-seg {
+    flex:1; height:3px;
+    border-radius:0 0 2px 2px;
+    background:rgba(255,255,255,0.12);
+  }
+  .prog-seg.on { background:var(--gold); }
+
+  /* ══════ BODY ══════ */
   .body {
     max-width:760px;
     margin:0 auto;
@@ -160,173 +237,1363 @@
     gap:14px;
     margin:64px 0 18px;
   }
+  .divider:first-child { margin-top:0; }
   .divider .line { flex:1; height:1px; background:linear-gradient(90deg, var(--border), transparent); }
-  .divider span { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--ink-soft); }
+  .divider .line:first-child { background:linear-gradient(270deg, var(--border), transparent); }
+  .divider span {
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:2.2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
 
-  h2 { font-family:'Playfair Display',serif; font-size:36px; margin-bottom:24px; color:var(--ink); }
-  h3 { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent-deep); margin:40px 0 16px; }
+  h2 {
+    font-family:'Playfair Display',serif;
+    font-size:32px;
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:-0.4px;
+    color:var(--ink);
+    margin-bottom:18px;
+  }
+  h3 {
+    font-family:'Playfair Display',serif;
+    font-size:21px;
+    font-weight:600;
+    color:var(--accent-deep);
+    margin:36px 0 12px;
+    line-height:1.3;
+  }
+  h4 {
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+    margin:22px 0 8px;
+  }
 
-  p { font-size:17px; color:var(--ink-mid); margin-bottom:20px; }
-  p.lead { font-size:20px; color:var(--ink); font-weight:400; margin-bottom:32px; }
+  p {
+    font-size:16.5px;
+    color:var(--ink-mid);
+    margin-bottom:16px;
+    line-height:1.75;
+  }
+  p.lead {
+    font-size:19px;
+    color:var(--ink);
+    font-weight:400;
+    line-height:1.6;
+    margin-bottom:24px;
+  }
+  p strong { color:var(--ink); }
 
-  .tool-stack {
+  ul, ol {
+    margin:12px 0 18px 24px;
+  }
+  li {
+    font-size:16px;
+    color:var(--ink-mid);
+    margin-bottom:8px;
+    line-height:1.7;
+  }
+
+  blockquote {
+    border-left:3px solid var(--gold);
+    background:var(--white);
+    box-shadow:var(--shadow);
+    padding:26px 30px;
+    margin:34px 0;
+    border-radius:0 8px 8px 0;
+  }
+  blockquote p {
+    font-family:'Playfair Display',serif;
+    font-size:19px;
+    font-style:italic;
+    color:var(--ink);
+    margin-bottom:0;
+    line-height:1.55;
+  }
+
+  .pull {
+    border-left:3px solid var(--gold);
+    background:var(--white);
+    box-shadow:var(--shadow);
+    padding:26px 30px;
+    margin:34px 0;
+    border-radius:0 8px 8px 0;
+  }
+  .pull p {
+    font-family:'Playfair Display',serif;
+    font-size:21px;
+    font-style:italic;
+    color:var(--ink);
+    margin-bottom:0;
+    line-height:1.5;
+  }
+
+  .note {
+    display:flex; gap:14px;
+    border-radius:10px;
+    padding:18px 22px;
+    margin:28px 0;
+  }
+  .note .ni { font-size:19px; flex-shrink:0; margin-top:1px; }
+  .note p { font-size:15px; margin-bottom:4px; }
+  .note p:last-child { margin-bottom:0; }
+  .note.blue  { background:var(--blue-pale);  border:1px solid var(--blue-border); }
+  .note.green { background:var(--green-pale); border:1px solid var(--green-border); }
+  .note.red   { background:var(--red-pale);   border:1px solid var(--red-border); }
+  .note.warm  { background:#faf7f2;           border:1px solid #e8dfd4; }
+
+  /* ══════ STORY CARD ══════ */
+  .story {
+    background:var(--ink);
+    color:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    margin:40px 0;
+    box-shadow:0 4px 24px rgba(0,0,0,0.1);
+  }
+  .story-head {
+    background:linear-gradient(135deg, #162230, #1e3248);
+    padding:22px 28px 16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .story-head h3 { margin:0; color:var(--gold-pale); font-size:19px; }
+  .story-body { padding:22px 28px 26px; }
+  .story-body p { color:rgba(255,255,255,0.72); font-size:15.5px; margin-bottom:14px; }
+  .story-body h4 { color:var(--gold-pale); margin-top:20px; font-size:14px; text-transform:uppercase; letter-spacing:1px; }
+
+  .story-highlight {
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px;
+    padding:16px 20px;
+    margin:12px 0;
+  }
+  .story-highlight p { color:rgba(255,255,255,0.88); margin-bottom:4px; font-size:15px; }
+  .story-highlight strong { color:var(--gold-pale); }
+
+  .story-outcome {
+    background:linear-gradient(135deg, rgba(184,135,79,0.12), rgba(44,109,160,0.1));
+    border:1px solid rgba(184,135,79,0.2);
+    border-radius:8px;
+    padding:18px 20px;
+    margin-top:18px;
+  }
+  .story-outcome .out-label {
+    font-size:10px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--gold-pale); margin-bottom:6px;
+  }
+  .story-outcome p { color:rgba(255,255,255,0.88); margin-bottom:4px; font-size:15.5px; }
+
+  /* ══════ COMPARISON ══════ */
+  .compare {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:30px 0;
+  }
+  .compare .col {
+    border-radius:10px;
+    padding:22px;
+  }
+  .compare .col.old { background:#faf7f2; border:1px solid var(--border); }
+  .compare .col.new { background:var(--blue-pale); border:1px solid var(--blue-border); }
+  .compare .col-label {
+    font-size:10px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:14px;
+  }
+  .col.old .col-label { color:var(--ink-soft); }
+  .col.new .col-label { color:var(--accent-mid); }
+  .compare ul { list-style:none; margin:0; }
+  .compare li {
+    font-size:14.5px;
+    color:var(--ink-mid);
+    padding:5px 0;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+    display:flex; align-items:flex-start; gap:9px;
+  }
+  .compare li:last-child { border-bottom:none; }
+  .compare li .ico { flex-shrink:0; font-size:13px; margin-top:2px; }
+  .col.new li { color:var(--ink); font-weight:500; }
+  .compare .time-tag {
+    display:inline-block;
+    margin-top:14px;
+    padding:4px 11px;
+    border-radius:20px;
+    font-size:12.5px;
+    font-weight:600;
+  }
+  .col.old .time-tag { background:rgba(160,48,48,0.07); color:#9b3030; }
+  .col.new .time-tag { background:rgba(44,109,160,0.1);  color:var(--accent-mid); }
+
+  /* ══════ HIERARCHY ══════ */
+  .hierarchy { margin:34px 0; }
+  .h-row {
+    display:flex; align-items:center; gap:16px;
+    padding:16px 22px;
+    border-radius:9px;
+    margin-bottom:3px;
+  }
+  .h-num {
+    width:34px; height:34px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px;
+    flex-shrink:0;
+  }
+  .h-row .hc h4 { margin:0 0 2px; font-size:15px; }
+  .h-row .hc p  { margin:0; font-size:13.5px; }
+
+  .h-row.r1 { background:linear-gradient(135deg,#1b3a5c,#2c5d8a); }
+  .h-row.r1 .h-num { background:var(--gold); color:#fff; }
+  .h-row.r1 h4,.h-row.r1 p { color:#fff; }
+  .h-row.r1 p { color:rgba(255,255,255,0.65); }
+
+  .h-row.r2 { background:var(--blue-pale); }
+  .h-row.r2 .h-num { background:var(--accent-mid); color:#fff; }
+  .h-row.r2 h4 { color:var(--accent-deep); }
+  .h-row.r2 p  { color:var(--ink-soft); }
+
+  .h-row.r3 { background:#faf5ee; }
+  .h-row.r3 .h-num { background:var(--gold); color:#fff; }
+  .h-row.r3 h4 { color:var(--ink); }
+  .h-row.r3 p  { color:var(--ink-soft); }
+
+  .h-row.r4 { background:var(--cream-warm); }
+  .h-row.r4 .h-num { background:var(--ink-mid); color:#fff; }
+  .h-row.r4 h4 { color:var(--ink); }
+  .h-row.r4 p  { color:var(--ink-soft); }
+
+  .h-connector {
+    width:2px; height:12px;
+    background:var(--border);
+    margin-left:53px;
+  }
+
+  /* ══════ SPLIT ══════ */
+  .split {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px;
+    margin:26px 0;
+  }
+  .split-col {
+    border-radius:10px;
+    padding:20px;
+  }
+  .split-col.ai   { background:#faf5ee; border:1px solid #e8dfd4; }
+  .split-col.human { background:var(--blue-pale); border:1px solid var(--blue-border); }
+  .split-col .sl {
+    font-size:10px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:12px;
+  }
+  .split-col.ai .sl    { color:var(--gold); }
+  .split-col.human .sl { color:var(--accent-mid); }
+  .split-col ul { list-style:none; margin:0; }
+  .split-col li { font-size:14px; color:var(--ink-mid); padding:5px 0; border-bottom:1px solid rgba(0,0,0,0.06); }
+  .split-col li:last-child { border-bottom:none; }
+  .split-col li span { margin-right:7px; }
+
+  /* ══════ BADGES ══════ */
+  .badges {
+    display:flex; flex-wrap:wrap; gap:9px;
+    margin:24px 0;
+  }
+  .badge {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:9px 15px;
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--ink);
+    display:flex; align-items:center; gap:8px;
+    box-shadow:var(--shadow);
+  }
+  .badge .bd { width:8px; height:8px; border-radius:50%; }
+  .bd.b1 { background:var(--accent-mid); }
+  .bd.b2 { background:var(--gold); }
+  .bd.b3 { background:#d97559; }
+  .bd.b4 { background:#6baa87; }
+  .bd.b5 { background:#7c6bcc; }
+
+  /* ══════ TOOL GRID (Gemini Enhancement) ══════ */
+  .tool-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 12px;
-    margin: 32px 0;
+    margin: 26px 0;
   }
-  .tool-box {
+  .tool-card {
     background: var(--white);
+    padding: 18px 16px;
+    border-radius: 10px;
     border: 1px solid var(--border);
-    padding: 20px;
-    border-radius: 12px;
     text-align: center;
     box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .tool-box strong { display: block; color: var(--accent-deep); font-size: 15px; margin-bottom: 4px; }
-  .tool-box span { font-size: 12px; color: var(--ink-soft); }
+  .tool-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+  }
+  .tool-card strong {
+    display: block;
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .tool-card small {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
 
-  .hierarchy { margin:40px 0; }
-  .h-row { display:flex; align-items:center; gap:16px; padding:18px 24px; border-radius:10px; margin-bottom:4px; }
-  .h-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }
-  .h-row.r1 { background: var(--accent-deep); color:#fff; }
-  .h-row.r1 .h-num { background:var(--gold); }
-  .h-row.r2 { background: var(--blue-pale); border: 1px solid var(--blue-border); }
-  .h-row.r2 .h-num { background: var(--accent-mid); color:#fff; }
+  /* ══════ TIER CARDS ══════ */
+  .tier {
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--white);
+    margin:24px 0;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .tier-head {
+    display:flex; align-items:center; gap:12px;
+    padding:16px 22px;
+  }
+  .tier-tag {
+    padding:3px 10px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.6px;
+  }
+  .tier-head h3 { margin:0; font-size:18px; }
+  .tier-head .tier-time { margin-left:auto; font-size:13px; color:var(--ink-soft); font-weight:600; }
+  .tier-body { padding:0 22px 22px; }
+  .tier-body p { font-size:15px; }
 
+  .tier.g .tier-head { background:#f0faf4; border-bottom:1px solid var(--green-border); }
+  .tier.g .tier-tag  { background:var(--green-border); color:#165724; }
+  .tier.g .tier-head h3 { color:#165724; }
+
+  .tier.a .tier-head { background:#fffbf0; border-bottom:1px solid #ffe0a0; }
+  .tier.a .tier-tag  { background:#ffe0a0; color:#7a5c04; }
+  .tier.a .tier-head h3 { color:#7a5c04; }
+
+  .tier.r .tier-head { background:var(--red-pale); border-bottom:1px solid var(--red-border); }
+  .tier.r .tier-tag  { background:var(--red-border); color:#842029; }
+  .tier.r .tier-head h3 { color:#842029; }
+
+  /* ══════ CODE BLOCKS (Enhanced with Gemini floating shadow + copy button) ══════ */
   .code {
     background:#161820;
-    border-radius:12px;
+    border-radius:10px;
     overflow:hidden;
-    margin:24px 0;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    margin:18px 0;
+    box-shadow: var(--shadow-float);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .code:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.16), 0 4px 8px rgba(0,0,0,0.1);
   }
   .code-bar {
-    display:flex; align-items:center; justify-content:space-between;
-    padding:12px 20px;
-    background:#1c1e26;
-    border-bottom:1px solid rgba(255,255,255,0.05);
+    display:flex; align-items:center; gap:8px;
+    padding:11px 18px;
+    background:#12141a;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    justify-content: space-between;
   }
+  .code-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dots { display:flex; gap:6px; }
+  .dots i { width:10px; height:10px; border-radius:50%; font-style:normal; }
+  .dots .d1{background:#ff5f57} .dots .d2{background:#febc2e} .dots .d3{background:#28c840}
+  .code-bar .cl { font-size:11.5px; color:rgba(255,255,255,0.3); margin-left:6px; font-family:'DM Sans',sans-serif; }
+  
+  /* Copy Button (Gemini Enhancement) */
   .copy-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.6);
-    padding: 4px 10px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
     font-size: 11px;
-    border-radius: 4px;
+    padding: 4px 10px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
   }
-  .copy-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
-  pre { padding:24px; font-family:'JetBrains Mono', monospace; font-size:14px; color:#c2cfe0; white-space:pre-wrap; }
-  .ck { color:#7ec8e3; }
-  .cv { color:#a8e6cf; }
-
-  .tier { border-radius:14px; background:var(--white); margin:32px 0; overflow:hidden; box-shadow:var(--shadow); border:1px solid var(--border); }
-  .tier-head { display:flex; align-items:center; gap:12px; padding:20px 24px; border-bottom:1px solid var(--border); }
-  .tier-body { padding:24px; }
-  .tier.g .tier-head { background:#f0faf4; color:#165724; }
-  .tier.a .tier-head { background:#fffbf0; color:#7a5c04; }
-
-  .challenge {
-    background: linear-gradient(135deg, var(--accent-deep), #2c5d8a);
+  .copy-btn:hover {
+    background: rgba(255,255,255,0.15);
     color: #fff;
-    border-radius: 14px;
-    padding: 32px 36px;
-    margin: 48px 0;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   }
-  .challenge h2 { color: #fff; font-size: 28px; margin-bottom: 12px; }
+  .copy-btn.copied {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+  }
 
-  .footer { background:var(--ink); color:#fff; padding:80px 36px; text-align:center; }
-  .footer p { color: rgba(255,255,255,0.5); font-size: 14px; }
+  .code pre {
+    padding:18px 20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    line-height:1.72;
+    color:#c2cfe0;
+    white-space:pre-wrap;
+    overflow-x:auto;
+  }
+  .code .cm { color:#5a6475; font-style:italic; }
+  .code .ck { color:#7ec8e3; font-weight:500; }
+  .code .cv { color:#a8e6cf; }
 
+  /* ══════ SHAKY BITS ══════ */
+  .shaky-list { margin:22px 0; display:flex; flex-direction:column; gap:14px; }
+  .shaky-item {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px 20px;
+    box-shadow:var(--shadow);
+  }
+  .shaky-row { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .shaky-n {
+    width:26px; height:26px; border-radius:6px;
+    background:var(--red-pale); color:#842029;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:13px; flex-shrink:0;
+  }
+  .shaky-row h4 { margin:0; font-size:15px; color:var(--ink); }
+  .shaky-item p { font-size:14px; color:var(--ink-mid); margin-bottom:4px; }
+  .shaky-item .fix { color:var(--accent-mid); font-weight:600; font-size:14px; }
+
+  /* ══════ CHECKLIST ══════ */
+  .checklist {
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:26px;
+    box-shadow:var(--shadow);
+    margin:28px 0;
+  }
+  .checklist h3 { margin-top:0; color:var(--ink); font-size:17px; margin-bottom:16px; }
+  .check-row {
+    display:flex; align-items:center; gap:12px;
+    padding:9px 0;
+    border-bottom:1px solid rgba(0,0,0,0.055);
+    font-size:15px; color:var(--ink-mid);
+  }
+  .check-row:last-child { border-bottom:none; }
+  .check-box {
+    width:20px; height:20px;
+    border:2px solid var(--border);
+    border-radius:5px; flex-shrink:0;
+    background:var(--cream);
+  }
+
+  /* ══════ READING ══════ */
+  .read-row {
+    display:flex; gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .read-row:last-child { border-bottom:none; }
+  .read-icon {
+    width:40px; height:40px;
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; flex-shrink:0;
+  }
+  .ri-book { background:var(--blue-pale); }
+  .ri-tool { background:#faf5ee; }
+  .ri-person { background:var(--green-pale); }
+  .ri-data { background:var(--red-pale); }
+  .read-row h4 { margin:0 0 3px; font-size:14.5px; color:var(--ink); text-transform:none; letter-spacing:0; }
+  .read-row p { font-size:13px; color:var(--ink-soft); margin-bottom:0; }
+
+  /* ══════ CHALLENGE BOX ══════ */
+  .challenge {
+    background:linear-gradient(135deg, var(--accent-deep), #2c5d8a);
+    color:#fff;
+    border-radius:14px;
+    padding:32px 36px;
+    margin:48px 0;
+    box-shadow:0 4px 24px rgba(0,0,0,0.12);
+  }
+  .challenge h2 { color:#fff; font-size:28px; margin-bottom:12px; }
+  .challenge p { color:rgba(255,255,255,0.82); font-size:15.5px; margin-bottom:14px; }
+  .challenge strong { color:var(--gold-pale); }
+
+  /* ══════ FOOTER ══════ */
+  .footer {
+    background:var(--ink);
+    color:rgba(255,255,255,0.55);
+    text-align:center;
+    padding:52px 36px;
+  }
+  .footer-weeks { display:flex; justify-content:center; gap:7px; margin-bottom:24px; }
+  .fw { width:30px; height:3px; border-radius:2px; }
+  .fw.on { background:var(--gold); }
+  .fw.off { background:rgba(255,255,255,0.14); }
+  .footer h3 { font-family:'Playfair Display',serif; color:#fff; font-size:20px; margin-bottom:6px; }
+  .footer p { font-size:14px; max-width:480px; margin:0 auto 4px; line-height:1.6; }
+  .footer .nw { color:var(--gold-pale); font-weight:600; }
+  .footer .tiny { opacity:.4; font-size:12.5px; margin-top:18px; }
+
+  /* ══════ RESPONSIVE ══════ */
   @media(max-width:620px){
-    .hero h1 { font-size:38px; }
-    .body { padding:40px 20px; }
+    .hero h1 { font-size:34px; }
+    .compare, .split { grid-template-columns:1fr; }
+    .tool-grid { grid-template-columns:1fr; }
+    .body { padding:40px 22px 80px; }
+    .hero-inner { padding:0 22px; }
+    .sticky-nav { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="sticky-nav" id="stickyNav">
-  <span>The Unfair Advantage: Week 1</span>
-  <a href="#prompts">Jump to Prompt Library</a>
+<!-- ══════ STICKY HEADER (Gemini Enhancement) ══════ -->
+<div class="sticky-header" id="stickyHeader">
+  <div class="sticky-inner">
+    <div class="sticky-title">
+      <span class="sticky-badge">WEEK 1</span>
+      The Intelligence Layer
+    </div>
+    <nav class="sticky-nav">
+      <a href="#tactical" class="sticky-link">Tactical</a>
+      <a href="#prompts" class="sticky-link">Prompts</a>
+      <a href="#challenge" class="sticky-link">Challenge</a>
+    </nav>
+  </div>
 </div>
 
+<!-- ══════ HERO ══════ -->
 <div class="hero">
   <div class="hero-inner">
     <div class="pill"><div class="pill-dot"></div><span>The Unfair Advantage · Week 1 of 4</span></div>
     <h1>The Intelligence Layer:<br><em>Build the Depth That Wins</em></h1>
-    <p class="sub">Walk into meetings knowing more about your prospect than competitors who just skim LinkedIn — in 20 minutes, not 4 hours.</p>
+    <p class="sub">How to walk into meetings knowing more about your prospect than competitors who just skim LinkedIn — in 20 minutes, not 4 hours.</p>
     <div class="hero-bar">
       <div class="avatar">D</div>
-      <div class="meta"><strong>David Matthews</strong><br>Enterprise Sales · 25 min read</div>
+      <div class="meta"><strong>David Matthews</strong><br>Enterprise Sales &amp; Transformation · 25 min read</div>
     </div>
   </div>
 </div>
-
+<div class="progress"><div class="progress-inner"><div class="prog-seg on"></div><div class="prog-seg"></div><div class="prog-seg"></div><div class="prog-seg"></div></div></div>
+<!-- ══════ BODY ══════ -->
 <div class="body">
-  <p class="lead">Elite sellers don't just use AI to write better emails. They use it to see through walls.</p>
-  
-  <div class="divider"><span>The Tech Stack</span></div>
-  <div class="tool-stack">
-    <div class="tool-box"><strong>Claude Pro</strong><span>100+ Page Reports</span></div>
-    <div class="tool-box"><strong>Perplexity Pro</strong><span>Real-Time Research</span></div>
-    <div class="tool-box"><strong>Gemini Adv.</strong><span>Visual Data & Charts</span></div>
-    <div class="tool-box"><strong>Grok</strong><span>Social Intelligence</span></div>
+
+  <p class="lead">The best sellers know what to look for before they know where to find it.</p>
+  <p>They read stakeholder dynamics. They navigate procurement politics. They understand when "digital transformation" actually means "please help us manage risk."</p>
+  <p>They smell budget constraints in an earnings call. They know which executives actually make decisions vs. which ones just show up to meetings.</p>
+  <p>Now imagine that judgment — turbocharged by AI.</p>
+  <p>This week: how to walk into meetings knowing more about your prospect than competitors who just skim LinkedIn. Not because you're "more digital"—because you know <em>what to look for</em> and AI helps you find it in 20 minutes instead of 4 hours.</p>
+
+  <blockquote><p>The unfair advantage isn't the tool. It's judgment + the tool.</p></blockquote>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="note blue" style="margin: 32px 0;">
+    <div class="ni">📑</div>
+    <div>
+      <p><strong>In This Article:</strong></p>
+      <p style="margin-bottom:6px;">• The Market Pattern (why this matters in 2026)</p>
+      <p style="margin-bottom:6px;">• The Story: How Research Won a Major Deal</p>
+      <p style="margin-bottom:6px;">• Why Tom Won (frameworks: Timme & Astley, Voss, McKinsey)</p>
+      <p style="margin-bottom:6px;">• The Hierarchy: Goals → Strategies → Initiatives → Departments</p>
+      <p style="margin-bottom:6px;">• The Tech Stack (which tools for which tasks)</p>
+      <p style="margin-bottom:6px;">• Three-Tier Tactical (Level 1, 2, 3, 3+)</p>
+      <p style="margin-bottom:6px;">• When AI Gets It Wrong (hallucinations, over-reliance, context collapse)</p>
+      <p style="margin-bottom:6px;">• <strong>Complete Prompt Library</strong> (all 4 prompts, copy-paste ready)</p>
+      <p style="margin-bottom:0;">• Week 1 Challenge & Further Reading</p>
+    </div>
   </div>
 
-  <div class="divider"><span>Hierarchy Extraction</span></div>
-  <div class="hierarchy">
-    <div class="h-row r1"><div class="h-num">1</div><div><strong>Goals:</strong> Financial targets & vision.</div></div>
-    <div class="h-row r2"><div class="h-num">2</div><div><strong>Strategies:</strong> Strategic pillars.</div></div>
-    <div class="h-row r2" style="background:#fafafa;"><div class="h-num">3</div><div><strong>Initiatives:</strong> Projects & Departments.</div></div>
+  <!-- THE MARKET -->
+  <div class="divider"><div class="line"></div><span>The Market Pattern</span><div class="line"></div></div>
+  
+  <p>Marc Sumner, CEO of Robertson Sumner (specialist UK IT channel recruiters), identified the hardest roles to fill in 2026: positions blending technical literacy with commercial acumen and strong interpersonal skills. McKinsey and HBR echo this: the differentiator isn't AI fluency — it's the human judgment that knows what to do with what AI finds.</p>
+
+  <p>Research across millions of sales opportunities shows AI-augmented professionals consistently outperform peers who don't use AI systematically (Gong Labs, ongoing research 2024-2026).</p>
+
+  <p>But that's a side effect, not the goal.</p>
+
+  <!-- COMPARISON -->
+  <div class="divider"><div class="line"></div><span>The Difference</span><div class="line"></div></div>
+  <h2>Traditional Research vs. Intelligence</h2>
+
+  <div class="compare">
+    <div class="col old">
+      <div class="col-label">Traditional Research</div>
+      <ul>
+        <li><span class="ico">❌</span> Skim the website</li>
+        <li><span class="ico">❌</span> Glance at LinkedIn</li>
+        <li><span class="ico">❌</span> Read a press release or two</li>
+        <li><span class="ico">❌</span> Walk in with surface-level knowledge</li>
+      </ul>
+      <span class="time-tag">⏱ 4+ hours</span>
+    </div>
+    <div class="col new">
+      <div class="col-label">AI-Augmented Intelligence</div>
+      <ul>
+        <li><span class="ico">✓</span> Understand their actual priorities</li>
+        <li><span class="ico">✓</span> Know what they're NOT saying publicly</li>
+        <li><span class="ico">✓</span> Spot language patterns that reveal intent</li>
+        <li><span class="ico">✓</span> Ask questions that prove you've done the work</li>
+      </ul>
+      <span class="time-tag">⏱ 20 minutes</span>
+    </div>
   </div>
 
-  <div class="divider" id="prompts"><span>The Prompt Library</span></div>
-  
-  <div class="tier g">
-    <div class="tier-head"><strong>LEVEL 1</strong><h3>Quick Company Intelligence</h3></div>
-    <div class="tier-body">
-      <div class="code">
-        <div class="code-bar"><span>PROMPT</span><button class="copy-btn" onclick="copyCode(this)">Copy Prompt</button></div>
-        <pre>I'm meeting with [COMPANY NAME]'s [TITLE] next week.
-Analyze the reports and tell me:
-1. PRIORITIES: Top 3 strategic goals?
-2. PAIN POINTS: Hidden risks or efficiency drains?
-3. DISCOVERY: Give me 3 questions proving I understand context.</pre>
+  <p>Traditional research gets you <em>in</em> the room. Deep intelligence wins the room.</p>
+  <p>Yes, AI makes this faster—20 minutes instead of 4 hours. But more importantly, it <strong>deepens your understanding</strong>. You're not just quicker. You're asking better questions. You're spotting what others miss. You're positioning with precision because you actually understand their context.</p>
+
+  <!-- TOM'S STORY -->
+  <div class="divider"><div class="line"></div><span>The Story</span><div class="line"></div></div>
+
+  <div class="story">
+    <div class="story-head">📖 <h3>How Research Won a Major Deal</h3></div>
+    <div class="story-body">
+      <p>Tom is an experienced Account Executive. Over a decade in role. Recently lost a significant deal to a competitor.</p>
+      <p>The feedback stung: <em>"They seemed to understand our business better."</em></p>
+      <p>Tom was frustrated. He knew this sector. He understood the dynamics, the pressures, the decision-making patterns. But when he looked at the winning pitch, he saw it: the competitor had quoted the CFO's own LinkedIn post. They'd referenced a challenging initiative from the annual report. They'd used the exact language the executive team was using internally.</p>
+      <p>Tom hadn't lost because he didn't understand the business. He lost because he didn't do the homework that <em>proved</em> it.</p>
+
+      <h4>The Turnaround</h4>
+      <p>For his next pitch—similar client profile, similar stakeholder—Tom spent 20 minutes with AI analysing recent annual reports, executive LinkedIn posts (last 6 months), and earnings calls.</p>
+
+      <h4>The Discovery</h4>
+      <div class="story-highlight">
+        <p>The CFO mentioned <strong>"cost-to-serve"</strong> 17 times across those documents.</p>
+        <p><strong>"Innovation"</strong> appeared twice.</p>
+        <p>The annual report buried a <strong>failed automation project</strong> in the risk disclosures section.</p>
+      </div>
+
+      <h4>The Repositioning</h4>
+      <p>Tom didn't pitch "digital transformation"—what everyone else was selling. He led with <strong>"operational efficiency with managed risk."</strong></p>
+      <p>He referenced their past experience directly: <em>"I know change management is challenging. Here's how we de-risk this while delivering the efficiency gains you need."</em></p>
+
+      <div class="story-outcome">
+        <div class="out-label">Outcome</div>
+        <p><strong>Won.</strong> Significant multi-year contract.</p>
+        <p>The competitive edge? Not "better AI skills." Better pattern recognition applied to better data. Tom knew what <em>"cost-to-serve mentioned 17 times"</em> meant. AI just surfaced it faster.</p>
       </div>
     </div>
   </div>
 
+  <!-- HALLUCINATION WARNING -->
+  <div class="note red">
+    <div class="ni">⚠️</div>
+    <div>
+      <p><strong>One thing before we go further.</strong> AI makes mistakes. In testing this exact workflow, AI once synthesised "strategic priorities" that sounded credible but weren't in the source documents. It also combined information from different years as if it were current—referencing an executive who'd left 18 months prior. The fix is straightforward: always verify AI outputs against the source. If you can't find the quote or data point, don't use it. We'll cover the full list of failure modes later in this piece.</p>
+    </div>
+  </div>
+
+  <!-- WHY TOM WON -->
+  <div class="divider"><div class="line"></div><span>The Frameworks</span><div class="line"></div></div>
+  <h2>Why Tom Won</h2>
+  <p>Tom's approach wasn't luck. It maps directly onto frameworks proven across thousands of deals.</p>
+
+  <div class="badges">
+    <div class="badge"><div class="bd b1"></div>Timme &amp; Astley</div>
+    <div class="badge"><div class="bd b2"></div>Heath Brothers</div>
+    <div class="badge"><div class="bd b3"></div>Chris Voss</div>
+    <div class="badge"><div class="bd b4"></div>Sol Rashidi</div>
+    <div class="badge"><div class="bd b5"></div>McKinsey</div>
+  </div>
+
+  <h3>Timme &amp; Astley — Insight-Led Selling</h3>
+  <p>Tom's approach is textbook <em>Insight-Led Selling: Adopt an Executive Mindset, Build Credibility, Communicate with Impact.</em></p>
+  <p><strong>Adopt an Executive Mindset:</strong> Tom shifted from "what am I selling?" to "what are THEY trying to solve?" He started with the CFO's priorities—cost-to-serve optimisation, operational efficiency, risk management.</p>
+  <p><strong>Build Credibility:</strong> By referencing their past automation challenges and acknowledging change management complexity, Tom proved he'd done the homework AND understood the context.</p>
+  <p><strong>Communicate with Impact:</strong> Tom used THEIR language. "Cost-to-serve." "Operational efficiency." "Managed risk." He didn't translate their priorities into vendor jargon.</p>
+
+  <h3>Chris Voss — Tactical Empathy</h3>
+  <p>Tom's acknowledgment of their past automation challenges is pure Voss: <em>"I know change management is challenging."</em> This is tactical empathy—proving you understand their world before asking for anything. Voss calls this "accusation audit"—surfacing the objection before they voice it.</p>
+
+  <h3>McKinsey — Second-Order Thinking</h3>
+  <p><strong>First-order thinking:</strong> They want innovation → Pitch our latest AI capabilities.</p>
+  <p><strong>Second-order thinking:</strong> They've been burned before → They want efficiency without risk → Position around proven delivery with managed change.</p>
+  <p>AI didn't give Tom this insight. His experience did. AI just surfaced the evidence faster.</p>
+
+  <!-- HIERARCHY -->
+  <div class="divider"><div class="line"></div><span>The Framework</span><div class="line"></div></div>
+  <h2>Goals → Strategies → Initiatives → Departments</h2>
+  <p>One of the most powerful ideas in <em>Insight-Led Selling</em> is this: companies don't buy products. They buy to implement their initiatives in support of their strategies and goals. Most sellers stop at the department level. Executives think in the hierarchy:</p>
+
+  <div class="hierarchy">
+    <div class="h-row r1"><div class="h-num">1</div><div class="hc"><h4>Goals</h4><p>What they want to achieve—vision, financial targets, strategic imperatives</p></div></div>
+    <div class="h-connector"></div>
+    <div class="h-row r2"><div class="h-num">2</div><div class="hc"><h4>Strategies</h4><p>How they plan to achieve—key pillars, competitive positioning</p></div></div>
+    <div class="h-connector"></div>
+    <div class="h-row r3"><div class="h-num">3</div><div class="hc"><h4>Initiatives</h4><p>Specific programmes and projects—transformation programmes, cross-functional work</p></div></div>
+    <div class="h-connector"></div>
+    <div class="h-row r4"><div class="h-num">4</div><div class="hc"><h4>Departments</h4><p>Who executes—operational activities, day-to-day implementation</p></div></div>
+  </div>
+
+  <div class="note green">
+    <div class="ni">💡</div>
+    <div>
+      <p><strong>Wrong:</strong> "Our cloud platform offers 99.99% uptime and scales automatically."</p>
+      <p><strong>Right:</strong> "I saw in your annual report that operational efficiency is a board-level goal, with a strategy to reduce cost-to-serve by 15%. Your cloud migration initiative supports this. Here's how we de-risk the migration while delivering the efficiency gains your CFO is measured on."</p>
+    </div>
+  </div>
+
+  <h3>Why AI Is Perfect for This</h3>
+  <div class="split">
+    <div class="split-col ai">
+      <div class="sl">AI handles</div>
+      <ul>
+        <li><span>📄</span> Scanning documents in seconds</li>
+        <li><span>🔍</span> Finding every mention of "cost-to-serve"</li>
+        <li><span>🏗️</span> Extracting structured hierarchies</li>
+      </ul>
+    </div>
+    <div class="split-col human">
+      <div class="sl">You handle</div>
+      <ul>
+        <li><span>🧠</span> Knowing what "cost-to-serve" means</li>
+        <li><span>🎭</span> Understanding political dynamics</li>
+        <li><span>⏰</span> Connecting timing to procurement cycles</li>
+      </ul>
+    </div>
+  </div>
+  <p><strong>The combination:</strong> AI extracts the hierarchy. Your experience interprets what it means.</p>
+
+  <!-- TECH STACK (Gemini Enhancement) -->
+  <div class="divider"><div class="line"></div><span>The Tech Stack</span><div class="line"></div></div>
+  <h2>The 2026 Seller's Stack</h2>
+  <p>Different tools for different tasks. Here's what each does best:</p>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <strong>Claude Pro</strong><br>
+      <small>Best for 200pg docs, deep analysis, nuanced synthesis</small>
+    </div>
+    <div class="tool-card">
+      <strong>Perplexity Pro</strong><br>
+      <small>Best for real-time web search, current info, fact-checking</small>
+    </div>
+    <div class="tool-card">
+      <strong>Gemini Advanced</strong><br>
+      <small>Best for visual charts, infographics, data extraction</small>
+    </div>
+    <div class="tool-card">
+      <strong>Grok (X Premium+)</strong><br>
+      <small>Best for exec social media, X/Twitter intelligence</small>
+    </div>
+  </div>
+
+  <div class="note blue">
+    <div class="ni">💡</div>
+    <div>
+      <p><strong>Two-AI Verification Rule:</strong> If Claude and ChatGPT both say "cost-to-serve appears 17 times," it's real. If they disagree, verify manually against the source document. Cross-verification catches hallucinations.</p>
+    </div>
+  </div>
+  <!-- THREE TIERS -->
+  <div class="divider" id="tactical"><div class="line"></div><span>The Tactical</span><div class="line"></div></div>
+  <h2>Three-Tier Intelligence</h2>
+  <p>Not every meeting needs 90 minutes of research. Here's how to calibrate.</p>
+
+  <!-- LEVEL 1 -->
+  <div class="tier g">
+    <div class="tier-head"><span class="tier-tag">LEVEL 1</span><h3>Quick Intelligence</h3><span class="tier-time">⏱ 20 min</span></div>
+    <div class="tier-body">
+      <p><strong>Tools:</strong> Any leading AI model (free versions work fine)<br><strong>Use for:</strong> 80% of your meetings.</p>
+      <p><strong>Workflow:</strong> Gather their annual report, 3–5 recent press releases, executive LinkedIn posts (last 6 months). Feed into AI with this prompt:</p>
+
+      <div class="code">
+        <div class="code-bar">
+          <div class="code-bar-left">
+            <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+            <span class="cl">Level 1—Quick Company Intelligence</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre><span class="cm"># Paste into any AI tool with documents attached</span>
+
+I'm meeting with [COMPANY NAME]'s [TITLE - e.g., CFO, CIO] next week to discuss [SOLUTION TYPE].
+
+I've attached/pasted:
+- Their most recent annual report
+- Recent press releases
+- Executive LinkedIn posts
+
+Analyze this and tell me:
+
+<span class="ck">1. PRIORITIES:</span>   Top 3 strategic priorities? <span class="cv">(Quote their exact language)</span>
+<span class="ck">2. PAIN POINTS:</span>  Challenges or risks? <span class="cv">(efficiency, cost, risk)</span>
+<span class="ck">3. LANGUAGE:</span>     What words/phrases repeat? <span class="cv">(This reveals what matters)</span>
+<span class="ck">4. PAST CHALLENGES:</span> Failed projects, risks, lessons learned?
+<span class="ck">5. BUDGET SIGNALS:</span> Financial pressure or investment priorities?
+<span class="ck">6. QUESTIONS:</span>    3 discovery questions proving I understand their context</pre>
+      </div>
+
+      <p><strong>Then:</strong> 5 minutes verifying AI findings. Add your pattern recognition. Output: 1-page brief.</p>
+      <p><em>Full prompt with contrarian angles section available in the Prompt Library below.</em></p>
+    </div>
+  </div>
+
+  <!-- LEVEL 2 -->
+  <div class="tier a">
+    <div class="tier-head"><span class="tier-tag">LEVEL 2</span><h3>Person-Level Intelligence</h3><span class="tier-time">⏱ 45 min</span></div>
+    <div class="tier-body">
+      <p><strong>Tools:</strong> Any leading AI model + LinkedIn<br><strong>Use for:</strong> 15% of meetings—senior stakeholders, strategic accounts.</p>
+      <p>Everything in Level 1, plus research on the <em>individual</em>. Analyse their LinkedIn profile, recent posts, conference talks. Look for career trajectory, personal priorities, decision-making style, recent organizational shifts.</p>
+      <p><strong>Also:</strong> Boolean search LinkedIn Jobs for hiring signals. If they're recruiting relevant roles, there's likely budget and timeline.</p>
+      <p><em>Complete prompt available in the Prompt Library below.</em></p>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE WARNING -->
+  <div class="note red" style="margin: 32px 0;">
+    <div class="ni">⚠️</div>
+    <div>
+      <p><strong>Compliance & Data Protection Warning</strong></p>
+      <p>Before using ANY AI tool with client, company, or deal data, read this carefully.</p>
+      <p><strong>What's Safe to Upload:</strong> Published annual reports, press releases, public LinkedIn profiles, earnings call transcripts, news articles, publicly available conference presentations.</p>
+      <p><strong>What's NOT Safe (Without Legal/IT Approval):</strong> CRM data, proposals with pricing, internal strategy documents, confidential customer information, regulated data (GDPR, financial services, healthcare), competitive intelligence marked confidential, contract terms.</p>
+      <p><strong>The Rule:</strong> If you wouldn't post it publicly on LinkedIn, don't upload it to a free AI tool.</p>
+      <p>Free AI tools may use your inputs for training unless you're on enterprise plans with data protection agreements. Before using Level 3 or beyond: check your company's AI usage policy, verify data classification, anonymize where possible, use enterprise AI tools if available, and when in doubt, ask Legal/IT/Compliance.</p>
+    </div>
+  </div>
+
+  <!-- LEVEL 3 -->
+  <div class="tier r">
+    <div class="tier-head"><span class="tier-tag">LEVEL 3</span><h3>Advanced Pattern Recognition</h3><span class="tier-time">⏱ Ongoing</span></div>
+    <div class="tier-body">
+      <p><strong>Tools:</strong> Claude Projects OR Custom GPT + Historical data<br><strong>Use for:</strong> Building institutional memory from past deals.</p>
+      
+      <div class="note warm" style="margin-top:18px;">
+        <div class="ni">⚠️</div>
+        <div><p><strong>WARNING:</strong> Check with IT/Legal before uploading ANY customer or deal data to external AI tools.</p></div>
+      </div>
+
+      <p><strong>What This Unlocks:</strong> Upload anonymized past proposals, win/loss analysis, deal notes to a dedicated Claude Project or custom GPT.</p>
+
+      <div class="code">
+        <div class="code-bar">
+          <div class="code-bar-left">
+            <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+            <span class="cl">Level 3—Pattern Recognition</span>
+          </div>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>I've uploaded 10 past deals in the [SECTOR] space.
+
+Analyze these and tell me:
+
+<span class="ck">1.</span> What language patterns predicted wins vs. losses?
+<span class="ck">2.</span> What objections appeared repeatedly?
+<span class="ck">3.</span> What positioning worked best?
+<span class="ck">4.</span> Based on this new prospect's data, which past deal is most similar?
+<span class="ck">5.</span> What should I emphasize/avoid based on historical patterns?</pre>
+      </div>
+
+      <p><strong>Why This Works:</strong> You're building institutional memory. Every deal teaches the AI what worked in YOUR context, with YOUR solutions, against YOUR competitors.</p>
+      <p><strong>Level 3 Is Designed for Public Data:</strong> Win/loss patterns (anonymized), language analysis (no customer names), positioning strategies (generic to your solutions), objection patterns (sector-level, not customer-specific).</p>
+      <p><strong>Time Saved:</strong> Immeasurable—this is pattern recognition that would take years to internalize manually.</p>
+    </div>
+  </div>
+
+  <!-- LEVEL 3+ -->
+  <div class="tier r">
+    <div class="tier-head"><span class="tier-tag">LEVEL 3+</span><h3>Enterprise Deep Dive</h3><span class="tier-time">⏱ 90–120 min</span></div>
+    <div class="tier-body">
+      <p><strong>Tools:</strong> Pro/paid versions of leading AI models (advanced analysis required)<br><strong>Use for:</strong> The 5%—£500K+ deals, board-level presentations, multi-year strategic partnerships.</p>
+      <div class="note warm" style="margin-top:18px;">
+        <div class="ni">⚠️</div>
+        <div><p><strong>This is NOT for everyday use.</strong> For 80% of meetings, Level 1 is sufficient. This protocol is for high-stakes pursuits where institutional-grade intelligence creates competitive advantage.</p></div>
+      </div>
+      <p>The 8-Pillar Protocol: two-step framework covering Foundations, Financials, Market Segments, Technology Strategy, Governance, Infrastructure & ESG, Ecosystem & Partnerships, and Synthesis—with a Double-Verification Loop to catch hallucinations.</p>
+      <p><em>Complete two-step protocol with all 8 pillars available in the Prompt Library below.</em></p>
+    </div>
+  </div>
+
+  <!-- SHAKY BITS -->
+  <div class="divider"><div class="line"></div><span>Honesty Check</span><div class="line"></div></div>
+  <h2>When AI Gets It Wrong</h2>
+  <p>We flagged two of these earlier. Here's the full picture—three failure modes, and how to handle each:</p>
+
+  <div class="shaky-list">
+    <div class="shaky-item">
+      <div class="shaky-row"><div class="shaky-n">1</div><h4>The Hallucination Problem</h4></div>
+      <p>AI synthesised "strategic priorities" that sounded credible but weren't in the source documents. Nearly cited a fake initiative in a pitch.</p>
+      <p class="fix">→ Fix: Ask AI to cite page numbers or quotes. If it can't, don't use it.</p>
+    </div>
+    <div class="shaky-item">
+      <div class="shaky-row"><div class="shaky-n">2</div><h4>The Over-Reliance Trap</h4></div>
+      <p>Used AI-generated questions without adding personal judgment. Questions were generic. Client said "everyone asks those questions."</p>
+      <p class="fix">→ Fix: AI gives the starting point. Your experience adds the depth.</p>
+    </div>
+    <div class="shaky-item">
+      <div class="shaky-row"><div class="shaky-n">3</div><h4>The Context Collapse</h4></div>
+      <p>AI combined information from different years as if current. Referenced an executive who'd left 18 months prior.</p>
+      <p class="fix">→ Fix: Always verify dates and current roles. LinkedIn is your check.</p>
+    </div>
+  </div>
+
+  <h3>What This Doesn't Solve</h3>
+  <div class="split">
+    <div class="split-col" style="background:var(--red-pale); border-color:var(--red-border);">
+      <div class="sl" style="color:#842029;">AI Won't</div>
+      <ul>
+        <li><span>❌</span> Replace domain expertise</li>
+        <li><span>❌</span> Handle political dynamics</li>
+        <li><span>❌</span> Detect sarcasm or PR spin</li>
+        <li><span>❌</span> Navigate procurement process</li>
+      </ul>
+    </div>
+    <div class="split-col" style="background:var(--green-pale); border-color:var(--green-border);">
+      <div class="sl" style="color:#165724;">AI Does</div>
+      <ul>
+        <li><span>✓</span> Accelerate research (4 hrs → 20 min)</li>
+        <li><span>✓</span> Surface patterns you'd miss</li>
+        <li><span>✓</span> Free you for strategic thinking</li>
+        <li><span>✓</span> Provide evidence for your instincts</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="divider"><div class="line"></div><span>Your Toolkit</span><div class="line"></div></div>
+  <div class="checklist">
+    <h3>📋 Pre-Meeting Intelligence Checklist</h3>
+    <div class="check-row"><div class="check-box"></div>Annual report (most recent)</div>
+    <div class="check-row"><div class="check-box"></div>Executive LinkedIn posts (last 6 months)</div>
+    <div class="check-row"><div class="check-box"></div>Press releases (recent 3–5)</div>
+    <div class="check-row"><div class="check-box"></div>Earnings call transcript (if public)</div>
+    <div class="check-row"><div class="check-box"></div>AI synthesis (5 minutes)</div>
+    <div class="check-row"><div class="check-box"></div>Human verification (5 minutes)</div>
+    <div class="check-row"><div class="check-box"></div>Discovery questions (3–5, using THEIR language)</div>
+  </div>
+  <!-- PROMPT LIBRARY -->
+  <div class="divider" id="prompts"><div class="line"></div><span>Prompt Library</span><div class="line"></div></div>
+  <h2>Complete Prompt Library — Copy & Paste Ready</h2>
+  <p>All four prompts, fully tested and working. Bookmark this section.</p>
+
+  <div class="note blue">
+    <div class="ni">💡</div>
+    <div>
+      <p><strong>Two-AI Verification Rule:</strong> If Claude and ChatGPT both say "cost-to-serve appears 17 times," it's real. If they disagree, verify manually against the source document.</p>
+    </div>
+  </div>
+
+  <!-- PROMPT 1: LEVEL 1 -->
+  <h3>Prompt 1: Level 1 — Quick Company Intelligence (20 minutes)</h3>
+  <p><strong>Tools:</strong> Any leading AI model (free versions work)<br>
+  <strong>Use for:</strong> 80% of your meetings</p>
+
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Prompt 1 — Level 1 Quick Intelligence</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>I'm meeting with [COMPANY NAME]'s [TITLE - e.g., CFO, CIO] next week to discuss [SOLUTION TYPE].
+
+I've attached/pasted:
+- Their most recent annual report
+- Recent press releases
+- Executive LinkedIn posts
+
+Analyze this and tell me:
+
+<span class="ck">1. PRIORITIES:</span> What are their top 3 strategic priorities right now?
+   (Quote specific language they use)
+
+<span class="ck">2. PAIN POINTS:</span> What challenges or risks are they facing?
+   (Look for language around efficiency, cost, transformation, risk)
+
+<span class="ck">3. LANGUAGE PATTERNS:</span> What words/phrases do they repeat?
+   (This reveals what matters)
+
+<span class="ck">4. PAST CHALLENGES:</span> Any mention of failed projects, risks, or lessons learned?
+
+<span class="ck">5. BUDGET SIGNALS:</span> Any indicators of financial pressure or investment priorities?
+
+<span class="ck">6. QUESTIONS TO ASK:</span> Based on this intelligence, give me 3 discovery questions
+   that prove I understand their context
+
+<span class="ck">7. CONTRARIAN ANGLES:</span> For each of the top 3 priorities you identified,
+   list one reason why a competitor would ignore or dismiss it.
+
+This helps identify:
+- What others are missing (your unfair advantage)
+- Why the obvious angle might be wrong (strategic depth)
+- How to position differently (contrarian value)
+
+Format:
+Priority: [Name]
+Why competitors ignore it: [Reason]
+Your contrarian angle: [How you address what others miss]</pre>
+  </div>
+
+  <p><strong>Output:</strong> 1-page intelligence brief covering priorities, pain points, language patterns, and 3 discovery questions.</p>
+  <p><strong>Time saved:</strong> 3 hours 40 minutes vs. manual research.</p>
+
+  <!-- PROMPT 2: HIERARCHY -->
+  <h3>Prompt 2: Hierarchy Extraction — Goals → Strategies → Initiatives</h3>
+  <p><strong>Tools:</strong> Any leading AI model<br>
+  <strong>Use for:</strong> Mapping board-level goals to departmental initiatives</p>
+
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Prompt 2 — Hierarchy Extraction</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>I'm researching [COMPANY NAME] for an executive meeting next week.
+
+I've attached their most recent annual report.
+
+Extract the Goals → Strategies → Initiatives → Departments hierarchy:
+
+<span class="ck">1. GOALS:</span> What are their top 3-5 strategic goals?
+   (Look for: vision statements, financial targets, board priorities)
+   Quote specific language they use.
+
+<span class="ck">2. STRATEGIES:</span> How are they planning to achieve these goals?
+   (Look for: strategic pillars, key approaches, competitive positioning)
+
+<span class="ck">3. INITIATIVES:</span> What specific programs or projects support these strategies?
+   (Look for: transformation programs, major projects, department-level initiatives)
+
+<span class="ck">4. DEPARTMENTS:</span> Which departments/functions are responsible for execution?
+   (Look for: organizational structure, who reports what)
+
+Format as a clear hierarchy showing how:
+Goals → Strategies → Initiatives → Departments connect.</pre>
+  </div>
+
+  <p><strong>Output:</strong> Hierarchical map connecting board-level goals to department-level execution.</p>
+  <p><strong>Why this matters:</strong> You can pitch solutions tied to strategic goals, not just departmental needs.</p>
+
+  <!-- PROMPT 3: LEVEL 2 -->
+  <h3>Prompt 3: Level 2 — Person-Level Intelligence (45 minutes)</h3>
+  <p><strong>Tools:</strong> Any leading AI model + LinkedIn<br>
+  <strong>Use for:</strong> 15% of meetings — senior stakeholders, strategic accounts</p>
+
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Prompt 3 — Level 2 Person-Level Research</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>I'm meeting with [NAME], [TITLE] at [COMPANY] next week.
+
+Analyze their LinkedIn profile, recent posts (last 6 months),
+any conference talks or interviews.
+
+Tell me:
+
+<span class="ck">1. Career trajectory:</span> How long in role? Previous companies?
+
+<span class="ck">2. Personal priorities:</span> What do they post about? What themes repeat?
+
+<span class="ck">3. Decision-making style:</span> Data-driven? Relationship-focused? Risk-averse?
+
+<span class="ck">4. Recent activity:</span> Job changes, promotions, organizational shifts?
+
+<span class="ck">5. ONE QUESTION</span> I should ask to show I understand THEIR agenda,
+   not just the company's</pre>
+  </div>
+
+  <p><strong>Also search LinkedIn Jobs:</strong></p>
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Boolean Search for Hiring Signals</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>site:linkedin.com/jobs "[COMPANY NAME]" "[RELEVANT ROLE]"</pre>
+  </div>
+
+  <p><strong>Why this works:</strong> If they're hiring Cloud Engineers or Project Managers, there's budget and timeline.</p>
+  <p><strong>Time saved:</strong> 2+ hours.</p>
+
+  <!-- PROMPT 4: LEVEL 3+ -->
+  <h3>Prompt 4: Level 3+ — Enterprise Deep Dive (90-120 minutes)</h3>
+  <p><strong>Tools:</strong> Pro/paid versions of leading AI models<br>
+  <strong>Use for:</strong> The 5% — £500K+ deals, board-level presentations, multi-year strategic partnerships</p>
+
+  <div class="note red">
+    <div class="ni">⚠️</div>
+    <div>
+      <p><strong>This is NOT for everyday use.</strong> For 80% of meetings, Level 1 is sufficient. This protocol is for high-stakes pursuits where institutional-grade intelligence creates measurable competitive advantage.</p>
+    </div>
+  </div>
+
+  <h4>Step 1: Intake & Calibration (Paste This First)</h4>
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Level 3+ Step 1 — Calibration</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>Act as a Senior Market Intelligence Lead.
+Your first task is to ask me for a Target Company Name.
+
+Once I provide the name, you must:
+
+<span class="ck">1. Define the Industry Context:</span>
+   Identify the primary sector (e.g., Global Construction/Consultancy,
+   Fintech, Pharma, Enterprise SaaS).
+
+<span class="ck">2. Select Validation Sources:</span>
+   Name 3-4 high-authority sources for that specific sector.
+
+   Examples by sector:
+   - Construction: Construction Enquirer, PBCToday, Construction News
+   - Finance: Bloomberg, FT, SEC Filings, Annual Reports
+   - Technology: Gartner, IDC, company investor relations
+   - Pharma: FDA filings, PubMed, industry journals
+
+<span class="ck">3. Identify Key Competitors:</span>
+   List 3 direct rivals to use as a baseline for competitive analysis.
+
+Wait for my confirmation before executing the 8-point research.</pre>
+  </div>
+
+  <h4>Step 2: The 8-Pillar Protocol (Paste After Confirmation)</h4>
+  <div class="code">
+    <div class="code-bar">
+      <div class="code-bar-left">
+        <div class="dots"><i class="d1"></i><i class="d2"></i><i class="d3"></i></div>
+        <span class="cl">Level 3+ Step 2 — The 8 Pillars</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+    </div>
+    <pre>Execute a Deep Research Protocol for [INSERT COMPANY NAME] across
+the following 8 areas.
+
+<span class="ck">CRITICAL REQUIREMENT:</span> Use a Double-Verification Loop—cross-reference
+at least TWO high-authority sources for every financial or strategic claim.
+Flag any single-source claims explicitly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+THE 8 PILLARS OF INVESTIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<span class="cv">1. FOUNDATIONS</span>
+   - Establishment date, headquarters location, ownership structure
+   - Core business model and value proposition
+   - Mission, values, and "Cultural DNA" (what they say about themselves)
+   - Leadership history (founders, CEO tenure, major transitions)
+
+<span class="cv">2. FINANCIALS (2022-2025/TTM)</span>
+   - Annual revenue (trend analysis)
+   - Net income, operating income, PBT (if public)
+   - Available financial ratios (margins, growth rates)
+   - NOTE: If private company, reconstruct from:
+     * Annual Reviews
+     * Companies House filings (UK)
+     * Reputable trade news estimates
+     * Explicitly flag "ESTIMATED" vs "REPORTED"
+
+<span class="cv">3. MARKET SEGMENTS & SERVICES</span>
+   - Primary business segments (by revenue %)
+   - Specific services/products in each segment
+   - Recent product/service launches or expansions
+   - Competitive advantages vs. identified rivals
+   - Market positioning (premium, value, niche specialist)
+
+<span class="cv">4. TECHNOLOGY STRATEGY</span>
+   - AI/ML/Automation focus areas
+   - Data analytics capabilities and platforms
+   - R&D investment levels (% of revenue if available)
+   - Innovation labs or emerging tech initiatives
+   - Shift toward "Agentic AI" or autonomous systems (if applicable)
+
+<span class="cv">5. GOVERNANCE & LEADERSHIP</span>
+   - Board of Directors composition
+   - Executive team (C-suite)
+   - Key leaders in: Technology, Operations, Digital Transformation
+   - Recent leadership changes or appointments
+   - Advisory boards or strategic councils
+
+<span class="cv">6. INFRASTRUCTURE & ESG</span>
+   - Core technology systems and platforms
+   - Cybersecurity posture (certifications, incidents)
+   - Net Zero commitments and progress
+   - Sustainability initiatives
+   - How technology enables ESG goals
+
+<span class="cv">7. ECOSYSTEM & PARTNERSHIPS</span>
+   - Geographic presence (countries, offices, headcount)
+   - Key client segments (industries served, client types)
+   - Technology partnerships (Microsoft, AWS, Oracle, SAP, etc.)
+   - Strategic alliances or joint ventures
+   - M&A activity (acquisitions, divestitures)
+
+<span class="cv">8. SYNTHESIS & COMPETITIVE OUTLOOK</span>
+   - Industry rankings (Fortune 500, sector awards, certifications)
+   - Analyst ratings or recognitions (Gartner, Forrester, etc.)
+   - Current "Competitive Moat" (sustainable advantages)
+   - Major challenges or threats (2026 outlook)
+   - Strategic priorities for next 12-24 months
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BONUS SECTION: BLIND SPOT IDENTIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Identify ONE significant event or dynamic NOT covered in the 8 pillars:
+- Major M&A announcement
+- Leadership crisis or executive departure
+- Regulatory challenge or legal issue
+- Structural carve-out or reorganization
+- Competitive disruption or market shift
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FORMATTING REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For each pillar:
+- Use bulleted lists (3-5 main points per pillar)
+- Include 2-3 sub-bullets for deep data under each main point
+- Cite sources explicitly: [Source: Annual Report 2024, p.12]
+- Flag "Data Gaps" for private entities or unavailable information
+- Mark "ESTIMATED" vs "REPORTED" for all financial data
+- Highlight contradictions between sources</pre>
+  </div>
+
+  <p><strong>Time breakdown:</strong></p>
+  <ul>
+    <li>Step 1 (Intake): 10 minutes</li>
+    <li>Step 2 (Execution): 30-40 minutes (AI processing)</li>
+    <li>Verification: 40-60 minutes (human review)</li>
+    <li><strong>Total: 90-120 minutes</strong></li>
+  </ul>
+
+  <div class="note warm">
+    <div class="ni">📌</div>
+    <div>
+      <p><strong>Reality check:</strong> If verification consistently takes longer, that's not a bug—it's due diligence. The goal is thorough intelligence, not speed at the expense of accuracy.</p>
+    </div>
+  </div>
+
+  <div class="note blue" style="margin-top:28px;">
+    <div class="ni">🚀</div>
+    <div>
+      <p><strong>This is a starting guide.</strong> Once you master these prompts and gain confidence utilizing AI for research, take it to the next level: custom GPTs, Claude Projects, multi-agent workflows, agentic systems. The frameworks here are your foundation—what you build on top is where the real competitive edge emerges.</p>
+    </div>
+  </div>
+
+  <!-- READING LIST -->
+  <div class="divider"><div class="line"></div><span>Go Deeper</span><div class="line"></div></div>
+  <h2>Further Reading</h2>
+  <div class="read-row">
+    <div class="read-icon ri-book">📖</div>
+    <div><h4>Insight-Led Selling — Stephen G. Timme & Melody Astley</h4><p>The backbone of this series. Free tools at InsightLedSelling.com (Access Code: INSIGHTSELLER)</p></div>
+  </div>
+  <div class="read-row">
+    <div class="read-icon ri-book">📖</div>
+    <div><h4>Made to Stick — Chip & Dan Heath</h4><p>The SUCCESs framework. How to make your pitch memorable.</p></div>
+  </div>
+  <div class="read-row">
+    <div class="read-icon ri-book">📖</div>
+    <div><h4>Never Split the Difference — Chris Voss</h4><p>Tactical empathy and "accusation audit." The psychology behind surfacing objections.</p></div>
+  </div>
+  <div class="read-row">
+    <div class="read-icon ri-person">🎤</div>
+    <div><h4>Sol Rashidi on LinkedIn</h4><p>Posts regularly on Human Amplification vs. Intellectual Atrophy. Search her TEDx Charleston talk.</p></div>
+  </div>
+  <div class="read-row">
+    <div class="read-icon ri-data">📊</div>
+    <div><h4>Gong Labs Research</h4><p>Search "Gong AI Revenue Impact"—data-backed insights from 7M+ sales opportunities.</p></div>
+  </div>
+
+  <!-- CHALLENGE -->
+  <div class="divider" id="challenge"><div class="line"></div><span>Your Move</span><div class="line"></div></div>
   <div class="challenge">
     <h2>Week 1 Challenge</h2>
-    <p>Run the <strong>Level 1 Prompt</strong> on one dormant lead. Re-engage with an insight.</p>
+    <p><strong>Don't just read this. Do this.</strong></p>
+    <p>Before Week 2 publishes next Wednesday, pick one upcoming meeting and run <strong>Level 1 Quick Intelligence</strong> on it. Twenty minutes. See what you find.</p>
+    <p><strong>The Commitment:</strong> This isn't "read and nod." This is "do the work and see what happens."</p>
+    <p>If you run the prompt, share what you learned. Comment below. No judgment—just learning.</p>
   </div>
+
+  <!-- CLOSING -->
+  <div class="divider"><div class="line"></div><span>The Takeaway</span><div class="line"></div></div>
+  <div class="pull"><p>Most sellers spend 4 hours researching and walk in knowing surface-level facts. You'll spend 20 minutes and walk in understanding their board-level priorities.</p></div>
+
+  <p>The unfair advantage isn't that you're "better at AI." It's that you know what to look for—a decade of pattern recognition—and AI helps you find it faster.</p>
+  <p>Master Level 1 this week. You're already ahead of 90% of sellers.</p>
+
 </div>
 
+<!-- ══════ FOOTER ══════ -->
 <div class="footer">
-  <p>Next Week: <strong>The Preparation Multiplier</strong></p>
-  <p>David Matthews · The Unfair Advantage Series · 2026</p>
+  <div class="footer-weeks"><div class="fw on"></div><div class="fw off"></div><div class="fw off"></div><div class="fw off"></div></div>
+  <h3>Next Week</h3>
+  <p class="nw">Week 2: The Preparation Multiplier</p>
+  <p>How to turn RFP responses into strategic positioning documents in 20% of the time.</p>
+  <p class="tiny">Part of "The Unfair Advantage"—a 4-week series on AI-augmented enterprise sales<br>David Matthews · Enterprise Sales & Transformation</p>
 </div>
 
+<!-- ══════ JAVASCRIPT (Gemini Enhancements) ══════ -->
 <script>
-  window.onscroll = function() {
-    var nav = document.getElementById("stickyNav");
-    if (window.pageYOffset > 400) { nav.classList.add("visible"); }
-    else { nav.classList.remove("visible"); }
-  };
-
-  function copyCode(btn) {
-    const pre = btn.parentElement.nextElementSibling;
-    const text = pre.innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      const original = btn.innerText;
-      btn.innerText = "Copied!";
-      setTimeout(() => { btn.innerText = original; }, 2000);
-    });
+// Sticky header on scroll
+window.addEventListener('scroll', function() {
+  const header = document.getElementById('stickyHeader');
+  if (window.scrollY > 400) {
+    header.classList.add('visible');
+  } else {
+    header.classList.remove('visible');
   }
+});
+
+// Copy to clipboard function
+function copyCode(button) {
+  const codeBlock = button.closest('.code').querySelector('pre');
+  const text = codeBlock.innerText;
+  
+  navigator.clipboard.writeText(text).then(function() {
+    button.textContent = 'Copied!';
+    button.classList.add('copied');
+    
+    setTimeout(function() {
+      button.textContent = 'Copy';
+      button.classList.remove('copied');
+    }, 2000);
+  }).catch(function(err) {
+    console.error('Failed to copy text: ', err);
+    button.textContent = 'Failed';
+    setTimeout(function() {
+      button.textContent = 'Copy';
+    }, 2000);
+  });
+}
+
+// Smooth scroll for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
 </script>
 
 </body>
