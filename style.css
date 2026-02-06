@@ -1,48 +1,59 @@
 /* ============================================================================
-   EXECUTIVE BRIEFING ENGINE - DARK MODE PERSPECTIVE
+   EXECUTIVE BRIEFING ENGINE - DYNAMIC MODE PERSPECTIVE
    Optimised for Eyestrain Reduction & High-Stakes Impact
    ============================================================================ */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --navy: #0f172a;       /* Deep Base */
-    --navy-light: #1e293b; /* Bento/Card Background */
-    --primary: #3b82f6;    /* Action Blue */
-    --slate: #94a3b8;      /* Secondary Text */
-    --text-main: #f1f5f9;  /* Primary Text */
-    --border: #334155;     /* Subtle Contrast */
-    --max-width: 1000px; 
+    color-scheme: light dark; /* Enables browser detection */
+
+    /* Core Brand Colors */
+    --navy: #0f172a;       
+    --navy-light: #1e293b; 
+    --primary: #3b82f6;    
+    --slate: #94a3b8;      
+    --text-main: #f1f5f9;  
+    --border: #334155;     
+    --max-width: 1000px;
+
+    /* Light/Dark Mapping Logic */
+    --bg-body: light-dark(#f8fafc, #020617);
+    --bg-container: light-dark(#ffffff, #0f172a);
+    --bg-card: light-dark(#f1f5f9, #1e293b);
+    --text-heading: light-dark(#0f172a, #ffffff);
+    --text-body: light-dark(#334155, #f1f5f9);
+    --border-dynamic: light-dark(#e2e8f0, #334155);
 }
 
 body {
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
     line-height: 1.6;
-    color: var(--text-main);
-    background: #020617; /* The 'Desk' background - True Dark */
+    color: var(--text-body);
+    background: var(--bg-body); /* Uses the dynamic variable */
 }
 
-/* THE MASTER CONTAINER - Centered & Professional */
+/* THE MASTER CONTAINER */
 .page-container {
     max-width: var(--max-width);
     margin: 0 auto; 
-    background: var(--navy);
-    box-shadow: 0 0 100px rgba(0,0,0,0.5);
+    background: var(--bg-container);
+    box-shadow: 0 0 100px rgba(0,0,0,0.1);
     min-height: 100vh;
 }
 
-/* NAVIGATION - Overriding White Defaults */
+/* NAVIGATION */
 nav {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-dynamic);
     padding: 1.25rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--navy);
+    background: var(--bg-container);
 }
 
 nav a {
-    color: var(--text-main);
+    color: var(--text-body);
     text-decoration: none;
     transition: 0.3s;
 }
@@ -51,7 +62,7 @@ nav a:hover {
     color: var(--primary);
 }
 
-/* DARK HEADER BLOCK */
+/* DARK HEADER BLOCK - Note: Keeping this dark for impact */
 .dark-header-block {
     background: var(--navy);
     color: white;
@@ -76,128 +87,76 @@ nav a:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.5; /* Increased slightly for darker tones */
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 0 2rem;
+    opacity: 0.5;
 }
 
 .hero-content h1 {
     font-size: clamp(2.2rem, 5vw, 3.8rem);
     font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.05em;
     color: white;
 }
 
-.hero-content p {
-    text-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
-    letter-spacing: 0.1em;
-    font-weight: 800;
-}
-
-/* BENTO GRID - High-Impact stats */
+/* BENTO GRID */
 .bento-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    background: var(--border);
-    gap: 1px; /* Creates thin border lines between items */
+    background: var(--border-dynamic);
+    gap: 1px; 
 }
 
 .bento-item {
-    background: var(--navy);
+    background: var(--bg-container);
     padding: 3.5rem 2.5rem;
     transition: background 0.3s ease;
 }
 
 .bento-item:hover {
-    background: var(--navy-light);
-}
-
-.bento-item h3 {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--primary);
-    margin-bottom: 0.75rem;
+    background: var(--bg-card);
 }
 
 .bento-item .value {
     font-size: clamp(2.5rem, 4vw, 3.5rem);
     font-weight: 900;
-    line-height: 1;
-    margin-bottom: 1rem;
-    letter-spacing: -0.04em;
-    color: white;
+    color: var(--text-heading);
 }
 
-.bento-item .label {
-    color: var(--slate);
-    font-size: 0.95rem;
-}
-
-/* AUTHOR CARD - Dark variant */
+/* AUTHOR CARD */
 .author-card {
     display: flex;
     align-items: center;
     gap: 2.5rem;
-    background: var(--navy-light);
+    background: var(--bg-card);
     padding: 2.5rem;
     border-radius: 12px;
     margin-bottom: 3.5rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-dynamic);
 }
 
-.author-image {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--primary);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-    flex-shrink: 0;
-}
-
-.author-card h2 { color: white; margin-bottom: 0.5rem; }
-.author-card p { color: var(--slate); font-size: 1rem; }
+.author-card h2 { color: var(--text-heading); }
 
 /* CONTENT SECTION */
 main { 
     padding: 5rem 2.5rem; 
     width: 100%;
-    background: var(--navy);
+    background: var(--bg-container);
 }
 
 .intro-text h2 {
-    color: white;
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
-}
-
-.intro-text p {
-    color: var(--slate);
-    font-size: 1.15rem;
-    margin-bottom: 2rem;
+    color: var(--text-heading);
 }
 
 /* FOOTER */
 footer {
     padding: 5rem 2.5rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--border-dynamic);
     text-align: center;
     font-size: 0.85rem;
     color: var(--slate);
-    background: #020617; /* Deepest Navy */
+    background: var(--bg-body);
 }
 
 /* MOBILE OPTIMIZATION */
 @media (max-width: 768px) {
     .bento-row { grid-template-columns: 1fr; }
     .author-card { flex-direction: column; text-align: center; }
-    .hero-impact { height: 350px; }
 }
