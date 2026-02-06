@@ -3,234 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Executive Library | The Unfair Advantage</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Foundations | The Unfair Advantage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --primary: #3b82f6;
-            --navy: #0f172a;
-            --slate: #64748b;
-            --border: #e2e8f0;
+            color-scheme: light dark;
+            --navy: #020617;       
+            --primary: #3b82f6;    
+            --slate: #94a3b8;      
+            --max-width: 1000px;
+            --bg-body: light-dark(#f8fafc, #020617);
+            --bg-container: light-dark(#ffffff, #0f172a);
+            --bg-card: light-dark(#f1f5f9, #1e293b);
+            --text-heading: light-dark(#0f172a, #ffffff);
+            --text-body: light-dark(#334155, #f1f5f9);
+            --border-dynamic: light-dark(#e2e8f0, #334155);
         }
 
-        .library-hero {
-            position: relative;
-            background: #000 url('library-hero.png') no-repeat center top;
-            background-size: cover;
-            color: white;
-            padding: 8rem 2.5rem 10rem 2.5rem;
-            text-align: center;
-            overflow: hidden;
-            border-bottom: 1px solid #1e293b;
-        }
+        :root[data-theme="light"] { color-scheme: light; }
+        :root[data-theme="dark"] { color-scheme: dark; }
 
-        .library-hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.98) 100%);
-            z-index: 1;
-        }
-
-        .hero-inner {
-            position: relative;
-            z-index: 2;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-
-        .library-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .book-card {
-            background: #fff;
-            padding: 2.2rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .book-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px -12px rgba(15, 23, 42, 0.12);
-        }
-
-        .category-tag {
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--primary);
-            margin-bottom: 1.2rem;
-            display: block;
-        }
-
-        .book-title {
-            font-size: 1.3rem;
-            color: var(--navy);
-            margin-bottom: 0.4rem;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .book-author {
-            font-size: 0.9rem;
-            color: var(--slate);
-            margin-bottom: 1.2rem;
-            font-weight: 600;
-            opacity: 0.8;
-        }
-
-        .book-description {
-            font-size: 0.95rem;
-            color: var(--slate);
+        body {
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            color: var(--text-body);
+            background: var(--bg-body);
+            overflow-x: hidden;
         }
 
-        .executive-takeaway {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: var(--navy);
-            border-top: 1px solid #f1f5f9;
-            padding-top: 1.2rem;
-            margin-top: 1.5rem;
-            font-style: italic;
-            font-weight: 500;
+        .page-container {
+            max-width: var(--max-width);
+            margin: 0 auto; 
+            background: var(--bg-container);
+            box-shadow: 0 0 100px rgba(0,0,0,0.1);
+            min-height: 100vh;
         }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; background: white; border-bottom: 1px solid var(--border); }
+        /* --- NAVIGATION --- */
+        nav {
+            border-bottom: 1px solid var(--border-dynamic);
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-container);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+        .mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--text-heading); margin: 5px 0; }
+
+        .theme-toggle {
+            background: var(--bg-card); border: 1px solid var(--border-dynamic);
+            color: var(--text-heading); padding: 0.4rem 0.8rem; border-radius: 20px;
+            cursor: pointer; font-size: 0.7rem; font-weight: 800;
+        }
+
+        /* --- ANIMATED HERO BLOCK --- */
+        .dark-header-block {
+            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white; width: 100%; position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .foundations-hero {
+            position: relative; padding: 7rem 2.5rem; min-height: 500px; 
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+
+        .hero-inner { position: relative; z-index: 2; max-width: 850px; }
+        
+        .inspiration-tag {
+            display: inline-block; text-decoration: none; color: #60a5fa; 
+            font-size: 0.65rem; font-weight: 800; text-transform: uppercase; 
+            letter-spacing: 0.15em; border: 1px solid rgba(96, 165, 250, 0.3); 
+            padding: 0.5rem 1.2rem; border-radius: 30px; background: rgba(0,0,0,0.3);
+            margin-bottom: 2rem; transition: 0.3s;
+        }
+        .inspiration-tag:hover { border-color: #60a5fa; background: rgba(59, 130, 246, 0.1); }
+
+        /* --- HIERARCHY CARDS --- */
+        .hierarchy-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-dynamic); margin-top: 3rem; }
+        .hierarchy-card { 
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
+            padding: 2rem 1.5rem; transition: 0.3s; min-height: 180px;
+        }
+        .hierarchy-card:hover { background: rgba(255, 255, 255, 0.07); }
+        .hierarchy-card span { font-size: 0.7rem; font-weight: 900; color: var(--primary); opacity: 0.8; display: block; margin-bottom: 0.5rem; }
+        .hierarchy-card h4 { font-size: 1rem; font-weight: 800; margin-bottom: 0.5rem; color: white; }
+        .hierarchy-card p { font-size: 0.8rem; color: #94a3b8; line-height: 1.4; }
+
+        /* --- MAIN CONTENT --- */
+        main { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
+
+        .briefing-box { 
+            background: var(--bg-card); padding: 2.5rem; border-radius: 12px; 
+            border-left: 6px solid var(--primary); margin: 2rem 0; border-top: 1px solid var(--border-dynamic);
+            border-right: 1px solid var(--border-dynamic); border-bottom: 1px solid var(--border-dynamic);
+        }
+
+        .management-gap { 
+            background: #fff7ed; padding: 2.5rem; border-radius: 12px; 
+            border: 1px solid #ffedd5; margin-top: 3rem;
+        }
+        [data-theme="dark"] .management-gap { background: rgba(251, 146, 60, 0.05); border-color: rgba(251, 146, 60, 0.2); }
+
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
+                background: var(--bg-container); flex-direction: column; justify-content: center;
+                transition: 0.4s; z-index: 1001;
+            }
+            .nav-links.active { right: 0; }
+            .hierarchy-container { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <nav>
-            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--navy); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
-            <div style="display:flex; gap:2rem; font-size:0.8rem; font-weight:700; text-transform:uppercase;">
-                <a href="foundations.html" style="color:var(--slate); text-decoration:none;">Foundations</a>
-                <a href="week1.html" style="color:var(--slate); text-decoration:none;">Intelligence Layer</a>
-                <a href="library.html" style="color:var(--primary); text-decoration:none;">Library</a>
-                <a href="contact.html" style="color:var(--slate); text-decoration:none;">Contact</a>
-            </div>
-        </nav>
 
-        <header class="library-hero">
-            <div class="hero-inner">
-                <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">
-                    The Practitioner's Archive
+<div class="page-container">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button class="mobile-toggle" id="mobile-toggle"><span></span><span></span><span></span></button>
+        <div class="nav-links" id="nav-links">
+            <a href="foundations.html" style="color: var(--primary);">Foundations</a>
+            <a href="week1.html">Intelligence Layer</a>
+            <a href="library.html">Library</a>
+            <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
+
+    <div class="dark-header-block">
+        <header class="foundations-hero">
+            <div class="hero-inner reveal">
+                <a href="https://natesnewsletter.substack.com/" target="_blank" class="inspiration-tag">
+                    Inspiration: Nate's Newsletter
+                </a>
+                
+                <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 1rem;">
+                    The 2026 Reality Check
                 </span>
-                <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 1.1;">
-                    The Executive Library. <br>
-                    <span style="color: #60a5fa;">Shared Meaning in 2026.</span>
+                
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 2rem;">
+                    Lean in, or start a garden. <br>
+                    <span style="color: #94a3b8;">The middle ground is gone.</span>
                 </h1>
-                <p style="font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #cbd5e1;">
-                    The market is noisy. These frameworks are the filter. Use them to decode complexity, align stakeholders, and lead high-stakes commercial mandates.
+
+                <p style="font-size: 1.2rem; color: #cbd5e1; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+                    AI isn't a management decision or a company pilot—it is the environment. Your curiosity will take you further than your resistance ever could.
                 </p>
             </div>
         </header>
 
-        <main style="padding: 5rem 2.5rem; background: #fbfcfd;">
-            <div style="max-width: 1200px; margin: 0 auto;">
-                
-                <div class="library-grid">
-                    
-                    <div class="book-card" style="border-top: 5px solid var(--navy);">
-                        <div>
-                            <span class="category-tag">Strategic Alignment / Visual Meaning</span>
-                            <div class="book-title">Visualising Business Transformation</div>
-                            <div class="book-author">Steve Whitla & Jonathan Whelan</div>
-                            <p class="book-description">A masterclass in using diagrams to achieve 'Shared Meaning'. It moves beyond simple drawing to visual modelling for complex enterprise-wide change.</p>
-                        </div>
-                        <p class="executive-takeaway">"The diagram is not the goal; shared understanding is." Use this to align the CEO, CFO, and CTO on one transformation map.</p>
-                    </div>
-
-                    <div class="book-card" style="border-top: 5px solid #facc15;">
-                        <div>
-                            <span class="category-tag">Visual Sales / Workshop</span>
-                            <div class="book-title">Draw to Win</div>
-                            <div class="book-author">Dan Roam</div>
-                            <p class="book-description">The 'Yellow Book'. A crash course in leading, selling, and innovating through visual thinking. Designed for leaders who need to win at the whiteboard.</p>
-                        </div>
-                        <p class="executive-takeaway">Visuals bypass boardroom skepticism. Whoever owns the whiteboard owns the consensus.</p>
-                    </div>
-
-                    <div class="book-card">
-                        <div>
-                            <span class="category-tag">Visual Strategy</span>
-                            <div class="book-title">The Back of the Napkin</div>
-                            <div class="book-author">Dan Roam</div>
-                            <p class="book-description">Solving complex business problems with simple pictures. If you cannot draw your value proposition on a napkin, the client won't buy it.</p>
-                        </div>
-                        <p class="executive-takeaway">The SQVID framework allows you to find the one picture that makes a deal 'click' for a CFO.</p>
-                    </div>
-
-                    <div class="book-card">
-                        <div>
-                            <span class="category-tag">Negotiation / EQ</span>
-                            <div class="book-title">Never Split the Difference</div>
-                            <div class="book-author">Chris Voss</div>
-                            <p class="book-description">High-stakes negotiation tactics for the commercial environment. Essential for surfacing 'Unspoken Needs' and navigating procurement stalemates.</p>
-                        </div>
-                        <p class="executive-takeaway">The 'Accusation Audit' surfaces the internal friction that kills £10M+ mandates.</p>
-                    </div>
-
-                    <div class="book-card">
-                        <div>
-                            <span class="category-tag">Performance Psychology</span>
-                            <div class="book-title">How to be a Complete and Utter Failure in Life</div>
-                            <div class="book-author">Steve McDermott</div>
-                            <p class="book-description">A masterclass in reverse psychology. By identifying and naming the habits of failure, you can ruthlessly eliminate them from your sales process.</p>
-                        </div>
-                        <p class="executive-takeaway">Perform a commercial autopsy on your habits to ensure success is repeatable, not accidental.</p>
-                    </div>
-
-                    <div class="book-card">
-                        <div>
-                            <span class="category-tag">Leadership / Strategy</span>
-                            <div class="book-title">Discover Your True North</div>
-                            <div class="book-author">Bill George</div>
-                            <p class="book-description">Authentic leadership is the foundation of trust. Define your 'True North' to lead complex stakeholder groups through AI-driven transformation.</p>
-                        </div>
-                        <p class="executive-takeaway">Trust is the only currency AI cannot devalue. Authenticity is your ultimate commercial hedge.</p>
-                    </div>
-
-                    <div class="book-card" style="border-left: 5px solid #ef4444;">
-    <div>
-        <span class="category-tag">Consultative Discipline</span>
-        <div class="book-title">The Advice Trap / Let's Get Real</div>
-        <div class="book-author">Khalsa Mahan</div>
-        <p style="font-size: 0.85rem; color: var(--slate);">The antidote to 'vendor-think'. Mahan teaches the discipline of asking the questions that actually matter, even when they are uncomfortable.</p>
+        <div class="hierarchy-container">
+            <div class="hierarchy-card" style="border-bottom: 4px solid #3b82f6;">
+                <span>STEP 01</span>
+                <h4>GOALS</h4>
+                <p>Vision, Financial Targets, & Board-level Imperatives.</p>
+            </div>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #60a5fa;">
+                <span>STEP 02</span>
+                <h4>STRATEGIES</h4>
+                <p>Strategic Pillars & Competitive Positioning.</p>
+            </div>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #93c5fd;">
+                <span>STEP 03</span>
+                <h4>INITIATIVES</h4>
+                <p>Funded Transformation Programmes & Specific Projects.</p>
+            </div>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #cbd5e1;">
+                <span>STEP 04</span>
+                <h4>DEPARTMENTS</h4>
+                <p>Operational Activities & Daily Execution.</p>
+            </div>
+        </div>
     </div>
-    <p class="executive-takeaway">"The most expensive thing you can do is solve the wrong problem." Stop jumping to solutions; start qualifying the truth.</p>
+
+    <main>
+        <section class="reveal">
+            <h2 style="font-size: 1.8rem; color: var(--text-heading); margin-bottom: 1.5rem;">01. The 2026 Market Pattern</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8;">
+                Marc Sumner (Robertson Sumner) identified that the rarest and most in-demand roles are those blending <strong>technical literacy with commercial acumen</strong>. In 2026, AI fluency is the baseline; human judgement is the differentiator.
+            </p>
+            
+            <div class="briefing-box">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem; color: var(--text-heading);">The McKinsey Ownership Rule</h3>
+                <p style="font-size: 1rem; line-height: 1.6; color: var(--text-body);">
+                    Elite firms now screen for individuals who <strong>"maintain ownership of decisions when AI outputs are imperfect."</strong> Success is orchestration, not just execution.
+                </p>
+            </div>
+        </section>
+
+        <section class="reveal" style="margin-top: 5rem;">
+            <h2 style="font-size: 1.8rem; color: var(--text-heading); margin-bottom: 1.5rem;">02. The Strategic Hierarchy</h2>
+            <p>Companies do not buy products; they buy to implement initiatives that support their strategies and goals. Most sales teams stop at the departmental level. We start at the Board level.</p>
+            
+            <div class="management-gap">
+                <h4 style="color: #9a3412; margin-bottom: 0.5rem; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">The Management Gap</h4>
+                <p style="font-size: 1.1rem; color: #7c2d12; line-height: 1.5; font-weight: 500;">
+                    High-value deals exist in the distance between what the CEO promises the market and the internal friction hindering that promise.
+                </p>
+            </div>
+        </section>
+
+        <div class="reveal" style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
+            <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-heading);">The foundations are set. Now, deploy the tools.</p>
+            <a href="week1.html" style="background: var(--primary); color: white; padding: 1.2rem 3rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1rem; letter-spacing: 0.05em; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);">
+                PROCEED TO WEEK 1
+            </a>
+        </div>
+    </main>
+
+    <div style="background: var(--navy); padding: 5rem 2.5rem; color: white;">
+        <div style="max-width: 800px; margin: 0 auto; display: flex; gap: 2.5rem; align-items: center; opacity: 0.9;">
+            <div style="flex-shrink: 0;">
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(45deg, #ff6719, #ffaf19); display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.4rem;">N</div>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 0.5rem 0; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.75rem;">Inspiration</h4>
+                <p style="margin: 0; color: #cbd5e1; font-size: 1rem; line-height: 1.6;">
+                    <strong>Nate (Nate's Newsletter)</strong> — A leading voice in navigating the 2026 AI environment. Curiosity is the only hedge against total displacement.
+                </p>
+                <a href="https://natesnewsletter.substack.com/" target="_blank" style="display: inline-block; margin-top: 1rem; color: #3b82f6; text-decoration: none; font-size: 0.85rem; font-weight: 700;">Subscribe to Nate's Newsletter →</a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="padding: 4rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
+        <p style="font-weight: 900; color: var(--text-heading); margin-bottom: 1rem;">DAVID MATTHEWS</p>
+        <div style="display: flex; justify-content: center; gap: 2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+            <a href="index.html" style="color: var(--slate); text-decoration: none;">Home</a>
+            <a href="contact.html" style="color: var(--slate); text-decoration: none;">Contact</a>
+            <a href="https://linkedin.com" style="color: var(--primary); text-decoration: none;">LinkedIn</a>
+        </div>
+    </footer>
 </div>
 
-                </div>
+<script>
+    const root = document.documentElement;
 
-                <div style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
-                    <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 2rem; color: var(--navy); opacity: 0.7;">Books read. Frameworks understood. Now, take the room.</p>
-                    <a href="contact.html" style="background: var(--primary); color: white; padding: 1.3rem 3.5rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1rem; letter-spacing: 0.05em; transition: 0.3s; box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);">
-                        CONNECT FOR COLLABORATION
-                    </a>
-                </div>
+    // Theme logic
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
 
-            </div>
-        </main>
+    // Mobile logic
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+        document.getElementById('nav-links').classList.toggle('active');
+    });
 
-        <footer style="padding: 5rem 2.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--slate); background: #f8fafc;">
-            <p style="font-weight: 900; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem;">DAVID MATTHEWS</p>
-            <div style="display: flex; justify-content: center; gap: 2.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
-                <a href="index.html" style="color: var(--navy); text-decoration: none;">Home</a>
-                <a href="foundations.html" style="color: var(--navy); text-decoration: none;">Foundations</a>
-                <a href="week1.html" style="color: var(--navy); text-decoration: none;">Intelligence Layer</a>
-            </div>
-        </footer>
-    </div>
+    // Intersection Observer
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

@@ -3,70 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | David Matthews</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Contact | The Unfair Advantage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #3b82f6;    
+            --slate: #94a3b8;      
+            --max-width: 1000px;
+            --bg-body: light-dark(#f8fafc, #020617);
+            --bg-container: light-dark(#ffffff, #0f172a);
+            --bg-card: light-dark(#f1f5f9, #1e293b);
+            --text-heading: light-dark(#0f172a, #ffffff);
+            --text-body: light-dark(#334155, #f1f5f9);
+            --border-dynamic: light-dark(#e2e8f0, #334155);
+        }
+
+        :root[data-theme="light"] { color-scheme: light; }
+        :root[data-theme="dark"] { color-scheme: dark; }
+
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; }
+
+        .page-container { max-width: var(--max-width); margin: 0 auto; background: var(--bg-container); box-shadow: 0 0 100px rgba(0,0,0,0.1); min-height: 100vh; }
+
+        nav { border-bottom: 1px solid var(--border-dynamic); padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-container); position: sticky; top: 0; z-index: 1000; }
+        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+        .nav-links .contact-link { color: var(--primary); }
+
+        .theme-toggle { background: var(--bg-card); border: 1px solid var(--border-dynamic); color: var(--text-heading); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; font-size: 0.7rem; font-weight: 800; }
+
+        /* --- CONTACT HERO --- */
+        .contact-header { 
+            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); 
+            background-size: 400% 400%; 
+            animation: gradientBG 15s ease infinite; 
+            padding: 5rem 2.5rem; 
+            color: white; 
+            text-align: center;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        main { padding: 4rem 2.5rem; max-width: 800px; margin: 0 auto; }
+
+        /* --- FORM STYLING --- */
+        .contact-card { background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 16px; padding: 3rem; }
+        
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--slate); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+        
+        .input-field { 
+            width: 100%; 
+            padding: 1rem; 
+            background: var(--bg-body); 
+            border: 1px solid var(--border-dynamic); 
+            border-radius: 8px; 
+            color: var(--text-heading); 
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .input-field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+
+        .submit-btn { 
+            width: 100%; 
+            padding: 1.2rem; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: 900; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.1em; 
+            cursor: pointer; 
+            transition: 0.3s;
+            margin-top: 1rem;
+        }
+        .submit-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+        .contact-info { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; text-align: center; }
+        .info-item h4 { font-size: 0.75rem; color: var(--slate); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 800; }
+        .info-item p { color: var(--text-heading); font-weight: 700; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
 <body>
-    <div class="page-container">
-        <nav>
-            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--navy); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
-            <div style="display:flex; gap:2rem; font-size:0.8rem; font-weight:700; text-transform:uppercase;">
-                <a href="foundations.html" style="color:var(--slate); text-decoration:none;">Foundations</a>
-                <a href="week1.html" style="color:var(--slate); text-decoration:none;">Intelligence Layer (Week 1)</a>
-                <a href="contact.html" style="color:var(--primary); text-decoration:none;">Contact</a>
-            </div>
-        </nav>
 
-        <header style="background: var(--navy); color: white; padding: 4rem 2.5rem; text-align: center;">
-            <h1 style="font-size: 3rem; font-weight: 900; letter-spacing: -0.04em;">Connect for Collaboration</h1>
-            <p style="font-size: 1.2rem; opacity: 0.8; max-width: 700px; margin: 1rem auto;">Currently exploring Commercial Leadership roles and strategic growth mandates.</p>
-        </header>
+<div class="page-container">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="week1.html">Intelligence Layer</a>
+            <a href="library.html">Library</a>
+            <a href="contact.html" class="contact-link">Contact</a>
+            <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
 
-        <main style="padding: 4rem 2.5rem;">
-            <div class="intro-text" style="max-width: 800px; margin: 0 auto;">
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
-                    
-                    <div>
-                        <h2 style="margin-bottom: 1.5rem;">Let's Talk Performance.</h2>
-                        <p style="margin-bottom: 1.5rem;">Whether you are looking to scale an enterprise services arm, implement <strong>EQ + IQ + AI</strong> frameworks in your sales team, or discuss a specific mandate, I’m open to conversation.</p>
-                        
-                        <div style="margin-top: 2.5rem;">
-                            <h4 style="text-transform: uppercase; font-size: 0.75rem; color: var(--slate); letter-spacing: 0.1em; margin-bottom: 1rem;">Primary Channel</h4>
-                            <a href="https://www.linkedin.com/in/david-a-matthews/" target="_blank" style="display: inline-block; background: #0a66c2; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700;">Message via LinkedIn</a>
-                        </div>
-
-                        <div style="margin-top: 2.5rem;">
-                            <h4 style="text-transform: uppercase; font-size: 0.75rem; color: var(--slate); letter-spacing: 0.1em; margin-bottom: 0.5rem;">Direct Email</h4>
-                            <p style="font-size: 1.1rem; font-weight: 600;">[Insert Your Email Address]</p>
-                        </div>
-                    </div>
-
-                    <div style="background: #f8fafc; padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border);">
-                        <h3 style="margin-bottom: 1rem;">Mandate Profile</h3>
-                        <p style="font-size: 0.95rem; color: var(--slate); margin-bottom: 1.5rem;">
-                            Specialising in complex transformations within Tier-1 Banking, Telco, and SaaS sectors.
-                        </p>
-                        <ul style="font-size: 0.9rem; list-style: none; display: grid; gap: 1rem;">
-                            <li style="display: flex; gap: 0.5rem;">✅ <strong>Revenue:</strong> £5M–£50M+ targets</li>
-                            <li style="display: flex; gap: 0.5rem;">✅ <strong>Focus:</strong> Services Growth & Profitability</li>
-                            <li style="display: flex; gap: 0.5rem;">✅ <strong>Approach:</strong> Outcome-based mandates</li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div style="margin-top: 6rem; text-align: center; border-top: 1px solid var(--border); padding-top: 4rem;">
-                    <p style="font-style: italic; color: var(--slate);">"Commercial judgement + Strategic positioning + AI fluency."</p>
-                </div>
-
-            </div>
-        </main>
-
-        <footer style="padding: 4rem 2.5rem; text-align: center; color: var(--slate); border-top: 1px solid var(--border);">
-            <p><strong>DAVID MATTHEWS</strong></p>
-            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Harvard Business School Exec Ed | EQ + IQ + AI = Sales Performance</p>
-        </footer>
+    <div class="contact-header">
+        <h1 style="font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 1rem;">SECURE A STRATEGIC BRIEFING</h1>
+        <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto; font-weight: 500;">Open for discussions on Commercial Strategy, AI Practitioner workshops, and Enterprise Growth collaboration.</p>
     </div>
+
+    <main>
+        <div class="contact-card reveal">
+            <form action="#">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" class="input-field" placeholder="David Matthews" required>
+                </div>
+                <div class="input-group">
+                    <label>Corporate Email</label>
+                    <input type="email" class="input-field" placeholder="name@company.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Inquiry Type</label>
+                    <select class="input-field">
+                        <option>Executive Strategy & Advisory</option>
+                        <option>AI Practitioner Training</option>
+                        <option>Commercial Services Growth</option>
+                        <option>General Collaboration</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Brief Context</label>
+                    <textarea class="input-field" rows="5" placeholder="Outline your current challenge or mandate..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Transmit Inquiry</button>
+            </form>
+        </div>
+
+        <div class="contact-info reveal">
+            <div class="info-item">
+                <h4>Network</h4>
+                <p><a href="https://www.linkedin.com/in/david-matthews-6484722/" style="color: var(--primary); text-decoration: none;">LinkedIn Profile</a></p>
+            </div>
+            <div class="info-item">
+                <h4>Location</h4>
+                <p>Coventry / London, UK</p>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 4rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
+        <p style="color: var(--text-heading); font-weight: 900; letter-spacing: 0.2em;">DAVID MATTHEWS</p>
+    </footer>
+</div>
+
+<script>
+    const root = document.documentElement;
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>

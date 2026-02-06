@@ -4,149 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intelligence Layer (Week 1) | The Unfair Advantage</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
-            --primary: #3b82f6;
-            --navy: #0f172a;
-            --slate: #64748b;
-            --border: #e2e8f0;
+            --primary: #3b82f6;    
+            --slate: #94a3b8;      
+            --max-width: 1000px;
+            --bg-body: light-dark(#f8fafc, #020617);
+            --bg-container: light-dark(#ffffff, #0f172a);
+            --bg-card: light-dark(#f1f5f9, #1e293b);
+            --text-heading: light-dark(#0f172a, #ffffff);
+            --text-body: light-dark(#334155, #f1f5f9);
+            --border-dynamic: light-dark(#e2e8f0, #334155);
         }
 
-        /* Hero Section - Synchronized with Foundations style */
-        .week1-hero {
-            position: relative;
-            background: #000 url('intelligence-layer-hero.png') no-repeat center top;
-            background-size: cover;
-            color: white;
-            padding: 7rem 2.5rem 8rem 2.5rem;
+        :root[data-theme="light"] { color-scheme: light; }
+        :root[data-theme="dark"] { color-scheme: dark; }
+
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; }
+
+        .page-container { max-width: var(--max-width); margin: 0 auto; background: var(--bg-container); box-shadow: 0 0 100px rgba(0,0,0,0.1); min-height: 100vh; }
+
+        /* --- NAVIGATION --- */
+        nav { border-bottom: 1px solid var(--border-dynamic); padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-container); position: sticky; top: 0; z-index: 1000; }
+        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+        .nav-links .active-link { color: var(--primary); }
+
+        .theme-toggle { background: var(--bg-card); border: 1px solid var(--border-dynamic); color: var(--text-heading); padding: 0.4rem 0.8rem; border-radius: 20px; cursor: pointer; font-size: 0.7rem; font-weight: 800; }
+
+        /* --- MODULE HERO --- */
+        .module-header { 
+            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); 
+            background-size: 400% 400%; 
+            animation: gradientBG 15s ease infinite; 
+            padding: 7rem 2.5rem; 
+            color: white; 
             text-align: center;
-            overflow: hidden;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .week1-hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.95) 100%);
-            z-index: 1;
-        }
-
-        .hero-inner {
             position: relative;
-            z-index: 2;
-            max-width: 950px;
-            margin: 0 auto;
         }
+        .hero-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2; mix-blend-mode: overlay; z-index: 0; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Module Specific Styling */
-        .prompt-block {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 2rem;
-            border-radius: 8px;
-            font-family: 'Courier New', Courier, monospace;
-            border: 1px solid #1e293b;
-            margin: 2.5rem 0;
+        main { padding: 5rem 2.5rem; max-width: 850px; margin: 0 auto; }
+
+        /* --- PROMPT BLOCK STYLING --- */
+        .prompt-container { margin: 3rem 0; }
+        .prompt-label { font-size: 0.7rem; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 0.75rem; display: block; }
+        
+        .prompt-block { 
+            background: #0f172a; 
+            color: #94a3b8; 
+            padding: 2.5rem; 
+            border-radius: 12px; 
+            font-family: 'Courier New', Courier, monospace; 
+            border: 1px solid #1e293b; 
+            line-height: 1.7; 
+            font-size: 1rem;
             position: relative;
-            line-height: 1.6;
-            font-size: 0.95rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
+        .prompt-block::before { content: "MASTER PROMPT"; position: absolute; top: -10px; right: 20px; background: var(--primary); color: white; padding: 4px 12px; font-size: 0.6rem; font-weight: 900; font-family: 'Inter', sans-serif; border-radius: 4px; }
 
-        .prompt-block::after {
-            content: "MASTER PROMPT";
-            position: absolute;
-            top: 0; right: 0;
-            background: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            font-family: sans-serif;
-            letter-spacing: 0.1em;
-        }
+        .lesson-card { background: var(--bg-card); border-left: 4px solid var(--primary); padding: 2.5rem; border-radius: 0 12px 12px 0; margin-bottom: 4rem; }
+        
+        .outcome-box { background: rgba(59, 130, 246, 0.05); border: 1px solid var(--border-dynamic); padding: 2rem; border-radius: 12px; margin: 4rem 0; }
 
-        .step-card {
-            border-left: 4px solid var(--primary);
-            padding-left: 1.5rem;
-            margin-bottom: 3.5rem;
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; background: white; border-bottom: 1px solid var(--border); }
+        footer { padding: 4rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic); margin-top: 4rem; }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <nav>
-            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--navy); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
-            <div style="display:flex; gap:2rem; font-size:0.8rem; font-weight:700; text-transform:uppercase;">
-                <a href="foundations.html" style="color:var(--slate); text-decoration:none;">Foundations</a>
-                <a href="week1.html" style="color:var(--primary); text-decoration:none;">Intelligence Layer (Week 1)</a>
-                <a href="contact.html" style="color:var(--slate); text-decoration:none;">Contact</a>
-            </div>
-        </nav>
 
-        <header class="week1-hero">
-            <div class="hero-inner">
-                <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">
-                    Intelligence Layer (Module 01)
-                </span>
-                
-                <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 1.1;">
-                    Seeing the Unspoken. <br>
-                    <span style="color: #60a5fa;">The Executive Deep Scan.</span>
-                </h1>
+<div class="page-container">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="week1.html" class="active-link">Intelligence Layer</a>
+            <a href="library.html">Library</a>
+            <a href="contact.html" style="color: var(--primary); text-decoration: none;">Contact</a>
+            <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
 
-                <p style="font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 2.5rem auto; line-height: 1.6; color: #cbd5e1;">
-                    Moving from manual research loops to high-velocity synthesis. Use AI to decode the Boardroom's actual anxieties in minutes.
-                </p>
-            </div>
-        </header>
-
-        <main style="padding: 4rem 2.5rem;">
-            <div style="max-width: 850px; margin: 0 auto;">
-                
-                <section class="step-card">
-                    <h2 style="color: var(--navy); font-size: 1.8rem; margin-bottom: 1rem;">The 20-Minute Deep Scan</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--slate);">
-                        The Intelligence Layer is not about gathering data; it is about surfacing the <strong>Management Gap</strong>—the distance between what the CEO promises and the internal friction preventing it.
-                    </p>
-                </section>
-
-                <h3 style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--primary); margin-bottom: 1rem;">The Practitioner's Workflow</h3>
-                
-                <p style="color: var(--navy); font-weight: 700;">Phase 1: The Executive Extraction</p>
-                
-                <div class="prompt-block">
-                    "Act as a Tier-1 Management Consultant. Analyze the following 10-K Risk Factors and the latest Earnings Call transcript for [Company Name]. Identify the top 3 'Board-Level Imperatives' for the next 18 months. Specifically, find where internal operational friction (Technical Debt, Legacy Infrastructure, or Personnel Gaps) is listed as a threat to their 'North Star' goal. Format as a synthesis for a Commercial Director."
-                </div>
-
-                <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; margin: 4rem 0;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem; font-size: 1.3rem;">The Outcome</h3>
-                    <p style="font-size: 1rem; line-height: 1.6; color: var(--slate);">
-                        This scan allows you to walk into a room and mention a specific risk from their 10-K that aligns with your solution. You are no longer selling a product; you are mitigating a publicly disclosed board-level threat.
-                    </p>
-                </div>
-
-                <div style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
-                    <p style="font-weight: 700; font-size: 1.2rem; margin-bottom: 2rem; color: var(--navy);">Mastered the scan? The engine awaits.</p>
-                    <div style="display: inline-block; padding: 1.2rem 3rem; border: 2px solid var(--border); border-radius: 8px; font-weight: 900; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">
-                        Week 2: The Omniscience Engine (Locked)
-                    </div>
-                </div>
-
-            </div>
-        </main>
-
-        <footer style="padding: 5rem 2.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--slate); background: #f8fafc;">
-            <p style="font-weight: 900; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem;">DAVID MATTHEWS</p>
-            <div style="display: flex; justify-content: center; gap: 2.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
-                <a href="index.html" style="color: var(--navy); text-decoration: none;">Home</a>
-                <a href="foundations.html" style="color: var(--navy); text-decoration: none;">Foundations</a>
-                <a href="contact.html" style="color: var(--navy); text-decoration: none;">Contact</a>
-            </div>
-        </footer>
+    <div class="module-header">
+        <img src="intelligence-layer-hero.png" class="hero-bg-img" alt="">
+        <div style="position: relative; z-index: 1;">
+            <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">Module 01</span>
+            <h1 style="font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem;">SEEING THE UNSPOKEN.</h1>
+            <p style="color: #cbd5e1; font-weight: 500; font-size: 1.2rem; max-width: 700px; margin: 0 auto;">Use AI to decode boardroom anxieties and Management Gaps in under 20 minutes.</p>
+        </div>
     </div>
+
+    <main>
+        <div class="lesson-card reveal">
+            <h2 style="color: var(--text-heading); font-size: 1.8rem; margin-bottom: 1rem; font-weight: 800;">The 20-Minute Deep Scan</h2>
+            <p style="font-size: 1.15rem; color: var(--text-body); line-height: 1.8;">
+                The Intelligence Layer is not about gathering data; it is about surfacing the <strong>Management Gap</strong>—the distance between what the CEO promises and the internal friction preventing it.
+            </p>
+        </div>
+
+        <div class="reveal" style="margin: 4rem 0;">
+            <span class="prompt-label">The Practitioner's Workflow</span>
+            <h3 style="color: var(--text-heading); font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 800;">Phase 1: The Executive Extraction</h3>
+            <p style="margin-bottom: 2rem;">Stop reading 100-page reports. Use this logic to synthesize Board-Level imperatives instantly.</p>
+            
+            <div class="prompt-container">
+                <div class="prompt-block">
+                    "Act as a Tier-1 Management Consultant. Analyze the following 10-K Risk Factors and the latest Earnings Call transcript for [Company Name]. <br><br>
+                    Identify the top 3 'Board-Level Imperatives' for the next 18 months. Specifically, find where internal operational friction (Technical Debt, Legacy Infrastructure, or Personnel Gaps) is listed as a threat to their 'North Star' goal. <br><br>
+                    Format as a synthesis for a Commercial Director."
+                </div>
+            </div>
+        </div>
+
+        <div class="outcome-box reveal">
+            <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em;">The Outcome</h3>
+            <p style="font-size: 1.1rem; color: var(--text-body);">
+                This scan allows you to walk into a room and mention a specific risk from their 10-K that aligns with your solution. You are no longer selling a product; you are <strong>mitigating a publicly disclosed board-level threat.</strong>
+            </p>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-top: 6rem; padding: 4rem; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-dynamic);">
+            <p style="font-weight: 800; font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-heading);">Mastered the scan? The engine awaits.</p>
+            <div style="display: inline-block; padding: 1.2rem 3rem; border: 2px solid var(--border-dynamic); border-radius: 8px; font-weight: 900; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;">
+                Week 2: The Omniscience Engine (Locked)
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p style="color: var(--text-heading); font-weight: 900; letter-spacing: 0.2em;">DAVID MATTHEWS</p>
+    </footer>
+</div>
+
+<script>
+    const root = document.documentElement;
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
