@@ -1,152 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intelligence Layer (Week 1) | The Unfair Advantage</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Foundations | The Unfair Advantage</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+
         :root {
-            --primary: #3b82f6;
-            --navy: #0f172a;
-            --slate: #64748b;
-            --border: #e2e8f0;
+            color-scheme: light dark;
+            --navy: #020617; --primary: #3b82f6; --slate: #94a3b8;
+            --bg-body: light-dark(#f8fafc, #020617);
+            --bg-container: light-dark(#ffffff, #0f172a);
+            --bg-card: light-dark(#f1f5f9, #1e293b);
+            --text-heading: light-dark(#0f172a, #ffffff);
+            --text-body: light-dark(#334155, #f1f5f9);
+            --border-dynamic: light-dark(#e2e8f0, #334155);
         }
 
-        /* Hero Section - Synchronized with Foundations style */
-        .week1-hero {
-            position: relative;
-            background: #000 url('intelligence-layer-hero.png') no-repeat center top;
-            background-size: cover;
-            color: white;
-            padding: 7rem 2.5rem 8rem 2.5rem;
-            text-align: center;
-            overflow: hidden;
-            border-bottom: 1px solid #1e293b;
-        }
+        body { line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .page-container { max-width: 1000px; margin: 0 auto; background: var(--bg-container); min-height: 100vh; box-shadow: 0 0 100px rgba(0,0,0,0.1); }
 
-        .week1-hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5) 0%, rgba(15, 23, 42, 0.95) 100%);
-            z-index: 1;
-        }
+        /* NAV */
+        nav { border-bottom: 1px solid var(--border-dynamic); padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-container); position: sticky; top: 0; z-index: 1000; }
+        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
+        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-left: 2rem; }
 
-        .hero-inner {
-            position: relative;
-            z-index: 2;
-            max-width: 950px;
-            margin: 0 auto;
-        }
+        /* HERO */
+        .dark-header-block { background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: white; padding: 8rem 2.5rem; text-align: center; }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Module Specific Styling */
-        .prompt-block {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 2rem;
-            border-radius: 8px;
-            font-family: 'Courier New', Courier, monospace;
-            border: 1px solid #1e293b;
-            margin: 2.5rem 0;
-            position: relative;
-            line-height: 1.6;
-            font-size: 0.95rem;
+        .inspiration-tag {
+            display: inline-block; text-decoration: none; color: #60a5fa; 
+            font-size: 0.65rem; font-weight: 800; text-transform: uppercase; 
+            letter-spacing: 0.15em; border: 1px solid rgba(96, 165, 250, 0.3); 
+            padding: 0.5rem 1.2rem; border-radius: 30px; background: rgba(0,0,0,0.3);
+            margin-bottom: 2rem; transition: 0.3s;
         }
+        .inspiration-tag:hover { border-color: #60a5fa; background: rgba(59, 130, 246, 0.1); }
 
-        .prompt-block::after {
-            content: "MASTER PROMPT";
-            position: absolute;
-            top: 0; right: 0;
-            background: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            font-size: 0.65rem;
-            font-weight: 900;
-            font-family: sans-serif;
-            letter-spacing: 0.1em;
+        /* CONTENT */
+        main { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
+        h2 { font-size: 2.2rem; font-weight: 900; color: var(--text-heading); margin: 4rem 0 1.5rem 0; letter-spacing: -0.04em; }
+        p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; }
+
+        /* HIERARCHY GRID */
+        .hierarchy-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-dynamic); margin-top: 3rem; }
+        .hierarchy-card { 
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px);
+            padding: 2.5rem 1.5rem; transition: 0.3s; min-height: 200px;
         }
+        .hierarchy-card span { font-size: 0.7rem; font-weight: 900; color: var(--primary); display: block; margin-bottom: 0.75rem; }
+        .hierarchy-card h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.75rem; color: white; }
+        .hierarchy-card p { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
 
-        .step-card {
-            border-left: 4px solid var(--primary);
-            padding-left: 1.5rem;
-            margin-bottom: 3.5rem;
+        /* MANAGEMENT GAP CARD */
+        .management-gap { 
+            background: rgba(251, 146, 60, 0.05); padding: 3rem; border-radius: 12px; 
+            border: 1px solid rgba(251, 146, 60, 0.2); margin-top: 4rem;
         }
+        .gap-label { color: #f97316; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.15em; display: block; margin-bottom: 1rem; }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2.5rem; background: white; border-bottom: 1px solid var(--border); }
+        /* REVEAL */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* FOOTER BRANDING */
+        .nate-tribute { background: var(--navy); padding: 5rem 2.5rem; color: white; border-radius: 16px; margin-top: 5rem; }
+        .nate-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, #ff6719, #ffaf19); display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.2rem; flex-shrink: 0; }
+
+        @media (max-width: 768px) { .hierarchy-container { grid-template-columns: 1fr; } .nate-tribute { text-align: center; flex-direction: column; } }
     </style>
 </head>
 <body>
-    <div class="page-container">
-        <nav>
-            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--navy); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
-            <div style="display:flex; gap:2rem; font-size:0.8rem; font-weight:700; text-transform:uppercase;">
-                <a href="foundations.html" style="color:var(--slate); text-decoration:none;">Foundations</a>
-                <a href="week1.html" style="color:var(--primary); text-decoration:none;">Intelligence Layer (Week 1)</a>
-                <a href="contact.html" style="color:var(--slate); text-decoration:none;">Contact</a>
-            </div>
-        </nav>
 
-        <header class="week1-hero">
-            <div class="hero-inner">
-                <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">
-                    Intelligence Layer (Module 01)
-                </span>
+<div class="page-container">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <div class="nav-links">
+            <a href="foundations.html" style="color:var(--primary)">Foundations</a>
+            <a href="week1.html">Week 1</a>
+        </div>
+    </nav>
+
+    <div class="dark-header-block">
+        <header style="padding: 6rem 2.5rem; text-align: center;">
+            <div class="reveal active">
+                <a href="https://natesnewsletter.substack.com/" target="_blank" class="inspiration-tag">
+                    Inspiration: Nate's Newsletter
+                </a>
                 
-                <h1 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900; letter-spacing: -0.05em; margin-bottom: 1.5rem; line-height: 1.1;">
-                    Seeing the Unspoken. <br>
-                    <span style="color: #60a5fa;">The Executive Deep Scan.</span>
+                <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 2rem;">
+                    Lean in, or start a garden. <br>
+                    <span style="color: #94a3b8;">The middle ground is gone.</span>
                 </h1>
 
-                <p style="font-size: 1.3rem; opacity: 0.9; max-width: 800px; margin: 0 auto 2.5rem auto; line-height: 1.6; color: #cbd5e1;">
-                    Moving from manual research loops to high-velocity synthesis. Use AI to decode the Boardroom's actual anxieties in minutes.
+                <p style="font-size: 1.2rem; color: #cbd5e1; max-width: 750px; margin: 0 auto; line-height: 1.6;">
+                    AI isn't a management decision or a company pilot—it is the environment. Curiosity is the only hedge against total displacement.
                 </p>
             </div>
         </header>
 
-        <main style="padding: 4rem 2.5rem;">
-            <div style="max-width: 850px; margin: 0 auto;">
-                
-                <section class="step-card">
-                    <h2 style="color: var(--navy); font-size: 1.8rem; margin-bottom: 1rem;">The 20-Minute Deep Scan</h2>
-                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--slate);">
-                        The Intelligence Layer is not about gathering data; it is about surfacing the <strong>Management Gap</strong>—the distance between what the CEO promises and the internal friction preventing it.
-                    </p>
-                </section>
-
-                <h3 style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.15em; color: var(--primary); margin-bottom: 1rem;">The Practitioner's Workflow</h3>
-                
-                <p style="color: var(--navy); font-weight: 700;">Phase 1: The Executive Extraction</p>
-                
-                <div class="prompt-block">
-                    "Act as a Tier-1 Management Consultant. Analyze the following 10-K Risk Factors and the latest Earnings Call transcript for [Company Name]. Identify the top 3 'Board-Level Imperatives' for the next 18 months. Specifically, find where internal operational friction (Technical Debt, Legacy Infrastructure, or Personnel Gaps) is listed as a threat to their 'North Star' goal. Format as a synthesis for a Commercial Director."
-                </div>
-
-                <div style="background: #f1f5f9; padding: 2rem; border-radius: 12px; margin: 4rem 0;">
-                    <h3 style="color: var(--navy); margin-bottom: 0.5rem; font-size: 1.3rem;">The Outcome</h3>
-                    <p style="font-size: 1rem; line-height: 1.6; color: var(--slate);">
-                        This scan allows you to walk into a room and mention a specific risk from their 10-K that aligns with your solution. You are no longer selling a product; you are mitigating a publicly disclosed board-level threat.
-                    </p>
-                </div>
-
-                <div style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
-                    <p style="font-weight: 700; font-size: 1.2rem; margin-bottom: 2rem; color: var(--navy);">Mastered the scan? The engine awaits.</p>
-                    <div style="display: inline-block; padding: 1.2rem 3rem; border: 2px solid var(--border); border-radius: 8px; font-weight: 900; color: #cbd5e1; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">
-                        Week 2: The Omniscience Engine (Locked)
-                    </div>
-                </div>
-
+        <div class="hierarchy-container">
+            <div class="hierarchy-card" style="border-bottom: 4px solid #3b82f6;">
+                <span>STAGE 01</span>
+                <h4>GOALS</h4>
+                <p>Board-level imperatives, financial targets, and the CEO's North Star promises.</p>
             </div>
-        </main>
-
-        <footer style="padding: 5rem 2.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--slate); background: #f8fafc;">
-            <p style="font-weight: 900; font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem;">DAVID MATTHEWS</p>
-            <div style="display: flex; justify-content: center; gap: 2.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
-                <a href="index.html" style="color: var(--navy); text-decoration: none;">Home</a>
-                <a href="foundations.html" style="color: var(--navy); text-decoration: none;">Foundations</a>
-                <a href="contact.html" style="color: var(--navy); text-decoration: none;">Contact</a>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #60a5fa;">
+                <span>STAGE 02</span>
+                <h4>STRATEGIES</h4>
+                <p>The strategic pillars and competitive positioning required to reach those goals.</p>
             </div>
-        </footer>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #93c5fd;">
+                <span>STAGE 03</span>
+                <h4>INITIATIVES</h4>
+                <p>Funded transformation programmes and cross-functional projects that execute strategy.</p>
+            </div>
+            <div class="hierarchy-card" style="border-bottom: 4px solid #cbd5e1;">
+                <span>STAGE 04</span>
+                <h4>DEPARTMENTS</h4>
+                <p>Operational activities where day-to-day friction actually lives.</p>
+            </div>
+        </div>
     </div>
+
+    <main>
+        <section class="reveal">
+            <h2>01. The 2026 Market Pattern</h2>
+            <p>Marc Sumner (Robertson Sumner) identified that the rarest and most in-demand roles are those blending <strong>technical literacy with commercial acumen</strong>. In 2026, AI fluency is the baseline; human judgement is the moat.</p>
+            
+            <div style="background: var(--bg-card); padding: 2.5rem; border-radius: 12px; border-left: 6px solid var(--primary); margin: 3rem 0;">
+                <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">The McKinsey Ownership Rule</h3>
+                <p style="font-size: 1rem; color: var(--slate); margin-bottom: 0;">
+                    Elite firms now screen for individuals who <strong>"maintain ownership of decisions when AI outputs are imperfect."</strong> Success is orchestration, not just prompt engineering.
+                </p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h2>02. The Management Gap</h2>
+            <p>High-value Managed Services deals are found in the distance between what the Board promises the market and the internal friction hindering that promise. This is the <strong>Management Gap</strong>.</p>
+            
+            <div class="management-gap">
+                <span class="gap-label">Executive Briefing</span>
+                <p style="font-size: 1.2rem; color: light-dark(#7c2d12, #fdba74); line-height: 1.6; font-weight: 500; margin-bottom: 0;">
+                    Companies don't buy products; they buy to implement initiatives that support their strategies and goals. We use AI to bridge the gap between Boardroom vision and Departmental reality.
+                </p>
+            </div>
+        </section>
+
+        <div class="reveal" style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
+            <p style="font-weight: 800; font-size: 1.1rem; margin-bottom: 2.5rem; color: var(--text-heading);">Foundations set. Proceed to deployment.</p>
+            <a href="week1.html" style="background: var(--primary); color: white; padding: 1.2rem 3rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.1em; transition: 0.3s; box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);">
+                ACCESS INTELLIGENCE LAYER
+            </a>
+        </div>
+
+        <div class="nate-tribute reveal" style="display: flex; gap: 2.5rem; align-items: center;">
+            <div class="nate-avatar">N</div>
+            <div>
+                <h4 style="color: #3b82f6; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem; margin-bottom: 0.5rem;">Strategic Inspiration</h4>
+                <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">
+                    <strong>Nate (Nate's Newsletter)</strong> — A leading voice on why curiosity is the only hedge against displacement. This methodology is built on Nate’s principle of leaning into the technical environment.
+                </p>
+                <a href="https://natesnewsletter.substack.com/" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Subscribe to Nate's Newsletter →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 5rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
+        <p style="font-weight: 900; color: var(--text-heading); margin-bottom: 1rem; letter-spacing: 0.1em;">DAVID MATTHEWS</p>
+        <div style="display: flex; justify-content: center; gap: 2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">
+            <a href="index.html" style="color: var(--slate); text-decoration: none;">Home</a>
+            <a href="contact.html" style="color: var(--slate); text-decoration: none;">Contact</a>
+            <a href="https://linkedin.com" target="_blank" style="color: var(--primary); text-decoration: none;">LinkedIn</a>
+        </div>
+    </footer>
+</div>
+
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
