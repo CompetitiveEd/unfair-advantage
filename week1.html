@@ -3,15 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 1: Intelligence Layer | The Unfair Advantage</title>
+    <title>Week 1: The Intelligence Layer | The Unfair Advantage</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
+        // --- THEME PERSISTENCE ---
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // --- CLIPBOARD LOGIC WITH FEEDBACK ---
+        function copyPrompt(btn) {
+            const container = btn.parentElement;
+            const codeBlock = container.querySelector('code');
+            const text = codeBlock.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = "COPIED TO CLIPBOARD";
+                const originalBg = btn.style.background;
+                btn.style.background = "#10b981"; 
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = originalBg || "var(--primary)";
+                }, 2000);
+            });
         }
     </script>
 
@@ -29,37 +50,55 @@
             --border-dynamic: light-dark(#e2e8f0, #334155);
         }
 
-        body { line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; }
+        body { line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         .page-container { max-width: 1000px; margin: 0 auto; background: var(--bg-container); min-height: 100vh; box-shadow: 0 0 100px rgba(0,0,0,0.1); }
 
-        /* NAV */
         nav { border-bottom: 1px solid var(--border-dynamic); padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-container); position: sticky; top: 0; z-index: 1000; }
-        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
-        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-left: 2rem; }
+        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; letter-spacing: -0.02em; }
+        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-left: 2rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
 
-        /* HERO */
-        .dark-header-block { background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: white; padding: 8rem 2.5rem; text-align: center; }
+        .dark-header-block { background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: white; padding: 9rem 2.5rem; text-align: center; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* CONTENT */
         main { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
-        h2 { font-size: 2rem; font-weight: 900; color: var(--text-heading); margin: 3.5rem 0 1.5rem 0; letter-spacing: -0.02em; }
-        h3 { font-size: 1.4rem; font-weight: 800; color: var(--text-heading); margin: 2rem 0 1rem 0; }
-        p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; }
+        h2 { font-size: 2.6rem; font-weight: 900; color: var(--text-heading); margin: 4.5rem 0 1.5rem 0; letter-spacing: -0.05em; }
+        h3 { font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin: 3rem 0 1.2rem 0; letter-spacing: -0.02em; }
+        p { margin-bottom: 2rem; font-size: 1.15rem; line-height: 1.8; }
 
-        /* BENTO PROMPT BOXES */
-        .prompt-container { background: #0f172a; border: 1px solid #1e293b; padding: 2.5rem; border-radius: 12px; margin: 2.5rem 0; position: relative; }
-        .prompt-container::before { content: "MASTER PROMPT"; position: absolute; top: 0; right: 0; background: var(--primary); color: white; padding: 6px 15px; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.1em; border-radius: 0 0 0 12px; }
-        code { font-family: 'Courier New', Courier, monospace; color: #94a3b8; font-size: 0.95rem; display: block; white-space: pre-wrap; }
+        /* --- CONSOLE & PROMPT STYLES --- */
+        .prompt-container { 
+            background: #0f172a; border: 1px solid #1e293b; padding: 2.5rem; 
+            border-radius: 12px; margin: 3rem 0; position: relative; text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .prompt-container::before { 
+            content: "MASTER PROMPT"; position: absolute; top: -12px; left: 24px; 
+            background: #1e293b; color: #94a3b8; padding: 5px 15px; font-size: 0.65rem; 
+            font-weight: 900; letter-spacing: 0.2em; border-radius: 4px; border: 1px solid #334155;
+        }
+        .copy-btn {
+            position: sticky; top: 15px; float: right; background: var(--primary); 
+            color: white; border: none; padding: 10px 20px; font-size: 0.7rem; 
+            font-weight: 900; border-radius: 4px; cursor: pointer; text-transform: uppercase; 
+            letter-spacing: 0.12em; transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 20;
+        }
+        .copy-btn:hover { transform: translateY(-2px); filter: brightness(1.2); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
+        code { font-family: 'Courier New', Courier, monospace; color: #94a3b8; font-size: 1rem; display: block; white-space: pre-wrap; line-height: 1.7; }
 
-        /* FRAMEWORK CARDS */
-        .framework-box { background: var(--bg-card); border-left: 6px solid var(--primary); padding: 2rem; border-radius: 8px; margin: 2rem 0; }
-        .tier-card { border: 1px solid var(--border-dynamic); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; }
-        .tier-label { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
+        /* --- OUTPUT WRAPPERS --- */
+        .output-box { background: rgba(59, 130, 246, 0.04); border: 1px dashed rgba(59, 130, 246, 0.3); padding: 3rem; border-radius: 16px; margin: 4rem 0; }
+        .output-label { color: var(--primary); font-weight: 900; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.25em; display: block; margin-bottom: 2rem; border-bottom: 1px solid rgba(59, 130, 246, 0.1); padding-bottom: 1rem; }
+        .output-content h4 { color: var(--text-heading); font-size: 1.1rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .output-content p { font-size: 1rem; margin-bottom: 1.5rem; border-left: 2px solid var(--border-dynamic); padding-left: 1.5rem; }
 
-        /* REVEAL */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        /* --- REVEAL ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .pill { background: var(--bg-card); border: 1px solid var(--border-dynamic); padding: 6px 16px; border-radius: 99px; font-size: 0.75rem; font-weight: 800; color: var(--slate); margin-right: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        @media (max-width: 768px) { .nav-links { display: none; } .executive-grid { grid-template-columns: 1fr !important; } }
     </style>
 </head>
 <body>
@@ -70,95 +109,182 @@
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="week1.html" style="color:var(--primary)">Week 1</a>
+            <a href="index.html">The Roadmap</a>
         </div>
     </nav>
 
     <div class="dark-header-block">
-        <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.3em; font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 1rem;">Week 1 of 4</span>
-        <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.04em;">The Intelligence Layer</h1>
-        <p style="color: #cbd5e1; margin-top: 1.5rem; font-size: 1.2rem; max-width: 750px; margin-left: auto; margin-right: auto;">
-            Building the depth that wins trust before you walk in the room. 4 hours of manual research loops compressed into 20 minutes of high-velocity synthesis.
+        <span style="color: var(--primary); font-weight: 900; letter-spacing: 0.5em; font-size: 0.75rem; text-transform: uppercase; display: block; margin-bottom: 2rem;">Intelligence Layer</span>
+        <h1 style="font-size: clamp(2.5rem, 7vw, 4.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.06em;">AI handles the storm.<br><span style="color:#64748b">You handle the human.</span></h1>
+        <p style="color: #cbd5e1; margin-top: 2.5rem; font-size: 1.35rem; max-width: 800px; margin-left: auto; margin-right: auto; font-weight: 500; line-height: 1.6;">
+            The industry has chosen. Reclaim 4 hours per meeting and walk in understanding their board-level priorities before they say a word.
         </p>
     </div>
 
     <main>
-        <section class="reveal">
-            <h2>The Market Pattern</h2>
-            <p>Marc Sumner (Robertson Sumner) identified the rarest 2026 roles: those blending <strong>technical literacy + commercial acumen + soft skills</strong>. AI fluency is now assumed; output is the only metric that remains.</p>
-            
-            <div class="framework-box">
-                <p style="margin:0; font-weight: 600;">"Commercial Acumen + AI beats AI skills alone."</p>
-                <p style="font-size: 0.9rem; color: var(--slate); margin-top: 0.5rem;">Research across 7M+ opportunities shows AI-augmented professionals generate <strong>77% more revenue</strong> (Gong, 2026).</p>
-            </div>
+        <section class="reveal active">
+            <h2>The "Mirror Moment" Prevention</h2>
+            <p>I still wake up replaying the deals I lost. Not because I didn't work hard, but because I didn't truly understand their world. That mirror moment stings: <strong>Did I prove I get them in the room?</strong></p>
+            <p>One side of the market is trapped in 4-hour manual research loops. The other uses AI to surface what matters in 20 minutes, then layers on 10+ years of pattern recognition and relationship depth to close.</p>
         </section>
 
         <section class="reveal">
-            <h2>The Strategic Hierarchy</h2>
-            <p>Companies don't buy products; they buy to implement initiatives that support their strategies and goals. Most sellers stop at the department level. We start at the Board level.</p>
-            
+            <h3>Mapping the Hierarchy (The RetailCo Protocol)</h3>
+            <p>Let's show exactly how AI helps you map the <strong>Goals → Strategies → Initiatives → Departments</strong> hierarchy from 100+ page annual reports in 20 minutes.</p>
+
             <div class="prompt-container">
-<code>I'm researching [COMPANY] for an executive meeting. Extract the hierarchy:
-1. GOALS: Financial targets & board priorities.
-2. STRATEGIES: Key strategic pillars & competitive positioning.
-3. INITIATIVES: Specific transformation programmes.
-4. DEPARTMENTS: Functional execution & daily implementation.</code>
+                <button class="copy-btn" onclick="copyPrompt(this)">COPY MASTER PROMPT</button>
+<code>I'm researching [COMPANY NAME] for an executive meeting next week.
+I've attached their most recent annual report.
+
+Extract the Goals → Strategies → Initiatives → Departments hierarchy:
+
+1. GOALS: What are their top 3-5 strategic goals? 
+   (Look for: vision statements, financial targets, board priorities)
+   Quote specific language they use.
+
+2. STRATEGIES: How are they planning to achieve these goals?
+   (Look for: strategic pillars, key approaches, competitive positioning)
+   
+3. INITIATIVES: What specific programs or projects support these strategies?
+   (Look for: transformation programs, major projects, department-level initiatives)
+   
+4. DEPARTMENTS: Which departments/functions are responsible for execution?
+   (Look for: organizational structure, who reports what)
+
+Format as a clear hierarchy showing how Goals → Strategies → Initiatives → Departments connect.</code>
+            </div>
+
+            <div class="output-box">
+                <span class="output-label">Unabridged AI Synthesis Output</span>
+                <div class="output-content">
+                    <h4>Level 1: Board-Level Goals</h4>
+                    <p><strong>Operational Efficiency:</strong> "Reduce cost-to-serve by 15% over 3 years" (CFO Letter, p.4). "Improve operating margin from 8.2% to 10.5%" (Financial Targets, p.12).</p>
+                    
+                    <h4>Level 2: Strategic Pillars</h4>
+                    <p><strong>Goal 1 → Strategy:</strong> "Supply chain optimization through technology modernization" and "Automation of manual processes in fulfillment and logistics."</p>
+                    
+                    <h4>Level 3: Strategic Initiatives</h4>
+                    <p><strong>Strategy: Supply Chain → Initiatives:</strong> "Cloud migration of legacy ERP system" (IT Section, p.28) and "AI-powered demand forecasting rollout" (Operations Section, p.31).</p>
+                    
+                    <h4>Level 4: Departmental Ownership</h4>
+                    <p><strong>Cloud Migration Lead:</strong> IT Department (CTO: Sarah Johnson). Support: Finance (system of record) and Operations (process redesign).</p>
+                </div>
             </div>
         </section>
 
-        <section class="reveal">
-            <h2>The Story: How Research Won</h2>
-            <p>An Account Executive recently lost a deal because the competitor "understood the business better." The fix? A 20-minute AI deep-scan revealed the CFO mentioned <strong>"cost-to-serve" 17 times</strong> in recent calls, while "innovation" appeared only twice. The next pitch was repositioned from "digital transformation" to "operational efficiency," winning a multi-year mandate.</p>
+        <section class="reveal" style="margin: 8rem 0; padding: 5rem 3rem; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border-dynamic);">
+            <div style="text-align: center; margin-bottom: 5rem;">
+                <span style="color: var(--primary); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em;">The Intelligence Console</span>
+                <h2 style="margin-top: 1.5rem; letter-spacing: -0.04em;">The Unabridged Prompt Library</h2>
+                <p style="color: var(--slate); font-size: 1.1rem; max-width: 650px; margin: 0 auto; font-weight: 500;">Every strategic prompt from the 2026 methodology, validated for executive synthesis.</p>
+            </div>
+
+            <div class="executive-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;">
+                
+                <div>
+                    <p style="font-size: 0.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em;">01. Person-Level Intel</p>
+                    <div class="prompt-container" style="height: 450px; overflow-y: auto; margin: 0; padding: 2rem; border-color: rgba(59, 130, 246, 0.2); background: #080c17;">
+                        <button class="copy-btn" onclick="copyPrompt(this)">COPY FULL SET</button>
+<code># PROMPT 4: EXECUTIVE DEEP DIVE
+Analyze [NAME], [TITLE] at [COMPANY]. I've attached their LinkedIn activity.
+1. Career trajectory: How long in role? Previous companies? Promoted from within OR external hire?
+2. Personal priorities: Themes in LinkedIn posts/conference transcripts from last 6 months.
+3. Decision-making style: Data-driven vs Intuitive? communication style technical or strategic?
+4. The Strategic Question: Give me ONE discovery question that demonstrates I understand THEIR personal agenda, not just the company's.
+
+# PROMPT 5: STAKEHOLDER POLITICAL MAP
+Create a stakeholder analysis for [SOLUTION TYPE]:
+1. ECONOMIC BUYER: Who controls the money and what are their approval limits?
+2. TECHNICAL BUYER: Who defines requirements and validates technical fit?
+3. THE BLOCKER: Who has competing priorities or prefers status quo?
+4. PERSONAL KPI: What does success look like for each individual stakeholder?</code>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="font-size: 0.8rem; font-weight: 900; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em;">02. Timing & Signals</p>
+                    <div class="prompt-container" style="height: 450px; overflow-y: auto; margin: 0; padding: 2rem; border-color: rgba(59, 130, 246, 0.2); background: #080c17;">
+                        <button class="copy-btn" onclick="copyPrompt(this)">COPY FULL SET</button>
+<code># PROMPT 6: HIRING SIGNAL ANALYSIS
+Search LinkedIn Jobs for [COMPANY] and [ROLE TYPE].
+1. Volume Hiring (>5 similar roles) = Major initiative starting.
+2. Leadership Hire (VP/Director) = New program with 6-month vendor selection window.
+3. Specialist Hiring: What niche skills indicate specific technology decisions made?
+4. Engagement Timing: When should I reach out to influence requirements before the RFP?
+
+# PROMPT 7: BUDGET CYCLE ALIGNMENT
+From Investor Relations/Annual Report:
+1. Define Fiscal Year (e.g., April-March).
+2. Q4 Planning Window: When are budget requests submitted for the next year?
+3. CapEx vs OpEx: Is budget constrained? Are they looking for flexible investment models?
+4. Engagement Window: When should I engage to influence the budget allocation?</code>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="font-size: 0.8rem; font-weight: 900; color: #ef4444; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.15em;">03. Risk & Safety</p>
+                    <div class="prompt-container" style="height: 450px; overflow-y: auto; margin: 0; padding: 2rem; border-color: rgba(239, 68, 68, 0.2); background: #080c17;">
+                        <button class="copy-btn" onclick="copyPrompt(this)" style="background:#ef4444;">COPY FULL SET</button>
+<code># PROMPT 8: THE PRE-MORTEM
+Assume it is 6 months from now and this deal has failed.
+1. Why did the CFO block it? Did we build an ROI case for their specific office?
+2. Technical Risk: Did IT flag integration or security concerns?
+3. Political Risk: Did our champion lose influence or did a blocker coalition form?
+
+# PROMPT 9: OBJECTION PREP (Acknowledge → Reframe)
+Based on [PAST FAILURES] mentioned in their risk disclosures, write the 3 most likely objections. 
+Format: "I know [PAST FAILURE] was challenging. Here is how our approach de-risks this specifically..."
+
+# PROMPT 10: THE HALLUCINATION CHECK
+Cross-verify all AI-generated stats against [SOURCE PDF]. 
+CRITICAL: If you cannot find the EXACT quote or data point on a specific page, flag it as "UNVERIFIED - DO NOT USE."</code>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="reveal">
-            <h2>Three-Tier Tactical Research</h2>
-            
-            <div class="tier-card">
-                <span class="tier-label" style="background: #dcfce7; color: #166534;">🟢 Level 1: Quick Scan (20 Mins)</span>
-                <p style="font-size: 1rem;">Synthesising annual reports, press releases, and CFO LinkedIn posts to find priorities, pain points, and repeats in language.</p>
-            </div>
+        <section class="reveal" style="margin-top: 8rem;">
+            <span style="color: #ef4444; font-weight: 900; letter-spacing: 0.4em; font-size: 0.8rem; text-transform: uppercase; display: block; margin-bottom: 1.5rem;">Enterprise Deep-Dive</span>
+            <h2 style="margin-top: 0;">🔴 Level 3+: The 8-Pillar Protocol</h2>
+            <p>Reserved for £500k+ mandates. This provides the comprehensive intelligence institutional investors use for due diligence. <strong>Use only when the stakes justify the 120-minute execution time.</strong></p>
 
-            <div class="tier-card">
-                <span class="tier-label" style="background: #fef9c3; color: #854d0e;">🟡 Level 2: Person-Level (45 Mins)</span>
-                <p style="font-size: 1rem;">Analysing individual executive career trajectories, decision-making styles, and conference transcripts to find the "Personal Agenda."</p>
-            </div>
+            <div class="prompt-container" style="border: 2px solid rgba(239, 68, 68, 0.5); background: #0a0505;">
+                <button class="copy-btn" onclick="copyPrompt(this)" style="background: #ef4444; padding: 12px 24px;">COPY COMPLETE PROTOCOL</button>
+<code>Execute a Deep Research Protocol for [COMPANY NAME] across these 8 pillars. 
+CRITICAL REQUIREMENT: Cross-reference at least TWO high-authority sources for every claim.
 
-            <div class="tier-card">
-                <span class="tier-label" style="background: #fee2e2; color: #991b1b;">🔴 Level 3+: Enterprise Protocol (90 Mins+)</span>
-                <p style="font-size: 1rem;">The **8-Pillar Deep Dive**. Used exclusively for £500k+ mandates. Includes Financial Ratios, Technology Strategy, ESG Infrastructure, and M&A Ecosystems.</p>
-            </div>
-        </section>
+1. FOUNDATIONS: Core business model, value proposition, and leadership history.
+2. FINANCIALS (2022-2025): Revenue trends, operating income, PBT, and growth ratios. Flag ESTIMATED vs REPORTED.
+3. SEGMENTS: Revenue % by service line, product launches, and market positioning (Premium vs Niche).
+4. TECH STRATEGY: R&D investment levels, AI focus areas, and shift toward Agentic/Autonomous systems.
+5. GOVERNANCE: Board composition, C-suite tenure, and recent key leadership appointments.
+6. INFRASTRUCTURE & ESG: Core technology platforms (ERP/CRM), Net Zero commitments, and Cybersecurity posture.
+7. ECOSYSTEM: Geographic presence, technology partnerships (AWS/SAP/etc), and recent M&A activity.
+8. SYNTHESIS: The current "Competitive Moat," major challenges/threats, and strategic priorities for next 24 months.
 
-        <section class="reveal">
-            <h3>The 8-Pillar Master Protocol</h3>
-            <div class="prompt-container">
-<code>Execute a Deep Research Protocol for [COMPANY] across 8 Pillars:
-1. FOUNDATIONS: Core business model & Cultural DNA.
-2. FINANCIALS: 2022-2025 Revenue trends & Operating margins.
-3. SEGMENTS: Revenue % by service line.
-4. TECH STRATEGY: R&D levels & AI focus areas.
-5. GOVERNANCE: Board composition & recent appointments.
-6. ESG: Net Zero commitments & cybersecurity posture.
-7. ECOSYSTEM: M&A activity & strategic alliances.
-8. SYNTHESIS: Competitive moat & 2026 Strategic priorities.</code>
+FORMAT: Use bulleted lists with deep data. Cite sources explicitly [Source: Annual Report 2024, p.12]. Identify ONE major "Blind Spot" not covered in the pillars.</code>
             </div>
         </section>
 
-        <div class="reveal" style="text-align: center; margin-top: 6rem; padding-bottom: 4rem;">
-            <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 2rem; color: var(--text-heading);">The foundations are set. Now, deploy the tools.</p>
-            <a href="index.html" style="background: var(--primary); color: white; padding: 1.2rem 3rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1rem; letter-spacing: 0.05em; transition: 0.3s; box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);">
+        <div class="reveal" style="text-align: center; margin-top: 10rem; padding-bottom: 6rem;">
+            <p style="font-weight: 900; font-size: 1.25rem; margin-bottom: 3rem; color: var(--text-heading); letter-spacing: -0.02em;">Intelligence Layer Mastered. Reclaim the Gain.</p>
+            <a href="index.html" style="background: var(--navy); color: white; padding: 1.4rem 4rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 1rem; letter-spacing: 0.2em; transition: 0.3s; border: 1px solid var(--border-dynamic); box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
                 RETURN TO DASHBOARD
             </a>
         </div>
     </main>
 
-    <footer style="padding: 4rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
-        <p style="font-weight: 900; color: var(--text-heading); margin-bottom: 0.5rem;">DAVID MATTHEWS</p>
-        <p style="font-size: 0.75rem; color: var(--slate); text-transform: uppercase;">EQ + IQ + AI = SALES PERFORMANCE</p>
+    <footer style="padding: 6rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
+        <p style="font-weight: 900; color: var(--text-heading); margin-bottom: 2rem; letter-spacing: 0.4em; font-size: 0.85rem; text-transform: uppercase;">DAVID MATTHEWS</p>
+        <div style="display: flex; justify-content: center; gap: 1.5rem;">
+            <span class="pill">EQ</span><span class="pill">IQ</span><span class="pill">AI</span>
+        </div>
     </footer>
 </div>
 
 <script>
+    // Intersection Observer for Reveal Animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
     }, { threshold: 0.1 });
