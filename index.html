@@ -69,16 +69,13 @@
         .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
-        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
-        .mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--text-heading); margin: 5px 0; }
-
         .theme-toggle {
             background: var(--bg-card); border: 1px solid var(--border-dynamic);
             color: var(--text-heading); padding: 0.4rem 0.8rem; border-radius: 20px;
             cursor: pointer; font-size: 0.7rem; font-weight: 800;
         }
 
-        /* --- ANIMATED HERO BLOCK --- */
+        /* --- HERO BLOCK (Always Dark) --- */
         .dark-header-block {
             background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
             background-size: 400% 400%;
@@ -97,60 +94,40 @@
             display: flex; align-items: center; justify-content: center; text-align: center;
         }
 
-        .hero-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0.3; z-index: 0;
-        }
-
         .hero-content { position: relative; z-index: 1; }
 
-        /* --- BENTO GLASSMORPHISM --- */
-        .bento-row { display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border-dynamic); gap: 1px; }
-        .bento-item { 
-            background: rgba(255, 255, 255, 0.03) !important;
-            backdrop-filter: blur(12px);
-            padding: 3.5rem 2.5rem; transition: 0.3s;
-        }
-        .bento-item:hover { background: rgba(255, 255, 255, 0.07) !important; transform: translateY(-3px); }
-        .value { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #60a5fa; }
+        /* --- BENTO TRAJECTORY CARDS --- */
+        .bento-row { display: grid; grid-template-columns: repeat(2, 1fr); background: rgba(255,255,255,0.1); gap: 1px; }
+        .bento-item { background: rgba(15, 23, 42, 0.4) !important; backdrop-filter: blur(12px); padding: 2.5rem; transition: 0.3s; }
+        
+        .metric-label { color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .metric-value-lg { font-size: 2.2rem; font-weight: 900; color: #ffffff; margin-bottom: 1rem; }
+        .trajectory-bar { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 1rem; overflow: hidden; }
+        .trajectory-fill { height: 100%; background: var(--primary); box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); transition: width 2s ease-out; }
+        .metric-detail { color: #60a5fa; font-weight: 900; font-size: 1.1rem; }
 
-        /* --- MAIN CONTENT --- */
+        /* --- MAIN CONTENT & ADAPTIVE BOXES --- */
         main { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
-
-        .author-card {
-            display: flex; align-items: center; gap: 2.5rem; background: var(--bg-card);
-            padding: 2.5rem; border-radius: 12px; margin-bottom: 3.5rem; border: 1px solid var(--border-dynamic);
-        }
-        .author-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
 
         .executive-briefing { display: grid; grid-template-columns: 1.8fr 1fr; gap: 2rem; margin: 4rem 0; }
         
         .pill-uk {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
-            padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; color: white;
+            background: var(--bg-body); border: 1px solid var(--border-dynamic); 
+            padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; color: var(--text-heading);
             font-variant: all-small-caps; letter-spacing: 0.05em;
         }
 
         .schedule-item {
             padding: 2rem; border: 1px solid var(--border-dynamic); border-radius: 12px;
             display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg-card); margin-bottom: 1.5rem; transition: 0.3s;
+            background: var(--bg-card); margin-bottom: 1.5rem;
         }
-        .locked { opacity: 0.6; background: var(--bg-body); cursor: not-allowed; }
 
-        /* --- REVEAL ANIMATION --- */
         .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 768px) {
-            .mobile-toggle { display: block; }
-            .nav-links {
-                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
-                background: var(--bg-container); flex-direction: column; justify-content: center;
-                transition: 0.4s; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-            }
-            .nav-links.active { right: 0; }
-            .bento-row, .executive-briefing, .author-card, .schedule-item { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
+            .bento-row, .executive-briefing, .schedule-item { grid-template-columns: 1fr; flex-direction: column; }
         }
     </style>
 </head>
@@ -159,19 +136,16 @@
 <div class="page-container">
     <nav>
         <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
-        <button class="mobile-toggle" id="mobile-toggle"><span></span><span></span><span></span></button>
-        <div class="nav-links" id="nav-links">
+        <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="week1.html">Intelligence Layer</a>
             <a href="library.html">Library</a>
-            <a href="contact.html" style="color: var(--primary);">Contact</a>
             <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
         </div>
     </nav>
 
     <div class="dark-header-block">
         <header class="hero-impact">
-            <img src="unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
             <div class="hero-content reveal">
                 <h1 style="color:#60a5fa; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">STOP USING AI TO WRITE.</h1>
                 <h1 style="color:white; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">START USING IT TO SEE.</h1>
@@ -181,71 +155,70 @@
 
         <div class="bento-row">
             <div class="bento-item">
-                <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Revenue Scaling</h3>
-                <div class="value"><span id="cagr-count">0</span>%+ CAGR</div>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Scaled Enterprise Services from £25M to £183M.</p>
+                <p class="metric-label">Enterprise Revenue Trajectory</p>
+                <div class="metric-value-lg">£183M <span style="font-size: 1rem; color: #64748b; font-weight: 400;">← £25M</span></div>
+                <div class="trajectory-bar"><div class="trajectory-fill" style="width: 84%;"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <span style="font-size: 0.75rem; color: #94a3b8;">4-Year Portfolio CAGR</span>
+                    <span class="metric-detail">60.4%</span>
+                </div>
             </div>
+
             <div class="bento-item">
-                <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Leadership</h3>
-                <div class="value">#1 ROOKIE</div>
-                <p style="color: #94a3b8; font-size: 0.9rem;">Coached Global Rookie of the Year 2023.</p>
+                <p class="metric-label">Professional Services Pivot (VAR)</p>
+                <div class="metric-value-lg">£50M+ <span style="font-size: 1rem; color: #64748b; font-weight: 400;">← £18.5M</span></div>
+                <div class="trajectory-bar"><div class="trajectory-fill" style="width: 70%; background: #10b981; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <span style="font-size: 0.75rem; color: #94a3b8;">Revenue Growth</span>
+                    <span class="metric-detail" style="color: #10b981;">+170%</span>
+                </div>
             </div>
         </div>
     </div>
 
     <main>
-        <div class="author-card reveal">
-            <img src="https://media.licdn.com/dms/image/v2/D5603AQHEutEnh6PZJA/profile-displayphoto-scale_200_200/B56ZvhU54aJUAY-/0/1769011918730?e=1771459200&v=beta&t=SpSMEPaDtt8sn8Jx8BNnTsmkc9xJ_TUCTsci93d1JiU" alt="David Matthews" class="author-image">
-            <div>
-                <h2 style="color: var(--text-heading);">David Matthews</h2>
-                <p style="font-weight: 700; color: var(--primary);">Commercial Director - Services Growth | AI Practitioner</p>
-                <p style="font-size: 0.85rem; color: var(--slate);">Harvard Business School Exec Ed.</p>
-            </div>
+        <div class="reveal" style="margin-bottom: 4rem; padding: 2rem; border-left: 4px solid #10b981; background: var(--bg-card); border-radius: 0 12px 12px 0;">
+            <h3 style="color: #10b981; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 800;">Leadership & Coaching</h3>
+            <p style="font-size: 1.5rem; font-weight: 900; color: var(--text-heading); margin-top: 0.5rem;">Coached Global Rookie of the Year 2023</p>
+            <p style="color: var(--slate); font-size: 0.95rem;">Successfully bridging the gap between raw talent and elite enterprise execution.</p>
         </div>
 
         <div class="reveal">
-            <h2 style="font-size: 2.5rem; color: var(--text-heading); margin-bottom: 1.5rem;">Judgement is the Moat.</h2>
+            <h2 style="font-size: 2.5rem; color: var(--text-heading); margin-bottom: 1.5rem; font-weight: 900;">Judgement is the Moat.</h2>
             <p>The market is splitting. One side is trapped in 4-hour manual research loops. The other uses AI to surface the "Unspoken Needs" of a CFO in 20 minutes.</p>
-            <p style="margin-top: 1rem;">I have not changed the fundamentals of enterprise sales; I have simply added <strong>AI Fluency</strong> to deliver better quality decision-making.</p>
         </div>
 
         <section class="executive-briefing reveal">
-            <div class="narrative-card" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2.5rem; color: white;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 16px; padding: 2.5rem;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;">
-                    <div style="width: 4px; height: 28px; background: #3b82f6; border-radius: 2px;"></div>
-                    <h3 style="color: white; text-transform: uppercase; letter-spacing: 0.15em; font-size: 1.1rem; font-weight: 800;">The 2020 Pivot</h3>
+                    <div style="width: 4px; height: 28px; background: var(--primary); border-radius: 2px;"></div>
+                    <h3 style="color: var(--text-heading); text-transform: uppercase; letter-spacing: 0.15em; font-size: 1.1rem; font-weight: 800;">The 2020 Pivot</h3>
                 </div>
-
-                <div style="margin-bottom: 2.5rem;">
-                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Catalyst: Behavioural Waste</p>
-                    <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin-bottom: 1.5rem;">
-                        In 2020, while managing a <strong>£100M+ aggregate ACV pipeline</strong>, I realised we were losing the battle to "behavioural waste."
-                    </p>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem; color: #94a3b8; font-size: 0.95rem;">
-                        <p>• <strong>The "War Room" Bottleneck:</strong> Weeks of manual brainstorming solved in minutes.</p>
-                        <p>• <strong>Knowledge Decay:</strong> Rescuing "proven wins" from searchable silos.</p>
-                        <p>• <strong>The Mission:</strong> Stop optimising the grind. Kill it instead.</p>
-                    </div>
+                <p style="color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Catalyst: Behavioural Waste</p>
+                <p style="font-size: 1.1rem; color: var(--text-heading); margin-bottom: 1.5rem;">
+                    In 2020, while managing a <strong>£100M+ aggregate ACV pipeline</strong>, I realised we were losing the battle to "behavioural waste."
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 1.25rem; color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem;">
+                    <p>• <strong>The "War Room" Bottleneck:</strong> Weeks of manual brainstorming solved in minutes.</p>
+                    <p>• <strong>Knowledge Decay:</strong> Rescuing "proven wins" from searchable silos.</p>
                 </div>
-
-                <div style="padding: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Resolution: GAIN Methodology</p>
+                <div style="padding: 1.5rem; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border-dynamic);">
+                    <p style="color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">GAIN Methodology</p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[G]uide</strong><br><span style="color: #94a3b8;">Models.</span></p>
-                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[A]dvise</strong><br><span style="color: #94a3b8;">Logic.</span></p>
-                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[I]nfluence</strong><br><span style="color: #94a3b8;">Wins.</span></p>
+                        <p style="font-size:0.85rem;"><strong style="color: var(--text-heading);">[G]uide</strong><br><span style="color: var(--slate);">Models.</span></p>
+                        <p style="font-size:0.85rem;"><strong style="color: var(--text-heading);">[A]dvise</strong><br><span style="color: var(--slate);">Logic.</span></p>
+                        <p style="font-size:0.85rem;"><strong style="color: var(--text-heading);">[I]nfluence</strong><br><span style="color: var(--slate);">Wins.</span></p>
                     </div>
                 </div>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 2rem; text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Impact</p>
-                    <p style="font-size: 1.8rem; font-weight: 900; color: white;">WEEKS TO MINUTES</p>
+                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid var(--primary); border-radius: 16px; padding: 2rem; text-align: center;">
+                    <p style="color: var(--primary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Impact</p>
+                    <p style="font-size: 1.8rem; font-weight: 900; color: var(--text-heading);">WEEKS TO MINUTES</p>
                 </div>
-                <div style="background: #0f172a; border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.05);">
-                    <h5 style="color: #64748b; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 1rem;">Sector Footprint</h5>
+                <div style="background: var(--bg-card); border-radius: 16px; padding: 2rem; border: 1px solid var(--border-dynamic);">
+                    <h5 style="color: var(--slate); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 1rem;">Sector Footprint</h5>
                     <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                         <span class="pill-uk">Tier-1 Banking</span>
                         <span class="pill-uk">Telco</span>
@@ -254,41 +227,25 @@
                     </div>
                 </div>
                 <div style="padding: 1rem; text-align: right;">
-                    <p style="color: #60a5fa; font-weight: 800; font-size: 1.4rem;">"Don't optimise the grind. <span style="color:white">Kill it.</span>"</p>
+                    <p style="color: var(--primary); font-weight: 900; font-size: 1.6rem; line-height: 1.2;">
+                        "Don't optimise the grind. <br>
+                        <span style="color: var(--text-heading); text-decoration: underline; text-decoration-color: var(--primary);">Kill it.</span>"
+                    </p>
                 </div>
             </div>
         </section>
 
         <section style="margin-top: 5rem;">
-            <h2 class="reveal" style="color: var(--text-heading); margin-bottom: 2rem; font-weight: 800;">The Release Schedule</h2>
-            
+            <h2 class="reveal" style="color: var(--text-heading); margin-bottom: 2rem; font-weight: 900;">The Release Schedule</h2>
             <div class="schedule-item reveal" style="border-left: 4px solid var(--primary);">
                 <div style="flex: 1;">
                     <span style="display: block; font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.5rem;">Week 1</span>
                     <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--text-heading);">Killing the Research Tax</span>
-                    <span style="display: block; font-size: 0.9rem; color: var(--slate); margin-top: 0.5rem;">Surfacing unspoken needs in 20 minutes.</span>
                 </div>
                 <a href="week1.html" style="background:var(--primary); color:white; padding:0.8rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:800; font-size: 0.8rem;">ACCESS</a>
             </div>
-
-            <div class="schedule-item reveal locked">
-                <div style="flex: 1;">
-                    <span style="display: block; font-weight: 800; color: var(--slate); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.5rem;">Week 2</span>
-                    <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--slate);">Decoding Complex Mandates</span>
-                </div>
-                <span style="color: var(--slate); font-weight: 800; font-size: 0.75rem;">FEB 13</span>
-            </div>
         </section>
-
-        <div class="reveal" style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--navy); border-radius: 12px; color: white;">
-            <h2 style="margin-bottom: 1rem;">Connect for Collaboration</h2>
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;" target="_blank">LinkedIn</a>
-        </div>
     </main>
-
-    <footer>
-        <p style="color: var(--text-heading); font-weight: 800;">DAVID MATTHEWS</p>
-    </footer>
 </div>
 
 <script>
@@ -302,38 +259,16 @@
         localStorage.setItem('theme', next);
     });
 
-    // Mobile Toggle
-    document.getElementById('mobile-toggle').addEventListener('click', () => {
-        document.getElementById('nav-links').classList.toggle('active');
-    });
-
-    // Counter
-    function animateValue(id, start, end, duration) {
-        let obj = document.getElementById(id);
-        if (!obj) return;
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            obj.innerHTML = Math.floor(progress * (end - start) + start);
-            if (progress < 1) window.requestAnimationFrame(step);
-        };
-        window.requestAnimationFrame(step);
-    }
-
-    // Intersection Observer
+    // Intersection Observer for animations
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
                 e.target.classList.add('active');
-                if (e.target.classList.contains('dark-header-block')) {
-                    animateValue("cagr-count", 0, 60, 2000);
-                }
             }
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.reveal, .dark-header-block').forEach(el => obs.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
