@@ -10,10 +10,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
+        // Theme Logic
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.setAttribute('data-theme', 'dark');
         }
+
+        // Cinematic Reveal & Session Logic
+        function unlockExperience() {
+            const trailer = document.getElementById('trailer-overlay');
+            trailer.classList.add('overlay-hidden');
+            sessionStorage.setItem('trailerPlayed', 'true');
+            
+            // Trigger bento animations after trailer clears
+            setTimeout(() => {
+                document.getElementById('traj-total').style.width = '84%';
+                document.getElementById('traj-var').style.width = '70%';
+            }, 800);
+        }
+
+        // Developer Reset for Testing
+        function resetTrailerTest() {
+            sessionStorage.removeItem('trailerPlayed');
+            window.location.reload();
+        }
+
+        window.onload = () => {
+            if (sessionStorage.getItem('trailerPlayed')) {
+                document.getElementById('trailer-overlay').style.display = 'none';
+                // Trigger animations immediately if trailer already seen
+                setTimeout(() => {
+                    document.getElementById('traj-total').style.width = '84%';
+                    document.getElementById('traj-var').style.width = '70%';
+                }, 100);
+            }
+        };
     </script>
 
     <style>
@@ -47,8 +78,17 @@
             color: var(--text-body);
             background: var(--bg-body);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased; /* Smoother font rendering on Mac */
+            -webkit-font-smoothing: antialiased;
         }
+
+        /* --- TRAILER STYLES --- */
+        #trailer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #020617; z-index: 9999; display: flex; align-items: center;
+            justify-content: center; transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1s ease;
+        }
+        .overlay-hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .page-container {
             max-width: var(--max-width);
@@ -108,6 +148,12 @@
         }
 
         .hero-content { position: relative; z-index: 1; max-width: 850px; }
+
+        /* THE PARADOX ANCHOR */
+        .paradox-anchor { margin-bottom: 3.5rem; text-align: left; max-width: 650px; margin-left: auto; margin-right: auto; }
+        .paradox-label { color: #3b82f6; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; display: block; margin-bottom: 1rem; }
+        .paradox-text { color: #94a3b8; font-size: 1rem; font-weight: 500; font-style: italic; line-height: 1.6; border-left: 2px solid rgba(59, 130, 246, 0.4); padding-left: 1.5rem; }
+
         .hero-headline { font-size: clamp(2rem, 5.5vw, 3.8rem); line-height: 1.1; font-weight: 900; letter-spacing: -0.03em; }
         .hero-subtext { color: #cbd5e1; font-size: 1.1rem; margin-top: 1.8rem; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; font-weight: 500; }
         .formula { color: #60a5fa; font-size: 0.9rem; margin-top: 1.5rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; }
@@ -169,10 +215,25 @@
             .nav-links.active { right: 0; }
             .bento-row, .executive-briefing, .author-card, .schedule-item { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
             .hero-headline { font-size: 2.2rem; }
+            .paradox-text { text-align: center; border-left: none; padding-left: 0; }
         }
     </style>
 </head>
 <body>
+
+<div id="trailer-overlay">
+    <div style="text-align: center; max-width: 700px; padding: 2rem;">
+        <span style="color: #3b82f6; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.4em; text-transform: uppercase; display: block; margin-bottom: 2rem; opacity: 0; animation: fadeIn 1s forwards 0.5s;">The Cost of Inertia</span>
+        <h2 style="color: white; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 900; line-height: 1.3; margin-bottom: 3rem; opacity: 0; animation: fadeIn 1s forwards 1s;">
+            £500,000 in bid costs. <br>
+            Thousands of cross-functional hours. <br>
+            <span style="color: #64748b;">All lost to the dredge.</span>
+        </h2>
+        <button onclick="unlockExperience()" style="background: transparent; border: 1px solid #3b82f6; color: #3b82f6; padding: 1rem 2rem; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.2em; cursor: pointer; text-transform: uppercase; opacity: 0; animation: fadeIn 1s forwards 1.5s;">
+            KILL THE WASTE
+        </button>
+    </div>
+</div>
 
 <div class="page-container">
     <nav>
@@ -191,6 +252,13 @@
         <header class="hero-impact">
             <img src="unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
             <div class="hero-content reveal">
+                <div class="paradox-anchor">
+                    <span class="paradox-label">The HOWNOTTOGAIN Paradox</span>
+                    <p class="paradox-text">
+                        Optimising the <strong>Economic Value of Time</strong> by eradicating the back-office dredge. How Not To Guide, Advise, and Influence is the cost of structural information negligence. We kill the dredge to reclaim the Gain.
+                    </p>
+                </div>
+
                 <div class="hero-headline">
                     <span style="color:#60a5fa; display:block;">STOP USING AI TO WRITE.</span>
                     <span style="color:white; display:block;">START USING IT TO SEE.</span>
@@ -249,20 +317,20 @@
                 </div>
 
                 <div style="margin-bottom: 2.5rem;">
-                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Catalyst: Eradicating Behavioural Waste</p>
+                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Catalyst: Eradicating Behavioural Waste</p>
                     <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin-bottom: 1.5rem; font-weight: 500;">
-                        Managing a <strong>£100M+ Managed Services annuity pipeline</strong>, I identified a critical failure point: Behavioural Waste. Complex cross-functional teams were losing weeks to manual dredging. With bid costs often exceeding <strong>£500k</strong>, the resource inefficiency was unsustainable.
+                        Managing a <strong>£100M+ Managed Services annuity pipeline</strong>, I identified a critical failure point: Behavioural Waste. Elite teams were losing weeks to back-office dredging. With bid costs often exceeding <strong>£500k</strong>, the resource inefficiency was unsustainable.
                     </p>
                     
                     <div style="display: flex; flex-direction: column; gap: 1.25rem; color: #94a3b8; font-size: 0.95rem; font-weight: 500;">
                         <p>• <strong>Bid-Cost Optimisation:</strong> Achieved a massive reduction in capture costs by automating the synthesis of evidence and service architecture.</p>
                         <p>• <strong>Timeline Acceleration:</strong> Compressed the solutioning-to-contracting cycle from months to days by enabling <strong>Real-Time Solution Co-Authorship.</strong></p>
-                        <p>• <strong>Strategic Interface:</strong> A dynamic iPad dashboard that allows for instant modelling of the customer’s North Star and areas of innovation.</p>
+                        <p>• <strong>Strategic Interface:</strong> A dynamic modelling environment (iPad) that allows for instant modelling of the customer’s North Star and areas of innovation.</p>
                     </div>
                 </div>
 
                 <div style="padding: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The GAIN Methodology (Dynamic Solutioning)</p>
+                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The GAIN Methodology (Real-Time Modelling)</p>
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                         <p style="font-size:0.85rem;"><strong style="color: #f8fafc; font-weight: 800;">[G]uide</strong><br><span style="color: #94a3b8; font-weight: 500;">Dynamic Modelling.</span></p>
                         <p style="font-size:0.85rem;"><strong style="color: #f8fafc; font-weight: 800;">[A]dvise</strong><br><span style="color: #94a3b8; font-weight: 500;">Innovation Mapping.</span></p>
@@ -284,12 +352,10 @@
                         <span class="pill-uk">Tier-1 Banking</span>
                         <span class="pill-uk">Public Sector</span>
                         <span class="pill-uk">Enterprise SaaS</span>
-                        <span class="pill-uk">Telco</span>
-                        <span class="pill-uk">Energy</span>
                     </div>
                 </div>
                 <div style="padding: 1rem; text-align: right;">
-                    <p style="color: #60a5fa; font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em;">"Don't optimise the grind. <span style="color:white">Kill it.</span>"</p>
+                    <p style="color: #60a5fa; font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em;">"Kill the dredge. <span style="color:white">Reclaim the Gain.</span>"</p>
                 </div>
             </div>
         </section>
@@ -304,6 +370,13 @@
                 </div>
             </div>
         </section>
+
+        <div style="text-align: center; margin: 4rem 0; padding: 2rem; border-top: 1px dashed var(--border-dynamic);">
+            <p style="font-size: 0.7rem; color: var(--slate); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.1em;">Developer Testing Tools</p>
+            <button onclick="resetTrailerTest()" style="background: #ef4444; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800; cursor: pointer;">
+                RESET TRAILER COOKIE & REFRESH
+            </button>
+        </div>
 
         <div class="reveal" style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--navy); border-radius: 12px; color: white;">
             <h2 style="margin-bottom: 1.5rem; font-weight: 800; letter-spacing: -0.02em;">Connect for Collaboration</h2>
@@ -334,7 +407,8 @@
         entries.forEach(e => {
             if (e.isIntersecting) {
                 e.target.classList.add('active');
-                if (e.target.classList.contains('dark-header-block')) {
+                // Only trigger trajectory if trailer isn't currently blocking the view
+                if (e.target.classList.contains('dark-header-block') && sessionStorage.getItem('trailerPlayed')) {
                     document.getElementById('traj-total').style.width = '84%';
                     document.getElementById('traj-var').style.width = '70%';
                 }
