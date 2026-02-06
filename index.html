@@ -7,27 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <style>
-       /* ============================================================================
-           EXECUTIVE BRIEFING ENGINE - DYNAMIC MODE PERSPECTIVE
-           Optimised for Eyestrain Reduction & High-Stakes Impact
-           ============================================================================ */
+    
+    <script>
+        /* Prevents theme flashing */
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
 
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             color-scheme: light dark;
-
-            /* Core Brand Colors */
-            --navy: #0f172a;       
-            --navy-light: #1e293b; 
+            --navy: #020617;       
+            --navy-mural: #0f172a; 
             --primary: #3b82f6;    
             --slate: #94a3b8;      
-            --text-main: #f1f5f9;  
-            --border: #334155;     
             --max-width: 1000px;
-
-            /* Light/Dark Mapping Logic */
             --bg-body: light-dark(#f8fafc, #020617);
             --bg-container: light-dark(#ffffff, #0f172a);
             --bg-card: light-dark(#f1f5f9, #1e293b);
@@ -36,18 +34,17 @@
             --border-dynamic: light-dark(#e2e8f0, #334155);
         }
 
-        /* Support for Manual Toggle */
         :root[data-theme="light"] { color-scheme: light; }
         :root[data-theme="dark"] { color-scheme: dark; }
 
         body {
-            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
             color: var(--text-body);
             background: var(--bg-body);
+            overflow-x: hidden;
         }
 
-        /* THE MASTER CONTAINER */
         .page-container {
             max-width: var(--max-width);
             margin: 0 auto; 
@@ -56,7 +53,7 @@
             min-height: 100vh;
         }
 
-        /* NAVIGATION */
+        /* --- NAVIGATION --- */
         nav {
             border-bottom: 1px solid var(--border-dynamic);
             padding: 1.25rem 2.5rem;
@@ -64,6 +61,7 @@
             justify-content: space-between;
             align-items: center;
             background: var(--bg-container);
+            position: sticky; top: 0; z-index: 1000;
         }
 
         .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
@@ -71,334 +69,271 @@
         .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
 
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+        .mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--text-heading); margin: 5px 0; }
+
         .theme-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dynamic);
-            color: var(--text-heading);
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 800;
+            background: var(--bg-card); border: 1px solid var(--border-dynamic);
+            color: var(--text-heading); padding: 0.4rem 0.8rem; border-radius: 20px;
+            cursor: pointer; font-size: 0.7rem; font-weight: 800;
         }
 
-        /* DARK HEADER BLOCK */
+        /* --- ANIMATED HERO BLOCK --- */
         .dark-header-block {
-            background: var(--navy);
-            color: white;
-            width: 100%;
+            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white; width: 100%; position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .hero-impact {
-            position: relative;
-            padding: 6rem 2.5rem;
-            min-height: 480px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            text-align: center;
+            position: relative; padding: 6rem 2.5rem; min-height: 480px; 
+            display: flex; align-items: center; justify-content: center; text-align: center;
         }
 
         .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0.4;
-            z-index: 0;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.3; z-index: 0;
         }
 
-        .hero-content { position: relative; z-index: 1; width: 100%; }
+        .hero-content { position: relative; z-index: 1; }
 
-        /* BENTO GRID */
-        .bento-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            background: var(--border-dynamic);
-            gap: 1px; 
+        /* --- BENTO GLASSMORPHISM --- */
+        .bento-row { display: grid; grid-template-columns: repeat(2, 1fr); background: var(--border-dynamic); gap: 1px; }
+        .bento-item { 
+            background: rgba(255, 255, 255, 0.03) !important;
+            backdrop-filter: blur(12px);
+            padding: 3.5rem 2.5rem; transition: 0.3s;
         }
+        .bento-item:hover { background: rgba(255, 255, 255, 0.07) !important; transform: translateY(-3px); }
+        .value { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #60a5fa; }
 
-        .bento-item {
-            background: var(--bg-container);
-            padding: 3.5rem 2.5rem;
-            transition: background 0.3s ease;
-        }
+        /* --- MAIN CONTENT --- */
+        main { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
 
-        .dark-header-block .bento-item { background: var(--navy); }
-
-        .bento-item .value {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 900;
-            color: var(--text-heading);
-        }
-
-        .dark-header-block .value { color: #60a5fa; }
-
-        /* AUTHOR CARD */
         .author-card {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-            background: var(--bg-card);
-            padding: 2.5rem;
-            border-radius: 12px;
-            margin-bottom: 3.5rem;
-            border: 1px solid var(--border-dynamic);
+            display: flex; align-items: center; gap: 2.5rem; background: var(--bg-card);
+            padding: 2.5rem; border-radius: 12px; margin-bottom: 3.5rem; border: 1px solid var(--border-dynamic);
         }
-
         .author-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
 
-        /* CONTENT SECTION */
-        main { 
-            padding: 5rem 2.5rem; 
-            width: 100%;
-            background: var(--bg-container);
-            max-width: 900px;
-            margin: 0 auto;
+        .executive-briefing { display: grid; grid-template-columns: 1.8fr 1fr; gap: 2rem; margin: 4rem 0; }
+        
+        .pill-uk {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+            padding: 5px 12px; border-radius: 4px; font-size: 0.7rem; color: white;
+            font-variant: all-small-caps; letter-spacing: 0.05em;
         }
 
-        /* SCHEDULE ITEMS */
         .schedule-item {
             padding: 2rem; border: 1px solid var(--border-dynamic); border-radius: 12px;
             display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg-card); margin-bottom: 1.5rem;
+            background: var(--bg-card); margin-bottom: 1.5rem; transition: 0.3s;
         }
+        .locked { opacity: 0.6; background: var(--bg-body); cursor: not-allowed; }
 
-        .locked { opacity: 0.6; background: var(--bg-body); }
+        /* --- REVEAL ANIMATION --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .pill-uk {
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            padding: 5px 12px; 
-            border-radius: 4px; 
-            font-size: 0.7rem; 
-            font-variant: all-small-caps; 
-            letter-spacing: 0.05em;
-            color: white;
-        }
-
-        /* FOOTER */
-        footer {
-            padding: 5rem 2.5rem;
-            border-top: 1px solid var(--border-dynamic);
-            text-align: center;
-            background: var(--bg-container);
-        }
-
-        /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .bento-row { grid-template-columns: 1fr; }
-            .author-card { flex-direction: column; text-align: center; }
-            .schedule-item { flex-direction: column; gap: 1.5rem; text-align: center; }
-            .executive-briefing { grid-template-columns: 1fr !important; }
+            .mobile-toggle { display: block; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
+                background: var(--bg-container); flex-direction: column; justify-content: center;
+                transition: 0.4s; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            }
+            .nav-links.active { right: 0; }
+            .bento-row, .executive-briefing, .author-card, .schedule-item { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
         }
-
-        /* Animated Background for the Hero Block */
-.dark-header-block {
-    position: relative;
-    background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Glass Morphism for Bento Items */
-.bento-item {
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important; /* Micro-interaction override */
-}
-
-.bento-item:hover {
-    background: rgba(255, 255, 255, 0.07) !important;
-    border-color: var(--primary) !important;
-    transform: translateY(-5px);
-}
     </style>
 </head>
 <body>
 
-    <div class="page-container">
-        <nav>
-            <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
-            <div class="nav-links">
-                <a href="foundations.html">Foundations</a>
-                <a href="week1.html">Intelligence Layer</a>
-                <a href="library.html">Library</a>
-                <a href="contact.html" style="color: var(--primary);">Contact</a>
-                <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
+<div class="page-container">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button class="mobile-toggle" id="mobile-toggle"><span></span><span></span><span></span></button>
+        <div class="nav-links" id="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="week1.html">Intelligence Layer</a>
+            <a href="library.html">Library</a>
+            <a href="contact.html" style="color: var(--primary);">Contact</a>
+            <button class="theme-toggle" id="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
+
+    <div class="dark-header-block">
+        <header class="hero-impact">
+            <img src="unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
+            <div class="hero-content reveal">
+                <h1 style="color:#60a5fa; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">STOP USING AI TO WRITE.</h1>
+                <h1 style="color:white; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">START USING IT TO SEE.</h1>
+                <p style="color: #cbd5e1; font-size: 1.2rem; margin-top: 1.5rem; font-weight: 700; letter-spacing: 0.1em;">EQ + IQ + AI = SALES PERFORMANCE</p>
             </div>
-        </nav>
+        </header>
 
-        <div class="dark-header-block">
-            <header class="hero-impact">
-                <img src="unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
-                <div class="hero-content">
-                    <h1 style="color:#60a5fa; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">STOP USING AI TO WRITE.</h1>
-                    <h1 style="color:white; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; font-weight: 900;">START USING IT TO SEE.</h1>
-                    <p style="color: #cbd5e1; font-size: 1.2rem; margin-top: 1.5rem; font-weight: 700; letter-spacing: 0.1em;">EQ + IQ + AI = SALES PERFORMANCE</p>
-                </div>
-            </header>
+        <div class="bento-row">
+            <div class="bento-item">
+                <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Revenue Scaling</h3>
+                <div class="value"><span id="cagr-count">0</span>%+ CAGR</div>
+                <p style="color: #94a3b8; font-size: 0.9rem;">Scaled Enterprise Services from £25M to £183M.</p>
+            </div>
+            <div class="bento-item">
+                <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Leadership</h3>
+                <div class="value">#1 ROOKIE</div>
+                <p style="color: #94a3b8; font-size: 0.9rem;">Coached Global Rookie of the Year 2023.</p>
+            </div>
+        </div>
+    </div>
 
-            <div class="bento-row">
-                <div class="bento-item">
-                    <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Revenue Scaling</h3>
-                    <div class="value">60%+ CAGR</div>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">Scaled Enterprise Services from £25M to £183M.</p>
-                </div>
-                <div class="bento-item">
-                    <h3 style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Leadership</h3>
-                    <div class="value">#1 ROOKIE</div>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">Coached Global Rookie of the Year 2023.</p>
-                </div>
+    <main>
+        <div class="author-card reveal">
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQHEutEnh6PZJA/profile-displayphoto-scale_200_200/B56ZvhU54aJUAY-/0/1769011918730?e=1771459200&v=beta&t=SpSMEPaDtt8sn8Jx8BNnTsmkc9xJ_TUCTsci93d1JiU" alt="David Matthews" class="author-image">
+            <div>
+                <h2 style="color: var(--text-heading);">David Matthews</h2>
+                <p style="font-weight: 700; color: var(--primary);">Commercial Director - Services Growth | AI Practitioner</p>
+                <p style="font-size: 0.85rem; color: var(--slate);">Harvard Business School Exec Ed.</p>
             </div>
         </div>
 
-        <main>
-            <div class="author-card">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQHEutEnh6PZJA/profile-displayphoto-scale_200_200/B56ZvhU54aJUAY-/0/1769011918730?e=1771459200&v=beta&t=SpSMEPaDtt8sn8Jx8BNnTsmkc9xJ_TUCTsci93d1JiU" alt="David Matthews" class="author-image">
-                <div>
-                    <h2 style="color: var(--text-heading);">David Matthews</h2>
-                    <p style="font-weight: 700; color: var(--primary);">Commercial Director - Services Growth | AI Practitioner</p>
-                    <p style="font-size: 0.85rem; color: var(--slate);">Harvard Business School Exec Ed.</p>
-                </div>
-            </div>
-
+        <div class="reveal">
             <h2 style="font-size: 2.5rem; color: var(--text-heading); margin-bottom: 1.5rem;">Judgement is the Moat.</h2>
             <p>The market is splitting. One side is trapped in 4-hour manual research loops. The other uses AI to surface the "Unspoken Needs" of a CFO in 20 minutes.</p>
             <p style="margin-top: 1rem;">I have not changed the fundamentals of enterprise sales; I have simply added <strong>AI Fluency</strong> to deliver better quality decision-making.</p>
-
-           <section class="executive-briefing" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 2rem; margin: 4rem 0; align-items: start;">
-
-    <div class="narrative-card" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2.5rem; color: white;">
-        
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;">
-            <div style="width: 4px; height: 28px; background: #3b82f6; border-radius: 2px;"></div>
-            <h3 style="color: white; text-transform: uppercase; letter-spacing: 0.15em; margin: 0; font-size: 1.1rem; font-weight: 800;">
-                The 2020 Pivot: The Why Behind This Site
-            </h3>
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-            <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">The Catalyst: Behavioural Waste</p>
-            <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin-bottom: 1.5rem;">
-                In 2020, while managing a <strong>£100M+ aggregate ACV pipeline</strong>, I realised that even with elite talent, we were losing the battle to "behavioural waste." This site is the modern evolution of the solution I engineered then.
-            </p>
+        <section class="executive-briefing reveal">
+            <div class="narrative-card" style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2.5rem; color: white;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 2rem;">
+                    <div style="width: 4px; height: 28px; background: #3b82f6; border-radius: 2px;"></div>
+                    <h3 style="color: white; text-transform: uppercase; letter-spacing: 0.15em; font-size: 1.1rem; font-weight: 800;">The 2020 Pivot</h3>
+                </div>
+
+                <div style="margin-bottom: 2.5rem;">
+                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Catalyst: Behavioural Waste</p>
+                    <p style="font-size: 1.05rem; color: #f8fafc; line-height: 1.6; margin-bottom: 1.5rem;">
+                        In 2020, while managing a <strong>£100M+ aggregate ACV pipeline</strong>, I realised we were losing the battle to "behavioural waste."
+                    </p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1.25rem; color: #94a3b8; font-size: 0.95rem;">
+                        <p>• <strong>The "War Room" Bottleneck:</strong> Weeks of manual brainstorming solved in minutes.</p>
+                        <p>• <strong>Knowledge Decay:</strong> Rescuing "proven wins" from searchable silos.</p>
+                        <p>• <strong>The Mission:</strong> Stop optimising the grind. Kill it instead.</p>
+                    </div>
+                </div>
+
+                <div style="padding: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                    <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">The Resolution: GAIN Methodology</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[G]uide</strong><br><span style="color: #94a3b8;">Models.</span></p>
+                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[A]dvise</strong><br><span style="color: #94a3b8;">Logic.</span></p>
+                        <p style="font-size:0.85rem;"><strong style="color: #f8fafc;">[I]nfluence</strong><br><span style="color: #94a3b8;">Wins.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 2rem; text-align: center;">
+                    <p style="color: #60a5fa; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1rem;">Impact</p>
+                    <p style="font-size: 1.8rem; font-weight: 900; color: white;">WEEKS TO MINUTES</p>
+                </div>
+                <div style="background: #0f172a; border-radius: 16px; padding: 2rem; border: 1px solid rgba(255,255,255,0.05);">
+                    <h5 style="color: #64748b; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 1rem;">Sector Footprint</h5>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="pill-uk">Tier-1 Banking</span>
+                        <span class="pill-uk">Telco</span>
+                        <span class="pill-uk">Energy</span>
+                        <span class="pill-uk">SaaS</span>
+                    </div>
+                </div>
+                <div style="padding: 1rem; text-align: right;">
+                    <p style="color: #60a5fa; font-weight: 800; font-size: 1.4rem;">"Don't optimise the grind. <span style="color:white">Kill it.</span>"</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 5rem;">
+            <h2 class="reveal" style="color: var(--text-heading); margin-bottom: 2rem; font-weight: 800;">The Release Schedule</h2>
             
-            <div style="display: flex; flex-direction: column; gap: 1.25rem; color: #94a3b8; font-size: 0.95rem; line-height: 1.6;">
-                <div style="display: flex; gap: 12px;">
-                    <span style="color: #3b82f6;">•</span>
-                    <span><strong>The "War Room" Bottleneck:</strong> 12 stakeholders losing weeks to manual brainstorming that AI can now solve in minutes.</span>
+            <div class="schedule-item reveal" style="border-left: 4px solid var(--primary);">
+                <div style="flex: 1;">
+                    <span style="display: block; font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.5rem;">Week 1</span>
+                    <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--text-heading);">Killing the Research Tax</span>
+                    <span style="display: block; font-size: 0.9rem; color: var(--slate); margin-top: 0.5rem;">Surfacing unspoken needs in 20 minutes.</span>
                 </div>
-                <div style="display: flex; gap: 12px;">
-                    <span style="color: #3b82f6;">•</span>
-                    <span><strong>Knowledge Decay:</strong> Millions in "proven wins" sat idle in silos because they weren't searchable. I decided to change that.</span>
-                </div>
-                <div style="display: flex; gap: 12px;">
-                    <span style="color: #3b82f6;">•</span>
-                    <span><strong>The Mission:</strong> This portfolio exists to ensure sales leaders never have to "optimise the grind" again. We kill it instead.</span>
-                </div>
+                <a href="week1.html" style="background:var(--primary); color:white; padding:0.8rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:800; font-size: 0.8rem;">ACCESS</a>
             </div>
-        </div>
 
-        <div style="padding: 1.5rem; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-            <p style="color: #3b82f6; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">The Resolution: GAIN Methodology</p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
-                <p style="margin:0; font-size:0.9rem;"><strong style="color: #f8fafc;">[G]uide</strong><br><span style="color: #94a3b8;">Visual service models.</span></p>
-                <p style="margin:0; font-size:0.9rem;"><strong style="color: #f8fafc;">[A]dvise</strong><br><span style="color: #94a3b8;">Data-backed logic.</span></p>
-                <p style="margin:0; font-size:0.9rem;"><strong style="color: #f8fafc;">[I]nfluence</strong><br><span style="color: #94a3b8;">Surfacing proven wins.</span></p>
-            </div>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 2rem; text-align: center;">
-            <p style="color: #60a5fa; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem;">Commercial Impact</p>
-            <p style="font-size: 2rem; font-weight: 900; color: white; margin: 0;">WEEKS TO MINUTES</p>
-        </div>
-
-        <div style="background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 2rem;">
-            <h5 style="color: #64748b; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem;">Sector Footprint</h5>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <span class="pill-uk">Tier-1 Banking</span>
-                <span class="pill-uk">Telco</span>
-                <span class="pill-uk">Energy</span>
-                <span class="pill-uk">SaaS</span>
-            </div>
-        </div>
-
-        <div style="padding: 2rem; text-align: right; margin-top: auto;">
-            <p style="color: #60a5fa; font-weight: 800; font-size: 1.6rem; line-height: 1.2;">
-                "Don't optimise the grind.<br><span style="color: white;">Kill it.</span>"
-            </p>
-        </div>
-    </div>
-</section>
-            <section style="margin-top: 5rem;">
-                <h2 style="color: var(--text-heading); margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.02em;">The Release Schedule</h2>
-                
-                <div class="schedule-item" style="border-left: 4px solid var(--primary); background: var(--bg-card); padding: 2rem; margin-bottom: 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-dynamic); border-left-width: 4px;">
-                    <div style="flex: 1;">
-                        <span style="display: block; font-weight: 800; color: var(--primary); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Week 1: The Intelligence Layer</span>
-                        <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--text-heading); margin-bottom: 0.25rem;">Killing the Research Tax</span>
-                        <span style="font-size: 0.95rem; color: var(--slate);">Utilising AI to surface stakeholder pressures and "unspoken needs" in as little as 20 minutes.</span>
-                    </div>
-                    <a href="week1.html" style="background:var(--primary); color:white; padding:0.8rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:800; font-size: 0.8rem; letter-spacing: 0.05em; margin-left: 2rem;">ACCESS BRIEFING</a>
+            <div class="schedule-item reveal locked">
+                <div style="flex: 1;">
+                    <span style="display: block; font-weight: 800; color: var(--slate); text-transform: uppercase; font-size: 0.75rem; margin-bottom: 0.5rem;">Week 2</span>
+                    <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--slate);">Decoding Complex Mandates</span>
                 </div>
-
-                <div class="schedule-item locked">
-                    <div style="flex: 1;">
-                        <span style="display: block; font-weight: 800; color: var(--slate); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Week 2: The Omniscience Engine</span>
-                        <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--slate); margin-bottom: 0.25rem;">Decoding Complex Mandates</span>
-                        <span style="font-size: 0.95rem; color: var(--slate);">Automated gap analysis of RFPs vs. historical legacy service solutions.</span>
-                    </div>
-                    <span style="color: var(--slate); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">Unlocking Feb 13</span>
-                </div>
-
-                <div class="schedule-item locked">
-                    <div style="flex: 1;">
-                        <span style="display: block; font-weight: 800; color: var(--slate); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Week 3: The Oxygen Effect</span>
-                        <span style="display: block; font-size: 1.25rem; font-weight: 800; color: var(--slate); margin-bottom: 0.25rem;">High-Velocity Influence</span>
-                        <span style="font-size: 0.95rem; color: var(--slate);">Systematising follow-up: AI-assisted closing strategies for Tier-1 boards.</span>
-                    </div>
-                    <span style="color: var(--slate); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;">Locked</span>
-                </div>
-            </section>
-
-            <div style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--navy); border-radius: 12px; color: white;">
-                <h2 style="color: white; margin-bottom: 1rem;">Connect for Collaboration</h2>
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;" target="_blank">Connect on LinkedIn</a>
+                <span style="color: var(--slate); font-weight: 800; font-size: 0.75rem;">FEB 13</span>
             </div>
-        </main>
+        </section>
 
-        <footer>
-            <p style="color: var(--text-heading); font-weight: 800;">DAVID MATTHEWS</p>
-        </footer>
-    </div>
+        <div class="reveal" style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--navy); border-radius: 12px; color: white;">
+            <h2 style="margin-bottom: 1rem;">Connect for Collaboration</h2>
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;" target="_blank">LinkedIn</a>
+        </div>
+    </main>
 
-    <script>
-        const btn = document.getElementById('theme-toggle');
-        const root = document.documentElement;
+    <footer>
+        <p style="color: var(--text-heading); font-weight: 800;">DAVID MATTHEWS</p>
+    </footer>
+</div>
 
-        btn.addEventListener('click', () => {
-            const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            const next = (current === 'dark') ? 'light' : 'dark';
-            root.setAttribute('data-theme', next);
-            root.style.colorScheme = next;
-            localStorage.setItem('theme', next);
+<script>
+    const root = document.documentElement;
+
+    // Theme Toggle
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = root.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+
+    // Mobile Toggle
+    document.getElementById('mobile-toggle').addEventListener('click', () => {
+        document.getElementById('nav-links').classList.toggle('active');
+    });
+
+    // Counter
+    function animateValue(id, start, end, duration) {
+        let obj = document.getElementById(id);
+        if (!obj) return;
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) window.requestAnimationFrame(step);
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Intersection Observer
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('active');
+                if (e.target.classList.contains('dark-header-block')) {
+                    animateValue("cagr-count", 0, 60, 2000);
+                }
+            }
         });
+    }, { threshold: 0.1 });
 
-        const saved = localStorage.getItem('theme');
-        if (saved) { root.setAttribute('data-theme', saved); root.style.colorScheme = saved; }
-    </script>
+    document.querySelectorAll('.reveal, .dark-header-block').forEach(el => obs.observe(el));
+</script>
 </body>
 </html>
