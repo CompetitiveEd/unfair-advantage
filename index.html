@@ -44,10 +44,14 @@
          * SESSION TESTING UTILITIES
          */
         function resetTrailerTest() {
-            sessionStorage.removeItem('trailerPlayed');
-            window.location.reload();
-        }
-
+    sessionStorage.removeItem('trailerPlayed');
+    // This line below is the "secret sauce" that stops the jump-to-bottom
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    
+    window.location.reload();
+}
         window.onload = () => {
             if (sessionStorage.getItem('trailerPlayed')) {
                 const overlay = document.getElementById('trailer-overlay');
@@ -707,11 +711,10 @@
             <a href="https://www.linkedin.com/in/david-a-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1.5rem 5rem; border-radius: 10px; text-decoration: none; font-weight: 900; font-size: 1rem; letter-spacing: 0.1em; transition: 0.3s; box-shadow: 0 15px 30px rgba(10, 102, 194, 0.4);" target="_blank">LINKEDIN PROFILE</a>
         </div>
 
-        <div style="text-align: center; margin: 8rem 0 4rem 0; border-top: 1px dashed var(--border-dynamic); padding-top: 4rem;">
-            <p style="color: var(--slate); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 2rem;">Platform Maintenance</p>
-            <button onclick="resetTrailerTest()" style="background: #ef4444; color: white; border: none; padding: 1rem 2.5rem; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.75rem; letter-spacing: 0.1em; transition: 0.3s;">RESET TRAILER SESSION</button>
-        </div>
-    </main>
+<div style="text-align: center; margin: 8rem 0 4rem 0; border-top: 1px dashed var(--border-dynamic); padding-top: 4rem;">
+    <p style="color: var(--slate); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 2rem;">Platform Maintenance</p>
+    <button onclick="window.scrollTo(0,0); resetTrailerTest();" style="background: #ef4444; color: white; border: none; padding: 1rem 2.5rem; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.75rem; letter-spacing: 0.1em; transition: 0.3s;">RESET TRAILER SESSION</button>
+</div>
 
     <footer>
         <p style="text-align: center; padding: 6rem 0; font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); font-size: 0.85rem; text-transform: uppercase;">DAVID MATTHEWS</p>
