@@ -4,41 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Unfair Advantage | David Matthews</title>
-    <link rel="stylesheet" href="style.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* Ensuring variables exist if style.css is missing */
+        /* ============================================================================
+           EXECUTIVE BRIEFING ENGINE - DYNAMIC MODE PERSPECTIVE
+           ============================================================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
+            color-scheme: light dark;
             --navy: #0f172a;
             --slate: #475569;
             --primary: #3b82f6;
-            --border: #e2e8f0;
+            --max-width: 1200px;
+
+            /* Dynamic Theme Mapping */
+            --bg-body: light-dark(#ffffff, #020617);
+            --bg-container: light-dark(#ffffff, #0f172a);
+            --bg-card: light-dark(#f8fafc, #1e293b);
+            --text-heading: light-dark(#0f172a, #ffffff);
+            --text-body: light-dark(#1e293b, #f1f5f9);
+            --border-dynamic: light-dark(#e2e8f0, #334155);
         }
-        .page-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem 0; }
-        .dark-header-block { background: #0f172a; border-radius: 16px; overflow: hidden; margin-bottom: 4rem; }
-        .hero-impact { position: relative; padding: 4rem 2rem; min-height: 300px; display: flex; align-items: center; }
-        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-body);
+            background-color: var(--bg-body);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .page-container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        
+        nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 2rem 0; 
+        }
+
+        /* Toggle Button */
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dynamic);
+            color: var(--text-heading);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .dark-header-block { 
+            background: var(--navy); 
+            border-radius: 16px; 
+            overflow: hidden; 
+            margin-bottom: 4rem; 
+            color: white;
+        }
+
+        .hero-impact { 
+            position: relative; 
+            padding: 4rem 2rem; 
+            min-height: 300px; 
+            display: flex; 
+            align-items: center; 
+        }
+
+        .hero-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; opacity: 0.4; z-index: 0;
+        }
+
         .hero-content { position: relative; z-index: 1; max-width: 800px; }
-        .bento-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem; background: rgba(255,255,255,0.05); }
-        .bento-item { background: white; padding: 2rem; border-radius: 12px; color: var(--navy); }
-        .value { font-size: 2rem; font-weight: 800; color: var(--primary); margin: 0.5rem 0; }
+
+        .bento-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1.5rem; 
+            padding: 2rem; 
+            background: rgba(255,255,255,0.05); 
+            position: relative;
+            z-index: 1;
+        }
+
+        .bento-item { 
+            background: var(--bg-container); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-dynamic);
+        }
+
+        .value { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 0.75rem 0; }
+        
         .author-card { display: flex; gap: 2rem; align-items: center; margin-bottom: 3rem; }
-        .author-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
+        .author-image { 
+            width: 100px; height: 100px; border-radius: 50%; 
+            object-fit: cover; border: 3px solid var(--primary); 
+        }
+
+        .origin-block {
+            background: var(--navy); color: white; padding: 2.5rem; 
+            margin: 3rem 0; border-radius: 12px; border-left: 5px solid var(--primary);
+        }
+
+        .schedule-item {
+            padding: 1.5rem; border: 1px solid var(--border-dynamic); 
+            border-radius: 12px; display: flex; justify-content: space-between; 
+            align-items: center; background: var(--bg-card); margin-bottom: 1.25rem;
+        }
+
+        footer { 
+            text-align: center; padding: 4rem 0; 
+            border-top: 1px solid var(--border-dynamic); margin-top: 4rem; 
+        }
+
+        @media (max-width: 768px) {
+            .bento-row { grid-template-columns: 1fr; }
+            .author-card { flex-direction: column; text-align: center; }
+            nav { flex-direction: column; gap: 1rem; }
+        }
     </style>
 </head>
-<body style="background-color: #ffffff; color: #1e293b; font-family: system-ui, -apple-system, sans-serif; line-height: 1.6;">
+<body>
 
     <div class="page-container">
         <nav>
-            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--navy); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
-            <div style="display:flex; gap:2rem; font-size:0.8rem; font-weight:700; text-transform:uppercase;">
-                <a href="foundations.html" style="color:var(--slate); text-decoration:none;">Foundations</a>
-                <a href="week1.html" style="color:var(--slate); text-decoration:none;">Intelligence Layer (Week 1)</a>
-                <a href="library.html" style="color:var(--slate); text-decoration:none;">Library</a>
-                <a href="contact.html" style="color:var(--primary); text-decoration:none;">Contact</a>
+            <a href="index.html" style="font-weight:900; text-decoration:none; color:var(--text-heading); font-size:1.1rem;">THE UNFAIR ADVANTAGE</a>
+            <div style="display:flex; gap:2rem; align-items:center;">
+                <button class="theme-toggle" id="theme-toggle">🌓 Toggle Mode</button>
             </div>
         </nav>
 
@@ -52,108 +150,72 @@
                 </div>
             </header>
 
-            <div class="bento-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 2rem; background: rgba(255,255,255,0.05);">
+            <div class="bento-row">
+                <div class="bento-item">
+                    <h3 style="color: var(--text-heading); font-size: 1.2rem; font-weight: 800; text-transform: uppercase;">Revenue Scaling</h3>
+                    <div class="value">60%+ CAGR</div>
+                    <p style="color: var(--text-body); font-size: 0.95rem;">Successfully scaled Enterprise Services from £25M to £183M over a 4-year cycle.</p>
+                </div>
+                <div class="bento-item">
+                    <h3 style="color: var(--text-heading); font-size: 1.2rem; font-weight: 800; text-transform: uppercase;">Leadership Lineage</h3>
+                    <div class="value">#1 ROOKIE</div>
+                    <p style="color: var(--text-body); font-size: 0.95rem;">Coached the 2023 #1 Global Rookie of the Year across the global group.</p>
+                </div>
+            </div>
+        </div>
+
+        <main style="max-width: 800px; margin: 0 auto;">
+            <div class="author-card">
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQHEutEnh6PZJA/profile-displayphoto-scale_200_200/B56ZvhU54aJUAY-/0/1769011918730?e=1771459200&v=beta&t=SpSMEPaDtt8sn8Jx8BNnTsmkc9xJ_TUCTsci93d1JiU" alt="David Matthews" class="author-image">
+                <div class="author-info">
+                    <h2 style="color: var(--text-heading);">David Matthews</h2>
+                    <p style="font-weight: 700; color: var(--primary);">Commercial Director | AI Practitioner</p>
+                    <p style="font-size: 0.95rem; color: var(--slate);">Harvard Business School Exec Ed.</p>
+                </div>
+            </div>
+
+            <h2 style="font-size:2.5rem; margin-bottom:1.5rem; color: var(--text-heading);">Judgement is the Moat.</h2>
+            <p style="margin-bottom:1rem;">The market is splitting. One side is trapped in research loops. The other uses AI to surface "Unspoken Needs" in minutes.</p>
+            
+            <div class="origin-block">
+                <h4 style="color: var(--primary); text-transform: uppercase; margin-bottom: 1rem;">The Origin</h4>
+                <p style="font-size: 1.15rem; font-weight: 700; font-style: italic; color: #60a5fa;">"How did you even know that existed?"</p>
+                <p style="margin-top: 1rem; color: #94a3b8;">AI does in seconds what manual layers took days to achieve.</p>
+            </div>
+
+            <section class="framework" style="margin-top:5rem;">
+                <h2 style="color: var(--text-heading); margin-bottom:2rem;">The Release Schedule</h2>
                 
-                <div class="bento-item" style="background: #ffffff; padding: 2rem; border-radius: 12px; color: #0f172a; border: 1px solid #e2e8f0;">
-                    <h3 style="color: #0f172a; margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Revenue Scaling</h3>
-                    <div class="value" style="color: #3b82f6; font-size: 2.2rem; font-weight: 900; margin: 0.75rem 0;">60%+ CAGR</div>
-                    <p style="color: #334155; font-size: 0.95rem; line-height: 1.5; margin: 0; opacity: 1 !important;">
-                        Successfully scaled Enterprise Services from £25M to £183M over a 4-year cycle. Plus grew Professional Service forward order book to >£50m from traditional VAR accounts.
-                    </p>
-                </div>
-                <div class="bento-item" style="background: #ffffff; padding: 2rem; border-radius: 12px; color: #0f172a; border: 1px solid #e2e8f0;">
-                    <h3 style="color: #0f172a; margin: 0; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Leadership Lineage</h3>
-                    <div class="value" style="color: #3b82f6; font-size: 2.2rem; font-weight: 900; margin: 0.75rem 0;">#1 ROOKIE</div>
-                    <p style="color: #334155; font-size: 0.95rem; line-height: 1.5; margin: 0; opacity: 1 !important;">
-                        Directly coached the 2023 #1 Global Rookie of the Year (revenue & profitability) from all peers across the global group, plus many others to their award jackets.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <main>
-            <div class="intro-text" style="max-width: 800px; margin: 0 auto;">
-                <div class="author-card">
-                    <img src="https://media.licdn.com/dms/image/v2/D5603AQHEutEnh6PZJA/profile-displayphoto-scale_200_200/B56ZvhU54aJUAY-/0/1769011918730?e=1771459200&v=beta&t=SpSMEPaDtt8sn8Jx8BNnTsmkc9xJ_TUCTsci93d1JiU" alt="David Matthews" class="author-image">
-                    <div class="author-info">
-                        <h2 style="margin: 0; color: var(--navy);">David Matthews</h2>
-                        <p style="font-weight: 700; color: var(--primary); margin: 0.25rem 0;">Commercial Director | Services Growth Leader | AI Practitioner</p>
-                        <p style="font-size: 0.95rem; color: var(--slate);">15 years navigating £5M–£50M mandates. Harvard Business School Exec Ed.</p>
+                <div class="schedule-item" style="border-color: var(--primary);">
+                    <div>
+                        <span style="display: block; font-weight: 700; color: var(--text-heading);">Intelligence Layer (Week 1)</span>
+                        <span style="font-size: 0.9rem; color: var(--slate);">Stakeholder pressures in 20 minutes.</span>
                     </div>
+                    <a href="week1.html" style="background:var(--primary); color:white; padding:0.8rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:700;">ACCESS</a>
                 </div>
+            </section>
 
-                <div style="text-align: center; padding: 1.25rem; background: #f1f5f9; border-radius: 8px; margin-bottom: 3.5rem; border: 1px solid var(--border);">
-                    <p style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate); margin: 0;">
-                        Strategic Advisor Across: Tier-1 Banking • Telco • Energy • Utilities • SaaS
-                    </p>
-                </div>
-
-                <h2 style="font-size:2.5rem; margin-bottom:1.5rem; letter-spacing: -0.03em; color: var(--navy);">Judgement is the Moat.</h2>
-                <p>The market is splitting. One side is trapped in 4-hour manual research loops. The other uses AI to surface the "Unspoken Needs" of a CFO in 20 minutes.</p>
-                <p>I have not changed the fundamentals of enterprise sales; I have simply added <strong>AI Fluency</strong> to deliver better quality and more informed decision-making.</p>
-
-                <div style="background: #0f172a; color: white; padding: 2.5rem; margin: 3rem 0; border-radius: 12px; border-left: 5px solid #3b82f6;">
-                    <h4 style="color: #3b82f6; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">The Origin</h4>
-                    <p style="font-size: 1.05rem; margin-bottom: 1rem;">Working in the bid hub in 2020, I watched 12 experts locked in a room for three days building a renewal pitch. Expert time—imprisoned on £10m+ deals.</p>
-                    <p style="color: #94a3b8; margin-bottom: 1.5rem;">The math was brutal: absolute waste of energy. So I ran a team SWOT. The question shifted: <strong>Don't optimize the grind. Kill it.</strong></p>
-                    <p style="font-size: 1.15rem; font-weight: 700; font-style: italic; color: #60a5fa;">"How did you even know that existed?"</p>
-                    <p style="margin-top: 1rem; color: #94a3b8;">Manual intelligence layers then. AI does it in seconds now—but only with judgment.</p>
-                </div>
-
-               <section class="framework" style="margin-top:5rem;">
-    <h2 style="margin-bottom:0.5rem; color: var(--navy);">The Release Schedule</h2>
-    <p style="margin-bottom: 2rem; color: var(--primary); font-weight: 700;">EQ + IQ + AI = SALES PERFORMANCE</p>
-    
-    <div style="display:grid; gap:1.25rem;">
-        
-        <div style="padding:1.5rem; border:1px solid var(--primary); border-radius:12px; display:flex; justify-content:space-between; align-items:center; background: #f0f7ff;">
-            <div>
-                <span style="display: block; font-weight: 700; color: var(--navy); font-size: 1.1rem;">The Intelligence Layer (Week 1)</span>
-                <span style="font-size: 0.9rem; color: var(--slate);">Surfacing stakeholder pressures in 20 minutes, not 4 hours.</span>
-            </div>
-            <a href="week1.html" style="background:var(--primary); color:white; padding:0.8rem 1.5rem; border-radius:6px; text-decoration:none; font-weight:700; font-size:0.85rem;">ACCESS NOW</a>
-        </div>
-
-        <div style="padding:1.5rem; border:1px solid var(--border); border-radius:12px; display:flex; justify-content:space-between; align-items:center; background: #f8fafc;">
-            <div>
-                <span style="display: block; font-weight: 700; color: #64748b;">The Omniscience Engine (Week 2)</span>
-                <span style="font-size: 0.85rem; color: #94a3b8;">Using AI to decode RFPs and find hidden requirements.</span>
-            </div>
-            <span style="background:#e2e8f0; color:#64748b; padding:0.8rem 1.5rem; border-radius:6px; font-weight:700; font-size:0.85rem;">COMING SOON</span>
-        </div>
-
-        <div style="padding:1.5rem; border:1px solid var(--border); border-radius:12px; display:flex; justify-content:space-between; align-items:center; background: #f8fafc;">
-            <div>
-                <span style="display: block; font-weight: 700; color: #64748b;">The Oxygen Effect (Week 3)</span>
-                <span style="font-size: 0.85rem; color: #94a3b8;">Strategic post-meeting communication that owns the narrative.</span>
-            </div>
-            <span style="background:#e2e8f0; color:#64748b; padding:0.8rem 1.5rem; border-radius:6px; font-weight:700; font-size:0.85rem;">LOCKED</span>
-        </div>
-
-        <div style="padding:1.5rem; border:1px solid var(--border); border-radius:12px; display:flex; justify-content:space-between; align-items:center; background: #f8fafc;">
-            <div>
-                <span style="display: block; font-weight: 700; color: #64748b;">The Buried Gold Playbook (Week 4)</span>
-                <span style="font-size: 0.85rem; color: #94a3b8;">Turning forgotten institutional memory into high-stakes expansion wins.</span>
-            </div>
-            <span style="background:#e2e8f0; color:#64748b; padding:0.8rem 1.5rem; border-radius:6px; font-weight:700; font-size:0.85rem;">LOCKED</span>
-        </div>
-
-    </div>
-</section>
-
-                <div style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: #0f172a; border-radius: 12px; color: white;">
-                    <h2 style="color: white; margin-bottom: 1rem;">Connect for Collaboration</h2>
-                    <p style="color: #94a3b8; margin-bottom: 2.5rem;">Sharing frameworks to help organisations move forward. Currently exploring Commercial Leadership roles.</p>
-                    <a href="https://www.linkedin.com/in/david-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;" target="_blank">Connect on LinkedIn</a>
-                </div>
+            <div style="text-align: center; margin-top: 5rem; padding: 4rem 2rem; background: var(--navy); border-radius: 12px; color: white;">
+                <h2 style="color: white; margin-bottom: 1rem;">Connect for Collaboration</h2>
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" style="background: #0a66c2; color: white; padding: 1rem 2.5rem; border-radius: 8px; text-decoration: none; font-weight: 700;" target="_blank">Connect on LinkedIn</a>
             </div>
         </main>
 
-        <footer style="text-align: center; padding: 4rem 0; border-top: 1px solid var(--border); margin-top: 4rem;">
-            <p style="color: var(--navy); margin: 0;"><strong>DAVID MATTHEWS</strong></p>
-            <p style="font-size: 0.8rem; color: var(--slate); margin-top: 0.5rem;">Harvard Business School Exec Ed | Tier-1 Financial Services Specialist</p>
+        <footer>
+            <p style="color: var(--text-heading);"><strong>DAVID MATTHEWS</strong></p>
+            <p style="font-size: 0.8rem; color: var(--slate);">Tier-1 Financial Services Specialist</p>
         </footer>
     </div>
+
+    <script>
+        const btn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        btn.addEventListener('click', () => {
+            const current = getComputedStyle(html).colorScheme;
+            const next = current.includes('dark') ? 'light' : 'dark';
+            html.style.setProperty('color-scheme', next);
+        });
+    </script>
 </body>
 </html>
-
