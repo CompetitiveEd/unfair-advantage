@@ -1,23 +1,24 @@
-/* ============================================================================
-   EXECUTIVE BRIEFING ENGINE - DYNAMIC MODE PERSPECTIVE
-   Optimised for Eyestrain Reduction & High-Stakes Impact
-   ============================================================================ */
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* 01. RESET & CORE VARIABLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 :root {
     color-scheme: light dark;
-
     /* Core Brand Colors */
-    --navy: #0f172a;       
-    --navy-light: #1e293b; 
-    --primary: #3b82f6;    
-    --slate: #94a3b8;      
-    --text-main: #f1f5f9;  
-    --border: #334155;     
+    --navy: #020617;
+    --navy-light: #0f172a;
+    --navy-slate: #1e293b;
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --slate: #94a3b8;
+    --slate-light: #cbd5e1;
+    --slate-dark: #64748b;
+    --green: #10b981;
     --max-width: 1000px;
-
-    /* Light/Dark Mapping Logic */
+    /* Dynamic Light/Dark Tokens */
     --bg-body: light-dark(#f8fafc, #020617);
     --bg-container: light-dark(#ffffff, #0f172a);
     --bg-card: light-dark(#f1f5f9, #1e293b);
@@ -26,27 +27,34 @@
     --border-dynamic: light-dark(#e2e8f0, #334155);
 }
 
-/* Force theme via JS attribute */
-:root[data-theme="light"] { color-scheme: light; }
-:root[data-theme="dark"] { color-scheme: dark; }
+/* Theme forcing via JS */
+:root[data-theme="light"] {
+    color-scheme: light;
+}
 
+:root[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+/* 02. BASE STYLES */
 body {
-    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
     color: var(--text-body);
     background: var(--bg-body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* THE MASTER CONTAINER */
 .page-container {
     max-width: var(--max-width);
-    margin: 0 auto; 
+    margin: 0 auto;
     background: var(--bg-container);
-    box-shadow: 0 0 100px rgba(0,0,0,0.1);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.1);
     min-height: 100vh;
 }
 
-/* NAVIGATION */
+/* 03. NAVIGATION */
 nav {
     border-bottom: 1px solid var(--border-dynamic);
     padding: 1.25rem 2.5rem;
@@ -54,12 +62,38 @@ nav {
     justify-content: space-between;
     align-items: center;
     background: var(--bg-container);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; }
-.nav-links { display: flex; gap: 2rem; align-items: center; }
-.nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
-.nav-links a:hover { color: var(--primary); }
+.nav-brand {
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--text-heading);
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--slate);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.3s;
+    letter-spacing: 0.05em;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
 
 .theme-toggle {
     background: var(--bg-card);
@@ -70,75 +104,165 @@ nav {
     cursor: pointer;
     font-size: 0.7rem;
     font-weight: 800;
+    transition: 0.3s;
 }
 
-/* DARK HEADER BLOCK - Always dark for impact */
+.theme-toggle:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* 04. HERO & HEADER SECTIONS */
 .dark-header-block {
-    background: #020617; /* Keeps the navy background edge-to-edge */
+    background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;
     width: 100%;
     position: relative;
 }
 
 .hero-impact {
     position: relative;
-    padding: 6rem 2.5rem;
-    min-height: 480px; 
+    padding: 8rem 2.5rem;
+    min-height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     text-align: center;
 }
 
 .hero-bg {
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%;
-            object-fit: cover; 
-            object-position: center 20%; 
-            opacity: 0.15; 
-            z-index: 0;
-            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-        }
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.25;
+    z-index: 0;
+}
 
-        .hero-impact {
-            position: relative; 
-            padding: 8rem 2.5rem; 
-            min-height: 500px; 
-            max-height: 700px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center;
-            overflow: hidden; 
-        }
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+}
 
-/* BENTO GRID */
+.paradox-anchor {
+    margin-bottom: 3.5rem;
+    text-align: left;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.paradox-label {
+    color: #3b82f6;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.paradox-text {
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.6;
+    border-left: 2px solid rgba(59, 130, 246, 0.4);
+    padding-left: 1.5rem;
+}
+
+.hero-headline {
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+}
+
+.hero-subtext {
+    color: #cbd5e1;
+    font-size: 1.15rem;
+    margin-top: 2rem;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.formula {
+    color: #60a5fa;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+}
+
+/* 05. BENTO GRID */
 .bento-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     background: var(--border-dynamic);
-    gap: 1px; 
+    gap: 1px;
 }
 
 .bento-item {
-    background: var(--navy); /* Keep navy for the header block version */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
     padding: 3.5rem 2.5rem;
+    transition: 0.3s;
 }
 
-.bento-item .value {
-    font-size: clamp(2.5rem, 4vw, 3.5rem);
+.metric-label {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+.metric-value-lg {
+    font-size: 2.4rem;
     font-weight: 900;
-    color: #60a5fa; /* Keep primary blue for contrast on dark */
-    margin-bottom: 0.5rem;
+    color: white;
+    margin: 0.5rem 0;
+    letter-spacing: -0.02em;
 }
 
-/* MAIN CONTENT */
-main { 
-    padding: 5rem 2.5rem; 
+.metric-detail {
+    color: #60a5fa;
+    font-size: 1.1rem;
+    font-weight: 900;
+}
+
+.trajectory-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.trajectory-fill {
+    position: absolute;
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    box-shadow: 0 0 15px var(--primary);
+    transition: width 2s ease-out;
+}
+
+/* 06. MAIN CONTENT */
+main {
+    padding: 6rem 2.5rem;
     max-width: 900px;
     margin: 0 auto;
 }
@@ -146,37 +270,164 @@ main {
 .author-card {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
+    gap: 3rem;
     background: var(--bg-card);
-    padding: 2.5rem;
-    border-radius: 12px;
-    margin: 4rem 0;
+    padding: 3rem;
+    border-radius: 16px;
+    margin-bottom: 4.5rem;
     border: 1px solid var(--border-dynamic);
 }
 
-.author-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); }
-
-/* SCHEDULE ITEMS */
-.schedule-item {
-    padding: 2rem; border: 1px solid var(--border-dynamic); border-radius: 12px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--bg-card); margin-bottom: 1.5rem;
+.author-image {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
 }
 
-.locked { opacity: 0.6; background: var(--bg-body); cursor: not-allowed; }
+/* 07. SCHEDULE & CARDS */
+.schedule-item {
+    padding: 2.5rem;
+    border: 1px solid var(--border-dynamic);
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    margin-bottom: 2rem;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.schedule-item:hover:not(.locked) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+}
+
+.locked {
+    opacity: 0.6;
+    background: var(--bg-body);
+    cursor: not-allowed;
+}
+
+.btn-schedule {
+    background: var(--primary);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    transition: 0.3s;
+}
+
+.btn-schedule:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+/* 08. TRAILER OVERLAY */
+#trailer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #020617;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1), opacity 1s ease;
+}
+
+.overlay-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 09. ANIMATIONS */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 10. UTILITY CLASSES */
+.pill-uk {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 7px 16px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: white;
+    font-variant: all-small-caps;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.executive-briefing {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr;
+    gap: 2.5rem;
+    margin: 5rem 0;
+}
+
+/* 11. RESPONSIVE / MOBILE */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .bento-row,
+    .executive-briefing,
+    .schedule-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .author-card {
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-headline {
+        font-size: 2.2rem;
+    }
+
+    .hero-impact {
+        padding: 4rem 1.5rem;
+        min-height: 400px;
+    }
+
+    main {
+        padding: 3rem 1.5rem;
+    }
+}
 
 /* FOOTER */
 footer {
-    padding: 5rem 2.5rem;
+    padding: 6rem 2.5rem;
     border-top: 1px solid var(--border-dynamic);
     text-align: center;
     background: var(--bg-container);
-}
-
-/* MOBILE OPTIMIZATION */
-@media (max-width: 768px) {
-    .nav-links { display: none; }
-    .bento-row { grid-template-columns: 1fr; }
-    .author-card { flex-direction: column; text-align: center; gap: 1.5rem; }
-    .schedule-item { flex-direction: column; gap: 1.5rem; text-align: center; }
 }
