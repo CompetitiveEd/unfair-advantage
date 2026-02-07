@@ -29,6 +29,7 @@
         function unlockExperience() {
             const trailer = document.getElementById('trailer-overlay');
             trailer.classList.add('overlay-hidden');
+            trailer.style.display = 'none';
             sessionStorage.setItem('trailerPlayed', 'true');
             
             // Sequential animation trigger for data bars
@@ -52,19 +53,16 @@
 
     window.location.reload();
 }
-        window.onload = () => {
-            if (sessionStorage.getItem('trailerPlayed')) {
-                const overlay = document.getElementById('trailer-overlay');
-                if(overlay) overlay.style.display = 'none';
-                
-                setTimeout(() => {
-                    const totalBar = document.getElementById('traj-total');
-                    const varBar = document.getElementById('traj-var');
-                    if(totalBar) totalBar.style.width = '84%';
-                    if(varBar) varBar.style.width = '70%';
-                }, 100);
-            }
-        };
+       window.onload = () => {
+    if (sessionStorage.getItem('trailerPlayed')) {
+        const overlay = document.getElementById('trailer-overlay');
+        if(overlay) {
+            overlay.style.display = 'none'; // Ensure it stays gone on refresh
+            overlay.classList.add('overlay-hidden');
+        }
+        // ... leave your trajectory bar code here ...
+    }
+};
 
         /**
          * COMMERCIAL CALCULATOR
@@ -169,6 +167,7 @@
             pointer-events: none; 
         }
         
+              
         @keyframes fadeIn { 
             from { opacity: 0; transform: translateY(15px); } 
             to { opacity: 1; transform: translateY(0); } 
