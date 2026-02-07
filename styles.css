@@ -128,8 +128,8 @@ nav {
 
 .hero-impact {
     position: relative;
-    padding: 4rem 2.5rem;  /* Changed from 8rem */
-    min-height: 450px;      /* Changed from 550px */
+    padding: 3rem 2.5rem 4rem;
+    min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,22 +143,27 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.60;     /* Increased from 0.25 - more visible but still subtle */
+    opacity: 0.60;
     z-index: 0;
 }
 .hero-content {
     position: relative;
     z-index: 1;
     max-width: 850px;
-    animation: fadeIn 1.2s ease-out;
+}
+
+.hero-content > * {
+    opacity: 0;
+    animation: fadeSlideUp 1s ease-out forwards;
 }
 
 .paradox-anchor {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     text-align: left;
     max-width: 650px;
     margin-left: auto;
     margin-right: auto;
+    animation-delay: 0.2s;
 }
 
 .paradox-label {
@@ -187,7 +192,15 @@ nav {
     line-height: 1.05;
     font-weight: 900;
     letter-spacing: -0.04em;
-    animation: fadeIn 1.5s ease-out 0.3s backwards;
+    animation-delay: 0.5s;
+}
+
+.hero-headline span:first-child {
+    animation: fadeSlideUp 1s ease-out 0.7s backwards;
+}
+
+.hero-headline span:last-child {
+    animation: fadeSlideUp 1s ease-out 0.9s backwards;
 }
 
 .hero-subtext {
@@ -199,6 +212,7 @@ nav {
     margin-right: auto;
     line-height: 1.5;
     font-weight: 500;
+    animation-delay: 1.1s;
 }
 
 .formula {
@@ -208,6 +222,7 @@ nav {
     font-weight: 800;
     letter-spacing: 0.25em;
     text-transform: uppercase;
+    animation-delay: 1.3s;
 }
 
 /* 05. BENTO GRID */
@@ -221,8 +236,18 @@ nav {
 .bento-item {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(12px);
-    padding: 2.5rem 2rem; /* Changed from 3.5rem 2.5rem */
+    padding: 2.5rem 2rem;
     transition: 0.3s;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 1.5s forwards;
+}
+
+.bento-item:nth-child(2) {
+    animation-delay: 1.7s;
+}
+
+.bento-item:first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .metric-label {
@@ -237,8 +262,14 @@ nav {
     font-size: 2.4rem;
     font-weight: 900;
     color: white;
-    margin: 0.5rem 0;
+    margin: 0.3rem 0;
     letter-spacing: -0.02em;
+}
+
+.metric-value-lg .metric-before {
+    font-size: 1.6rem;
+    opacity: 0.6;
+    font-weight: 700;
 }
 
 .metric-detail {
@@ -252,7 +283,7 @@ nav {
     height: 6px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
     overflow: hidden;
     position: relative;
 }
@@ -364,6 +395,17 @@ main {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .reveal {
@@ -665,4 +707,15 @@ footer {
     border-top: 1px solid var(--border-dynamic);
     text-align: center;
     background: var(--bg-container);
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .hero-content > *,
+    .bento-item,
+    .hero-headline span {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
