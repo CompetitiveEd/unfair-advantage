@@ -199,7 +199,7 @@
 </div>
 
      <main>
-    <section style="padding: 30px 40px 60px 40px; max-width: 800px; margin: 0 auto; text-align: center;">
+    <section style="padding: 15px 40px 60px 40px; max-width: 800px; margin: 0 auto; text-align: center;">
         <h2 style="font-size: 2rem; font-weight: 800; color: var(--text-heading); margin-bottom: 2rem;">The Unfair Advantage</h2>
         
         <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-heading); margin-bottom: 1.5rem;">
@@ -209,12 +209,10 @@
         <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-body);">
             By reclaiming 1,000+ hours annually from manual research, AI frees elite strategists to do what actually wins deals: deep discovery, articulating complex value, walking a mile in their client's shoes. The hardest sale isn't convincing a buyer to choose you. It's convincing them you belong in the conversation.
         </p>
+        
+        <a href="foundations.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; margin-top: 2rem;">START WITH FOUNDATIONS</a>
     </section>
 </main>
-
-<section style="padding: 3rem 2rem; text-align: center; background: var(--bg-body);">
-    <a href="foundations.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">START WITH FOUNDATIONS</a>
-</section>
 
 <footer>
     <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading);">DAVID MATTHEWS</p>
@@ -224,29 +222,35 @@
 <script>
     // Smooth scroll to top with elegant fade animation
     function scrollToTop() {
+        // Smooth scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Trigger the same elegant fade as trailer
-        const pageContainer = document.querySelector('.page-container');
-        pageContainer.classList.remove('content-reveal');
-        
+        // Wait for scroll to complete, then trigger fade
         setTimeout(() => {
-            pageContainer.classList.add('content-reveal');
+            const pageContainer = document.querySelector('.page-container');
+            pageContainer.classList.remove('content-reveal');
             
-            // Trigger trajectory bars
+            // Force reflow
+            void pageContainer.offsetWidth;
+            
             setTimeout(() => {
-                const totalBar = document.getElementById('traj-total');
-                const varBar = document.getElementById('traj-var');
-                if(totalBar) {
-                    totalBar.style.width = '0%';
-                    setTimeout(() => totalBar.style.width = '84%', 50);
-                }
-                if(varBar) {
-                    varBar.style.width = '0%';
-                    setTimeout(() => varBar.style.width = '70%', 50);
-                }
-            }, 800);
-        }, 50);
+                pageContainer.classList.add('content-reveal');
+                
+                // Trigger trajectory bars after fade starts
+                setTimeout(() => {
+                    const totalBar = document.getElementById('traj-total');
+                    const varBar = document.getElementById('traj-var');
+                    if(totalBar) {
+                        totalBar.style.width = '0%';
+                        setTimeout(() => totalBar.style.width = '84%', 50);
+                    }
+                    if(varBar) {
+                        varBar.style.width = '0%';
+                        setTimeout(() => varBar.style.width = '70%', 50);
+                    }
+                }, 400);
+            }, 50);
+        }, 600);
     }
 
     // Theme management
