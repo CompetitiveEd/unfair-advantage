@@ -1,228 +1,344 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foundations | The Unfair Advantage</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    </script>
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
-
-        :root {
-            color-scheme: light dark;
-            --navy: #020617; --primary: #3b82f6; --slate: #94a3b8;
-            --bg-body: light-dark(#f8fafc, #020617);
-            --bg-container: light-dark(#ffffff, #0f172a);
-            --bg-card: light-dark(#f1f5f9, #1e293b);
-            --text-heading: light-dark(#0f172a, #ffffff);
-            --text-body: light-dark(#334155, #f1f5f9);
-            --border-dynamic: light-dark(#e2e8f0, #334155);
-        }
-
-        body { line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        .page-container { max-width: 1000px; margin: 0 auto; background: var(--bg-container); min-height: 100vh; box-shadow: 0 0 100px rgba(0,0,0,0.1); }
-
-        nav { border-bottom: 1px solid var(--border-dynamic); padding: 1.25rem 2.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-container); position: sticky; top: 0; z-index: 1000; }
-        .nav-brand { font-weight: 900; text-decoration: none; color: var(--text-heading); font-size: 1.1rem; letter-spacing: -0.02em; }
-        .nav-links a { color: var(--slate); text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-left: 2rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
-
-        /* HERO BLOCK */
-        .dark-header-block { background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617); background-size: 400% 400%; animation: gradientBG 15s ease infinite; color: white; padding: 8rem 2.5rem; text-align: center; position: relative; }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .inspiration-tag {
-            display: inline-block; text-decoration: none; color: #60a5fa; 
-            font-size: 0.65rem; font-weight: 800; text-transform: uppercase; 
-            letter-spacing: 0.2em; border: 1px solid rgba(96, 165, 250, 0.3); 
-            padding: 0.6rem 1.4rem; border-radius: 30px; background: rgba(0,0,0,0.4);
-            margin-bottom: 2.5rem; transition: 0.3s;
-        }
-        .inspiration-tag:hover { border-color: #60a5fa; background: rgba(59, 130, 246, 0.15); }
-
-        /* HIERARCHY GRID */
-        .hierarchy-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-dynamic); margin-top: 4rem; }
-        .hierarchy-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); padding: 3rem 1.5rem; min-height: 220px; }
-        .hierarchy-card span { font-size: 0.7rem; font-weight: 900; color: var(--primary); display: block; margin-bottom: 1rem; letter-spacing: 0.1em; }
-        .hierarchy-card h4 { font-size: 1.1rem; font-weight: 900; margin-bottom: 0.75rem; color: white; letter-spacing: -0.01em; }
-        .hierarchy-card p { font-size: 0.85rem; color: #94a3b8; line-height: 1.6; font-weight: 500; }
-
-        /* MAIN CONTENT */
-        main { padding: 6rem 2.5rem; max-width: 900px; margin: 0 auto; }
-        h2 { font-size: 2.5rem; font-weight: 900; color: var(--text-heading); margin: 5rem 0 2rem 0; letter-spacing: -0.04em; }
-        p { margin-bottom: 1.8rem; font-size: 1.1rem; line-height: 1.8; font-weight: 400; }
-        strong { font-weight: 700; color: var(--text-heading); }
-
-        /* NATE'S COMPARISON TABLE */
-        .comparison-table { width: 100%; border-collapse: collapse; margin: 3rem 0; border: 1px solid var(--border-dynamic); border-radius: 12px; overflow: hidden; }
-        .comparison-table th { background: var(--bg-card); padding: 1.5rem; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate); }
-        .comparison-table td { padding: 1.5rem; border-top: 1px solid var(--border-dynamic); font-size: 0.95rem; font-weight: 500; }
-        .island-row { color: var(--slate); font-style: italic; }
-        .advantage-row { color: var(--primary); font-weight: 700; }
-
-        /* RASHIDI BLOCK */
-        .rashidi-callout { background: #0f172a; padding: 3.5rem; border-radius: 16px; border: 1px solid rgba(59, 130, 246, 0.2); margin: 4rem 0; position: relative; }
-        .rashidi-label { position: absolute; top: -12px; left: 30px; background: var(--primary); color: white; padding: 4px 12px; font-size: 0.65rem; font-weight: 900; border-radius: 4px; text-transform: uppercase; }
-
-        /* REVEAL */
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .nate-tribute { background: var(--navy); padding: 4rem; color: white; border-radius: 20px; margin-top: 6rem; display: flex; gap: 3rem; align-items: center; border: 1px solid rgba(255,255,255,0.05); }
-        .nate-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1e40af); display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.5rem; flex-shrink: 0; }
-
-        @media (max-width: 768px) { .hierarchy-container { grid-template-columns: 1fr; } .nate-tribute { flex-direction: column; text-align: center; } }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<div class="page-container">
     <nav>
         <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="nav-links">
-            <a href="foundations.html" style="color:var(--primary)">Foundations</a>
-            <a href="week1.html">Week 1</a>
-            <a href="index.html">The Roadmap</a>
+            <a href="foundations.html" style="color: var(--primary);">Foundations</a>
+            <div class="nav-dropdown">
+                <span class="nav-link-main">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">Week 1: Intelligence Layer</a>
+                    <a href="#" class="locked" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes." onclick="return false;">🔒 Week 2: Omniscience Engine</a>
+                    <a href="#" class="locked" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems." onclick="return false;">🔒 Week 3: Oxygen Effect</a>
+                    <a href="#" class="locked" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives." onclick="return false;">🔒 Week 4: Velocity @ Scale</a>
+                </div>
+            </div>
+            <a href="library.html">Library</a>
+            <a href="contact.html">Contact</a>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <div class="dark-header-block">
-        <header class="reveal active">
-            <a href="https://natesnewsletter.substack.com/" target="_blank" class="inspiration-tag">
-                The Curiosity Hedge: Nate's Newsletter
-            </a>
-            
-            <h1 style="font-size: clamp(2.2rem, 6vw, 3.8rem); font-weight: 900; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 2.5rem;">
-                Lean in, or start a garden. <br>
-                <span style="color: #64748b;">The industry has chosen.</span>
-            </h1>
+    <div class="page-container content-reveal">
+        <section style="padding: 60px 40px; max-width: 900px; margin: 0 auto;">
+            <h1 style="font-size: 3rem; font-weight: 900; color: var(--text-heading); margin-bottom: 1rem; text-align: center;">Foundations</h1>
+            <p style="font-size: 1.2rem; text-align: center; color: var(--slate); margin-bottom: 3rem;">Why this site exists. Why it matters. Why now.</p>
 
-            <p style="font-size: 1.25rem; color: #cbd5e1; max-width: 800px; margin: 0 auto; line-height: 1.7; font-weight: 500;">
-                AI fluency is no longer a "management decision"—it is the survival layer. Curiosity is the only hedge against total displacement in the 2026 enterprise landscape.
-            </p>
-        </header>
+            <!-- Why This Site Exists -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">Why This Site Exists</h2>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 1rem;">
+                    This site is a working demonstration. Not a portfolio. Not a resume. A live example of AI-native sales methodology in practice.
+                </p>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 1rem;">
+                    Built for Commercial Directors exploring transformation at £100M+ scale. For CXOs evaluating AI-native leadership. For recruiters assessing capability beyond credentials.
+                </p>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 0;">
+                    The methodology works. >£790M career revenue impact proves it. The question isn't whether AI transforms sales execution. It's whether you have the systems thinking to build it.
+                </p>
+            </div>
 
-        <div class="hierarchy-container">
-            <div class="hierarchy-card" style="border-bottom: 4px solid #3b82f6;">
-                <span>STRATA 01</span>
-                <h4>GOALS</h4>
-                <p>Decoding the Board-level imperatives and the CEO's "North Star" performance promises.</p>
+            <!-- The Research Tax Problem -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">The Research Tax Problem</h2>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 2rem;">
+                    Elite sellers waste 40% of their time on manual research. Pre-meeting intelligence. RFP analysis. Stakeholder mapping. Account expansion planning. Follow-up research.
+                </p>
+                
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--primary); margin-bottom: 2rem; font-weight: 700;">
+                    This isn't just inefficiency. It's strategic capacity buried under drudge work.
+                </p>
+                
+                <!-- Simple Calculator -->
+                <div style="background: var(--bg-body); border: 2px solid var(--primary); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1.5rem; text-align: center;">Calculate Your Research Tax</h3>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate); margin-bottom: 0.5rem;">Number of sellers:</label>
+                        <input type="number" id="numSellers" value="10" min="1" max="100" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-dynamic); border-radius: 6px; background: var(--bg-card); color: var(--text-body); font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: block; font-size: 0.9rem; font-weight: 600; color: var(--slate); margin-bottom: 0.5rem;">Average salary (£):</label>
+                        <input type="number" id="avgSalary" value="75000" min="30000" max="200000" step="5000" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-dynamic); border-radius: 6px; background: var(--bg-card); color: var(--text-body); font-size: 1rem;">
+                    </div>
+                    
+                    <button onclick="calculateTax()" style="width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-bottom: 2rem;">CALCULATE ANNUAL COST</button>
+                    
+                    <div id="results" style="display: none;">
+                        <div style="background: var(--bg-card); border-left: 4px solid #ef4444; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p style="font-size: 0.85rem; text-transform: uppercase; color: var(--slate); margin-bottom: 0.5rem; font-weight: 700;">Annual Cost (40% research time)</p>
+                            <p id="annualCost" style="font-size: 2rem; font-weight: 800; color: #ef4444; margin: 0;"></p>
+                        </div>
+                        
+                        <div style="background: var(--bg-card); border-left: 4px solid #22c55e; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                            <p style="font-size: 0.85rem; text-transform: uppercase; color: var(--slate); margin-bottom: 0.5rem; font-weight: 700;">Hours Wasted Annually</p>
+                            <p id="hoursWasted" style="font-size: 2rem; font-weight: 800; color: #22c55e; margin: 0;"></p>
+                        </div>
+                        
+                        <div style="background: var(--bg-card); border-left: 4px solid var(--primary); padding: 1.5rem; border-radius: 8px;">
+                            <p style="font-size: 0.85rem; text-transform: uppercase; color: var(--slate); margin-bottom: 0.5rem; font-weight: 700;">Potential Savings (AI compression)</p>
+                            <p id="savings" style="font-size: 2rem; font-weight: 800; color: var(--primary); margin: 0;"></p>
+                            <p style="font-size: 0.85rem; color: var(--slate); margin-top: 0.5rem;">If 80% of research automated</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); font-style: italic;">
+                    This is the research tax. The cost of manual execution on proven frameworks. The problem I've been solving for 38 years.
+                </p>
             </div>
-            <div class="hierarchy-card" style="border-bottom: 4px solid #60a5fa;">
-                <span>STRATA 02</span>
-                <h4>STRATEGIES</h4>
-                <p>Analyzing the strategic pillars and competitive moats required to achieve those goals.</p>
+
+            <!-- The 30-Year Foundation -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">The 30-Year Foundation</h2>
+                
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-heading); margin-bottom: 2rem; font-weight: 700;">
+                    I've been building self-healing systems since 1987. GenAI is just the newest execution layer.
+                </p>
+                
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">1987-1997: National Grid</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        Oracle DBA, Unix specialist, VME mainframe support. Built self-healing EU architecture for critical national energy systems. 40% cost savings through automation.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--slate);">
+                        <strong>The lesson:</strong> Anticipate failure modes. Automate responses. Scale service without scaling headcount. This is what "agentic AI" does in 2026. I was building it in 1987.
+                    </p>
+                </div>
+                
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">1997-2010: Computacenter (Technical → Commercial)</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        13-year progression from technical delivery to enterprise sales. Averaged £9M annually. Displaced Tier 1 competitors through delivery excellence and commercial rigor.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--slate);">
+                        <strong>The lesson:</strong> Technical architecture means nothing if you can't translate it to business value. Bridge the gap. That's what wins deals.
+                    </p>
+                </div>
+                
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">2010-2016: Services Transformation (VAR → Margin)</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        Turned around neglected Professional Services unit. £50M revenue (170% growth). Hit £1M+ monthly profit by December 2013. Margin at 3x scale.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--slate);">
+                        <strong>The lesson:</strong> VARs are attempting this transition now (SCC, Node4, funded startups). I did it in 2010-2013. Created IP white-labelled by Tier 1 SIs. Built talent that progressed to MD roles.
+                    </p>
+                </div>
+                
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">2016-2023: Dual Role (Enterprise + IP Development)</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        Enterprise repositioning: £25M → £183M over 4 years (65% CAGR). Simultaneously developed GAIN platform: 80% pre-sales cycle reduction through IP surfacing.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--slate);">
+                        <strong>The lesson:</strong> Data-driven consultancy platform surfaced buried IP from legacy customer data. Enabled £333M TCV (Global Investment Bank) + £30M TCV (Government). Systems thinking scales beyond individual execution.
+                    </p>
+                </div>
+                
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem;">2023-2025: Brillio (AI-Native Reinvention)</h3>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        AI-first organization. Mandate: "Bring AI to every project and client." £45M Project Unicorn: Fully autonomous, self-healing AI infrastructure. Same architecture I built at National Grid. Now at cloud scale.
+                    </p>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--slate);">
+                        <strong>The lesson:</strong> While colleagues pasted prompts into ChatGPT, I architected the system underneath. Because I'd been building self-healing workflows for 38 years. GenAI is just Oracle with better NLP.
+                    </p>
+                </div>
             </div>
-            <div class="hierarchy-card" style="border-bottom: 4px solid #93c5fd;">
-                <span>STRATA 03</span>
-                <h4>INITIATIVES</h4>
-                <p>Mapping the funded transformation programmes where commercial friction is weaponized.</p>
+
+            <!-- Why I Could Build This -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">Why I Could Build This (And Most Sales Leaders Can't)</h2>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 1.5rem;">
+                    Having ChatGPT ≠ Having workflows. Most sales leaders lack the technical fluency to design AI systems. They can use tools. They can't architect solutions.
+                </p>
+                
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1rem;">The Technical Foundation</h3>
+                <ul style="font-size: 1rem; line-height: 1.9; color: var(--text-body); margin-bottom: 2rem; padding-left: 1.5rem;">
+                    <li><strong>Oracle/RDBMS:</strong> Understand data architecture, CRM foundations, signal quality</li>
+                    <li><strong>SQL fluency:</strong> Query systems, build reports, design scorecards (not just consume dashboards)</li>
+                    <li><strong>Unix administration:</strong> Think in workflows, automation, system orchestration</li>
+                    <li><strong>Senior PM background:</strong> People, power, politics, persuasion—change management at scale</li>
+                </ul>
+                
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1rem;">The Commercial Credibility</h3>
+                <ul style="font-size: 1rem; line-height: 1.9; color: var(--text-body); margin-bottom: 2rem; padding-left: 1.5rem;">
+                    <li>>£790M career revenue impact (individual contributor + team leadership)</li>
+                    <li>Proven without AI: £183M enterprise, £50M services, £9M annual individual performance</li>
+                    <li>Built systems that scale: IP white-labelled by Tier 1 SIs, talent progressed to MD roles</li>
+                </ul>
+                
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1rem;">The AI-Native Execution</h3>
+                <p style="font-size: 1rem; line-height: 1.8; color: var(--text-body);">
+                    At Brillio—surrounded by AI tools and infrastructure—I was the only one systematically redesigning workflows. Because I understood the architecture underneath. Because I'd been building self-healing systems for 38 years.
+                </p>
             </div>
-            <div class="hierarchy-card" style="border-bottom: 4px solid #cbd5e1;">
-                <span>STRATA 04</span>
-                <h4>OPERATIONS</h4>
-                <p>Where "Dredge" lives—operational day-to-day activity that obscures strategic value.</p>
+
+            <!-- The Brillio Laboratory -->
+            <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 12px; padding: 2.5rem; margin-bottom: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">The Brillio Laboratory (2023-2025)</h2>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 1.5rem;">
+                    <strong>Context:</strong> US HQ'd AI-first digital services organization. Mandate: "Bring AI to every project and client."
+                </p>
+                
+                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-body); margin-bottom: 2rem;">
+                    I was immersed in AI infrastructure daily. Tools everywhere. Executive support for adoption. Yet sales teams still researched manually. Why? <strong>Because having ChatGPT ≠ having workflows.</strong>
+                </p>
+                
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-heading); margin-bottom: 1rem;">What I Built</h3>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">Project Unicorn Architecture (£45M Pursuit)</h4>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body);">
+                        Fully autonomous, self-healing AI infrastructure for major UK telco. Advanced to final two against global SIs (TCS, Wipro, Epam). This wasn't "AI sales pitch." This was architecting the system—same thinking as National Grid 1987, now at cloud scale.
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">Account Transformation Playbook</h4>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body);">
+                        Scaled enterprise software account from staff aug to strategic partner: >50 consultants, £2M revenue. Positioned as AI-led modernisation partner. Required: Understanding client's data architecture, cloud infrastructure, application stack. My Oracle/SQL background = could speak their language.
+                    </p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">Daily Workflow Reinvention</h4>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body); margin-bottom: 0.5rem;">
+                        While surrounded by AI tools, I was <strong>the only one</strong> systematically redesigning workflows:
+                    </p>
+                    <ul style="font-size: 0.95rem; line-height: 1.7; color: var(--slate); padding-left: 1.5rem;">
+                        <li>Pre-meeting intelligence: 8 hours → 20 minutes</li>
+                        <li>RFP analysis: 40 hours → 2 hours</li>
+                        <li>Account expansion mapping: Days → Hours</li>
+                        <li>Strategic follow-up: Manual → Automated signal tracking</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">Documented the Methodology</h4>
+                    <p style="font-size: 1rem; line-height: 1.7; color: var(--text-body);">
+                        "AI Is Not Your Cheerleader" newsletter—IQ + EQ + AI fluency series (143 subscribers). Weekly operational playbooks with real prompts and workflows. Not theory. Production systems.
+                    </p>
+                </div>
             </div>
-        </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; padding: 3rem 0;">
+                <h2 style="font-size: 2rem; font-weight: 800; color: var(--text-heading); margin-bottom: 1.5rem;">The Unfair Advantage</h2>
+                <p style="font-size: 1.15rem; line-height: 1.8; color: var(--text-body); margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    AI-first organization ≠ AI-native execution. You need systems thinking to bridge the gap. I have 38 years of building self-healing systems. Colleagues have ChatGPT. That's the unfair advantage.
+                </p>
+                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="btn-newsletter" style="margin-right: 1rem;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    Subscribe to Newsletter
+                </a>
+                <a href="index.html" class="btn-schedule">Back to Home</a>
+            </div>
+        </section>
     </div>
 
-    <main>
-        <section class="reveal">
-            <h2>01. The Curiosity Hedge</h2>
-            <p>As Nate Jones (Nate's Newsletter) identifies, the industry is splitting into two groups. Group A leans into the technical environment, pushing themselves to go further. Group B hides their head in the sand, claiming "I don't have time."</p>
-            
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>The Profile</th>
-                        <th>The Mindset</th>
-                        <th>The Outcome</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="island-row">
-                        <td>The Island (Denial)</td>
-                        <td>"I tried it in 2022. It's not that good."</td>
-                        <td>Vocational Obsolescence</td>
-                    </tr>
-                    <tr class="advantage-row">
-                        <td>The Advantage (Curiosity)</td>
-                        <td>"AI handles the storm; I handle the human."</td>
-                        <td>Commercial Evolution</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p><strong>Curiosity is the ladder.</strong> In 2026, there is no career path that doesn't include AI. Your decades of scars and pattern recognition are your greatest assets—but only if you automate the administrative "Dredge" that keeps you from using them.</p>
-        </section>
-
-        <section class="reveal">
-            <div class="rashidi-callout">
-                <span class="rashidi-label">Sol Rashidi: Human Amplification</span>
-                <h3 style="color: white; font-size: 1.6rem; margin-bottom: 1rem; font-weight: 900; letter-spacing: -0.02em;">Avoid Intellectual Atrophy™</h3>
-                <p style="color: #94a3b8; font-size: 1.05rem; margin-bottom: 0; line-height: 1.7;">
-                    Sol Rashidi (the world's first Chief AI Officer) warns: "We must outsource <strong>tasks</strong> to AI, not <strong>critical thinking</strong>." If you use AI to write for you, you are becoming dependent. If you use AI to <strong>see</strong> for you—to synthesize 40 data sources into a pressure map—you are amplified.
-                </p>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <h2>02. The Structural Mandate</h2>
-            <p>High-value Managed Services are won in the <strong>Management Gap</strong>: the distance between Boardroom vision and Departmental friction. We use the Intelligence Layer to bridge this gap in under 20 minutes.</p>
-            
-            <div style="background: var(--bg-card); padding: 3rem; border-radius: 12px; border: 1px solid var(--border-dynamic); margin: 4rem 0;">
-                <h4 style="margin-bottom: 1rem; font-weight: 900; color: var(--text-heading);">The Economic Value of Time (EVT)</h4>
-                <p style="font-size: 1rem; margin-bottom: 0;">
-                    When you spend 4 hours on manual research, you are paying a "Tax" that prevents you from performing <strong>Second-Order Thinking</strong>. Structural Efficiency is the removal of that tax. We kill the dredge so you can reclaim the gain.
-                </p>
-            </div>
-        </section>
-
-        <div class="reveal" style="text-align: center; margin-top: 6rem; padding-bottom: 2rem;">
-            <p style="font-weight: 800; font-size: 1.1rem; margin-bottom: 2.5rem; color: var(--text-heading); letter-spacing: -0.01em;">Foundations are set. Reclaim your advantage.</p>
-            <a href="week1.html" style="background: var(--primary); color: white; padding: 1.25rem 3.5rem; border-radius: 8px; text-decoration: none; font-weight: 900; font-size: 0.9rem; letter-spacing: 0.15em; transition: 0.3s; box-shadow: 0 15px 30px -10px rgba(59, 130, 246, 0.5);">
-                ACCESS WEEK 1: INTELLIGENCE LAYER
-            </a>
-        </div>
-
-        <div class="nate-tribute reveal">
-            <div class="nate-avatar">N</div>
-            <div>
-                <h4 style="color: #3b82f6; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.7rem; margin-bottom: 0.8rem; font-weight: 900;">The Mindset Architect</h4>
-                <p style="color: #cbd5e1; font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-                    <strong>Nate Jones (Nate's Newsletter)</strong> — The leading perspective on কেন curiosity is the only hedge against vocational displacement. This platform is built on Nate’s principle of proactive engagement over denial.
-                </p>
-                <a href="https://natesnewsletter.substack.com/" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.05em; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 4px;">Explore Nate's Newsletter →</a>
-            </div>
-        </div>
-    </main>
-
-    <footer style="padding: 6rem 2.5rem; text-align: center; border-top: 1px solid var(--border-dynamic);">
-        <p style="font-weight: 900; color: var(--text-heading); margin-bottom: 1.5rem; letter-spacing: 0.2em; font-size: 0.8rem; text-transform: uppercase;">David Matthews</p>
-        <div style="display: flex; justify-content: center; gap: 2.5rem; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;">
-            <a href="index.html" style="color: var(--slate); text-decoration: none;">Index</a>
-            <a href="contact.html" style="color: var(--slate); text-decoration: none;">Contact</a>
-            <a href="https://linkedin.com" target="_blank" style="color: var(--primary); text-decoration: none;">LinkedIn</a>
-        </div>
+    <footer>
+        <p>&copy; 2026 The Unfair Advantage. All rights reserved.</p>
     </footer>
-</div>
 
-<script>
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+    <script>
+        // Calculator function
+        function calculateTax() {
+            const sellers = parseInt(document.getElementById('numSellers').value);
+            const salary = parseInt(document.getElementById('avgSalary').value);
+            
+            // 40% of time on research, 2080 working hours per year
+            const researchHours = sellers * 2080 * 0.4;
+            const costPerHour = salary / 2080;
+            const annualCost = researchHours * costPerHour;
+            const savings = annualCost * 0.8; // 80% automation potential
+            
+            document.getElementById('annualCost').textContent = '£' + annualCost.toLocaleString('en-GB', {maximumFractionDigits: 0});
+            document.getElementById('hoursWasted').textContent = researchHours.toLocaleString('en-GB', {maximumFractionDigits: 0}) + ' hours';
+            document.getElementById('savings').textContent = '£' + savings.toLocaleString('en-GB', {maximumFractionDigits: 0});
+            
+            document.getElementById('results').style.display = 'block';
+        }
+        
+        // Theme toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', targetTheme);
+                    localStorage.setItem('theme', targetTheme);
+                });
+            }
+            
+            // Mobile menu
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        mobileMenuToggle.classList.remove('active');
+                        navLinks.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Mobile dropdown
+            const navDropdown = document.querySelector('.nav-dropdown');
+            if (navDropdown) {
+                const dropdownMain = navDropdown.querySelector('.nav-link-main');
+                dropdownMain.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        e.stopPropagation();
+                        navDropdown.classList.toggle('mobile-open');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
