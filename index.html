@@ -49,10 +49,15 @@
     <div class="page-container">
     <nav>
         <a href="#" onclick="scrollToTop(); return false;" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <div class="nav-dropdown">
-                <a href="intelligence.html" class="nav-link-main">Intelligence Layer ▾</a>
+                <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
                     <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: Intelligence Layer</a>
                     <a href="#" class="locked" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems." onclick="return false;">2: Omniscience Engine</a>
@@ -305,6 +310,37 @@
                 const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-theme', targetTheme);
                 localStorage.setItem('theme', targetTheme);
+            });
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+        
+        // Mobile dropdown toggle
+        const navDropdown = document.querySelector('.nav-dropdown');
+        if (navDropdown) {
+            const dropdownMain = navDropdown.querySelector('.nav-link-main');
+            dropdownMain.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.stopPropagation();
+                    navDropdown.classList.toggle('mobile-open');
+                }
             });
         }
     });
