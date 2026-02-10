@@ -3,102 +3,652 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Week 2: The Omniscience Engine | The Unfair Advantage</title>
-    
+    <meta name="description" content="Week 2: Omniscience Engine. Mapping the political power structure of complex deals.">
+    <title>Week 2: Omniscience Engine | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-    </script>
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
-
-        :root {
-            color-scheme: light dark;
-            --navy: #020617; --primary: #3b82f6; --slate: #94a3b8;
-            --bg-body: light-dark(#f8fafc, #020617);
-            --bg-container: light-dark(#ffffff, #0f172a);
-            --bg-card: light-dark(#f1f5f9, #1e293b);
-            --text-heading: light-dark(#0f172a, #ffffff);
-            --text-body: light-dark(#334155, #f1f5f9);
-            --border-dynamic: light-dark(#e2e8f0, #334155);
-        }
-
-        body { line-height: 1.6; color: var(--text-body); background: var(--bg-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
-        
-        .page-container { 
-            max-width: 1000px; margin: 0 auto; background: var(--bg-container); 
-            height: 100vh; display: flex; flex-direction: column;
-        }
-
-        /* --- LOADING SHIMMER --- */
-        .shimmer-block {
-            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #020617);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-            flex: 1; display: flex; align-items: center; justify-content: center; position: relative;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .content-box { text-align: center; max-width: 700px; padding: 2rem; z-index: 10; }
-
-        .lock-icon {
-            width: 80px; height: 80px; margin: 0 auto 2rem; border: 2px solid rgba(59, 130, 246, 0.5);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: var(--primary); font-size: 1.5rem; animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
-
-        h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; color: white; letter-spacing: -0.04em; margin-bottom: 1.5rem; }
-        .tagline { color: #60a5fa; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; margin-bottom: 1rem; display: block; }
-        p { color: #94a3b8; font-size: 1.1rem; line-height: 1.7; margin-bottom: 2.5rem; }
-
-        /* --- STATUS BAR --- */
-        .status-container { max-width: 400px; margin: 0 auto; }
-        .status-label { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 900; color: #475569; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
-        .progress-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
-        .progress-fill { width: 45%; height: 100%; background: var(--primary); box-shadow: 0 0 15px var(--primary); }
-
-        .back-link { position: absolute; bottom: 3rem; color: #475569; text-decoration: none; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; transition: 0.3s; }
-        .back-link:hover { color: white; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="page-container">
-    <div class="shimmer-block">
-        <div class="content-box">
-            <div class="lock-icon">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            
-            <span class="tagline">Phase 02: Decoding Mandates</span>
-            <h1>The Omniscience Engine</h1>
-            
-            <p>
-                Bridging the <strong>Management Gap</strong> between Boardroom vision and Departmental friction. We are currently calibrating the Gap Analysis protocols for £10M+ RFPs.
-            </p>
-
-            <div class="status-container">
-                <div class="status-label">
-                    <span>System Status: Calibrating</span>
-                    <span>45%</span>
+    <div class="page-container content-reveal">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <div class="nav-dropdown">
+                <span class="nav-link-main" style="color: var(--primary);">Week 2: Omniscience ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: Intelligence Layer</a>
+                    <a href="week2.html" style="color: var(--primary);" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: Omniscience Engine</a>
+                    <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: Oxygen Effect</a>
+                    <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: Velocity @ Scale</a>
                 </div>
-                <div class="progress-bg">
-                    <div class="progress-fill"></div>
+            </div>
+            <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
+    
+    <header class="dark-header-block">
+        <div class="hero-impact">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="pill-uk" style="display: inline-block; margin-bottom: 1.5rem; border-color: var(--primary); color: var(--primary);">WEEK 2 — OMNISCIENCE ENGINE</div>
+                <h1 class="hero-headline">
+                    <span style="color: white; display: block;">You mapped one person. Now map the deal.</span>
+                    <span style="color: #94a3b8; display: block;">From knowing one person to mapping the entire power structure.</span>
+                </h1>
+                <p class="hero-subtext">From first stakeholder to full authority map — the political intelligence that wins complex deals.</p>
+                
+                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center;">
+                    <span class="pill-uk">1-4 HOURS — FROM SINGLE CONTACT TO DEAL STRATEGY</span>
                 </div>
             </div>
         </div>
+    </header>
 
-        <a href="index.html" class="back-link">← Return to Dashboard</a>
+    <main>
+        
+        <section class="reveal">
+            <div class="container" style="max-width: 800px;">
+                <h2 class="section-heading-standard">The Context</h2>
+                <div class="quote-block">
+                    <p>Sarah had won the first meeting. The Director of Resilience loved the approach — evidence-based, operationally grounded, no slides full of logos. "This is exactly what we need," she said.</p>
+                    <p style="margin-top: 1rem;">Three months later, Sarah lost the deal.</p>
+                    <p style="margin-top: 1rem;">Not because the solution was wrong. Not because the price was too high. Because she'd built her entire strategy around one stakeholder. The CIO — who controlled 35% of the evaluation weighting — had different priorities. The CFO wanted a fundamentally different commercial model. The procurement lead had been burned by a previous supplier and was looking for reasons to say no.</p>
+                    <p style="margin-top: 1rem;">Sarah knew the company. She knew one person brilliantly. She didn't know the deal.</p>
+                    <p style="margin-top: 1rem;">Week 2 exists because knowing one person isn't enough. Complex deals are won by coalitions, not champions.</p>
+                </div>
+
+                <div class="note-box note-blue">
+                    <div class="note-box-icon">i</div>
+                    <div class="note-box-content">
+                        <p><strong>Completed Week 1?</strong> This week builds directly on Week 1 intelligence. If you haven't run the Intelligence Layer prompts, start there. Week 2 uses your Week 1 outputs as input.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">BEFORE YOU BEGIN</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div class="grid-2-col">
+                    <div class="talent-card gain-card">
+                        <h3 class="talent-card-title" style="color: var(--primary);">GATHER</h3>
+                        <p class="talent-card-text" style="color: var(--text-body); font-size: 0.9rem;">
+                            <strong>01:</strong> Week 1 outputs — company research, budget signals, stakeholder profile(s)<br>
+                            <strong>02:</strong> RFP, ITT, or opportunity brief (if formal process exists)<br>
+                            <strong>03:</strong> Pre-briefing paper or meeting notes from initial engagement<br>
+                            <strong>04:</strong> LinkedIn profiles for ALL known stakeholders (not just your contact)
+                        </p>
+                    </div>
+                    <div class="talent-card gain-card">
+                        <h3 class="talent-card-title" style="color: var(--primary);">PREPARE</h3>
+                        <p class="talent-card-text" style="color: var(--text-body); font-size: 0.9rem;">
+                            <strong>05:</strong> Stakeholder register — list every name you've encountered<br>
+                            <strong>06:</strong> Relationship audit — who do you know? Who knows them?<br>
+                            <strong>07:</strong> Evaluation criteria and weightings (if available)<br>
+                            <strong>08:</strong> Your company's relevant case studies and proof points (from W1-09)
+                        </p>
+                    </div>
+                </div>
+
+                <div class="note-box note-amber">
+                    <div class="note-box-icon">!</div>
+                    <div class="note-box-content">
+                        <p><strong>No RFP?</strong> This week works with or without a formal procurement document. An RFP is the richest source of stakeholder intelligence — but the mapping works from meeting notes, org charts, LinkedIn research, or any source that reveals people and power.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">THE FRAMEWORK</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <div class="step-intro-meta" style="justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">DECODE OPPORTUNITY</span>
+                        <span style="color: var(--slate);">→</span>
+                        <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">FIND PEOPLE</span>
+                        <span style="color: var(--slate);">→</span>
+                        <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">MAP MOTIVATIONS</span>
+                        <span style="color: var(--slate);">→</span>
+                        <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">MAP AUTHORITY</span>
+                        <span style="color: var(--slate);">→</span>
+                        <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">DEAL STRATEGY</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--slate);">Steps 1-3 extract intelligence. Steps 4-5 build the map. Steps 6-7 turn it into strategy.</p>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">01</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Decode the Opportunity</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~20 MIN</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">STRATEGIC BID ANALYSIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">Every procurement document tells two stories. The official story is in the requirements and evaluation criteria. The real story is in the language intensity, the specificity of certain requirements, the gaps, and the timeline compression. This prompt reads both.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-01 // RFP STRATEGIC DECODER</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Act as an expert Proposal Director and Strategic Deal Analyst.
+
+I am providing you with the text from an RFP / Opportunity Description for [INSERT CLIENT NAME].
+
+Your task is to decode the "story behind the document." 
+
+Analyze the text and produce a 'Strategic Decoding Table' with the following columns:
+1. EXPLICIT REQUIREMENT: What they strictly asked for.
+2. IMPLICIT SIGNAL: What the language intensity, specificity, or repetition suggests is the real driver.
+3. LIKELY PAIN POINT: What specifically went wrong with the incumbent to cause this requirement to be written this way.
+4. RISK LEVEL: (Low/Med/High) How dangerous this is if we get it wrong.
+
+Then, determine the 'Trigger Event': Based on the text, was this initiated by:
+A) Contract Expiry (Commodity mindset, looking for price/efficiency)
+B) Regulatory/Compliance Failure (Risk-averse, looking for safety)
+C) New Strategic Mandate (Transformation mindset, looking for innovation)
+Explain your reasoning.
+
+[PASTE RFP / OPPORTUNITY TEXT HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong> The Meridian Financial Services example for this prompt is being built. For now, run this prompt with your own materials — the output structure is defined by the prompt itself.</p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — The trigger question is the most important. A contract expiry produces different behaviour than a regulatory mandate or a board-mandated strategic programme. Expiry = commodity mindset, lowest price wins. Regulatory = compliance-first, risk-averse evaluation. Board mandate = strategic, partnership-oriented. The same RFP reads completely differently once you know which triggered it.</p>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">02</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Find the People</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~15 MIN</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">STAKEHOLDER ECOSYSTEM MAPPING</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">The RFP names some people. Meeting notes mention others. LinkedIn reveals connections between them. This prompt builds the complete stakeholder register and — critically — identifies who's MISSING. The people not in the room are often the ones who decide.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-02 // STAKEHOLDER DISCOVERY</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Act as a Strategic Account Manager.
+
+I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, LinkedIn exports].
+
+1. Extract every individual person named or referenced.
+2. Build a 'Stakeholder Register' table with columns: Name, Job Title, Role in Deal (Decision Maker/Influencer/Evaluator), Source of Info.
+3. Crucially, create a 'Missing Stakeholders' list. Based on a typical deal of this size and complexity ([INSERT DEAL SIZE/TYPE]), who is missing? (e.g., Is there a Procurement lead? A Privacy Officer? A CFO sponsor?). 
+4. For the missing roles, suggest the likely Job Titles we should search for on LinkedIn.
+
+[PASTE SOURCE MATERIAL HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent. Low influence, high knowledge = parked.</p>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">03</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Decode Requirements</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~15 MIN</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">PAIN POINT ARCHAEOLOGY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">Requirements aren't neutral. Every unusually specific requirement was born from a bad experience. Every cluster of dense requirements reveals where they've been burned. This prompt reads the archaeology — what happened to them that made them write THIS.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-03 // REQUIREMENTS DECODER</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Analyze the requirements section of this RFP.
+
+Group the requirements into 'Clusters of Density' — areas where there are an unusually high number of specific, detailed, or punitive requirements.
+
+For each Cluster:
+1. Name the 'Trauma': What specific operational failure or vendor issue likely happened in the past to make them write this section so aggressively?
+2. Define our 'Response Strategy': Should we:
+   - COMPLY (Standard response is fine)
+   - DIFFERENTIATE (This is a major win theme opportunity)
+   - MITIGATE (This is a trap or high-risk area)
+
+Output as a table.
+
+[PASTE REQUIREMENTS SECTION HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">04</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Map Motivations</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~20 MIN PER STAKEHOLDER</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">VOSS + CIALDINI — DEEP MOTIVATION ANALYSIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">You've identified the stakeholders. Now understand what drives each one. Not their job title — their personal success criteria. What they need to achieve. What failure looks like for them specifically. This is the difference between knowing the org chart and knowing the politics.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-04 // STAKEHOLDER MOTIVATION MAP</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Act as an expert in Chris Voss's negotiation tactics and Cialdini's influence principles.
+
+I am providing the profile for [STAKEHOLDER NAME], [JOB TITLE].
+
+Generate a 'Deep Motivation Profile':
+1. The 'Black Swan': What is the one piece of information that, if we knew it, would change how we approach them? (Hypothesize based on role/industry).
+2. Stated vs. Hidden Drivers: What do they say they want (e.g., Innovation) vs. what their role/bonus actually rewards (e.g., Risk Reduction).
+3. The 'No-Oriented' Question: Draft a question designed to get them to say "No" to reveal their constraints (e.g., "Is it ridiculous to suggest that cost certainty is more important than feature breadth right now?").
+4. Success Definition: Complete this sentence for them: "I will be promoted/bonused next year if this project delivers..."
+
+[PASTE STAKEHOLDER PROFILE/LINKEDIN DATA HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — The gap between stated priorities and underlying drivers is where political intelligence lives. A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens, not the innovation lens. Follow the incentives, not the LinkedIn posts.</p>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">05</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Map Authority</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~20 MIN</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">MILLER HEIMAN + POLITICAL MAPPING</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">This is the single most important output of Week 2. The authority map shows formal decision structure AND informal influence lines. Who evaluates what. Who has veto. Who controls the most scoring points. The original 2005 version of this was a hand-drawn 2x2 chart. The intelligence is the same. The speed isn't.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-05 // MULTI-STAKEHOLDER AUTHORITY MAP</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Synthesize all the stakeholder intelligence we have gathered so far.
+
+Create a 'Political Authority Map' for this deal:
+
+1. Classify each stakeholder into Miller Heiman roles:
+   - Economic Buyer (Releases budget)
+   - User Buyer (Uses the solution)
+   - Technical Buyer (Judges the spec/compliance)
+   - Coach (Guides us)
+
+2. Map the 'Influence Network': Who influences whom? (e.g., "CFO likely defers to CTO on technical risk, but holds veto on commercial terms").
+
+3. Identify the 'Winning Coalition': Which minimum set of 3-4 people, if they all vote 'Yes', makes the deal inevitable?
+
+4. Identify the 'Blockers': Who has the power to kill this deal, and what is their likely objection?
+
+[PASTE ALL STAKEHOLDER SUMMARIES HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable. Identify the linchpin — the person who unlocks the others. That's your primary relationship investment.</p>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">06</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Plan Engagement</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~15 MIN PER STAKEHOLDER</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">PERSONALISED VALUE + VOSS TACTICAL EMPATHY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">You know who matters and how they relate. Now build the specific engagement plan for each one. Not 'maintain relationship' — specific value propositions, specific discovery questions, specific messaging guidance.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-06 // PERSONALISED ENGAGEMENT PLANS</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
+
+Structure it as a meeting preparation guide:
+
+1. The Hook (First 2 mins): A specific insight or 'Accusation Audit' opener that proves we understand their world immediately.
+2. The Discovery Goal: What is the ONE piece of information we must learn from them in the next interaction?
+3. The Value Drop: What specific insight, data point, or case study should we share that helps them achieve THEIR personal goal (from the Motivation Map)?
+4. The Ask: What is the calibrated next step we should ask for?
+
+[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="step-intro reveal">
+                    <div class="step-intro-number">07</div>
+                    <div class="step-intro-content">
+                        <div class="step-intro-name">Deal Strategy</div>
+                        <div class="step-intro-meta">
+                            <span class="pill-uk" style="background: var(--primary); color: white;">~15 MIN</span>
+                            <span class="pill-uk" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">BID DIRECTOR SYNTHESIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="lead-prose">Everything synthesised into one page. The document the entire pursuit team works from. Win themes. Winning coalition. Engagement sequence mapped to the procurement calendar. If you can't fit your deal strategy on one page, you don't understand the deal well enough.</p>
+
+                <div class="prompt-console-header">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W2-07 // DEAL STRATEGY SYNTHESIS</div>
+                </div>
+                <div class="prompt-console">
+                    <pre><code class="language-text">Synthesize everything into a 'One-Page Deal Strategy' (Plan on a Page).
+
+Sections:
+1. Executive Summary: The deal in 3 sentences (Context, Opportunity, Why Us).
+2. The Winning Coalition: The 3-4 people we are targeting.
+3. Three Key Win Themes: The strategic pillars of our bid.
+4. Top 3 Risks & Mitigations.
+5. Pricing Strategy Headline.
+6. The 'No-Bid' Criteria: Under what specific conditions should we walk away from this deal?
+
+[PASTE ALL PREVIOUS OUTPUTS HERE]</code></pre>
+                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
+                </div>
+
+                <div class="note-box note-green">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>Worked example coming soon.</strong></p>
+                    </div>
+                </div>
+
+                <div class="quote-block">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal. Hope is not a strategy. Resources are finite.</p>
+                </div>
+
+                <div class="note-box note-blue">
+                    <div class="note-box-icon">i</div>
+                    <div class="note-box-content">
+                        <p><strong>Reference outputs are being built.</strong> The Meridian Financial Services full stakeholder dossier and comparative analysis — showing "what good looks like" — will be available for download here. These are the benchmark outputs you compare your own results against.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">WHERE THIS BREAKS</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div style="background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-dynamic); padding: 2rem;">
+                    <h3 style="color: var(--text-heading); margin-top: 0;">Honest Failures</h3>
+                    <p style="color: var(--slate); margin-bottom: 2rem;">Three ways I have messed this up, so you don't have to.</p>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">FAILURE 1: The Invisible Stakeholder</h4>
+                        <p style="font-size: 0.95rem; color: var(--text-body);">Built a comprehensive authority map for a 6-person evaluation panel. Won the written submission. Lost at orals. The CEO's EA — never mentioned in any document — had been asked for her opinion on "which team she'd want to work with." She preferred the competitor because they'd been more personable with the support staff during the site visit.</p>
+                        <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); background: var(--bg-body); padding: 0.5rem; border-left: 3px solid var(--red);">RULE: Your stakeholder map is never complete. Always ask: "Who else will have an opinion on this?"</p>
+                    </div>
+
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">FAILURE 2: The Stale Map</h4>
+                        <p style="font-size: 0.95rem; color: var(--text-body);">Mapped stakeholders in January. Submitted the bid in March. The CIO had been replaced in February. The new CIO had different priorities. The entire deal strategy was built on a person who no longer existed in the role.</p>
+                        <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); background: var(--bg-body); padding: 0.5rem; border-left: 3px solid var(--red);">RULE: Stakeholder maps decay. Refresh within 2 weeks of any submission deadline.</p>
+                    </div>
+
+                    <div style="margin-bottom: 0;">
+                        <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">FAILURE 3: Over-Engineering the Politics</h4>
+                        <p style="font-size: 0.95rem; color: var(--text-body);">Spent 6 hours building a detailed authority map for a deal that turned out to be a single-decision-maker procurement. The CEO was making the decision himself based on a 30-minute meeting. All the political intelligence was irrelevant.</p>
+                        <p style="font-size: 0.9rem; font-weight: 700; color: var(--text-heading); background: var(--bg-body); padding: 0.5rem; border-left: 3px solid var(--red);">RULE: Match preparation to decision complexity. Not every deal needs Week 2 depth.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">PROMPT LIBRARY</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <p style="margin-bottom: 1.5rem; color: var(--slate); font-size: 0.9rem;">All prompts from this week in one place.</p>
+
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 1rem;">INTELLIGENCE EXTRACTION</p>
+                    
+                    <button class="library-prompt-title">W2-01 // RFP STRATEGIC DECODER</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Act as an expert Proposal Director and Strategic Deal Analyst. I am providing you with the text from an RFP / Opportunity Description for [INSERT CLIENT NAME]. Your task is to decode the "story behind the document." Analyze the text and produce a 'Strategic Decoding Table' with the following columns: 1. EXPLICIT REQUIREMENT: What they strictly asked for. 2. IMPLICIT SIGNAL: What the language intensity, specificity, or repetition suggests is the real driver. 3. LIKELY PAIN POINT: What specifically went wrong with the incumbent to cause this requirement to be written this way. 4. RISK LEVEL: (Low/Med/High) How dangerous this is if we get it wrong. Then, determine the 'Trigger Event': Based on the text, was this initiated by Contract Expiry, Regulatory Failure, or Strategic Mandate? Explain your reasoning. [PASTE RFP TEXT HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+
+                    <button class="library-prompt-title">W2-02 // STAKEHOLDER DISCOVERY</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Act as a Strategic Account Manager. I am providing you with [INSERT SOURCE MATERIAL]. 1. Extract every individual person named or referenced. 2. Build a 'Stakeholder Register' table with columns: Name, Job Title, Role in Deal, Source of Info. 3. Crucially, create a 'Missing Stakeholders' list. Based on a typical deal of this size and complexity, who is missing? 4. For the missing roles, suggest the likely Job Titles we should search for on LinkedIn. [PASTE SOURCE MATERIAL HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+
+                    <button class="library-prompt-title">W2-03 // REQUIREMENTS DECODER</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Analyze the requirements section of this RFP. Group the requirements into 'Clusters of Density' — areas where there are an unusually high number of specific, detailed, or punitive requirements. For each Cluster: 1. Name the 'Trauma': What specific operational failure or vendor issue likely happened in the past? 2. Define our 'Response Strategy': Should we COMPLY, DIFFERENTIATE, or MITIGATE? Output as a table. [PASTE REQUIREMENTS SECTION HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 1rem;">DEEP STAKEHOLDER INTELLIGENCE</p>
+
+                    <button class="library-prompt-title">W2-04 // STAKEHOLDER MOTIVATION MAP</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Act as an expert in Chris Voss's negotiation tactics. I am providing the profile for [STAKEHOLDER NAME]. Generate a 'Deep Motivation Profile': 1. The 'Black Swan' hypothesis. 2. Stated vs. Hidden Drivers. 3. The 'No-Oriented' Question. 4. Success Definition ("I will be bonused if..."). [PASTE PROFILE HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+
+                    <button class="library-prompt-title">W2-05 // MULTI-STAKEHOLDER AUTHORITY MAP</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Synthesize all stakeholder intelligence. Create a 'Political Authority Map': 1. Classify Miller Heiman roles (Economic, User, Technical, Coach). 2. Map the Influence Network. 3. Identify the Winning Coalition. 4. Identify the Blockers. [PASTE ALL SUMMARIES HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 0.8rem; font-weight: 800; color: var(--primary); letter-spacing: 0.1em; margin-bottom: 1rem;">ENGAGEMENT STRATEGY</p>
+
+                    <button class="library-prompt-title">W2-06 // PERSONALISED ENGAGEMENT PLANS</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME]. Structure as meeting prep: 1. The Hook (Accusation Audit opener). 2. The Discovery Goal. 3. The Value Drop (Insight to share). 4. The Ask (Calibrated next step). [PASTE PROFILE HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+
+                    <button class="library-prompt-title">W2-07 // DEAL STRATEGY SYNTHESIS</button>
+                    <div class="library-prompt-body">
+                        <pre><code class="language-text">Synthesize everything into a 'One-Page Deal Strategy'. Sections: 1. Executive Summary. 2. The Winning Coalition. 3. Three Key Win Themes. 4. Top 3 Risks & Mitigations. 5. Pricing Strategy Headline. 6. The 'No-Bid' Criteria (when to walk away). [PASTE ALL OUTPUTS HERE]</code></pre>
+                        <button class="copy-btn-small" onclick="copyPrompt(this)">Copy</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 4rem;">
+                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Stakeholders mapped. Power structure clear. Now win the deal.</p>
+                    <a href="week3.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">ACCESS WEEK 3: OXYGEN EFFECT</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>
+            
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.3s;">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Connect on LinkedIn
+            </a>
+
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">
+                AI Is Not Your Cheerleader — Weekly deep dives into real AI workflows for enterprise sales
+            </a>
+        </div>
+    </footer>
     </div>
-</div>
 
+<script>
+    // Copy prompt function
+    function copyPrompt(btn) {
+        const pre = btn.previousElementSibling;
+        const code = pre.querySelector('code');
+        const text = code.innerText;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = 'COPIED';
+            btn.classList.add('copied');
+            
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        });
+    }
+
+    // Theme management
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    // Theme toggle
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', targetTheme);
+                localStorage.setItem('theme', targetTheme);
+            });
+        }
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                    mobileMenuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+        
+        // Mobile dropdown toggle
+        const navDropdown = document.querySelector('.nav-dropdown');
+        if (navDropdown) {
+            const dropdownMain = navDropdown.querySelector('.nav-link-main');
+            dropdownMain.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.stopPropagation();
+                    navDropdown.classList.toggle('mobile-open');
+                }
+            });
+        }
+    });
+
+    // Reveal animations
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Accordion functionality for Prompt Library
+    const acc = document.getElementsByClassName("library-prompt-title");
+    for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>
 </body>
 </html>

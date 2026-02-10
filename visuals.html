@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GAIN Visual Toolkit: 14 interactive tools to visualise sales intelligence, from stakeholder maps to account dashboards.">
+    <title>Visuals | The Unfair Advantage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        /* --- VISUALS PAGE SPECIFIC STYLES --- */
+        
+        /* General Container for Visuals */
+        .visual-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dynamic);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .visual-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-dynamic);
+            padding-bottom: 1rem;
+        }
+
+        .visual-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin: 0;
+        }
+
+        .visual-meta {
+            font-size: 0.8rem;
+            color: var(--slate);
+            margin-top: 0.25rem;
+        }
+
+        /* Legend Toggle */
+        .legend-body { display: none; }
+        .legend-body.active { display: grid; }
+
+        /* Tooltip / Detail Panel Styling */
+        .detail-panel {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 20;
+            max-width: 250px;
+            font-size: 0.85rem;
+            display: none;
+            pointer-events: none;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        /* VISUAL 1: 2x2 Matrix */
+        .matrix-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            max-width: 500px;
+            margin: 0 auto;
+            border-left: 2px solid var(--text-body);
+            border-bottom: 2px solid var(--text-body);
+            background: linear-gradient(to top right, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%);
+        }
+        
+        .matrix-quadrant-label {
+            position: absolute;
+            font-size: 0.7rem;
+            color: var(--slate);
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.5rem;
+        }
+
+        .stakeholder-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, 50%); /* Center on coordinate */
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .stakeholder-dot:hover { transform: translate(-50%, 50%) scale(1.3); z-index: 11; }
+        .dot-blue { background: #3b82f6; }
+        .dot-green { background: #10b981; }
+        .dot-amber { background: #f59e0b; }
+        .dot-champion { background: #10b981; border: 2px solid white; box-shadow: 0 0 0 2px #10b981; }
+
+        /* VISUAL 2: Org Chart */
+        .org-tree {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .org-level { display: flex; justify-content: center; gap: 1.5rem; width: 100%; margin-bottom: 2rem; position: relative; }
+        .org-node {
+            background: var(--bg-body);
+            border: 1px solid var(--border-dynamic);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            width: 140px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .org-node:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .org-node::before { /* Connecting lines - simplified for CSS */
+            content: ''; position: absolute; top: -1rem; left: 50%; height: 1rem; width: 1px; background: var(--border-dynamic);
+        }
+        .org-level:first-child .org-node::before { display: none; }
+        .node-status { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+        /* VISUAL 3: Gantt Timeline */
+        .timeline-scroll { overflow-x: auto; padding-bottom: 1rem; }
+        .gantt-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(12, 1fr); /* Label + 12 weeks */
+            gap: 2px;
+            min-width: 800px;
+        }
+        .gantt-header { font-size: 0.7rem; color: var(--slate); text-align: center; padding: 0.5rem; background: var(--bg-body); }
+        .gantt-row-label { font-size: 0.8rem; font-weight: 600; padding: 0.5rem; display: flex; align-items: center; }
+        .gantt-bar {
+            height: 24px;
+            border-radius: 4px;
+            margin: 6px 0;
+            font-size: 0.7rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* VISUAL 4: Bar Chart */
+        .bar-chart-row { display: flex; align-items: center; margin-bottom: 0.75rem; }
+        .bar-label { width: 150px; font-size: 0.85rem; font-weight: 600; }
+        .bar-track { flex: 1; height: 24px; background: var(--bg-body); border-radius: 4px; overflow: hidden; display: flex; }
+        .bar-segment { height: 100%; transition: width 1s ease-out; }
+        
+        /* VISUAL 5: Bubble Chart */
+        .bubble-chart {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-left: 2px solid var(--border-dynamic);
+            border-bottom: 2px solid var(--border-dynamic);
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .bubble:hover { transform: scale(1.1); opacity: 1; z-index: 10; }
+
+        /* VISUAL 6: Timeline Map */
+        .timeline-map-grid {
+            display: grid;
+            grid-template-columns: repeat(22, 1fr); /* 22 weeks */
+            gap: 0;
+            margin-top: 1rem;
+            min-width: 800px;
+            position: relative;
+            padding-top: 2rem;
+        }
+        .tm-phase {
+            height: 40px;
+            background: var(--bg-body);
+            border: 1px solid var(--border-dynamic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            position: relative;
+            cursor: pointer;
+        }
+        .tm-phase:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .tm-deadline {
+            position: absolute;
+            top: -25px;
+            bottom: 0;
+            width: 2px;
+            z-index: 10;
+        }
+        .tm-deadline-label {
+            position: absolute;
+            top: -25px;
+            left: 5px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .tm-hard { background: #ef4444; }
+        .tm-soft { background: #f59e0b; border-style: dashed; }
+        .tm-compression {
+            position: absolute;
+            top: 0; bottom: 0;
+            background: rgba(239, 68, 68, 0.1);
+            pointer-events: none;
+        }
+
+        /* VISUAL 8: Commercial Flow */
+        .flow-container {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .flow-card {
+            background: var(--bg-body);
+            border: 1px solid var(--border-dynamic);
+            padding: 1rem;
+            border-radius: 6px;
+            position: relative;
+            min-width: 160px;
+            font-size: 0.85rem;
+        }
+        .flow-card h4 { margin: 0 0 0.5rem 0; font-size: 0.9rem; color: var(--primary); }
+        .flow-card ul { padding-left: 1rem; margin: 0; font-size: 0.8rem; }
+        .flow-arrow { font-size: 1.5rem; color: var(--slate); }
+
+        /* VISUAL 9: Heatmap */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: 200px repeat(5, 1fr);
+            gap: 1px;
+            background: var(--border-dynamic);
+        }
+        .heatmap-cell {
+            background: var(--bg-card);
+            padding: 1rem;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .heatmap-header { font-weight: 700; background: var(--bg-body); }
+        .hm-strong { background: rgba(59, 130, 246, 0.2); color: #3b82f6; font-weight: 700; }
+        .hm-med { background: rgba(59, 130, 246, 0.1); }
+        .hm-weak { background: rgba(0,0,0,0.02); color: var(--slate); }
+
+        /* VISUAL 10: Coalition Map */
+        .coalition-container {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            background: var(--bg-body);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .coalition-node {
+            background: var(--bg-card);
+            border: 2px solid var(--border-dynamic);
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 140px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: absolute;
+            z-index: 2;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .coalition-node:hover { border-color: var(--primary); transform: scale(1.05); z-index: 10; }
+        .coalition-centre {
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            padding: 1rem;
+            border-radius: 8px;
+            z-index: 5;
+            position: absolute;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+        .coalition-line {
+            position: absolute;
+            background: var(--border-dynamic);
+            z-index: 1;
+            height: 2px;
+            transform-origin: 0 50%;
+        }
+        .line-green { background: #10b981; height: 3px; }
+        .line-amber { background: #f59e0b; border-bottom: 2px dashed #f59e0b; background: transparent; }
+        .line-blue { border-bottom: 2px dotted #3b82f6; background: transparent; }
+
+        /* VISUAL 12: White Space Grid */
+        .whitespace-grid {
+            display: grid;
+            grid-template-columns: 150px repeat(5, 1fr);
+            gap: 4px;
+        }
+        .ws-cell {
+            padding: 1rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .ws-green { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; }
+        .ws-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .ws-white { background: var(--bg-body); border: 2px dashed var(--border-dynamic); color: var(--slate); }
+        .ws-white:hover { border-color: var(--primary); color: var(--primary); }
+        .ws-grey { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid var(--border-dynamic); }
+
+        /* VISUAL 14: Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .dash-card {
+            background: var(--bg-body);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-dynamic);
+        }
+        .rag-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .org-level { flex-wrap: wrap; }
+            .gantt-grid, .heatmap-grid, .whitespace-grid, .timeline-map-grid { min-width: 600px; } /* Force scroll */
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .matrix-container { max-width: 300px; }
+            .coalition-container { height: 600px; } /* More height for stacked nodes */
+        }
+
+        @media print {
+            .visual-container { break-inside: avoid; border: 1px solid #ccc; }
+            nav, footer, .hero-impact { display: none; }
+            body { background: white; color: black; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container content-reveal">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <div class="nav-dropdown">
+                <span class="nav-link-main">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">1: Intelligence Layer</a>
+                    <a href="week2.html">2: Omniscience Engine</a>
+                    <a href="week3.html">3: Oxygen Effect</a>
+                    <a href="week4.html">4: Velocity @ Scale</a>
+                </div>
+            </div>
+            <a href="visuals.html" style="color: var(--primary);">Visuals</a>
+            <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
+    
+    <header class="dark-header-block">
+        <div class="hero-impact">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="pill-uk" style="display: inline-block; margin-bottom: 1.5rem; border-color: var(--primary); color: var(--primary);">GAIN VISUAL TOOLKIT</div>
+                <h1 class="hero-headline">
+                    <span style="color: white; display: block;">The same intelligence. Now you can see it.</span>
+                    <span style="color: #94a3b8; display: block;">Interactive tools built from the methodology outputs.</span>
+                </h1>
+                <p class="hero-subtext">Every visual on this page is generated from GAIN prompt outputs. These are what your intelligence looks like when it's structured, mapped, and ready to use.</p>
+                
+                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center;">
+                    <span class="pill-uk">14 INTERACTIVE TOOLS — FROM STAKEHOLDER MAPS TO ACCOUNT DASHBOARDS</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="reveal">
+            <div class="container" style="max-width: 900px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">THE ORIGIN</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <p class="lead-prose">In 2005, these visualisations were Visio diagrams, hand-drawn 2x2 charts, and colour-coded org charts maintained in Word documents. They took weeks to build and constant effort to keep current. The intelligence they contained won deals worth millions.</p>
+
+                <p style="margin-bottom: 1.5rem;">These are the same tools, modernised. Each one is generated from GAIN prompt outputs using the Meridian Financial Services fictional data set. They show what your intelligence LOOKS like when it's properly structured — not sitting in a text document, but mapped, colour-coded, and ready to brief from.</p>
+                
+                <p class="quote-block">Every visual connects to a specific GAIN prompt. Run the prompt. Get the output. The visual shows you what to do with it.</p>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1000px;">
+                <div class="visual-container" style="padding: 1rem 1.5rem; margin-bottom: 3rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="this.parentElement.querySelector('.legend-body').classList.toggle('active')">
+                        <h3 class="visual-title" style="margin: 0;">🔑 Colour Key — Used Across All Visuals</h3>
+                        <span style="color: var(--slate);">▾</span>
+                    </div>
+                    <div class="legend-body" style="margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Relationship Status</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #3b82f6; margin-right: 8px;"></span> Blue — Unknown (not yet contacted)</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f59e0b; margin-right: 8px;"></span> Amber — Targeted (identified, not yet engaged)</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981; margin-right: 8px;"></span> Green — Established (active relationship)</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981; border: 2px solid white; box-shadow: 0 0 0 1px #10b981; margin-right: 8px;"></span> Green + White Border — Champion</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Commercial / Scope</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #3b82f6; margin-right: 8px;"></span> Blue — Fixed / Existing / TUPE</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #f59e0b; margin-right: 8px;"></span> Amber — At-risk / Deferred</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #10b981; margin-right: 8px;"></span> Green — New scope / Upside</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #94a3b8; margin-right: 8px;"></span> Grey — In-house / Not applicable</p>
+                        </div>
+                        <div>
+                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Scoring / Performance</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #10b981; margin-right: 8px;"></span> Green — Strong (4-5 / On target)</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #f59e0b; margin-right: 8px;"></span> Amber — Moderate (3 / At risk)</p>
+                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #ef4444; margin-right: 8px;"></span> Red — Weak (1-2 / Below target)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1000px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">STAKEHOLDER INTELLIGENCE</div>
+                    <div class="divider-line"></div>
+                </div>
+                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 0.5rem;">Map the People. Map the Power.</h2>
+                <p class="section-subtitle" style="text-align: left; margin-bottom: 2rem;">These visuals are the outputs of Week 2: Omniscience Engine. They turn stakeholder research into political intelligence you can brief from at a glance.</p>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">01. Authority & Influence 2x2</h3>
+                        <p class="visual-meta">Generated from W2-05: Multi-Stakeholder Authority Map</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The Authority & Influence 2x2 is the single most important visual in the methodology. It originated in 2005 as a hand-drawn chart with coloured stickers — one colour for awareness status (have you met them?), another for relationship quality (do they support you?). The original used four quadrants: Authority + Influence, Authority but No Influence, No Authority but Influence, No Authority and No Influence. Every person in the account was plotted. At a glance, you could see who matters, who likes you, and who you haven't reached yet.</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">This is the interactive version. Each stakeholder is plotted by their formal authority (vertical axis) and informal influence (horizontal axis). The colour coding shows relationship status — from unknown (blue) through targeted (amber) to established (green) and champion (white border). Hover over any stakeholder to see their profile summary, buyer role, and engagement priority.</p>
+                    
+                    <div class="matrix-container">
+                        <div class="matrix-quadrant-label" style="top: 0; right: 0;">High Auth / High Inf</div>
+                        <div class="matrix-quadrant-label" style="top: 0; left: 0;">High Auth / Low Inf</div>
+                        <div class="matrix-quadrant-label" style="bottom: 0; right: 0;">Low Auth / High Inf</div>
+                        <div class="matrix-quadrant-label" style="bottom: 0; left: 0;">Low Auth / Low Inf</div>
+                        
+                        <div style="position: absolute; left: -30px; top: 50%; transform: rotate(-90deg); font-size: 0.7rem; font-weight: 700; color: var(--slate);">AUTHORITY</div>
+                        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: var(--slate);">INFLUENCE</div>
+
+                        <div class="stakeholder-dot dot-blue" style="bottom: 90%; left: 90%;" title="James Whitfield (CEO) - Unknown"></div>
+                        <div class="stakeholder-dot dot-green" style="bottom: 85%; left: 80%;" title="Richard Hale (CIO) - Established"></div>
+                         <div class="stakeholder-dot dot-champion" style="bottom: 60%; left: 85%;" title="Jennifer Morris (Dir. Resilience) - CHAMPION"></div>
+                        <div class="stakeholder-dot dot-amber" style="bottom: 88%; left: 30%;" title="Mark Thompson (CFO) - Targeted"></div>
+                        <div class="stakeholder-dot dot-green" style="bottom: 50%; left: 20%;" title="Sarah Blackwell (Procurement) - Established"></div>
+                        <div class="stakeholder-dot dot-amber" style="bottom: 20%; left: 75%;" title="Andrew Chen (Head of Infra) - Targeted"></div>
+                        <div class="stakeholder-dot dot-amber" style="bottom: 82%; left: 70%;" title="David Osei (CRO) - Targeted"></div>
+                        <div class="stakeholder-dot dot-blue" style="bottom: 85%; left: 15%;" title="David Harrison (COO) - Unknown"></div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">02. Relationship-Aware Org Chart</h3>
+                        <p class="visual-meta">Generated from W2-02 & W2-04</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The 2005 org chart was a Visio diagram showing every person in the IT function — named, with team sizes, supplier relationships annotated in the margins, and project involvement colour-coded. It was the map of the territory. This version adds two dimensions the original couldn't show dynamically: relationship status (have you engaged this person?) and support level (are they for you, against you, or neutral?).</p>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Head colour shows awareness: blue (unknown), amber (targeted), green (engaged). This is the original 2005 colour system, now interactive.</p>
+
+                    <div class="org-tree">
+                        <div class="org-level">
+                            <div class="org-node" style="border-color: #3b82f6;">
+                                <div class="node-status" style="background: #3b82f6;"></div><strong>J. Whitfield</strong><br><span style="font-size:0.7rem;">CEO</span>
+                            </div>
+                        </div>
+                        <div class="org-level">
+                            <div class="org-node" style="border-color: #f59e0b;">
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>M. Thompson</strong><br><span style="font-size:0.7rem;">CFO</span>
+                            </div>
+                            <div class="org-node" style="border-color: #10b981;">
+                                <div class="node-status" style="background: #10b981;"></div><strong>R. Hale</strong><br><span style="font-size:0.7rem;">CIO</span>
+                            </div>
+                            <div class="org-node" style="border-color: #f59e0b;">
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>D. Osei</strong><br><span style="font-size:0.7rem;">CRO</span>
+                            </div>
+                            <div class="org-node" style="border-color: #3b82f6;">
+                                <div class="node-status" style="background: #3b82f6;"></div><strong>D. Harrison</strong><br><span style="font-size:0.7rem;">COO</span>
+                            </div>
+                        </div>
+                        <div class="org-level">
+                            <div class="org-node" style="border-color: #10b981;">
+                                <div class="node-status" style="background: #10b981;"></div><strong>S. Blackwell</strong><br><span style="font-size:0.7rem;">Procurement</span>
+                            </div>
+                            <div class="org-node" style="border-color: #f59e0b;">
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>A. Chen</strong><br><span style="font-size:0.7rem;">IT Infra</span>
+                            </div>
+                            <div class="org-node" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);">
+                                <div class="node-status" style="background: #10b981;"></div><strong>J. Morris</strong><br><span style="font-size:0.7rem;">Resilience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">03. Engagement Sequence Timeline</h3>
+                        <p class="visual-meta">Generated from W2-06: Personalised Engagement Plans</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">You can't approach everyone at once. The engagement sequence maps WHO to approach, WHEN, and in what ORDER — aligned to the procurement timeline. The sequence is strategic: you build support with accessible allies before approaching senior decision-makers. You never go cold to someone when a warm introduction exists. This timeline shows the optimal path through the stakeholder map.</p>
+                    
+                    <div class="timeline-scroll">
+                        <div class="gantt-grid">
+                            <div class="gantt-header">STAKEHOLDER</div>
+                            <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
+                            <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
+                            <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
+
+                            <div class="gantt-row-label">J. Morris (Champ)</div>
+                            <div style="grid-column: 2 / span 2; background: #10b981;" class="gantt-bar">Deepen Support</div>
+                            <div style="grid-column: 7 / span 1; background: #10b981;" class="gantt-bar">Coach</div>
+
+                            <div class="gantt-row-label">S. Blackwell (Proc)</div>
+                            <div style="grid-column: 3 / span 2; background: #3b82f6;" class="gantt-bar">Clarification</div>
+                            <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Negotiate</div>
+
+                            <div class="gantt-row-label">A. Chen (Tech)</div>
+                            <div style="grid-column: 4 / span 2; background: #f59e0b;" class="gantt-bar">Tech Workshop</div>
+
+                            <div class="gantt-row-label">R. Hale (CIO)</div>
+                            <div style="grid-column: 5 / span 1; background: #ef4444;" class="gantt-bar">Exec Briefing</div>
+
+                            <div class="gantt-row-label">D. Osei (CRO)</div>
+                            <div style="grid-column: 6 / span 2; background: #f59e0b;" class="gantt-bar">Governance Alignment</div>
+
+                            <div class="gantt-row-label">M. Thompson (CFO)</div>
+                            <div style="grid-column: 8 / span 1; background: #64748b;" class="gantt-bar">Commercial</div>
+
+                            <div class="gantt-row-label">D. Harrison (COO)</div>
+                            <div style="grid-column: 2 / span 12; color: var(--slate); font-style: italic; font-size: 0.7rem; padding: 0.5rem;">Monitor only — no direct engagement</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">04. Scoring Power Map</h3>
+                        <p class="visual-meta">Generated from W2-05: Section 3</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">In any formal evaluation, different stakeholders control different portions of the total score. The Scoring Power Map shows who controls which evaluation criteria and how many points they influence. This is where you invest your relationship effort — the stakeholder who controls 35% of the weighted score matters more than the one who controls 5%, regardless of seniority.</p>
+
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Technical (25%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 60%; background: #f59e0b;" title="Andrew Chen"></div>
+                            <div class="bar-segment" style="width: 40%; background: #ef4444;" title="Richard Hale"></div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Service (20%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 70%; background: #10b981;" title="Jennifer Morris"></div>
+                            <div class="bar-segment" style="width: 30%; background: #f59e0b;" title="Andrew Chen"></div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Commercial (20%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 50%; background: #64748b;" title="Mark Thompson"></div>
+                            <div class="bar-segment" style="width: 50%; background: #3b82f6;" title="Sarah Blackwell"></div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Team (15%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 70%; background: #10b981;" title="Jennifer Morris"></div>
+                            <div class="bar-segment" style="width: 30%; background: #ef4444;" title="Richard Hale"></div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Automation (15%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 80%; background: #ef4444;" title="Richard Hale"></div>
+                            <div class="bar-segment" style="width: 20%; background: #f59e0b;" title="Andrew Chen"></div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Social Value (5%)</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 100%; background: #3b82f6;" title="Sarah Blackwell"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1000px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">BID INTELLIGENCE</div>
+                    <div class="divider-line"></div>
+                </div>
+                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">See the Deal. Score the Deal.</h2>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">05. Scoring Weight Visualisation</h3>
+                        <p class="visual-meta">Generated from W3-03: Tier-by-Tier Scoring Strategy</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Most bid teams spread effort evenly across all requirements. That's mathematically wrong. A criterion worth 25% of the total deserves five times the writing investment of one worth 5%. This visualisation shows the scoring landscape — where the points are, where your strengths are, and where the effort should concentrate.</p>
+
+                    <div class="bubble-chart">
+                        <div class="bubble" style="bottom: 80%; left: 80%; width: 90px; height: 90px; background: #10b981;">Tech (25%)</div>
+                        <div class="bubble" style="bottom: 60%; left: 50%; width: 80px; height: 80px; background: #f59e0b;">Comm (20%)</div>
+                        <div class="bubble" style="bottom: 60%; left: 85%; width: 80px; height: 80px; background: #10b981;">Svc (20%)</div>
+                        <div class="bubble" style="bottom: 40%; left: 75%; width: 60px; height: 60px; background: #10b981;">Team (15%)</div>
+                        <div class="bubble" style="bottom: 40%; left: 55%; width: 60px; height: 60px; background: #f59e0b;">Auto (15%)</div>
+                        <div class="bubble" style="bottom: 10%; left: 20%; width: 40px; height: 40px; background: #94a3b8;">Soc (5%)</div>                        
+                        <div style="position: absolute; left: 10px; top: 10px; font-size: 0.7rem; color: var(--slate);">HIGH WEIGHT</div>
+                        <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.7rem; color: var(--slate);">HIGH CONFIDENCE</div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">06. Timeline Map</h3>
+                        <p class="visual-meta">Generated from W2-01: RFP Strategic Decoder</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Every procurement has a calendar. Within that calendar are hard deadlines (regulatory, contractual) and soft deadlines (aspirational, moveable). The timeline map shows both — and highlights where the calendar compresses. Compression points are where the buyer will compromise on process, and where your preparation advantage matters most.</p>
+
+                    <div class="timeline-scroll">
+                        <div class="timeline-map-grid">
+                            <div class="tm-compression" style="grid-column: 9 / span 2;"></div>
+                            <div class="tm-compression" style="grid-column: 16 / span 6;"></div>
+
+                            <div class="tm-phase" style="grid-column: 1 / span 2;">Issued</div>
+                            <div class="tm-phase" style="grid-column: 3 / span 4;">Clarification</div>
+                            <div class="tm-phase" style="grid-column: 7 / span 2; border-right: 2px solid #ef4444;">Submission</div>
+                            <div class="tm-phase" style="grid-column: 9 / span 2;">Tech Eval</div>
+                            <div class="tm-phase" style="grid-column: 11 / span 1;">Comm Eval</div>
+                            <div class="tm-phase" style="grid-column: 12 / span 1;">Orals</div>
+                            <div class="tm-phase" style="grid-column: 13 / span 2;">Selection</div>
+                            <div class="tm-phase" style="grid-column: 15 / span 1;">Preferred</div>
+                            <div class="tm-phase" style="grid-column: 16 / span 6;">Contracting</div>
+                            <div class="tm-phase" style="grid-column: 22 / span 1;">Go-Live</div>
+
+                            <div class="tm-deadline tm-hard" style="left: 0; grid-column: 7;"><div class="tm-deadline-label">Submit</div></div>
+                            <div class="tm-deadline tm-soft" style="left: 0; grid-column: 12;"><div class="tm-deadline-label">Orals</div></div>
+                            <div class="tm-deadline tm-hard" style="left: 0; grid-column: 16;"><div class="tm-deadline-label">Sign</div></div>
+                            <div class="tm-deadline tm-hard" style="right: 0; grid-column: 22;"><div class="tm-deadline-label">ISO 22301</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">07. Service Tower Breakdown</h3>
+                        <p class="visual-meta">Generated from W2-03: Requirements Decoder</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">For managed services deals, the scope is typically divided into service towers — distinct workstreams with their own SLAs, FTE allocations, and cost structures. This breakdown shows the scope landscape: which towers are biggest (by cost or headcount), where TUPE implications exist, and where the commercial differentiation opportunities are.</p>
+
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Infrastructure</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 100%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£2.1M (TUPE)</div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Service Desk</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 70%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£1.4M (TUPE)</div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Resilience</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 40%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.8M (New)</div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Network</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 30%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.6M (TUPE)</div>
+                        </div>
+                    </div>
+                    <div class="bar-chart-row">
+                        <div class="bar-label">Automation</div>
+                        <div class="bar-track">
+                            <div class="bar-segment" style="width: 20%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.4M (New)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">08. Commercial Mechanism Summary</h3>
+                        <p class="visual-meta">Generated from W2-01: RFP Strategic Decoder</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The commercial model reveals the buyer's sophistication and trust level. This visual maps all the commercial mechanisms in the deal — showing how payments flow, where risk sits, and where innovation investment is rewarded.</p>
+                    
+                    <div class="flow-container">
+                        <div class="flow-card" style="border-left: 4px solid #3b82f6;">
+                            <h4>BASE CONTRACT</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£5.3M / year</p>
+                            <ul>
+                                <li>Fixed Price</li>
+                                <li>5 Towers</li>
+                                <li>Paid Monthly</li>
+                            </ul>
+                        </div>
+                        <div class="flow-card" style="border-left: 4px solid #f59e0b;">
+                            <h4>DEFERRED (10%)</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£530k Held</p>
+                            <ul>
+                                <li>Released at:</li>
+                                <li>6 Months</li>
+                                <li>12 Months</li>
+                                <li>18 Months</li>
+                            </ul>
+                        </div>
+                        <div class="flow-card" style="border-left: 4px solid #10b981;">
+                            <h4>GAIN SHARE</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">60/40 Split</p>
+                            <ul>
+                                <li>Savings > Y1 Baseline</li>
+                                <li>Unlimited Upside</li>
+                            </ul>
+                        </div>
+                        <div class="flow-card" style="border-left: 4px solid #10b981;">
+                            <h4>INNOVATION FUND</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£106k (2%)</p>
+                            <ul>
+                                <li>Ring-fenced</li>
+                                <li>Joint Governance</li>
+                                <li>Re-investment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1000px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">WIN STRATEGY</div>
+                    <div class="divider-line"></div>
+                </div>
+                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">Build the Case. Win the Room.</h2>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">09. Win Theme Deployment Map</h3>
+                        <p class="visual-meta">Generated from W3-01: Win Theme Generator</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">A win theme that only appears in the executive summary is a slogan. A win theme that runs through the technical response, the commercial proposal, the oral presentation, AND the informal stakeholder conversations is a strategy. This map shows how each of your three win themes deploys across every touchpoint.</p>
+
+                    <div class="timeline-scroll">
+                        <div class="heatmap-grid">
+                            <div class="heatmap-cell heatmap-header">THEME / TOUCHPOINT</div>
+                            <div class="heatmap-cell heatmap-header">Exec Summary</div>
+                            <div class="heatmap-cell heatmap-header">Tech Response</div>
+                            <div class="heatmap-cell heatmap-header">Commercial</div>
+                            <div class="heatmap-cell heatmap-header">Orals</div>
+                            <div class="heatmap-cell heatmap-header">Stakeholder Mtgs</div>
+
+                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">1. Operational Resilience</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-weak">Weak</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-med">Present</div>
+
+                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">2. Automation First</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-med">Present</div>
+                            <div class="heatmap-cell hm-med">Present</div>
+                            <div class="heatmap-cell hm-weak">Weak</div>
+
+                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">3. Capability Building</div>
+                            <div class="heatmap-cell hm-med">Present</div>
+                            <div class="heatmap-cell hm-weak">Weak</div>
+                            <div class="heatmap-cell hm-weak">Weak</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                            <div class="heatmap-cell hm-strong">STRONG</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">10. Coalition Map</h3>
+                        <p class="visual-meta">Generated from W2-05: Winning Coalition</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">You don't need everyone. You need the minimum set of stakeholders who, if they all support you, make the decision inevitable. The coalition map shows the winning coalition — who must say yes, what each person needs from you, and who is the linchpin that unlocks the others.</p>
+                    
+                    <div class="coalition-container">
+                        <div class="coalition-centre">MERIDIAN ORT DEAL</div>
+                        
+                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(-45deg);"></div>
+                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(45deg);"></div>
+                        <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(-135deg);"></div>
+                        <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(135deg);"></div>
+                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 220px; transform: rotate(-90deg);"></div> <div class="coalition-line line-blue" style="top: 50%; left: 50%; width: 220px; transform: rotate(0deg);"></div> <div class="coalition-node" style="top: 20%; left: 70%; border-color: #10b981;">
+                            <strong>Jennifer Morris</strong><br><span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">CHAMPION / LINCHPIN</span><br><span style="font-size: 0.7rem;">Needs: Evidence</span>
+                        </div>
+                        <div class="coalition-node" style="top: 80%; left: 70%; border-color: #10b981;">
+                            <strong>Richard Hale</strong><br><span style="font-size: 0.7rem; color: #10b981;">TECH AUTHORITY</span><br><span style="font-size: 0.7rem;">Needs: Automation</span>
+                        </div>
+                        <div class="coalition-node" style="top: 20%; left: 30%; border-color: #f59e0b;">
+                            <strong>Mark Thompson</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">ECONOMIC BUYER</span><br><span style="font-size: 0.7rem;">Needs: ROI</span>
+                        </div>
+                        <div class="coalition-node" style="top: 80%; left: 30%; border-color: #f59e0b;">
+                            <strong>Andrew Chen</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">VALIDATOR</span><br><span style="font-size: 0.7rem;">Needs: Competence</span>
+                        </div>
+                        
+                        <div class="coalition-node" style="top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.8;">
+                            <strong>S. Blackwell</strong><br><span style="font-size: 0.7rem;">GATEKEEPER</span>
+                        </div>
+                        <div class="coalition-node" style="top: 50%; right: 5%; transform: translateY(-50%); opacity: 0.7; border-color: #3b82f6;">
+                            <strong>J. Whitfield</strong><br><span style="font-size: 0.7rem;">APPROVER</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">11. Risk & Gap Heatmap</h3>
+                        <p class="visual-meta">Generated from W3-05: Self-Scoring</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Every deal has vulnerabilities. The risk heat map shows where you're strong and where you're exposed — by evaluation criterion. It's the honest view: where will evaluators score you highest? Where will competitors outscore you? This is the pre-submission self-scoring visualised.</p>
+
+                    <div class="heatmap-grid" style="grid-template-columns: 200px 1fr 1fr 1fr 1fr;">
+                        <div class="heatmap-cell heatmap-header">CRITERION</div>
+                        <div class="heatmap-cell heatmap-header">YOU</div>
+                        <div class="heatmap-cell heatmap-header">COMP A</div>
+                        <div class="heatmap-cell heatmap-header">COMP B</div>
+                        <div class="heatmap-cell heatmap-header">STATUS</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Technical (25%)</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell">Level</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Service Del (20%)</div>
+                        <div class="heatmap-cell hm-strong">5</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-strong">STRENGTH</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Commercial (20%)</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell" style="color: #ef4444; font-weight: 700;">RISK</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Team (15%)</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-strong">Advantage</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Automation (15%)</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-weak">2</div>
+                        <div class="heatmap-cell hm-strong">Strong</div>
+                        
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Social Value (5%)</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-med">3</div>
+                        <div class="heatmap-cell hm-strong">4</div>
+                        <div class="heatmap-cell">Gap</div>
+                        
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 700; background: #e2e8f0;">WEIGHTED SCORE</div>
+                        <div class="heatmap-cell" style="font-weight: 700; background: #e2e8f0;">3.95</div>
+                        <div class="heatmap-cell" style="background: #e2e8f0;">3.35</div>
+                        <div class="heatmap-cell" style="background: #e2e8f0;">3.10</div>
+                        <div class="heatmap-cell" style="background: #e2e8f0;">WIN</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1000px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">ACCOUNT GROWTH</div>
+                    <div class="divider-line"></div>
+                </div>
+                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">Maintain the Account. Grow the Franchise.</h2>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">12. White Space Analysis</h3>
+                        <p class="visual-meta">Generated from W4-01: Boring But Expensive</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Where you serve, where you don't, where to expand. The white space analysis maps your current services against the client's full operational landscape. White space is where you're not present but could be — adjacent problems, departments you don't serve, functions running on competitors' contracts. Every white space is a potential expansion opportunity.</p>
+
+                    <div class="timeline-scroll">
+                        <div class="whitespace-grid">
+                            <div></div>
+                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">MANAGED SVC</div>
+                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">PROJECTS</div>
+                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">CONSULTING</div>
+                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">STAFFING</div>
+                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">LICENSING</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Infrastructure</div>
+                            <div class="ws-cell ws-green">MERIDIAN</div>
+                            <div class="ws-cell ws-green">MERIDIAN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Service Desk</div>
+                            <div class="ws-cell ws-green">MERIDIAN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Resilience</div>
+                            <div class="ws-cell ws-green">MERIDIAN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Network</div>
+                            <div class="ws-cell ws-red">ACME</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Security</div>
+                            <div class="ws-cell ws-red">SECURECO</div>
+                            <div class="ws-cell ws-red">SECURECO</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-red">SECURECO</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Cloud</div>
+                            <div class="ws-cell ws-white">OPPORTUNITY</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Applications</div>
+                            <div class="ws-cell ws-grey">IN-HOUSE</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-grey">IN-HOUSE</div>
+                            
+                             <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Data & Analytics</div>
+                            <div class="ws-cell ws-white">OPPORTUNITY</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Workplace</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPPORTUNITY</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                            <div class="ws-cell ws-white">OPEN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">13. 90-Day Campaign Timeline</h3>
+                        <p class="visual-meta">Generated from W4-03: 90-Day Campaign Assembly</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Not 'maintain the relationship.' A specific, 12-week plan with named actions, named owners, and measurable milestones. The 90-day campaign timeline is the operating document the account team works from.</p>
+                    
+                    <div class="timeline-scroll">
+                        <div class="gantt-grid">
+                            <div class="gantt-header">STREAM</div>
+                            <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
+                            <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
+                            <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
+
+                            <div class="gantt-row-label">RELATIONSHIP</div>
+                            <div style="grid-column: 3 / span 1; background: #10b981;" class="gantt-bar">Q1 Review</div>
+                            <div style="grid-column: 5 / span 1; background: #10b981;" class="gantt-bar">Cloud Pres</div>
+                            <div style="grid-column: 8 / span 1; background: #10b981;" class="gantt-bar">CTO Intro</div>
+                            <div style="grid-column: 12 / span 1; background: #10b981;" class="gantt-bar">Exec Sponsor</div>
+
+                            <div class="gantt-row-label">OPPORTUNITY</div>
+                            <div style="grid-column: 4 / span 1; background: #3b82f6;" class="gantt-bar">Cloud Prop</div>
+                            <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Data W'shop</div>
+                            <div style="grid-column: 11 / span 1; background: #3b82f6;" class="gantt-bar">Network Prop</div>
+
+                            <div class="gantt-row-label">SERVICE</div>
+                            <div style="grid-column: 2 / span 1; background: #f59e0b;" class="gantt-bar">Review Prep</div>
+                            <div style="grid-column: 7 / span 1; background: #f59e0b;" class="gantt-bar">Innov Rpt</div>
+
+                            <div class="gantt-row-label">DEFENCE</div>
+                            <div style="grid-column: 6 / span 1; background: #ef4444;" class="gantt-bar">Comp Intel</div>
+                            <div style="grid-column: 11 / span 1; background: #ef4444;" class="gantt-bar">Net Strategy</div>
+                            
+                             <div class="gantt-row-label" style="background: var(--bg-card);">GOVERNANCE</div>
+                            <div style="grid-column: 10 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;">◆</div>
+                            <div style="grid-column: 13 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;">◆</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <div class="visual-header">
+                        <h3 class="visual-title">14. Account Health Dashboard</h3>
+                        <p class="visual-meta">Generated from W4-05: Governance View</p>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">One page. This is what the Managing Director sees quarterly. If your account health can't fit on one page, you don't know the account well enough. The dashboard is the governance artefact — the document that triggers investment decisions. The one-page constraint is deliberate.</p>
+
+                    <div class="dashboard-grid">
+                        <div class="dash-card">
+                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACCOUNT SNAPSHOT</h4>
+                            <div style="font-weight: 700; margin-bottom: 0.5rem;">Meridian Fin. Svcs</div>
+                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem;">Contract: £5.3M/yr</div>
+                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem;">Tenure: 18 Months</div>
+                            <div style="font-size: 0.85rem;">Contact: J. Morris</div>
+                        </div>
+                        <div class="dash-card">
+                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">PERFORMANCE</h4>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #10b981;"></span> SLA: 99.2%</div>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #f59e0b;"></span> Relationship: Amber</div>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #10b981;"></span> Commercial: Green</div>
+                             <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #f59e0b;"></span> Pipeline: £2.1M</div>
+                        </div>
+                        <div class="dash-card">
+                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">TOP 3 RISKS</h4>
+                            <ul style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
+                                <li style="margin-bottom: 0.5rem;">New CIO (No relationship)</li>
+                                <li style="margin-bottom: 0.5rem;">Network renewal (Competitor)</li>
+                                <li style="margin-bottom: 0.5rem;">Innovation fund unused</li>
+                            </ul>
+                        </div>
+                        <div class="dash-card">
+                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">TOP 3 OPPS</h4>
+                            <ul style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
+                                <li style="margin-bottom: 0.5rem;">Cloud Migration (£800k)</li>
+                                <li style="margin-bottom: 0.5rem;">Data & Analytics (£1.2M)</li>
+                                <li style="margin-bottom: 0.5rem;">Network Displacement</li>
+                            </ul>
+                        </div>
+                        <div class="dash-card">
+                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">90-DAY PRIORITIES</h4>
+                             <ol style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
+                                <li style="margin-bottom: 0.5rem;">Establish CIO relationship</li>
+                                <li style="margin-bottom: 0.5rem;">Propose cloud migration</li>
+                                <li style="margin-bottom: 0.5rem;">Network displace strategy</li>
+                             </ol>
+                        </div>
+                        <div class="dash-card">
+                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACTIONS REQUIRED</h4>
+                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">⬜ Cloud presales invest</div>
+                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">⬜ CEO sponsor meeting</div>
+                             <div style="font-size: 0.85rem;">⬜ Review network intel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 4rem;">
+                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 1rem;">Every visual on this page was generated from GAIN prompt outputs.</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="week1.html" class="btn-schedule">ACCESS WEEK 1: INTELLIGENCE</a>
+                        <a href="index.html" class="btn-schedule" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">RETURN TO OVERVIEW</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Connect on LinkedIn
+            </a>
+        </div>
+    </footer>
+    </div>
+
+<script>
+    // Theme management
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', targetTheme);
+                localStorage.setItem('theme', targetTheme);
+            });
+        }
+        
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
+        
+        const navDropdown = document.querySelector('.nav-dropdown');
+        if (navDropdown) {
+            const dropdownMain = navDropdown.querySelector('.nav-link-main');
+            dropdownMain.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.stopPropagation();
+                    navDropdown.classList.toggle('mobile-open');
+                }
+            });
+        }
+    });
+
+    // Reveal animations
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
