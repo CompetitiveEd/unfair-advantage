@@ -1,498 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <title>Fictional Insight Data Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Room: Upload and manage your deal artifacts for GAIN analysis.">
+    <title>Data Room | The Unfair Advantage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
     <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 40px; color: #333; max-width: 1100px; margin: auto; }
-        .data-card { border: 1px solid #ddd; border-radius: 10px; margin-bottom: 25px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-        .card-header { background: #004a99; color: white; padding: 15px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; }
-        .copy-btn { background: #28a745; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        pre { background: #f8f9fa; padding: 20px; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: 'Courier New', monospace; }
-        .badge { background: #ffc107; color: black; padding: 3px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; }
+        .upload-zone {
+            border: 2px dashed var(--border-dynamic);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--bg-card);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            color: var(--slate);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .file-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .file-card {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dynamic);
+            padding: 1rem;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .file-card:hover {
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .file-type-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-body);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: var(--text-heading);
+            margin-right: 1rem;
+            border: 1px solid var(--border-dynamic);
+            text-transform: uppercase;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--text-heading);
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .file-meta {
+            font-size: 0.8rem;
+            color: var(--slate);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--slate);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover {
+            color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
     </style>
 </head>
 <body>
 
-    <h1>🛠️ Fictional Training Data Repository</h1>
-    <p><em>For Training & Practice Use Only. This data is fictional and designed for sandbox testing.</em></p>
-    <hr>
-
-    <h1>🛠️ Fictional Training Data Repository</h1>
-<p><em>For Training & Practice Use Only. This data is fictional and designed for sandbox testing.</em></p>
-<hr>
-
-<div class="data-card" style="border: 2px solid #004a99; border-radius: 12px; margin-bottom: 30px; font-family: sans-serif;">
-    <div class="card-header" style="background: #004a99; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 10px 10px 0 0;">
-        <div>
-            <strong>FILE:</strong> PERS-JM-2026 <span class="badge" style="margin-left:10px; background:#fff; color:#004a99; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">EXECUTIVE DOSSIER</span>
+    <div class="page-container content-reveal">
+    <nav>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <div class="nav-dropdown">
+                <span class="nav-link-main">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: Intelligence Layer</a>
+                    <a href="week2.html" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: Omniscience Engine</a>
+                    <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: Oxygen Effect</a>
+                    <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: Velocity @ Scale</a>
+                </div>
+            </div>
+            <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
         </div>
-        <button class="copy-btn" onclick="copyFullDossier()" style="background: #28a745; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Copy Full Dossier</button>
-    </div>
+    </nav>
     
-    <div style="height: 450px; overflow-y: scroll; background: #fff; padding: 20px; border: 1px inset #eee;">
-        <div id="visual-profile">
-            <h2 style="margin-top:0; color:#004a99;">Jennifer Catherine Morris</h2>
-            <p><strong>Director of Organisational Resilience & Business Continuity</strong></p>
-            <p>This box contains the full fictional history, LinkedIn activity, and professional network data for Jennifer Morris.</p>
-            <p><em>(Click "Copy Full Dossier" to grab all 3,000+ words for your AI prompt).</em></p>
-            <hr>
-            <h3>Quick Stats:</h3>
-            <ul>
-                <li><strong>Budget:</strong> £4.2M</li>
-                <li><strong>Team size:</strong> 6 direct reports</li>
-                <li><strong>Key Focus:</strong> Revenue Protection vs. Compliance Cost</li>
-            </ul>
+    <header class="dark-header-block">
+        <div class="hero-impact">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="pill-uk" style="display: inline-block; margin-bottom: 1.5rem; border-color: var(--primary); color: var(--primary);">DATA ROOM</div>
+                <h1 class="hero-headline">
+                    <span style="color: white; display: block;">Context is Currency.</span>
+                    <span style="color: #94a3b8; display: block;">Upload your deal artifacts. Generative AI needs ground truth.</span>
+                </h1>
+                <p class="hero-subtext">The prompts in GAIN are only as good as the data you feed them. Manage your deal context here.</p>
+            </div>
         </div>
+    </header>
 
-        <div id="raw-dossier-text" style="display: none;">
-[PFICTIONAL RESILIENCE DIRECTOR PROFILE
-For Training & Practice Use Only
-Name: Jennifer Catherine Morris
-Current Title: Director of Organisational Resilience & Business Continuity
-Current Company: Meridian Financial Services plc (London, UK)
-Location: Greater London, England, United Kingdom (Hybrid)
-Seniority: Director-level (C-Suite Adjacent)
-Years in Role: 3 years 5 months (since March 2022)
-________________________________________
-PROFESSIONAL SUMMARY
-Senior strategic executive with 14+ years of progressive experience in operational resilience, business continuity, risk management, and digital transformation. Proven track record leading enterprise-wide resilience initiatives across regulated financial services organizations. Expert in developing governance frameworks, incident response protocols, and organizational capability building. Strong background in managing stakeholder relationships across C-suite, board level, and functional teams. Known for translating complex risk concepts into actionable business strategy.
-Key Focus Areas:
-•	Organizational resilience architecture and design
-•	Operational resilience frameworks (regulatory compliance: PRA, FCA)
-•	Business continuity & disaster recovery planning
-•	Enterprise risk management & incident response
-•	Cyber and technology resilience
-•	Staff capability building and training
-•	Third-party/vendor risk management
-________________________________________
-CURRENT ROLE DETAILS
-Director of Organisational Resilience & Business Continuity
-Meridian Financial Services plc
-March 2022 – Present | 3 yrs 5 months
-London, England, UK (Hybrid – 2 days in office, 3 days remote)
-Key Responsibilities:
-•	Lead enterprise-wide resilience strategy and implementation across 8,000+ employees
-•	Develop and oversee operational resilience policies, standards, and procedures
-•	Chair quarterly Resilience Steering Committee with CFO, CRO, and COO
-•	Manage annual business continuity exercise program; define recovery time objectives (RTOs) and recovery point objectives (RPOs)
-•	Oversee vendor/third-party risk assessment and resilience oversight
-•	Direct incident response protocols; serve as incident commander for major events
-•	Manage annual resilience budget of £4.2M (staffing, technology, testing)
-•	Report directly to Chief Risk Officer; present quarterly updates to Board Risk Committee
-•	Lead transformation initiative to implement ISO 22301 certification (target: Q3 2026)
-Achievements:
-•	Reduced incident response time by 47% through revised protocols (2023)
-•	Successfully led pandemic recovery: restored full operations within 8 hours during June 2024 data center incident
-•	Designed resilience scorecard now used across 5 regional offices
-•	Mentored 12 business continuity coordinators; promoted 3 to manager-level positions
-•	Established new third-party resilience audit framework (now assesses 230+ vendors quarterly)
-________________________________________
-PREVIOUS EXPERIENCE
-Senior Manager, Operational Resilience
-Ashford Bank Holdings
-August 2018 – February 2022 | 3 yrs 6 months
-Edinburgh, Scotland, UK (On-site)
-•	Led operational resilience function for wealth management division (£18B AUM)
-•	Developed and implemented stress-testing framework for market volatility scenarios
-•	Established crisis communication protocols; trained 200+ staff on escalation procedures
-•	Conducted 6 major business continuity tests per year; identified and remediated 40+ gaps
-•	Managed cross-functional workstreams with IT, Operations, and Compliance teams
-•	Reduced insurance premiums by 12% through improved risk profile documentation
-Manager, Business Continuity & Risk
-Capital Markets Solutions Ltd
-May 2015 – July 2018 | 3 yrs 2 months
-London, England, UK (On-site)
-•	Responsible for BC planning for trading operations (500+ traders, £2.1B daily turnover)
-•	Designed alternate site activation procedures; conducted quarterly drills
-•	Built relationships with 15+ technology vendors to ensure SLA compliance
-•	Led incident management for 3 significant operational incidents; post-incident reviews improved response protocols
-•	Developed staff awareness campaign: increased BC plan familiarity from 38% to 82%
-Resilience Analyst
-GMP Insurance Group
-January 2012 – April 2015 | 3 yrs 3 months
-London, England, UK (On-site)
-•	Supported development of disaster recovery and business continuity strategies
-•	Performed risk assessments and vulnerability analysis for IT infrastructure
-•	Coordinated BC testing activities; documented results and recommendations
-•	Assisted with compliance documentation for PCI-DSS and ISO certifications
-Project Coordinator, Risk & Compliance
-Thomson Corporate Services
-June 2010 – December 2011 | 1 yr 6 months
-London, England, UK (On-site)
-•	Entry-level role supporting risk and compliance projects
-•	Coordinated documentation for internal audit activities
-________________________________________
-EDUCATION & QUALIFICATIONS
-Master of Business Administration (MBA)
-University of Exeter | 2012-2014
-Specialization: Strategic Risk Management & Business Resilience
-Bachelor of Science (BS) in Business Management
-Kingston University | 2006-2010
-Professional Certifications:
-•	Certified Business Continuity Professional (CBCP) | DRI International | 2015 (current through 2026)
-•	ISO 22301 Business Continuity Management Internal Auditor | TUV-Certified | 2020
-•	Diploma in Financial Services (Compliance) | Chartered Institute of Securities & Investment (CISI) | 2016
-•	PRINCE2 Project Management | Axelos | 2018
-Ongoing Education:
-•	Leading course on Enterprise Cyber Resilience | GIAC/SANS | In progress (completion Q2 2026)
-•	Board Leadership Programme | Institute of Directors | Completed Feb 2024
-________________________________________
-SKILLS & COMPETENCIES
-Core Competencies:
-•	Operational Resilience Strategy & Governance
-•	Business Continuity Planning & Management
-•	Risk Management & Assessment
-•	Incident & Crisis Management
-•	Stakeholder Management (Board/C-Suite)
-•	Regulatory Compliance (PRA, FCA, ISO standards)
-•	Third-Party Risk & Vendor Management
-•	Staff Training & Capability Building
-•	Budget Management & Resource Allocation
-•	Change Management
-Technical Skills:
-•	Business Continuity software: Stratus, Assure, Altayo
-•	Project management tools: Microsoft Project, Jira, Confluence
-•	Data analysis: Excel (advanced), Power BI, Tableau
-•	GIS mapping software (for geographic risk assessment)
-•	ERP systems: SAP, Oracle
-Soft Skills:
-•	Executive presence & Board-level communication
-•	Strategic thinking & business acumen
-•	Team leadership (currently manages 6 direct reports)
-•	Cross-functional collaboration
-•	Change advocacy
-•	Presentation & public speaking
-________________________________________
-PROFESSIONAL AFFILIATIONS
-•	Member, DRI International (Disaster Recovery Institute International) – Since 2015
-•	Fellow, Institute of Business Continuity Management (IBCM) – Since 2018
-•	Member, Institute of Risk Management (IRM) – Since 2016
-•	Advisory Board, London Business School Executive Education – Since 2023
-________________________________________
-LANGUAGE & REGIONAL NOTES
-•	Native Language: English (British)
-•	Additional Languages: Conversational French
-•	Geographic Focus: UK & Northern Europe regulations
-•	Regulatory Knowledge: Particularly strong in PRA/FCA frameworks (UK financial services)
-________________________________________
-KEY INSIGHTS FOR TRAINING USE
-Career Trajectory Pattern: Jennifer's path shows a common progression—starting in compliance/risk support roles, then moving to dedicated BC/resilience positions, and eventually to director-level strategic leadership. She likely spent 4-5 years building expertise before moving into management.
-Typical Interview Topics:
-•	Incident response decisions & outcomes
-•	Stakeholder management examples (difficult conversations with executives)
-•	How she measures resilience ROI
-•	Experience with regulatory audits/assessments
-•	Team building and talent development
-•	Technology implementations (BC software selection process)
-Realistic Compensation Range: £120,000 - £160,000 base + 30-40% bonus (typical for director-level resilience roles in London financial services)
-Company Context (Meridian Financial Services): Fictional mid-tier UK investment bank; regulated by PRA/FCA; ~8,000 employees; emphasis on regulatory compliance and operational stability.
-POST #1 - Published: January 24, 2026 | 287 likes • 43 comments • 12 reposts
-Jennifer Morris
-Director of Organisational Resilience & Business Continuity @ Meridian Financial Services
-Post Text:
-"We've just completed our annual resilience stress-test exercise at Meridian, and I wanted to share a few reflections.
-This year, we tested a scenario that genuinely unsettled our teams: a simultaneous technology outage + a key vendor service degradation during a volatile market day. Not fun to simulate, but absolutely necessary.
-Here's what stood out:
-✅ Our incident command structure worked seamlessly - clear escalation paths, no confusion ⚠️ BUT - we identified a 47-minute gap in cross-team communication during the transition from response to recovery ✅ Our backup systems performed flawlessly ⚠️ BUT - only 68% of staff knew how to access the alternate working location
-The uncomfortable truth? Even with great planning, real incidents expose gaps we didn't anticipate. And that's exactly why we do this.
-Post-exercise, we've initiated 3 key improvements:
-1.	Revised comms protocol with clearer message sequencing
-2.	Mandatory 'location activation' training for all staff (rolling out Feb-March)
-3.	Enhanced real-time dashboard for incident commanders
-The teams who participate in these exercises are the real heroes here. They take it seriously, they stay in role, and they give honest feedback. That's what makes the difference.
-Are you running resilience exercises in your organization? What's the biggest gap you've uncovered? (Curious to hear patterns from other sectors.)"
-Engagement Snapshot:
-•	Comments include: industry peers asking about methodology, colleagues from other departments, DRI members
-•	Top commenter: Terry Downing (fellow resilience director) with 12+ comment thread about vendor risk management
-•	Reposted by: ISO 22301 training company, DRI International chapter
-________________________________________
-POST #2 - Published: December 16, 2025 | 412 likes • 67 comments • 34 reposts
-Jennifer Morris
-"Proud announcement: Three of my team have just achieved their CBCP certification! 🎓
-Sophie Clarke, Michael Zhang, and Priya Desai have been with our resilience function for 2-3 years and have genuinely earned this credential through hard work, study, and real incident experience.
-This is what career development looks like in practice:
-•	Start as BC Coordinator (entry-level)
-•	Lead business unit exercises
-•	Present to senior leadership
-•	Pursue formal certification
-•	Step up to BC Manager role
-We're now promoting all three into team lead positions across our regional offices. They'll each oversee resilience planning for their geographic area.
-If you're in a similar function, building bench strength isn't optional—it's essential. Your resilience capability is only as strong as the people who drive it.
-Massive congrats to Sophie, Michael, and Priya. You make this function better every day. 🙌"
-Engagement Snapshot:
-•	67 comments mostly from: current Meridian employees congratulating team members, DRI members asking about certification paths, universities with BC programs
-•	Reposted by: multiple UK financial services companies
-•	Tagged: @DRI International, @CISI
-________________________________________
-POST #3 - Published: November 8, 2025 | 156 likes • 31 comments • 8 reposts
-Jennifer Morris
-"Article share: Just read an excellent piece on 'Why Resilience Directors Need a Seat at the Budget Table' (link to Harvard Business Review).
-The core argument is one I strongly agree with: resilience is often treated as a compliance checkbox rather than a strategic business function. This creates a vicious cycle:
-❌ Resilience isn't funded adequately ❌ Incident response is reactive rather than planned ❌ Incidents cause business losses (much larger than what resilience investment would have cost) ❌ Post-incident, there's a brief surge in funding, then it declines again
-I've seen this exact pattern in 2 of my previous roles.
-What changed at Meridian: our CFO recognized that every 1% improvement in incident response efficiency = £2-3M in avoided losses. That reframing made the case for proper funding.
-Key takeaway from the article: resilience isn't overhead—it's revenue protection.
-If your organization treats resilience as a compliance cost rather than a business investment, this is worth a read. And maybe worth a conversation with your CFO.
-Who else has experienced this dynamic? What shifted the conversation in your organization?"
-Engagement Snapshot:
-•	Strong engagement from: risk officers, CFOs, enterprise resilience leaders
-•	Comments debate ROI measurement approaches
-•	Shared by: Institute of Risk Management
-________________________________________
-Yes, you caught that! Let me complete Post #4 and add the rest of the expansion:
-________________________________________
-POST #4 - Published: September 30, 2025 | 94 likes • 18 comments • 3 reposts
-Jennifer Morris
-"Lesson learned (the hard way): Vendor resilience planning can't be a checkbox exercise.
-We required all key vendors to complete a 'resilience assessment' form. 73 of them returned it. Our team reviewed them... and we realized most responses were generic, boilerplate, and frankly not useful.
-So we changed approach: instead of forms, we now conduct structured interviews with vendor resilience leads. We ask specific questions:
-•	What happens if YOUR systems go down? What's your RTO/RPO?
-•	How do YOU test it? When was your last test?
-•	Who's your incident commander? Can you introduce us?
-•	What's your geography risk? (Power grids, weather, geopolitical?)
-Suddenly, we get real answers. And sometimes we discover gaps they didn't even know they had.
-This approach takes more time (yes, I know). But we've already identified 3 critical vendors where our assumptions about their resilience were completely wrong.
-Vendor risk is enterprise risk. You can't delegate it to a checklist.
-Anyone else managing third-party resilience? What's been your biggest surprise?"
-Engagement Snapshot:
-•	Comments from: procurement teams, supply chain risk managers, other financial services directors
-•	Reposted by: Enterprise Risk Management association
-•	Top response: vendor management software company offering to help automate
-________________________________________
-LinkedIn Interests & Content She Follows
-Organizations Jennifer Follows (Fictional):
-•	DRI International (Disaster Recovery Institute)
-•	Institute of Business Continuity Management (IBCM)
-•	Institute of Risk Management (IRM)
-•	Financial Conduct Authority (FCA) Official
-•	Prudential Regulation Authority (PRA) Official
-•	Meridian Financial Services (company page - she's tagged in ~40 posts)
-•	ISO Standards Organization
-•	Business Continuity Institute
-•	Cyber Incident Response Association
-Industry Leaders/Thought Leaders She Follows:
-•	Terry Downing (FBCI FJSRM - published author on operational resilience)
-•	Graham Self (Enterprise Architect & Resilience Strategist)
-•	Yves Kerr (Head of Resilience, major European bank)
-•	Dr. Sarah Chen (Academic researcher on organizational resilience)
-•	Mark Lumley (fellow Director Digital & IT Resilience, London Borough Hounslow)
-•	Matthew Drew (Group Security & Resilience Director, Tesco)
-•	Paul Rose (Crisis & Incident Management specialist)
-Hashtags She Regularly Engages With:
-•	#OperationalResilience
-•	#BusinessContinuity
-•	#RiskManagement
-•	#IncidentResponse
-•	#Cyber Resilience
-•	#FinancialServices
-•	#DisasterRecovery
-•	#EnterpriseRisk
-•	#ISO22301
-•	#Leadership
-Content Types She Engages With:
-1.	Regulatory Updates (PRA/FCA announcements, new resilience requirements)
-2.	Case Studies (post-incident reviews, "lessons learned" articles)
-3.	Industry Research (reports on organizational resilience maturity)
-4.	Technology Reviews (new BC/DR software, incident management platforms)
-5.	Leadership Development (board management, executive presence content)
-6.	Team Achievements (colleagues' certifications, promotions, speaking engagements)
-7.	Industry Events (DRI conferences, roundtables, webinars)
-8.	Thought Leadership Articles (her own and peers' reflections on resilience)
-________________________________________
-Articles & Content Jennifer Has Shared (Last 12 Months)
-1.	"The Hidden Cost of Incident Response Delays" - Risk Management Today Magazine (shared Jan 2026) | 78 likes, 14 comments
-2.	"Third-Party Risk in Financial Services: What Regulators Really Care About" - PRA Insights (shared Nov 2025) | 203 likes, 31 comments
-3.	"Why Board-Level Resilience Oversight Matters" - McKinsey Quarterly (shared Oct 2025) | 156 likes, 22 comments
-4.	"Building a Resilience Culture: Beyond Compliance" - Harvard Business Review (shared Aug 2025) | 289 likes, 67 comments
-5.	"Real-World Incident: How One Bank Recovered From a Ransomware Attack" - Case Study shared (July 2025) | 92 likes, 17 comments
-________________________________________
-Skills Endorsed on LinkedIn (Top Endorsements)
-Most Endorsed Skills:
-•	Operational Resilience (247 endorsements)
-•	Business Continuity (234 endorsements)
-•	Risk Management (198 endorsements)
-•	Crisis Management (167 endorsements)
-•	Incident Response (145 endorsements)
-•	Project Management (128 endorsements)
-•	Leadership (156 endorsements)
-•	Strategic Planning (134 endorsements)
-•	Vendor Management (89 endorsements)
-•	Compliance (76 endorsements)
-Who Endorses Her Most Frequently:
-•	Her direct reports (6 people)
-•	Colleagues from Meridian (21 people)
-•	Previous colleagues from Ashford Bank (8 people)
-•	Industry peers/other directors (15+ people)
-•	University MBA contacts (12 people)
-________________________________________
-Recommendations & Testimonials (Fictional)
-From: Richard Partridge | Head of Enterprise Change & PMO, Meridian Financial
-"Jennifer brought clarity and structure to our resilience function. She doesn't just check compliance boxes—she asks the hard strategic questions about what could actually disrupt our business, and then builds the capability to handle it. Her team is genuinely empowered." ⭐⭐⭐⭐⭐
-From: Dr. Elena Rodriguez | Dean of Executive Education, University of Exeter MBA Program
-"Jennifer was an outstanding student and is now a thought leader in her field. She bridges theory and practice beautifully, and brings real-world case studies to the conversation." ⭐⭐⭐⭐⭐
-From: James Mundy | Previous CFO, Ashford Bank Holdings
-"Jennifer's ability to translate risk language into business impact changed how we viewed resilience investment. She was instrumental in securing board approval for our DR infrastructure upgrade." ⭐⭐⭐⭐⭐
-From: Michael Zhang | BC Manager (Team Lead), Meridian Financial
-"Jennifer genuinely invests in her team's development. She sponsored my CBCP certification and gave me meaningful responsibilities. This is the kind of leader who creates career paths." ⭐⭐⭐⭐⭐
-________________________________________
-Speaking Engagements & Visibility (Last 18 Months)
-Conferences/Webinars:
-•	DRI International Annual Conference (May 2025) | Speaker: "Resilience in Crisis: Real-Time Decision Making" | 240 attendees
-•	Institute of Business Continuity Management Roundtable (March 2025) | Panelist: "Emerging Risks in 2025" | 120 attendees
-•	Financial Services Resilience Summit (Oct 2024) | Keynote: "Building Resilience Culture in Regulated Environments" | 450 attendees
-•	ISO 22301 Implementation Webinar Series (ongoing) | Expert Contributor | 8 sessions
-Media/Publishing:
-•	Quoted in: Financial Times article on "Operational Resilience in Banking" (Nov 2025)
-•	Contributing author: "Modern Approaches to Business Continuity" (peer-reviewed journal, 2024)
-•	Blog: Writes monthly piece on "Resilience Reflections" (LinkedIn newsletter, ~2,400 subscribers)
-________________________________________
-LinkedIn Activity Patterns (Fictional)
-Posting Frequency: ~2-3 posts per month (thoughtful, substantive posts rather than daily engagement)
-Engagement Style:
-•	Responds to comments within 24 hours
-•	Often poses questions to encourage discussion
-•	Engages with other thought leaders' posts (likes/comments 3-4x per week)
-•	Shares industry research & articles regularly
-•	Primarily posts during UK business hours (8am-5pm GMT)
-Time Spent on LinkedIn: ~45 minutes/day on average (mostly reading/commenting, less on posting)
-Network Composition:
-•	63% financial services professionals
-•	18% risk/resilience specialists from other sectors
-•	12% academic/research contacts
-•	7% government/regulatory bodies
-Connection Requests: Typically accepts requests from professionals she knows or who have mutual connections; occasionally denies vague requests
-________________________________________
-Personal Touches (Realistic but Fictional)
-Bio/Headline: "Building organisational resilience | Business Continuity Director | DRI Fellow | Board Advisor | 'Resilience isn't what happens when things go right—it's what happens when they don't' 📊"
-Profile Photo Notes: Professional headshot, business formal attire, warm expression (the type that shows both approachability and authority)
-Interests Outside Work (Hinted at in Profile):
-•	Mentions in interviews: marathon runner (completed 3 marathons)
-•	Supporter of women in tech/finance initiatives
-•	Volunteer: Mentors early-career professionals in risk management
-•	Background: North England (Leeds), family in Scottish Borders
-Quirks in Engagement:
-•	Tends to respond with longer, thoughtful comments rather than quick emoji reactions
-•	Occasionally makes self-deprecating jokes about "resilience nerds"
-•	Passionate about mentoring—often highlights team members' achievements
-•	Uses data/evidence in comments; rarely makes claims without backing
+    <main>
+        
+        <section class="reveal">
+            <div class="container" style="max-width: 800px;">
+                
+                <h2 class="section-heading-standard">Active Context</h2>
+                <p class="lead-prose" style="text-align: center; font-size: 1rem; margin-bottom: 2rem;">
+                    These files are currently loaded into your session context. All prompts run from the Methodology pages will reference this data.
+                </p>
 
+                <div class="upload-zone" id="drop-zone">
+                    <span class="upload-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </span>
+                    <h3 style="margin-top: 0; color: var(--text-heading);">Drag & Drop Deal Files</h3>
+                    <p style="color: var(--slate); font-size: 0.9rem; margin-bottom: 1.5rem;">Or click to browse your secure drive</p>
+                    <p style="font-size: 0.8rem; color: var(--text-body); opacity: 0.7;">Supported: PDF, DOCX, TXT, MD, CSV (Max 20MB)</p>
+                </div>
 
+                <div class="file-list">
+                    
+                    <div class="file-card">
+                        <div class="file-type-icon" style="color: #2b579a; background: rgba(43, 87, 154, 0.1); border-color: rgba(43, 87, 154, 0.2);">DOCX</div>
+                        <div class="file-info">
+                            <span class="file-name">Meridian_Global_RFP_2024.docx <span class="status-badge">PARSED</span></span>
+                            <span class="file-meta">1.2 MB • Uploaded 2 mins ago • <strong>Contains:</strong> Requirements, Evaluation Criteria</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="action-btn" aria-label="Delete">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="file-card">
+                        <div class="file-type-icon" style="color: #000000; background: rgba(0, 0, 0, 0.05); border-color: rgba(0, 0, 0, 0.1);">MD</div>
+                        <div class="file-info">
+                            <span class="file-name">Discovery_Meeting_Transcript_CIO.md <span class="status-badge">PARSED</span></span>
+                            <span class="file-meta">45 KB • Uploaded 14 mins ago • <strong>Contains:</strong> 3 Speakers, Budget Signals</span>
+                        </div>
+                        <div class="file-actions">
+                            <button class="action-btn" aria-label="Delete">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="note-box note-amber" style="margin-top: 3rem;">
+                    <div class="note-box-icon">!</div>
+                    <div class="note-box-content">
+                        <p><strong>Security Note:</strong> This interface is a simulation for training purposes. In a real deployment, ensure your AI instance (ChatGPT Team/Enterprise or Claude) is configured with "Data Privacy" enabled to prevent training on your uploaded client data.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 4rem;">
+                    <a href="week1.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">GO TO WEEK 1: INTELLIGENCE LAYER</a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>
+            
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.3s;">
+                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                Connect on LinkedIn
+            </a>
         </div>
+    </footer>
     </div>
-</div>
 
 <script>
-function copyFullDossier() {
-    // This grabs the hidden plain text version which is much better for AI prompts
-    const text = document.getElementById('raw-dossier-text').innerText;
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Full Dossier Copied! You can now paste the entire fictional history into your AI.');
+    // Theme management
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', targetTheme);
+                localStorage.setItem('theme', targetTheme);
+            });
+        }
+        
+        // Mobile Menu
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (mobileMenuToggle && navLinks) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
+
+        // Mock Upload Interaction
+        const dropZone = document.getElementById('drop-zone');
+        if(dropZone) {
+            dropZone.addEventListener('click', () => {
+                alert('In the live version, this opens your file browser.');
+            });
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'var(--primary)';
+                dropZone.style.background = 'rgba(59, 130, 246, 0.1)';
+            });
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.style.borderColor = 'var(--border-dynamic)';
+                dropZone.style.background = 'var(--bg-card)';
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                alert('File upload simulation: Files received.');
+                dropZone.style.borderColor = 'var(--border-dynamic)';
+                dropZone.style.background = 'var(--bg-card)';
+            });
+        }
     });
-}
+
+    // Reveal animations
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
-
-    <div class="data-card">
-        <div class="card-header">
-            <span><strong>CORPORATE:</strong> Meridian Financial Services Strategy <span class="badge">FINANCIAL DATA</span></span>
-            <button class="copy-btn" onclick="copyText('corporate')">Copy Strategy</button>
-        </div>
-        <pre id="corporate">
-CEO INSIGHT: "Meridian’s reputation is built on availability, not just assets." [cite: 314]
-FUNDING: 15% increase in 'Resilience Transformation' funding for 2026 
-OPERATIONAL GOAL: Reduce Mean Time to Recover (MTTR) by 30% [cite: 318]
-CRITICAL GAPS: Reliance on three 'Critical-Path' third-party vendors identified in 'Stress-Test Alpha' [cite: 321]
-        </pre>
-    </div>
-
-    <div class="data-card">
-        <div class="card-header">
-            <span><strong>SOCIAL:</strong> LinkedIn Thought Leadership <span class="badge">EXECUTIVE VOICE</span></span>
-            <button class="copy-btn" onclick="copyText('social')">Copy Posts</button>
-        </div>
-        <pre id="social">
-POST 1: "Resilience isn't overhead—it's revenue protection. Every 1% improvement in response efficiency = £2-3M in avoided losses." [cite: 170, 172, 326]
-POST 2: "Vendor resilience planning can't be a checkbox exercise. We found 3 critical vendors where our assumptions were completely wrong." [cite: 183, 192, 327]
-POST 3: "Stress-tests are uncomfortable but necessary. We identified a 47-minute gap in cross-team communication." [cite: 126, 129, 325]
-        </pre>
-    </div>
-
-    <script>
-        function copyText(id) {
-            var text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copied to clipboard!");
-        }
-    </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Fictional Insight Data Hub</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 40px; color: #333; max-width: 1100px; margin: auto; }
-        .data-card { border: 1px solid #ddd; border-radius: 10px; margin-bottom: 25px; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); }
-        .card-header { background: #004a99; color: white; padding: 15px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; }
-        .copy-btn { background: #28a745; border: none; color: white; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        pre { background: #f8f9fa; padding: 20px; white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: 'Courier New', monospace; }
-        .badge { background: #ffc107; color: black; padding: 3px 10px; border-radius: 20px; font-size: 0.8em; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-    <h1>🛠️ Fictional Training Data Repository</h1>
-    <p><em>For Training & Practice Use Only. This data is fictional and designed for sandbox testing.</em></p>
-    <hr>
-
-    <div class="data-card">
-        <div class="card-header">
-            <span><strong>PROFILE:</strong> Jennifer Catherine Morris <span class="badge">DIRECTOR LEVEL</span></span>
-            <button class="copy-btn" onclick="copyText('profile')">Copy Profile</button>
-        </div>
-        <pre id="profile">
-NAME: Jennifer Catherine Morris 
-CURRENT ROLE: Director of Organisational Resilience & Business Continuity @ Meridian Financial Services plc [cite: 3, 19]
-TENURE: 3 years 5 months (Since March 2022) 
-BUDGET: £4.2M annual resilience budget 
-KEY SKILLS: Operational Resilience (PRA/FCA), ISO 22301, Incident Command, Third-Party Risk [cite: 12, 26, 30, 81]
-STRATEGY: Implementing ISO 22301 certification by Q3 2026 [cite: 30]
-        </pre>
-    </div>
-
-    <div class="data-card">
-        <div class="card-header">
-            <span><strong>CORPORATE:</strong> Meridian Financial Services Strategy <span class="badge">FINANCIAL DATA</span></span>
-            <button class="copy-btn" onclick="copyText('corporate')">Copy Strategy</button>
-        </div>
-        <pre id="corporate">
-CEO INSIGHT: "Meridian’s reputation is built on availability, not just assets." [cite: 314]
-FUNDING: 15% increase in 'Resilience Transformation' funding for 2026 
-OPERATIONAL GOAL: Reduce Mean Time to Recover (MTTR) by 30% [cite: 318]
-CRITICAL GAPS: Reliance on three 'Critical-Path' third-party vendors identified in 'Stress-Test Alpha' [cite: 321]
-        </pre>
-    </div>
-
-    <div class="data-card">
-        <div class="card-header">
-            <span><strong>SOCIAL:</strong> LinkedIn Thought Leadership <span class="badge">EXECUTIVE VOICE</span></span>
-            <button class="copy-btn" onclick="copyText('social')">Copy Posts</button>
-        </div>
-        <pre id="social">
-POST 1: "Resilience isn't overhead—it's revenue protection. Every 1% improvement in response efficiency = £2-3M in avoided losses." [cite: 170, 172, 326]
-POST 2: "Vendor resilience planning can't be a checkbox exercise. We found 3 critical vendors where our assumptions were completely wrong." [cite: 183, 192, 327]
-POST 3: "Stress-tests are uncomfortable but necessary. We identified a 47-minute gap in cross-team communication." [cite: 126, 129, 325]
-        </pre>
-    </div>
-
-    <script>
-        function copyText(id) {
-            var text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copied to clipboard!");
-        }
-    </script>
-
 </body>
 </html>
