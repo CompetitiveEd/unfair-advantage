@@ -3,292 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Intelligence Layer: Reclaim 4 hours per meeting with the GAIN Prompt Chain.">
+    <meta name="description" content="Week 1: Intelligence Layer. Reclaim 4 hours per meeting with the GAIN Prompt Chain.">
     <title>Week 1: Intelligence Layer | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="page-container content-reveal">
-<nav>
-    <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
-    <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <div class="nav-links">
-            <a href="foundations.html">Foundations</a>
-            <a href="steer.html">Steer, Don't Drift</a>
-            <div class="nav-dropdown">
-                <span class="nav-link-main" style="color: var(--primary);">About ▾</span>
-                <div class="dropdown-content">
-                    <a href="origins.html">Origins</a>
-                    <a href="frameworks.html" style="color: var(--primary);">Frameworks</a>
-                </div>
-            </div>
-            <div class="nav-dropdown">
-                <span class="nav-link-main">GAIN Series ▾</span>
-                <div class="dropdown-content">
-                    <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: KNOW Them - Intelligence Layer</a>
-                    <a href="week2.html" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: MAP Them - Omniscience Engine</a>
-                    <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: WIN Them - Oxygen Effect</a>
-                    <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: GROW Them - Velocity @ Scale</a>
-                </div>
-            </div>
-        <a href="visuals.html">Visuals</a>
-        <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
-    </div>
-</nav>
+    <style>
+        /* Inline overrides for perfect Week 4 Design System alignment */
+        :root {
+            --primary: #3b82f6;
+            --slate: #94a3b8;
+            --bg-card: #1e293b;
+            --border-dynamic: rgba(255,255,255,0.1);
+            --text-body: #cbd5e1;
+            --text-heading: #ffffff;
+        }
+        
+        body { background-color: #0f172a; color: var(--text-body); font-family: 'Inter', sans-serif; }
+        
+        /* Step Headers */
+        .step-header-block { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .large-step-number { font-size: 3.5rem; font-weight: 900; line-height: 0.8; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
+        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; padding-top: 0.5rem; }
+        .step-title { font-size: 1.15rem; font-weight: 800; color: white; margin: 0; }
+        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; }
+        .step-counter { display: block; font-size: 0.65rem; font-weight: 800; color: var(--slate); letter-spacing: 0.1em; margin-bottom: 0.2rem; width: 100%; }
+        
+        /* Prompt Consoles */
+        .prompt-console-header { background: #1e293b; padding: 10px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .prompt-console-dots span { height: 10px; width: 10px; background-color: #334155; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .prompt-console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; }
+        
+        .prompt-wrapper { position: relative; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 12px 12px; overflow: hidden; }
+        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: 'Monaco', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.6; max-height: 140px; overflow: hidden; transition: max-height 0.5s ease; position: relative; }
+        .prompt-content.expanded { max-height: 2000px; }
+        .prompt-actions { display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1); }
+        .prompt-expand-btn { border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 12px 1.5rem; cursor: pointer; flex-grow: 1; text-align: left; }
+        .copy-btn-inline { background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: var(--primary); font-size: 0.7rem; font-weight: 800; padding: 0 1.5rem; cursor: pointer; height: 45px; transition: 0.2s; }
+        .copy-btn-inline:hover { background: rgba(255,255,255,0.05); color: white; }
+        
+        /* Library Buttons */
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-body); padding: 12px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
+        .library-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); color: white; transform: translateY(-1px); }
+        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
+        .library-btn:hover .copy-badge { background: var(--primary); color: white; border-color: var(--primary); }
 
-      <header class="dark-header-block">
-            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Executive Boardroom">
-            <div class="hero-impact">
-                <div class="hero-content">
-                    <span style="color: #60a5fa; display: block; font-size: 0.75rem; font-weight: 900; letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 1 — INTELLIGENCE LAYER</span>
-                    <h1 class="hero-headline">
-                        <span style="color: white; display: block;">AI handles the storm.</span>
-                        <span style="color: #64748b; display: block;">You handle the human.</span>
+        /* Specific Week 1 Visuals */
+        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
+        .hero-headline { font-size: 3rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+        
+        /* Animations */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="week1-page">
+
+    <div id="scroll-progress"></div>
+
+    <div class="page-container">
+        <nav>
+            <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links">
+                <a href="foundations.html">Foundations</a>
+                <a href="steer.html">Steer</a>
+                
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">About ▾</span>
+                    <div class="dropdown-content">
+                        <a href="origins.html">Origins</a>
+                        <a href="frameworks.html">Frameworks</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <span class="nav-link-main" style="color: var(--primary);">GAIN Series ▾</span>
+                    <div class="dropdown-content">
+                        <a href="week1.html" class="locked">1: KNOW - Intelligence</a>
+                        <a href="week2.html">2: MAP - Omniscience</a>
+                        <a href="week3.html">3: WIN - Oxygen Effect</a>
+                        <a href="week4.html">4: GROW - Velocity</a>
+                    </div>
+                </div>
+                <a href="visuals.html">Visuals</a>
+                <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
+            </div>
+        </nav>
+    
+        <header class="dark-header-block">
+            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Intelligence Layer" style="opacity: 0.6;">
+            <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
+                <div class="hero-content reveal" style="text-align: center;">
+                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 1 — INTELLIGENCE LAYER</p>
+                    <h1 class="hero-headline" style="line-height: 1.1;">
+                        <span style="color: #ffffff; display: block;">AI handles the storm.</span>
+                        <span style="color: #3b82f6; display: block;">You handle the human.</span>
                     </h1>
-                    <p class="hero-subtext">Reclaim 4 hours per meeting. Walk in understanding their board-level priorities before they say a word.</p>
-                    <div class="speed-badge">20 MINUTES — FROM ANNUAL REPORT TO EXECUTIVE BRIEFING</div>
+                    <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+                    <p class="hero-subtext" style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        Reclaim 4 hours per meeting. Walk in understanding their board-level priorities before they say a word.
+                    </p>
+                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
+                        20 MINUTES — FROM ANNUAL REPORT TO EXECUTIVE BRIEFING
+                    </p>
                 </div>
             </div>
         </header>
 
-        <main>
-            <section class="container" style="padding-top: 4rem; padding-bottom: 4rem;">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">THE STORY</span>
-                    <div class="divider-line"></div>
+    <main style="margin-top: -4rem; position: relative; z-index: 2;">
+        
+        <section class="reveal">
+            <div class="container" style="max-width: 800px;">
+                
+                <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); padding: 2rem;">
+                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Context</h2>
+                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
+                        <p class="body-prose" style="margin: 0;">Tom had 30 minutes before a CFO meeting. He ran the annual report through an AI research prompt. He found the CFO used "cost-to-serve" 17 times and "innovation" twice. <br><br>He dropped "digital transformation" from his pitch and led with "operational efficiency." The CFO leaned forward and said: <em>"You're the only one who seemed to understand what we're actually trying to do."</em></p>
+                    </div>
                 </div>
 
-                <p class="lead-prose">Tom had 30 minutes before a CFO meeting at a financial services firm. He ran the company's annual report through an AI research prompt. Something jumped out.</p>
-
-                <p class="body-prose">The CFO had used the phrase "cost-to-serve" 17 times in the shareholder letter. "Innovation" appeared twice. On page 47, buried in the risk disclosures, was a failed automation project — written in the cautious language companies use when they don't want investors to notice.</p>
-
-                <p class="body-prose">Tom dropped "digital transformation" from his pitch. He led with "operational efficiency with managed risk."</p>
-
-                <div class="quote-block">
-                    <p>"I noticed your automation investment didn't deliver the efficiency gains you'd planned. That's a common pattern in managed services transitions — the upfront cost modelling rarely accounts for the integration complexity. Here's how we've addressed that specifically."</p>
-                </div>
-
-                <p class="body-prose">The CFO leaned forward. At the end of the meeting, he said:</p>
-
-                <div class="quote-block">
-                    <p>"You're the only one who seemed to understand what we're actually trying to do."</p>
-                    <div class="quote-attribution">— CFO, after the meeting</div>
-                </div>
-
-                <div class="note-box note-blue">
+                <div class="note-box note-blue reveal" style="margin-top: 2rem;">
                     <div class="note-box-icon">i</div>
                     <div class="note-box-content">
                         <p><strong>Tom didn't become smarter in 30 minutes.</strong> He used AI to surface what experienced sellers already know to look for — then applied judgment to turn research into relevance.</p>
                     </div>
                 </div>
 
-                <p class="context-fragment">Built and refined across live deals in an AI-services environment — where the methodology had to work on real pipeline, not in theory.</p>
-
-                <div class="note-box note-blue" style="margin-top: 2rem;">
-                    <div class="note-box-icon">i</div>
-                    <div class="note-box-content">
-                        <p><strong>New to AI tools?</strong> Read <a href="steer.html" style="color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--primary);">Steer, Don't Drift</a> first — it covers how to choose your tools, when conversations break down, and why the human in the loop matters more than the prompts.</p>
-                    </div>
-                </div>
-
-                <div class="section-divider" style="margin-top: 3rem;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">BEFORE YOU BEGIN</span>
-                    <div class="divider-line"></div>
-                </div>
-
-                <h2 class="content-heading">Pre-Meeting Intelligence Checklist</h2>
-                <p class="lead-prose">Gather these before you run the first prompt. The chain is only as good as what you feed it.</p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
-
-                    <div class="tier-card" style="margin-bottom: 0;">
-                        <div class="tier-level">GATHER</div>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">01</span> Annual report — most recent (PDF from investor relations page)</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">02</span> Executive LinkedIn posts — last 6 months of activity from your target stakeholder</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">03</span> Press releases — the most recent 3-5 from their newsroom or investor relations page</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">04</span> Earnings call transcript — if publicly listed (check investor relations or financial sites)</p>
-                    </div>
-
-                    <div class="tier-card" style="margin-bottom: 0;">
-                        <div class="tier-level">PREPARE</div>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">05</span> AI synthesis — 5 minutes reviewing each AI output before moving to the next step</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">06</span> Human verification — 5 minutes cross-checking key facts against original sources</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">07</span> Discovery questions — 3-5 questions using THEIR language, not yours</p>
-                        <p class="tier-description" style="display: flex; align-items: flex-start; gap: 0.5rem;"><span style="color: var(--primary); font-weight: 700;">08</span> Your company materials — case studies, capability statements, standard deck (needed for Step 5)</p>
-                    </div>
-
-                </div>
-
-                <div class="note-box note-amber">
-                    <div class="note-box-icon">!</div>
-                    <div class="note-box-content">
-                        <p><strong>No annual report?</strong> For private companies, use Companies House filings, trade press coverage, and their own website. The prompts adapt — but they need source material. The more you feed in, the sharper the output.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="container" style="padding-top: 4rem; padding-bottom: 4rem;">
                 <div class="section-divider">
                     <div class="divider-line"></div>
-                    <span class="divider-label">THE FRAMEWORK</span>
+                    <div class="divider-label">BEFORE YOU BEGIN</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <h2 class="content-heading">The Prompt Chain</h2>
-                <p style="text-align: center; font-size: 1rem; color: var(--slate); max-width: 700px; margin: 0 auto 3rem auto;">6 steps. Each output feeds the next. The end product is a ready-to-use executive briefing — not intelligence sitting in a document.</p>
-                
-                <div class="chain-flow">
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 01</span>
-                        <span class="chain-step-name">Company Intel</span>
-                        <span class="chain-step-time">20 min</span>
+                <div class="grid-2-col">
+                    <div class="talent-card gain-card reveal">
+                        <h3 class="talent-card-title" style="color: var(--primary);">GATHER</h3>
+                        <p class="talent-card-text" style="color: var(--text-body); font-size: 0.9rem;">
+                            <strong>01:</strong> Annual report (PDF from investor relations)<br>
+                            <strong>02:</strong> Executive LinkedIn posts (last 6 months)<br>
+                            <strong>03:</strong> Press releases (most recent 3-5)<br>
+                            <strong>04:</strong> Earnings call transcript (if public)
+                        </p>
                     </div>
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 02</span>
-                        <span class="chain-step-name">Find Money</span>
-                        <span class="chain-step-time">10 min</span>
-                    </div>
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 03</span>
-                        <span class="chain-step-name">Profile People</span>
-                        <span class="chain-step-time">15 min</span>
-                    </div>
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 04</span>
-                        <span class="chain-step-name">Battle Card</span>
-                        <span class="chain-step-time">10 min</span>
-                    </div>
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 05</span>
-                        <span class="chain-step-name">Your Company</span>
-                        <span class="chain-step-time">10 min</span>
-                    </div>
-                    <div class="chain-step">
-                        <span class="chain-step-number">Step 06</span>
-                        <span class="chain-step-name">The Briefing</span>
-                        <span class="chain-step-time">15 min</span>
+                    <div class="talent-card gain-card reveal">
+                        <h3 class="talent-card-title" style="color: var(--primary);">PREPARE</h3>
+                        <p class="talent-card-text" style="color: var(--text-body); font-size: 0.9rem;">
+                            <strong>05:</strong> AI synthesis (review output before using)<br>
+                            <strong>06:</strong> Discovery questions (in THEIR language)<br>
+                            <strong>07:</strong> Your company materials (for Step 5)<br>
+                            <strong>08:</strong> Human verification (cross-check key facts)
+                        </p>
                     </div>
                 </div>
-                <div class="chain-total">TOTAL: ~80 MINUTES</div>
 
-                <p class="body-prose" style="margin-top: 3rem;">For 80% of meetings, you only need Steps 1-2. That's the 20-minute brief. For strategic accounts, run the full chain.</p>
+                <div class="note-box note-amber reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">!</div>
+                    <div class="note-box-content">
+                        <p><strong>No annual report?</strong> For private companies, use Companies House filings, trade press coverage, and their own website. The prompts adapt, but they need source material.</p>
+                    </div>
+                </div>
 
-                <div class="note-box note-green">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">THE FRAMEWORK</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div class="reveal" style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
+                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Prompt Chain</p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">COMPANY INTEL</span>
+                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">FIND MONEY</span>
+                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">PROFILE PEOPLE</span>
+                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">BATTLE CARD</span>
+                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">CAPABILITY</span>
+                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                        <span class="pill-blue" style="background: var(--primary); color: white; border: 1px solid var(--primary); font-size: 0.65rem; padding: 6px 12px;">BRIEFING</span>
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Steps 4-5 synthesize strategy. Step 6 creates the deliverable.</p>
+                </div>
+
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">01</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 1 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Company Intelligence</h3>
+                            <div class="pill-blue">~20 MIN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Extracts the intelligence architecture of any company. Returns board-level priorities, budget signals, and pain points structured for sales.</p>
+                </div>
+
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-01 // 9-PILLAR DEEP RESEARCH</div>
+                </div>
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Senior Market Intelligence Analyst preparing a pre-meeting briefing for an enterprise sales executive.
+
+I will provide: an annual report/shareholder letter, recent press releases, and any available investor relations material.
+
+Extract intelligence across these 9 pillars:
+
+1. STRATEGIC PRIORITIES: Board-level goals and CEO stated direction. Quote their exact language.
+2. FINANCIAL SIGNALS: Revenue trends, margin pressure, investment areas, budget reallocations. Flag specific numbers.
+3. PAIN POINTS: Stated challenges, risk disclosures, failed initiatives. Note what's buried vs. what's highlighted.
+4. COMPETITIVE POSITIONING: How they describe their market position. Who do they benchmark against?
+5. TECHNOLOGY DIRECTION: Digital transformation priorities, automation targets, platform investments.
+6. REGULATORY & COMPLIANCE: Upcoming deadlines, certification targets, audit findings.
+7. PEOPLE & CULTURE: Hiring priorities, skills gaps, leadership changes, organisational restructuring.
+8. STAKEHOLDER LANGUAGE: The specific phrases executives use repeatedly. These reveal what their KPIs are tied to.
+9. TIMELINE & DEADLINES: Fiscal year, budget cycles, certification deadlines, programme milestones.
+
+FORMAT: Structure each pillar with 3-5 key findings. For every claim, cite the source document and location (e.g., "Shareholder Letter, para 3" or "Risk Disclosure, p.47"). Flag anything you cannot verify as "UNVERIFIED — REQUIRES CONFIRMATION."</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
                     <div class="note-box-icon">+</div>
                     <div class="note-box-content">
-                        <p><strong>The worked example below uses Meridian Financial Services</strong> — a fictional mid-tier UK financial services firm built from real patterns across multiple client engagements. Every output is what the AI actually produces when fed realistic source material.</p>
+                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
+                        <strong>Priorities:</strong> CEO states "Availability, not just assets." Strategic shift to "Continuous Business Availability."<br>
+                        <strong>Pain Points:</strong> Micro-outage costs up 12% YoY. Manual incident response creating 47-minute gaps.<br>
+                        <strong>Deadlines:</strong> ISO 22301 certification targeted for Q3 2026. This creates a deadline-driven procurement event.</p>
                     </div>
                 </div>
 
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 1 OF 6</span>
-                    <div class="divider-line"></div>
+                <div class="quote-block reveal">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — "Availability, not assets" is the CEO's personal framing. Use those exact words and you're an insider. Rephrase it and you sound like a vendor. The ISO 22301 deadline with a skills gap means they need external capability <em>now</em>. Timing matters more than pitch.</p>
                 </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">01</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">Company Intelligence</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~20 MIN</span>
-                            <span class="step-pill">TIMME & ASTLEY — EXECUTIVE MINDSET</span>
+
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">02</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 2 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Find the Money</h3>
+                            <div class="pill-blue">~10 MIN</div>
                         </div>
                     </div>
                 </div>
-                
-                <p class="lead-prose">The 9-Pillar Deep Research prompt extracts the intelligence architecture of any company. Feed it an annual report, investor relations material, and recent press releases. It returns board-level priorities, strategic initiatives, pain points, deadlines, and budget signals — structured so every finding connects to something you can use in conversation.</p>
-                
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">9-PILLAR DEEP RESEARCH</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Act as a Senior Market Intelligence Analyst preparing a pre-meeting briefing for an enterprise sales executive.
 
-I will provide: an annual report/shareholder letter, recent press releases, and any available investor relations material.
-
-Extract intelligence across these 9 pillars:
-
-1. STRATEGIC PRIORITIES: Board-level goals and CEO stated direction. Quote their exact language.
-2. FINANCIAL SIGNALS: Revenue trends, margin pressure, investment areas, budget reallocations. Flag specific numbers.
-3. PAIN POINTS: Stated challenges, risk disclosures, failed initiatives. Note what's buried vs. what's highlighted.
-4. COMPETITIVE POSITIONING: How they describe their market position. Who do they benchmark against?
-5. TECHNOLOGY DIRECTION: Digital transformation priorities, automation targets, platform investments.
-6. REGULATORY & COMPLIANCE: Upcoming deadlines, certification targets, audit findings.
-7. PEOPLE & CULTURE: Hiring priorities, skills gaps, leadership changes, organisational restructuring.
-8. STAKEHOLDER LANGUAGE: The specific phrases executives use repeatedly. These reveal what their KPIs are tied to.
-9. TIMELINE & DEADLINES: Fiscal year, budget cycles, certification deadlines, programme milestones.
-
-FORMAT: Structure each pillar with 3-5 key findings. For every claim, cite the source document and location (e.g., "Shareholder Letter, para 3" or "Risk Disclosure, p.47"). Flag anything you cannot verify as "UNVERIFIED — REQUIRES CONFIRMATION."</code>
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Most sellers pitch "invest more." Experienced sellers find money the prospect is already wasting. This prompt finds the reallocation budget.</p>
                 </div>
 
-                <div class="output-box">
-                    <span class="output-label">AI OUTPUT — MERIDIAN FINANCIAL SERVICES</span>
-                    <h4 class="output-heading">PILLAR 1: STRATEGIC PRIORITIES</h4>
-                    <div class="output-item">CEO states: "Meridian's reputation is built on availability, not just assets." (Shareholder Letter)</div>
-                    <div class="output-item">Strategic shift from "Static Security" to "Continuous Business Availability" — this is the CEO's personal framing of the company's direction</div>
-                    <div class="output-item">15% increase in "Resilience Transformation" funding earmarked for 2026 (Shareholder Letter)</div>
-                    <div class="output-item">Goal: move resilience from "back-office cost" to "front-line competitive advantage" (CEO, Shareholder Letter)</div>
-                    <p class="output-note">Selected pillars shown. In practice, all 9 pillars return populated.</p>
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-03 // BORING BUT EXPENSIVE — BUDGET DETECTION</div>
                 </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">A junior seller reads this and thinks "good background." An experienced seller reads this and sees three things:</p>
-                    <p class="judgment-text">First: "availability, not assets" is the CEO's personal framing. Use those exact words in your meeting and you're speaking their language. Rephrase it and you sound like every other vendor.</p>
-                    <p class="judgment-text">Second: the micro-outage cost increase and the manual incident response protocols are connected — but the annual report doesn't connect them explicitly. That gap is your opening. You can draw the line they haven't drawn publicly, and that's how you demonstrate insight rather than regurgitated research.</p>
-                    <p class="judgment-text">Third: ISO 22301 with a Q3 2026 deadline and a skills gap at managerial level means they need external capability. That's not a "nice to have" conversation — that's a deadline-driven procurement event with budget already allocated. Your timing matters more than your pitch.</p>
-                </div>
-                <p class="so-what">You now have: their strategic direction in their own language, budget signals with numbers attached, pain points with severity indicators, and a hard deadline that creates urgency. This is the foundation every other prompt in the chain builds on.</p>
-
-                <div class="judgment-callout" style="border-left-color: #8b5cf6; margin-top: 2rem;">
-                    <span class="judgment-label" style="color: #8b5cf6;">WHY THIS PROMPT WORKS</span>
-                    <p class="judgment-text" style="margin-bottom: 1rem;">The same annual report. Three different prompts. Three different outputs.</p>
-                    <p class="judgment-text"><strong>BAD PROMPT:</strong><br>"Summarise this annual report for me."<br><span style="font-style: italic;">→ "Meridian Financial Services is a mid-tier UK financial services firm with £847M revenue. The company is focused on operational resilience and has a transformation programme called Meridian 2030..."</span><br>A paragraph you could get from the website. No insight. No language signals. No budget connections. Nothing you can use in a meeting.</p>
-                    <p class="judgment-text"><strong>OKAY PROMPT:</strong><br>"What are the strategic priorities of Meridian Financial Services?"<br><span style="font-style: italic;">→ "1. Operational resilience transformation. 2. Cloud migration. 3. ISO 22301 certification. 4. Cost efficiency. 5. Regulatory compliance."</span><br>A list. Useful. But no source citations, no CEO language, no budget numbers, no timeline, no pain points. You'd still walk into the meeting with surface-level understanding.</p>
-                    <p class="judgment-text"><strong>GAIN PROMPT:</strong><br>The W1-01 9-Pillar Deep Research prompt.<br><span style="font-style: italic;">→ "PILLAR 1 — STRATEGIC PRIORITIES: CEO states 'Availability, not assets' (Shareholder Letter, para 2). Strategic shift from 'Static Security' to 'Continuous Business Availability.' 15% increase in Resilience Transformation funding earmarked for 2026... PILLAR 3 — PAIN POINTS: Micro-outage costs up 12% YoY (MD&A, Section 4.2). Manual incident response creating 47-minute communication gaps (Press Release, Jan 2026). ISO 22301 skills gap at managerial level — 3 of 8 regional managers lack certification... [UNVERIFIED: automation project referenced in risk disclosure p.47 — requires confirmation]"</span><br>Board-level priorities in their exact language. Budget signals with numbers. Pain points with severity. Timeline with deadlines. Every claim cited. Unverifiable claims flagged. This is what you use in a meeting.</p>
-                    <p class="judgment-text" style="margin-top: 1rem; font-weight: 600;">The difference isn't the AI. It's the prompt. The GAIN prompts specify: who the AI should be (role), what it's working from (context), what to produce (format), and what NOT to do (constraints). That's the skill this programme teaches.</p>
-                </div>
-
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 2 OF 6</span>
-                    <div class="divider-line"></div>
-                </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">02</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">Find the Money</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~10 MIN</span>
-                            <span class="step-pill">BUDGET REALLOCATION FRAMING</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="lead-prose">The Boring But Expensive prompt finds budget that already exists. Most sellers pitch "invest in our solution." Experienced sellers find money the prospect is already spending on problems they'd love to stop paying for. The reframe: not "spend more" — "redirect what you're already wasting."</p>
-
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">BORING BUT EXPENSIVE — BUDGET SIGNAL DETECTION</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Using the company research I've provided, identify "Boring But Expensive" problems — operational costs that are high, visible to the CFO, and solvable but unglamorous.
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Using the company research I've provided, identify "Boring But Expensive" problems — operational costs that are high, visible to the CFO, and solvable but unglamorous.
 
 Look for these categories:
 1. MANUAL PROCESSES: Workflows requiring human intervention that could be automated. What's the FTE cost?
@@ -303,552 +292,48 @@ For each finding:
 — Identify who owns this budget (which department/function)
 — Frame the reallocation argument: "You're currently spending £X on [boring problem]. Redirecting even a portion toward [solution category] eliminates the root cause."
 
-CRITICAL: Do not invent numbers. If you cannot estimate cost from the source material, note "COST UNKNOWN — DISCOVERY QUESTION NEEDED" and suggest the specific question to ask.</code>
-                </div>
-
-                <div class="output-box">
-                    <span class="output-label">AI OUTPUT — MERIDIAN BUDGET SIGNALS</span>
-                    <h4 class="output-heading">MANUAL PROCESSES</h4>
-                    <div class="output-item">Manual incident response protocols creating "human-in-the-loop" delays across all incident types (MD&A, Section 4.2)</div>
-                    <div class="output-item">Stress-test data: average incident response involves multiple staff for 47+ minutes during the response-to-recovery transition alone (Stress-Test Alpha findings, Press Release Jan 2026)</div>
-                    <div class="output-item">With micro-outages increasing 12% year-on-year, the compounding FTE cost of manual response is growing, not shrinking</div>
-                    <div class="output-item">Budget owner: Jennifer Morris, Director of Organisational Resilience (£4.2M annual budget)</div>
-                    <div class="output-item">Reallocation argument: "You're absorbing growing FTE cost on manual incident response. The 12% increase in unplanned operational costs is the price of the current manual approach — automating recovery orchestration redirects that spend into the MTTR reduction you've already targeted."</div>
-                    <h4 class="output-heading">VENDOR DEPENDENCY</h4>
-                    <div class="output-item">Stress-Test Alpha identified dependencies on 3 "Critical-Path" third-party vendors (Press Release, Jan 2026)</div>
-                    <div class="output-item">Jennifer Morris publicly moved from vendor self-assessment forms to structured interviews — found "3 critical vendors where our assumptions about their resilience were completely wrong" (LinkedIn Post #4)</div>
-                    <div class="output-item">Current approach: structured interviews with vendor resilience leads across 230+ vendors assessed quarterly — effective but labour-intensive</div>
-                    <div class="output-item">Budget owner: Procurement function + Jennifer Morris (vendor risk oversight)</div>
-                    <div class="output-item">Reallocation argument: "Your vendor assessment programme produces better intelligence since you moved to structured interviews — but the resource cost of doing that across 230+ vendors quarterly is significant. A managed vendor resilience framework could maintain that depth while freeing your team for the analysis work that matters."</div>
-                </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">The vendor dependency finding is gold — and most sellers would miss it. Jennifer has publicly said she's unhappy with vendor self-assessment forms. She moved to structured interviews and it worked better — but that's a labour-intensive workaround, not a scalable solution. You're not selling "vendor risk management software." You're solving a problem she's already trying to fix manually. That's a completely different conversation to cold-calling with a capability pitch.</p>
-                    <p class="judgment-text">Notice what's NOT here: there's no "innovation" budget signal. The CEO mentioned innovation twice in the shareholder letter. The money language — across the MD&A, the press releases, and Jennifer's own posts — is all operational efficiency, risk reduction, and compliance. Follow the money, not the marketing.</p>
-                </div>
-                <p class="so-what">You now have budget signals tied to specific problems, with the department owners identified. The reallocation framing turns "we'd like you to spend money" into "here's how to redirect money you're already spending." That reframe is the difference between a procurement conversation and a strategic one.</p>
-
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 3 OF 6</span>
-                    <div class="divider-line"></div>
-                </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">03</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">Profile the People</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~15 MIN</span>
-                            <span class="step-pill">VOSS — LABELLING & ACCUSATION AUDIT</span>
+CRITICAL: Do not invent numbers. If you cannot estimate cost from the source material, note "COST UNKNOWN — DISCOVERY QUESTION NEEDED" and suggest the specific question to ask.</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
                         </div>
                     </div>
                 </div>
-                
-                <p class="lead-prose">You know the company. Now know the human. The Executive Strategic Intelligence prompt builds a stakeholder profile that goes beyond job title and reporting line. It surfaces decision-making style, personal priorities, communication preferences, and the one question that demonstrates you understand their specific agenda — not just the company's priorities.</p>
 
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">EXECUTIVE STRATEGIC INTELLIGENCE — DEEP DIVE</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Analyse the following LinkedIn profile, recent posts, and any available public commentary for [NAME], [TITLE] at [COMPANY].
-
-Cross-reference against the company research already provided.
-
-Build a profile covering:
-
-1. ROLE & RESPONSIBILITIES: What do they actually own? Budget size? Team size? Who do they report to?
-2. STATED PRIORITIES: What themes dominate their public commentary? What do they post about, share, and comment on?
-3. DECISION-MAKING STYLE: Evidence-based or intuitive? Collaborative or directive? Risk-averse or progressive? Cite specific examples from their content.
-4. PROFESSIONAL REPUTATION: How do colleagues describe them? What do endorsements and recommendations reveal about how they operate?
-5. PERSONAL DIMENSIONS: Interests outside work mentioned in profile or posts. Community involvement. Communication style quirks.
-6. THE ONE QUESTION: Based on everything above, give me ONE discovery question that demonstrates I understand their personal agenda — not just the company's priorities. This question should make them think: "This person has done their homework."
-
-FORMAT: Structured profile. For every claim, cite the source (LinkedIn post date, recommendation author, etc.). Flag assumptions clearly.</code>
-                </div>
-
-                <div class="output-box">
-                    <span class="output-label">AI OUTPUT — JENNIFER MORRIS PROFILE</span>
-                    <h4 class="output-heading">ROLE & RESPONSIBILITIES</h4>
-                    <div class="output-item">Director of Organisational Resilience & Business Continuity, Meridian Financial Services plc</div>
-                    <div class="output-item">Manages £4.2M annual resilience budget across staffing, technology, and testing</div>
-                    <div class="output-item">6 direct reports. Oversees resilience programme spanning 8,000+ employees across 5 regional offices</div>
-                    <div class="output-item">Reports directly to Chief Risk Officer. Presents quarterly updates to Board Risk Committee</div>
-                    <div class="output-item">Chairs quarterly Resilience Steering Committee alongside CFO, CRO, and COO</div>
-                    <div class="output-item">Appointed to lead the "2026 Resilience Charter" aligning UK operational resilience standards with digital-first banking technologies (Press Release, Nov 2025)</div>
-                    <h4 class="output-heading">STATED PRIORITIES</h4>
-                    <div class="output-item">Operational resilience as strategic function, not compliance checkbox: "resilience isn't overhead — it's revenue protection" (Post #3). Reframed ROI for CFO: "every 1% improvement in incident response efficiency = £2-3M in avoided losses"</div>
-                    <div class="output-item">Team development and career pathways: celebrated 3 team members achieving CBCP certification, all promoted to regional team lead positions (Post #2)</div>
-                    <h4 class="output-heading">THE ONE QUESTION</h4>
-                    <div class="output-item">"You've publicly shared the stress-test findings — including the 47-minute communication gap and the 68% location awareness result — and then published the three specific improvements you're making. That level of transparency is unusual. How has that openness shaped the way your Steering Committee engages with resilience reporting?"</div>
-                </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">Two things to notice. First: Jennifer shares her failures publicly. The 47-minute gap, the vendor assessment problems, the staff awareness finding — she puts these in front of thousands of LinkedIn connections. That tells you she values honesty and will respect a vendor who is equally transparent about limitations. Lead with what your solution doesn't do as well as what it does. Voss would call this an accusation audit: acknowledge the hard truth before she raises it.</p>
-                    <p class="judgment-text">Second: the marathon running isn't small talk material. It's a signal about how she approaches problems — methodical preparation, long-term commitment, measured progress. She's not looking for a quick fix or a flashy demo. She's looking for a partner who thinks in programmes, not projects. Your engagement model matters more than your technology.</p>
-                    <p class="judgment-text">The AI-generated "one question" is good — but experience would refine it. Connect it to the Boring But Expensive finding from Step 2: "You've moved 230+ vendors from self-assessment to structured interviews — that clearly produces better intelligence, but it must be significantly more resource-intensive. Have you explored what a managed approach to that process would look like?" Now you're not just asking a smart question. You're planting a solution seed without pitching.</p>
-                </div>
-                <p class="so-what">You now have a stakeholder profile with enough depth to tailor every interaction — from the way you open the conversation to the way you structure your proposal. The decision-making style tells you to bring data, not slides. The personal dimensions tell you to be authentic, not polished. The professional reputation tells you she builds capability — so frame your solution as enablement, not replacement.</p>
-
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 4 OF 6</span>
-                    <div class="divider-line"></div>
-                </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">04</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">Synthesise the Battle Card</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~10 MIN</span>
-                            <span class="step-pill">VOSS + TIMME & ASTLEY — COMMUNICATE WITH IMPACT</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="lead-prose">Steps 1-3 generated intelligence. Step 4 turns it into ammunition. The Battle Card synthesis prompt compresses everything into a single-page reference you glance at five minutes before walking into the room. It connects the dots across company research, budget signals, and stakeholder profile — and produces the messaging framework you'll actually use.</p>
-
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">EXECUTIVE BATTLE CARD SYNTHESIS</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Using all the intelligence gathered so far — company research, budget signals, and stakeholder profile — create a 1-page Executive Battle Card.
-
-Structure:
-
-1. CFO NORTH STAR: The single strategic priority that defines this company's direction right now. Use their exact language.
-
-2. THE THREE HOOKS: Three conversation-opening insights derived from the research. Each hook must:
-   — Reference a specific finding from the research (with source)
-   — Connect to a capability you could provide
-   — Be framed as an observation, not a pitch ("I noticed..." not "We offer...")
-
-3. ACCUSATION AUDIT (Voss framework): Write 3 statements that acknowledge the prospect's likely concerns before they raise them. Format: "You're probably thinking [concern]. Here's what I'd want to know if I were in your position..."
-
-4. BOARDROOM QUESTION: One question designed for a board-level audience that demonstrates strategic understanding of their 12-24 month roadmap. This question should be impossible to ask without having done this research.
-
-5. PILLAR 9 INTEGRATION: How does your potential solution connect to their stated strategic direction? Map capability to their language, not yours.
-
-6. LANDMINES: What topics should you AVOID? What past failures or sensitivities should you navigate carefully?</code>
-                </div>
-
-                <div class="output-box">
-                    <span class="output-label">AI OUTPUT — MERIDIAN BATTLE CARD</span>
-                    <h4 class="output-heading">CFO NORTH STAR</h4>
-                    <div class="output-item">"Availability, not assets." The CEO's stated strategic direction. Meridian is repositioning resilience from cost centre to competitive advantage under a "Continuous Business Availability" vision. Meridian Financial Services is repositioning resilience from cost centre to competitive advantage under a "Continuous Business Availability" vision. Every conversation must connect to availability and operational continuity — not security products, not compliance technology, not infrastructure for its own sake.</div>
-                    <h4 class="output-heading">THE THREE HOOKS</h4>
-                    <div class="output-item">Hook 1: "Your stress-test showed a 47-minute communication gap in the response-to-recovery transition. That specific gap pattern is common in organisations transitioning from manual to automated incident orchestration — and it's typically the highest-impact area to address first." (Source: Press Release Jan 2026, LinkedIn Post #1)</div>
-                    <div class="output-item">Hook 2: "Your MD&A identifies a 12% increase in unplanned operational costs from micro-outages linked to legacy infrastructure friction. Most organisations in similar positions find the root cause is less about the infrastructure itself and more about the manual recovery protocols sitting on top of it." (Source: MD&A, Section 4.2)</div>
-                    <h4 class="output-heading">BOARDROOM QUESTION</h4>
-                    <div class="output-item">"With ISO 22301 certification targeted for Q3 2026 and the Resilience Charter underway, how is the Steering Committee thinking about the balance between building internal managerial capability and bringing in external managed resilience services to meet the deadline?"</div>
-                </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">This is where the chain pays off. None of these hooks exist in isolation — they're the compound result of company research, budget analysis, and stakeholder profiling feeding into each other. A standalone prompt couldn't produce this. The chain could.</p>
-                    <p class="judgment-text">The landmine about the failed automation project is particularly important. AI surfaced it because the data was in the risk disclosures. A junior seller reads the battle card and thinks "I'll mention their failed project to show I've done my homework." That's a career-ending move. Risk disclosures are written by lawyers for investors, not for vendors to reference in meetings. You use the insight to shape your approach — leading with managed risk rather than innovation. You never quote it back to them.</p>
-                </div>
-                <p class="so-what">The battle card is your cheat sheet. Print it. Screenshot it. Review it in the lift. Every section answers a question you'll face in the room: What do they care about? How do I open? What should I avoid? What's the one question that proves I've done the work?</p>
-
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 5 OF 6</span>
-                    <div class="divider-line"></div>
-                </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">05</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">Research YOUR Company</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~10 MIN</span>
-                            <span class="step-pill">MATCH CAPABILITY TO THEIR LANGUAGE</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="lead-prose">You've mapped their world. Now map yours to it. This step is often skipped — sellers assume they know their own capabilities. But the point isn't knowing what you sell. It's finding the specific proof points, case studies, and language that connect to what this prospect cares about. Generic capability decks fail. Targeted matching wins.</p>
-
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">COMPANY CAPABILITY MATCHING</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Based on the company research, stakeholder profile, and battle card I've provided, search the following materials from MY company for the best matches:
-
-[PASTE: Your company's case studies, solution descriptions, capability statements, or marketing materials]
-
-Find:
-1. CASE STUDIES: Which client stories are most relevant to this prospect's specific situation? Match on industry, challenge type, scale, and outcomes.
-2. PROOF POINTS: Specific metrics or outcomes from our work that directly address their stated pain points.
-3. LANGUAGE ALIGNMENT: Where do our materials already use their language? Where do we need to translate? (e.g., if they say "availability" and we say "uptime" — flag the disconnect.)
-4. GAPS: Where does this prospect need something we don't have a clear proof point for? These become discovery questions, not weaknesses to hide.
-5. SLIDE RELEVANCY: If I have a standard presentation deck, which slides should I INCLUDE, CUT, or MODIFY for this specific meeting?
-
-FORMAT: Prioritised list. Most relevant match first. For each, explain WHY it's relevant to THIS prospect — not why it's good in general.</code>
-                </div>
-
-                <div class="output-box">
-                    <span class="output-label">AI OUTPUT — CAPABILITY MATCHING (EXAMPLE STRUCTURE)</span>
-                    <p class="output-note" style="margin-top: 0; margin-bottom: 1.5rem;">This step's output depends entirely on YOUR company's materials. Below is the structure the output follows when fed against a managed services provider's collateral.</p>
-                    <h4 class="output-heading">CASE STUDY MATCH #1 (HIGHEST RELEVANCE)</h4>
-                    <div class="output-item">"Financial services firm, 6,000 employees — ISO 27001 to ISO 22301 transition, including automated incident orchestration"</div>
-                    <div class="output-item">WHY: Meridian is targeting ISO 22301 by Q3 2026 with a similar employee scale. Same certification journey, regulated environment, managed services model.</div>
-                    <h4 class="output-heading">LANGUAGE ALIGNMENT FLAGS</h4>
-                    <div class="output-item">Our materials say "disaster recovery." Meridian says "Continuous Business Availability." These are philosophically different — the first is reactive, the second is proactive. Reframe all materials to use their terminology.</div>
-                </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">The language alignment flag is the kind of detail that separates a good meeting from a great one. If Jennifer Morris says "Continuous Business Availability" and you say "disaster recovery," you've told her — without realising it — that you don't understand the difference between what she used to do and what she's trying to build. Same underlying concept, completely different strategic register. The AI caught the disconnect. A junior seller wouldn't.</p>
-                    <p class="judgment-text">The gap identification matters equally. Most sellers hide gaps or skip over them quickly. Experienced sellers turn them into discovery questions. "We don't have a direct proof point for resilience capability building, but I'm curious — is that something you see as a long-term internal function, or would a partner-supported model make sense alongside the managed services?" That question demonstrates honesty AND opens an expansion opportunity.</p>
-                </div>
-                <p class="so-what">You've now mapped your capabilities to their specific priorities — not in general terms, but using their language, referencing their pain points, and addressing their timeline. The gaps you've identified become discovery questions, not weaknesses. You walk in knowing where you're strong, where you need to learn more, and exactly which proof points to lead with.</p>
-
-                <div class="section-divider" style="margin-bottom: 0;">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">STEP 6 OF 6</span>
-                    <div class="divider-line"></div>
-                </div>
-                <div class="step-intro reveal">
-                    <div class="step-intro-number">06</div>
-                    <div class="step-intro-content">
-                        <div class="step-intro-name">The Deliverable</div>
-                        <div class="step-intro-meta">
-                            <span class="step-pill">~15 MIN</span>
-                            <span class="step-pill">INSIGHT-LED SELLING + HEATH & HEATH</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="lead-prose">This is what separates a prompt chain from a prompt library. Steps 1-5 generated intelligence. Step 6 turns it into something you use Monday morning. The deliverable is an executive briefing — a single document you review before walking into the room, structured so you can glance at any section and know exactly what to say, what to ask, and what to avoid.</p>
-
-                <div class="prompt-console-header">
-                    <div class="prompt-console-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                    <span class="prompt-console-title">EXECUTIVE BRIEFING GENERATOR</span>
-                </div>
-                <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                    <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                    <code class="prompt-code">Using everything from Steps 1-5, compile a complete Executive Briefing for my meeting with [NAME] at [COMPANY].
-
-Structure the briefing as follows:
-
-SECTION 1 — STAKEHOLDER PROFILE
-Name, title, reporting line, budget authority, team size. Decision-making style summary. Personal dimensions relevant to rapport-building.
-
-SECTION 2 — COMPANY CONTEXT
-Strategic direction in 3 sentences using their language. Key pain points with severity ranking. Hard deadlines driving urgency.
-
-SECTION 3 — HOW WE GOT HERE
-The pathway to this meeting. Who introduced us? What's the relationship chain? What do they already know about us?
-
-SECTION 4 — MEETING OBJECTIVES
-Primary objective: The one outcome that makes this meeting a success.
-Secondary objective: The fallback — what's the minimum acceptable outcome?
-Discovery questions: The 3 questions I must ask, ranked by priority.
-
-SECTION 5 — PERSONAL DIMENSIONS
-Interests, communication style, rapport opportunities. Things to reference naturally, not as a scripted icebreaker.
-
-SECTION 6 — KEY MESSAGING
-The 3 hooks from the battle card, refined into conversational language.
-The accusation audit statements, ready to deploy.
-The boardroom question.
-What to AVOID.
-
-SECTION 7 — PROOF POINTS
-Relevant case studies and metrics mapped to their priorities.
-Language alignment notes.
-
-This briefing should be ready to review on a phone screen 10 minutes before walking into the room. Concise. Actionable. No filler.</code>
-                </div>
-
-                <div class="briefing-card">
-                    <p class="briefing-header">EXECUTIVE BRIEFING</p>
-                    <h3 class="briefing-subheader">Jennifer Morris — Meridian Financial Services</h3>
-                    
-                    <h4 class="briefing-section-title">STAKEHOLDER PROFILE</h4>
-                    <p class="briefing-text">Jennifer Catherine Morris | Director of Organisational Resilience & Business Continuity</p>
-                    <p class="briefing-text">Reports to: Chief Risk Officer | Chairs: Quarterly Resilience Steering Committee (CFO, CRO, COO)</p>
-                    <p class="briefing-text">Budget: £4.2M annual | Team: 6 direct reports | Scope: 8,000+ employees, 5 regional offices</p>
-                    <p class="briefing-text">Style: Evidence-based, transparent about failures, values honesty over polish</p>
-                    <p class="briefing-text">Personal: Marathon runner (3 completed), active mentor, self-deprecating humour, North of England background</p>
-                    
-                    <h4 class="briefing-section-title">COMPANY CONTEXT</h4>
-                    <p class="briefing-text">Meridian is repositioning resilience from cost centre to competitive advantage under the CEO's "Continuous Business Availability" vision. Core pain points: 12% rise in unplanned operational costs from micro-outages, managerial-level resilience skills gap, and over-reliance on manual incident response protocols. Hard deadline: ISO 22301 certification, Q3 2026 — with the Resilience Charter programme underway and a 15% budget increase already committed.</p>
-                    
-                    <h4 class="briefing-section-title">HOW WE GOT HERE</h4>
-                    <p class="briefing-text context-fragment" style="margin-bottom: 0.5rem;">[Pathway-specific — e.g., "Introduced via mutual connection who worked with Jennifer at Ashford Bank Holdings. Jennifer is aware of our ISO 22301 transition work in financial services. This is a first meeting to explore alignment with her Resilience Charter programme."]</p>
-                    
-                    <h4 class="briefing-section-title">MEETING OBJECTIVES</h4>
-                    <p class="briefing-text">Primary: Secure agreement for a follow-up meeting including Jennifer AND her CRO to discuss managed resilience services aligned to the ISO 22301 timeline.</p>
-                    <p class="briefing-text">Secondary: Establish credibility as a partner who understands operational resilience as a strategic function (not technology) and gain permission to present to the Resilience Steering Committee.</p>
-                    <p class="briefing-text" style="font-weight: 700; margin-top: 0.5rem;">Discovery priorities:</p>
-                    <p class="briefing-text">1. "How is the Steering Committee balancing internal capability building vs. external managed services for the ISO 22301 deadline?"</p>
-                    <p class="briefing-text">2. "You've moved vendor assessment to structured interviews — are you exploring what a managed model for that process would look like?"</p>
-                    <p class="briefing-text">3. "What does a successful resilience partnership look like to you over the next 18 months?"</p>
-                    
-                    <h4 class="briefing-section-title">KEY MESSAGING</h4>
-                    <p class="briefing-text">Hook 1: 47-minute communication gap — common pattern in manual-to-automated transitions — our specific experience</p>
-                    <p class="briefing-text">Hook 2: 12% operational cost increase — root cause is manual process, not infrastructure — reallocation framing</p>
-                    <p class="briefing-text">Hook 3: Vendor assessment scaling (230+ vendors, structured interviews) — managed approach opportunity</p>
-                    <p class="briefing-text">Accusation audit opener: "You've probably seen several resilience pitches this quarter, especially with ISO 22301 approaching..."</p>
-                    <p class="briefing-text">Boardroom question: "How is the Steering Committee balancing internal capability building vs. external managed services?"</p>
-                    <p class="briefing-text">AVOID: Don't reference the failed automation project directly. Don't lead with technology. Don't assume Steering Committee politics. Don't say "digital transformation."</p>
-                    
-                    <h4 class="briefing-section-title">PROOF POINTS</h4>
-                    <p class="briefing-text">Primary: ISO 22301 transition case study (financial services, similar scale, 40% MTTR reduction)</p>
-                    <p class="briefing-text">Secondary: Managed vendor resilience assessment programme (180+ vendors, mid-tier insurer)</p>
-                    <p class="briefing-text">Language notes: Use "Continuous Business Availability" not "disaster recovery." Use "operational resilience" not "uptime." Open with their world, not ours.</p>
-                    <p class="briefing-text">Gap: No direct resilience training proof point — turn into discovery question on capability building model.</p>
-                </div>
-
-                <div class="judgment-callout">
-                    <span class="judgment-label">WHAT EXPERIENCE SEES</span>
-                    <p class="judgment-text">This is the deliverable. Not a research dump. Not a prompt output you need to interpret. A briefing you can review in the car park, on the train, or in the lift.</p>
-                    <p class="judgment-text">The difference between this and "doing your research" is structure and purpose. Every section exists because it answers a question you'll face in the meeting: Who am I talking to? What do they care about? What should I say? What should I ask? What should I avoid?</p>
-                    <p class="judgment-text">The chain matters because each step added a layer the previous step couldn't produce alone. Company research without people profiling gives you data without context. People profiling without budget signals gives you rapport without relevance. The battle card without capability matching gives you hooks without proof. The briefing is where it all synthesises — and it only works because everything fed into it.</p>
-                </div>
-
-                <div class="note-box note-amber">
-                    <div class="note-box-icon">!</div>
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">+</div>
                     <div class="note-box-content">
-                        <p><strong>That's the complete chain.</strong> Six steps, each building on the last. The briefing only works because every step fed into it. Skip a step and you get a weaker briefing — run them all and you walk in with institutional-grade intelligence.</p>
+                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
+                        <strong>Vendor Dependency:</strong> They moved from self-assessment to structured interviews for 230+ vendors quarterly. This is effective but massive labour cost.<br>
+                        <strong>Reallocation Arg:</strong> "You're spending growing FTEs on manual vendor interviews. A managed resilience framework maintains that depth but frees your team for analysis."<br>
+                        <strong>Note:</strong> No "innovation" budget found. All money is in risk reduction and efficiency.</p>
                     </div>
                 </div>
 
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">MATCH EFFORT TO STAKES</span>
-                    <div class="divider-line"></div>
-                </div>
-
-                <h2 class="content-heading">Three Levels of Preparation</h2>
-                <p style="text-align: center; color: var(--slate); font-size: 1rem; margin-bottom: 2rem;">Not every meeting justifies the full chain. Match your preparation to the stakes.</p>
-
-                <div class="tier-card">
-                    <div class="tier-level">LEVEL 1</div>
-                    <h3 class="tier-name">The 20-Minute Brief</h3>
-                    <p class="tier-description">Steps 1-2 only. Company intelligence and budget signals.</p>
-                    <p class="tier-description">For: 80% of your meetings. Standard accounts. Tactical bids. The daily rhythm.</p>
-                    <p class="tier-description">Result: You walk in knowing their strategic priorities and where the budget sits. Ahead of 90% of the competition who skimmed the website on the train.</p>
-                    <div class="tier-meta">Time: 20 minutes.</div>
-                </div>
-
-                <div class="tier-card">
-                    <div class="tier-level">LEVEL 2</div>
-                    <h3 class="tier-name">The Full Intelligence Package</h3>
-                    <p class="tier-description">All 6 steps. Complete chain from annual report to executive briefing.</p>
-                    <p class="tier-description">For: 15% of your meetings. Senior stakeholders. Strategic accounts. Deals worth investing preparation time in.</p>
-                    <p class="tier-description">Result: Institutional-grade intelligence with a ready-to-use briefing. Personalised messaging. You walk in knowing the human, not just the company.</p>
-                    <div class="tier-meta">Time: ~80 minutes.</div>
-                </div>
-
-                <div class="tier-card">
-                    <div class="tier-level">LEVEL 3</div>
-                    <h3 class="tier-name">The 9-Pillar Deep Protocol</h3>
-                    <p class="tier-description">Extended Step 1 with full double-verification across all 9 pillars, plus all subsequent steps with enhanced depth.</p>
-                    <p class="tier-description">For: 5% of your meetings. Board-level presentations. Major mandates. Deals where losing costs more than the preparation time.</p>
-                    <p class="tier-description">Result: Due-diligence-grade intelligence. The kind of preparation institutional investors do before committing capital.</p>
-                    <div class="tier-meta">Time: ~120 minutes.</div>
-                </div>
-            </section>
-
-            <section class="container reveal" style="padding-top: 4rem; padding-bottom: 4rem;">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">PRACTICE MATERIALS</span>
-                    <div class="divider-line"></div>
-                </div>
-                <h2 class="content-heading">Run It Yourself</h2>
-                <p class="lead-prose">The Meridian Financial Services worked example above uses real AI outputs from realistic source materials. To run the prompts yourself:</p>
-                
-                <div style="background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; padding: 2rem; margin-top: 2rem;">
-                    <h4 style="margin-top: 0; color: var(--text-heading);">Available source materials:</h4>
-                    <ul style="color: var(--text-body); line-height: 1.6; margin-bottom: 2rem;">
-                        <li>Meridian LinkedIn Company Page Scrape</li>
-                        <li>Meridian Corporate Website Scrape (including Investor Relations with 5-year financials)</li>
-                        <li>Meridian Bloomberg Terminal Alerts</li>
-                        <li>Individual stakeholder LinkedIn profiles</li>
-                    </ul>
-                    
-                    <h4 style="margin-top: 0; color: var(--text-heading);">The exercise:</h4>
-                    <p style="color: var(--text-body); line-height: 1.6; margin-bottom: 2rem;">Feed the Meridian source materials into the Week 1 prompts. Compare your outputs to the reference answers. The gap between yours and the reference IS the learning.</p>
-                    
-                    <a href="#" class="btn-schedule" style="font-size: 0.8rem; padding: 0.75rem 1.5rem;">ACCESS PRACTICE MATERIALS</a>
-                </div>
-            </section>
-
-            <section class="container reveal" style="padding-top: 4rem; padding-bottom: 4rem; background: var(--bg-body);">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">HONEST FAILURES</span>
-                    <div class="divider-line"></div>
-                </div>
-
-                <h2 class="content-heading">Where This Breaks</h2>
-                <p class="body-prose">Any methodology that doesn't tell you where it fails is selling you something. AI-assisted intelligence has real limitations. Here are the ones that have cost time, credibility, or both.</p>
-                
-                <div class="shaky-card">
-                    <h3 class="shaky-title">Hallucination</h3>
-                    <p class="shaky-text">AI fabricated a partnership between two companies that never existed. The battle card referenced it as a proof point. If it had reached the client, it would have destroyed credibility in the first meeting.</p>
-                    <p class="shaky-text">Caught by: Step 5 capability matching flagged it as "no supporting documentation found." The verification prompt works — but only if you run it.</p>
-                    <p class="shaky-rule">Rule: Never cite an AI-generated fact in a meeting without source verification. If you can't find it in the original document, it doesn't exist.</p>
-                </div>
-
-                <div class="shaky-card">
-                    <h3 class="shaky-title">Over-reliance</h3>
-                    <p class="shaky-text">Stopped applying judgment. Copied the briefing output directly into an outreach note without editing. The language was technically correct but completely generic — it could have been sent to any resilience director at any financial services firm. The recipient ignored it.</p>
-                    <p class="shaky-text">What went wrong: The chain generated good intelligence, but the human layer — the part that says "this specific sentence will resonate because of what I know about this specific person" — was skipped.</p>
-                    <p class="shaky-rule">Rule: The AI generates 80% of the work. The last 20% — the part that makes it personal, specific, and human — is yours. That's not a limitation. That's the point.</p>
-                </div>
-
-                <div class="shaky-card">
-                    <h3 class="shaky-title">Transcription Disaster</h3>
-                    <p class="shaky-text">Voice-to-text during a meeting captured "cost-to-serve" as "cost to surf." The follow-up note referenced the prospect's focus on "cost to surf" three times. They didn't respond.</p>
-                    <p class="shaky-rule">Rule: Always read AI-generated content out loud before sending. Your ears catch what your eyes skip.</p>
-                </div>
-
-                <div class="shaky-card">
-                    <h3 class="shaky-title">False Confidence</h3>
-                    <p class="shaky-text">AI produced a beautifully structured battle card. Detailed, well-sourced, compelling hooks. One problem: the CFO referenced in the research had left the company three months earlier. The battle card was built on an organisational structure that no longer existed.</p>
-                    <p class="shaky-text">Caught by: It wasn't caught until the meeting. The prospect said, "James left in October." The rest of the meeting was recovery.</p>
-                    <p class="shaky-rule">Rule: AI doesn't know what's changed since its sources were published. Always verify leadership, org structure, and recent announcements within 48 hours of your meeting.</p>
-                </div>
-            </section>
-
-            <section class="container library-section reveal" style="padding-top: 4rem; padding-bottom: 4rem;">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <span class="divider-label">THE TOOLKIT</span>
-                    <div class="divider-line"></div>
-                </div>
-
-                <h2 class="content-heading">Week 1 Prompt Library</h2>
-                <p style="text-align: center; color: var(--slate); font-size: 1rem; margin-bottom: 2rem;">All Intelligence Layer prompts. Copy-paste ready. The chain walkthrough above uses prompts 01, 03, 05, 08, 09, and 14. The remaining prompts extend coverage for specific scenarios.</p>
-
-                <h3 class="library-category">COMPANY INTELLIGENCE</h3>
-                
-                <div class="library-prompt-title">01: 9-Pillar Deep Research</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">9-PILLAR DEEP RESEARCH</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Act as a Senior Market Intelligence Analyst preparing a pre-meeting briefing for an enterprise sales executive.
-
-I will provide: an annual report/shareholder letter, recent press releases, and any available investor relations material.
-
-Extract intelligence across these 9 pillars:
-
-1. STRATEGIC PRIORITIES: Board-level goals and CEO stated direction. Quote their exact language.
-2. FINANCIAL SIGNALS: Revenue trends, margin pressure, investment areas, budget reallocations. Flag specific numbers.
-3. PAIN POINTS: Stated challenges, risk disclosures, failed initiatives. Note what's buried vs. what's highlighted.
-4. COMPETITIVE POSITIONING: How they describe their market position. Who do they benchmark against?
-5. TECHNOLOGY DIRECTION: Digital transformation priorities, automation targets, platform investments.
-6. REGULATORY & COMPLIANCE: Upcoming deadlines, certification targets, audit findings.
-7. PEOPLE & CULTURE: Hiring priorities, skills gaps, leadership changes, organisational restructuring.
-8. STAKEHOLDER LANGUAGE: The specific phrases executives use repeatedly. These reveal what their KPIs are tied to.
-9. TIMELINE & DEADLINES: Fiscal year, budget cycles, certification deadlines, programme milestones.
-
-FORMAT: Structure each pillar with 3-5 key findings. For every claim, cite the source document and location (e.g., "Shareholder Letter, para 3" or "Risk Disclosure, p.47"). Flag anything you cannot verify as "UNVERIFIED — REQUIRES CONFIRMATION."</code>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">03</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 3 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Profile the People</h3>
+                            <div class="pill-blue">~15 MIN</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">02: 9-Pillar Deep Research (Compact)</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">COMPACT RESEARCH</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Research [COMPANY NAME] across these areas using their annual report and recent press releases:
-
-1. What are their top 3 strategic priorities? Quote the CEO's exact language.
-2. What financial pressures or budget shifts are visible?
-3. What are their biggest stated challenges or risk disclosures?
-4. What technology investments or platform changes are underway?
-5. What regulatory deadlines or compliance targets are approaching?
-6. What phrases does leadership use repeatedly? (These reveal KPI alignment.)
-
-Keep findings concise. Cite sources. Flag anything unverifiable.</code>
-                    </div>
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Builds a profile beyond job titles. Surfaces decision-making style and the "One Question" that proves you understand their personal agenda.</p>
                 </div>
 
-                <div class="library-prompt-title">03: Boring But Expensive — Budget Signal Detection</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">BUDGET SIGNAL DETECTION</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Using the company research I've provided, identify "Boring But Expensive" problems — operational costs that are high, visible to the CFO, and solvable but unglamorous.
-
-Look for these categories:
-1. MANUAL PROCESSES: Workflows requiring human intervention that could be automated. What's the FTE cost?
-2. INTEGRATION FRICTION: Data reconciliation between systems, manual handoffs, duplicate entry. Quantify where possible.
-3. COMPLIANCE BURDEN: Audit preparation labour, certification maintenance, regulatory reporting overhead.
-4. VENDOR DEPENDENCY: Over-reliance on single vendors creating premium pricing or switching costs.
-5. TECHNICAL DEBT: End-of-life systems, extended support contracts, legacy maintenance absorbing budget.
-6. SKILLS GAPS: Roles that are hard to fill or retain, creating contractor dependency or capability holes.
-
-For each finding:
-— Estimate the annual cost where data supports it
-— Identify who owns this budget (which department/function)
-— Frame the reallocation argument: "You're currently spending £X on [boring problem]. Redirecting even a portion toward [solution category] eliminates the root cause."
-
-CRITICAL: Do not invent numbers. If you cannot estimate cost from the source material, note "COST UNKNOWN — DISCOVERY QUESTION NEEDED" and suggest the specific question to ask.</code>
-                    </div>
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-05 // EXECUTIVE STRATEGIC INTELLIGENCE</div>
                 </div>
-
-                <div class="library-prompt-title">04: Budget Cycle Alignment</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">BUDGET CYCLE</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">From the investor relations materials and annual report for [COMPANY NAME]:
-
-1. Define their fiscal year (e.g., April-March or January-December).
-2. When is their Q4 planning window — when are budget requests submitted for the next financial year?
-3. What is the CapEx vs OpEx balance? Are they looking for flexible investment models or fixed commitments?
-4. Based on this timing, when is the optimal engagement window to influence budget allocation for our type of solution?
-5. Are there any mid-year budget review cycles mentioned?
-
-Flag assumptions clearly. Note if fiscal year information is not publicly available.</code>
-                    </div>
-                </div>
-
-                <h3 class="library-category">PEOPLE INTELLIGENCE</h3>
-
-                <div class="library-prompt-title">05: Executive Strategic Intelligence — Deep Dive</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">EXECUTIVE STRATEGIC INTELLIGENCE</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Analyse the following LinkedIn profile, recent posts, and any available public commentary for [NAME], [TITLE] at [COMPANY].
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Analyse the following LinkedIn profile, recent posts, and any available public commentary for [NAME], [TITLE] at [COMPANY].
 
 Cross-reference against the company research already provided.
 
@@ -861,62 +346,51 @@ Build a profile covering:
 5. PERSONAL DIMENSIONS: Interests outside work mentioned in profile or posts. Community involvement. Communication style quirks.
 6. THE ONE QUESTION: Based on everything above, give me ONE discovery question that demonstrates I understand their personal agenda — not just the company's priorities. This question should make them think: "This person has done their homework."
 
-FORMAT: Structured profile. For every claim, cite the source (LinkedIn post date, recommendation author, etc.). Flag assumptions clearly.</code>
+FORMAT: Structured profile. For every claim, cite the source (LinkedIn post date, recommendation author, etc.). Flag assumptions clearly.</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">06: LinkedIn Profile Extract (Compact)</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">COMPACT PROFILE</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Analyse this LinkedIn profile for [NAME] at [COMPANY].
-
-Extract:
-1. Current role, tenure, and reporting line (if visible)
-2. Career trajectory: promoted from within or external hire? How long in current role?
-3. Top 3 themes from their recent posts or shared content
-4. Communication style: data-driven or narrative? Formal or conversational?
-5. One notable personal detail or interest visible from their profile
-
-Keep it brief. This is a quick-reference extract, not a full deep dive.</code>
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>MERIDIAN WORKED EXAMPLE (Jennifer Morris)</strong><br>
+                        <strong>Priorities:</strong> "Resilience is revenue protection." Shares her failures publicly (e.g., the 47-min gap). Values honesty over polish.<br>
+                        <strong>The One Question:</strong> "You've publicly shared the stress-test findings including the 47-minute gap. That level of transparency is unusual. How has that openness shaped the way your Risk Committee engages with resilience reporting?"</p>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">07: Hiring Signal Analysis</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">HIRING SIGNALS</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Search for current job postings at [COMPANY NAME] related to [ROLE TYPE / FUNCTION].
+                <div class="quote-block reveal">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — Jennifer shares failure publicly. That tells you she values honesty. Lead with what your solution <em>doesn't</em> do well. A "Voss Accusation Audit" opener acknowledges the hard truth before she raises it.</p>
+                </div>
 
-Analyse:
-1. Volume: Are they hiring multiple similar roles? (Signals a major initiative starting.)
-2. Seniority: Are they hiring leadership (VP/Director level)? (Signals a new programme with a vendor selection window.)
-3. Specialist skills: What niche skills are they recruiting for? (Signals specific technology or methodology decisions already made.)
-4. Timing: Based on posting dates and urgency language, when should I engage to influence requirements before they formalise?
-
-Note: If no relevant postings are found, state that clearly rather than speculating.</code>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">04</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 4 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Synthesise Battle Card</h3>
+                            <div class="pill-blue">~10 MIN</div>
+                        </div>
                     </div>
                 </div>
 
-                <h3 class="library-category">SYNTHESIS & MATCHING</h3>
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Turns intelligence into ammunition. A single-page reference for the meeting: Hooks, Landmines, and the "North Star".</p>
+                </div>
 
-                <div class="library-prompt-title">08: Executive Battle Card Synthesis</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">BATTLE CARD SYNTHESIS</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Using all the intelligence gathered so far — company research, budget signals, and stakeholder profile — create a 1-page Executive Battle Card.
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-08 // BATTLE CARD SYNTHESIS</div>
+                </div>
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Using all the intelligence gathered so far — company research, budget signals, and stakeholder profile — create a 1-page Executive Battle Card.
 
 Structure:
 
@@ -933,19 +407,48 @@ Structure:
 
 5. PILLAR 9 INTEGRATION: How does your potential solution connect to their stated strategic direction? Map capability to their language, not yours.
 
-6. LANDMINES: What topics should you AVOID? What past failures or sensitivities should you navigate carefully?</code>
+6. LANDMINES: What topics should you AVOID? What past failures or sensitivities should you navigate carefully?</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">09: Company Capability Matching</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">CAPABILITY MATCHING</span>
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
+                        <strong>North Star:</strong> "Continuous Business Availability."<br>
+                        <strong>Hook 1:</strong> "Your stress-test showed a 47-minute gap in recovery transition. That pattern is common in manual-to-automated shifts."<br>
+                        <strong>Landmine:</strong> Do NOT reference the failed automation project from the risk disclosure directly. Use it to shape your "managed risk" approach, but don't quote it.</p>
                     </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Based on the company research, stakeholder profile, and battle card I've provided, search the following materials from MY company for the best matches:
+                </div>
+
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">05</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 5 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Research YOUR Company</h3>
+                            <div class="pill-blue">~10 MIN</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Don't pitch generic capabilities. Match your proof points to their specific pain points and language.</p>
+                </div>
+
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-09 // CAPABILITY MATCHING</div>
+                </div>
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Based on the company research, stakeholder profile, and battle card I've provided, search the following materials from MY company for the best matches:
 
 [PASTE: Your company's case studies, solution descriptions, capability statements, or marketing materials]
 
@@ -956,100 +459,51 @@ Find:
 4. GAPS: Where does this prospect need something we don't have a clear proof point for? These become discovery questions, not weaknesses to hide.
 5. SLIDE RELEVANCY: If I have a standard presentation deck, which slides should I INCLUDE, CUT, or MODIFY for this specific meeting?
 
-FORMAT: Prioritised list. Most relevant match first. For each, explain WHY it's relevant to THIS prospect — not why it's good in general.</code>
+FORMAT: Prioritised list. Most relevant match first. For each, explain WHY it's relevant to THIS prospect — not why it's good in general.</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">10: Slide Relevancy Prompt</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">SLIDE RELEVANCY</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">I have a standard presentation deck for [MEETING TYPE]. Based on the intelligence gathered about [COMPANY NAME] and [STAKEHOLDER NAME]:
-
-1. Which slides should I KEEP? (Directly relevant to their stated priorities.)
-2. Which slides should I CUT? (Generic, not relevant, or potentially off-putting.)
-3. Which slides should I MODIFY? (Relevant topic but needs reframing to use their language.)
-4. What order should the remaining slides be in? (Lead with what matters most to them.)
-5. Is there a slide I should CREATE? (A gap in the deck that their specific situation requires.)
-
-Be specific about why each recommendation is made. Reference the prospect's priorities and language.</code>
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
+                        <strong>Language Flag:</strong> Our materials say "disaster recovery." Meridian says "Continuous Business Availability." Philosophically different. Reframe everything.<br>
+                        <strong>Gap:</strong> No direct proof point for "resilience capability training." Turn this into a discovery question: "Is capability building a long-term internal goal?"</p>
                     </div>
                 </div>
 
-                <h3 class="library-category">RISK & VERIFICATION</h3>
+                <div class="quote-block reveal">
+                    <p><strong>WHAT EXPERIENCE SEES</strong> — If you say "disaster recovery" when she says "availability," you've revealed you don't understand her strategy. The AI catches this disconnect. Junior sellers don't.</p>
+                </div>
 
-                <div class="library-prompt-title">11: Pre-Mortem</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">PRE-MORTEM</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Assume it is 6 months from now and this deal with [COMPANY NAME] has failed completely.
-
-Working backwards, identify:
-1. Why did the CFO or budget holder block it? Did we build an ROI case specific to their stated priorities?
-2. What technical risk killed it? Did IT flag integration, security, or compatibility concerns we didn't address?
-3. What political risk emerged? Did our champion lose influence? Did a blocker coalition form? Did we fail to engage a key stakeholder?
-4. What competitive risk materialised? Did an incumbent or competitor offer something we couldn't match?
-5. What did we assume that turned out to be wrong?
-
-For each risk, suggest one specific action to mitigate it NOW, before it materialises.</code>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">06</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">STEP 6 OF 6</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">The Deliverable</h3>
+                            <div class="pill-blue">~15 MIN</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">12: Objection Prep (Voss Accusation Audit)</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">OBJECTION PREP</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Based on [COMPANY NAME]'s risk disclosures, public statements, and any known past challenges, write the 3 most likely objections they will raise about engaging with an external partner for [SOLUTION TYPE].
-
-Format each as an accusation audit:
-"I know [specific concern based on their experience]. Here's how our approach addresses that specifically..."
-
-Ground each objection in their actual situation — not generic sales objections. Reference specific findings from the research where possible.</code>
-                    </div>
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">The output isn't a research doc. It's an executive briefing you review on your phone 10 minutes before the meeting.</p>
                 </div>
 
-                <div class="library-prompt-title">13: Hallucination Check</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">HALLUCINATION CHECK</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Cross-verify all claims, statistics, and facts in the following AI-generated output against the original source documents I've provided.
-
-For EACH factual claim:
-— If you can find the exact source: mark as VERIFIED and cite the location.
-— If the claim is a reasonable inference but not directly stated: mark as INFERRED and explain your reasoning.
-— If you cannot find supporting evidence: mark as UNVERIFIED — DO NOT USE.
-
-This is a critical safety check. Be strict. If in doubt, mark as UNVERIFIED.</code>
-                    </div>
+                <div class="prompt-console-header reveal">
+                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
+                    <div class="prompt-console-title">W1-14 // EXECUTIVE BRIEFING GENERATOR</div>
                 </div>
-
-                <h3 class="library-category">OUTREACH</h3>
-
-                <div class="library-prompt-title">14: Executive Briefing Generator</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">BRIEFING GENERATOR</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Using everything from Steps 1-5, compile a complete Executive Briefing for my meeting with [NAME] at [COMPANY].
+                <div class="prompt-console reveal" style="border-radius: 0;">
+                    <div class="prompt-wrapper">
+                        <div class="prompt-content">
+                            <pre><code class="language-text" style="white-space: pre-wrap;">Using everything from Steps 1-5, compile a complete Executive Briefing for my meeting with [NAME] at [COMPANY].
 
 Structure the briefing as follows:
 
@@ -1080,172 +534,196 @@ SECTION 7 — PROOF POINTS
 Relevant case studies and metrics mapped to their priorities.
 Language alignment notes.
 
-This briefing should be ready to review on a phone screen 10 minutes before walking into the room. Concise. Actionable. No filler.</code>
+This briefing should be ready to review on a phone screen 10 minutes before walking into the room. Concise. Actionable. No filler.</code></pre>
+                        </div>
+                        <div class="prompt-actions">
+                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
+                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
+                        </div>
                     </div>
                 </div>
 
-                <h3 class="library-category">ADVANCED INTELLIGENCE</h3>
-
-                <div class="library-prompt-title">15: Multi-Source Intelligence Synthesis</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">MULTI-SOURCE INTELLIGENCE SYNTHESIS</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Act as a senior intelligence analyst. You have been given multiple source documents about the same organisation from different sources (e.g., LinkedIn scrape, website content, news articles, financial filings).
-
-Your job is not to summarise each source — it's to CROSS-REFERENCE them and find what no single source reveals alone.
-
-Produce:
-
-1. CONSISTENCY CHECK: Where do sources agree? Where do they contradict? Where does one source reveal something others omit?
-
-2. TIMELINE RECONSTRUCTION: Build a unified timeline of events from all sources. Where does the timeline reveal cause-and-effect the company hasn't stated publicly?
-
-3. NARRATIVE vs REALITY: What's the public narrative (website, LinkedIn)? What do the financial filings show? What does the regulator say? Where are the gaps?
-
-4. LEADERSHIP SIGNALS: Cross-reference leadership profiles against announcements. Who joined recently? Who left? What are leaders posting about vs what the company is announcing?
-
-5. INTELLIGENCE GRADE: For each finding, rate: CONFIRMED (multiple sources agree), PROBABLE (strong inference), POSSIBLE (single source), or CONTRADICTED (sources disagree).
-
-Start with the 3 most important cross-referenced insights — the things you could ONLY find by reading multiple sources together.</code>
+                <div class="note-box note-green reveal" style="margin-top: 2rem;">
+                    <div class="note-box-icon">+</div>
+                    <div class="note-box-content">
+                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
+                        <strong>Objective:</strong> Secure follow-up with CRO regarding ISO 22301 deadline.<br>
+                        <strong>Messaging:</strong> Hook 1 (47-min gap), Hook 2 (12% cost increase), Hook 3 (Vendor Assessment scale).<br>
+                        <strong>Boardroom Question:</strong> "How is the Steering Committee balancing internal capability vs. external managed services for the ISO 22301 deadline?"</p>
                     </div>
                 </div>
 
-                <div class="library-prompt-title">16: Governance & NED Network Intelligence</div>
-                <div class="library-prompt-body">
-                    <div class="prompt-console-header">
-                        <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                        <span class="prompt-console-title">GOVERNANCE & NED NETWORK INTELLIGENCE</span>
-                    </div>
-                    <div class="prompt-console" style="border-radius: 0 0 12px 12px; margin-top: 0;">
-                        <button class="copy-btn" onclick="copyPrompt(this)">COPY PROMPT</button>
-                        <code class="prompt-code">Map the governance structure of a target organisation, with specific focus on Non-Executive Directors and their external networks.
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">WHERE THIS BREAKS</div>
+                    <div class="divider-line"></div>
+                </div>
 
-Using annual report governance sections, Companies House data, and LinkedIn profiles of Board members:
-
-1. BOARD COMPOSITION: Executive directors and NEDs — names, roles, tenure, backgrounds.
-
-2. COMMITTEE STRUCTURE: Audit, Risk, Remuneration, Nomination — who chairs each? Which committees approve contracts of this scale?
-
-3. NED NETWORK MAP: For each NED, what other boards do they sit on? Any connections to YOUR company? Any connections to your existing clients? Industry background?
-
-4. GOVERNANCE SIGNALS: Recent board changes, committee focus areas, governance concerns raised by auditors or regulators.
-
-5. ENGAGEMENT IMPLICATIONS: How does the board structure affect procurement decisions? Could a NED introduction create an above-the-line relationship?</code>
+                <div class="worked-example-box reveal" style="background: var(--bg-card); border-color: var(--border-dynamic);">
+                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: Hallucination</h3>
+                        <p class="body-prose" style="font-size: 0.9rem;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
+                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Use the Verification Prompt (W1-13). If you can't see the source, it doesn't exist.</p>
                     </div>
                 </div>
 
-            </section>
-
-            <section class="container reveal" style="padding-top: 5rem; padding-bottom: 5rem; text-align: center;">
-                <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Intelligence gathered. Now map the power structure.</p>
-                <a href="week2.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">ACCESS WEEK 2: OMNISCIENCE ENGINE</a>
-                <div style="margin-top: 1.5rem;">
-                    <a href="index.html" style="color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid var(--border-dynamic); padding-bottom: 2px; transition: 0.3s;" onmouseover="this.style.color='var(--primary)';this.style.borderColor='var(--primary)'" onmouseout="this.style.color='var(--slate)';this.style.borderColor='var(--border-dynamic)'">Return to the methodology overview.</a>
+                <div class="worked-example-box reveal" style="margin-top: 1rem; background: var(--bg-card); border-color: var(--border-dynamic);">
+                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: Over-reliance</h3>
+                        <p class="body-prose" style="font-size: 0.9rem;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it.</p>
+                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: AI generates 80%. The last 20%—the humanity—is yours.</p>
+                    </div>
                 </div>
-            </section>
-        </main>
 
-<footer>
-    <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-        <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>    <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.3s;">
-        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-        </svg>
-        Connect on LinkedIn
-    </a>
+                <div class="worked-example-box reveal" style="margin-top: 1rem; background: var(--bg-card); border-color: var(--border-dynamic);">
+                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: False Confidence</h3>
+                        <p class="body-prose" style="font-size: 0.9rem;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was 9 months old.</p>
+                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Verify leadership changes within 48 hours of the meeting.</p>
+                    </div>
+                </div>
 
-    <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">
-        AI Is Not Your Cheerleader — Weekly deep dives into real AI workflows for enterprise sales
-    </a>
-</div>
+                <section class="container reveal" style="padding-top: 6rem; padding-bottom: 2rem;">
+                    <div class="section-divider">
+                        <div class="divider-line"></div>
+                        <span class="divider-label">PROMPT LIBRARY</span>
+                        <div class="divider-line"></div>
+                    </div>
+                    
+                    <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
 
-</footer>
+                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">COMPANY INTELLIGENCE</h4>
+                    <div class="library-grid">
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-01')">W1-01 // 9-PILLAR RESEARCH <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-02')">W1-02 // COMPACT RESEARCH <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-03')">W1-03 // BUDGET DETECTION <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-04')">W1-04 // BUDGET CYCLE <span class="copy-badge">Copy</span></button>
+                    </div>
+
+                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">PEOPLE INTELLIGENCE</h4>
+                    <div class="library-grid">
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-05')">W1-05 // EXEC INTELLIGENCE <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-06')">W1-06 // COMPACT PROFILE <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-07')">W1-07 // HIRING SIGNALS <span class="copy-badge">Copy</span></button>
+                    </div>
+
+                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">SYNTHESIS & MATCHING</h4>
+                    <div class="library-grid">
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-08')">W1-08 // BATTLE CARD <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-09')">W1-09 // CAPABILITY MATCH <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-10')">W1-10 // SLIDE RELEVANCY <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-14')">W1-14 // EXEC BRIEFING <span class="copy-badge">Copy</span></button>
+                    </div>
+
+                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">RISK & ADVANCED</h4>
+                    <div class="library-grid">
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-11')">W1-11 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-12')">W1-12 // OBJECTION PREP <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-13')">W1-13 // HALLUCINATION CHECK <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-15')">W1-15 // MULTI-SOURCE <span class="copy-badge">Copy</span></button>
+                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-16')">W1-16 // GOVERNANCE MAP <span class="copy-badge">Copy</span></button>
+                    </div>
+                </section>
+
+                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
+                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Intelligence gathered. Now map the power structure.</p>
+                    <a href="week2.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: 700;">PROCEED TO WEEK 2: OMNISCIENCE</a>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+            <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>
+            <a href="#" style="color: var(--slate); text-decoration: none; font-size: 0.85rem; font-weight: 600;">Connect on LinkedIn</a>
+        </div>
+    </footer>
     </div>
 
     <script>
-        // Clipboard Copy Function
+        // 1. Theme Logic
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    const root = document.documentElement;
+                    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                    root.setAttribute('data-theme', next);
+                    localStorage.setItem('theme', next);
+                });
+            }
+        });
+
+        // 2. Read More Toggle
+        function togglePrompt(btn) {
+            const content = btn.parentElement.previousElementSibling; 
+            content.classList.toggle('expanded');
+            btn.innerText = content.classList.contains('expanded') ? '— Read less' : '+ Read more';
+        }
+
+        // 3. Copy Button Logic
         function copyPrompt(btn) {
-            const container = btn.closest('.prompt-console');
-            const codeBlock = container.querySelector('.prompt-code');
-            const text = codeBlock.innerText;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = btn.innerHTML;
-                btn.innerHTML = "COPIED";
-                btn.style.background = "#10b981";
-                
+            const container = btn.parentElement.previousElementSibling;
+            const code = container.innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const original = btn.innerText;
+                btn.innerText = '✓';
+                btn.style.color = '#10b981';
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = "";
+                    btn.innerText = original;
+                    btn.style.color = '';
                 }, 2000);
             });
         }
 
-        // Theme management
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
+        // 4. Library Copy Logic
+        function copyLibraryPrompt(btn, promptID) {
+            const headers = document.querySelectorAll('.prompt-console-title');
+            let targetCode = "";
+
+            headers.forEach(header => {
+                if (header.innerText.includes(promptID)) {
+                    const consoleDiv = header.parentElement.nextElementSibling; 
+                    if (consoleDiv) {
+                        const codeBlock = consoleDiv.querySelector('code');
+                        if (codeBlock) targetCode = codeBlock.innerText;
+                        else {
+                            const preBlock = consoleDiv.querySelector('pre');
+                            if (preBlock) targetCode = preBlock.innerText;
+                        }
+                    }
+                }
+            });
+
+            if (targetCode) {
+                navigator.clipboard.writeText(targetCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const originalText = badge.innerText;
+                    badge.innerText = "COPIED";
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        badge.innerText = originalText;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            } else {
+                console.warn("Could not find code for ID:", promptID);
+            }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Theme toggle
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const currentTheme = document.documentElement.getAttribute('data-theme');
-                    const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                    document.documentElement.setAttribute('data-theme', targetTheme);
-                    localStorage.setItem('theme', targetTheme);
-                });
-            }
-            
-            // Mobile menu toggle
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            if (mobileMenuToggle && navLinks) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    mobileMenuToggle.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-                document.addEventListener('click', (e) => {
-                    if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                        mobileMenuToggle.classList.remove('active');
-                        navLinks.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Mobile dropdown toggle
-            const navDropdown = document.querySelector('.nav-dropdown');
-            if (navDropdown) {
-                const dropdownMain = navDropdown.querySelector('.nav-link-main');
-                dropdownMain.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        e.stopPropagation();
-                        navDropdown.classList.toggle('mobile-open');
-                    }
-                });
-            }
-
-            // Reveal animations
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-            // Library accordion toggle
-            document.querySelectorAll('.library-prompt-title').forEach(title => {
-                title.addEventListener('click', () => {
-                    title.classList.toggle('open');
-                    const body = title.nextElementSibling;
-                    if (body) body.classList.toggle('open');
-                });
+        // 5. Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
         });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
