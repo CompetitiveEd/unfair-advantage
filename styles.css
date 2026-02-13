@@ -1959,3 +1959,123 @@ footer {
             nav, footer, .hero-impact { display: none; }
             body { background: white; color: black; }
         }
+
+        /* ==========================================================================
+   ▼ WEEK 3 COSMETIC UPGRADES (PASTE AT BOTTOM OF STYLES.CSS) ▼
+   ========================================================================== */
+
+/* 1. NEW VARIABLES (Injecting the high-end palette) */
+:root {
+    --accent-success: #10b981;
+    --slate-400: #94a3b8;
+    --nav-glass: rgba(255, 255, 255, 0.85);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+    --nav-glass: rgba(15, 23, 42, 0.7); /* Darker, more transparent in dark mode */
+}
+
+/* 2. SCROLL PROGRESS BAR (New Element) */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-success));
+    width: 0%;
+    z-index: 9999; /* Ensures it sits on top of everything */
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* 3. GLASS NAVIGATION (Overriding existing solid nav) */
+nav {
+    background: var(--nav-glass) !important; /* Force the glass effect */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    transition: background 0.3s ease, padding 0.3s ease;
+}
+
+/* 4. HERO TEXT GRADIENT */
+.text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* 5. CONSOLE/IDE UPGRADE (VS Code Aesthetic) */
+/* This creates the "Application Window" look */
+.prompt-console-header {
+    background: #1e293b !important; /* Force dark slate */
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px 8px 0 0;
+    padding: 0.75rem 1.25rem;
+}
+
+.prompt-console {
+    background: #0f172a !important; /* Deep Navy */
+    border: 1px solid rgba(255,255,255,0.05);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* 6. CARD INTERACTION POLISH */
+/* Adds the "Lift" effect to your Gain/Talent cards */
+.gain-card, .talent-card, .framework-card {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.gain-card:hover, .talent-card:hover, .framework-card:hover {
+    transform: translateY(-8px); /* Higher lift */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary);
+}
+
+/* 7. COPY BUTTON FEEDBACK */
+.copy-btn {
+    transition: all 0.2s ease;
+}
+.copy-btn.copied {
+    background-color: var(--accent-success) !important;
+    color: white !important;
+    border-color: var(--accent-success);
+}
+
+/* --- Base Overrides & Mobile Optimizations --- */
+#scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; 
+    background: linear-gradient(90deg, var(--primary), var(--green));
+    width: 0%; z-index: 2000; transition: width 0.1s ease-out;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, var(--slate) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.dark-header-block {
+    min-height: 75dvh; display: flex; align-items: center;
+    clip-path: polygon(0 0, 100% 0, 100% 94%, 0 100%);
+    position: relative; padding: 2rem 0;
+}
+
+@media (max-width: 768px) {
+    .dark-header-block { min-height: 60dvh; clip-path: polygon(0 0, 100% 0, 100% 97%, 0 100%); }
+    .hero-headline { font-size: clamp(1.8rem, 8vw, 2.5rem) !important; }
+}
+
+/* --- Fluid Accordion --- */
+.library-prompt-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+}
+.library-prompt-title.active + .library-prompt-body { padding: 1.5rem; }
+
+/* --- Reveal Staggering --- */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.grid-2-col > .reveal:nth-child(2) { transition-delay: 0.15s; }
