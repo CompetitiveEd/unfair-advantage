@@ -35,29 +35,38 @@
 
     <div class="page-container">
         <nav>
-            <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links">
-                <a href="foundations.html">Foundations</a>
-                <a href="steer.html">Steer</a>
-                <div class="nav-dropdown">
-                    <span class="nav-link-main" style="color: var(--primary);">GAIN Series ▾</span>
-                    <div class="dropdown-content">
-                        <a href="week1.html">1: KNOW - Intelligence</a>
-                        <a href="week2.html">2: MAP - Omniscience</a>
-                        <a href="week3.html" class="locked">3: WIN - Oxygen Effect</a>
-                        <a href="week4.html">4: GROW - Velocity</a>
-                    </div>
+        <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+         <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="steer.html">Steer</a>
+            
+            <div class="nav-dropdown">
+                <span class="nav-link-main">About ▾</span>
+                <div class="dropdown-content">
+                    <a href="origins.html">Origins</a>
+                    <a href="frameworks.html">Frameworks</a>
                 </div>
-                <a href="visuals.html">Visuals</a>
-                <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
             </div>
-        </nav>
+
+            <div class="nav-dropdown">
+                <span class="nav-link-main" style="color: var(--primary);">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">1: KNOW - Intelligence</a>
+                    <a href="week2.html">2: MAP - Omniscience</a>
+                    <a href="week3.html" class="locked">3: WIN - Oxygen Effect</a>
+                    <a href="week4.html">4: GROW - Velocity</a>
+                </div>
+            </div>
+            <a href="visuals.html">Visuals</a>
+            <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
+        </div>
+    </nav>
     
         <header class="dark-header-block">
-        <img src="assets/images/steer-hero.png" class="hero-bg" alt="Oxygen Effect" style="opacity: 0.6;">
+        <img src="assets/images/week1.png" class="hero-bg" alt="Oxygen Effect" style="opacity: 0.6;">
         <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
             <div class="hero-content reveal" style="text-align: center;">
                 <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: block;">
@@ -469,12 +478,53 @@ Output as a Week-by-Week Action Plan.
 
 <script src="scripts.js"></script>
 <script>
-    // Inline Read More Toggle Logic for Week 3
-    function togglePrompt(btn) {
-        const content = btn.previousElementSibling; 
-        content.classList.toggle('expanded');
-        btn.innerText = content.classList.contains('expanded') ? '— Read less' : '+ Read more';
-    }
+    // 1. IMMEDIATE THEME LOAD (Prevents Flash)
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 2. THEME TOGGLE LOGIC
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const root = document.documentElement;
+                const current = root.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                
+                root.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            });
+        }
+
+        // 3. READ MORE LOGIC (Restored)
+        window.togglePrompt = function(btn) {
+            const content = btn.previousElementSibling; 
+            content.classList.toggle('expanded');
+            btn.innerText = content.classList.contains('expanded') ? '— Read less' : '+ Read more';
+        }
+
+        // 4. MOBILE MENU LOGIC (Restored)
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+        }
+        
+        // 5. REVEAL ANIMATION (Restored)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
 </script>
 </body>
+
 </html>
