@@ -3,108 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Why Not Just Automate Everything? The Human in the Loop Architecture.">
-    <title>Human In The Loop | The Unfair Advantage</title>
+    <meta name="description" content="Steer, Don't Drift: The Navigation Layer. AI does the work. You choose the direction.">
+    <title>Steer, Don't Drift | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* INLINE OVERRIDES FOR VISUALS */
-        
-        /* 1. The Bento Grid for Steps */
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-        .module-card {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .module-card:hover {
-            background: rgba(30, 41, 59, 0.8);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .module-number {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--slate);
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-        .module-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: white;
-            margin: 0;
-        }
+        /* --- VISUAL SURPRISES & OVERRIDES --- */
 
-        /* 2. Comparison Cards */
-        .split-card-container {
+        /* 1. The Split Columns (Drift vs Steer) */
+        .contrast-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.1);
+            gap: 2rem;
             margin-bottom: 4rem;
         }
-        @media (max-width: 768px) { .split-card-container { grid-template-columns: 1fr; } }
-        
-        .split-card { padding: 3rem 2rem; }
-        .split-left { background: rgba(15, 23, 42, 0.8); border-right: 1px solid rgba(255,255,255,0.05); }
-        .split-right { background: rgba(59, 130, 246, 0.05); }
+        @media (max-width: 768px) { .contrast-container { grid-template-columns: 1fr; } }
 
-        /* 3. The Signal Decay Graph (Context Window) */
-        .decay-graph-container {
+        .contrast-card {
+            padding: 2.5rem;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 100%;
+            transition: transform 0.3s ease;
             position: relative;
+            overflow: hidden;
+        }
+        .contrast-card:hover { transform: translateY(-5px); }
+
+        /* The Drifter (Dark/Red) */
+        .card-drift {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .card-drift::before {
+            content: "WARNING";
+            position: absolute;
+            top: 1rem; right: 1rem;
+            font-size: 0.6rem;
+            font-weight: 900;
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 2px 6px;
+            border-radius: 4px;
+            opacity: 0.7;
+        }
+
+        /* The Navigator (Bright/Blue) */
+        .card-steer {
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.1) 0%, rgba(30, 41, 59, 0.4) 100%);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+        .card-steer::before {
+            content: "OPTIMAL";
+            position: absolute;
+            top: 1rem; right: 1rem;
+            font-size: 0.6rem;
+            font-weight: 900;
+            color: #10b981;
+            border: 1px solid #10b981;
+            padding: 2px 6px;
+            border-radius: 4px;
+            opacity: 0.9;
+        }
+
+        /* 2. The Flight Plan (Steps 1-6) */
+        .flight-plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .flight-step {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .flight-step:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--primary);
+        }
+        .flight-num {
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: var(--slate);
+            margin-bottom: 0.5rem;
+            display: block;
+            letter-spacing: 0.1em;
+        }
+        .flight-step:hover .flight-num { color: var(--primary); }
+
+        /* 3. The "Signal Monitor" (Context Window) */
+        .signal-monitor {
             background: #0f172a;
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        .monitor-screen {
             padding: 2rem;
-            height: 300px;
             display: flex;
             align-items: flex-end;
-            margin-top: 2rem;
-            overflow: hidden;
-        }
-        .decay-bar {
-            flex-grow: 1;
-            margin: 0 4px;
-            background: var(--primary);
-            opacity: 0.8;
-            border-radius: 4px 4px 0 0;
-            transition: height 1s ease;
+            justify-content: space-between;
+            height: 200px;
+            background: linear-gradient(180deg, rgba(16,185,129,0.05) 0%, rgba(239,68,68,0.05) 100%);
             position: relative;
         }
-        .bar-high { height: 80%; background: #10b981; }
-        .bar-med { height: 60%; background: #fbbf24; }
-        .bar-low { height: 30%; background: #ef4444; }
-        .bar-dead { height: 10%; background: #94a3b8; opacity: 0.3; }
-
-        .graph-label {
+        .signal-line {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            color: white;
-            font-size: 0.75rem;
-            font-weight: 700;
-            background: rgba(0,0,0,0.7);
-            padding: 4px 8px;
-            border-radius: 4px;
+            bottom: 0; left: 0;
+            opacity: 0.6;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,10 Q30,10 50,50 T100,90" fill="none" stroke="%23cbd5e1" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>') no-repeat center center;
+            background-size: 100% 100%;
         }
-        .label-start { top: 20%; left: 5%; }
-        .label-repeat { top: 45%; left: 40%; }
-        .label-fail { bottom: 15%; right: 5%; color: #ef4444; }
-        
-        /* Standard Re-use from Week 4 Template */
+        .monitor-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #1e293b;
+            font-size: 0.75rem;
+            color: var(--slate);
+            font-weight: 700;
+        }
+
+        /* Standard Re-use */
         .step-header-block { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; }
         .large-step-number { font-size: 3.5rem; font-weight: 900; line-height: 0.8; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
         .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; padding-top: 0.5rem; }
@@ -118,6 +150,7 @@
         .prompt-expand-btn { border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 12px 1.5rem; cursor: pointer; flex-grow: 1; text-align: left; }
         .copy-btn-inline { background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: var(--primary); font-size: 0.7rem; font-weight: 800; padding: 0 1.5rem; cursor: pointer; height: 45px; transition: 0.2s; }
         .copy-btn-inline:hover { background: rgba(255,255,255,0.05); color: white; }
+        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.7rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
     </style>
 </head>
 <body class="week4-page">
@@ -132,7 +165,7 @@
             </button>
             <div class="nav-links">
                 <a href="foundations.html">Foundations</a>
-                <a href="steer.html">Steer</a>
+                <a href="steer.html" style="color: var(--primary);">Steer</a>
                 
                 <div class="nav-dropdown">
                     <span class="nav-link-main">About ▾</span>
@@ -157,17 +190,17 @@
         </nav>
     
         <header class="dark-header-block">
-            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Automation vs Intelligence" style="opacity: 0.3;">
+            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Cockpit View" style="opacity: 0.4;">
             <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
                 <div class="hero-content reveal" style="text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">THE ARCHITECTURE</p>
+                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">THE NAVIGATION LAYER</p>
                     <h1 class="hero-headline" style="line-height: 1.1;">
-                        <span style="color: #ffffff; display: block;">Why not just</span>
-                        <span style="color: #3b82f6; display: block;">automate everything?</span>
+                        <span style="color: #ffffff; display: block;">The AI is the Engine.</span>
+                        <span style="color: #3b82f6; display: block;">You own the Flight Plan.</span>
                     </h1>
                     <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
                     <p class="hero-subtext" style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
-                        The vision of fully autonomous AI agents sounds efficient until you realise it's two spam filters negotiating with each other. GAIN uses AI for the research grunt work so you arrive at the meeting prepared AND fully present. The executive briefing is preparation, not a script. The difference is everything.
+                        Speed without direction is just a faster way to get lost. Prompts are the controls, and you are the pilot.
                     </p>
                 </div>
             </div>
@@ -178,77 +211,104 @@
         <section class="reveal">
             <div class="container" style="max-width: 900px;">
                 
-                <div class="split-card-container reveal">
-                    <div class="split-card split-left">
-                        <h3 style="color: #ef4444; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">FULL AUTOMATION</h3>
-                        <p class="body-prose" style="font-size: 1rem; color: #cbd5e1; margin-bottom: 0;">
+                <div class="contrast-container reveal">
+                    
+                    <div class="contrast-card card-drift">
+                        <h3 style="color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">THE DRIFT</h3>
+                        <p style="font-size: 0.9rem; color: #ef4444; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">Unconscious Automation</p>
+                        
+                        <p class="body-prose" style="font-size: 0.95rem; color: #cbd5e1; margin-bottom: 1rem;">
                             A script makes you robotic. AI agents negotiating with AI agents. No room for instinct, rapport, or timing.
                         </p>
-                    </div>
-                    <div class="split-card split-right">
-                        <h3 style="color: var(--primary); font-size: 0.9rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">GAIN APPROACH</h3>
-                        <p class="body-prose" style="font-size: 1rem; color: white; margin-bottom: 0;">
-                            Preparation makes you confident. 4 hours of AI research so you walk in informed and fully present.
+                        <p class="body-prose" style="font-size: 0.95rem; color: #94a3b8; font-style: italic;">
+                            "Write me an email to the CFO." -> Result: Ignored.
                         </p>
                     </div>
+
+                    <div class="contrast-card card-steer">
+                        <h3 style="color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">THE STEER</h3>
+                        <p style="font-size: 0.9rem; color: #10b981; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem;">Active Intelligence</p>
+                        
+                        <p class="body-prose" style="font-size: 0.95rem; color: white; margin-bottom: 1rem;">
+                            Preparation makes you confident. 4 hours of AI research so you walk in informed and fully present.
+                        </p>
+                        <p class="body-prose" style="font-size: 0.95rem; color: #60a5fa; font-style: italic;">
+                            "Act as a cynical CFO..." -> Result: Advantage.
+                        </p>
+                    </div>
+
                 </div>
 
                 <div class="section-divider">
                     <div class="divider-line"></div>
-                    <div class="divider-label">HUMAN IN THE LOOP</div>
+                    <div class="divider-label">THE FLIGHT PLAN</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
-                    <h2 class="section-heading-standard" style="margin-bottom: 1rem;">Not The Line</h2>
+                <div class="reveal" style="text-align: center;">
+                    <h2 class="section-heading-standard" style="margin-bottom: 1rem;">Human In The Loop</h2>
                     <p class="body-prose" style="max-width: 700px; margin: 0 auto;">
-                        The prompt chain looks linear but you don't run it like a pipeline. Between every step, you read the output, add your own context — from conversations, instinct, experience — and adjust the next prompt. That's what turns generic AI output into intelligence your competitor can't replicate.
+                        The prompt chain looks linear but you don't run it like a pipeline. Between every step, you read the output, add your own context, and adjust.
                     </p>
                 </div>
 
-                <div class="module-grid reveal">
-                    <div class="module-card">
-                        <span class="module-number">STEP 01</span>
-                        <h4 class="module-title">Company Intel</h4>
+                <div class="flight-plan-grid reveal">
+                    <div class="flight-step">
+                        <span class="flight-num">STEP 01</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Company Intel</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;">Establish a baseline. Strategic goals, annual report themes, stated risks.</p>
                     </div>
-                    <div class="module-card">
-                        <span class="module-number">STEP 02</span>
-                        <h4 class="module-title">Find Money</h4>
+                    <div class="flight-step">
+                        <span class="flight-num">STEP 02</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Find Money</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;">Scan for budget signals. Regional disparities, transformation funds.</p>
                     </div>
-                    <div class="module-card">
-                        <span class="module-number">STEP 03</span>
-                        <h4 class="module-title">Profile People</h4>
+                    <div class="flight-step">
+                        <span class="flight-num">STEP 03</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Profile People</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;">Map influence. Who holds the budget? Who is the blocker?</p>
                     </div>
-                    <div class="module-card">
-                        <span class="module-number">STEP 04</span>
-                        <h4 class="module-title">Battle Card</h4>
+                    <div class="flight-step">
+                        <span class="flight-num">STEP 04</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Battle Card</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;">Generate strategy. A "Why Us, Why Now" narrative.</p>
                     </div>
-                    <div class="module-card">
-                        <span class="module-number">STEP 05</span>
-                        <h4 class="module-title">Your Company</h4>
+                    <div class="flight-step">
+                        <span class="flight-num">STEP 05</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">Your Company</h4>
+                        <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.5; margin: 0;">Align capabilities to pain. Use their internal terminology.</p>
                     </div>
-                    <div class="module-card">
-                        <span class="module-number">STEP 06</span>
-                        <h4 class="module-title">The Briefing</h4>
+                    <div class="flight-step" style="border-color: var(--primary); background: rgba(59,130,246,0.1);">
+                        <span class="flight-num" style="color: var(--primary);">STEP 06</span>
+                        <h4 style="color: white; font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">The Briefing</h4>
+                        <p style="font-size: 0.85rem; color: white; line-height: 1.5; margin: 0;">The final output. Proves you know their business.</p>
+                    </div>
+                </div>
+
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">H</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">INJECTION POINT</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">What This Looks Like In Practice</h3>
+                        </div>
                     </div>
                 </div>
 
                 <div class="worked-example-box reveal" style="background: var(--bg-card); border-color: var(--border-dynamic); padding: 2rem;">
-                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">What This Looks Like In Practice</h2>
                     <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
                         <p class="body-prose" style="margin: 0;">
-                            <strong>Company Intel:</strong> Establish a baseline understanding of the account. Identify strategic goals, annual report themes, and publicly stated risks.<br><br>
-                            <strong>The Human Layer:</strong> Step 1 flags a "resilience skills gap." You already know — from a contact inside the company — it's concentrated in the Manchester office, causing friction with London leadership.<br><br>
-                            <strong>The Injection:</strong> So you modify Step 2: <em>"Pay particular attention to skills-gap-related costs, especially regional disparities."</em><br><br>
-                            Now Step 2 finds budget signals the generic prompt would have missed. That insight carries through to your briefing and the stakeholder thinks: "How did they know that?" They didn't get it from AI. They got it from experience, fed it into AI, and let the system amplify it.
+                            Step 1 flags a "resilience skills gap."<br><br>
+                            <strong>YOU KNOW (Human Intel):</strong> It's concentrated in the Manchester office, causing friction with London.<br><br>
+                            <strong>YOU STEER (The Prompt):</strong> <em>"Pay particular attention to skills-gap-related costs, especially regional disparities."</em><br><br>
+                            <strong>RESULT:</strong> Step 2 finds specific budget signals the generic prompt missed. The stakeholder asks: "How did they know that?"
                         </p>
                     </div>
                     
                     <div class="note-box note-blue" style="margin-top: 1.5rem;">
                         <div class="note-box-icon">!</div>
                         <div class="note-box-content">
-                            <p><strong>THE MOST IMPORTANT PART OF EVERY PROMPT</strong><br>
-                            [PASTE YOUR ADDITIONAL CONTEXT HERE] isn't decoration. What you add from conversations, observations, and instinct is what transforms generic output into competitive advantage.</p>
+                            <p><strong>[PASTE YOUR ADDITIONAL CONTEXT HERE]</strong> isn't decoration. What you add from conversations, observations, and instinct is what transforms generic output into competitive advantage.</p>
                         </div>
                     </div>
                 </div>
@@ -259,11 +319,7 @@
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="reveal" style="text-align: center; margin-bottom: 2rem;">
-                     <p class="body-prose">The GAIN prompts work in any AI system. Different tools surface different things — that's a feature, not a bug. Start free, upgrade when outputs go generic.</p>
-                </div>
-
-                <div class="grid-3-col reveal" style="margin-bottom: 4rem;">
+                <div class="grid-3-col reveal">
                     <div class="talent-card gain-card">
                         <h3 class="talent-card-title">DEPTH vs. SPEED</h3>
                         <p class="talent-card-text">Depth for research. Speed for lookups. You'll learn which tools suit which within days.</p>
@@ -273,51 +329,57 @@
                         <p class="talent-card-text">One surfaces LinkedIn activity, another finds a podcast interview. Use multiple tools.</p>
                     </div>
                     <div class="talent-card gain-card">
-                        <h3 class="talent-card-title">BEFORE YOU START</h3>
+                        <h3 class="talent-card-title">CRITICAL EYE</h3>
                         <p class="talent-card-text">Read the output critically. Your job is to verify, not to be impressed.</p>
                     </div>
                 </div>
 
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">TECHNICAL REALITY</div>
-                    <div class="divider-line"></div>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">!</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">TECHNICAL REALITY</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Context Window Limits</h3>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="reveal">
-                    <h3 style="text-align: center; color: white; margin-bottom: 0.5rem;">When The AI Conversation Breaks Down</h3>
-                    <p style="text-align: center; font-size: 0.9rem; color: var(--slate); max-width: 600px; margin: 0 auto 2rem auto;">
-                        Context Window Limits. Every AI conversation has a shelf life. When it fills, the system silently drops earlier content. Watch for repetition or forgotten context, then hand off to a fresh chat.
-                    </p>
-
-                    <div class="decay-graph-container">
-                        <div class="graph-label label-start">HIGH OUTPUT QUALITY</div>
-                        <div class="graph-label label-repeat">REPETITION STARTS</div>
-                        <div class="graph-label label-fail">CONTEXT FORGOTTEN</div>
-                        
-                        <div class="decay-bar bar-high"></div><div class="decay-bar bar-high"></div><div class="decay-bar bar-high"></div>
-                        <div class="decay-bar bar-high"></div><div class="decay-bar bar-high"></div><div class="decay-bar bar-med"></div>
-                        <div class="decay-bar bar-med"></div><div class="decay-bar bar-med"></div><div class="decay-bar bar-low"></div>
-                        <div class="decay-bar bar-low"></div><div class="decay-bar bar-low"></div><div class="decay-bar bar-dead"></div>
-                        <div class="decay-bar bar-dead"></div><div class="decay-bar bar-dead"></div><div class="decay-bar bar-dead"></div>
+                    <p class="body-prose" style="margin-bottom: 2rem;">Every AI conversation has a shelf life. When it fills, the system silently drops earlier content.</p>
+                    
+                    <div class="signal-monitor">
+                        <div class="monitor-screen">
+                            <div class="signal-line"></div>
+                            <div style="position: relative; z-index: 2;">
+                                <span style="font-size: 3rem; font-weight: 900; color: #10b981; line-height: 1;">100%</span>
+                                <span style="display: block; font-size: 0.7rem; font-weight: 700; color: #10b981; letter-spacing: 0.1em;">SIGNAL QUALITY</span>
+                            </div>
+                            <div style="position: relative; z-index: 2; text-align: right;">
+                                <span style="font-size: 3rem; font-weight: 900; color: #ef4444; line-height: 1;">40%</span>
+                                <span style="display: block; font-size: 0.7rem; font-weight: 700; color: #ef4444; letter-spacing: 0.1em;">HALLUCINATION RISK</span>
+                            </div>
+                        </div>
+                        <div class="monitor-labels">
+                            <span>START OF CHAT</span>
+                            <span>WINDOW LIMIT REACHED</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="grid-2-col reveal" style="margin-top: 2rem;">
-                    <div>
-                        <h4 style="color: #ef4444; font-size: 0.9rem; font-weight: 700;">SIGNS OF DECAY</h4>
-                        <ul style="font-size: 0.9rem; color: var(--text-body); line-height: 1.6;">
-                            <li><strong>The AI Starts Repeating Itself:</strong> You ask for a battle card and the output looks suspiciously similar to something it generated three prompts ago.</li>
-                            <li><strong>Context Forgotten:</strong> You mentioned the stakeholder's name and role in Step 1. By Step 5, the AI uses a generic placeholder.</li>
-                            <li><strong>The Output Gets Generic:</strong> Early outputs were specific and detailed. Later outputs sound like they could apply to any company in any industry.</li>
-                            <li><strong>Hallucination Increases:</strong> Facts start appearing that weren't in any source material you provided.</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 style="color: var(--primary); font-size: 0.9rem; font-weight: 700;">THE FIX</h4>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">
-                            Start a new chat using the Context Transfer Protocol below.
-                        </p>
+                    <div class="grid-2-col" style="margin-top: 2rem;">
+                        <div>
+                            <h4 style="color: #ef4444; font-size: 0.9rem; font-weight: 700;">SIGNS OF DECAY</h4>
+                            <ul style="font-size: 0.9rem; color: var(--text-body); line-height: 1.6;">
+                                <li><strong>Repetition:</strong> The Battle Card looks just like Step 3.</li>
+                                <li><strong>Amnesia:</strong> "Who is the stakeholder again?"</li>
+                                <li><strong>Hallucination:</strong> Inventing facts not in provided source material.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary); font-size: 0.9rem; font-weight: 700;">THE FIX</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-body);">
+                                Don't argue with a degrading context window. Start a fresh chat and use the Handoff Prompt.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -329,7 +391,7 @@
                     <div class="prompt-wrapper">
                         <div class="prompt-content">
                             <pre><code class="language-text" style="white-space: pre-wrap;">I am continuing our previous research. Please acknowledge that you have the context from our earlier steps before we proceed.
-                            
+
 [This technique works across tools — you can research in one system and hand the summary to a different one for the next step.]</code></pre>
                         </div>
                         <div class="prompt-actions">
@@ -352,11 +414,11 @@
                 <div class="grid-3-col reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
                     <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
                         <h4 style="color: white; margin-bottom: 0.5rem;">START FAMILIAR</h4>
-                        <p style="font-size: 0.85rem; color: var(--slate);">Your first run will feel slow — that's normal. Pick a prospect you know. Compare output to what's in your head.</p>
+                        <p style="font-size: 0.85rem; color: var(--slate);">Your first run will feel slow. Pick a prospect you know. Compare output to what's in your head.</p>
                     </div>
                     <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
                         <h4 style="color: white; margin-bottom: 0.5rem;">DON'T EDIT</h4>
-                        <p style="font-size: 0.85rem; color: var(--slate);">Run the prompt as written first. The structure is deliberate.</p>
+                        <p style="font-size: 0.85rem; color: var(--slate);">Run the prompt as written first. The structure is deliberate. Edit later.</p>
                     </div>
                     <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
                         <h4 style="color: white; margin-bottom: 0.5rem;">THREE ATTEMPTS</h4>
