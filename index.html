@@ -10,11 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* --- HOMEPAGE SPECIFIC STYLES --- */
+        /* --- HOMEPAGE SPECIFIC OVERRIDES --- */
 
-        /* 1. Hero Adjustments */
+        /* 1. Hero Restoration (The "Clean" Block) */
         .hero-bg {
-            filter: brightness(0.4);
+            filter: brightness(0.35);
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; z-index: 0;
@@ -22,195 +22,126 @@
         
         .dark-header-block {
             min-height: 85vh;
-            display: flex; flex-direction: column; justify-content: center;
-            padding-bottom: 4rem; overflow: hidden; position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding-bottom: 6rem; overflow: hidden; position: relative; text-align: center;
         }
 
-        /* 2. The Bento Stats Grid */
+        .hero-headline {
+            font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 768px) { .hero-headline { font-size: 2.5rem; } }
+
+        .hero-subtext {
+            font-size: 1.25rem; color: #cbd5e1; max-width: 700px; margin: 0 auto;
+            line-height: 1.6; font-weight: 400;
+        }
+
+        .hero-credits {
+            margin-top: 3rem;
+            font-size: 0.85rem; color: #94a3b8;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 1.5rem;
+            display: inline-block;
+        }
+
+        /* 2. Bento Stats (Portfolio Proof) */
         .bento-section {
             padding: 0 2rem;
-            margin-top: -8rem;
+            margin-top: -6rem; /* Overlap */
             position: relative; z-index: 2;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
-        
         .bento-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            max-width: 1100px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+            max-width: 1100px; margin: 0 auto;
         }
         @media (max-width: 768px) { .bento-row { grid-template-columns: 1fr; } }
 
         .bento-item {
-            background: rgba(15, 23, 42, 0.95);
+            background: #1e293b; /* Match body bg for seamless look */
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            border-radius: 12px; padding: 2rem;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
         }
-        .bento-item:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .metric-value-lg { font-size: 2.5rem; font-weight: 900; color: white; margin: 0.5rem 0; }
+        .trajectory-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 1.5rem 0; overflow: hidden; }
+        .trajectory-fill { height: 100%; width: 0%; transition: width 1.5s ease; }
 
-        .metric-value-lg {
-            font-size: 3rem;
-            font-weight: 900;
-            color: white;
-            line-height: 1;
-            letter-spacing: -0.03em;
-            margin: 1rem 0;
+        /* 3. The Broken GAIN Grid (with Interlude) */
+        .gain-grid-container {
+            max-width: 1000px; margin: 0 auto 4rem auto;
+            display: flex; flex-direction: column; gap: 1.5rem;
         }
+        
+        .gain-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        @media (max-width: 768px) { .gain-row { grid-template-columns: 1fr; } }
 
-        .metric-detail {
-            font-size: 0.9rem;
-            color: #10b981;
-            font-weight: 800;
-            background: rgba(16, 185, 129, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .trajectory-bar {
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            margin: 1.5rem 0;
-            overflow: hidden;
-        }
-        .trajectory-fill {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 1.5s cubic-bezier(0.2, 1, 0.3, 1);
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        /* 3. The Methodology Pipeline (Updated with Interlude) */
-        .method-pipeline {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; /* Added column for Interlude */
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 4rem;
-            overflow-x: auto;
-            padding-bottom: 1rem;
-        }
-        @media (max-width: 1024px) { 
-            .method-pipeline { display: flex; flex-direction: column; gap: 1.5rem; }
-            .method-arrow { transform: rotate(90deg); }
-        }
-
-        .method-node {
+        .gain-card {
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 2rem;
+            transition: all 0.2s ease; position: relative;
+            text-decoration: none; display: block;
+        }
+        .gain-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        
+        .gain-letter { color: var(--primary); font-weight: 900; font-size: 1.2rem; margin-bottom: 0.5rem; display: block; }
+        .gain-title { color: white; font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .gain-desc { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 0; }
+
+        /* The Interlude Bridge */
+        .interlude-bridge {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px dashed var(--primary);
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
-            min-width: 180px;
-            position: relative;
-            transition: all 0.2s ease;
+            margin: 0.5rem 0;
         }
-        .method-node:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
-        
-        .method-node h3 { color: white; font-size: 1rem; margin-bottom: 0.5rem; font-weight: 800; }
-        .method-phase { font-size: 0.65rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
-        .method-desc { font-size: 0.8rem; color: #cbd5e1; line-height: 1.4; margin: 0; }
-        
-        .method-arrow { color: var(--slate); font-size: 1.2rem; opacity: 0.5; text-align: center; }
+        .interlude-title { color: white; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .interlude-text { color: #cbd5e1; font-size: 0.9rem; max-width: 600px; margin: 0 auto; }
 
-        /* Special Style for Interlude Node */
-        .node-interlude {
-            border: 1px dashed rgba(96, 165, 250, 0.5);
-            background: rgba(96, 165, 250, 0.05);
+        /* 4. Velocity Results (Simplified Table) */
+        .velocity-table {
+            width: 100%; border-collapse: collapse; margin-top: 2rem;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden;
         }
-        .node-interlude h3 { color: #60a5fa; }
-
-        /* 4. The Program Table (System Throughput) */
-        .program-table-container {
-            overflow-x: auto;
-            margin: 0 auto 3rem auto;
-            border: 1px solid var(--border-dynamic);
-            border-radius: 12px;
-            background: var(--bg-card);
+        .velocity-table th {
+            text-align: left; padding: 1rem 1.5rem; background: rgba(255,255,255,0.05);
+            color: var(--slate); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
         }
-        .program-table { width: 100%; border-collapse: collapse; min-width: 800px; }
-        .program-table th {
-            text-align: left; padding: 1.25rem;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid var(--border-dynamic);
-            color: var(--slate); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
-        }
-        .program-table td {
-            padding: 1.25rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .velocity-table td {
+            padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.05);
             color: #cbd5e1; font-size: 0.9rem; vertical-align: top;
         }
-        .program-table tr:last-child td { border-bottom: none; }
-        
-        .interlude-row { background: rgba(96, 165, 250, 0.05); border-left: 3px solid #60a5fa; }
-        .interlude-badge {
-            display: inline-block; padding: 0.2rem 0.5rem;
-            background: rgba(96, 165, 250, 0.15); color: #60a5fa;
-            border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
-        }
-        .verb-badge {
-            display: inline-block; padding: 0.2rem 0.5rem;
-            background: rgba(255, 255, 255, 0.05); color: white;
-            border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1);
-        }
+        .velocity-highlight { color: #10b981; font-weight: 700; }
 
-        /* 5. Engineering Outcome Cards (Replacing Prompts) */
-        .outcome-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+        /* 5. Engineering Deep Dive (Outcomes) */
+        .eng-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;
             margin-top: 2rem;
         }
-        .outcome-card {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 2rem;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+        .eng-card {
+            background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem; border-radius: 8px;
         }
-        .outcome-card:hover { border-color: var(--primary); background: rgba(30, 41, 59, 0.6); }
-        
-        .outcome-icon { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
-        .outcome-title { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .outcome-desc { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; }
-        .outcome-result { 
-            border-top: 1px solid rgba(255,255,255,0.1); 
-            padding-top: 0.75rem; 
-            font-size: 0.75rem; 
-            color: #10b981; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em;
-        }
+        .eng-icon { font-size: 1.2rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .eng-head { color: white; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .eng-body { color: #94a3b8; font-size: 0.8rem; line-height: 1.4; }
 
-        /* Failure Analysis (Red Team) */
-        .failure-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        @media (max-width: 900px) { .failure-grid { grid-template-columns: 1fr; } }
+        /* 6. Failure Grid (Centered) */
+        .failure-container { max-width: 900px; margin: 0 auto; }
+        .failure-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; text-align: center; }
+        @media (max-width: 768px) { .failure-grid { grid-template-columns: 1fr; } }
         
-        .failure-card {
-            background: rgba(239, 68, 68, 0.05);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            border-radius: 8px; padding: 1.5rem;
-        }
-        .fail-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; }
-        .fail-text { color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
-        .fail-rule { 
-            border-top: 1px solid rgba(239, 68, 68, 0.2); padding-top: 0.75rem;
-            color: white; font-weight: 700; font-size: 0.8rem; 
-        }
+        .fail-item { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.5rem; border-radius: 8px; }
+        .fail-head { color: #ef4444; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .fail-note { color: #cbd5e1; font-size: 0.85rem; line-height: 1.4; }
 
     </style>
 </head>
-<body class="week4-page">
+<body class="week4-page" style="background-color: #1e293b;">
 
     <div class="page-container content-reveal">
     <nav>
@@ -252,12 +183,9 @@
                 </h1>
                 <p class="hero-subtext">The strategic advantage in enterprise sales isn't content generation. It's intelligence synthesis.</p>
                 
-                <div style="margin-top: 2rem; display: inline-block; border-left: 2px solid var(--primary); padding-left: 1rem; text-align: left;">
-                    <p style="font-size: 0.85rem; color: var(--slate); margin: 0; opacity: 0.9;">
-                        <strong>Built by David Matthews</strong><br>
-                        £790M Career Portfolio • Commercial Director<br>
-                        Enterprise & Services Repositioning
-                    </p>
+                <div class="hero-credits">
+                    Built by David Matthews | £790M career portfolio | Commercial Director — Enterprise & Services<br>
+                    Currently building the system I wish I'd had earlier.
                 </div>
             </div>
         </div>
@@ -266,219 +194,146 @@
     <div class="bento-section">
         <div class="bento-row">
             <div class="bento-item">
-                <span class="metric-label" style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Enterprise Portfolio</span>
+                <span style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Enterprise Portfolio</span>
                 <div class="metric-value-lg">£183M <span style="font-size: 1.5rem; opacity: 0.5; font-weight: 400;">← £35M</span></div>
-                <p style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500; margin: 0.5rem 0 1.5rem 0;">
-                    From transactional to multi-year annuity. 
-                    <br><span style="color: var(--primary);">7 → 11 specialist sellers.</span>
-                </p>
-                
-                <div class="trajectory-bar"><div id="traj-total" class="trajectory-fill"></div></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: white; font-size: 0.8rem; font-weight: 700;">Portfolio CAGR</span>
-                    <span class="metric-detail">51.3%</span>
-                </div>
+                <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Transactional → Multi-year annuity. Margin doubled.</p>
+                <div class="trajectory-bar"><div id="traj-total" class="trajectory-fill" style="background: var(--primary); width: 84%;"></div></div>
+                <span style="color: white; font-size: 0.8rem; font-weight: 700;">Portfolio CAGR: 51.3%</span>
             </div>
             
             <div class="bento-item">
-                <span class="metric-label" style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Services Scale-Up</span>
+                <span style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Services Scale-Up</span>
                 <div class="metric-value-lg">£53M <span style="font-size: 1.5rem; opacity: 0.5; font-weight: 400;">← £18.5M</span></div>
-                <p style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500; margin: 0.5rem 0 1.5rem 0;">
-                    Zero brand equity to profit engine.
-                    <br><span style="color: var(--primary);">Full P&L ownership.</span>
-                </p>
-                
-                <div class="trajectory-bar"><div id="traj-var" class="trajectory-fill" style="background: #10b981; box-shadow: 0 0 15px #10b981;"></div></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="color: white; font-size: 0.8rem; font-weight: 700;">Revenue Growth</span>
-                    <span class="metric-detail">+170%</span>
-                </div>
+                <p style="color: #cbd5e1; font-size: 0.9rem; margin: 0;">Zero brand equity to profit engine. Full P&L ownership.</p>
+                <div class="trajectory-bar"><div id="traj-var" class="trajectory-fill" style="background: #10b981; width: 100%; box-shadow: 0 0 15px #10b981;"></div></div>
+                <span style="color: white; font-size: 0.8rem; font-weight: 700;">Revenue Growth: +170%</span>
             </div>
         </div>
     </div>
 
     <main>
-        
         <section class="reveal">
-            <div class="container" style="max-width: 1200px;">
+            <div class="container">
                 <h2 class="section-heading-standard" style="text-align: center; margin-bottom: 3rem;">The Revenue Engine</h2>
                 
-                <div class="method-pipeline">
-                    <div class="method-node">
-                        <span class="method-phase">WEEK 1</span>
-                        <h3>Intelligence Layer</h3>
-                        <p class="method-desc">Deep research & stakeholder profiling.</p>
-                        <a href="week1.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
+                <div class="gain-grid-container">
+                    
+                    <div class="gain-row">
+                        <a href="week1.html" class="gain-card">
+                            <span class="gain-letter">[G] INTELLIGENCE</span>
+                            <div class="gain-title">Know Them</div>
+                            <p class="gain-desc">20-min Deep Research. Board priorities & budget signals.</p>
+                        </a>
+                        <a href="week2.html" class="gain-card">
+                            <span class="gain-letter">[A] OMNISCIENCE</span>
+                            <div class="gain-title">Map Them</div>
+                            <p class="gain-desc">Authority mapping. Relationship gap analysis.</p>
+                        </a>
                     </div>
 
-                    <div class="method-arrow">→</div>
-
-                    <div class="method-node">
-                        <span class="method-phase">WEEK 2</span>
-                        <h3>Omniscience</h3>
-                        <p class="method-desc">Authority mapping & influence strategy.</p>
-                        <a href="week2.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
+                    <div class="interlude-bridge">
+                        <h3 class="interlude-title">INTERLUDE: THE ENGINEERING LAYER</h3>
+                        <p class="interlude-text">
+                            Generic pricing kills bids. This layer translates technical complexity into commercial safety. 
+                            It is where the deal is actually secured.
+                        </p>
+                        
+                        <div class="eng-grid">
+                            <div class="eng-card">
+                                <div class="eng-icon">🛡️</div>
+                                <div class="eng-head">Commercial Shield</div>
+                                <div class="eng-body">Defensive definitions for In-Scope vs. Out-of-Scope.</div>
+                            </div>
+                            <div class="eng-card">
+                                <div class="eng-icon">⚖️</div>
+                                <div class="eng-head">Lever Engine</div>
+                                <div class="eng-body">Trading cost vs. risk with "Price Sliders".</div>
+                            </div>
+                            <div class="eng-card">
+                                <div class="eng-icon">⑂</div>
+                                <div class="eng-head">Logic Models</div>
+                                <div class="eng-body">Decision trees that categorize complexity (Simple/Toxic).</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="method-arrow" style="color: #60a5fa;">→</div>
-
-                    <div class="method-node node-interlude">
-                        <span class="method-phase" style="color: #60a5fa;">INTERLUDE</span>
-                        <h3>Engineering Layer</h3>
-                        <p class="method-desc">Modelling complexity into commercial safety.</p>
-                        <span style="font-size: 0.7rem; color: #60a5fa; font-weight: 700; display: block; margin-top: 1rem;">↓ SEE BELOW</span>
+                    <div class="gain-row">
+                        <a href="week3.html" class="gain-card">
+                            <span class="gain-letter">[IN] OXYGEN EFFECT</span>
+                            <div class="gain-title">Win Them</div>
+                            <p class="gain-desc">Win themes. Narrative construction. Scored responses.</p>
+                        </a>
+                        <a href="week4.html" class="gain-card">
+                            <span class="gain-letter">VELOCITY @ SCALE</span>
+                            <div class="gain-title">Grow Them</div>
+                            <p class="gain-desc">Continuous signal detection. Account expansion.</p>
+                        </a>
                     </div>
 
-                    <div class="method-arrow" style="color: #60a5fa;">→</div>
-
-                    <div class="method-node">
-                        <span class="method-phase">WEEK 3</span>
-                        <h3>Oxygen Effect</h3>
-                        <p class="method-desc">Win themes & narrative construction.</p>
-                        <a href="week3.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
-                    </div>
-
-                    <div class="method-arrow">→</div>
-
-                    <div class="method-node">
-                        <span class="method-phase">WEEK 4</span>
-                        <h3>Velocity @ Scale</h3>
-                        <p class="method-desc">Account growth & renewal defense.</p>
-                        <a href="week4.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <div class="container" style="max-width: 1100px;">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">VELOCITY AUDIT</div>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto;">
-                    A deterministic system. Inputs are defined. Time is compressed. Outcomes are predictable.
-                </p>
-
-                <div class="program-table-container">
-                    <table class="program-table">
-                        <thead>
-                            <tr>
-                                <th>Module</th>
-                                <th>Action</th>
-                                <th>Legacy Friction (Inputs)</th>
-                                <th>System Output (Deliverable)</th>
-                                <th>Velocity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="font-weight: 700; color: white;">The Intelligence Layer</td>
-                                <td><span class="verb-badge">KNOW THEM</span></td>
-                                <td>Annual Report, Press Releases, LinkedIn</td>
-                                <td>Executive Briefing, Stakeholder Profile</td>
-                                <td>20 Mins</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 700; color: white;">The Omniscience Engine</td>
-                                <td><span class="verb-badge">MAP THEM</span></td>
-                                <td>Stakeholder List, Org Charts</td>
-                                <td>Authority Map, Influence Strategy</td>
-                                <td>1 Hour</td>
-                            </tr>
-                            
-                            <tr class="interlude-row">
-                                <td style="font-weight: 700; color: white;">The Engineering Layer</td>
-                                <td><span class="interlude-badge">MODEL THEM</span></td>
-                                <td>RFP Scope + Tech Requirements</td>
-                                <td>Logic Models, Visual "Placemats", Risk Shield</td>
-                                <td style="color: #60a5fa; font-weight: 700;">Crucial</td>
-                            </tr>
-                            
-                            <tr>
-                                <td style="font-weight: 700; color: white;">The Oxygen Effect</td>
-                                <td><span class="verb-badge">WIN THEM</span></td>
-                                <td>RFP Questions / Proposal Specs</td>
-                                <td>Scored Responses, Win Themes</td>
-                                <td>-50% Time</td>
-                            </tr>
-                            <tr>
-                                <td style="font-weight: 700; color: white;">Velocity @ Scale</td>
-                                <td><span class="verb-badge">GROW THEM</span></td>
-                                <td>Existing Account Data</td>
-                                <td>Account Plan, White Space Analysis</td>
-                                <td>Continuous</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </section>
 
         <section class="reveal" style="padding: 4rem 2rem; background: rgba(30, 41, 59, 0.3);">
-            <div class="container" style="max-width: 1100px;">
-                <h2 class="section-heading-standard" style="text-align: center;">The Engineering Layer</h2>
-                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto;">
-                    Generic pricing kills bids. This layer translates technical complexity into commercial safety. It is where the deal is actually secured.
+            <div class="container" style="max-width: 900px;">
+                <h2 class="section-heading-standard" style="text-align: center;">Resource Optimization</h2>
+                <p class="body-prose" style="text-align: center; margin-bottom: 2rem;">
+                    Doing more with less. Breaking the linear link between headcount and revenue.
                 </p>
 
-                <div class="outcome-grid">
-                    <div class="outcome-card">
-                        <div class="outcome-icon">▢</div>
-                        <div class="outcome-title">Visual Synthesis</div>
-                        <div class="outcome-desc">Synthesising complex transformation into a single visual "placemat" (From/To state). Executives buy clarity, not complexity.</div>
-                        <div class="outcome-result">OUTPUT: THE PLACEMAT</div>
-                    </div>
-
-                    <div class="outcome-card">
-                        <div class="outcome-icon">⑂</div>
-                        <div class="outcome-title">Logic Engine</div>
-                        <div class="outcome-desc">Categorizing technical complexity using a decision tree (Simple/Medium/Toxic). Removing the guesswork from pricing.</div>
-                        <div class="outcome-result">OUTPUT: DECISION MATRIX</div>
-                    </div>
-
-                    <div class="outcome-card">
-                        <div class="outcome-icon">🛡️</div>
-                        <div class="outcome-title">Commercial Shield</div>
-                        <div class="outcome-desc">Identifying "Silent Killer" requirements that have infinite cost depth. Defensive definitions for In-Scope vs. Out-of-Scope.</div>
-                        <div class="outcome-result">OUTPUT: RISK REGISTER</div>
-                    </div>
-
-                    <div class="outcome-card">
-                        <div class="outcome-icon">⚖️</div>
-                        <div class="outcome-title">Lever Engine</div>
-                        <div class="outcome-desc">Moving from fixed price to "price sliders." Identifying variables (Service Window, Location, Speed) to trade cost vs. risk.</div>
-                        <div class="outcome-result">OUTPUT: OPTIONS MENU</div>
-                    </div>
-                </div>
+                <table class="velocity-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Legacy Friction</th>
+                            <th>GAIN Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WEEK 1 & 2 (Research)</td>
+                            <td>Weeks of manual parsing</td>
+                            <td><span class="velocity-highlight">90% Faster</span> Time-to-Insight</td>
+                        </tr>
+                        <tr>
+                            <td>WEEK 3 (Bid Cycle)</td>
+                            <td>High cost of sale</td>
+                            <td><span class="velocity-highlight">40% Less Effort</span> on Drafts</td>
+                        </tr>
+                        <tr>
+                            <td>WEEK 4 (Growth)</td>
+                            <td>Reactive defense</td>
+                            <td><span class="velocity-highlight">30% Higher Velocity</span> on Upsell</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <section class="reveal" style="padding-bottom: 6rem;">
-            <div class="container" style="max-width: 1100px;">
+        <section class="reveal" style="padding-bottom: 6rem; padding-top: 4rem;">
+            <div class="container failure-container">
                 <div class="section-divider">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
                     <div class="divider-line"></div>
                 </div>
+                
+                <p class="body-prose" style="text-align: center; margin-bottom: 2rem;">
+                    Risk is continuous. The system must be maintained.
+                </p>
 
                 <div class="failure-grid">
-                    <div class="failure-card">
-                        <div class="fail-title">The Invisible Stakeholder</div>
-                        <p class="fail-text">Won the submission. Lost at orals. The CEO's EA preferred the competitor who was nicer to staff.</p>
-                        <div class="fail-rule">RULE: Your map is never complete. Ask "Who else?"</div>
+                    <div class="fail-item">
+                        <div class="fail-head">The Invisible Stakeholder</div>
+                        <p class="fail-note">Lost at orals because the CEO's EA wasn't mapped.</p>
                     </div>
-                    <div class="failure-card">
-                        <div class="fail-title">The Stale Map</div>
-                        <p class="fail-text">Mapped in Jan. Submitted in March. The CIO was replaced in Feb. Strategy built on a ghost.</p>
-                        <div class="fail-rule">RULE: Refresh within 2 weeks of deadline.</div>
+                    <div class="fail-item">
+                        <div class="fail-head">The Stale Map</div>
+                        <p class="fail-note">Strategy built on a ghost because the CIO left in Feb.</p>
                     </div>
-                    <div class="failure-card">
-                        <div class="fail-title">Over-Engineering</div>
-                        <p class="fail-text">Spent 6 hours mapping a single-decision-maker purchase. The CEO decided in 30 mins.</p>
-                        <div class="fail-rule">RULE: Match preparation to decision complexity.</div>
+                    <div class="fail-item">
+                        <div class="fail-head">Over-Engineering</div>
+                        <p class="fail-note">Spending 6 hours mapping a 30-minute decision.</p>
                     </div>
                 </div>
                 
@@ -501,19 +356,7 @@
     </div>
 
 <script>
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Trajectory Animation
-    window.onload = () => {
-        setTimeout(() => {
-            const totalBar = document.getElementById('traj-total');
-            const varBar = document.getElementById('traj-var');
-            if(totalBar) totalBar.style.width = '84%';
-            if(varBar) varBar.style.width = '70%';
-        }, 500);
-    };
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
     // Standard Scripts
     const savedTheme = localStorage.getItem('theme');
