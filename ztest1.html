@@ -12,7 +12,30 @@
     <style>
         /* --- CXO AUDIT OVERRIDES --- */
 
-        /* 1. The Impact Dashboard (The "Good Stuff") */
+        /* 1. The "North Star" Intro (New from your slides) */
+        .north-star-block {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(180deg, #0f172a 0%, rgba(30, 41, 59, 0.4) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-top: -2rem; /* Pull up to overlap/connect with hero */
+            position: relative;
+            z-index: 2;
+        }
+        .north-star-headline {
+            font-size: 1.4rem;
+            color: white;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .north-star-highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* 2. Impact Dashboard */
         .impact-dashboard {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -22,83 +45,23 @@
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 12px;
             padding: 1.5rem;
+            margin-top: 4rem; /* Spacing from North Star */
         }
         @media (max-width: 900px) { .impact-dashboard { grid-template-columns: 1fr 1fr; } }
 
-        .impact-metric {
-            text-align: center;
-            border-right: 1px solid rgba(255,255,255,0.1);
-        }
+        .impact-metric { text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
         .impact-metric:last-child { border-right: none; }
-        @media (max-width: 900px) { 
-            .impact-metric:nth-child(2) { border-right: none; } 
-            .impact-metric { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
-            .impact-metric:nth-last-child(-n+2) { border-bottom: none; padding-bottom: 0; padding-top: 1rem; }
-        }
+        .metric-val { display: block; font-size: 1.5rem; font-weight: 900; color: white; margin-bottom: 0.25rem; }
+        .metric-label { font-size: 0.7rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; margin-bottom: 0.2rem; }
+        .metric-context { font-size: 0.65rem; color: #94a3b8; font-style: italic; }
+        .metric-delta { font-size: 0.75rem; color: #10b981; font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 2px 6px; border-radius: 4px; margin-left: 0.5rem; vertical-align: middle; }
 
-        .metric-val { 
-            display: block; 
-            font-size: 1.5rem; 
-            font-weight: 900; 
-            color: white; 
-            margin-bottom: 0.25rem; 
-        }
-        .metric-label { 
-            font-size: 0.7rem; 
-            color: var(--slate); 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-            font-weight: 700;
-        }
-        .metric-delta {
-            font-size: 0.75rem;
-            color: #10b981;
-            font-weight: 700;
-            background: rgba(16, 185, 129, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-left: 0.5rem;
-            vertical-align: middle;
-        }
-
-        /* 2. The Equation Grid */
-        .equation-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        @media (max-width: 900px) { .equation-wrapper { grid-template-columns: 1fr; } }
-
-        .component-card {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        .component-card:hover { transform: translateY(-3px); border-color: var(--primary); }
-        
-        .comp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 1rem;
-        }
-        .comp-symbol { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.05em; color: white; }
-        .comp-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; }
-        
-        /* 3. The Allocation Quadrant (2x2 Matrix) */
+        /* 3. Allocation Quadrant */
         .quadrant-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-top: 2rem;
-            position: relative;
         }
         @media (max-width: 768px) { .quadrant-wrapper { grid-template-columns: 1fr; } }
 
@@ -111,51 +74,83 @@
             flex-direction: column;
             height: 100%;
         }
-        
-        .quad-label {
-            font-size: 0.7rem;
-            font-weight: 800;
-            color: var(--slate);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .quad-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        
-        .quad-resource {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+        .quad-label { font-size: 0.7rem; font-weight: 800; color: var(--slate); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .quad-title { font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+        .quad-resource { margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; font-weight: 600; }
 
-        /* 4. Evolution Matrix (Table Replacement) */
-        .evo-grid { display: grid; gap: 0.75rem; margin-top: 2rem; }
-        .evo-row {
+        /* 4. The Strategy Map (From Slide 3cffc4) */
+        .strategy-map-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 1024px) { .strategy-map-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .strategy-map-grid { grid-template-columns: 1fr; } }
+
+        .strat-card {
             background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.05);
-            padding: 1.25rem;
+            border-top: 3px solid var(--slate);
             border-radius: 6px;
-            align-items: center;
-            font-size: 0.9rem;
+            padding: 1.5rem;
         }
-        .evo-header { background: transparent; border: none; font-size: 0.7rem; font-weight: 800; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em; }
-        .evo-col-old { color: var(--slate); }
-        .evo-col-new { color: white; font-weight: 600; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1rem; }
-        .evo-col-truth { color: #10b981; font-style: italic; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1rem; }
-        @media (max-width: 768px) { 
-            .evo-row { grid-template-columns: 1fr; gap: 0.5rem; } 
-            .evo-header { display: none; }
-            .evo-col-new, .evo-col-truth { border-left: none; padding-left: 0; }
+        .strat-title { color: white; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; min-height: 2.5em; }
+        .strat-section { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .strat-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .strat-label { display: block; font-size: 0.65rem; color: var(--slate); font-weight: 800; text-transform: uppercase; margin-bottom: 0.3rem; }
+        .strat-text { font-size: 0.8rem; color: #cbd5e1; line-height: 1.4; margin: 0; }
+        
+        /* 5. The Transformation Roadmap (From Slide 3d06e6) */
+        .roadmap-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 2rem;
+            border-left: 2px solid rgba(255,255,255,0.1);
+            padding-left: 2rem;
+        }
+        .roadmap-step { position: relative; padding-bottom: 3rem; }
+        .roadmap-step::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #0f172a;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+        }
+        .roadmap-step:last-child { padding-bottom: 0; }
+        
+        .roadmap-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+        .roadmap-phase { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; background: rgba(59,130,246,0.1); padding: 2px 8px; border-radius: 4px; }
+        .roadmap-title { font-size: 1.1rem; font-weight: 700; color: white; margin: 0; }
+        .roadmap-content { font-size: 0.9rem; color: var(--text-body); max-width: 600px; }
+
+        /* 6. The "Red Team" / Losing Strategy (Aligned to Slide 3d1268) */
+        .red-team-box {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        .red-team-title { color: #ef4444; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; margin-bottom: 1rem; }
+        .lose-theme-list { list-style: none; padding: 0; margin: 0; }
+        .lose-theme-item { 
+            position: relative; 
+            padding-left: 1.5rem; 
+            margin-bottom: 0.75rem; 
+            font-size: 0.9rem; 
+            color: #cbd5e1; 
+        }
+        .lose-theme-item::before { 
+            content: '⚠️'; 
+            position: absolute; 
+            left: 0; 
+            font-size: 0.8rem; 
         }
 
         /* Standard Re-use */
@@ -173,7 +168,6 @@
         <div class="nav-links">
             <a href="foundations.html" style="color: var(--primary);">Foundations</a>
             <a href="steer.html">Steer</a>
-            
             <div class="nav-dropdown">
                 <span class="nav-link-main">About ▾</span>
                 <div class="dropdown-content">
@@ -181,7 +175,6 @@
                     <a href="frameworks.html">Frameworks</a>
                 </div>
             </div>
-
             <div class="nav-dropdown">
                 <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
@@ -200,10 +193,10 @@
         <img src="assets/images/foundations-hero.png" class="hero-bg" alt="Foundation Layer">
         <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
             <div class="hero-content reveal" style="text-align: center;">
-                <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">REVENUE ARCHITECTURE</p>
+                <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">THE REVENUE ARCHITECTURE</p>
                 <h1 class="hero-headline" style="line-height: 1.1;">
                     <span style="color: #ffffff; display: block;">AI generates the evidence.</span>
-                    <span style="color: #3b82f6; display: block;">You engineer the win.</span>
+                    <span style="color: #3b82f6; display: block;">You engineer the outcome.</span>
                 </h1>
                 <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
                 <p class="hero-subtext" style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
@@ -213,8 +206,14 @@
         </div>
     </header>
 
-    <main style="margin-top: -4rem; position: relative; z-index: 2;">
+    <main>
         
+        <div class="north-star-block reveal">
+            <h2 class="north-star-headline">
+                "We enable our customers to <span class="north-star-highlight">differentiate to win</span>. We take a 360-degree view of the opportunities and threats to create impact and influence."
+            </h2>
+        </div>
+
         <section class="reveal">
             <div class="container" style="max-width: 1000px;">
                 
@@ -222,166 +221,207 @@
                     <div class="impact-metric">
                         <span class="metric-val">3x</span>
                         <span class="metric-label">PIPELINE VELOCITY</span>
+                        <span class="metric-context">Cash Flow Efficiency</span>
                     </div>
                     <div class="impact-metric">
                         <span class="metric-val">+22% <span class="metric-delta">Avg</span></span>
                         <span class="metric-label">DEAL SIZE (ACV)</span>
+                        <span class="metric-context">Market Penetration</span>
                     </div>
                     <div class="impact-metric">
                         <span class="metric-val">+15%</span>
                         <span class="metric-label">WIN RATIO</span>
+                        <span class="metric-context">Forecast Predictability</span>
                     </div>
                     <div class="impact-metric">
                         <span class="metric-val">-40%</span>
                         <span class="metric-label">COST OF SALE</span>
+                        <span class="metric-context">EBITDA Protection</span>
                     </div>
                 </div>
 
                 <div class="section-divider">
                     <div class="divider-line"></div>
-                    <div class="divider-label">THE COMPETITIVE EQUATION</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="equation-wrapper">
-                    <div class="component-card">
-                        <div class="comp-header">
-                            <span class="comp-symbol">IQ</span>
-                            <span class="comp-tag" style="color: var(--slate);">FRAMEWORKS</span>
-                        </div>
-                        <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                            <strong>SPIN. MEDDIC. Voss. Minto.</strong><br>
-                            These exist in books. Knowing them doesn't make you different — not knowing them makes you irrelevant.
-                        </p>
-                        <p style="font-size: 0.75rem; color: var(--slate); font-style: italic;">Status: Table Stakes</p>
-                    </div>
-
-                    <div class="component-card" style="border-color: rgba(59,130,246,0.3); background: rgba(59,130,246,0.05);">
-                        <div class="comp-header">
-                            <span class="comp-symbol" style="color: #60a5fa;">AI</span>
-                            <span class="comp-tag" style="color: #60a5fa;">VELOCITY</span>
-                        </div>
-                        <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem; color: white;">
-                            <strong>Generative Synthesis.</strong><br>
-                            Surfacing budget signals and connecting findings to stated goals in minutes, not weeks.
-                        </p>
-                        <p style="font-size: 0.75rem; color: #60a5fa; font-style: italic;">Status: The Multiplier</p>
-                    </div>
-
-                    <div class="component-card">
-                        <div class="comp-header">
-                            <span class="comp-symbol" style="color: #10b981;">EQ</span>
-                            <span class="comp-tag" style="color: #10b981;">JUDGMENT</span>
-                        </div>
-                        <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                            <strong>Pattern Recognition.</strong><br>
-                            Knowing that when a CFO says 'cost-to-serve' 17 times, their bonus depends on it.
-                        </p>
-                        <p style="font-size: 0.75rem; color: #10b981; font-style: italic;">Status: The Scarcity</p>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
-                    <p style="font-size: 1.1rem; color: var(--text-body); font-weight: 500;">
-                        IQ + AI + EQ = <span style="color: white; font-weight: 700;">The Unfair Advantage</span>
-                    </p>
-                    <p style="font-size: 0.9rem; color: var(--slate); margin-top: 0.5rem; font-style: italic;">
-                        This site democratizes the first two. The third is the difference between a user and a leader.
-                    </p>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE PROOF OF EVOLUTION</div>
+                    <div class="divider-label">THE STRATEGIC ENGINE</div>
                     <div class="divider-line"></div>
                 </div>
 
                 <div class="reveal">
-                    <p class="body-prose" style="text-align: center; margin-bottom: 2rem; max-width: 700px; margin-left: auto; margin-right: auto;">
-                        The intelligence requirements change. The judgment required to make sense of it doesn't.
+                    <p class="body-prose" style="text-align: center; margin-bottom: 2rem;">
+                        Before we deploy AI, we define the imperatives. This is the logic that AI amplifies.
                     </p>
+                    
+                    <div class="strategy-map-grid">
+                        <div class="strat-card" style="border-top-color: #3b82f6;">
+                            <h3 class="strat-title">Lead with & grow services business</h3>
+                            <div class="strat-section">
+                                <span class="strat-label">OBJECTIVE</span>
+                                <p class="strat-text">Pursue healthy contracts with growth potential; mitigate risk factors.</p>
+                            </div>
+                            <div class="strat-section">
+                                <span class="strat-label">MEASURE</span>
+                                <p class="strat-text">Win ratio, Forward order book, Modelled vs Actual.</p>
+                            </div>
+                        </div>
 
-                    <div class="evo-grid">
-                        <div class="evo-row evo-header">
-                            <div>MANUAL PROCESS</div>
-                            <div style="padding-left: 1rem;">GAIN SYSTEM</div>
-                            <div style="padding-left: 1rem;">THE CONSTANT (JUDGMENT)</div>
+                        <div class="strat-card" style="border-top-color: #10b981;">
+                            <h3 class="strat-title">Improve productivity & competitiveness</h3>
+                            <div class="strat-section">
+                                <span class="strat-label">OBJECTIVE</span>
+                                <p class="strat-text">Leverage global standard capability. Proactive disruption via affordable solutions.</p>
+                            </div>
+                            <div class="strat-section">
+                                <span class="strat-label">MEASURE</span>
+                                <p class="strat-text">Analyst feedback, Pipeline health, Margin expansion.</p>
+                            </div>
                         </div>
-                        
-                        <div class="evo-row">
-                            <div class="evo-col-old">Read annual reports manually</div>
-                            <div class="evo-col-new">9-Pillar Deep Research</div>
-                            <div class="evo-col-truth">Knowing which findings matter</div>
+
+                        <div class="strat-card" style="border-top-color: #f59e0b;">
+                            <h3 class="strat-title">Maximise relationships (Retain)</h3>
+                            <div class="strat-section">
+                                <span class="strat-label">OBJECTIVE</span>
+                                <p class="strat-text">Bring innovation & new energy to existing clients. Focused, aligned sales-led units.</p>
+                            </div>
+                            <div class="strat-section">
+                                <span class="strat-label">MEASURE</span>
+                                <p class="strat-text">Renewal rates, Erosion, Podium elevation.</p>
+                            </div>
                         </div>
-                        <div class="evo-row">
-                            <div class="evo-col-old">Estimated IT spend from chat</div>
-                            <div class="evo-col-new">Budget Signal Detection</div>
-                            <div class="evo-col-truth">Knowing where the money sits</div>
-                        </div>
-                        <div class="evo-row">
-                            <div class="evo-col-old">Built org charts slowly</div>
-                            <div class="evo-col-new">Stakeholder Discovery (1hr)</div>
-                            <div class="evo-col-truth">Knowing who actually decides</div>
-                        </div>
-                        <div class="evo-row">
-                            <div class="evo-col-old">Tracked competitors by ear</div>
-                            <div class="evo-col-new">Competitor Intel Synthesis</div>
-                            <div class="evo-col-truth">Knowing what they'll say</div>
-                        </div>
-                        <div class="evo-row">
-                            <div class="evo-col-old">Updated docs weekly</div>
-                            <div class="evo-col-new">The Full GAIN System</div>
-                            <div class="evo-col-truth">The discipline of doing it</div>
+
+                        <div class="strat-card" style="border-top-color: #ef4444;">
+                            <h3 class="strat-title">Innovate offerings for future</h3>
+                            <div class="strat-section">
+                                <span class="strat-label">OBJECTIVE</span>
+                                <p class="strat-text">New ways of bidding & commercials. Win hearts/minds via differentiation.</p>
+                            </div>
+                            <div class="strat-section">
+                                <span class="strat-label">MEASURE</span>
+                                <p class="strat-text">Contract base growth, NPS / Customer Feedback.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
-                    <div class="divider-label">RESOURCE ALLOCATION STRATEGY</div>
+                    <div class="divider-label">RESOURCE ALLOCATION</div>
                     <div class="divider-line"></div>
                 </div>
 
                 <div class="reveal">
                     <p class="body-prose" style="text-align: center; margin-bottom: 2rem;">
-                        Not every deal needs the full system. Strategic leadership is knowing where to deploy capacity to protect Cost of Sale.
+                        Resource optimization strategy. Deploying capacity where it impacts the P&L.
                     </p>
 
                     <div class="quadrant-wrapper">
+                        <div class="quad-card" style="border-left: 4px solid #93c5fd;">
+                            <span class="quad-label" style="color: #93c5fd;">PROACTIVE • STANDARD</span>
+                            <h3 class="quad-title">Tactical Pursuit</h3>
+                            <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
+                                Repeatable service models. Scalable outreach. Exploitation of "Pod" model.
+                            </p>
+                            <div class="quad-resource" style="color: #93c5fd;">DEPLOY: Weeks 1 + 2</div>
+                        </div>
+
                         <div class="quad-card" style="border-left: 4px solid #3b82f6;">
                             <span class="quad-label" style="color: #3b82f6;">PROACTIVE • COMPLEX</span>
                             <h3 class="quad-title">Strategic Pursuit</h3>
                             <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                                Exploration of new ways of working. Complex collection of offerings. Dedicated pod resources.
+                                Transformation. New ways of working. Complex offerings. Dedicated resources.
                             </p>
                             <div class="quad-resource" style="color: #3b82f6;">DEPLOY: Full Cycle (Weeks 1-4)</div>
-                        </div>
-
-                        <div class="quad-card" style="border-left: 4px solid #93c5fd;">
-                            <span class="quad-label" style="color: #93c5fd;">REACTIVE • COMPLEX</span>
-                            <h3 class="quad-title">Strategic Bid (RFP)</h3>
-                            <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                                Exploitation of established services. Led by lines of service and client teams.
-                            </p>
-                            <div class="quad-resource" style="color: #93c5fd;">DEPLOY: Weeks 1 + 2 + 3</div>
-                        </div>
-
-                        <div class="quad-card" style="border-left: 4px solid #cbd5e1;">
-                            <span class="quad-label" style="color: #94a3b8;">PROACTIVE • STANDARD</span>
-                            <h3 class="quad-title">Tactical Pursuit</h3>
-                            <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                                Repeatable service models. Scalable outreach.
-                            </p>
-                            <div class="quad-resource" style="color: #94a3b8;">DEPLOY: Weeks 1 + 2</div>
                         </div>
 
                         <div class="quad-card" style="border-left: 4px solid #475569;">
                             <span class="quad-label" style="color: #64748b;">REACTIVE • STANDARD</span>
                             <h3 class="quad-title">Tactical Bid</h3>
                             <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
-                                Reactive response. Available resource. Volume play.
+                                "Keep the lights on." Reactive response. Available resource. Led by Line of Service.
                             </p>
                             <div class="quad-resource" style="color: #64748b;">DEPLOY: Week 1 Only (20 mins)</div>
+                        </div>
+
+                        <div class="quad-card" style="border-left: 4px solid #cbd5e1;">
+                            <span class="quad-label" style="color: #94a3b8;">REACTIVE • COMPLEX</span>
+                            <h3 class="quad-title">Strategic Bid (RFP)</h3>
+                            <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1rem;">
+                                Must-win defence. Exploitation of established services. High capacity demand.
+                            </p>
+                            <div class="quad-resource" style="color: #94a3b8;">DEPLOY: Weeks 1 + 2 + 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="red-team-box reveal">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <span class="red-team-title">PRE-MORTEM: START WITH THE END IN MIND</span>
+                        <span style="font-size: 0.7rem; color: #ef4444; border: 1px solid #ef4444; padding: 2px 6px; border-radius: 4px;">RISK ANALYSIS</span>
+                    </div>
+                    <h3 style="color: white; font-size: 1.2rem; margin-top: 0; margin-bottom: 1rem;">"Why will we lose?"</h3>
+                    <p class="body-prose" style="font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        Most teams plan how to win. We start by understanding all of the reasons why we would lose. Then we assume we will win.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <span style="display: block; color: var(--slate); font-size: 0.7rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">LOSE THEMES (EXAMPLE)</span>
+                            <ul class="lose-theme-list">
+                                <li class="lose-theme-item">Perceived lack of US presence vs. Global Incumbent.</li>
+                                <li class="lose-theme-item">Failure to connect our culture to their "One Team" value.</li>
+                                <li class="lose-theme-item">Viewing us as a "Box Shifter" vs. Strategic Partner.</li>
+                            </ul>
+                        </div>
+                        <div style="border-left: 1px solid rgba(255,255,255,0.1); padding-left: 2rem;">
+                            <span style="display: block; color: #10b981; font-size: 0.7rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">THE COUNTER-STRATEGY</span>
+                            <p class="body-prose" style="font-size: 0.9rem; margin: 0;">
+                                We engage a third party to turn these specific fears into a positive Core Narrative. We don't hide the weakness; we reframe it as agility.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider" style="margin-top: 4rem;">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">EXECUTION ROADMAP</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div class="reveal">
+                    <p class="body-prose" style="text-align: center; margin-bottom: 2rem;">
+                        How we move from chaos to system. The phased deployment model.
+                    </p>
+
+                    <div class="roadmap-container">
+                        <div class="roadmap-step">
+                            <div class="roadmap-header">
+                                <span class="roadmap-phase">PHASE 1: PEOPLE</span>
+                                <h3 class="roadmap-title">Restructure & Align</h3>
+                            </div>
+                            <p class="roadmap-content">Restructure sales without impact/loss. Align bonus plans to goals. Benchmark pursuit roles and finalise package amendments.</p>
+                        </div>
+
+                        <div class="roadmap-step">
+                            <div class="roadmap-header">
+                                <span class="roadmap-phase">PHASE 2: RELEVANCE</span>
+                                <h3 class="roadmap-title">Customer Perspective</h3>
+                            </div>
+                            <p class="roadmap-content">Answer "Why Us?" from customer perspective. Collate collateral. Understand sector information & marketing plans. Get all aspects of sales working as one.</p>
+                        </div>
+
+                        <div class="roadmap-step">
+                            <div class="roadmap-header">
+                                <span class="roadmap-phase">PHASE 3: BRILLIANCE</span>
+                                <h3 class="roadmap-title">Process & Governance</h3>
+                            </div>
+                            <p class="roadmap-content">Clarify Strategic Pursuit Strategy. Launch market pricing. Utilize Ready Reckoner. Simplify bid production and governance approval process.</p>
+                        </div>
+
+                        <div class="roadmap-step">
+                            <div class="roadmap-header">
+                                <span class="roadmap-phase" style="background: rgba(16,185,129,0.1); color: #10b981;">PHASE 4: WINNING</span>
+                                <h3 class="roadmap-title" style="color: #10b981;">Market Dominance</h3>
+                            </div>
+                            <p class="roadmap-content">Evidence new bid win rates increasing to >50%. Showcase Bid Pod success. Increased exploitation of upsell opportunity. Top Down approach in use.</p>
                         </div>
                     </div>
                 </div>
