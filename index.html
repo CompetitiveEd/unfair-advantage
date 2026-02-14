@@ -10,109 +10,213 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* 1. HERO IMAGE DIMMING & PLACEMENT */
+        /* --- HOMEPAGE SPECIFIC STYLES --- */
+
+        /* 1. Hero Adjustments */
         .hero-bg {
-            filter: brightness(0.4); /* Matches steer.html style */
+            filter: brightness(0.4);
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
         }
         
         .dark-header-block {
-            position: relative;
-            /* Ensures the image has a defined height to fill */
-            min-height: 60vh; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-bottom: 4rem;
+            min-height: 85vh;
+            display: flex; flex-direction: column; justify-content: center;
+            padding-bottom: 4rem; overflow: hidden; position: relative;
+        }
+
+        /* 2. The Bento Stats Grid */
+        .bento-section {
+            padding: 0 2rem;
+            margin-top: -8rem;
+            position: relative; z-index: 2;
+            margin-bottom: 4rem;
+        }
+        
+        .bento-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) { .bento-row { grid-template-columns: 1fr; } }
+
+        .bento-item {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .bento-item:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        .metric-value-lg {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin: 1rem 0;
+        }
+
+        .metric-detail {
+            font-size: 0.9rem;
+            color: #10b981;
+            font-weight: 800;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .trajectory-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin: 1.5rem 0;
             overflow: hidden;
         }
-
-        /* 2. BENTO ROW PLACEMENT */
-        .bento-section {
-            padding: 0 2rem 4rem 2rem;
-            /* Pulls the boxes up to reduce gap with hero image */
-            margin-top: -6rem; 
-            position: relative;
-            z-index: 2;
+        .trajectory-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.2, 1, 0.3, 1);
+            box-shadow: 0 0 15px var(--primary);
         }
 
-        /* 3. PROGRAM TABLE STYLES (Added for the request) */
+        /* 3. The Methodology Pipeline (Updated with Interlude) */
+        .method-pipeline {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; /* Added column for Interlude */
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 4rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        @media (max-width: 1024px) { 
+            .method-pipeline { display: flex; flex-direction: column; gap: 1.5rem; }
+            .method-arrow { transform: rotate(90deg); }
+        }
+
+        .method-node {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            min-width: 180px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .method-node:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
+        
+        .method-node h3 { color: white; font-size: 1rem; margin-bottom: 0.5rem; font-weight: 800; }
+        .method-phase { font-size: 0.65rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; }
+        .method-desc { font-size: 0.8rem; color: #cbd5e1; line-height: 1.4; margin: 0; }
+        
+        .method-arrow { color: var(--slate); font-size: 1.2rem; opacity: 0.5; text-align: center; }
+
+        /* Special Style for Interlude Node */
+        .node-interlude {
+            border: 1px dashed rgba(96, 165, 250, 0.5);
+            background: rgba(96, 165, 250, 0.05);
+        }
+        .node-interlude h3 { color: #60a5fa; }
+
+        /* 4. The Program Table (System Throughput) */
         .program-table-container {
             overflow-x: auto;
-            margin-top: 3rem;
-            margin-bottom: 3rem;
+            margin: 0 auto 3rem auto;
             border: 1px solid var(--border-dynamic);
-            border-radius: 8px;
+            border-radius: 12px;
             background: var(--bg-card);
         }
-        .program-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 800px; /* Forces scroll on mobile */
-        }
+        .program-table { width: 100%; border-collapse: collapse; min-width: 800px; }
         .program-table th {
-            text-align: left;
-            padding: 1rem;
+            text-align: left; padding: 1.25rem;
             background: rgba(255,255,255,0.03);
             border-bottom: 1px solid var(--border-dynamic);
-            color: var(--slate);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
+            color: var(--slate); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
         }
         .program-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-dynamic);
-            color: var(--text-body);
-            vertical-align: top;
-            line-height: 1.5;
+            padding: 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            color: #cbd5e1; font-size: 0.9rem; vertical-align: top;
         }
-        .program-table tr:last-child td {
-            border-bottom: none;
-        }
-        .interlude-row {
-            background: rgba(96, 165, 250, 0.08); /* Subtle blue tint for Interlude */
+        .program-table tr:last-child td { border-bottom: none; }
+        
+        .interlude-row { background: rgba(96, 165, 250, 0.05); border-left: 3px solid #60a5fa; }
+        .interlude-badge {
+            display: inline-block; padding: 0.2rem 0.5rem;
+            background: rgba(96, 165, 250, 0.15); color: #60a5fa;
+            border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
         }
         .verb-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: rgba(96, 165, 250, 0.15);
-            color: #60a5fa;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
+            display: inline-block; padding: 0.2rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05); color: white;
+            border-radius: 4px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 5. Engineering Outcome Cards (Replacing Prompts) */
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .outcome-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .outcome-card:hover { border-color: var(--primary); background: rgba(30, 41, 59, 0.6); }
+        
+        .outcome-icon { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
+        .outcome-title { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .outcome-desc { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; }
+        .outcome-result { 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            padding-top: 0.75rem; 
+            font-size: 0.75rem; 
+            color: #10b981; 
+            font-weight: 700; 
+            text-transform: uppercase; 
             letter-spacing: 0.05em;
         }
-        .interlude-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-heading);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid var(--border-dynamic);
+
+        /* Failure Analysis (Red Team) */
+        .failure-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+            margin-top: 2rem;
         }
+        @media (max-width: 900px) { .failure-grid { grid-template-columns: 1fr; } }
+        
+        .failure-card {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 8px; padding: 1.5rem;
+        }
+        .fail-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .fail-text { color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem; }
+        .fail-rule { 
+            border-top: 1px solid rgba(239, 68, 68, 0.2); padding-top: 0.75rem;
+            color: white; font-weight: 700; font-size: 0.8rem; 
+        }
+
     </style>
 </head>
-<body>
+<body class="week4-page">
 
     <div class="page-container content-reveal">
     <nav>
         <a href="#" onclick="scrollToTop(); return false;" class="nav-brand">THE UNFAIR ADVANTAGE</a>
         <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
          <div class="nav-links">
             <a href="foundations.html">Foundations</a>
@@ -127,339 +231,321 @@
             <div class="nav-dropdown">
                 <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
-                    <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: KNOW Them - Intelligence Layer</a>
-                    <a href="week2.html" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: MAP Them - Omniscience Engine</a>
-                    <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: WIN Them - Oxygen Effect</a>
-                    <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: GROW Them - Velocity @ Scale</a>
+                    <a href="week1.html">1: KNOW - Intelligence</a>
+                    <a href="week2.html">2: MAP - Omniscience</a>
+                    <a href="week3.html">3: WIN - Oxygen Effect</a>
+                    <a href="week4.html">4: GROW - Velocity</a>
                 </div>
             </div>
-         
-             <a href="visuals.html">Visuals</a>   
+            <a href="visuals.html">Visuals</a>
             <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
         </div>
     </nav>
     
-        <header class="dark-header-block">
-            <img src="assets/images/unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
-            <div class="hero-impact" style="position: relative; z-index: 1;">
-                <div class="hero-content">
-                    <h1 class="hero-headline">
-                        <span style="color: #60a5fa; display: block;">STOP USING AI TO WRITE.</span>
-                        <span style="color: #f1f5f9; display: block;">START USING IT TO SEE.</span>
-                    </h1>
-                    <p class="hero-subtext">The strategic advantage in enterprise sales isn't content generation. It's intelligence synthesis.</p>
-                    
-                    <p style="font-size: 0.85rem; color: var(--slate); margin-top: 1.5rem; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6; opacity: 0.9;">
-                        Built by David Matthews | £790M career portfolio | Commercial Director — Enterprise & Services | Currently building the system I wish I'd had earlier.
+    <header class="dark-header-block">
+        <img src="assets/images/unfair-advantage-hero.png" class="hero-bg" alt="Executive Boardroom">
+        <div class="hero-impact" style="position: relative; z-index: 1;">
+            <div class="hero-content">
+                <h1 class="hero-headline">
+                    <span style="color: #60a5fa; display: block;">STOP USING AI TO WRITE.</span>
+                    <span style="color: #f1f5f9; display: block;">START USING IT TO SEE.</span>
+                </h1>
+                <p class="hero-subtext">The strategic advantage in enterprise sales isn't content generation. It's intelligence synthesis.</p>
+                
+                <div style="margin-top: 2rem; display: inline-block; border-left: 2px solid var(--primary); padding-left: 1rem; text-align: left;">
+                    <p style="font-size: 0.85rem; color: var(--slate); margin: 0; opacity: 0.9;">
+                        <strong>Built by David Matthews</strong><br>
+                        £790M Career Portfolio • Commercial Director<br>
+                        Enterprise & Services Repositioning
                     </p>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <div class="bento-section">
-            <div class="bento-row">
-                <div class="bento-item">
-                    <span class="metric-label">Enterprise Portfolio Repositioning</span>
-                    <div class="metric-value-lg">£183M <span style="color: var(--slate); font-weight: 400;">←</span> <span style="font-size: 1.4rem; opacity: 0.7;">£35M</span> <span style="font-size: 0.8rem; opacity: 0.7;">Per Annum</span></div>
-                    <p style="color: white; font-size: 0.8rem; font-weight: 600; margin: 0.75rem 0 1rem 0; line-height: 1.4;">7→11 specialist sellers | Transactional → Multi-year annuity | Margin doubled across resold and managed services</p>
-                    
-                    <div class="trajectory-bar"><div id="traj-total" class="trajectory-fill"></div></div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 700;">Portfolio CAGR</span>
-                        <span class="metric-detail">51.3%</span>
-                    </div>
+    <div class="bento-section">
+        <div class="bento-row">
+            <div class="bento-item">
+                <span class="metric-label" style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Enterprise Portfolio</span>
+                <div class="metric-value-lg">£183M <span style="font-size: 1.5rem; opacity: 0.5; font-weight: 400;">← £35M</span></div>
+                <p style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500; margin: 0.5rem 0 1.5rem 0;">
+                    From transactional to multi-year annuity. 
+                    <br><span style="color: var(--primary);">7 → 11 specialist sellers.</span>
+                </p>
+                
+                <div class="trajectory-bar"><div id="traj-total" class="trajectory-fill"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: white; font-size: 0.8rem; font-weight: 700;">Portfolio CAGR</span>
+                    <span class="metric-detail">51.3%</span>
+                </div>
             </div>
-                <div class="bento-item">
-                    <span class="metric-label">Professional Services Repositioning</span>
-                    <div class="metric-value-lg">£53M+ <span style="color: var(--slate); font-weight: 400;">←</span> <span style="font-size: 1.4rem; opacity: 0.7;">£18.5M</span> <span style="font-size: 0.8rem; opacity: 0.7;">Per Annum</span></div>
-                    <p style="color: white; font-size: 0.8rem; font-weight: 600; margin: 0.75rem 0 1rem 0; line-height: 1.4;">6→10 direct sellers | Zero brand equity → £50M+ sustained | Margin more than doubled | Full P&L ownership</p>
-                    
-                    <div class="trajectory-bar"><div id="traj-var" class="trajectory-fill" style="background: var(--green); box-shadow: 0 0 15px var(--green);"></div></div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #94a3b8; font-size: 0.8rem; font-weight: 700;">Revenue Growth</span>
-                        <span class="metric-detail">+170%</span>
-                    </div>
+            
+            <div class="bento-item">
+                <span class="metric-label" style="color: #94a3b8; font-weight: 700; text-transform: uppercase; font-size: 0.75rem;">Services Scale-Up</span>
+                <div class="metric-value-lg">£53M <span style="font-size: 1.5rem; opacity: 0.5; font-weight: 400;">← £18.5M</span></div>
+                <p style="color: #cbd5e1; font-size: 0.9rem; font-weight: 500; margin: 0.5rem 0 1.5rem 0;">
+                    Zero brand equity to profit engine.
+                    <br><span style="color: var(--primary);">Full P&L ownership.</span>
+                </p>
+                
+                <div class="trajectory-bar"><div id="traj-var" class="trajectory-fill" style="background: #10b981; box-shadow: 0 0 15px #10b981;"></div></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: white; font-size: 0.8rem; font-weight: 700;">Revenue Growth</span>
+                    <span class="metric-detail">+170%</span>
                 </div>
             </div>
         </div>
+    </div>
 
     <main>
-        <section class="gain-methodology" style="padding-top: 2rem; padding-bottom: 2rem;">
-            <div class="container">
-                <h2 class="section-heading-standard" style="text-align: center; margin-bottom: 0.5rem; font-size: 1.5rem;">The GAIN Methodology</h2>
-                <p class="section-subtitle">3 layers. Full sales cycle. From first research to account expansion.</p>
+        
+        <section class="reveal">
+            <div class="container" style="max-width: 1200px;">
+                <h2 class="section-heading-standard" style="text-align: center; margin-bottom: 3rem;">The Revenue Engine</h2>
                 
-                <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 1.5rem;">
-                    
-                    <div class="gain-row-top" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                        
-                        <a href="week1.html" class="talent-card gain-card card-link">
-                            <h3 class="talent-card-title" style="text-transform: none; color: var(--primary);">[G] Intelligence Layer <span style="float: right; color: var(--slate); opacity: 0.5;">&rarr;</span></h3>
-                            <p style="color: var(--text-heading); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; margin-top: -0.5rem;">Know them</p>
-                            <div class="talent-card-divider" style="margin: 0 0 1.5rem 0; width: 40px;"></div>
-                            <p style="font-size: 1rem; color: var(--text-heading); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4;">
-                                20–80 minutes. Board-level priorities, stakeholder profiles, budget signals.
-                            </p>
-                            <p style="font-size: 0.9rem; color: var(--slate); font-style: italic; line-height: 1.5; margin-bottom: 1.5rem;">
-                                The prompts ask what experienced sellers know to look for.
-                            </p>
-                            <p style="font-size: 0.8rem; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 0.75rem; margin-top: auto;">
-                                9-pillar company research • Budget signal detection • Stakeholder profiling
-                            </p>
-                            <p style="font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dotted var(--border-dynamic);">
-                                Your team walks into every meeting prepared. No exceptions.
-                            </p>
-                        </a>
-
-                       <a href="week2.html" class="talent-card gain-card card-link">
-                            <h3 class="talent-card-title" style="text-transform: none; color: var(--primary);">[A] Omniscience Engine <span style="float: right; color: var(--slate); opacity: 0.5;">&darr;</span></h3>
-                            <p style="color: var(--text-heading); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; margin-top: -0.5rem;">Map them</p>  <div class="talent-card-divider" style="margin: 0 0 1.5rem 0; width: 40px;"></div>
-                            <p style="font-size: 1rem; color: var(--text-body); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                                1–4 hours. Authority mapping, relationship gaps, engagement sequencing.
-                            </p>
-                            <p style="font-size: 0.9rem; color: var(--slate); font-style: italic; line-height: 1.5; margin-bottom: 1.5rem;">
-                                Built on the political navigation that wins complex deals.
-                            </p>
-                            <p style="font-size: 0.8rem; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 0.75rem; margin-top: auto;">
-                                Authority mapping • Relationship gap analysis • Engagement storyboards
-                            </p>
-                            <p style="font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dotted var(--border-dynamic);">
-                                Know the politics before the politics know you.
-                            </p>
-                        </a>
+                <div class="method-pipeline">
+                    <div class="method-node">
+                        <span class="method-phase">WEEK 1</span>
+                        <h3>Intelligence Layer</h3>
+                        <p class="method-desc">Deep research & stakeholder profiling.</p>
+                        <a href="week1.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
                     </div>
 
-                    <div class="talent-card gain-card" style="position: relative; padding: 0;">
-                        
-                        <div style="padding: 1.5rem 1.5rem 0.75rem 1.5rem; text-align: center; border-bottom: 1px solid var(--border-dynamic);">
-                            <h3 class="talent-card-title" style="text-transform: none; color: var(--primary); font-size: 1.1rem; margin-bottom: 0.25rem;">[IN] INFLUENCE</h3>
-                        </div>
+                    <div class="method-arrow">→</div>
 
-                        <div class="gain-influence-cols" style="display: grid; grid-template-columns: 1fr 1fr;">
-                            
-                           <a href="week3.html" class="gain-influence-left card-link" style="padding: 1.5rem; border-right: 1px solid var(--border-dynamic); text-decoration: none;">
-                                <p style="color: var(--primary); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">Oxygen Effect</p>
-                            <p style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em;">Win them</p>
-                                <p style="font-size: 1rem; color: var(--text-body); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                                    Half the time. RFP scoring, win themes, orals prep, visuals.
-                                </p>
-                                <p style="font-size: 0.9rem; color: var(--slate); font-style: italic; line-height: 1.5; margin-bottom: 1.5rem;">
-                                    Engineered by someone who knows how evaluators actually score.
-                                </p>
-                                <p style="font-size: 0.8rem; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 0.75rem;">
-                                    Tier-by-tier scoring strategy • Pre-submission self-scoring • Response section writing
-                                </p>
-                                <p style="font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dotted var(--border-dynamic);">
-                                    Higher scores. Less time. Fewer rewrites.
-                                </p>
-                            </a>
-
-                            <a href="week4.html" class="card-link" style="padding: 1.5rem; text-decoration: none;">
-                                <p style="color: var(--primary); font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem;">Velocity @ Scale</p>
-                                    <p style="color: var(--slate); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em;">Grow them</p>
-                                <p style="font-size: 1rem; color: var(--text-body); font-weight: 600; margin-bottom: 0.75rem; line-height: 1.4;">
-                                    Continuous. Signal detection, account planning, qualify in/out.
-                                </p>
-                                <p style="font-size: 0.9rem; color: var(--slate); font-style: italic; line-height: 1.5; margin-bottom: 1.5rem;">
-                                    Pattern recognition across hundreds of deal cycles, now systematised.
-                                </p>
-                                <p style="font-size: 0.8rem; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 0.75rem;">
-                                    Signal detection & white space analysis • 90-day campaign assembly • Contract renewal & competitive defence
-                                </p>
-                                <p style="font-size: 0.85rem; color: var(--primary); font-weight: 600; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dotted var(--border-dynamic);">
-                                    Renewals secured. Expansion found. Competitors detected early.
-                                </p>
-                            </a>
-                        </div>
+                    <div class="method-node">
+                        <span class="method-phase">WEEK 2</span>
+                        <h3>Omniscience</h3>
+                        <p class="method-desc">Authority mapping & influence strategy.</p>
+                        <a href="week2.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
                     </div>
 
+                    <div class="method-arrow" style="color: #60a5fa;">→</div>
+
+                    <div class="method-node node-interlude">
+                        <span class="method-phase" style="color: #60a5fa;">INTERLUDE</span>
+                        <h3>Engineering Layer</h3>
+                        <p class="method-desc">Modelling complexity into commercial safety.</p>
+                        <span style="font-size: 0.7rem; color: #60a5fa; font-weight: 700; display: block; margin-top: 1rem;">↓ SEE BELOW</span>
+                    </div>
+
+                    <div class="method-arrow" style="color: #60a5fa;">→</div>
+
+                    <div class="method-node">
+                        <span class="method-phase">WEEK 3</span>
+                        <h3>Oxygen Effect</h3>
+                        <p class="method-desc">Win themes & narrative construction.</p>
+                        <a href="week3.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
+                    </div>
+
+                    <div class="method-arrow">→</div>
+
+                    <div class="method-node">
+                        <span class="method-phase">WEEK 4</span>
+                        <h3>Velocity @ Scale</h3>
+                        <p class="method-desc">Account growth & renewal defense.</p>
+                        <a href="week4.html" style="font-size: 0.7rem; color: var(--primary); font-weight: 700; display: block; margin-top: 1rem;">VIEW MODULE →</a>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="container" style="max-width: 1100px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">VELOCITY AUDIT</div>
+                    <div class="divider-line"></div>
+                </div>
+                
+                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto;">
+                    A deterministic system. Inputs are defined. Time is compressed. Outcomes are predictable.
+                </p>
 
                 <div class="program-table-container">
                     <table class="program-table">
                         <thead>
                             <tr>
-                                <th>Week</th>
-                                <th>Name</th>
-                                <th>Verb</th>
-                                <th>What You Have</th>
-                                <th>What You Build</th>
-                                <th>Time</th>
+                                <th>Module</th>
+                                <th>Action</th>
+                                <th>Legacy Friction (Inputs)</th>
+                                <th>System Output (Deliverable)</th>
+                                <th>Velocity</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="color: var(--slate); font-weight: 600;">Week 1</td>
-                                <td style="font-weight: 700; color: var(--text-heading);">The Intelligence Layer</td>
+                                <td style="font-weight: 700; color: white;">The Intelligence Layer</td>
                                 <td><span class="verb-badge">KNOW THEM</span></td>
                                 <td>Annual Report, Press Releases, LinkedIn</td>
-                                <td>Executive Briefing, Stakeholder Profile, Battle Card</td>
-                                <td>20–80 Mins</td>
+                                <td>Executive Briefing, Stakeholder Profile</td>
+                                <td>20 Mins</td>
                             </tr>
                             <tr>
-                                <td style="color: var(--slate); font-weight: 600;">Week 2</td>
-                                <td style="font-weight: 700; color: var(--text-heading);">The Omniscience Engine</td>
+                                <td style="font-weight: 700; color: white;">The Omniscience Engine</td>
                                 <td><span class="verb-badge">MAP THEM</span></td>
-                                <td>Stakeholder List, Org Structure</td>
-                                <td>Authority Map, Influence Strategy, Gap Analysis</td>
-                                <td>1–4 Hours</td>
+                                <td>Stakeholder List, Org Charts</td>
+                                <td>Authority Map, Influence Strategy</td>
+                                <td>1 Hour</td>
                             </tr>
                             
                             <tr class="interlude-row">
-                                <td><span class="interlude-badge">Interlude</span></td>
-                                <td style="font-weight: 700; color: var(--text-heading);">The Engineer Layer</td>
-                                <td><span class="verb-badge">MODEL THEM</span></td>
-                                <td>Stakeholder Map + RFP Requirements</td>
-                                <td>Logic Models, Commercial Shields, Visual "Placemats"</td>
-                                <td>1-2 Hours</td>
+                                <td style="font-weight: 700; color: white;">The Engineering Layer</td>
+                                <td><span class="interlude-badge">MODEL THEM</span></td>
+                                <td>RFP Scope + Tech Requirements</td>
+                                <td>Logic Models, Visual "Placemats", Risk Shield</td>
+                                <td style="color: #60a5fa; font-weight: 700;">Crucial</td>
                             </tr>
                             
                             <tr>
-                                <td style="color: var(--slate); font-weight: 600;">Week 3</td>
-                                <td style="font-weight: 700; color: var(--text-heading);">The Oxygen Effect</td>
+                                <td style="font-weight: 700; color: white;">The Oxygen Effect</td>
                                 <td><span class="verb-badge">WIN THEM</span></td>
-                                <td>RFP / Proposal Requirements</td>
-                                <td>Scored Responses, Win Themes, Orals Decks</td>
-                                <td>Half Standard Time</td>
+                                <td>RFP Questions / Proposal Specs</td>
+                                <td>Scored Responses, Win Themes</td>
+                                <td>-50% Time</td>
                             </tr>
                             <tr>
-                                <td style="color: var(--slate); font-weight: 600;">Week 4</td>
-                                <td style="font-weight: 700; color: var(--text-heading);">Velocity @ Scale</td>
+                                <td style="font-weight: 700; color: white;">Velocity @ Scale</td>
                                 <td><span class="verb-badge">GROW THEM</span></td>
-                                <td>Existing Account List</td>
-                                <td>Account Plan, White Space Analysis, Defensive Strategy</td>
+                                <td>Existing Account Data</td>
+                                <td>Account Plan, White Space Analysis</td>
                                 <td>Continuous</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </section>
 
-        <section style="padding: 2.5rem 2rem; text-align: center; background: var(--bg-card); border-top: 1px solid var(--border-dynamic); border-bottom: 1px solid var(--border-dynamic);">
-            <div class="container">
-                <p style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate); margin-bottom: 1.5rem; font-weight: 700;">The principle underneath:</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <p style="font-size: 1.1rem; color: var(--text-heading); font-weight: 700;">Intelligence synthesis > content generation</p>
-                    <p style="font-size: 1.1rem; color: var(--text-heading); font-weight: 700;">Systems architecture > prompt engineering</p>
-                    <p style="font-size: 1.1rem; color: var(--text-heading); font-weight: 700;">Capital efficiency > growth at any cost</p>
+        <section class="reveal" style="padding: 4rem 2rem; background: rgba(30, 41, 59, 0.3);">
+            <div class="container" style="max-width: 1100px;">
+                <h2 class="section-heading-standard" style="text-align: center;">The Engineering Layer</h2>
+                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 3rem auto;">
+                    Generic pricing kills bids. This layer translates technical complexity into commercial safety. It is where the deal is actually secured.
+                </p>
+
+                <div class="outcome-grid">
+                    <div class="outcome-card">
+                        <div class="outcome-icon">▢</div>
+                        <div class="outcome-title">Visual Synthesis</div>
+                        <div class="outcome-desc">Synthesising complex transformation into a single visual "placemat" (From/To state). Executives buy clarity, not complexity.</div>
+                        <div class="outcome-result">OUTPUT: THE PLACEMAT</div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">⑂</div>
+                        <div class="outcome-title">Logic Engine</div>
+                        <div class="outcome-desc">Categorizing technical complexity using a decision tree (Simple/Medium/Toxic). Removing the guesswork from pricing.</div>
+                        <div class="outcome-result">OUTPUT: DECISION MATRIX</div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">🛡️</div>
+                        <div class="outcome-title">Commercial Shield</div>
+                        <div class="outcome-desc">Identifying "Silent Killer" requirements that have infinite cost depth. Defensive definitions for In-Scope vs. Out-of-Scope.</div>
+                        <div class="outcome-result">OUTPUT: RISK REGISTER</div>
+                    </div>
+
+                    <div class="outcome-card">
+                        <div class="outcome-icon">⚖️</div>
+                        <div class="outcome-title">Lever Engine</div>
+                        <div class="outcome-desc">Moving from fixed price to "price sliders." Identifying variables (Service Window, Location, Speed) to trade cost vs. risk.</div>
+                        <div class="outcome-result">OUTPUT: OPTIONS MENU</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section style="padding: 1rem 2rem 0.5rem 2rem; text-align: center;">
-            <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 1.5rem;">Week 1 is live. The prompts are real. Start here.</p>
-            <a href="week1.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">ACCESS WEEK 1: INTELLIGENCE LAYER</a>
+        <section class="reveal" style="padding-bottom: 6rem;">
+            <div class="container" style="max-width: 1100px;">
+                <div class="section-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-label">WHERE THIS BREAKS</div>
+                    <div class="divider-line"></div>
+                </div>
+
+                <div class="failure-grid">
+                    <div class="failure-card">
+                        <div class="fail-title">The Invisible Stakeholder</div>
+                        <p class="fail-text">Won the submission. Lost at orals. The CEO's EA preferred the competitor who was nicer to staff.</p>
+                        <div class="fail-rule">RULE: Your map is never complete. Ask "Who else?"</div>
+                    </div>
+                    <div class="failure-card">
+                        <div class="fail-title">The Stale Map</div>
+                        <p class="fail-text">Mapped in Jan. Submitted in March. The CIO was replaced in Feb. Strategy built on a ghost.</p>
+                        <div class="fail-rule">RULE: Refresh within 2 weeks of deadline.</div>
+                    </div>
+                    <div class="failure-card">
+                        <div class="fail-title">Over-Engineering</div>
+                        <p class="fail-text">Spent 6 hours mapping a single-decision-maker purchase. The CEO decided in 30 mins.</p>
+                        <div class="fail-rule">RULE: Match preparation to decision complexity.</div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 4rem;">
+                    <a href="foundations.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem;">VIEW THE FOUNDATIONS</a>
+                </div>
+            </div>
         </section>
+
     </main>
 
     <footer>
-       <div style="padding: 0.5rem 2rem 2rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;">
+        <div style="padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
             <p style="font-weight: 900; letter-spacing: 0.4em; color: var(--text-heading); margin: 0;">DAVID MATTHEWS</p>
-            
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.3s;">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px;">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: var(--slate); text-decoration: none; font-size: 0.9rem; font-weight: 600;">
                 Connect on LinkedIn
-            </a>
-
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">
-                AI Is Not Your Cheerleader — Weekly deep dives into real AI workflows for enterprise sales
             </a>
         </div>
     </footer>
     </div>
 
 <script>
-    // Smooth scroll to top with elegant fade animation
     function scrollToTop() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        setTimeout(() => {
-            const totalBar = document.getElementById('traj-total');
-            const varBar = document.getElementById('traj-var');
-            if(totalBar) {
-                totalBar.style.width = '0%';
-                setTimeout(() => totalBar.style.width = '84%', 50);
-            }
-            if(varBar) {
-                varBar.style.width = '0%';
-                setTimeout(() => varBar.style.width = '70%', 50);
-            }
-        }, 600);
     }
 
-    // Theme management
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-
-    // Trigger trajectory bars on load
+    // Trajectory Animation
     window.onload = () => {
         setTimeout(() => {
             const totalBar = document.getElementById('traj-total');
             const varBar = document.getElementById('traj-var');
             if(totalBar) totalBar.style.width = '84%';
             if(varBar) varBar.style.width = '70%';
-        }, 300);
+        }, 500);
     };
 
-    // Theme toggle
+    // Standard Scripts
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
     document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', targetTheme);
-                localStorage.setItem('theme', targetTheme);
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const root = document.documentElement;
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
             });
         }
         
-        // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-        
         if (mobileMenuToggle && navLinks) {
             mobileMenuToggle.addEventListener('click', () => {
                 mobileMenuToggle.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
-            
-            document.addEventListener('click', (e) => {
-                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                    mobileMenuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
         }
         
-        // Mobile dropdown toggle
-        const navDropdowns = document.querySelectorAll('.nav-dropdown');
-        if (navDropdowns) {
-            navDropdowns.forEach(dropdown => {
-                const dropdownMain = dropdown.querySelector('.nav-link-main');
-                if(dropdownMain){
-                    dropdownMain.addEventListener('click', (e) => {
-                        if (window.innerWidth <= 768) {
-                            e.stopPropagation();
-                            dropdown.classList.toggle('mobile-open');
-                        }
-                    });
-                }
-            });
-        }
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     });
-
-    // Reveal animations
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
