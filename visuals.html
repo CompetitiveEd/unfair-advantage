@@ -3,137 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GAIN Visual Toolkit: 14 interactive tools to visualise sales intelligence, from stakeholder maps to account dashboards.">
+    <meta name="description" content="GAIN Visual Toolkit: 14 interactive tools to visualise sales intelligence.">
     <title>Visuals | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    
-</head>
-<body>
+    <style>
+        /* Week 4 Design System Overrides */
+        :root {
+            --primary: #3b82f6;
+            --slate: #94a3b8;
+            --bg-card: #1e293b;
+            --border-dynamic: rgba(255,255,255,0.1);
+            --text-body: #cbd5e1;
+            --text-heading: #ffffff;
+        }
+        
+        body { background-color: #0f172a; color: var(--text-body); font-family: 'Inter', sans-serif; }
+        
+        /* Header / Step Styling */
+        .step-header-block { display: flex; align-items: flex-start; gap: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem; }
+        .large-step-number { font-size: 3.5rem; font-weight: 900; line-height: 0.8; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
+        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; padding-top: 0.5rem; }
+        .step-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; }
+        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; }
+        .step-counter { display: block; font-size: 0.65rem; font-weight: 800; color: var(--slate); letter-spacing: 0.1em; margin-bottom: 0.2rem; width: 100%; }
 
-    <div class="page-container content-reveal">
-<nav>
-    <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
-    <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <div class="nav-links">
-        <a href="foundations.html">Foundations</a>
-        <a href="steer.html">Steer, Don't Drift</a>
-        <div class="nav-dropdown">
-            <span class="nav-link-main">GAIN Series ▾</span>
-            <div class="dropdown-content">
-                <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: KNOW Them - Intelligence Layer</a>
-                <a href="week2.html" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: MAP Them - Omniscience Engine</a>
-                <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: WIN Them - Oxygen Effect</a>
-                <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: GROW Them - Velocity @ Scale</a>
-            </div>
-        </div>
-        <a href="visuals.html" style="color: var(--primary);">Visuals</a>
-        <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
-    </div>
-</nav>
-    
-    <header class="dark-header-block">
-            <img src="assets/images/visuals-hero.png" class="hero-bg" alt="Executive Boardroom">
-        <div class="hero-impact">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <div class="pill-uk" style="display: inline-block; margin-bottom: 1.5rem; border-color: var(--primary); color: var(--primary);">GAIN VISUAL TOOLKIT</div>
-                <h1 class="hero-headline">
-                    <span style="color: white; display: block;">The same intelligence. Now you can see it.</span>
-                    <span style="color: #94a3b8; display: block;">Interactive tools built from the methodology outputs.</span>
-                </h1>
-                <p class="hero-subtext">Every visual on this page is generated from GAIN prompt outputs. These are what your intelligence looks like when it's structured, mapped, and ready to use.</p>
+        /* Visual Panel Containers - The "Frame" for your diagrams */
+        .visual-panel {
+            background: #1e293b; /* Dark Card Background */
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden; /* Contains the scrollable areas */
+        }
+
+        /* Context Bar for descriptions */
+        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0; }
+
+        /* Text Adjustments for Dark Mode */
+        .lead-prose { font-size: 1.1rem; line-height: 1.6; color: var(--text-body); }
+        .quote-block { border-left: 3px solid var(--primary); padding-left: 1.5rem; font-style: italic; color: var(--slate); margin: 2rem 0; }
+
+        /* Diagram Specific Overrides for Dark Mode Visibility */
+        .matrix-quadrant-label { color: var(--slate); font-weight: 600; font-size: 0.7rem; padding: 5px; }
+        .org-node { background: #0f172a; color: white; border: 2px solid; } /* Dark node background */
+        .gantt-header { color: var(--slate); border-bottom: 1px solid var(--border-dynamic); }
+        .gantt-row-label { color: white; }
+        .heatmap-cell { border-color: var(--border-dynamic); color: white; }
+        .heatmap-header { color: var(--slate); background: rgba(255,255,255,0.05); }
+        .ws-cell { border-color: var(--border-dynamic); color: #0f172a; font-weight: 700; } /* Keep text dark inside coloured cells if needed, or white */
+        .ws-white { background: rgba(255,255,255,0.05); color: var(--slate); font-weight: 400; } /* "OPEN" cells */
+        .bar-label { color: white; }
+        
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="visuals-page">
+
+    <div id="scroll-progress"></div>
+
+    <div class="page-container">
+        <nav>
+            <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links">
+                <a href="foundations.html">Foundations</a>
+                <a href="steer.html">Steer</a>
                 
-                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center;">
-                    <span class="pill-uk">14 INTERACTIVE TOOLS — FROM STAKEHOLDER MAPS TO ACCOUNT DASHBOARDS</span>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">About ▾</span>
+                    <div class="dropdown-content">
+                        <a href="origins.html">Origins</a>
+                        <a href="frameworks.html">Frameworks</a>
+                    </div>
+                </div>
+
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">GAIN Series ▾</span>
+                    <div class="dropdown-content">
+                        <a href="week1.html">1: KNOW - Intelligence</a>
+                        <a href="week2.html">2: MAP - Omniscience</a>
+                        <a href="week3.html">3: WIN - Oxygen Effect</a>
+                        <a href="week4.html">4: GROW - Velocity</a>
+                    </div>
+                </div>
+                <a href="visuals.html" style="color: var(--primary);">Visuals</a>
+                <button id="theme-toggle" class="theme-toggle">🌓 MODE</button>
+            </div>
+        </nav>
+    
+        <header class="dark-header-block">
+            <img src="assets/images/visuals-hero.png" class="hero-bg" alt="Visual Toolkit" style="opacity: 0.6;">
+            <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
+                <div class="hero-content reveal" style="text-align: center;">
+                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">GAIN VISUAL TOOLKIT</p>
+                    <h1 class="hero-headline" style="line-height: 1.1; font-size: 3.5rem; font-weight: 900; margin-bottom: 1.5rem;">
+                        <span style="color: #ffffff; display: block;">The same intelligence.</span>
+                        <span style="color: #3b82f6; display: block;">Now you can see it.</span>
+                    </h1>
+                    <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+                    <p class="hero-subtext" style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto;">
+                        Every visual on this page is generated from GAIN prompt outputs. These are what your intelligence looks like when it's structured, mapped, and ready to use.
+                    </p>
+                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
+                        14 INTERACTIVE TOOLS — FROM STAKEHOLDER MAPS TO ACCOUNT DASHBOARDS
+                    </p>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main>
+    <main style="margin-top: -4rem; position: relative; z-index: 2;">
         
         <section class="reveal">
-            <div class="container" style="max-width: 900px;">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE ORIGIN</div>
-                    <div class="divider-line"></div>
+            <div class="container" style="max-width: 800px;">
+                
+                <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); padding: 2rem;">
+                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Origin</h2>
+                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
+                        <p class="body-prose" style="margin: 0;">In 2005, these visualisations were Visio diagrams, hand-drawn 2x2 charts, and colour-coded org charts maintained in Word documents. They took weeks to build. <br><br>These are the same tools, modernised. Each one is generated from GAIN prompt outputs using the Meridian Financial Services fictional data set. They show what your intelligence LOOKS like when it's structured.</p>
+                    </div>
                 </div>
 
-                <p class="lead-prose">In 2005, these visualisations were Visio diagrams, hand-drawn 2x2 charts, and colour-coded org charts maintained in Word documents. They took weeks to build and constant effort to keep current. The intelligence they contained won deals worth millions.</p>
+                <div class="quote-block reveal">
+                    <p>Every visual connects to a specific GAIN prompt. Run the prompt. Get the output. The visual shows you what to do with it.</p>
+                </div>
 
-                <p style="margin-bottom: 1.5rem;">These are the same tools, modernised. Each one is generated from GAIN prompt outputs using the Meridian Financial Services fictional data set. They show what your intelligence LOOKS like when it's properly structured — not sitting in a text document, but mapped, colour-coded, and ready to brief from.</p>
-                
-                <p class="quote-block">Every visual connects to a specific GAIN prompt. Run the prompt. Get the output. The visual shows you what to do with it.</p>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <div class="container" style="max-width: 1000px;">
-                <div class="visual-container" style="padding: 1rem 1.5rem; margin-bottom: 3rem;">
+                <div class="visual-panel reveal" style="padding: 1rem 1.5rem; margin-top: 3rem; background: rgba(255,255,255,0.02);">
                     <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="this.parentElement.querySelector('.legend-body').classList.toggle('active')">
-                        <h3 class="visual-title" style="margin: 0;">🔑 Colour Key — Used Across All Visuals</h3>
+                        <h3 class="visual-title" style="margin: 0; font-size: 0.9rem; color: var(--primary);">🔑 Global Colour Key</h3>
                         <span style="color: var(--slate);">▾</span>
                     </div>
-                    <div class="legend-body" style="margin-top: 1rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="legend-body" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                         <div>
-                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Relationship Status</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #3b82f6; margin-right: 8px;"></span> Blue — Unknown (not yet contacted)</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #f59e0b; margin-right: 8px;"></span> Amber — Targeted (identified, not yet engaged)</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981; margin-right: 8px;"></span> Green — Established (active relationship)</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #10b981; border: 2px solid white; box-shadow: 0 0 0 1px #10b981; margin-right: 8px;"></span> Green + White Border — Champion</p>
+                            <p style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Relationship Status</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3b82f6; margin-right: 8px;"></span> Blue — Unknown</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; margin-right: 8px;"></span> Amber — Targeted</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin-right: 8px;"></span> Green — Established</p>
                         </div>
                         <div>
-                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Commercial / Scope</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #3b82f6; margin-right: 8px;"></span> Blue — Fixed / Existing / TUPE</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #f59e0b; margin-right: 8px;"></span> Amber — At-risk / Deferred</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #10b981; margin-right: 8px;"></span> Green — New scope / Upside</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #94a3b8; margin-right: 8px;"></span> Grey — In-house / Not applicable</p>
-                        </div>
-                        <div>
-                            <p style="font-weight: 700; margin-bottom: 0.5rem;">Scoring / Performance</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #10b981; margin-right: 8px;"></span> Green — Strong (4-5 / On target)</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #f59e0b; margin-right: 8px;"></span> Amber — Moderate (3 / At risk)</p>
-                            <p><span style="display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: #ef4444; margin-right: 8px;"></span> Red — Weak (1-2 / Below target)</p>
+                            <p style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Scoring / Risk</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #10b981; margin-right: 8px;"></span> Green — Strong / Safe</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #f59e0b; margin-right: 8px;"></span> Amber — Moderate / Risk</p>
+                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #ef4444; margin-right: 8px;"></span> Red — Weak / Danger</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="reveal">
-            <div class="container" style="max-width: 1000px;">
                 <div class="section-divider">
                     <div class="divider-line"></div>
                     <div class="divider-label">STAKEHOLDER INTELLIGENCE</div>
                     <div class="divider-line"></div>
                 </div>
-                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 0.5rem;">Map the People. Map the Power.</h2>
-                <p class="section-subtitle" style="text-align: left; margin-bottom: 2rem;">These visuals are the outputs of Week 2: Omniscience Engine. They turn stakeholder research into political intelligence you can brief from at a glance.</p>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">01. Authority & Influence 2x2</h3>
-                        <p class="visual-meta">Generated from W2-05: Multi-Stakeholder Authority Map</p>
+                <div class="step-header-block reveal">
+                    <div class="large-step-number">01</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 1 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Authority & Influence 2x2</h3>
+                            <div class="pill-blue">OUTPUT OF W2-05</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The Authority & Influence 2x2 is the single most important visual in the methodology. It originated in 2005 as a hand-drawn chart with coloured stickers — one colour for awareness status (have you met them?), another for relationship quality (do they support you?). The original used four quadrants: Authority + Influence, Authority but No Influence, No Authority but Influence, No Authority and No Influence. Every person in the account was plotted. At a glance, you could see who matters, who likes you, and who you haven't reached yet.</p>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">This is the interactive version. Each stakeholder is plotted by their formal authority (vertical axis) and informal influence (horizontal axis). The colour coding shows relationship status — from unknown (blue) through targeted (amber) to established (green) and champion (white border). Hover over any stakeholder to see their profile summary, buyer role, and engagement priority.</p>
-                    
-                    <div class="matrix-container">
+                </div>
+
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">The single most important visual. Plotted by formal authority (vertical) and informal influence (horizontal). Colour shows relationship status.</p>
+                </div>
+
+                <div class="visual-panel reveal">
+                    <div class="matrix-container" style="height: 400px;">
                         <div class="matrix-quadrant-label" style="top: 0; right: 0;">High Auth / High Inf</div>
                         <div class="matrix-quadrant-label" style="top: 0; left: 0;">High Auth / Low Inf</div>
                         <div class="matrix-quadrant-label" style="bottom: 0; right: 0;">Low Auth / High Inf</div>
                         <div class="matrix-quadrant-label" style="bottom: 0; left: 0;">Low Auth / Low Inf</div>
                         
-                        <div style="position: absolute; left: -30px; top: 50%; transform: rotate(-90deg); font-size: 0.7rem; font-weight: 700; color: var(--slate);">AUTHORITY</div>
-                        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: var(--slate);">INFLUENCE</div>
+                        <div style="position: absolute; left: -30px; top: 50%; transform: rotate(-90deg); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">AUTHORITY</div>
+                        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">INFLUENCE</div>
 
                         <div class="stakeholder-dot dot-blue" style="bottom: 90%; left: 90%;" title="James Whitfield (CEO) - Unknown"></div>
                         <div class="stakeholder-dot dot-green" style="bottom: 85%; left: 80%;" title="Richard Hale (CIO) - Established"></div>
@@ -146,55 +199,72 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">02. Relationship-Aware Org Chart</h3>
-                        <p class="visual-meta">Generated from W2-02 & W2-04</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">02</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 2 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Relationship-Aware Org Chart</h3>
+                            <div class="pill-blue">OUTPUT OF W2-02</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The 2005 org chart was a Visio diagram showing every person in the IT function — named, with team sizes, supplier relationships annotated in the margins, and project involvement colour-coded. It was the map of the territory. This version adds two dimensions the original couldn't show dynamically: relationship status (have you engaged this person?) and support level (are they for you, against you, or neutral?).</p>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Head colour shows awareness: blue (unknown), amber (targeted), green (engaged). This is the original 2005 colour system, now interactive.</p>
+                </div>
 
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Not just reporting lines. This chart adds two dimensions: Awareness (Relationship Status colour) and Role.</p>
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="org-tree">
                         <div class="org-level">
                             <div class="org-node" style="border-color: #3b82f6;">
-                                <div class="node-status" style="background: #3b82f6;"></div><strong>J. Whitfield</strong><br><span style="font-size:0.7rem;">CEO</span>
+                                <div class="node-status" style="background: #3b82f6;"></div><strong>J. Whitfield</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CEO</span>
                             </div>
                         </div>
                         <div class="org-level">
                             <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>M. Thompson</strong><br><span style="font-size:0.7rem;">CFO</span>
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>M. Thompson</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CFO</span>
                             </div>
                             <div class="org-node" style="border-color: #10b981;">
-                                <div class="node-status" style="background: #10b981;"></div><strong>R. Hale</strong><br><span style="font-size:0.7rem;">CIO</span>
+                                <div class="node-status" style="background: #10b981;"></div><strong>R. Hale</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CIO</span>
                             </div>
                             <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>D. Osei</strong><br><span style="font-size:0.7rem;">CRO</span>
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>D. Osei</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CRO</span>
                             </div>
                             <div class="org-node" style="border-color: #3b82f6;">
-                                <div class="node-status" style="background: #3b82f6;"></div><strong>D. Harrison</strong><br><span style="font-size:0.7rem;">COO</span>
+                                <div class="node-status" style="background: #3b82f6;"></div><strong>D. Harrison</strong><br><span style="font-size:0.7rem; opacity: 0.7;">COO</span>
                             </div>
                         </div>
                         <div class="org-level">
                             <div class="org-node" style="border-color: #10b981;">
-                                <div class="node-status" style="background: #10b981;"></div><strong>S. Blackwell</strong><br><span style="font-size:0.7rem;">Procurement</span>
+                                <div class="node-status" style="background: #10b981;"></div><strong>S. Blackwell</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Procurement</span>
                             </div>
                             <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>A. Chen</strong><br><span style="font-size:0.7rem;">IT Infra</span>
+                                <div class="node-status" style="background: #f59e0b;"></div><strong>A. Chen</strong><br><span style="font-size:0.7rem; opacity: 0.7;">IT Infra</span>
                             </div>
                             <div class="org-node" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);">
-                                <div class="node-status" style="background: #10b981;"></div><strong>J. Morris</strong><br><span style="font-size:0.7rem;">Resilience</span>
+                                <div class="node-status" style="background: #10b981;"></div><strong>J. Morris</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Resilience</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">03. Engagement Sequence Timeline</h3>
-                        <p class="visual-meta">Generated from W2-06: Personalised Engagement Plans</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">03</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 3 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Engagement Sequence</h3>
+                            <div class="pill-blue">OUTPUT OF W2-06</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">You can't approach everyone at once. The engagement sequence maps WHO to approach, WHEN, and in what ORDER — aligned to the procurement timeline. The sequence is strategic: you build support with accessible allies before approaching senior decision-makers. You never go cold to someone when a warm introduction exists. This timeline shows the optimal path through the stakeholder map.</p>
-                    
+                </div>
+
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">You can't approach everyone at once. This maps WHO to approach, WHEN, and in what ORDER.</p>
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="timeline-scroll">
                         <div class="gantt-grid">
                             <div class="gantt-header">STAKEHOLDER</div>
@@ -228,13 +298,22 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">04. Scoring Power Map</h3>
-                        <p class="visual-meta">Generated from W2-05: Section 3</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">04</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 4 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Scoring Power Map</h3>
+                            <div class="pill-blue">OUTPUT OF W2-05</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">In any formal evaluation, different stakeholders control different portions of the total score. The Scoring Power Map shows who controls which evaluation criteria and how many points they influence. This is where you invest your relationship effort — the stakeholder who controls 35% of the weighted score matters more than the one who controls 5%, regardless of seniority.</p>
+                </div>
 
+                <div class="context-bar reveal">
+                    <p class="body-prose" style="font-size: 0.95rem;">Who controls the points? This bar chart shows exactly how much of the final decision each stakeholder influences.</p>
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="bar-chart-row">
                         <div class="bar-label">Technical (25%)</div>
                         <div class="bar-track">
@@ -278,44 +357,48 @@
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-        <section class="reveal">
-            <div class="container" style="max-width: 1000px;">
                 <div class="section-divider">
                     <div class="divider-line"></div>
                     <div class="divider-label">BID INTELLIGENCE</div>
                     <div class="divider-line"></div>
                 </div>
-                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">See the Deal. Score the Deal.</h2>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">05. Scoring Weight Visualisation</h3>
-                        <p class="visual-meta">Generated from W3-03: Tier-by-Tier Scoring Strategy</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">05</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 5 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Scoring Weight Visualisation</h3>
+                            <div class="pill-blue">OUTPUT OF W3-03</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Most bid teams spread effort evenly across all requirements. That's mathematically wrong. A criterion worth 25% of the total deserves five times the writing investment of one worth 5%. This visualisation shows the scoring landscape — where the points are, where your strengths are, and where the effort should concentrate.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="bubble-chart">
                         <div class="bubble" style="bottom: 80%; left: 80%; width: 90px; height: 90px; background: #10b981;">Tech (25%)</div>
                         <div class="bubble" style="bottom: 60%; left: 50%; width: 80px; height: 80px; background: #f59e0b;">Comm (20%)</div>
                         <div class="bubble" style="bottom: 60%; left: 85%; width: 80px; height: 80px; background: #10b981;">Svc (20%)</div>
                         <div class="bubble" style="bottom: 40%; left: 75%; width: 60px; height: 60px; background: #10b981;">Team (15%)</div>
                         <div class="bubble" style="bottom: 40%; left: 55%; width: 60px; height: 60px; background: #f59e0b;">Auto (15%)</div>
-                        <div class="bubble" style="bottom: 10%; left: 20%; width: 40px; height: 40px; background: #94a3b8;">Soc (5%)</div>                        
+                        <div class="bubble" style="bottom: 10%; left: 20%; width: 40px; height: 40px; background: #94a3b8;">Soc (5%)</div>                         
                         <div style="position: absolute; left: 10px; top: 10px; font-size: 0.7rem; color: var(--slate);">HIGH WEIGHT</div>
                         <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.7rem; color: var(--slate);">HIGH CONFIDENCE</div>
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">06. Timeline Map</h3>
-                        <p class="visual-meta">Generated from W2-01: RFP Strategic Decoder</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">06</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 6 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Timeline Map</h3>
+                            <div class="pill-blue">OUTPUT OF W2-01</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Every procurement has a calendar. Within that calendar are hard deadlines (regulatory, contractual) and soft deadlines (aspirational, moveable). The timeline map shows both — and highlights where the calendar compresses. Compression points are where the buyer will compromise on process, and where your preparation advantage matters most.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="timeline-scroll">
                         <div class="timeline-map-grid">
                             <div class="tm-compression" style="grid-column: 9 / span 2;"></div>
@@ -340,13 +423,18 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">07. Service Tower Breakdown</h3>
-                        <p class="visual-meta">Generated from W2-03: Requirements Decoder</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">07</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 7 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Service Tower Breakdown</h3>
+                            <div class="pill-blue">OUTPUT OF W2-03</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">For managed services deals, the scope is typically divided into service towers — distinct workstreams with their own SLAs, FTE allocations, and cost structures. This breakdown shows the scope landscape: which towers are biggest (by cost or headcount), where TUPE implications exist, and where the commercial differentiation opportunities are.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="bar-chart-row">
                         <div class="bar-label">Infrastructure</div>
                         <div class="bar-track">
@@ -379,27 +467,32 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">08. Commercial Mechanism Summary</h3>
-                        <p class="visual-meta">Generated from W2-01: RFP Strategic Decoder</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">08</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 8 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Commercial Mechanism</h3>
+                            <div class="pill-blue">OUTPUT OF W2-01</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">The commercial model reveals the buyer's sophistication and trust level. This visual maps all the commercial mechanisms in the deal — showing how payments flow, where risk sits, and where innovation investment is rewarded.</p>
-                    
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="flow-container">
                         <div class="flow-card" style="border-left: 4px solid #3b82f6;">
-                            <h4>BASE CONTRACT</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£5.3M / year</p>
-                            <ul>
+                            <h4 style="color: white; margin-top: 0;">BASE CONTRACT</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£5.3M / year</p>
+                            <ul style="color: var(--slate);">
                                 <li>Fixed Price</li>
                                 <li>5 Towers</li>
                                 <li>Paid Monthly</li>
                             </ul>
                         </div>
                         <div class="flow-card" style="border-left: 4px solid #f59e0b;">
-                            <h4>DEFERRED (10%)</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£530k Held</p>
-                            <ul>
+                            <h4 style="color: white; margin-top: 0;">DEFERRED (10%)</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£530k Held</p>
+                            <ul style="color: var(--slate);">
                                 <li>Released at:</li>
                                 <li>6 Months</li>
                                 <li>12 Months</li>
@@ -407,17 +500,17 @@
                             </ul>
                         </div>
                         <div class="flow-card" style="border-left: 4px solid #10b981;">
-                            <h4>GAIN SHARE</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">60/40 Split</p>
-                            <ul>
+                            <h4 style="color: white; margin-top: 0;">GAIN SHARE</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">60/40 Split</p>
+                            <ul style="color: var(--slate);">
                                 <li>Savings > Y1 Baseline</li>
                                 <li>Unlimited Upside</li>
                             </ul>
                         </div>
                         <div class="flow-card" style="border-left: 4px solid #10b981;">
-                            <h4>INNOVATION FUND</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">£106k (2%)</p>
-                            <ul>
+                            <h4 style="color: white; margin-top: 0;">INNOVATION FUND</h4>
+                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£106k (2%)</p>
+                            <ul style="color: var(--slate);">
                                 <li>Ring-fenced</li>
                                 <li>Joint Governance</li>
                                 <li>Re-investment</li>
@@ -426,25 +519,24 @@
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-        <section class="reveal">
-            <div class="container" style="max-width: 1000px;">
                 <div class="section-divider">
                     <div class="divider-line"></div>
                     <div class="divider-label">WIN STRATEGY</div>
                     <div class="divider-line"></div>
                 </div>
-                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">Build the Case. Win the Room.</h2>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">09. Win Theme Deployment Map</h3>
-                        <p class="visual-meta">Generated from W3-01: Win Theme Generator</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">09</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 9 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Win Theme Deployment</h3>
+                            <div class="pill-blue">OUTPUT OF W3-01</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">A win theme that only appears in the executive summary is a slogan. A win theme that runs through the technical response, the commercial proposal, the oral presentation, AND the informal stakeholder conversations is a strategy. This map shows how each of your three win themes deploys across every touchpoint.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="timeline-scroll">
                         <div class="heatmap-grid">
                             <div class="heatmap-cell heatmap-header">THEME / TOUCHPOINT</div>
@@ -478,13 +570,18 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">10. Coalition Map</h3>
-                        <p class="visual-meta">Generated from W2-05: Winning Coalition</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">10</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 10 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Coalition Map</h3>
+                            <div class="pill-blue">OUTPUT OF W2-05</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">You don't need everyone. You need the minimum set of stakeholders who, if they all support you, make the decision inevitable. The coalition map shows the winning coalition — who must say yes, what each person needs from you, and who is the linchpin that unlocks the others.</p>
-                    
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="coalition-container">
                         <div class="coalition-centre">MERIDIAN ORT DEAL</div>
                         
@@ -492,14 +589,17 @@
                         <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(45deg);"></div>
                         <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(-135deg);"></div>
                         <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(135deg);"></div>
-                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 220px; transform: rotate(-90deg);"></div> <div class="coalition-line line-blue" style="top: 50%; left: 50%; width: 220px; transform: rotate(0deg);"></div> <div class="coalition-node" style="top: 20%; left: 70%; border-color: #10b981;">
-                            <strong>Jennifer Morris</strong><br><span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">CHAMPION / LINCHPIN</span><br><span style="font-size: 0.7rem;">Needs: Evidence</span>
+                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 220px; transform: rotate(-90deg);"></div> 
+                        <div class="coalition-line line-blue" style="top: 50%; left: 50%; width: 220px; transform: rotate(0deg);"></div> 
+                        
+                        <div class="coalition-node" style="top: 20%; left: 70%; border-color: #10b981;">
+                            <strong>Jennifer Morris</strong><br><span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">CHAMPION</span><br><span style="font-size: 0.7rem;">Needs: Evidence</span>
                         </div>
                         <div class="coalition-node" style="top: 80%; left: 70%; border-color: #10b981;">
-                            <strong>Richard Hale</strong><br><span style="font-size: 0.7rem; color: #10b981;">TECH AUTHORITY</span><br><span style="font-size: 0.7rem;">Needs: Automation</span>
+                            <strong>Richard Hale</strong><br><span style="font-size: 0.7rem; color: #10b981;">TECH AUTH</span><br><span style="font-size: 0.7rem;">Needs: Automation</span>
                         </div>
                         <div class="coalition-node" style="top: 20%; left: 30%; border-color: #f59e0b;">
-                            <strong>Mark Thompson</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">ECONOMIC BUYER</span><br><span style="font-size: 0.7rem;">Needs: ROI</span>
+                            <strong>Mark Thompson</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">ECO BUYER</span><br><span style="font-size: 0.7rem;">Needs: ROI</span>
                         </div>
                         <div class="coalition-node" style="top: 80%; left: 30%; border-color: #f59e0b;">
                             <strong>Andrew Chen</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">VALIDATOR</span><br><span style="font-size: 0.7rem;">Needs: Competence</span>
@@ -514,13 +614,18 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">11. Risk & Gap Heatmap</h3>
-                        <p class="visual-meta">Generated from W3-05: Self-Scoring</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">11</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 11 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Risk & Gap Heatmap</h3>
+                            <div class="pill-blue">OUTPUT OF W3-05</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Every deal has vulnerabilities. The risk heat map shows where you're strong and where you're exposed — by evaluation criterion. It's the honest view: where will evaluators score you highest? Where will competitors outscore you? This is the pre-submission self-scoring visualised.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="heatmap-grid" style="grid-template-columns: 200px 1fr 1fr 1fr 1fr;">
                         <div class="heatmap-cell heatmap-header">CRITERION</div>
                         <div class="heatmap-cell heatmap-header">YOU</div>
@@ -564,32 +669,32 @@
                         <div class="heatmap-cell hm-strong">4</div>
                         <div class="heatmap-cell">Gap</div>
                         
-                        <div class="heatmap-cell" style="text-align: left; font-weight: 700; background: #e2e8f0;">WEIGHTED SCORE</div>
-                        <div class="heatmap-cell" style="font-weight: 700; background: #e2e8f0;">3.95</div>
-                        <div class="heatmap-cell" style="background: #e2e8f0;">3.35</div>
-                        <div class="heatmap-cell" style="background: #e2e8f0;">3.10</div>
-                        <div class="heatmap-cell" style="background: #e2e8f0;">WIN</div>
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 700; background: rgba(255,255,255,0.1);">WEIGHTED</div>
+                        <div class="heatmap-cell" style="font-weight: 700; background: rgba(255,255,255,0.1);">3.95</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">3.35</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">3.10</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">WIN</div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="reveal">
-            <div class="container" style="max-width: 1000px;">
                 <div class="section-divider">
                     <div class="divider-line"></div>
                     <div class="divider-label">ACCOUNT GROWTH</div>
                     <div class="divider-line"></div>
                 </div>
-                <h2 class="section-heading-standard" style="text-align: left; font-size: 1.5rem; margin-bottom: 2rem;">Maintain the Account. Grow the Franchise.</h2>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">12. White Space Analysis</h3>
-                        <p class="visual-meta">Generated from W4-01: Boring But Expensive</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">12</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 12 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">White Space Analysis</h3>
+                            <div class="pill-blue">OUTPUT OF W4-01</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Where you serve, where you don't, where to expand. The white space analysis maps your current services against the client's full operational landscape. White space is where you're not present but could be — adjacent problems, departments you don't serve, functions running on competitors' contracts. Every white space is a potential expansion opportunity.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="timeline-scroll">
                         <div class="whitespace-grid">
                             <div></div>
@@ -599,65 +704,44 @@
                             <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">STAFFING</div>
                             <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">LICENSING</div>
 
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Infrastructure</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Infrastructure</div>
                             <div class="ws-cell ws-green">MERIDIAN</div>
                             <div class="ws-cell ws-green">MERIDIAN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
 
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Service Desk</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Service Desk</div>
                             <div class="ws-cell ws-green">MERIDIAN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Resilience</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Resilience</div>
                             <div class="ws-cell ws-green">MERIDIAN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
 
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Network</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Network</div>
                             <div class="ws-cell ws-red">ACME</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
 
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Security</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Security</div>
                             <div class="ws-cell ws-red">SECURECO</div>
                             <div class="ws-cell ws-red">SECURECO</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-red">SECURECO</div>
 
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Cloud</div>
+                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Cloud</div>
                             <div class="ws-cell ws-white">OPPORTUNITY</div>
                             <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Applications</div>
-                            <div class="ws-cell ws-grey">IN-HOUSE</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-grey">IN-HOUSE</div>
-                            
-                             <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Data & Analytics</div>
-                            <div class="ws-cell ws-white">OPPORTUNITY</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem;">Workplace</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPPORTUNITY</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
                             <div class="ws-cell ws-white">OPEN</div>
@@ -665,13 +749,18 @@
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">13. 90-Day Campaign Timeline</h3>
-                        <p class="visual-meta">Generated from W4-03: 90-Day Campaign Assembly</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">13</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 13 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">90-Day Campaign Timeline</h3>
+                            <div class="pill-blue">OUTPUT OF W4-03</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">Not 'maintain the relationship.' A specific, 12-week plan with named actions, named owners, and measurable milestones. The 90-day campaign timeline is the operating document the account team works from.</p>
-                    
+                </div>
+
+                <div class="visual-panel reveal">
                     <div class="timeline-scroll">
                         <div class="gantt-grid">
                             <div class="gantt-header">STREAM</div>
@@ -698,34 +787,39 @@
                             <div style="grid-column: 6 / span 1; background: #ef4444;" class="gantt-bar">Comp Intel</div>
                             <div style="grid-column: 11 / span 1; background: #ef4444;" class="gantt-bar">Net Strategy</div>
                             
-                             <div class="gantt-row-label" style="background: var(--bg-card);">GOVERNANCE</div>
-                            <div style="grid-column: 10 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;">◆</div>
-                            <div style="grid-column: 13 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;">◆</div>
+                             <div class="gantt-row-label" style="background: transparent;">GOVERNANCE</div>
+                            <div style="grid-column: 10 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
+                            <div style="grid-column: 13 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="visual-container">
-                    <div class="visual-header">
-                        <h3 class="visual-title">14. Account Health Dashboard</h3>
-                        <p class="visual-meta">Generated from W4-05: Governance View</p>
+                <div class="step-header-block reveal" style="margin-top: 4rem;">
+                    <div class="large-step-number">14</div>
+                    <div style="width: 100%;">
+                        <span class="step-counter">VISUAL 14 OF 14</span>
+                        <div class="step-meta">
+                            <h3 class="step-title">Account Health Dashboard</h3>
+                            <div class="pill-blue">OUTPUT OF W4-05</div>
+                        </div>
                     </div>
-                    <p style="font-size: 0.9rem; margin-bottom: 2rem;">One page. This is what the Managing Director sees quarterly. If your account health can't fit on one page, you don't know the account well enough. The dashboard is the governance artefact — the document that triggers investment decisions. The one-page constraint is deliberate.</p>
+                </div>
 
+                <div class="visual-panel reveal">
                     <div class="dashboard-grid">
                         <div class="dash-card">
                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACCOUNT SNAPSHOT</h4>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem;">Meridian Fin. Svcs</div>
-                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem;">Contract: £5.3M/yr</div>
-                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem;">Tenure: 18 Months</div>
-                            <div style="font-size: 0.85rem;">Contact: J. Morris</div>
+                            <div style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Meridian Fin. Svcs</div>
+                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Contract: £5.3M/yr</div>
+                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Tenure: 18 Months</div>
+                            <div style="font-size: 0.85rem; color: var(--text-body);">Contact: J. Morris</div>
                         </div>
                         <div class="dash-card">
                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">PERFORMANCE</h4>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #10b981;"></span> SLA: 99.2%</div>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #f59e0b;"></span> Relationship: Amber</div>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #10b981;"></span> Commercial: Green</div>
-                             <div style="margin-bottom: 0.5rem; font-size: 0.85rem;"><span class="rag-indicator" style="background: #f59e0b;"></span> Pipeline: £2.1M</div>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #10b981;"></span> SLA: 99.2%</div>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #f59e0b;"></span> Relationship: Amber</div>
+                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #10b981;"></span> Commercial: Green</div>
+                             <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #f59e0b;"></span> Pipeline: £2.1M</div>
                         </div>
                         <div class="dash-card">
                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">TOP 3 RISKS</h4>
@@ -744,7 +838,7 @@
                             </ul>
                         </div>
                         <div class="dash-card">
-                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">90-DAY PRIORITIES</h4>
+                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">90-DAY PRIORITIES</h4>
                              <ol style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
                                 <li style="margin-bottom: 0.5rem;">Establish CIO relationship</li>
                                 <li style="margin-bottom: 0.5rem;">Propose cloud migration</li>
@@ -753,20 +847,18 @@
                         </div>
                         <div class="dash-card">
                              <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACTIONS REQUIRED</h4>
-                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">⬜ Cloud presales invest</div>
-                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem;">⬜ CEO sponsor meeting</div>
-                             <div style="font-size: 0.85rem;">⬜ Review network intel</div>
+                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-body);">⬜ Cloud presales invest</div>
+                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-body);">⬜ CEO sponsor meeting</div>
+                             <div style="font-size: 0.85rem; color: var(--text-body);">⬜ Review network intel</div>
                         </div>
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 4rem;">
-                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 1rem;">Every visual on this page was generated from GAIN prompt outputs.</p>
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="week1.html" class="btn-schedule">ACCESS WEEK 1: INTELLIGENCE</a>
-                        <a href="index.html" class="btn-schedule" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic);">RETURN TO OVERVIEW</a>
-                    </div>
+                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
+                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Turn these visuals into reality.</p>
+                    <a href="week1.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem;">START WITH WEEK 1</a>
                 </div>
+
             </div>
         </section>
 
