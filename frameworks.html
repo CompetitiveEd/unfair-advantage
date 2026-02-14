@@ -9,20 +9,133 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* GOLDEN STANDARD OVERRIDES FOR FRAMEWORKS PAGE */
+        
+        /* 1. Hero Overlay Fix */
+        .hero-bg {
+            opacity: 0.2; /* Consistent low opacity for text legibility */
+            filter: grayscale(20%) contrast(1.1);
+        }
+
+        /* 2. Framework Card Matrix */
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .framework-node {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dynamic);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .framework-node:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        /* Color Coding Borders for Categories */
+        .node-mindset { border-left: 3px solid #3b82f6; } /* Blue */
+        .node-tactic { border-left: 3px solid #10b981; }  /* Green */
+        .node-strategy { border-left: 3px solid #f59e0b; } /* Amber */
+
+        .fw-title {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .fw-author {
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .fw-desc {
+            color: var(--text-body);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* 3. The "Quote Console" */
+        .quote-console {
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 3rem;
+            position: relative;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.05);
+        }
+        
+        .quote-mark {
+            font-size: 4rem;
+            color: rgba(59, 130, 246, 0.2);
+            font-family: serif;
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Standard Re-use */
+        .section-heading-standard { font-size: 1.75rem; font-weight: 800; color: white; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .section-subtitle { font-size: 1.1rem; color: #cbd5e1; max-width: 700px; margin-bottom: 2rem; line-height: 1.6; }
+        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        
+        @media (max-width: 768px) { 
+            .hero-headline { font-size: 2.5rem; } 
+            .quote-text { font-size: 1.1rem; }
+            .quote-console { padding: 2rem; }
+        }
+    </style>
 </head>
-<body>
+<body class="week4-page">
 
 <div class="page-container content-reveal">
     <nav>
         <a href="index.html" class="nav-brand">THE UNFAIR ADVANTAGE</a>
         <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
-            <a href="steer.html">Steer, Don't Drift</a>
+            <a href="steer.html">Steer</a>
+            
             <div class="nav-dropdown">
                 <span class="nav-link-main" style="color: var(--primary);">About ▾</span>
                 <div class="dropdown-content">
@@ -30,13 +143,14 @@
                     <a href="frameworks.html" style="color: var(--primary);">Frameworks</a>
                 </div>
             </div>
+
             <div class="nav-dropdown">
                 <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
-                    <a href="week1.html" data-tooltip="Killing the Research Tax - Surfacing unspoken stakeholder needs in under 20 minutes.">1: KNOW Them - Intelligence Layer</a>
-                    <a href="week2.html" data-tooltip="The Digital Twin Briefing - Mapping complex stakeholder ecosystems.">2: MAP Them - Omniscience Engine</a>
-                    <a href="week3.html" data-tooltip="Beyond the Generic Prompt - Generating outcome-centric sales narratives.">3: WIN Them - Oxygen Effect</a>
-                    <a href="week4.html" data-tooltip="Velocity at Scale - Operationalising AI across the pursuit lifecycle.">4: GROW Them - Velocity @ Scale</a>
+                    <a href="week1.html">1: KNOW - Intelligence</a>
+                    <a href="week2.html">2: MAP - Omniscience</a>
+                    <a href="week3.html">3: WIN - Oxygen Effect</a>
+                    <a href="week4.html">4: GROW - Velocity</a>
                 </div>
             </div>
             <a href="visuals.html">Visuals</a>
@@ -45,77 +159,88 @@
     </nav>
     
     <header class="dark-header-block">
-            <img src="assets/images/frameworks.png" class="hero-bg" alt="Executive Boardroom">
-        <div class="hero-impact">
-            <div class="hero-content">
+        <img src="assets/images/frameworks.png" class="hero-bg" alt="Intellectual Foundations">
+        <div class="hero-impact" style="position: relative; z-index: 1; padding-top: 4rem;">
+            <div class="hero-content reveal">
                 <h1 class="hero-headline">
                     <span style="color: white; display: block;">The Intellectual Foundations</span>
                 </h1>
-                <p class="hero-subtext">Every GAIN prompt is built on established frameworks. Each GAIN week tells you which one applies and why.</p>
+                <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem 0;"></div>
+                <p class="hero-subtext" style="font-size: 1.25rem; font-weight: 500; color: #cbd5e1; line-height: 1.6; max-width: 800px;">
+                    Every GAIN prompt is built on established frameworks. Each GAIN week tells you which one applies and why.
+                </p>
             </div>
         </div>
     </header>
 
-    <main>
+    <main style="margin-top: -4rem; position: relative; z-index: 2;">
         
-        <section style="padding: 4rem 2rem; background: var(--bg-body); border-top: 1px solid var(--border-dynamic);">
+        <section class="reveal">
             <div class="container">
-                <h2 class="section-heading-standard">The Intellectual Foundations</h2>
-                <p class="section-subtitle">Every GAIN prompt is built on established frameworks. Each GAIN page tells you which framework applies and why.</p>
+                
+                <div style="margin-bottom: 4rem;">
+                    <div class="section-divider">
+                        <div class="divider-line"></div>
+                        <div class="divider-label">THE LIBRARY OF LOGIC</div>
+                        <div class="divider-line"></div>
+                    </div>
+                </div>
 
-                <div class="grid-3-col" style="margin-top: 3rem;">
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Insight-Led Selling</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Timme & Astley</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Executive mindset, credibility, impact</p>
+                <div class="framework-grid">
+                    
+                    <div class="framework-node node-mindset">
+                        <h3 class="fw-title">Insight-Led Selling</h3>
+                        <span class="fw-author">Timme & Astley</span>
+                        <p class="fw-desc">Shifting from relationship-building to executive relevance. Focuses on financial metrics and shareholder value impact.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Never Split the Difference</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Chris Voss</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Accusation audit, labelling, calibrated questions</p>
+                    <div class="framework-node node-mindset">
+                        <h3 class="fw-title">Let's Get Real or Let's Not Play</h3>
+                        <span class="fw-author">Mahan Khalsa</span>
+                        <p class="fw-desc">The discipline of ruthless qualification. If the problem isn't worth solving, the deal isn't worth chasing.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Made to Stick</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Heath & Heath</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Storytelling that lands and stays</p>
+                    <div class="framework-node node-mindset">
+                        <h3 class="fw-title">Strategic Account Management</h3>
+                        <span class="fw-author">The KYC Discipline</span>
+                        <p class="fw-desc">Know Your Customer as a continuous intelligence cycle that turns one win into a franchise, not a transaction.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Let's Get Real or Let's Not Play</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Mahan Khalsa</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Qualify in or out, ruthlessly</p>
+                    <div class="framework-node node-tactic">
+                        <h3 class="fw-title">Never Split the Difference</h3>
+                        <span class="fw-author">Chris Voss</span>
+                        <p class="fw-desc">Tactical empathy. Using "Accusation Audits," "Labelling," and "Calibrated Questions" to unlock information.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">The Pyramid Principle</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Barbara Minto</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Answer first, evidence underneath</p>
+                    <div class="framework-node node-tactic">
+                        <h3 class="fw-title">Made to Stick</h3>
+                        <span class="fw-author">Heath & Heath</span>
+                        <p class="fw-desc">Why some ideas survive and others die. The principles of Simplicity, Unexpectedness, and Concrete storytelling.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Human Amplification</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Sol Rashidi</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">AI as capability multiplier, not replacement</p>
+                    <div class="framework-node node-tactic">
+                        <h3 class="fw-title">The Pyramid Principle</h3>
+                        <span class="fw-author">Barbara Minto</span>
+                        <p class="fw-desc">Top-down communication. Start with the answer (The Executive Summary), then provide the supporting arguments.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Blue Ocean Strategy</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">Kim & Mauborgne</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Eliminate, Reduce, Raise, Create</p>
+                    <div class="framework-node node-strategy">
+                        <h3 class="fw-title">Human Amplification</h3>
+                        <span class="fw-author">Sol Rashidi</span>
+                        <p class="fw-desc">AI as a capability multiplier, not a replacement. The "Human in the Loop" architecture for deploying intelligence.</p>
                     </div>
 
-                    <div class="framework-card">
-                        <p style="color: var(--primary); font-weight: 700; margin-bottom: 0.25rem;">Strategic Account Management</p>
-                        <p style="color: var(--slate); font-size: 0.8rem; margin-bottom: 0.75rem;">The KYC Discipline</p>
-                        <p style="font-size: 0.9rem; color: var(--text-body);">Know Your Customer — before, during, and after the deal. The continuous intelligence cycle that turns one win into a franchise.</p>
+                    <div class="framework-node node-strategy">
+                        <h3 class="fw-title">Blue Ocean Strategy</h3>
+                        <span class="fw-author">Kim & Mauborgne</span>
+                        <p class="fw-desc">Redefining market boundaries. Using the "Eliminate-Reduce-Raise-Create" grid to differentiate the offering.</p>
                     </div>
+
                 </div>
             </div>
         </section>
 
-        <section style="padding: 1rem 2rem 0.5rem 2rem; text-align: center;">
+        <section class="reveal" style="padding: 4rem 2rem; text-align: center;">
             <div class="container" style="max-width: 800px;">
                 <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-body);">
                     These frameworks informed how the prompts are built. They're not a reading list — they're the structural logic underneath every GAIN output. Each week page tells you which framework applies and why it matters for that specific stage of the sales cycle.
@@ -123,16 +248,23 @@
             </div>
         </section>
 
-        <section style="padding: 4rem 2rem; background: var(--bg-card); border-top: 1px solid var(--border-dynamic); border-bottom: 1px solid var(--border-dynamic); text-align: center;">
-            <div class="container" style="max-width: 800px;">
-                <p style="font-size: 1.25rem; font-weight: 700; color: var(--text-heading); font-style: italic; line-height: 1.6; margin-bottom: 1rem;">
-                    "Is AI making our people more capable or more dependent? If we aren't measuring human amplification, we are just managing digital decay."
-                </p>
-                <p style="font-size: 1rem; color: var(--primary); font-weight: 700; margin-bottom: 2rem;">— Sol Rashidi</p>
+        <section class="reveal" style="padding: 6rem 2rem; background: var(--bg-card); border-top: 1px solid var(--border-dynamic); border-bottom: 1px solid var(--border-dynamic);">
+            <div class="container">
                 
-                <p style="font-size: 0.9rem; color: var(--slate);">
-                    This is the design principle behind every GAIN prompt. AI gathers the evidence. You apply the judgment. The combination is what wins.
-                </p>
+                <div class="quote-console">
+                    <span class="quote-mark">“</span>
+                    <p class="quote-text">
+                        Is AI making our people more capable or more dependent? If we aren't measuring human amplification, we are just managing digital decay.
+                    </p>
+                    <span class="quote-author">— Sol Rashidi</span>
+                    
+                    <div style="margin-top: 2rem; width: 50px; height: 2px; background: var(--primary); margin-left: auto; margin-right: auto;"></div>
+                    
+                    <p style="font-size: 0.9rem; color: var(--slate); margin-top: 1.5rem; line-height: 1.6;">
+                        This is the design principle behind every GAIN prompt. AI gathers the evidence. You apply the judgment. The combination is what wins.
+                    </p>
+                </div>
+
             </div>
         </section>
 
@@ -153,76 +285,47 @@
                 Connect on LinkedIn
             </a>
             <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 500;">
-                AI Is Not Your Cheerleader — Weekly deep dives into real AI workflows for enterprise sales
+                AI Is Not Your Cheerleader — Weekly deep dives into real AI workflows
             </a>
         </div>
     </footer>
 </div>
 
 <script>
-    // Smooth scroll to top with elegant fade animation
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Theme management
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    }
-
-    // Theme toggle
+    // Theme Logic
+    (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
     document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const targetTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', targetTheme);
-                localStorage.setItem('theme', targetTheme);
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const root = document.documentElement;
+                const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                root.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
             });
         }
         
         // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const navLinks = document.querySelector('.nav-links');
-        
         if (mobileMenuToggle && navLinks) {
             mobileMenuToggle.addEventListener('click', () => {
                 mobileMenuToggle.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
-            
-            document.addEventListener('click', (e) => {
-                if (!mobileMenuToggle.contains(e.target) && !navLinks.contains(e.target)) {
-                    mobileMenuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
-        }
-        
-        // Mobile dropdown toggle
-        const navDropdowns = document.querySelectorAll('.nav-dropdown');
-        if (navDropdowns) {
-            navDropdowns.forEach(dropdown => {
-                const dropdownMain = dropdown.querySelector('.nav-link-main');
-                if(dropdownMain){
-                    dropdownMain.addEventListener('click', (e) => {
-                        if (window.innerWidth <= 768) {
-                            e.stopPropagation();
-                            dropdown.classList.toggle('mobile-open');
-                        }
-                    });
-                }
-            });
         }
     });
 
-    // Reveal animations
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    // Reveal Animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('active');
+        });
+    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
