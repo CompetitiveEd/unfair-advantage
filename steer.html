@@ -324,7 +324,7 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
+                <div style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">
                     <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Ready to start? The Intelligence Layer is where every GAIN workflow begins.</p>
                     <a href="week1.html" class="btn-schedule">START WITH WEEK 1: INTELLIGENCE LAYER</a>
                 </div>
@@ -365,13 +365,22 @@
                 });
             }
 
-            // Reveal Animation
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('active');
+            // Scroll Reveal with immediate check for elements already in viewport
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
                 });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                // Immediately show elements already in viewport
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                // Observe for future scroll reveals
+                revealObserver.observe(el);
+            });
         });
 
         // Prompt Read More

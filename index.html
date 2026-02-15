@@ -100,7 +100,7 @@
         </div>
 
         <main>
-            <section class="reveal">
+            <section class="reveal" style="padding-top: 1.5rem;">
                 <div class="container-wide">
                     <h2 class="section-heading-standard" style="margin-bottom: 1rem;">The Revenue Engine</h2>
                     
@@ -259,11 +259,22 @@
             });
         }
         
-        // Scroll Reveal
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        // Scroll Reveal with immediate check for elements already in viewport
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { 
+                if (e.isIntersecting) e.target.classList.add('active'); 
+            });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            // Immediately show elements already in viewport
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight) {
+                el.classList.add('active');
+            }
+            // Observe for future scroll reveals
+            revealObserver.observe(el);
+        });
     });
 </script>
 </body>
