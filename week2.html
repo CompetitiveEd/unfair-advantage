@@ -9,41 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* BENTLEY / STEER DESIGN SYSTEM */
+        /* CORE VARIABLES */
         :root {
             --primary: #3b82f6;
-            --primary-dim: rgba(59, 130, 246, 0.1);
             --slate: #94a3b8;
-            --bg-body: #020617; /* Deep Steer Black */
-            --bg-card: #0f172a; /* Slightly lighter for cards */
+            --bg-body: #020617;
+            --bg-card: #0f172a;
             --bg-console: #020617;
             --text-body: #cbd5e1;
             --text-heading: #ffffff;
             --border-dynamic: rgba(255,255,255,0.08);
             --amber: #f59e0b;
-            --amber-dim: rgba(245, 158, 11, 0.1);
             --green: #10b981;
-            --green-dim: rgba(16, 185, 129, 0.1);
             --red: #ef4444;
-            --radius-std: 12px;
             --font-main: 'Inter', sans-serif;
             --font-mono: 'Monaco', 'Consolas', monospace;
         }
 
-        /* RESET & BASE */
+        /* BASE */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: var(--bg-body); color: var(--text-body); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         a { color: var(--primary); text-decoration: none; transition: 0.2s; }
         a:hover { color: #60a5fa; }
 
-        /* 1. FULL WIDTH NAVIGATION (Matches Screenshot) */
+        /* 1. FULL WIDTH STICKY NAV */
         nav { 
             width: 100%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             padding: 1.2rem 3rem; 
-            background: rgba(2, 6, 23, 0.95); /* Dark background */
+            background: rgba(2, 6, 23, 0.95); 
             backdrop-filter: blur(10px);
             position: fixed; 
             top: 0; 
@@ -72,9 +68,19 @@
         .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
         .dropdown-content a:last-child { border-bottom: none; }
 
-        /* HERO - STEER STYLE */
+        /* HERO - FULL COLOUR */
         .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
-        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; pointer-events: none; z-index: 0; mix-blend-mode: luminosity; }
+        .hero-bg { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0.8; 
+            pointer-events: none; 
+            z-index: 0; 
+        }
         .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
         .hero-pre { color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: block; }
         .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; color: white; }
@@ -85,13 +91,13 @@
         .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
         .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
 
-        /* 2. STRICT PARALLEL STEP HEADERS */
+        /* 2. REVISED STEP HEADERS */
         .step-block { 
             display: flex; 
             gap: 2rem; 
             margin-top: 6rem; 
             margin-bottom: 2rem; 
-            align-items: flex-start; /* Key: Aligns top */
+            align-items: flex-start;
         }
         .step-num { 
             font-size: 4rem; 
@@ -99,20 +105,14 @@
             color: var(--slate); 
             opacity: 0.2; 
             line-height: 0.8;
-            min-width: 80px; /* Fixed width prevents wrapping */
+            min-width: 80px;
             flex-shrink: 0; 
         }
         .step-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-top: 0.2rem; /* Optical alignment with number */
-        }
-        .step-meta-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
+            padding-top: 0.2rem;
         }
         .step-counter { 
             font-size: 0.7rem; 
@@ -122,48 +122,49 @@
             text-transform: uppercase; 
             margin-bottom: 0.25rem; 
         }
+        .step-title-row {
+            display: flex;
+            align-items: center; /* Aligns text and pill */
+            gap: 1rem;
+        }
         .step-title { 
-            font-size: 1.75rem; 
+            font-size: 1.5rem; 
             font-weight: 800; 
             color: white; 
             margin: 0; 
             line-height: 1.1; 
         }
-        .pill-blue { 
+        .time-pill { 
             display: inline-block; 
-            background: rgba(59, 130, 246, 0.1); 
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            color: var(--primary); 
-            font-size: 0.65rem; 
-            font-weight: 700; 
-            padding: 3px 8px; 
-            border-radius: 4px; 
-            vertical-align: middle;
-            margin-top: 0.5rem; /* Puts it on '2nd line' logic if needed */
+            color: var(--slate); 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
         }
 
-        /* 3. STEP 00 LIST STYLE (Matches Image) */
-        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+        /* 3. REVISED LIST STYLE */
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
-        .list-item { display: flex; margin-bottom: 0.8rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; }
+        .list-item { display: flex; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; line-height: 1.4; }
         .list-num { color: white; font-weight: 700; margin-right: 0.8rem; min-width: 25px; }
 
-        /* COMPONENTS */
-        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
-        
+        /* WORKED EXAMPLES (Clean) */
+        .worked-example-clean { 
+            background: transparent; 
+            border: none;
+            padding: 1.5rem 0; 
+            margin-top: 1rem; 
+        }
+        .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .example-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; margin: 0; }
+
+        /* EXPERIENCE QUOTES (Clean) */
         .experience-header { font-size: 0.8rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.5rem; }
         .experience-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; }
 
-        /* WORKED EXAMPLES & FAILURES */
-        .worked-example-box { 
-            background: rgba(16, 185, 129, 0.05); 
-            border-left: 3px solid var(--green); 
-            padding: 1.5rem; 
-            margin-top: 2rem; 
-            border-radius: 0 8px 8px 0;
-        }
-        .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-        
+        /* FAILURE BOXES */
         .failure-box {
             background: rgba(239, 68, 68, 0.05);
             border-left: 3px solid var(--red);
@@ -204,7 +205,7 @@
         .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 3px; }
         .library-btn:hover .copy-badge { background: var(--primary); color: white; }
 
-        /* FOOTER (Wide Layout) */
+        /* FOOTER */
         footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 8rem; background: var(--bg-body); }
         .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
         .footer-brand { font-weight: 900; letter-spacing: 0.15em; color: white; font-size: 1rem; text-transform: uppercase; }
@@ -216,17 +217,20 @@
         /* UTILS */
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        /* FLOW PILLS (Framework) */
+        .pill-blue-flow { background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
+        .pill-blue-flow.active { background: var(--primary); color: white; border-color: var(--primary); }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="steer.html">Steer</a>
-            
             <div class="nav-dropdown">
                 <span>About ▾</span>
                 <div class="dropdown-content">
@@ -235,7 +239,6 @@
                     <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
-
             <div class="nav-dropdown">
                 <span class="active" style="color: white;">GAIN Series ▾</span>
                 <div class="dropdown-content">
@@ -245,7 +248,6 @@
                     <a href="week4.html">4: GROW — Velocity</a>
                 </div>
             </div>
-            
             <a href="visuals.html">Visuals</a>
             <a href="contact.html" class="nav-cta">CONTACT</a>
         </div>
@@ -270,10 +272,10 @@
     <main>
         
         <div class="container-prose reveal">
-            <div class="worked-example-box" style="background: var(--bg-card); border-left: none; border: 1px solid var(--border-dynamic);">
-                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: white; margin-bottom: 1rem;">The Context</h3>
-                    <p style="margin: 0; font-size: 0.95rem; color: var(--text-body);">Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.</p>
+            <div class="worked-example-clean" style="margin-top: 0;">
+                <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
+                    <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
+                    Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.
                 </div>
             </div>
 
@@ -283,7 +285,6 @@
         </div>
 
         <div class="container-prose reveal">
-            
             <div class="section-divider">
                 <div class="divider-line"></div>
                 <div class="divider-label">BEFORE YOU BEGIN</div>
@@ -312,7 +313,32 @@
                     <strong style="color: var(--amber);">! No RFP?</strong> This week works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.
                 </p>
             </div>
+        </div>
 
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">THE FRAMEWORK</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Omniscience Flow</p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">DECODE OPPORTUNITY</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">FIND PEOPLE</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">MAP MOTIVATIONS</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">MAP AUTHORITY</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">DEAL STRATEGY</span>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Steps 4-5 build the map. Steps 6-7 turn it into strategy. Steps 8-10 map advanced dynamics.</p>
+            </div>
         </div>
 
         <div class="container-prose reveal">
@@ -320,8 +346,10 @@
                 <div class="step-num">01</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 1 OF 10</span>
-                    <h2 class="step-title">Decode the Opportunity</h2>
-                    <span class="time-pill">~20 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Decode the Opportunity</h2>
+                        <span class="time-pill">~20 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -359,10 +387,9 @@ Explain your reasoning.
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).</p>
-                <p style="margin-bottom: 0;"><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
+                <p class="example-prose"><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).<br><br><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
             </div>
 
             <div class="experience-header">WHAT EXPERIENCE SEES</div>
@@ -374,8 +401,10 @@ Explain your reasoning.
                 <div class="step-num">02</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 2 OF 10</span>
-                    <h2 class="step-title">Find the People</h2>
-                    <span class="time-pill">~15 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Find the People</h2>
+                        <span class="time-pill">~15 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -404,10 +433,9 @@ I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, Linked
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p>Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).</p>
-                <p style="margin-bottom: 0;"><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
+                <p class="example-prose">Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).<br><br><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
             </div>
 
             <div class="experience-header">WHAT EXPERIENCE SEES</div>
@@ -419,8 +447,10 @@ I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, Linked
                 <div class="step-num">03</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 3 OF 10</span>
-                    <h2 class="step-title">Decode Requirements</h2>
-                    <span class="time-pill">~15 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Decode Requirements</h2>
+                        <span class="time-pill">~15 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -453,11 +483,9 @@ Output as a table.
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.</p>
-                <p><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.</p>
-                <p style="margin-bottom: 0;"><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
+                <p class="example-prose"><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.<br><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.<br><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
             </div>
         </div>
 
@@ -466,8 +494,10 @@ Output as a table.
                 <div class="step-num">04</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 4 OF 10</span>
-                    <h2 class="step-title">Map Motivations</h2>
-                    <span class="time-pill">~20 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Map Motivations</h2>
+                        <span class="time-pill">~20 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -497,10 +527,9 @@ Generate a 'Deep Motivation Profile':
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.</p>
-                <p style="margin-bottom: 0;"><strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
+                <p class="example-prose"><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.<br><strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
             </div>
 
             <div class="experience-header">WHAT EXPERIENCE SEES</div>
@@ -512,8 +541,10 @@ Generate a 'Deep Motivation Profile':
                 <div class="step-num">05</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 5 OF 10</span>
-                    <h2 class="step-title">Map Authority</h2>
-                    <span class="time-pill">~20 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Map Authority</h2>
+                        <span class="time-pill">~20 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -549,10 +580,9 @@ Create a 'Political Authority Map' for this deal:
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.</p>
-                <p style="margin-bottom: 0;"><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
+                <p class="example-prose"><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.<br><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
             </div>
 
             <div class="experience-header">WHAT EXPERIENCE SEES</div>
@@ -564,8 +594,10 @@ Create a 'Political Authority Map' for this deal:
                 <div class="step-num">06</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 6 OF 10</span>
-                    <h2 class="step-title">Plan Engagement</h2>
-                    <span class="time-pill">~15 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Plan Engagement</h2>
+                        <span class="time-pill">~15 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -594,11 +626,9 @@ Structure it as a meeting preparation guide:
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."</p>
-                <p><strong>Morris:</strong> Lead with resilience peer credibility and transparency.</p>
-                <p style="margin-bottom: 0;"><strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.</p>
+                <p class="example-prose"><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."<br><strong>Morris:</strong> Lead with resilience peer credibility and transparency.<br><strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.</p>
             </div>
         </div>
 
@@ -607,8 +637,10 @@ Structure it as a meeting preparation guide:
                 <div class="step-num">07</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 7 OF 10</span>
-                    <h2 class="step-title">Deal Strategy</h2>
-                    <span class="time-pill">~15 MIN</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Deal Strategy</h2>
+                        <span class="time-pill">~15 MIN</span>
+                    </div>
                 </div>
             </div>
 
@@ -638,10 +670,9 @@ Sections:
                 </div>
             </div>
 
-            <div class="worked-example-box">
+            <div class="worked-example-clean">
                 <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                <p><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."</p>
-                <p style="margin-bottom: 0;"><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
+                <p class="example-prose"><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."<br><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
             </div>
 
             <div class="experience-header">WHAT EXPERIENCE SEES</div>
@@ -653,8 +684,10 @@ Sections:
                 <div class="step-num">08</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 8 OF 10</span>
-                    <h2 class="step-title">Cross-Stakeholder Dynamics</h2>
-                    <span class="time-pill">ADVANCED</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Cross-Stakeholder Dynamics</h2>
+                        <span class="time-pill">ADVANCED</span>
+                    </div>
                 </div>
             </div>
             <div class="console-header-v2">
@@ -681,8 +714,10 @@ Sections:
                 <div class="step-num">09</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 9 OF 10</span>
-                    <h2 class="step-title">Culture & Values Alignment</h2>
-                    <span class="time-pill">ADVANCED</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Culture & Values Alignment</h2>
+                        <span class="time-pill">ADVANCED</span>
+                    </div>
                 </div>
             </div>
             <div class="console-header-v2">
@@ -711,8 +746,10 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
                 <div class="step-num">10</div>
                 <div class="step-content">
                     <span class="step-counter">STEP 10 OF 10</span>
-                    <h2 class="step-title">Human Risk & TUPE</h2>
-                    <span class="time-pill">ADVANCED</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Human Risk & TUPE</h2>
+                        <span class="time-pill">ADVANCED</span>
+                    </div>
                 </div>
             </div>
             <div class="console-header-v2">
@@ -740,8 +777,10 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
                 <div class="step-num" style="opacity: 0.2;">E</div>
                 <div class="step-content">
                     <span class="step-counter">INTERLUDE</span>
-                    <h2 class="step-title">The Engineering Layer</h2>
-                    <span class="time-pill">OPTIONAL</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">The Engineering Layer</h2>
+                        <span class="time-pill">OPTIONAL</span>
+                    </div>
                 </div>
             </div>
 

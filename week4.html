@@ -3,207 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Week 4: Continuous Growth. Operationalising AI across the pursuit lifecycle for account growth.">
-    <title>Week 4: Continuous Growth | The Unfair Advantage</title>
+    <meta name="description" content="Week 4: Velocity @ Scale. Operationalising AI across the pursuit lifecycle for account growth.">
+    <title>Week 4: Velocity @ Scale | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Specific Week 4 Visuals - Kept as overrides where necessary */
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-body); padding: 12px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
-        .library-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); color: white; transform: translateY(-1px); }
-        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
-        .library-btn:hover .copy-badge { background: var(--primary); color: white; border-color: var(--primary); }
+        /* BENTLEY / STEER DESIGN SYSTEM */
+        :root {
+            --primary: #3b82f6;
+            --primary-dim: rgba(59, 130, 246, 0.1);
+            --slate: #94a3b8;
+            --bg-body: #020617; /* Deep Steer Black */
+            --bg-card: #0f172a; /* Slightly lighter for cards */
+            --bg-console: #020617;
+            --text-body: #cbd5e1;
+            --text-heading: #ffffff;
+            --border-dynamic: rgba(255,255,255,0.08);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.1);
+            --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.1);
+            --red: #ef4444;
+            --radius-std: 12px;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Monaco', 'Consolas', monospace;
+        }
+
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-body); color: var(--text-body); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        a { color: var(--primary); text-decoration: none; transition: 0.2s; }
+        a:hover { color: #60a5fa; }
+
+        /* 1. FULL WIDTH NAVIGATION */
+        nav { 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1.2rem 3rem; 
+            background: rgba(2, 6, 23, 0.95); /* Dark background */
+            backdrop-filter: blur(10px);
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid var(--border-dynamic);
+        }
+        .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-cta { 
+            border: 1px solid rgba(255,255,255,0.2); 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            color: white !important;
+            transition: all 0.2s ease;
+        }
+        .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
         
-        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
+        /* Dropdowns */
+        .nav-dropdown { position: relative; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        .dropdown-content a:last-child { border-bottom: none; }
 
-        /* Step Headers Sync */
-        .step-header-block { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem; }
-        .large-step-number { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
-        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; }
-        .step-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; line-height: 1; }
-        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
-        .step-counter { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-bottom: 0.2rem; }
+        /* HERO - STEER STYLE */
+        .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
+        .hero-bg { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0.8; 
+            pointer-events: none; 
+            z-index: 0; 
+        }
+        .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+        .hero-pre { color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: block; }
+        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; color: white; }
+        .hero-subtext { font-size: 1.25rem; font-weight: 400; color: var(--slate); max-width: 600px; margin: 0 auto; }
+        .hero-meta { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-top: 3rem; display: block; opacity: 0.7; }
 
-        /* Console styling */
-        .prompt-console-header { background: #1e293b; padding: 10px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; display: flex; justify-content: space-between; align-items: center; }
-        .prompt-console-dots span { height: 8px; width: 8px; background-color: #334155; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .prompt-console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; }
-        .prompt-wrapper { position: relative; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 12px 12px; overflow: hidden; border-top: none; }
-        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: 'Monaco', 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease; position: relative; }
+        /* CONTAINERS */
+        .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
+        .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
+
+        /* 2. STRICT PARALLEL STEP HEADERS */
+        .step-block { 
+            display: flex; 
+            gap: 2rem; 
+            margin-top: 6rem; 
+            margin-bottom: 2rem; 
+            align-items: flex-start;
+        }
+        .step-num { 
+            font-size: 4rem; 
+            font-weight: 900; 
+            color: var(--slate); 
+            opacity: 0.2; 
+            line-height: 0.8;
+            min-width: 80px; 
+            flex-shrink: 0; 
+        }
+        .step-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 0.2rem;
+        }
+        .step-counter { 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            color: var(--slate); 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            margin-bottom: 0.25rem; 
+        }
+        .step-title-row {
+            display: flex;
+            align-items: center; 
+            gap: 1rem;
+        }
+        .step-title { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: white; 
+            margin: 0; 
+            line-height: 1.1; 
+        }
+        .time-pill { 
+            display: inline-block; 
+            color: var(--slate); 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+        }
+
+        /* 3. STEP 00 LIST STYLE */
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+        .list-item { display: flex; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; line-height: 1.4; }
+        .list-num { color: white; font-weight: 700; margin-right: 0.8rem; min-width: 25px; }
+
+        /* COMPONENTS */
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        /* WORKED EXAMPLES & FAILURES */
+        .worked-example-clean { 
+            background: transparent; 
+            border: none;
+            padding: 1.5rem 0; 
+            margin-top: 1rem; 
+        }
+        .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .example-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; margin: 0; }
+        
+        .experience-header { font-size: 0.8rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.5rem; }
+        .experience-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; }
+
+        .failure-box {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid var(--red);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .failure-title { color: white; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .failure-rule { color: white; font-weight: 700; font-size: 0.9rem; margin-top: 1rem; display: block; }
+        .failure-red-text { color: var(--red); display: inline; font-weight: 800; }
+
+        /* CONSOLE */
+        .console-header-v2 { background: var(--bg-card); padding: 10px 1.5rem; border-radius: 8px 8px 0 0; border: 1px solid var(--border-dynamic); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .traffic-lights { display: flex; gap: 6px; }
+        .traffic-lights span { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+        .traffic-lights span:nth-child(1) { background: #ff5f56; }
+        .traffic-lights span:nth-child(2) { background: #ffbd2e; }
+        .traffic-lights span:nth-child(3) { background: #27c93f; }
+        .console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; font-family: var(--font-mono); text-transform: uppercase; }
+        .prompt-wrapper { background: var(--bg-console); border: 1px solid var(--border-dynamic); border-radius: 0 0 8px 8px; position: relative; overflow: hidden; }
+        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; max-height: 140px; overflow: hidden; transition: max-height 0.4s ease; position: relative; white-space: pre-wrap; }
         .prompt-content.expanded { max-height: 3000px; }
-        .prompt-actions { display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1); }
-        .prompt-expand-btn { border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 12px 1.5rem; cursor: pointer; flex-grow: 1; text-align: left; text-transform: uppercase; letter-spacing: 0.05em; }
-        .copy-btn-inline { background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: var(--primary); font-size: 0.7rem; font-weight: 800; padding: 0 1.5rem; cursor: pointer; height: 45px; transition: 0.2s; letter-spacing: 0.05em; }
+        .console-actions { display: flex; border-top: 1px solid var(--border-dynamic); background: rgba(255,255,255,0.02); }
+        .action-btn { background: transparent; border: none; padding: 10px 1.5rem; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: var(--font-main); text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-expand { color: var(--primary); flex-grow: 1; text-align: left; }
+        .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); }
+        .btn-copy:hover { color: white; background: rgba(255,255,255,0.05); }
+
+        /* DIVIDERS */
+        .section-divider { display: flex; align-items: center; gap: 1rem; margin: 5rem 0 3rem 0; }
+        .divider-line { flex-grow: 1; height: 1px; background: var(--border-dynamic); }
+        .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; text-transform: uppercase; }
+
+        /* LIBRARY */
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 4rem; }
+        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; letter-spacing: 0.02em; }
+        .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); color: white; }
+        .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 3px; }
+        .library-btn:hover .copy-badge { background: var(--primary); color: white; }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 8rem; background: var(--bg-body); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .footer-brand { font-weight: 900; letter-spacing: 0.15em; color: white; font-size: 1rem; text-transform: uppercase; }
+        .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-link { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+        .footer-link:hover { color: white; }
+        .footer-bottom { text-align: center; color: var(--slate); font-size: 0.8rem; margin-top: 3rem; opacity: 0.5; }
+
+        /* UTILS */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        /* FLOW PILLS */
+        .pill-blue-flow { background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
+        .pill-blue-flow.active { background: var(--primary); color: white; border-color: var(--primary); }
     </style>
 </head>
-<body class="hero-compact">
+<body>
 
-    <div id="scroll-progress"></div>
-
-    <div class="page-container content-reveal">
-        <nav>
-            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links">
-                <a href="foundations.html">Foundations</a>
-                <a href="steer.html">Steer</a>
-                
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">About ▾</span>
-                    <div class="dropdown-content">
-                        <a href="origins.html">Origins</a>
-                        <a href="frameworks.html">Frameworks</a>
-                        <a href="blueprint.html">Blueprint</a>
-                    </div>
-                </div>
-
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">GAIN Series ▾</span>
-                    <div class="dropdown-content">
-                        <a href="week1.html">1: KNOW — Intelligence Layer</a>
-                        <a href="week2.html">2: MAP — Strategic Mapping</a>
-                        <a href="week3.html">3: WIN — Winning the Deal</a>
-                        <a href="week4.html">4: GROW — Continuous Growth</a>
-                    </div>
-                </div>
-                <a href="visuals.html">Visuals</a>
-                <a href="contact.html" class="nav-cta">Contact</a>
-            </div>
-        </nav>
-    
-        <header class="dark-header-block">
-            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Continuous Growth" style="opacity: 0.6;">
-            <div class="hero-impact">
-                <div class="hero-content reveal" style="text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 4 — [N] NURTURE / GROW THEM — VELOCITY @ SCALE</p>
-                    <h1 class="hero-headline">
-                        <span style="color: #ffffff; display: block;">One deal is an event.</span>
-                        <span style="color: #3b82f6; display: block;">A franchise is a system.</span>
-                    </h1>
-                    <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                    <p class="hero-subtext">
-                        Account growth. Expansion signals. 90-day campaigns. The operating rhythm that turns one win into a portfolio.
-                    </p>
-                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
-                        CONTINUOUS — FROM SINGLE DEAL TO ACCOUNT FRANCHISE
-                    </p>
+    <nav>
+        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="steer.html">Steer</a>
+            <div class="nav-dropdown">
+                <span>About ▾</span>
+                <div class="dropdown-content">
+                    <a href="origins.html">Origins</a>
+                    <a href="frameworks.html">Frameworks</a>
+                    <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
-        </header>
+            <div class="nav-dropdown">
+                <span class="active" style="color: white;">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">1: KNOW — Intelligence</a>
+                    <a href="week2.html">2: MAP — Omniscience</a>
+                    <a href="week3.html">3: WIN — Oxygen</a>
+                    <a href="week4.html" style="color: var(--primary);">4: GROW — Velocity</a>
+                </div>
+            </div>
+            <a href="visuals.html">Visuals</a>
+            <a href="contact.html" class="nav-cta">CONTACT</a>
+        </div>
+    </nav>
 
-    <main style="margin-top: -4rem; position: relative; z-index: 2;">
+    <header class="dark-header-block">
+        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Velocity at Scale">
+        <div class="hero-impact">
+            <span class="hero-pre">WEEK 4 — [N] NURTURE / GROW THEM — VELOCITY @ SCALE</span>
+            <h1 class="hero-headline">
+                <span style="color: #ffffff; display: block;">One deal is an event.</span>
+                <span style="color: #3b82f6; display: block;">A franchise is a system.</span>
+            </h1>
+            <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
+            <p class="hero-subtext">
+                Account growth. Expansion signals. 90-day campaigns. The operating rhythm that turns one win into a portfolio.
+            </p>
+            <span class="hero-meta">CONTINUOUS — FROM SINGLE DEAL TO ACCOUNT FRANCHISE</span>
+        </div>
+    </header>
+
+    <main>
         
-        <section class="reveal">
-            <div class="container" style="max-width: 800px;">
+        <div class="container-prose reveal">
+            <div class="worked-example-clean" style="margin-top: 0;">
+                <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
+                    <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
+                    James had delivered brilliantly for 18 months. SLAs green across the board. Then he lost £2M of expansion business. Not because his delivery was poor. Because while he was focused on what he was already doing, someone else was having conversations about what the client needed next. Week 4 is the system that prevents this.
+                </div>
+            </div>
+
+            <div class="blue-callout-short" style="margin-top: 2rem;">
+                <strong>This week is different.</strong> Weeks 1-3 are sequential. Week 4 is continuous. These prompts run monthly, quarterly, on every signal. They're the operating rhythm of account management.
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">BEFORE YOU BEGIN</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="list-grid">
+                <div class="list-col">
+                    <h3>GATHER</h3>
+                    <div class="list-item"><span class="list-num">01:</span> Current contract scope — what you deliver, SLA performance</div>
+                    <div class="list-item"><span class="list-num">02:</span> Latest company research — refresh Week 1 intelligence</div>
+                    <div class="list-item"><span class="list-num">03:</span> Account team knowledge — incident reports, governance notes</div>
+                    <div class="list-item"><span class="list-num">04:</span> Stakeholder updates — new hires, departures, reorgs</div>
+                </div>
+                <div class="list-col">
+                    <h3>PREPARE</h3>
+                    <div class="list-item"><span class="list-num">05:</span> Current pipeline — opportunities already identified</div>
+                    <div class="list-item"><span class="list-num">06:</span> Competitor intelligence — who else serves this account?</div>
+                    <div class="list-item"><span class="list-num">07:</span> Relationship audit — who do you know well? Who is new?</div>
+                    <div class="list-item"><span class="list-num">08:</span> Contract timeline — renewal dates (yours and theirs)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">THE FRAMEWORK</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Continuous Operating Rhythm</p>
                 
-                <div class="worked-example-box">
-                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Context</h2>
-                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                        <p class="body-prose" style="margin: 0;">James had delivered brilliantly for 18 months. SLAs green across the board. Then he lost £2M of expansion business. Not because his delivery was poor. Because while he was focused on what he was already doing, someone else was having conversations about what the client needed next. Week 4 is the system that prevents this.</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">FIND EXPANSION</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">EXPAND MAP</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">CAMPAIGN</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">QUALIFY</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">DASHBOARD</span>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;">
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">RENEWAL</span>
+                    <span style="color: var(--slate); opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">NEW LEADER</span>
+                    <span style="color: var(--slate); opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">THREAT DETECT</span>
+                    <span style="color: var(--slate); opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">VALUE REPORT</span>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Row 1: The core account cycle. Row 2: Event-triggered and periodic prompts that run continuously.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">00</div>
+                <div class="step-content">
+                    <span class="step-counter">PRE-START</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Warning Brief</h2>
+                        <span class="time-pill">~15 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-blue reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">i</div>
-                    <div class="note-box-content">
-                        <p><strong>This week is different.</strong> Weeks 1-3 are sequential. Week 4 is continuous. These prompts run monthly, quarterly, on every signal. They're the operating rhythm of account management.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                This prevents the "Sales sold a Ferrari, Delivery built a Fiat" argument. Ensures commercial protections survive into operations.
+            </div>
 
-                <div class="reveal" style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;">THIS IS NURTURE — THE FOURTH DISCIPLINE OF GAIN</p>
-                    <p style="font-size: 0.9rem; color: var(--slate); max-width: 600px; margin: 0 auto;">Grow them before they outgrow you. Every prompt on this page turns delivery into expansion — the operating rhythm that makes one deal a franchise.</p>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="grid-2-col">
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">GATHER</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>01:</strong> Current contract scope — what you deliver, SLA performance<br>
-                            <strong>02:</strong> Latest company research — refresh Week 1 intelligence<br>
-                            <strong>03:</strong> Account team knowledge — incident reports, governance notes<br>
-                            <strong>04:</strong> Stakeholder updates — new hires, departures, reorgs
-                        </p>
-                    </div>
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">PREPARE</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>05:</strong> Current pipeline — opportunities already identified<br>
-                            <strong>06:</strong> Competitor intelligence — who else serves this account?<br>
-                            <strong>07:</strong> Relationship audit — who do you know well? Who is new?<br>
-                            <strong>08:</strong> Contract timeline — renewal dates (yours and theirs)
-                        </p>
-                    </div>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="reveal" style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Continuous Operating Rhythm</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">FIND EXPANSION</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">EXPAND MAP</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">CAMPAIGN</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">QUALIFY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--primary); color: white; border: 1px solid var(--primary); font-size: 0.65rem; padding: 6px 12px;">DASHBOARD</span>
-                    </div>
-
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;">
-                        <span class="pill-blue" style="background: rgba(255,255,255,0.03); color: var(--slate); border: 1px solid var(--border-dynamic); font-size: 0.6rem; padding: 4px 10px;">RENEWAL</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue" style="background: rgba(255,255,255,0.03); color: var(--slate); border: 1px solid var(--border-dynamic); font-size: 0.6rem; padding: 4px 10px;">NEW LEADER</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue" style="background: rgba(255,255,255,0.03); color: var(--slate); border: 1px solid var(--border-dynamic); font-size: 0.6rem; padding: 4px 10px;">THREAT DETECT</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue" style="background: rgba(255,255,255,0.03); color: var(--slate); border: 1px solid var(--border-dynamic); font-size: 0.6rem; padding: 4px 10px;">VALUE REPORT</span>
-                    </div>
-
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Row 1: The core account cycle. Row 2: Event-triggered and periodic prompts that run continuously.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">00</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">PRE-START</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Warning Brief</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">This prevents the "Sales sold a Ferrari, Delivery built a Fiat" argument. Ensures commercial protections survive into operations.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-00 // WARNING BRIEF GENERATOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Role: You are a Commercial Risk Officer bridging Sales and Delivery.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-00 // WARNING BRIEF GENERATOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Role: You are a Commercial Risk Officer bridging Sales and Delivery.
 
 Input: Winning Proposal, Commercial Exclusions (E-03), Signed Contract.
 
@@ -214,42 +382,39 @@ Structure:
 3. THE LANDMINES: Contract vs Proposal differences.
 4. COMMERCIAL TRIGGERS: Events that must trigger a Change Request.
 
-[PASTE DOCUMENTS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE DOCUMENTS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">Winning the bid is useless if you lose money on the delivery. This prompt generates the commercial armour that protects your margin from "scope creep" and "data migration black holes" the moment the contract starts.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 1 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Find Expansion</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — Winning the bid is useless if you lose money on the delivery. This prompt generates the commercial armour that protects your margin from "scope creep" and "data migration black holes" the moment the contract starts.</p>
-                </div>
+            <div class="blue-callout-short">
+                You see their operations from the inside. The Account Edition of Boring But Expensive finds the NEXT set of problems you can solve.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">01</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 1 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Find Expansion</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">You see their operations from the inside. The Account Edition of Boring But Expensive finds the NEXT set of problems you can solve.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-01 // BORING BUT EXPENSIVE — ACCOUNT EDITION</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Strategic Account Director.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-01 // BORING BUT EXPENSIVE — ACCOUNT EDITION</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Strategic Account Director.
 
 Input: Service reviews, incident reports, meeting minutes.
 
@@ -262,51 +427,44 @@ Look for:
 
 Output as a 'Growth Opportunity Register'.
 
-[PASTE DATA HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE DATA HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose"><strong>Expansion signals:</strong> Security ops team referenced in incident reports as a bottleneck. Morris's resilience programme needs automated vendor risk monitoring. Edinburgh office migration needs network infra.<br>If your analysis only finds opportunities inside your current scope, you're not reading the adjacent signals.</p>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">Dissatisfaction signals are the easiest expansion opportunities. The client complains about another supplier in a governance meeting. The service desk sees tickets that relate to a system you don't manage. These signals exist in every account. The question is whether anyone is listening.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 2 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Expand the Map</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Expansion signals: Security ops team referenced in incident reports as a bottleneck. Morris's resilience programme needs automated vendor risk monitoring. Edinburgh office migration needs network infra.<br>
-                        If your analysis only finds opportunities inside your current scope, you're not reading the adjacent signals.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Who do you need to know that you don't know yet — and who in your existing network can introduce you?
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — Dissatisfaction signals are the easiest expansion opportunities. The client complains about another supplier in a governance meeting. The service desk sees tickets that relate to a system you don't manage. These signals exist in every account. The question is whether anyone is listening.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">02</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 2 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Expand the Map</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Who do you need to know that you don't know yet — and who in your existing network can introduce you?</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-02 // STAKEHOLDER EXPANSION MAPPING</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Networking Strategist.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-02 // STAKEHOLDER EXPANSION MAPPING</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Networking Strategist.
 
 Context: We work with [EXISTING CONTACTS] in [DEPARTMENT].
 Target: We want to expand into [NEW DEPARTMENT].
@@ -315,47 +473,41 @@ Target: We want to expand into [NEW DEPARTMENT].
 2. Map the 'Bridge': How likely is it that our existing contacts know them?
 3. Draft a 'Referral Request': Write the email asking our champion to introduce us.
 
-[PASTE CURRENT CONTACTS AND TARGET AREA HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CURRENT CONTACTS AND TARGET AREA HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">You currently have strong relationships with Andrew Chen (IT Infrastructure) and Jennifer Morris (Resilience). The expansion target is the Security Operations team and the Edinburgh office leadership.<br><br>Your bridge mapping should show: Morris → Osei (CRO, her manager) → Security Ops. Chen → Edinburgh IT lead. The referral request to Morris should reference the vendor risk monitoring gap she's publicly discussed.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 3 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Plan the Campaign</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        You currently have strong relationships with Andrew Chen (IT Infrastructure) and Jennifer Morris (Resilience). The expansion target is the Security Operations team and the Edinburgh office leadership.<br><br>
-                        Your bridge mapping should show: Morris → Osei (CRO, her manager) → Security Ops. Chen → Edinburgh IT lead. The referral request to Morris should reference the vendor risk monitoring gap she's publicly discussed.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                A specific, 12-week plan with named actions, named owners, and measurable milestones. This is the operating document.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">03</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 3 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Plan the Campaign</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">A specific, 12-week plan with named actions, named owners, and measurable milestones. This is the operating document.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-03 // 90-DAY CAMPAIGN ASSEMBLY</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Campaign Director.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-03 // 90-DAY CAMPAIGN ASSEMBLY</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Campaign Director.
 
 Goal: Move from [CURRENT STATE] to [DESIRED STATE].
 
@@ -367,103 +519,85 @@ For each week define:
 - The Owner.
 - The Success Metric.
 
-[PASTE GOAL AND CONTEXT HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE GOAL AND CONTEXT HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">Goal: Expand from managed IT operations to include security operations monitoring.<br><br><strong>Month 1:</strong> Discovery with Security Ops lead (via Morris introduction).<br><strong>Month 2:</strong> Co-design workshop with Security Ops + Chen's team. Joint architecture session.<br><strong>Month 3:</strong> Proposal. Outcome-linked pricing matching existing contract model. Board paper drafted by Morris and Chen.</p>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The week-by-week timeline with named owners is what makes this real. A campaign without dates is a wish list. A campaign without owners is a delegation failure.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 4 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Qualify</h2>
+                        <span class="time-pill">~15 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Goal: Expand from managed IT operations to include security operations monitoring.<br><br>
-                        <strong>Month 1:</strong> Discovery with Security Ops lead (via Morris introduction).<br>
-                        <strong>Month 2:</strong> Co-design workshop with Security Ops + Chen's team. Joint architecture session.<br>
-                        <strong>Month 3:</strong> Proposal. Outcome-linked pricing matching existing contract model. Board paper drafted by Morris and Chen.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Not every opportunity deserves investment. This prompt forces the qualification decision with evidence.
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The week-by-week timeline with named owners is what makes this real. A campaign without dates is a wish list. A campaign without owners is a delegation failure.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">04</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 4 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Qualify</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Not every opportunity deserves investment. This prompt forces the qualification decision with evidence.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-04 // QUALIFY IN / QUALIFY OUT</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Sales Director.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-04 // QUALIFY IN / QUALIFY OUT</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Sales Director.
 
 Evaluate opportunity against MEDDIC framework. Score each letter Red/Amber/Green.
 - Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion.
 
 Recommendation: PURSUE, PARK, or WALK AWAY? Explain why.
 
-[PASTE FACTS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE FACTS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">Run W4-04 against the security ops expansion opportunity.<br><strong>GREEN:</strong> Metrics (incident handoff data proves problem), Champion (Morris).<br><strong>AMBER:</strong> Economic Buyer (Thompson hasn't been engaged yet).<br><strong>RED:</strong> Decision Criteria (Security Ops may have preferred vendor — intelligence gap).<br>Recommendation: PURSUE — but fix the red before Month 2.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">05</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 5 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">The Dashboard</h2>
+                        <span class="time-pill">~15 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Run W4-04 against the security ops expansion opportunity.<br>
-                        <strong>GREEN:</strong> Metrics (incident handoff data proves problem), Champion (Morris).<br>
-                        <strong>AMBER:</strong> Economic Buyer (Thompson hasn't been engaged yet).<br>
-                        <strong>RED:</strong> Decision Criteria (Security Ops may have preferred vendor — intelligence gap).<br>
-                        Recommendation: PURSUE — but fix the red before Month 2.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                One page. This is what the Managing Director sees quarterly. Performance RAG. Risks. Opportunities.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">05</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 5 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">The Dashboard</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">One page. This is what the Managing Director sees quarterly. Performance RAG. Risks. Opportunities.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-05 // ACCOUNT HEALTH DASHBOARD</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Synthesize account data into a 'One-Page Executive Dashboard'.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-05 // ACCOUNT HEALTH DASHBOARD</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Synthesize account data into a 'One-Page Executive Dashboard'.
 
 Sections:
 1. Financial Health (Revenue, Margin).
@@ -473,50 +607,41 @@ Sections:
 5. Top 3 Growth Opportunities.
 6. Top 3 Risks.
 
-[PASTE ALL ACCOUNT DATA HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE ALL ACCOUNT DATA HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose"><strong>Financial:</strong> GREEN — £8.2M contract on track.<br><strong>Operational:</strong> GREEN — all SLAs met.<br><strong>Relationship:</strong> AMBER — strong in IT Ops, weak in Security Ops and board level.<br><strong>Strategic Alignment:</strong> AMBER — Meridian 2030 Phase 2 starts 2027. Current scope covers Phase 1 only.<br>If all four quadrants are green, you're measuring the wrong things.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">06</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 6 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Renewal Intelligence</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Financial:</strong> GREEN — £8.2M contract on track.<br>
-                        <strong>Operational:</strong> GREEN — all SLAs met.<br>
-                        <strong>Relationship:</strong> AMBER — strong in IT Ops, weak in Security Ops and board level.<br>
-                        <strong>Strategic Alignment:</strong> AMBER — Meridian 2030 Phase 2 starts 2027. Current scope covers Phase 1 only.<br>
-                        If all four quadrants are green, you're measuring the wrong things.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Renewals are won or lost 18 months before expiry. This prompt builds the renewal strategy while you still have time.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">06</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 6 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Renewal Intelligence</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Renewals are won or lost 18 months before expiry. This prompt builds the renewal strategy while you still have time.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-06 // CONTRACT RENEWAL INTELLIGENCE</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a strategic account director planning for renewal 18 months out.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-06 // CONTRACT RENEWAL INTELLIGENCE</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a strategic account director planning for renewal 18 months out.
 
 Produce:
 1. RENEWAL RISK ASSESSMENT: What has changed since contract award?
@@ -526,46 +651,41 @@ Produce:
 5. RENEWAL STRATEGY: Renew as-is, expand, or transform?
 6. 18-MONTH ACTION PLAN.
 
-[PASTE CONTRACT DATA, PERFORMANCE, STAKEHOLDER MAP]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CONTRACT DATA, PERFORMANCE, STAKEHOLDER MAP]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">The Helios contract runs 5+2 years. The extension decision comes at month 48. That means the extension conversation starts internally at Meridian around month 36. Helios needs to be shaping that conversation from month 30. If you're only thinking about renewal when procurement sends you a letter, you've already lost.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">07</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 7 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">New Leadership Response</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        The Helios contract runs 5+2 years. The extension decision comes at month 48. That means the extension conversation starts internally at Meridian around month 36. Helios needs to be shaping that conversation from month 30. If you're only thinking about renewal when procurement sends you a letter, you've already lost.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Every leadership change is a threat and an opportunity. This prompt builds the rapid response plan for the first 30 days.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">07</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 7 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">New Leadership Response</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Every leadership change is a threat and an opportunity. This prompt builds the rapid response plan for the first 30 days.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-07 // NEW LEADERSHIP RESPONSE PROTOCOL</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">A new senior leader has joined.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-07 // NEW LEADERSHIP RESPONSE PROTOCOL</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">A new senior leader has joined.
 
 1. PROFILE: Career, priorities, previous vendors.
 2. THREAT ASSESSMENT: Did they use a competitor?
@@ -573,96 +693,84 @@ Produce:
 4. 30-DAY ENGAGEMENT PLAN: Who introduces us? What do we lead with?
 5. FIRST MEETING BRIEFING.
 
-[PASTE LINKEDIN PROFILE AND CONTEXT]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE LINKEDIN PROFILE AND CONTEXT]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">Scenario: A new CTO joins Meridian from a company that used a global competitor. Their LinkedIn shows posts praising that competitor. This is a RED flag.<br>30-day plan: Week 1 — intelligence gathering. Week 2 — warm introduction via Harrison or Hale. Week 3 — first meeting led with Helios delivery data, not a capability pitch.</p>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The first instinct is to get in front of the new leader fast. The experienced instinct is to get informed first and introduced second. A meeting without intelligence is a pitch. A meeting with intelligence is a conversation.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">08</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 8 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Threat Detection</h2>
+                        <span class="time-pill">MONTHLY</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Scenario: A new CTO joins Meridian from a company that used a global competitor. Their LinkedIn shows posts praising that competitor. This is a RED flag.<br>
-                        30-day plan: Week 1 — intelligence gathering. Week 2 — warm introduction via Harrison or Hale. Week 3 — first meeting led with Helios delivery data, not a capability pitch.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Competitors don't announce they're targeting your account. This prompt builds the monthly early warning scan.
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The first instinct is to get in front of the new leader fast. The experienced instinct is to get informed first and introduced second. A meeting without intelligence is a pitch. A meeting with intelligence is a conversation.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">08</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 8 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Threat Detection</h3>
-                            <div class="pill-blue">MONTHLY</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Competitors don't announce they're targeting your account. This prompt builds the monthly early warning scan.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-08 // COMPETITIVE THREAT DETECTION</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a competitive intelligence analyst.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-08 // COMPETITIVE THREAT DETECTION</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a competitive intelligence analyst.
 
 Check for signals: LinkedIn connections, Hiring patterns, Event attendance, Operational mentions, Procurement activity.
 
 For each signal: Rate threat level (LOW/MED/HIGH) and recommend action.
 
-[PASTE OBSERVATIONS AND GOVERNANCE NOTES]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE OBSERVATIONS AND GOVERNANCE NOTES]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">Monthly scan reveals: Sarah Blackwell (Procurement) connected with two sales directors from a global competitor on LinkedIn last week. Harrison mentioned "exploring options for network infrastructure" in the last governance meeting. A competitor presented at the same FCA resilience conference Jennifer Morris attended.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">09</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 9 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Value Realisation</h2>
+                        <span class="time-pill">QUARTERLY</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Monthly scan reveals: Sarah Blackwell (Procurement) connected with two sales directors from a global competitor on LinkedIn last week. Harrison mentioned "exploring options for network infrastructure" in the last governance meeting. A competitor presented at the same FCA resilience conference Jennifer Morris attended.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                This is the document that goes to the board — not operational metrics, but business outcomes enabled by the partnership.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">09</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 9 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Value Realisation</h3>
-                            <div class="pill-blue">QUARTERLY</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">This is the document that goes to the board — not operational metrics, but business outcomes enabled by the partnership.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-09 // VALUE REALISATION REPORT GENERATOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a strategic account director producing a board-level report.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-09 // VALUE REALISATION REPORT GENERATOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a strategic account director producing a board-level report.
 
 Produce:
 1. EXECUTIVE SUMMARY: Business value delivered.
@@ -671,52 +779,44 @@ Produce:
 4. STRATEGIC ALIGNMENT: Mapping to their priorities.
 5. FORWARD VIEW.
 
-[PASTE PERFORMANCE DATA AND BUSINESS CONTEXT]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE PERFORMANCE DATA AND BUSINESS CONTEXT]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">The SLA report says: "99.7% availability, P1 incidents resolved within SLA."<br>The value realisation report says: "Protected estimated £4.2M in potential revenue loss across 3 service events. Alert noise reduction freed 340 FTE hours monthly redeployed to resilience programme. ISO 22301 certification milestone achieved on schedule."<br>The first is for the IT manager. The second is for the board.</p>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The value realisation report is the single most important renewal defence document. It builds the evidence base over 5 years that makes going to market feel unnecessary. Every quarter you skip is a quarter of evidence you'll never recover.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">10</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 10 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Intelligence Refresh</h2>
+                        <span class="time-pill">MONTHLY</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        The SLA report says: "99.7% availability, P1 incidents resolved within SLA."<br>
-                        The value realisation report says: "Protected estimated £4.2M in potential revenue loss across 3 service events. Alert noise reduction freed 340 FTE hours monthly redeployed to resilience programme. ISO 22301 certification milestone achieved on schedule."<br>
-                        The first is for the IT manager. The second is for the board.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                This prompt runs the intelligence refresh monthly — flagging what has CHANGED since your last scan.
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The value realisation report is the single most important renewal defence document. It builds the evidence base over 5 years that makes going to market feel unnecessary. Every quarter you skip is a quarter of evidence you'll never recover.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">10</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 10 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Intelligence Refresh</h3>
-                            <div class="pill-blue">MONTHLY</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">This prompt runs the intelligence refresh monthly — flagging what has CHANGED since your last scan.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-10 // CONTINUOUS INTELLIGENCE MONITOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as an intelligence analyst.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-10 // CONTINUOUS INTELLIGENCE MONITOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as an intelligence analyst.
 
 Compare this month's sources against baseline. Flag ONLY changes:
 1. NEW STRATEGIC SIGNALS.
@@ -725,46 +825,41 @@ Compare this month's sources against baseline. Flag ONLY changes:
 4. REGULATORY CHANGES.
 5. COMPETITIVE SIGNALS.
 
-[PASTE THIS MONTH'S SOURCES AND BASELINE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE THIS MONTH'S SOURCES AND BASELINE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">Monthly refresh flags: Meridian posted 3 new job listings for "Cloud Security Architect" — signals Phase 2 of Meridian 2030 is moving to execution. Whitfield's LinkedIn post mentions "pan-European resilience" — language suggesting geographic expansion. Thompson presented at an investor conference and referenced "managed services cost glide path".</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">11</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 11 OF 11</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Internal Business Case</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Monthly refresh flags: Meridian posted 3 new job listings for "Cloud Security Architect" — signals Phase 2 of Meridian 2030 is moving to execution. Whitfield's LinkedIn post mentions "pan-European resilience" — language suggesting geographic expansion. Thompson presented at an investor conference and referenced "managed services cost glide path".</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Before you can win the deal externally, you need to win the resource allocation internally. This prompt builds the case for investment.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">11</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 11 OF 11</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Internal Business Case</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Before you can win the deal externally, you need to win the resource allocation internally. This prompt builds the case for investment.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W4-11 // INTERNAL BUSINESS CASE BUILDER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a pursuit director. Build a one-page investment case.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W4-11 // INTERNAL BUSINESS CASE BUILDER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a pursuit director. Build a one-page investment case.
 
 1. OPPORTUNITY SUMMARY.
 2. WIN PROBABILITY (Honest assessment).
@@ -774,151 +869,184 @@ Compare this month's sources against baseline. Flag ONLY changes:
 6. RISK FACTORS.
 7. RECOMMENDATION (Pursue/Park/Walk).
 
-[PASTE QUALIFICATION DATA AND DEAL CONTEXT]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE QUALIFICATION DATA AND DEAL CONTEXT]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
-
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        The original Meridian pursuit required 6 weeks of bid team time and 2 senior engineers. The business case should quantify: £65-80M contract value over 5+2 years, 14% target margin, Meridian as a flagship regulated FS reference, portfolio effect. If your internal business case doesn't include win probability with honest reasoning, your leadership is making resource decisions blind.</p>
-                    </div>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">WHERE THIS BREAKS</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="worked-example-box reveal">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: The Dashboard That Lied</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Every RAG was green. SLA performance excellent. Then the client told us they were going to market.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Green SLAs don't mean green relationships. Measure "strategic alignment".</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: The Campaign Nobody Followed</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Built a beautiful 90-day campaign. Reviewed it once. Never looked at it again. By week 4, the campaign was fiction.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: A campaign without weekly governance is just a document.</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: The Renewal That Was Already Lost</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Delivery was excellent for four years. Every SLA met. Every governance meeting green. When the renewal conversation started, procurement had already shortlisted two competitors. A rival account director had been building relationships with the new CFO for 12 months — attending the same events, sharing relevant case studies, connecting on LinkedIn. We didn't know because we were measuring delivery, not relevance.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Delivery earns the right to renew. It doesn't guarantee the renewal. If you're not running W4-08 (Threat Detection) and W4-06 (Renewal Intelligence) continuously, a competitor is doing the selling you've stopped doing.</p>
-                    </div>
-                </div>
-
-                <section class="container reveal" style="padding-top: 6rem; padding-bottom: 2rem;">
-                    <div class="section-divider">
-                        <div class="divider-line"></div>
-                        <span class="divider-label">PROMPT LIBRARY</span>
-                        <div class="divider-line"></div>
-                    </div>
-                    
-                    <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ACCOUNT INTELLIGENCE</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-00')">W4-00 // WARNING BRIEF <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-01')">W4-01 // EXPANSION SIGNALS <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-02')">W4-02 // STAKEHOLDER EXPANSION <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-10')">W4-10 // INTELLIGENCE REFRESH <span class="copy-badge">Copy</span></button>
-                    </div>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">CAMPAIGN PLANNING</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-03')">W4-03 // 90-DAY CAMPAIGN <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-04')">W4-04 // QUALIFY IN/OUT <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-05')">W4-05 // ACCOUNT DASHBOARD <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-11')">W4-11 // BUSINESS CASE <span class="copy-badge">Copy</span></button>
-                    </div>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION & DEFENCE</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-06')">W4-06 // RENEWAL INTEL <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-07')">W4-07 // NEW LEADERSHIP <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-08')">W4-08 // THREAT DETECTION <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-09')">W4-09 // VALUE REPORT <span class="copy-badge">Copy</span></button>
-                    </div>
-                </section>
-
-                <div class="reveal" style="text-align: center; margin-top: 4rem; margin-bottom: 2rem; padding: 3rem 2rem; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 12px;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;">THE MURMURATION</p>
-                    <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-heading); max-width: 600px; margin: 0 auto 1.5rem auto; line-height: 1.6;">This is where GAIN becomes continuous. Where the system moves as one. Week 4 doesn't end — it feeds back into Week 1. Intelligence refreshes. Maps update. Win themes evolve. The flock turns together.</p>
-                    <p style="font-size: 0.85rem; color: var(--slate); max-width: 500px; margin: 0 auto;">No single bird leads. The system leads. That's the unfair advantage.</p>
-                </div>
-
-                <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
-                    <a href="foundations.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: 700; margin-right: 1rem;">REVISIT FOUNDATIONS</a>
-                    <a href="index.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-body); text-decoration: none; border-radius: 6px; font-weight: 700;">RETURN TO HOME</a>
-                </div>
-
             </div>
-        </section>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose">The original Meridian pursuit required 6 weeks of bid team time and 2 senior engineers. The business case should quantify: £65-80M contract value over 5+2 years, 14% target margin, Meridian as a flagship regulated FS reference, portfolio effect. If your internal business case doesn't include win probability with honest reasoning, your leadership is making resource decisions blind.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider" style="margin-top: 4rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">WHERE THIS BREAKS</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 1: The Dashboard That Lied</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Every RAG was green. SLA performance excellent. Then the client told us they were going to market.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Green SLAs don't mean green relationships. Measure "strategic alignment".</span>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 2: The Campaign Nobody Followed</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Built a beautiful 90-day campaign. Reviewed it once. Never looked at it again. By week 4, the campaign was fiction.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> A campaign without weekly governance is just a document.</span>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 3: The Renewal That Was Already Lost</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Delivery was excellent for four years. Every SLA met. Every governance meeting green. When the renewal conversation started, procurement had already shortlisted two competitors. A rival account director had been building relationships with the new CFO for 12 months. We didn't know because we were measuring delivery, not relevance.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Delivery earns the right to renew. It doesn't guarantee the renewal. If you're not running W4-08 (Threat Detection) and W4-06 (Renewal Intelligence) continuously, a competitor is doing the selling you've stopped doing.</span>
+            </div>
+        </div>
+
+        <div class="container-wide reveal">
+            <div class="section-divider" style="margin-top: 6rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">PROMPT LIBRARY</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ACCOUNT INTELLIGENCE</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-00')">W4-00 // WARNING BRIEF <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-01')">W4-01 // EXPANSION SIGNALS <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-02')">W4-02 // STAKEHOLDER EXPANSION <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-10')">W4-10 // INTELLIGENCE REFRESH <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">CAMPAIGN PLANNING</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-03')">W4-03 // 90-DAY CAMPAIGN <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-04')">W4-04 // QUALIFY IN/OUT <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-05')">W4-05 // ACCOUNT DASHBOARD <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-11')">W4-11 // BUSINESS CASE <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION & DEFENCE</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-06')">W4-06 // RENEWAL INTEL <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-07')">W4-07 // NEW LEADERSHIP <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-08')">W4-08 // THREAT DETECTION <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-09')">W4-09 // VALUE REPORT <span class="copy-badge">Copy</span></button>
+            </div>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-top: 4rem; margin-bottom: 2rem; padding: 3rem 2rem; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 12px;">
+            <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;">THE MURMURATION</p>
+            <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-heading); max-width: 600px; margin: 0 auto 1.5rem auto; line-height: 1.6;">This is where GAIN becomes continuous. Where the system moves as one. Week 4 doesn't end — it feeds back into Week 1. Intelligence refreshes. Maps update. Win themes evolve. The flock turns together.</p>
+            <p style="font-size: 0.85rem; color: var(--slate); max-width: 500px; margin: 0 auto;">No single bird leads. The system leads. That's the unfair advantage.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
+            <a href="foundations.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: 700; margin-right: 1rem; transition: transform 0.2s;">REVISIT FOUNDATIONS</a>
+            <a href="index.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-body); text-decoration: none; border-radius: 6px; font-weight: 700; transition: all 0.2s;">RETURN TO HOME</a>
+        </div>
+
     </main>
 
     <footer>
         <div class="footer-inner">
             <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
-            <div class="footer-links">
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color: var(--slate);">
+            <div class="footer-right">
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>
-                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.85rem;">
+                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
                     AI Is Not Your Cheerleader →
                 </a>
             </div>
         </div>
-        <div class="footer-subtle">
+        <div class="footer-bottom">
             No hype. Just results. © 2026
         </div>
     </footer>
-    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (mobileMenuToggle && navLinks) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
+    <script>
+        // TOGGLE PROMPT EXPANSION
+        function togglePrompt(btn) {
+            const content = btn.parentElement.previousElementSibling;
+            content.classList.toggle('expanded');
+            btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+        }
+
+        // COPY FUNCTIONALITY
+        function copyPrompt(btn) {
+            const content = btn.parentElement.previousElementSibling.innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                const original = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.color = '#10b981';
+                setTimeout(() => {
+                    btn.innerText = original;
+                    btn.style.color = '';
+                }, 2000);
             });
         }
-        
-        // Scroll Reveal with immediate check for elements already in viewport
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => { 
-                if (e.isIntersecting) e.target.classList.add('active'); 
-            });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                el.classList.add('active');
+        // LIBRARY COPY FUNCTIONALITY
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const wrapper = title.nextElementSibling;
+                    const content = wrapper.querySelector('.prompt-content');
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = 'COPIED';
+                    badge.style.background = '#10b981';
+                    setTimeout(() => {
+                        badge.innerText = original;
+                        badge.style.background = '';
+                    }, 2000);
+                });
+            } else {
+                console.warn('Prompt ID not found:', promptID);
             }
-            // Observe for future scroll reveals
-            revealObserver.observe(el);
+        }
+
+        // MOBILE MENU TOGGLE
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const nav = document.querySelector('.nav-links');
+            
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                });
+            }
+
+            // SCROLL REVEAL
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
-    });
-</script>
+    </script>
 </body>
 </html>

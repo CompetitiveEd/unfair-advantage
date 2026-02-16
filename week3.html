@@ -3,199 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Win Them: Winning the Deal. Generating outcome-centric sales narratives.">
-    <title>Win Them: Winning the Deal | The Unfair Advantage</title>
+    <meta name="description" content="Win Them: The Oxygen Effect. Generating outcome-centric sales narratives.">
+    <title>Win Them: Oxygen Effect | The Unfair Advantage</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Specific Week 3 Visuals - Kept as overrides where necessary */
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-body); padding: 12px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
-        .library-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); color: white; transform: translateY(-1px); }
-        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
-        .library-btn:hover .copy-badge { background: var(--primary); color: white; border-color: var(--primary); }
+        /* BENTLEY / STEER DESIGN SYSTEM */
+        :root {
+            --primary: #3b82f6;
+            --primary-dim: rgba(59, 130, 246, 0.1);
+            --slate: #94a3b8;
+            --bg-body: #020617; /* Deep Steer Black */
+            --bg-card: #0f172a; /* Slightly lighter for cards */
+            --bg-console: #020617;
+            --text-body: #cbd5e1;
+            --text-heading: #ffffff;
+            --border-dynamic: rgba(255,255,255,0.08);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.1);
+            --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.1);
+            --red: #ef4444;
+            --radius-std: 12px;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Monaco', 'Consolas', monospace;
+        }
 
-        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-body); color: var(--text-body); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        a { color: var(--primary); text-decoration: none; transition: 0.2s; }
+        a:hover { color: #60a5fa; }
+
+        /* 1. FULL WIDTH NAVIGATION */
+        nav { 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1.2rem 3rem; 
+            background: rgba(2, 6, 23, 0.95); /* Dark background */
+            backdrop-filter: blur(10px);
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid var(--border-dynamic);
+        }
+        .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-cta { 
+            border: 1px solid rgba(255,255,255,0.2); 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            color: white !important;
+            transition: all 0.2s ease;
+        }
+        .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
         
-        /* Layout Fixes for Visual Consistency */
-        .step-header-block { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem; }
-        .large-step-number { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
-        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; }
-        .step-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; line-height: 1; }
-        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
-        .step-counter { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-bottom: 0.2rem; }
+        /* Dropdowns */
+        .nav-dropdown { position: relative; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        .dropdown-content a:last-child { border-bottom: none; }
 
-        /* Console styling */
-        .prompt-console-header { background: #1e293b; padding: 10px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; display: flex; justify-content: space-between; align-items: center; }
-        .prompt-console-dots span { height: 8px; width: 8px; background-color: #334155; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .prompt-console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; }
-        .prompt-wrapper { position: relative; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 12px 12px; overflow: hidden; border-top: none; }
-        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: 'Monaco', 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease; position: relative; }
+        /* HERO - STEER STYLE */
+        .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
+        .hero-bg { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0.8; 
+            pointer-events: none; 
+            z-index: 0; 
+        }
+        .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+        .hero-pre { color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: block; }
+        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; color: white; }
+        .hero-subtext { font-size: 1.25rem; font-weight: 400; color: var(--slate); max-width: 600px; margin: 0 auto; }
+        .hero-meta { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-top: 3rem; display: block; opacity: 0.7; }
+
+        /* CONTAINERS */
+        .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
+        .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
+
+        /* 2. STRICT PARALLEL STEP HEADERS */
+        .step-block { 
+            display: flex; 
+            gap: 2rem; 
+            margin-top: 6rem; 
+            margin-bottom: 2rem; 
+            align-items: flex-start; /* Key: Aligns top */
+        }
+        .step-num { 
+            font-size: 4rem; 
+            font-weight: 900; 
+            color: var(--slate); 
+            opacity: 0.2; 
+            line-height: 0.8;
+            min-width: 80px; /* Fixed width prevents wrapping */
+            flex-shrink: 0; 
+        }
+        .step-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 0.2rem; /* Optical alignment with number */
+        }
+        .step-counter { 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            color: var(--slate); 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            margin-bottom: 0.25rem; 
+        }
+        .step-title-row {
+            display: flex;
+            align-items: center; /* Aligns text and pill */
+            gap: 1rem;
+        }
+        .step-title { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: white; 
+            margin: 0; 
+            line-height: 1.1; 
+        }
+        .time-pill { 
+            display: inline-block; 
+            color: var(--slate); 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.7;
+        }
+
+        /* 3. STEP 00 LIST STYLE */
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+        .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+        .list-item { display: flex; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; line-height: 1.4; }
+        .list-num { color: white; font-weight: 700; margin-right: 0.8rem; min-width: 25px; }
+
+        /* COMPONENTS */
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        /* WORKED EXAMPLES & FAILURES */
+        .worked-example-clean { 
+            background: transparent; 
+            border: none;
+            padding: 1.5rem 0; 
+            margin-top: 1rem; 
+        }
+        .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .example-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; margin: 0; }
+        
+        .experience-header { font-size: 0.8rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.5rem; }
+        .experience-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; }
+
+        .failure-box {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid var(--red);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .failure-title { color: white; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .failure-rule { color: white; font-weight: 700; font-size: 0.9rem; margin-top: 1rem; display: block; }
+        .failure-red-text { color: var(--red); display: inline; font-weight: 800; }
+
+        /* CONSOLE */
+        .console-header-v2 { background: var(--bg-card); padding: 10px 1.5rem; border-radius: 8px 8px 0 0; border: 1px solid var(--border-dynamic); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .traffic-lights { display: flex; gap: 6px; }
+        .traffic-lights span { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+        .traffic-lights span:nth-child(1) { background: #ff5f56; }
+        .traffic-lights span:nth-child(2) { background: #ffbd2e; }
+        .traffic-lights span:nth-child(3) { background: #27c93f; }
+        .console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; font-family: var(--font-mono); text-transform: uppercase; }
+        .prompt-wrapper { background: var(--bg-console); border: 1px solid var(--border-dynamic); border-radius: 0 0 8px 8px; position: relative; overflow: hidden; }
+        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; max-height: 140px; overflow: hidden; transition: max-height 0.4s ease; position: relative; white-space: pre-wrap; }
         .prompt-content.expanded { max-height: 3000px; }
-        .prompt-actions { display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1); }
-        .prompt-expand-btn { border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 12px 1.5rem; cursor: pointer; flex-grow: 1; text-align: left; text-transform: uppercase; letter-spacing: 0.05em; }
-        .copy-btn-inline { background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: var(--primary); font-size: 0.7rem; font-weight: 800; padding: 0 1.5rem; cursor: pointer; height: 45px; transition: 0.2s; letter-spacing: 0.05em; }
+        .console-actions { display: flex; border-top: 1px solid var(--border-dynamic); background: rgba(255,255,255,0.02); }
+        .action-btn { background: transparent; border: none; padding: 10px 1.5rem; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: var(--font-main); text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-expand { color: var(--primary); flex-grow: 1; text-align: left; }
+        .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); }
+        .btn-copy:hover { color: white; background: rgba(255,255,255,0.05); }
+
+        /* DIVIDERS */
+        .section-divider { display: flex; align-items: center; gap: 1rem; margin: 5rem 0 3rem 0; }
+        .divider-line { flex-grow: 1; height: 1px; background: var(--border-dynamic); }
+        .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; text-transform: uppercase; }
+
+        /* LIBRARY */
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 4rem; }
+        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; letter-spacing: 0.02em; }
+        .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); color: white; }
+        .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 3px; }
+        .library-btn:hover .copy-badge { background: var(--primary); color: white; }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 8rem; background: var(--bg-body); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .footer-brand { font-weight: 900; letter-spacing: 0.15em; color: white; font-size: 1rem; text-transform: uppercase; }
+        .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-link { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+        .footer-link:hover { color: white; }
+        .footer-bottom { text-align: center; color: var(--slate); font-size: 0.8rem; margin-top: 3rem; opacity: 0.5; }
+
+        /* UTILS */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        /* FLOW PILLS */
+        .pill-blue-flow { background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
+        .pill-blue-flow.active { background: var(--primary); color: white; border-color: var(--primary); }
     </style>
 </head>
-<body class="hero-compact">
+<body>
 
-    <div id="scroll-progress"></div>
-
-    <div class="page-container content-reveal">
-        <nav>
-            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links">
-                <a href="foundations.html">Foundations</a>
-                <a href="steer.html">Steer</a>
-                
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">About ▾</span>
-                    <div class="dropdown-content">
-                        <a href="origins.html">Origins</a>
-                        <a href="frameworks.html">Frameworks</a>
-                        <a href="blueprint.html">Blueprint</a>
-                    </div>
-                </div>
-
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">GAIN Series ▾</span>
-                    <div class="dropdown-content">
-                        <a href="week1.html">1: KNOW — Intelligence Layer</a>
-                        <a href="week2.html">2: MAP — Strategic Mapping</a>
-                        <a href="week3.html">3: WIN — Winning the Deal</a>
-                        <a href="week4.html">4: GROW — Continuous Growth</a>
-                    </div>
-                </div>
-                <a href="visuals.html">Visuals</a>
-                <a href="contact.html" class="nav-cta">Contact</a>
-            </div>
-        </nav>
-    
-        <header class="dark-header-block">
-            <img src="assets/images/steer-hero.png" class="hero-bg" alt="Winning the Deal" style="opacity: 0.6;">
-            <div class="hero-impact">
-                <div class="hero-content reveal" style="text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 3 — [I] INFLUENCE / WIN THEM — OXYGEN EFFECT</p>
-                    <h1 class="hero-headline">
-                        <span style="color: #ffffff; display: block;">AI handles the volume.</span>
-                        <span style="color: #3b82f6; display: block;">You handle the judgment.</span>
-                    </h1>
-                    <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                    <p class="hero-subtext">
-                        Win themes. Scored responses. Orals prep. The operational machinery of winning — in half the time.
-                    </p>
-                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
-                        HALF THE TIME — FROM DEAL STRATEGY TO WINNING SUBMISSION
-                    </p>
+    <nav>
+        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="steer.html">Steer</a>
+            <div class="nav-dropdown">
+                <span>About ▾</span>
+                <div class="dropdown-content">
+                    <a href="origins.html">Origins</a>
+                    <a href="frameworks.html">Frameworks</a>
+                    <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
-        </header>
+            <div class="nav-dropdown">
+                <span class="active" style="color: white;">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">1: KNOW — Intelligence</a>
+                    <a href="week2.html">2: MAP — Omniscience</a>
+                    <a href="week3.html" style="color: var(--primary);">3: WIN — Oxygen</a>
+                    <a href="week4.html">4: GROW — Velocity</a>
+                </div>
+            </div>
+            <a href="visuals.html">Visuals</a>
+            <a href="contact.html" class="nav-cta">CONTACT</a>
+        </div>
+    </nav>
 
-    <main style="margin-top: -4rem; position: relative; z-index: 2;">
+    <header class="dark-header-block">
+        <img src="assets/images/steer-hero.png" class="hero-bg" alt="Oxygen Effect">
+        <div class="hero-impact">
+            <span class="hero-pre">WEEK 3 — [I] INFLUENCE / WIN THEM — OXYGEN EFFECT</span>
+            <h1 class="hero-headline">
+                <span style="color: #ffffff; display: block;">AI handles the volume.</span>
+                <span style="color: #3b82f6; display: block;">You handle the judgment.</span>
+            </h1>
+            <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
+            <p class="hero-subtext">
+                Win themes. Scored responses. Orals prep. The operational machinery of winning — in half the time.
+            </p>
+            <span class="hero-meta">HALF THE TIME — FROM DEAL STRATEGY TO WINNING SUBMISSION</span>
+        </div>
+    </header>
+
+    <main>
         
-        <section class="reveal">
-            <div class="container" style="max-width: 800px;">
+        <div class="container-prose reveal">
+            <div class="worked-example-clean" style="margin-top: 0;">
+                <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
+                    <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
+                    The bid team had worked weekends for three weeks. The response was comprehensive — 200 pages. They scored third. The winner's response was 80 pages, but every section opened with the client's language. Week 3 is the machinery that produces that response.
+                </div>
+            </div>
+
+            <div class="blue-callout-short" style="margin-top: 2rem;">
+                <strong>Completed Weeks 1 and 2?</strong> This week uses your deal strategy, authority map, and stakeholder intelligence as inputs. The win themes can only be as sharp as the political intelligence behind them.
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">BEFORE YOU BEGIN</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="list-grid">
+                <div class="list-col">
+                    <h3>GATHER</h3>
+                    <div class="list-item"><span class="list-num">01:</span> Deal strategy (W2-07)</div>
+                    <div class="list-item"><span class="list-num">02:</span> Authority map (W2-05)</div>
+                    <div class="list-item"><span class="list-num">03:</span> Full evaluation criteria</div>
+                    <div class="list-item"><span class="list-num">04:</span> Capability statements</div>
+                </div>
+                <div class="list-col">
+                    <h3>PREPARE</h3>
+                    <div class="list-item"><span class="list-num">05:</span> Draft response structure</div>
+                    <div class="list-item"><span class="list-num">06:</span> Competitor intelligence</div>
+                    <div class="list-item"><span class="list-num">07:</span> Win themes hypothesis</div>
+                    <div class="list-item"><span class="list-num">08:</span> Presentation team profiles</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">THE FRAMEWORK</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Oxygen Flow</p>
                 
-                <div class="worked-example-box">
-                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Context</h2>
-                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                        <p class="body-prose" style="margin: 0;">The bid team had worked weekends for three weeks. The response was comprehensive — 200 pages. They scored third. The winner's response was 80 pages, but every section opened with the client's language. Week 3 is the machinery that produces that response.</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">WIN THEMES</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">COMPETE</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">SCORE</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">WRITE</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">PRESENT</span>
+                    <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">COMMERCIAL</span>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 build strategy and scoring. Steps 4-5 write and validate. Steps 6-7 plan execution. Steps 8-9 produce the deliverables.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 1 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Win Themes</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-blue reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">i</div>
-                    <div class="note-box-content">
-                        <p><strong>Completed Weeks 1 and 2?</strong> This week uses your deal strategy, authority map, and stakeholder intelligence as inputs. The win themes can only be as sharp as the political intelligence behind them.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Win themes are not slogans. They're the three strategic threads that run through every volume of your response.
+            </div>
 
-                <div class="reveal" style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;">THIS IS INFLUENCE — THE THIRD DISCIPLINE OF GAIN</p>
-                    <p style="font-size: 0.9rem; color: var(--slate); max-width: 600px; margin: 0 auto;">Win them before the decision is made. Every prompt on this page turns intelligence into narrative — arming your champion with a story they can sell when you're not in the room.</p>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="grid-2-col">
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">GATHER</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>01:</strong> Deal strategy (W2-07) — your one-page strategic framework<br>
-                            <strong>02:</strong> Authority map (W2-05) — who evaluates what<br>
-                            <strong>03:</strong> Full evaluation criteria with weightings and scoring definitions<br>
-                            <strong>04:</strong> Your company's capability statements and case studies
-                        </p>
-                    </div>
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">PREPARE</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>05:</strong> Draft response structure — map criteria to sections<br>
-                            <strong>06:</strong> Competitor intelligence — known competitors<br>
-                            <strong>07:</strong> Win themes hypothesis — initial differentiation ideas<br>
-                            <strong>08:</strong> Presentation team profiles (if orals stage exists)
-                        </p>
-                    </div>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="reveal" style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Winning Flow</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">WIN THEMES</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">COMPETE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">SCORE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">WRITE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">PRESENT</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--primary); color: white; border: 1px solid var(--primary); font-size: 0.65rem; padding: 6px 12px;">COMMERCIAL</span>
-                    </div>
-
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 build strategy and scoring. Steps 4-5 write and validate. Steps 6-7 plan execution. Steps 8-9 produce the deliverables.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">01</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 1 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Win Themes</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Win themes are not slogans. They're the three strategic threads that run through every volume of your response.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-01 // WIN THEME GENERATOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Proposal Strategist.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-01 // WIN THEME GENERATOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Proposal Strategist.
 Context: We are bidding for [CLIENT] to provide [SERVICE].
 Our Deal Strategy (W2-07) identified these priorities: [PASTE DEAL STRATEGY].
 
@@ -205,51 +373,44 @@ Criteria for a Win Theme:
 2. It must be provable with evidence we have.
 3. It must be hard for competitors to claim.
 
-[PASTE CONTEXT/INPUTS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CONTEXT/INPUTS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="worked-example-clean">
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p class="example-prose"><strong>Theme 1:</strong> "Right size, right focus." Meridian would be Helios's 2nd-largest UK client. Global competitors will staff with generalists.<br><strong>Theme 2:</strong> "Resilience as operational DNA." 23-minute containment case study vs generic claims.</p>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">Theme deployment is what separates good bids from great ones. A win theme that only appears in the executive summary is a slogan. A win theme that appears in the technical response, the commercial proposal, the oral presentation, AND the informal stakeholder conversations is a strategy.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 2 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Competitor Intelligence</h2>
+                        <span class="time-pill">~15 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Theme 1: "Right size, right focus." Meridian would be Helios's 2nd-largest UK client. Global competitors will staff with generalists.<br>
-                        Theme 2: "Resilience as operational DNA." 23-minute containment case study vs generic claims.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                You're not bidding in a vacuum. The evaluation panel is comparing you against specific alternatives. This prompt builds the competitive landscape.
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — Theme deployment is what separates good bids from great ones. A win theme that only appears in the executive summary is a slogan. A win theme that appears in the technical response, the commercial proposal, the oral presentation, AND the informal stakeholder conversations is a strategy.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">02</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 2 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Competitor Intelligence</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">You're not bidding in a vacuum. The evaluation panel is comparing you against specific alternatives. This prompt builds the competitive landscape so your win themes are positioned AGAINST something.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-02 // COMPETITOR INTELLIGENCE SYNTHESIS</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Competitive Intelligence Analyst.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-02 // COMPETITOR INTELLIGENCE SYNTHESIS</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Competitive Intelligence Analyst.
 We are competing against [COMPETITOR A] and [COMPETITOR B].
 
 Create a 'Competitive Positioning Matrix':
@@ -258,42 +419,39 @@ Create a 'Competitive Positioning Matrix':
 3. Our Counter-Narrative: How do we inoculate the client against their claims?
 4. The 'Kill Shot': Where are they demonstrably weak where we are strong?
 
-[PASTE COMPETITOR NAMES HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE COMPETITOR NAMES HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The 'if they say, we say' responses are the most practical output. Knowing what they'll claim lets you pre-position. Not by attacking them — by making your differentiation obvious without naming anyone.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 3 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Scoring Strategy</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The 'if they say, we say' responses are the most practical output. Knowing what they'll claim lets you pre-position. Not by attacking them — by making your differentiation obvious without naming anyone.</p>
-                </div>
+            <div class="blue-callout-short">
+                Not every requirement deserves equal effort. A criterion worth 25% of the total score deserves five times the writing investment.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">03</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 3 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Scoring Strategy</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Not every requirement deserves equal effort. A criterion worth 25% of the total score deserves five times the writing investment.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-03 // TIER-BY-TIER SCORING STRATEGY</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Bid Manager optimizing for maximum weighted score.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-03 // TIER-BY-TIER SCORING STRATEGY</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Bid Manager optimizing for maximum weighted score.
 I am providing the Evaluation Criteria and Weightings.
 
 Create a 'Scoring Strategy Table':
@@ -301,38 +459,36 @@ Create a 'Scoring Strategy Table':
 2. Define exactly what evidence/case studies we must include to score a 5/5.
 3. Define the 'Minimum Viable Response' for low-value questions.
 
-[PASTE CRITERIA AND WEIGHTINGS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CRITERIA AND WEIGHTINGS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 4 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Executive Summary</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">04</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 4 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Executive Summary</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                The executive summary is the most important section. Most are about the bidder. This one is about the client.
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">The executive summary is the most important section. Most are about the bidder. This one is about the client.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-04 // EXECUTIVE SUMMARY GENERATOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a professional copywriter using the 'Made to Stick' framework.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-04 // EXECUTIVE SUMMARY GENERATOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a professional copywriter using the 'Made to Stick' framework.
 Draft the structure of the Executive Summary.
 
 Structure it in 4 Acts:
@@ -343,42 +499,39 @@ Act 4: The Proof (Why Us).
 
 Embed our 3 Win Themes (W3-01) throughout.
 
-[PASTE WIN THEMES AND CONTEXT HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE WIN THEMES AND CONTEXT HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The accusation audit embedded naturally is the subtle art. Don't open with 'We know you've been burned.' Instead: 'Investments that delivered below expectation are a pattern we've seen.' You've acknowledged the elephant. You've normalised it.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">05</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 5 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Self-Score</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The accusation audit embedded naturally is the subtle art. Don't open with 'We know you've been burned.' Instead: 'Investments that delivered below expectation are a pattern we've seen.' You've acknowledged the elephant. You've normalised it.</p>
-                </div>
+            <div class="blue-callout-short">
+                Score your own response before they do. This prompt acts as an independent evaluator.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">05</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 5 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Self-Score</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Score your own response before they do. This prompt acts as an independent evaluator.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-05 // PRE-SUBMISSION SELF-SCORING</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a hostile procurement evaluator.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-05 // PRE-SUBMISSION SELF-SCORING</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a hostile procurement evaluator.
 I am providing you with the Criteria and our Draft Response.
 
 Task:
@@ -386,38 +539,36 @@ Task:
 2. Identify: "Where did we answer the question but fail to provide evidence?"
 3. Provide 3 specific bullet points on how to move the score up by +1 point.
 
-[PASTE CRITERIA AND DRAFT RESPONSE HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CRITERIA AND DRAFT RESPONSE HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">06</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 6 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Orals Strategy</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">06</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 6 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Orals Strategy</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                The opening 90 seconds set the tone. Match speaker credibility to stakeholder roles.
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">The opening 90 seconds set the tone. Match speaker credibility to stakeholder roles. The first 90 seconds establish one thing: you see their mission better than they've articulated it themselves.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-06 // ORAL PRESENTATION STRATEGY</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Presentation Coach for a high-stakes pitch.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-06 // ORAL PRESENTATION STRATEGY</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Presentation Coach for a high-stakes pitch.
 Context: We are presenting to [CLIENT].
 
 Task:
@@ -425,42 +576,39 @@ Task:
 2. Speaker Allocation Strategy: Match speaker credibility to stakeholder roles.
 3. The 'Q&A Prep': Based on Risks (W2-07), what are the 3 hardest questions they will ask?
 
-[PASTE CONTEXT/RISKS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
+[PASTE CONTEXT/RISKS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                </div>
+            </div>
+
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">Speaker allocation based on credibility AND connection to evaluators is the key insight. The CFO wants to hear from someone who speaks finance. The technical lead wants to hear from an engineer. Match authority to audience.</p>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">07</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 7 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Engagement Storyboard</h2>
+                        <span class="time-pill">~20 MIN</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — Speaker allocation based on credibility AND connection to evaluators is the key insight. The CFO wants to hear from someone who speaks finance. The technical lead wants to hear from an engineer. Match authority to audience.</p>
-                </div>
+            <div class="blue-callout-short">
+                The storyboard turns your deal strategy into a visual timeline. Every touchpoint planned.
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">07</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 7 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Engagement Storyboard</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">The storyboard turns your deal strategy into a visual timeline. Every touchpoint planned.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-07 // ENGAGEMENT STORYBOARD</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Pursuit Manager.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-07 // ENGAGEMENT STORYBOARD</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Pursuit Manager.
 Create a 'Pursuit Storyboard' (Timeline from now until Decision Date).
 
 Map out:
@@ -469,38 +617,36 @@ Map out:
 3. Stakeholder Engagement Points.
 4. Clarification Question Strategy.
 
-[PASTE TIMELINE/DEADLINES HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE TIMELINE/DEADLINES HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">08</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 8 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Response Writer</h3>
-                            <div class="pill-blue">~45 MIN</div>
-                        </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">08</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 8 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Response Writer</h2>
+                        <span class="time-pill">~45 MIN</span>
                     </div>
                 </div>
-                
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Drafting specific response sections. Opens with their challenge, not your capability. States your approach specifically, not generically.</p>
-                </div>
-                
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-08 // RESPONSE SECTION WRITER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a senior bid writer producing a response section.
+            </div>
+
+            <div class="blue-callout-short">
+                Drafting specific response sections. Opens with their challenge, not your capability. States your approach specifically, not generically.
+            </div>
+
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-08 // RESPONSE SECTION WRITER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a senior bid writer producing a response section.
 
 Inputs: 
 1. The specific requirement/question.
@@ -516,38 +662,36 @@ Write a response that:
 - Embeds the win theme naturally. 
 - Provides evidence for every claim.
 
-[PASTE INPUTS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE INPUTS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">09</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 9 OF 9</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Commercial Narrative</h3>
-                            <div class="pill-blue">~30 MIN</div>
-                        </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">09</div>
+                <div class="step-content">
+                    <span class="step-counter">STEP 9 OF 9</span>
+                    <div class="step-title-row">
+                        <h2 class="step-title">Commercial Narrative</h2>
+                        <span class="time-pill">~30 MIN</span>
                     </div>
                 </div>
-                
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">The strategic framing that shapes how evaluators interpret the numbers. Price vs Value. Investment vs Cost.</p>
-                </div>
-                
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W3-09 // COMMERCIAL NARRATIVE GENERATOR</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a commercial strategist.
+            </div>
+
+            <div class="blue-callout-short">
+                The strategic framing that shapes how evaluators interpret the numbers. Price vs Value. Investment vs Cost.
+            </div>
+
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W3-09 // COMMERCIAL NARRATIVE GENERATOR</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a commercial strategist.
 
 Write the narrative wrapper around our pricing (NOT the schedule itself).
 
@@ -558,134 +702,155 @@ Produce:
 4. INVESTMENT NARRATIVE: Frame transition costs as investment with payback timeline.
 5. OBJECTION PRE-EMPTION: "Why higher than X?"
 
-[PASTE PRICING MODEL/STRATEGY HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE PRICING MODEL/STRATEGY HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">WHERE THIS BREAKS</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="worked-example-box reveal">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: Win Themes That Weren't Provable</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Evaluators loved the executive summary. Then they read the technical response and couldn't find the evidence.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: If you can't point to a specific case study — it's not a win theme.</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: Self-Scoring Hubris</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Gave ourselves 4.5/5. Actual evaluation came back at 3.2. The internal team knew what they MEANT, not what they WROTE.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Ask someone who didn't write it to score it.</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: The Polished Presentation That Missed</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Spent two days rehearsing the orals. Slides were immaculate. Delivery was smooth. The panel asked one question: "How would you handle the TUPE transfer for the Manchester team?" Our best speaker — the sales director — froze. The technical lead who knew the answer wasn't presenting. Wrong speaker matched to the wrong evaluator.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Speaker allocation isn't about seniority — it's about credibility matched to the evaluator's concern. The person who answers the hardest question must be in the room and briefed to lead.</p>
-                    </div>
-                </div>
-
-                <section class="container reveal" style="padding-top: 6rem; padding-bottom: 2rem;">
-                    <div class="section-divider">
-                        <div class="divider-line"></div>
-                        <span class="divider-label">PROMPT LIBRARY</span>
-                        <div class="divider-line"></div>
-                    </div>
-                    
-                    <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STRATEGY & INTELLIGENCE</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-01')">W3-01 // WIN THEME GENERATOR <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-02')">W3-02 // COMPETITOR INTEL <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-03')">W3-03 // SCORING STRATEGY <span class="copy-badge">Copy</span></button>
-                    </div>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">RESPONSE WRITING</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-04')">W3-04 // EXECUTIVE SUMMARY <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-05')">W3-05 // SELF-SCORING <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-08')">W3-08 // RESPONSE WRITER <span class="copy-badge">Copy</span></button>
-                    </div>
-
-                    <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION</h4>
-                    <div class="library-grid">
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-06')">W3-06 // ORALS STRATEGY <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-07')">W3-07 // STORYBOARD <span class="copy-badge">Copy</span></button>
-                        <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-09')">W3-09 // COMMERCIAL NARRATIVE <span class="copy-badge">Copy</span></button>
-                    </div>
-                </section>
-
-                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
-                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Deal won. Now grow the account.</p>
-                    <a href="week4.html" class="btn-schedule">PROCEED TO WEEK 4: CONTINUOUS GROWTH</a>
-                </div>
-
             </div>
-        </section>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider" style="margin-top: 4rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">WHERE THIS BREAKS</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 1: Win Themes That Weren't Provable</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Evaluators loved the executive summary. Then they read the technical response and couldn't find the evidence.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> If you can't point to a specific case study — it's not a win theme.</span>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 2: Self-Scoring Hubris</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Gave ourselves 4.5/5. Actual evaluation came back at 3.2. The internal team knew what they MEANT, not what they WROTE.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Ask someone who didn't write it to score it.</span>
+            </div>
+
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 3: The Polished Presentation That Missed</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Spent two days rehearsing the orals. Slides were immaculate. Delivery was smooth. The panel asked one question: "How would you handle the TUPE transfer for the Manchester team?" Our best speaker — the sales director — froze. The technical lead who knew the answer wasn't presenting.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> The person who answers the hardest question must be in the room and briefed to lead.</span>
+            </div>
+        </div>
+
+        <div class="container-wide reveal">
+            <div class="section-divider" style="margin-top: 6rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">PROMPT LIBRARY</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STRATEGY & INTELLIGENCE</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-01')">W3-01 // WIN THEME GENERATOR <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-02')">W3-02 // COMPETITOR INTEL <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-03')">W3-03 // SCORING STRATEGY <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">RESPONSE WRITING</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-04')">W3-04 // EXECUTIVE SUMMARY <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-05')">W3-05 // SELF-SCORING <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-08')">W3-08 // RESPONSE WRITER <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-06')">W3-06 // ORALS STRATEGY <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-07')">W3-07 // STORYBOARD <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-09')">W3-09 // COMMERCIAL NARRATIVE <span class="copy-badge">Copy</span></button>
+            </div>
+        </div>
+
     </main>
 
     <footer>
-    <div class="footer-inner">
-        <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
-        <div class="footer-links">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color: var(--slate);">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.85rem;">
-                AI Is Not Your Cheerleader →
-            </a>
+        <div class="footer-inner">
+            <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
+            <div class="footer-right">
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    AI Is Not Your Cheerleader →
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="footer-subtle">
-        No hype. Just results. © 2026
-    </div>
-</footer>
-    </div>
+        <div class="footer-bottom">
+            No hype. Just results. © 2026
+        </div>
+    </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (mobileMenuToggle && navLinks) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
+        // TOGGLE PROMPT EXPANSION
+        function togglePrompt(btn) {
+            const content = btn.parentElement.previousElementSibling;
+            content.classList.toggle('expanded');
+            btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+        }
+
+        // COPY FUNCTIONALITY
+        function copyPrompt(btn) {
+            const content = btn.parentElement.previousElementSibling.innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                const original = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.color = '#10b981';
+                setTimeout(() => {
+                    btn.innerText = original;
+                    btn.style.color = '';
+                }, 2000);
             });
         }
-        
-        // Scroll Reveal with immediate check for elements already in viewport
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => { 
-                if (e.isIntersecting) e.target.classList.add('active'); 
-            });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                el.classList.add('active');
+        // LIBRARY COPY FUNCTIONALITY
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const wrapper = title.nextElementSibling;
+                    const content = wrapper.querySelector('.prompt-content');
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = 'COPIED';
+                    badge.style.background = '#10b981';
+                    setTimeout(() => {
+                        badge.innerText = original;
+                        badge.style.background = '';
+                    }, 2000);
+                });
+            } else {
+                console.warn('Prompt ID not found:', promptID);
             }
-            // Observe for future scroll reveals
-            revealObserver.observe(el);
+        }
+
+        // SCROLL REVEAL
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
-    });
-</script>
+    </script>
 </body>
 </html>
