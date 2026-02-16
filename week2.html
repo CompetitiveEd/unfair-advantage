@@ -10,197 +10,300 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Specific Week 2 Visuals - Kept as overrides */
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-body); padding: 12px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
-        .library-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); color: white; transform: translateY(-1px); }
-        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
-        .library-btn:hover .copy-badge { background: var(--primary); color: white; border-color: var(--primary); }
+        /* BENTLEY DESIGN SYSTEM - STEER VARIANT */
+        :root {
+            --primary: #3b82f6;
+            --primary-dim: rgba(59, 130, 246, 0.1);
+            --slate: #94a3b8;
+            --bg-body: #0f172a; /* Lighter Steer Background */
+            --bg-card: #1e293b;
+            --bg-console: #020617;
+            --text-body: #cbd5e1;
+            --text-heading: #ffffff;
+            --border-dynamic: rgba(255,255,255,0.08);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.1);
+            --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.1);
+            --radius-std: 12px;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Monaco', 'Consolas', monospace;
+        }
 
-        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0; }
-        
-        /* Layout Fixes for Visual Consistency */
-        .step-header-block { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem; }
-        .large-step-number { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
-        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; }
-        .step-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; line-height: 1; }
-        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
-        .step-counter { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-bottom: 0.2rem; }
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-body); color: var(--text-body); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        a { color: var(--primary); text-decoration: none; transition: 0.2s; }
+        a:hover { color: #60a5fa; }
 
-        /* Console styling */
-        .prompt-console-header { background: #1e293b; padding: 10px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid rgba(255,255,255,0.1); border-bottom: none; display: flex; justify-content: space-between; align-items: center; }
-        .prompt-console-dots span { height: 8px; width: 8px; background-color: #334155; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .prompt-console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; }
-        .prompt-wrapper { position: relative; background: #0f172a; border: 1px solid rgba(255,255,255,0.1); border-radius: 0 0 12px 12px; overflow: hidden; border-top: none; }
-        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: 'Monaco', 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; max-height: 130px; overflow: hidden; transition: max-height 0.5s ease; position: relative; }
+        /* NAV - STEER STYLE */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
+        .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--slate); font-size: 0.9rem; font-weight: 500; }
+        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 200px; padding: 0.5rem 0; z-index: 20; }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 0.5rem 1rem; color: var(--text-body); }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; }
+        .nav-cta { background: transparent; border: 1px solid var(--border-dynamic); color: white !important; padding: 8px 16px; border-radius: 6px; font-weight: 600; transition: 0.2s; }
+        .nav-cta:hover { border-color: var(--primary); background: rgba(59, 130, 246, 0.1); }
+
+        /* HERO - STEER COMPACT STYLE */
+        .dark-header-block { position: relative; padding: 6rem 0 4rem 0; overflow: hidden; background: #020617; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.75; pointer-events: none; z-index: 0; }
+        .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; }
+        .hero-subtext { font-size: 1.25rem; font-weight: 400; color: var(--text-body); max-width: 600px; margin: 0 auto; }
+
+        /* LAYOUT CONTAINERS */
+        .page-container { width: 100%; padding: 0 1.5rem; }
+        .container-prose { max-width: 800px; margin: 0 auto; position: relative; }
+        .container-wide { max-width: 1100px; margin: 0 auto; position: relative; }
+
+        /* COMPONENT: STANDARD STEP HEADER (Strict Parallel Layout) */
+        .step-block { 
+            display: flex; 
+            align-items: flex-start; /* Ensures top alignment */
+            gap: 2rem; 
+            margin-top: 5rem; 
+            margin-bottom: 2rem; 
+        }
+        .step-num { 
+            font-size: 3.5rem; 
+            font-weight: 900; 
+            color: var(--slate); 
+            opacity: 0.25; 
+            line-height: 0.8;
+            min-width: 80px; /* Enforces column width */
+            flex-shrink: 0;  /* Prevents shrinking */
+        }
+        .step-meta { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+            padding-top: 5px; /* Visual alignment with top of numbers */
+        }
+        .step-counter { 
+            font-size: 0.7rem; 
+            font-weight: 800; 
+            color: var(--slate); 
+            letter-spacing: 0.15em; 
+            text-transform: uppercase; 
+            margin-bottom: 0.5rem; 
+            display: block;
+        }
+        .step-title { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: white; 
+            margin: 0; 
+            line-height: 1.1;
+        }
+        .time-pill { 
+            display: inline-block; 
+            background: rgba(59, 130, 246, 0.1); 
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: var(--primary); 
+            font-size: 0.65rem; 
+            font-weight: 700; 
+            padding: 4px 8px; 
+            border-radius: 4px; 
+            margin-top: 0.8rem; 
+            align-self: flex-start;
+        }
+
+        /* COMPONENT: EXPERIENCE SECTION (Steer Style) */
+        .experience-box {
+            background: transparent;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            border: none; /* No border as requested */
+        }
+        .experience-header {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #f59e0b; /* Amber Steer Colour */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .experience-content {
+            font-size: 1rem;
+            color: var(--text-body);
+            margin: 0;
+            font-style: normal;
+        }
+
+        /* COMPONENT: CONSOLES */
+        .console-header-v2 { background: var(--bg-card); padding: 12px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid var(--border-dynamic); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .traffic-lights { display: flex; gap: 6px; }
+        .traffic-lights span { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+        .traffic-lights span:nth-child(1) { background: #ff5f56; }
+        .traffic-lights span:nth-child(2) { background: #ffbd2e; }
+        .traffic-lights span:nth-child(3) { background: #27c93f; }
+        .console-title { font-size: 0.75rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; font-family: var(--font-mono); }
+        .prompt-wrapper { background: var(--bg-console); border: 1px solid var(--border-dynamic); border-radius: 0 0 12px 12px; position: relative; overflow: hidden; }
+        .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; max-height: 140px; overflow: hidden; transition: max-height 0.4s ease; position: relative; white-space: pre-wrap; }
         .prompt-content.expanded { max-height: 3000px; }
-        .prompt-actions { display: flex; justify-content: space-between; align-items: center; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1); }
-        .prompt-expand-btn { border: none; background: transparent; color: var(--primary); font-size: 0.8rem; font-weight: 700; padding: 12px 1.5rem; cursor: pointer; flex-grow: 1; text-align: left; text-transform: uppercase; letter-spacing: 0.05em; }
-        .copy-btn-inline { background: transparent; border: none; border-left: 1px solid rgba(255,255,255,0.1); color: var(--primary); font-size: 0.7rem; font-weight: 800; padding: 0 1.5rem; cursor: pointer; height: 45px; transition: 0.2s; letter-spacing: 0.05em; }
+        .console-actions { display: flex; border-top: 1px solid var(--border-dynamic); background: #0b1120; }
+        .action-btn { background: transparent; border: none; padding: 12px 1.5rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: var(--font-main); }
+        .btn-expand { color: var(--primary); flex-grow: 1; text-align: left; }
+        .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); font-weight: 700; letter-spacing: 0.05em; }
+
+        /* OTHER COMPONENTS */
+        .worked-example-box { background: var(--green-dim); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+        .example-tag { font-size: 0.7rem; font-weight: 800; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
+        
+        .section-divider { display: flex; align-items: center; gap: 1rem; margin: 4rem 0 2rem 0; }
+        .divider-line { flex-grow: 1; height: 1px; background: var(--border-dynamic); }
+        .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; }
+
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 4rem; }
+        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+        .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
+        .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .library-btn:hover .copy-badge { background: var(--primary); color: white; }
+
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 6rem; background: var(--bg-body); text-align: center; }
+        .footer-subtle { color: var(--slate); font-size: 0.8rem; opacity: 0.6; margin-top: 1rem; }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body class="hero-compact">
 
     <div id="scroll-progress"></div>
 
-    <div class="page-container content-reveal">
-        <nav>
-            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links">
-                <a href="foundations.html">Foundations</a>
-                <a href="steer.html">Steer</a>
-                
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">About ▾</span>
-                    <div class="dropdown-content">
-                        <a href="origins.html">Origins</a>
-                        <a href="frameworks.html">Frameworks</a>
-                        <a href="blueprint.html">Blueprint</a>
-                    </div>
-                </div>
-
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">GAIN Series ▾</span>
-                    <div class="dropdown-content">
-                        <a href="week1.html">1: KNOW — Intelligence Layer</a>
-                        <a href="week2.html">2: MAP — Strategic Mapping</a>
-                        <a href="week3.html">3: WIN — Winning the Deal</a>
-                        <a href="week4.html">4: GROW — Continuous Growth</a>
-                    </div>
-                </div>
-                <a href="visuals.html">Visuals</a>
-                <a href="contact.html" class="nav-cta">Contact</a>
-            </div>
-        </nav>
-    
-        <header class="dark-header-block">
-            <img src="assets/images/week1-hero.png" class="hero-bg" alt="Omniscience Engine" style="opacity: 0.6;">
-            <div class="hero-impact">
-                <div class="hero-content reveal" style="text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 2 — [A] ASSESS / MAP THEM — OMNISCIENCE ENGINE</p>
-                    <h1 class="hero-headline">
-                        <span style="color: #ffffff; display: block;">You mapped one person.</span>
-                        <span style="color: #3b82f6; display: block;">Now map the deal.</span>
-                    </h1>
-                    <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                    <p class="hero-subtext">
-                        From first stakeholder to full authority map. The political intelligence engine that wins complex deals.
-                    </p>
-                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
-                        1-4 HOURS — FROM SINGLE CONTACT TO DEAL STRATEGY
-                    </p>
+    <nav>
+        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu" style="display:none;">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links">
+            <a href="foundations.html">Foundations</a>
+            <a href="steer.html">Steer</a>
+            
+            <div class="nav-dropdown">
+                <span class="nav-link-main" style="cursor: pointer;">About ▾</span>
+                <div class="dropdown-content">
+                    <a href="origins.html">Origins</a>
+                    <a href="frameworks.html">Frameworks</a>
+                    <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
-        </header>
 
-    <main style="margin-top: -4rem; position: relative; z-index: 2;">
+            <div class="nav-dropdown">
+                <span class="nav-link-main" style="cursor: pointer;">GAIN Series ▾</span>
+                <div class="dropdown-content">
+                    <a href="week1.html">1: KNOW — Intelligence Layer</a>
+                    <a href="week2.html">2: MAP — Strategic Mapping</a>
+                    <a href="week3.html">3: WIN — Winning the Deal</a>
+                    <a href="week4.html">4: GROW — Continuous Growth</a>
+                </div>
+            </div>
+            <a href="visuals.html">Visuals</a>
+            <a href="contact.html" class="nav-cta">Contact</a>
+        </div>
+    </nav>
+
+    <header class="dark-header-block">
+        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Omniscience Engine" style="opacity: 0.75;">
+        <div class="hero-impact">
+            <div class="hero-content reveal" style="text-align: center;">
+                <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 2 — [A] ASSESS / MAP THEM — OMNISCIENCE ENGINE</p>
+                <h1 class="hero-headline">
+                    <span style="color: #ffffff; display: block;">You mapped one person.</span>
+                    <span style="color: #3b82f6; display: block;">Now map the deal.</span>
+                </h1>
+                <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+                <p class="hero-subtext">
+                    From first stakeholder to full authority map. The political intelligence engine that wins complex deals.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main>
         
-        <section class="reveal">
-            <div class="container" style="max-width: 800px;">
-                
-                <div class="worked-example-box">
-                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Context</h2>
-                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                        <p class="body-prose" style="margin: 0;">Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.</p>
-                    </div>
+        <div class="container-prose reveal">
+            
+            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 0; padding: 2rem;">
+                <h3 style="font-size: 1.1rem; color: white; margin-bottom: 1rem;">The Context</h3>
+                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
+                    <p style="margin: 0; font-size: 0.95rem;">Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.</p>
                 </div>
+            </div>
 
-                <div class="note-box note-blue reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">i</div>
-                    <div class="note-box-content">
-                        <p><strong>Completed Week 1?</strong> This week builds directly on Week 1 intelligence. If you haven't run the Intelligence Layer prompts, start there.</p>
-                    </div>
+            <div class="blue-callout-short" style="margin-top: 2rem;">
+                <strong>Completed Week 1?</strong> This week builds directly on Week 1 intelligence. If you haven't run the Intelligence Layer prompts, start there.
+            </div>
+
+            <div style="text-align: center; margin: 4rem 0;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Omniscience Flow</p>
+                <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Steps 4-5 build the map. Steps 6-7 turn it into strategy.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">00</div>
+                <div class="step-meta">
+                    <span class="step-counter">PRE-FLIGHT</span>
+                    <h2 class="step-title">Before You Begin</h2>
                 </div>
+            </div>
 
-                <div class="reveal" style="text-align: center; padding: 2rem 0; margin-bottom: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem;">THIS IS ASSESS — THE SECOND DISCIPLINE OF GAIN</p>
-                    <p style="font-size: 0.9rem; color: var(--slate); max-width: 600px; margin: 0 auto;">Map them before they know they've been mapped. Every prompt on this page builds the political intelligence that wins complex deals.</p>
+            <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
+                    <h3 style="font-size: 0.9rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem;">GATHER INPUTS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-body); margin: 0; line-height: 1.6;">
+                        <strong>01:</strong> Week 1 outputs<br>
+                        <strong>02:</strong> RFP or Opportunity Brief<br>
+                        <strong>03:</strong> Meeting Notes<br>
+                        <strong>04:</strong> Stakeholder LinkedIn Profiles
+                    </p>
                 </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
+                <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
+                    <h3 style="font-size: 0.9rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem;">PREPARE OUTPUTS</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-body); margin: 0; line-height: 1.6;">
+                        <strong>05:</strong> Stakeholder Register<br>
+                        <strong>06:</strong> Relationship Audit<br>
+                        <strong>07:</strong> Evaluation Criteria<br>
+                        <strong>08:</strong> Relevant Case Studies
+                    </p>
                 </div>
+            </div>
 
-                <div class="grid-2-col">
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">GATHER</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>01:</strong> Week 1 outputs (budget, research)<br>
-                            <strong>02:</strong> RFP, ITT, or opportunity brief<br>
-                            <strong>03:</strong> Meeting notes from initial engagement<br>
-                            <strong>04:</strong> LinkedIn profiles for ALL known stakeholders
-                        </p>
-                    </div>
-                    <div class="card reveal">
-                        <h3 class="gain-title-main" style="color: var(--primary);">PREPARE</h3>
-                        <p class="body-prose" style="color: var(--text-body); font-size: 0.9rem;">
-                            <strong>05:</strong> Stakeholder register (names encountered)<br>
-                            <strong>06:</strong> Relationship audit (who knows who?)<br>
-                            <strong>07:</strong> Evaluation criteria (if available)<br>
-                            <strong>08:</strong> Relevant case studies (W1-09)
-                        </p>
-                    </div>
+            <div class="warning-block">
+                <div class="warning-title"><span>⚠️</span> NO RFP?</div>
+                <p class="warning-text">This week works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.</p>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">01</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 1 OF 10</span>
+                    <h2 class="step-title">Decode the Opportunity</h2>
+                    <span class="time-pill">~20 MIN</span>
                 </div>
+            </div>
 
-                <div class="note-box note-amber reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">!</div>
-                    <div class="note-box-content">
-                        <p><strong>No RFP?</strong> This week works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.</p>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Every RFP tells two stories: the official requirements and the hidden pain points. This prompt reads both.
+            </div>
 
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="reveal" style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Omniscience Flow</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">DECODE OPPORTUNITY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">FIND PEOPLE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">MAP MOTIVATIONS</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px;">MAP AUTHORITY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue" style="background: var(--primary); color: white; border: 1px solid var(--primary); font-size: 0.65rem; padding: 6px 12px;">DEAL STRATEGY</span>
-                    </div>
-
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Steps 4-5 build the map. Steps 6-7 turn it into strategy. Steps 8-10 map advanced dynamics — cross-stakeholder tensions, culture, and people risk.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">01</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 1 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Decode the Opportunity</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Every RFP tells two stories: the official requirements and the hidden pain points. This prompt reads both.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-01 // RFP STRATEGIC DECODER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as an expert Proposal Director and Strategic Deal Analyst.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-01 // RFP STRATEGIC DECODER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as an expert Proposal Director and Strategic Deal Analyst.
 
 I am providing you with the text from an RFP / Opportunity Description for [INSERT CLIENT NAME].
 
@@ -218,51 +321,45 @@ B) Regulatory/Compliance Failure (Risk-averse, looking for safety)
 C) New Strategic Mandate (Transformation mindset, looking for innovation)
 Explain your reasoning.
 
-[PASTE RFP / OPPORTUNITY TEXT HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE RFP / OPPORTUNITY TEXT HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).<br>
-                        <strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 3px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The trigger question is the most important. Expiry = commodity mindset. Regulatory = risk-averse. Board mandate = strategic. The same RFP reads completely differently once you know which triggered it.</p>
-                </div>
+            <div class="experience-box">
+                <div class="experience-header">WHAT EXPERIENCE SEES</div>
+                <p class="experience-content">The trigger question is the most important. Expiry = commodity mindset. Regulatory = risk-averse. Board mandate = strategic. The same RFP reads completely differently once you know which triggered it.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">02</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 2 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Find the People</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">02</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 2 OF 10</span>
+                    <h2 class="step-title">Find the People</h2>
+                    <span class="time-pill">~15 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Builds the complete stakeholder register and—critically—identifies who is MISSING.</p>
-                </div>
+            <div class="blue-callout-short">
+                Builds the complete stakeholder register and—critically—identifies who is MISSING.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-02 // STAKEHOLDER DISCOVERY</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as a Strategic Account Manager.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-02 // STAKEHOLDER DISCOVERY</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as a Strategic Account Manager.
 
 I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, LinkedIn exports].
 
@@ -271,51 +368,45 @@ I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, Linked
 3. Crucially, create a 'Missing Stakeholders' list. Based on a typical deal of this size and complexity ([INSERT DEAL SIZE/TYPE]), who is missing? (e.g., Is there a Procurement lead? A Privacy Officer? A CFO sponsor?). 
 4. For the missing roles, suggest the likely Job Titles we should search for on LinkedIn.
 
-[PASTE SOURCE MATERIAL HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE SOURCE MATERIAL HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).<br>
-                        <strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent. Low influence, high knowledge = parked.</p>
-                </div>
+            <div class="experience-box">
+                <div class="experience-header">WHAT EXPERIENCE SEES</div>
+                <p class="experience-content">The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">03</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 3 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Decode Requirements</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">03</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 3 OF 10</span>
+                    <h2 class="step-title">Decode Requirements</h2>
+                    <span class="time-pill">~15 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Every unusually specific requirement was born in a bad experience. This prompt does the archaeology.</p>
-                </div>
+            <div class="blue-callout-short">
+                Every unusually specific requirement was born in a bad experience. This prompt does the archaeology.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-03 // REQUIREMENTS DECODER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Analyze the requirements section of this RFP.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-03 // REQUIREMENTS DECODER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Analyze the requirements section of this RFP.
 
 Group the requirements into 'Clusters of Density' — areas where there are an unusually high number of specific, detailed, or punitive requirements.
 
@@ -328,48 +419,41 @@ For each Cluster:
 
 Output as a table.
 
-[PASTE REQUIREMENTS SECTION HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE REQUIREMENTS SECTION HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.<br>
-                        <strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.<br>
-                        <strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">04</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 4 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Map Motivations</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">04</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 4 OF 10</span>
+                    <h2 class="step-title">Map Motivations</h2>
+                    <span class="time-pill">~20 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">What failure looks like for them specifically. The difference between knowing the org chart and knowing the politics.</p>
-                </div>
+            <div class="blue-callout-short">
+                What failure looks like for them specifically. The difference between knowing the org chart and knowing the politics.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-04 // STAKEHOLDER MOTIVATION MAP</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Act as an expert in Chris Voss's negotiation tactics and Cialdini's influence principles.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-04 // STAKEHOLDER MOTIVATION MAP</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Act as an expert in Chris Voss's negotiation tactics and Cialdini's influence principles.
 
 I am providing the profile for [STAKEHOLDER NAME], [JOB TITLE].
 
@@ -379,52 +463,45 @@ Generate a 'Deep Motivation Profile':
 3. The 'No-Oriented' Question: Draft a question designed to get them to say "No" to reveal their constraints (e.g., "Is it ridiculous to suggest that cost certainty is more important than feature breadth right now?").
 4. Success Definition: Complete this sentence for them: "I will be promoted/bonused next year if this project delivers..."
 
-[PASTE STAKEHOLDER PROFILE/LINKEDIN DATA HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE STAKEHOLDER PROFILE/LINKEDIN DATA HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        Feed David Harrison's LinkedIn profile into this prompt alongside the RFP and company research. The motivation map should surface:<br><br>
-                        <strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.<br>
-                        <strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens. Follow the incentives, not the LinkedIn posts.</p>
-                </div>
+            <div class="experience-box">
+                <div class="experience-header">WHAT EXPERIENCE SEES</div>
+                <p class="experience-content">A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens. Follow the incentives, not the LinkedIn posts.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">05</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 5 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Map Authority</h3>
-                            <div class="pill-blue">~20 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">05</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 5 OF 10</span>
+                    <h2 class="step-title">Map Authority</h2>
+                    <span class="time-pill">~20 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">The single most important output. Formal decision structure AND informal influence lines.</p>
-                </div>
+            <div class="blue-callout-short">
+                The single most important output. Formal decision structure AND informal influence lines.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-05 // MULTI-STAKEHOLDER AUTHORITY MAP</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Synthesize all the stakeholder intelligence we have gathered so far.
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-05 // MULTI-STAKEHOLDER AUTHORITY MAP</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Synthesize all the stakeholder intelligence we have gathered so far.
 
 Create a 'Political Authority Map' for this deal:
 
@@ -440,52 +517,45 @@ Create a 'Political Authority Map' for this deal:
 
 4. Identify the 'Blockers': Who has the power to kill this deal, and what is their likely objection?
 
-[PASTE ALL STAKEHOLDER SUMMARIES HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE ALL STAKEHOLDER SUMMARIES HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.<br>
-                        <strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.<br>
-                        If your map doesn't identify Harrison as a blocker risk, you haven't read his posts carefully enough.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable. Identify the linchpin — the person who unlocks the others.</p>
-                </div>
+            <div class="experience-box">
+                <div class="experience-header">WHAT EXPERIENCE SEES</div>
+                <p class="experience-content">The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">06</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 6 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Plan Engagement</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">06</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 6 OF 10</span>
+                    <h2 class="step-title">Plan Engagement</h2>
+                    <span class="time-pill">~15 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Specific value propositions, specific discovery questions, specific messaging guidance for each person.</p>
-                </div>
+            <div class="blue-callout-short">
+                Specific value propositions, specific discovery questions, specific messaging guidance for each person.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-06 // PERSONALISED ENGAGEMENT PLANS</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-06 // PERSONALISED ENGAGEMENT PLANS</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
 
 Structure it as a meeting preparation guide:
 
@@ -494,49 +564,41 @@ Structure it as a meeting preparation guide:
 3. The Value Drop: What specific insight, data point, or case study should we share that helps them achieve THEIR personal goal (from the Motivation Map)?
 4. The Ask: What is the calibrated next step we should ask for?
 
-[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."<br>
-                        <strong>Morris:</strong> Lead with resilience peer credibility and transparency.<br>
-                        <strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.<br>
-                        If all four cards use the same messaging, you haven't understood the stakeholders.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Morris:</strong> Lead with resilience peer credibility and transparency.</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">07</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 7 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Deal Strategy</h3>
-                            <div class="pill-blue">~15 MIN</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">07</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 7 OF 10</span>
+                    <h2 class="step-title">Deal Strategy</h2>
+                    <span class="time-pill">~15 MIN</span>
                 </div>
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Everything synthesised into one page. If you can't fit your deal strategy on one page, you don't understand the deal well enough.</p>
-                </div>
+            <div class="blue-callout-short">
+                Everything synthesised into one page. If you can't fit your deal strategy on one page, you don't understand the deal well enough.
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-07 // DEAL STRATEGY SYNTHESIS</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Synthesize everything into a 'One-Page Deal Strategy' (Plan on a Page).
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-07 // DEAL STRATEGY SYNTHESIS</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Synthesize everything into a 'One-Page Deal Strategy' (Plan on a Page).
 
 Sections:
 1. Executive Summary: The deal in 3 sentences (Context, Opportunity, Why Us).
@@ -546,52 +608,40 @@ Sections:
 5. Pricing Strategy Headline.
 6. The 'No-Bid' Criteria: Under what specific conditions should we walk away from this deal?
 
-[PASTE ALL PREVIOUS OUTPUTS HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE ALL PREVIOUS OUTPUTS HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="note-box note-green reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">+</div>
-                    <div class="note-box-content">
-                        <p><strong>MERIDIAN WORKED EXAMPLE</strong><br>
-                        <strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."<br>
-                        <strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.<br>
-                        If your deal strategy doesn't have no-bid criteria, you haven't qualified the deal.</p>
-                    </div>
-                </div>
+            <div class="worked-example-box">
+                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."</p>
+                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
+            </div>
 
-                <div class="reveal" style="padding: 2rem; border-left: 2px solid var(--primary); background: rgba(59, 130, 246, 0.05); margin-top: 2rem;">
-                    <p><strong>WHAT EXPERIENCE SEES</strong> — The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal.</p>
-                </div>
+            <div class="experience-box">
+                <div class="experience-header">WHAT EXPERIENCE SEES</div>
+                <p class="experience-content">The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal.</p>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">08</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 8 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Cross-Stakeholder Dynamics</h3>
-                            <div class="pill-blue">ADVANCED</div>
-                        </div>
-                    </div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num">08</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 8 OF 10</span>
+                    <h2 class="step-title">Cross-Stakeholder Dynamics</h2>
+                    <span class="time-pill">ADVANCED</span>
                 </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Understand how they interact. Where do priorities conflict? Who defers to whom?</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-08 // CROSS-STAKEHOLDER DYNAMICS MAP</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Synthesise all individual stakeholder profiles (minimum 3). Map how stakeholders INTERACT — not just what each wants individually.
+            </div>
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-08 // CROSS-STAKEHOLDER DYNAMICS MAP</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Synthesise all individual stakeholder profiles (minimum 3). Map how stakeholders INTERACT — not just what each wants individually.
 
 1. ALIGNMENT MAP: Where do priorities agree across stakeholders? What shared language appears?
 2. TENSION MAP: Where do priorities conflict? (e.g., CFO wants cost certainty, CIO wants transformation investment, COO wants zero disruption).
@@ -599,38 +649,27 @@ Sections:
 4. COALITION SCENARIOS: If stakeholder X champions you, who follows? If stakeholder Y blocks, what happens?
 5. THE QUIET STAKEHOLDER: Who has been silent? Absence of signal IS a signal.
 
-[PASTE ALL STAKEHOLDER PROFILES HERE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE ALL STAKEHOLDER PROFILES HERE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">09</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 9 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Culture & Values Alignment</h3>
-                            <div class="pill-blue">ADVANCED</div>
-                        </div>
-                    </div>
+            <div class="step-block">
+                <div class="step-num">09</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 9 OF 10</span>
+                    <h2 class="step-title">Culture & Values Alignment</h2>
+                    <span class="time-pill">ADVANCED</span>
                 </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Map their stated values against yours. Where is the genuine overlap? Where is the friction?</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-09 // CULTURE & VALUES ALIGNMENT</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">Assess cultural compatibility between your organisation and the prospect for a long-term partnership.
+            </div>
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-09 // CULTURE & VALUES ALIGNMENT</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">Assess cultural compatibility between your organisation and the prospect for a long-term partnership.
 
 Using: prospect website culture/values, careers page, leadership LinkedIn posts, employee reviews.
 
@@ -640,82 +679,61 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
 4. EVIDENCE FOR THE PROPOSAL: Specific cultural alignment proof points to embed.
 5. CULTURAL RISKS: Where might friction emerge?
 
-[PASTE CULTURAL MATERIALS FROM BOTH ORGANISATIONS]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE CULTURAL MATERIALS FROM BOTH ORGANISATIONS]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">10</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">STEP 10 OF 10</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Human Risk & TUPE</h3>
-                            <div class="pill-blue">ADVANCED</div>
-                        </div>
-                    </div>
+            <div class="step-block">
+                <div class="step-num">10</div>
+                <div class="step-meta">
+                    <span class="step-counter">STEP 10 OF 10</span>
+                    <h2 class="step-title">Human Risk & TUPE</h2>
+                    <span class="time-pill">ADVANCED</span>
                 </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">For deals involving staff transfer, the biggest risk isn't technology—it's people fear.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">W2-10 // THE HUMAN RISK & TUPE MAPPER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">ROLE: You are a Human Capital Strategist and TUPE Expert. You are mapping the emotional and operational risks of a people transfer.
+            </div>
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">W2-10 // THE HUMAN RISK & TUPE MAPPER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">ROLE: You are a Human Capital Strategist and TUPE Expert. You are mapping the emotional and operational risks of a people transfer.
 
 1. THE FEAR FACTORS: Identify the top 3 anxieties for the transferred staff (e.g., "Will I have a job in 12 months?").
 2. THE KNOWLEDGE GAP: Identify which specific roles hold the "institutional DNA." If these people leave, what breaks?
 3. THE "VALUE MIRROR": Map the client's stated people values directly to your own.
 4. THE DAY 1 PLAN: Draft the "First 24 Hours" engagement plan for the transferred staff.
 
-[PASTE EMPLOYEE DATA AND CULTURAL RESEARCH]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE EMPLOYEE DATA AND CULTURAL RESEARCH]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
+        </div>
 
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">ENGINEERING & RISK</div>
-                    <div class="divider-line"></div>
+        <div class="container-prose reveal">
+            <div class="step-block">
+                <div class="step-num" style="opacity: 0.2;">E</div>
+                <div class="step-meta">
+                    <span class="step-counter">INTERLUDE</span>
+                    <h2 class="step-title">The Engineering Layer</h2>
+                    <span class="time-pill">OPTIONAL</span>
                 </div>
+            </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">E</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">INTERLUDE</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">The Engineering Layer</h3>
-                            <div class="pill-blue">OPTIONAL</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="blue-callout-short">
+                Generic pricing will kill this bid. These prompts translate technical complexity into commercial safety.
+            </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem;">Generic pricing will kill this bid. These prompts translate technical complexity into commercial safety.</p>
-                </div>
-
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">E-01 // THE 'PLACEMAT' VISUALIZER</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">ROLE: You are a Strategic Visualiser and Enterprise Architect. Goal: Synthesise complex transformation into a SINGLE visual "placemat".
+            <div class="console-header-v2">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">E-01 // THE 'PLACEMAT' VISUALIZER</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">ROLE: You are a Strategic Visualiser and Enterprise Architect. Goal: Synthesise complex transformation into a SINGLE visual "placemat".
 
 1. THE "FROM" STATE: Visual metaphor for current pain (e.g., "Tangled wires").
 2. THE "TO" STATE: Visual metaphor for solution (e.g., "Streamlined highway").
@@ -723,155 +741,139 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
 4. THE "YES" LABELS: Specific client terms that must appear.
 5. CAPTIONING: Single sentence caption summarizing ROI.
 
-[PASTE CLIENT STATE AND GOALS]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE CLIENT STATE AND GOALS]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">E-02 // THE LOGIC ENGINE</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">ROLE: Technical Solution Architect. Need a "Decision Logic Matrix" to categorize complexity.
+            <div class="console-header-v2" style="margin-top: 1rem;">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">E-02 // THE LOGIC ENGINE</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">ROLE: Technical Solution Architect. Need a "Decision Logic Matrix" to categorize complexity.
 
 1. COMPLEXITY DRIVERS: Identify 5-7 factors (e.g., Legacy OS, Dongles).
 2. THE DECISION TREE: IF [Condition A] THEN [Action B] (Cost = X).
 3. CLASSIFICATION MATRIX: Define Simple / Medium / Complex / Toxic.
 4. SCORING MECHANISM: Assign risk scores to unknowns.
 
-[PASTE TECHNICAL SCOPE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE TECHNICAL SCOPE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">E-03 // THE COMMERCIAL SHIELD</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">ROLE: Commercial Risk Officer. Protect from "Black Hole" risks.
+            <div class="console-header-v2" style="margin-top: 1rem;">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">E-03 // THE COMMERCIAL SHIELD</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">ROLE: Commercial Risk Officer. Protect from "Black Hole" risks.
 
 1. THE "SILENT KILLERS": Requirements that look simple but have infinite cost depth.
 2. DEFENSIVE DEFINITIONS: In Scope vs Out of Scope vs Dependencies.
 3. DISCLAIMER: Define pricing as "Indicative based on assumptions".
 4. ASSUMPTION LOG: 5 critical assumptions that trigger Change Control.
 
-[PASTE RFP SCOPE]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE RFP SCOPE]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
+            </div>
 
-                <div class="prompt-console-header reveal">
-                    <div class="prompt-console-dots"><span></span><span></span><span></span></div>
-                    <div class="prompt-console-title">E-04 // THE COMMERCIAL LEVER ENGINE</div>
-                </div>
-                <div class="prompt-console reveal" style="border-radius: 0;">
-                    <div class="prompt-wrapper">
-                        <div class="prompt-content">
-                            <pre><code class="language-text" style="white-space: pre-wrap;">ROLE: Commercial Architect. Move from fixed price to "price sliders".
+            <div class="console-header-v2" style="margin-top: 1rem;">
+                <div class="traffic-lights"><span></span><span></span><span></span></div>
+                <div class="console-title">E-04 // THE COMMERCIAL LEVER ENGINE</div>
+            </div>
+            <div class="prompt-wrapper">
+                <div class="prompt-content">ROLE: Commercial Architect. Move from fixed price to "price sliders".
 
 1. THE LEVERS: Identify 3-5 variables (e.g., Service Window, Location, Speed).
 2. THE TRADE-OFFS: Cost Impact vs Risk Impact for each.
 3. RECOMMENDATION: The "Balanced" starting point.
 4. THE DIALOGUE: Script for the "Levers Conversation".
 
-[PASTE SOLUTION AND BUDGET]</code></pre>
-                        </div>
-                        <div class="prompt-actions">
-                            <button class="prompt-expand-btn" onclick="togglePrompt(this)">+ Read more</button>
-                            <button class="copy-btn-inline" onclick="copyPrompt(this)">COPY</button>
-                        </div>
-                    </div>
+[PASTE SOLUTION AND BUDGET]</div>
+                <div class="console-actions">
+                    <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                    <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
                 </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">WHERE THIS BREAKS</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="worked-example-box reveal">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: The Invisible Stakeholder</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Won the technical evaluation. Lost at final board. A non-executive director — never mentioned in any document, never in any meeting — had a prior relationship with the competitor's CEO. The deal was decided in a conversation we didn't know existed, between people we didn't know mattered.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Your stakeholder map is never complete. The question isn't "who's on the list?" — it's "who ISN'T on the list that should be?" Always ask your champion: "Who else has a voice in this decision that I haven't met?"</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: The Coalition That Wasn't</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Mapped 8 stakeholders. Identified the winning coalition. Built tailored messaging for each. Discovered at orals that the CIO and CFO had fundamentally different visions for the programme — and had been avoiding the conversation. Our proposal forced the confrontation. They chose to delay rather than decide.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: A coalition requires alignment, not just individual support. If two stakeholders both say "yes" but mean different things by it, you don't have a coalition — you have a time bomb. Map the tensions, not just the support.</p>
-                    </div>
-                </div>
-
-                <div class="worked-example-box reveal" style="margin-top: 1rem;">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: The Map That Decayed</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">Built a beautiful authority map in January. Submitted in April. The procurement director had moved teams in February. The new person had no relationship with us, no context, and a different evaluation methodology. Three months of strategy built on an org chart that no longer existed.</p>
-                        <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700; margin-top: 0.5rem;">RULE: Stakeholder maps are perishable goods. Refresh within 2 weeks of any deadline. If you can't verify a stakeholder is still in role, your map is a guess.</p>
-                    </div>
-                </div>
-
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">PROMPT LIBRARY</div>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">INTELLIGENCE EXTRACTION</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-01')">W2-01 // RFP DECODER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-02')">W2-02 // STAKEHOLDER DISCOVERY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-03')">W2-03 // REQUIREMENTS DECODER <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">DEEP MAPPING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-04')">W2-04 // MOTIVATION MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-05')">W2-05 // AUTHORITY MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-06')">W2-06 // ENGAGEMENT CARD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-07')">W2-07 // DEAL STRATEGY <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ADVANCED & ENGINEERING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-08')">W2-08 // DYNAMICS MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-09')">W2-09 // CULTURE ALIGNMENT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-10')">W2-10 // HUMAN RISK/TUPE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-01')">E-01 // VISUAL PLACEMAT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-02')">E-02 // LOGIC ENGINE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-03')">E-03 // COMMERCIAL SHIELD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-04')">E-04 // LEVER ENGINE <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
-                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Stakeholders mapped. Power structure clear.</p>
-                    <a href="week3.html" class="btn-schedule">PROCEED TO WEEK 3: OXYGEN</a>
-                </div>
-
             </div>
-        </section>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider" style="margin-top: 4rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">WHERE THIS BREAKS</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic);">
+                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: The Invisible Stakeholder</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Won the technical evaluation. Lost at final board. A non-executive director — never mentioned in any document — had a prior relationship with the competitor's CEO.</p>
+                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: Your stakeholder map is never complete. Always ask: "Who ISN'T on the list that should be?"</p>
+                </div>
+            </div>
+
+            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 1rem;">
+                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: The Coalition That Wasn't</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Mapped 8 stakeholders. Discovered at orals that the CIO and CFO had fundamentally different visions for the programme. Our proposal forced the confrontation. They chose to delay rather than decide.</p>
+                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: If two stakeholders both say "yes" but mean different things, you have a time bomb.</p>
+                </div>
+            </div>
+
+            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 1rem;">
+                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
+                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: The Map That Decayed</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Built a map in January. Submitted in April. The procurement director had moved teams in February. Three months of strategy built on an org chart that no longer existed.</p>
+                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: Refresh within 2 weeks of any deadline.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-wide reveal">
+            <div class="section-divider" style="margin-top: 6rem;">
+                <div class="divider-line"></div>
+                <div class="divider-label">PROMPT LIBRARY</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">INTELLIGENCE EXTRACTION</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-01')">W2-01 // RFP DECODER <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-02')">W2-02 // STAKEHOLDER DISCOVERY <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-03')">W2-03 // REQUIREMENTS DECODER <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">DEEP MAPPING</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-04')">W2-04 // MOTIVATION MAP <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-05')">W2-05 // AUTHORITY MAP <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-06')">W2-06 // ENGAGEMENT CARD <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-07')">W2-07 // DEAL STRATEGY <span class="copy-badge">Copy</span></button>
+            </div>
+
+            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ADVANCED & ENGINEERING</h4>
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-08')">W2-08 // DYNAMICS MAP <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-09')">W2-09 // CULTURE ALIGNMENT <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-10')">W2-10 // HUMAN RISK/TUPE <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-01')">E-01 // VISUAL PLACEMAT <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-02')">E-02 // LOGIC ENGINE <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-03')">E-03 // COMMERCIAL SHIELD <span class="copy-badge">Copy</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-04')">E-04 // LEVER ENGINE <span class="copy-badge">Copy</span></button>
+            </div>
+        </div>
+
     </main>
 
     <footer>
@@ -892,37 +894,80 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
             No hype. Just results. © 2026
         </div>
     </footer>
-    </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        if (mobileMenuToggle && navLinks) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
+        // TOGGLE PROMPT EXPANSION
+        function togglePrompt(btn) {
+            const content = btn.parentElement.previousElementSibling;
+            content.classList.toggle('expanded');
+            btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+        }
+
+        // COPY FUNCTIONALITY
+        function copyPrompt(btn) {
+            const content = btn.parentElement.previousElementSibling.innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                const original = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.color = '#10b981';
+                setTimeout(() => {
+                    btn.innerText = original;
+                    btn.style.color = '';
+                }, 2000);
             });
         }
-        
-        // Scroll Reveal with immediate check for elements already in viewport
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(e => { 
-                if (e.isIntersecting) e.target.classList.add('active'); 
-            });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                el.classList.add('active');
+        // LIBRARY COPY FUNCTIONALITY
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const wrapper = title.nextElementSibling;
+                    const content = wrapper.querySelector('.prompt-content');
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = 'COPIED';
+                    badge.style.background = '#10b981';
+                    setTimeout(() => {
+                        badge.innerText = original;
+                        badge.style.background = '';
+                    }, 2000);
+                });
+            } else {
+                console.warn('Prompt ID not found:', promptID);
             }
-            // Observe for future scroll reveals
-            revealObserver.observe(el);
+        }
+
+        // MOBILE MENU TOGGLE
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const nav = document.querySelector('.nav-links');
+            
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                });
+            }
+
+            // SCROLL REVEAL
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
-    });
-</script>
+    </script>
 </body>
 </html>
