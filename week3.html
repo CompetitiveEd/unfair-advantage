@@ -36,14 +36,14 @@
         a { color: var(--primary); text-decoration: none; transition: 0.2s; }
         a:hover { color: #60a5fa; }
 
-        /* 1. FULL WIDTH NAVIGATION */
+        /* 1. FULL WIDTH STICKY NAV (Steer Exact Match) */
         nav { 
             width: 100%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             padding: 1.2rem 3rem; 
-            background: rgba(2, 6, 23, 0.95); /* Dark background */
+            background: rgba(2, 6, 23, 0.95); 
             backdrop-filter: blur(10px);
             position: fixed; 
             top: 0; 
@@ -53,8 +53,17 @@
         }
         .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-links a, .nav-link-text { 
+            color: #cbd5e1; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            letter-spacing: 0.05em; 
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-text { color: white; }
+        
         .nav-cta { 
             border: 1px solid rgba(255,255,255,0.2); 
             padding: 8px 20px; 
@@ -64,15 +73,56 @@
         }
         .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
         
-        /* Dropdowns */
-        .nav-dropdown { position: relative; cursor: pointer; }
-        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        /* DROPDOWNS (Fixed Disappearing Issue) */
+        .nav-dropdown { position: relative; height: 100%; display: flex; align-items: center; }
+        
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            right: 0; 
+            background: var(--bg-card); 
+            border: 1px solid var(--border-dynamic); 
+            border-radius: 8px; 
+            min-width: 240px; 
+            padding: 0.5rem 0; 
+            z-index: 1001; 
+            margin-top: 15px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+        }
+
+        /* THE MAGIC BRIDGE */
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.2s ease-out; }
+        
+        .dropdown-content a { 
+            display: block; 
+            padding: 10px 20px; 
+            color: var(--slate); 
+            text-transform: none; 
+            font-weight: 500; 
+            border-bottom: 1px solid rgba(255,255,255,0.03); 
+            font-size: 0.9rem;
+            letter-spacing: 0;
+        }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 25px; }
         .dropdown-content a:last-child { border-bottom: none; }
 
-        /* HERO - STEER STYLE */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HERO */
         .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
         .hero-bg { 
             position: absolute; 
@@ -95,88 +145,30 @@
         .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
         .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
 
-        /* 2. STRICT PARALLEL STEP HEADERS */
-        .step-block { 
-            display: flex; 
-            gap: 2rem; 
-            margin-top: 6rem; 
-            margin-bottom: 2rem; 
-            align-items: flex-start; /* Key: Aligns top */
-        }
-        .step-num { 
-            font-size: 4rem; 
-            font-weight: 900; 
-            color: var(--slate); 
-            opacity: 0.2; 
-            line-height: 0.8;
-            min-width: 80px; /* Fixed width prevents wrapping */
-            flex-shrink: 0; 
-        }
-        .step-content {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-top: 0.2rem; /* Optical alignment with number */
-        }
-        .step-counter { 
-            font-size: 0.7rem; 
-            font-weight: 800; 
-            color: var(--slate); 
-            letter-spacing: 0.15em; 
-            text-transform: uppercase; 
-            margin-bottom: 0.25rem; 
-        }
-        .step-title-row {
-            display: flex;
-            align-items: center; /* Aligns text and pill */
-            gap: 1rem;
-        }
-        .step-title { 
-            font-size: 1.5rem; 
-            font-weight: 800; 
-            color: white; 
-            margin: 0; 
-            line-height: 1.1; 
-        }
-        .time-pill { 
-            display: inline-block; 
-            color: var(--slate); 
-            font-size: 0.9rem; 
-            font-weight: 600; 
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.7;
-        }
+        /* COMPONENTS */
+        .step-block { display: flex; gap: 2rem; margin-top: 6rem; margin-bottom: 2rem; align-items: flex-start; }
+        .step-num { font-size: 4rem; font-weight: 900; color: var(--slate); opacity: 0.2; line-height: 0.8; min-width: 80px; flex-shrink: 0; }
+        .step-content { display: flex; flex-direction: column; justify-content: center; padding-top: 0.2rem; }
+        .step-counter { font-size: 0.7rem; font-weight: 800; color: var(--slate); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.25rem; }
+        .step-title-row { display: flex; align-items: center; gap: 1rem; }
+        .step-title { font-size: 1.5rem; font-weight: 800; color: white; margin: 0; line-height: 1.1; }
+        .time-pill { display: inline-block; color: var(--slate); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
 
-        /* 3. STEP 00 LIST STYLE */
         .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
         .list-item { display: flex; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; line-height: 1.4; }
         .list-num { color: white; font-weight: 700; margin-right: 0.8rem; min-width: 25px; }
 
-        /* COMPONENTS */
         .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
         
-        /* WORKED EXAMPLES & FAILURES */
-        .worked-example-clean { 
-            background: transparent; 
-            border: none;
-            padding: 1.5rem 0; 
-            margin-top: 1rem; 
-        }
+        .worked-example-clean { background: transparent; border: none; padding: 1.5rem 0; margin-top: 1rem; }
         .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .example-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; margin: 0; }
-        
+
         .experience-header { font-size: 0.8rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.5rem; }
         .experience-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; }
 
-        .failure-box {
-            background: rgba(239, 68, 68, 0.05);
-            border-left: 3px solid var(--red);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 8px 8px 0;
-        }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 3px solid var(--red); padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
         .failure-title { color: white; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
         .failure-rule { color: white; font-weight: 700; font-size: 0.9rem; margin-top: 1rem; display: block; }
         .failure-red-text { color: var(--red); display: inline; font-weight: 800; }
@@ -198,12 +190,10 @@
         .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); }
         .btn-copy:hover { color: white; background: rgba(255,255,255,0.05); }
 
-        /* DIVIDERS */
         .section-divider { display: flex; align-items: center; gap: 1rem; margin: 5rem 0 3rem 0; }
         .divider-line { flex-grow: 1; height: 1px; background: var(--border-dynamic); }
         .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; text-transform: uppercase; }
 
-        /* LIBRARY */
         .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 4rem; }
         .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; letter-spacing: 0.02em; }
         .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); color: white; }
@@ -219,14 +209,12 @@
         .footer-link:hover { color: white; }
         .footer-bottom { text-align: center; color: var(--slate); font-size: 0.8rem; margin-top: 3rem; opacity: 0.5; }
 
-        /* UTILS */
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
-        
         /* FLOW PILLS */
         .pill-blue-flow { background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
         .pill-blue-flow.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -236,16 +224,18 @@
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="steer.html">Steer</a>
+            
             <div class="nav-dropdown">
-                <span>About ▾</span>
+                <span class="nav-link-text">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
                     <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
+            
             <div class="nav-dropdown">
-                <span class="active" style="color: white;">GAIN Series ▾</span>
+                <span class="nav-link-text active" style="color: white;">GAIN Series ▾</span>
                 <div class="dropdown-content">
                     <a href="week1.html">1: KNOW — Intelligence</a>
                     <a href="week2.html">2: MAP — Omniscience</a>
@@ -253,6 +243,7 @@
                     <a href="week4.html">4: GROW — Velocity</a>
                 </div>
             </div>
+            
             <a href="visuals.html">Visuals</a>
             <a href="contact.html" class="nav-cta">CONTACT</a>
         </div>
@@ -839,8 +830,18 @@ Produce:
             }
         }
 
-        // SCROLL REVEAL
+        // MOBILE MENU TOGGLE
         document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const nav = document.querySelector('.nav-links');
+            
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                });
+            }
+
+            // SCROLL REVEAL
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {

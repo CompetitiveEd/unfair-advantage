@@ -9,30 +9,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* CORE VARIABLES */
+        /* BENTLEY / STEER DESIGN SYSTEM */
         :root {
             --primary: #3b82f6;
+            --primary-dim: rgba(59, 130, 246, 0.1);
             --slate: #94a3b8;
-            --bg-body: #020617;
-            --bg-card: #0f172a;
+            --bg-body: #020617; /* Deep Steer Black */
+            --bg-card: #0f172a; /* Slightly lighter for cards */
             --bg-console: #020617;
             --text-body: #cbd5e1;
             --text-heading: #ffffff;
             --border-dynamic: rgba(255,255,255,0.08);
             --amber: #f59e0b;
+            --amber-dim: rgba(245, 158, 11, 0.1);
             --green: #10b981;
+            --green-dim: rgba(16, 185, 129, 0.1);
             --red: #ef4444;
+            --radius-std: 12px;
             --font-main: 'Inter', sans-serif;
             --font-mono: 'Monaco', 'Consolas', monospace;
         }
 
-        /* BASE */
+        /* RESET & BASE */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: var(--bg-body); color: var(--text-body); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
         a { color: var(--primary); text-decoration: none; transition: 0.2s; }
         a:hover { color: #60a5fa; }
 
-        /* 1. FULL WIDTH STICKY NAV */
+        /* 1. FULL WIDTH STICKY NAV (Steer Style) */
         nav { 
             width: 100%; 
             display: flex; 
@@ -49,8 +53,17 @@
         }
         .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-links a, .nav-link-text { 
+            color: #cbd5e1; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            letter-spacing: 0.05em; 
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-text { color: white; }
+        
         .nav-cta { 
             border: 1px solid rgba(255,255,255,0.2); 
             padding: 8px 20px; 
@@ -60,13 +73,54 @@
         }
         .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
         
-        /* Dropdowns */
-        .nav-dropdown { position: relative; cursor: pointer; }
-        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        /* DROPDOWNS (Fixed Disappearing Issue) */
+        .nav-dropdown { position: relative; height: 100%; display: flex; align-items: center; }
+        
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            right: 0; /* Align right */
+            background: var(--bg-card); 
+            border: 1px solid var(--border-dynamic); 
+            border-radius: 8px; 
+            min-width: 240px; 
+            padding: 0.5rem 0; 
+            z-index: 1001; 
+            margin-top: 15px; /* The visual gap */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+        }
+
+        /* THE MAGIC BRIDGE: Fills the gap so mouse doesn't 'fall' through */
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -20px; /* Covers the margin gap */
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.2s ease-out; }
+        
+        .dropdown-content a { 
+            display: block; 
+            padding: 10px 20px; 
+            color: var(--slate); 
+            text-transform: none; /* Keep dropdown items normal case */
+            font-weight: 500; 
+            border-bottom: 1px solid rgba(255,255,255,0.03); 
+            font-size: 0.9rem;
+            letter-spacing: 0;
+        }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 25px; }
         .dropdown-content a:last-child { border-bottom: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* HERO - FULL COLOUR */
         .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
@@ -91,7 +145,7 @@
         .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
         .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
 
-        /* 2. REVISED STEP HEADERS */
+        /* 2. REVISED STEP HEADERS (Parallel & Compact) */
         .step-block { 
             display: flex; 
             gap: 2rem; 
@@ -144,7 +198,7 @@
             opacity: 0.7;
         }
 
-        /* 3. REVISED LIST STYLE */
+        /* 3. REVISED LIST STYLE (For Step 00) */
         .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
         .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
         .list-item { display: flex; margin-bottom: 0.5rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; line-height: 1.4; }
@@ -219,7 +273,7 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
         .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
         
-        /* FLOW PILLS (Framework) */
+        /* FLOW PILLS */
         .pill-blue-flow { background: var(--bg-card); color: var(--text-body); border: 1px solid var(--border-dynamic); font-size: 0.65rem; padding: 6px 12px; border-radius: 4px; font-weight: 700; }
         .pill-blue-flow.active { background: var(--primary); color: white; border-color: var(--primary); }
     </style>
@@ -231,23 +285,26 @@
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="steer.html">Steer</a>
+            
             <div class="nav-dropdown">
-                <span>About ▾</span>
+                <span class="nav-link-text">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
                     <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
+            
             <div class="nav-dropdown">
-                <span class="active" style="color: white;">GAIN Series ▾</span>
+                <span class="nav-link-text active" style="color: white;">GAIN Series ▾</span>
                 <div class="dropdown-content">
                     <a href="week1.html">1: KNOW — Intelligence</a>
-                    <a href="week2.html">2: MAP — Omniscience</a>
+                    <a href="week2.html" style="color: var(--primary);">2: MAP — Omniscience</a>
                     <a href="week3.html">3: WIN — Oxygen</a>
                     <a href="week4.html">4: GROW — Velocity</a>
                 </div>
             </div>
+            
             <a href="visuals.html">Visuals</a>
             <a href="contact.html" class="nav-cta">CONTACT</a>
         </div>
@@ -1000,8 +1057,18 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
             }
         }
 
-        // SCROLL REVEAL
+        // MOBILE MENU TOGGLE
         document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('mobile-menu-toggle');
+            const nav = document.querySelector('.nav-links');
+            
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    nav.classList.toggle('active');
+                });
+            }
+
+            // SCROLL REVEAL
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {

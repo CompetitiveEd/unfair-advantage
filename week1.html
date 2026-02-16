@@ -36,7 +36,7 @@
         a { color: var(--primary); text-decoration: none; transition: 0.2s; }
         a:hover { color: #60a5fa; }
 
-        /* 1. FULL WIDTH STICKY NAV */
+        /* 1. FULL WIDTH STICKY NAV (Steer Exact Match) */
         nav { 
             width: 100%; 
             display: flex; 
@@ -53,8 +53,17 @@
         }
         .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
         .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
-        .nav-links a:hover, .nav-links a.active { color: white; }
+        .nav-links a, .nav-link-text { 
+            color: #cbd5e1; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            letter-spacing: 0.05em; 
+            text-transform: uppercase; 
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-text { color: white; }
+        
         .nav-cta { 
             border: 1px solid rgba(255,255,255,0.2); 
             padding: 8px 20px; 
@@ -64,13 +73,54 @@
         }
         .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
         
-        /* Dropdowns */
-        .nav-dropdown { position: relative; cursor: pointer; }
-        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        /* DROPDOWNS (Fixed Disappearing Issue) */
+        .nav-dropdown { position: relative; height: 100%; display: flex; align-items: center; }
+        
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            right: 0; /* Align right */
+            background: var(--bg-card); 
+            border: 1px solid var(--border-dynamic); 
+            border-radius: 8px; 
+            min-width: 240px; 
+            padding: 0.5rem 0; 
+            z-index: 1001; 
+            margin-top: 15px; /* The visual gap */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5); 
+        }
+
+        /* THE MAGIC BRIDGE: Fills the gap so mouse doesn't 'fall' through */
+        .dropdown-content::before {
+            content: "";
+            position: absolute;
+            top: -20px; /* Covers the margin gap */
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: transparent;
+        }
+
+        .nav-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.2s ease-out; }
+        
+        .dropdown-content a { 
+            display: block; 
+            padding: 10px 20px; 
+            color: var(--slate); 
+            text-transform: none; /* Keep dropdown items normal case or as preferred */
+            font-weight: 500; 
+            border-bottom: 1px solid rgba(255,255,255,0.03); 
+            font-size: 0.9rem;
+            letter-spacing: 0;
+        }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 25px; }
         .dropdown-content a:last-child { border-bottom: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* HERO - FULL COLOUR */
         .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
@@ -245,16 +295,18 @@
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="steer.html">Steer</a>
+            
             <div class="nav-dropdown">
-                <span>About ▾</span>
+                <span class="nav-link-text">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
                     <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
+            
             <div class="nav-dropdown">
-                <span class="active" style="color: white;">GAIN Series ▾</span>
+                <span class="nav-link-text active" style="color: white;">GAIN Series ▾</span>
                 <div class="dropdown-content">
                     <a href="week1.html" style="color: var(--primary);">1: KNOW — Intelligence</a>
                     <a href="week2.html">2: MAP — Omniscience</a>
@@ -262,6 +314,7 @@
                     <a href="week4.html">4: GROW — Velocity</a>
                 </div>
             </div>
+            
             <a href="visuals.html">Visuals</a>
             <a href="contact.html" class="nav-cta">CONTACT</a>
         </div>
@@ -733,7 +786,519 @@ FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Fl
                         </div>
                     </div>
 
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C2</div>
+                            <div class="step-content">
+                                <span class="step-counter">BUDGET INTELLIGENCE</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Budget Cycle Alignment</h2>
+                                    <span class="time-pill">~5 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-04 // BUDGET CYCLE ALIGNMENT</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Using the investor relations materials and financial data I've provided, map the budget cycle for [COMPANY].
+
+Extract:
+
+1. FISCAL YEAR: When does their financial year start and end?
+2. BUDGET PLANNING WINDOW: When do departments typically submit budget requests? (Usually 3-4 months before fiscal year start.)
+3. CAPEX vs OPEX BALANCE: Based on recent investments, do they favour capital expenditure or operational expenditure? This shapes how you price.
+4. INVESTMENT CYCLES: Are there specific quarters where major investments are announced? Board approval dates?
+5. OPTIMAL ENGAGEMENT TIMING: Based on the above, when should you be having budget conversations? When is it too late?
+6. BUDGET AUTHORITY SIGNALS: Who controls discretionary spend vs committed spend? At what threshold do decisions escalate to board level?
+
+FORMAT: Timeline with specific months/quarters. Flag any assumptions. Include "DISCOVERY QUESTION" for anything you can't determine from public sources.</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C3</div>
+                            <div class="step-content">
+                                <span class="step-counter">PEOPLE INTELLIGENCE</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">LinkedIn Compact Profile</h2>
+                                    <span class="time-pill">~5 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-06 // LINKEDIN COMPACT PROFILE</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Analyse this LinkedIn profile for [NAME], [TITLE] at [COMPANY].
+
+Produce a COMPACT PROFILE (one page maximum):
+
+1. ROLE SUMMARY: What they own. Who they report to. Team size if visible. One sentence.
+2. TOP 3 PRIORITIES: Based on their posts, shares, and comments — what do they care about most? Three bullet points.
+3. DECISION STYLE: Evidence-based or intuitive? Risk-averse or progressive? Collaborative or directive? One sentence with evidence.
+4. COMMUNICATION PREFERENCE: Do they post data, narratives, or opinions? Formal or informal? This tells you how to present to them.
+5. THE ONE QUESTION: One discovery question that demonstrates you've done your homework on THIS person — not just their company.
+6. RAPPORT HOOK: One personal dimension (interest, cause, community involvement) that creates a natural conversation opener.
+
+FORMAT: Six sections, maximum 2 lines each. No filler. This is a phone-screen reference card.
+
+[PASTE LINKEDIN PROFILE HERE]</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C4</div>
+                            <div class="step-content">
+                                <span class="step-counter">PEOPLE INTELLIGENCE</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Hiring Signal Analysis</h2>
+                                    <span class="time-pill">~10 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-07 // HIRING SIGNAL ANALYSIS</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Analyse the following job postings from [COMPANY]. Cross-reference against company research already provided.
+
+Extract:
+
+1. INITIATIVE SIGNALS: What programmes or transformations do these roles support? Group roles by likely initiative. (e.g., 6 resilience roles = active resilience transformation.)
+2. SENIORITY SIGNALS: Are they hiring leaders or doers? New leadership = new direction. Bulk hiring = execution phase.
+3. SPECIALIST SKILLS: What specific technologies, certifications, or methodologies are they seeking? These reveal their technology direction more honestly than any press release.
+4. CAPABILITY GAPS: Where are they struggling to hire? (High applicant count = easy to fill. Roles open 60+ days = hard to fill.) Hard-to-fill roles = your opportunity to offer managed capability.
+5. LOCATION SIGNALS: Are roles concentrated or distributed? New locations appearing? This reveals expansion or consolidation.
+6. TIMING: When were roles posted? Clusters of postings in a short period = programme just approved. Drip-feed = ongoing BAU.
+7. SALES IMPLICATIONS: For each cluster of roles, what does it mean for your engagement? What capability could you offer that eliminates their need to hire? What discovery question should you ask?
+
+FORMAT: Grouped by initiative/theme, not individual job listings. Each group: what it signals, what it means for you.
+
+[PASTE JOB LISTINGS OR CAREERS PAGE HERE]</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C5</div>
+                            <div class="step-content">
+                                <span class="step-counter">SYNTHESIS</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Slide Relevancy Audit</h2>
+                                    <span class="time-pill">~5 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-10 // SLIDE RELEVANCY AUDIT</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">I have a standard presentation deck for [MY COMPANY]. I am meeting [NAME], [TITLE] at [COMPANY].
+
+Based on the stakeholder intelligence and company research already provided, audit my deck:
+
+For each slide, recommend one of:
+1. KEEP — directly relevant to this stakeholder's priorities. Note WHY.
+2. CUT — not relevant to this meeting. Don't waste their time.
+3. MODIFY — the content is relevant but the framing needs changing. Specify what to change and why. (e.g., "Change 'disaster recovery' to 'continuous availability' — their language.")
+4. REORDER — move this slide earlier/later based on stakeholder priority.
+5. CREATE — a slide that doesn't exist but should. Describe what it needs to show and why.
+
+FINAL OUTPUT: The recommended slide sequence (by number) for this specific meeting, with total deck length and estimated presentation time.
+
+CONSTRAINTS: Maximum 12 slides for a 30-minute meeting. Maximum 20 for a 60-minute meeting. The first slide after the title must address THEIR context, not your company overview.
+
+[PASTE SLIDE LIST OR DECK OUTLINE HERE]</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C6</div>
+                            <div class="step-content">
+                                <span class="step-counter">RISK & ADVANCED</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Pre-Mortem Analysis</h2>
+                                    <span class="time-pill">~10 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-11 // PRE-MORTEM ANALYSIS</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Using all intelligence gathered so far — company research, stakeholder profiles, battle card, and capability matching — run a Pre-Mortem.
+
+SCENARIO: It is 6 months from now. This deal has failed. You did not win. Now explain why.
+
+Analyse across 5 failure modes:
+
+1. CFO BLOCK: The economic buyer killed it. Why? What financial objection wasn't addressed? What competing budget priority won instead?
+2. TECHNICAL REJECTION: The technical evaluator scored you low. Why? What capability gap was exposed? What proof point was missing?
+3. POLITICAL FAILURE: You backed the wrong horse. Your champion lost influence. A blocker you didn't engage torpedoed the deal. Which stakeholder and why?
+4. COMPETITIVE LOSS: A competitor won. Who? What did they offer that you didn't? Where did their relationships outweigh your solution?
+5. SELF-INFLICTED: Your own mistakes. Generic response. Wrong pricing model. Missed deadline. Tone-deaf presentation. What did YOU get wrong?
+
+For each failure mode:
+- PROBABILITY: How likely is this? (High / Medium / Low)
+- EARLY WARNING: What signal would tell you this is happening?
+- MITIGATION: What specific action prevents this?
+- DISCOVERY QUESTION: What can you ask in the next meeting to test whether this risk is real?
+
+FORMAT: Table — Failure Mode | Probability | Early Warning | Mitigation | Discovery Question</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C7</div>
+                            <div class="step-content">
+                                <span class="step-counter">RISK & ADVANCED</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Objection Prep (Voss Accusation Audit)</h2>
+                                    <span class="time-pill">~5 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-12 // OBJECTION PREP — ACCUSATION AUDIT</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Based on the company research, stakeholder profile, and battle card — identify the 3 most likely objections this prospect will raise.
+
+For each objection:
+
+1. THE OBJECTION: What will they say or think? Be specific. Not "they might have concerns about price" — instead: "They'll question why our managed service costs more than their current in-house team of 4 FTEs."
+
+2. THE ACCUSATION AUDIT (Voss framework): Write the statement you deploy BEFORE they raise it. Format: "You're probably thinking [specific concern]. And you'd be right to think that. Here's what I'd want to know if I were in your position..."
+
+3. THE EVIDENCE: What proof point, case study, or data point neutralises this objection?
+
+4. THE PIVOT: How do you turn the objection into a strength? (e.g., "Yes, our price is higher — because we include the governance layer that prevented a £4M incident at [client]. The question isn't cost per hour, it's cost per avoided disaster.")
+
+5. THE STAKEHOLDER LINK: Which specific stakeholder is most likely to raise this? How does their profile shape HOW you deliver the response?
+
+FORMAT: Three objections, fully prepared. Each should feel like a natural conversation, not a scripted rebuttal.</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C8</div>
+                            <div class="step-content">
+                                <span class="step-counter">RISK & ADVANCED</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Hallucination Verification</h2>
+                                    <span class="time-pill">~5 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-13 // HALLUCINATION VERIFICATION</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">Review the following AI-generated output for accuracy and hallucination risk.
+
+For EVERY factual claim in the text, categorise as:
+
+1. VERIFIED: The claim can be traced to a specific source document I provided. Cite the source and location (e.g., "Annual Report p.23" or "LinkedIn post, 12 Jan 2026").
+
+2. INFERRED: The claim is a reasonable inference from the source material, but not directly stated. Explain the reasoning. (e.g., "Inferred from the combination of 6 resilience hires and the ISO 22301 deadline — likely connected but not stated.")
+
+3. UNVERIFIED: The claim cannot be traced to any source I provided. This is a potential hallucination. Flag clearly.
+
+4. CONTRADICTED: The claim conflicts with something in the source material. Flag and explain the contradiction.
+
+OUTPUT FORMAT:
+- Reproduce each claim
+- Mark: ✅ VERIFIED (source) | 🔶 INFERRED (reasoning) | ❌ UNVERIFIED | ⚠️ CONTRADICTED
+- Summary: Total claims | Verified % | Unverified % | Contradicted %
+
+RULE: If unverified claims exceed 15% of total, flag the entire output as requiring manual review before use.
+
+[PASTE AI-GENERATED OUTPUT HERE]</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C9</div>
+                            <div class="step-content">
+                                <span class="step-counter">ADVANCED INTELLIGENCE</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Multi-Source Intelligence Synthesis</h2>
+                                    <span class="time-pill">~15 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-15 // MULTI-SOURCE INTELLIGENCE</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">You are a senior intelligence analyst. You have been given multiple source documents about the same organisation from different sources. Your job is not to summarise each source — it's to CROSS-REFERENCE them and find what no single source reveals alone.
+
+INPUTS: [PASTE multiple sources — LinkedIn scrape, website content, news articles, financial filings, regulatory reports]
+
+Produce:
+
+1. CONSISTENCY CHECK: Where do sources AGREE? (High confidence findings.) Where do sources CONTRADICT? (Red flags requiring investigation.) Where does one source reveal something others omit? (Hidden signals.)
+
+2. TIMELINE RECONSTRUCTION: Build a unified timeline of events, announcements, and changes from ALL sources. What happened in what order? Where does the timeline reveal cause-and-effect the company hasn't stated publicly?
+
+3. NARRATIVE vs REALITY: What's the company's PUBLIC narrative? (Website, LinkedIn, press releases.) What do the FINANCIAL filings show? (Revenue, margins, costs, risk disclosures.) What does the REGULATOR say? (Compliance status, findings, enforcement.) Where are the gaps between narrative and reality?
+
+4. LEADERSHIP SIGNALS: Cross-reference leadership profiles against company announcements. Who joined recently? (New leadership = new priorities.) Who left? (Departures from key functions = instability signal.) What are leaders posting about vs what the company is announcing?
+
+5. INTELLIGENCE GRADE: For each key finding, rate:
+   - CONFIRMED: Multiple sources agree
+   - PROBABLE: Strong inference from available data
+   - POSSIBLE: Single source, unverified
+   - CONTRADICTED: Sources disagree — flag for discovery
+
+FORMAT: Start with the 3 most important cross-referenced insights — the things you could ONLY find by reading multiple sources together.</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-prose">
+                        <div class="step-block">
+                            <div class="step-num" style="opacity: 0.2; font-size: 3rem;">C10</div>
+                            <div class="step-content">
+                                <span class="step-counter">ADVANCED INTELLIGENCE</span>
+                                <div class="step-title-row">
+                                    <h2 class="step-title">Governance & NED Network Intelligence</h2>
+                                    <span class="time-pill">~15 MIN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="console-header-v2">
+                            <div class="traffic-lights"><span></span><span></span><span></span></div>
+                            <div class="console-title">W1-16 // GOVERNANCE & NED NETWORK</div>
+                        </div>
+                        <div class="prompt-wrapper">
+                            <div class="prompt-content">You are mapping the governance structure of a target organisation, with specific focus on Non-Executive Directors and their external networks.
+
+INPUTS:
+- Annual report governance section / Companies House directors list
+- LinkedIn profiles of Board members and NEDs (if available)
+- Your own company's Board and NED list (for cross-reference)
+
+Produce:
+
+1. BOARD COMPOSITION: Executive directors: names, roles, tenure. Non-Executive Directors: names, backgrounds, tenure. Chair: executive or non-exec? Background?
+
+2. COMMITTEE STRUCTURE: Audit, Risk, Remuneration, Nomination — who chairs each? Which committees would approve a contract of this scale? Who sits on the committees most relevant to your deal?
+
+3. NED NETWORK MAP: For each NED: what other boards do they sit on? Any connections to YOUR company? (Shared NEDs = warm intro.) Any connections to your existing clients? Industry background: regulator? competitor? adjacent sector?
+
+4. GOVERNANCE SIGNALS: Recent board changes (new NEDs = new priorities). Committee focus areas mentioned in annual report. Any governance concerns raised by auditors or regulators?
+
+5. ENGAGEMENT IMPLICATIONS: How does the board structure affect procurement decisions? Does a committee need to approve this deal? Who is the board-level sponsor for the programme? Could a NED introduction create an above-the-line relationship?
+
+FORMAT: Start with NED Network Map — shared connections are the highest-value finding. Then committee structure. Then engagement implications.</div>
+                            <div class="console-actions">
+                                <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                                <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal">
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label" style="color: var(--amber);">PROMPT SESSION — NEW PROMPTS FOR REVIEW</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <p style="font-size: 0.85rem; color: var(--amber); font-weight: 600;">The following prompts are drafts awaiting review. Orange text = needs your input before going live.</p>
+            </div>
+
+            <div style="border: 2px dashed var(--amber); border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+                <div class="step-block" style="margin-top: 0;">
+                    <div class="step-num" style="opacity: 0.5; color: var(--amber);">S</div>
+                    <div class="step-content">
+                        <span class="step-counter" style="color: var(--amber);">NEW PROMPT — DRAFT</span>
+                        <div class="step-title-row">
+                            <h2 class="step-title" style="color: var(--amber);">Source Scraping Protocol</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(245, 158, 11, 0.05); border-left: 2px solid var(--amber); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0;">
+                     <p style="font-size: 0.95rem; color: var(--amber); margin: 0;">Before running any intelligence prompt, you need raw material. This protocol tells you exactly what to scrape, where to find it, and how to paste it as context.</p>
+                </div>
+                
+                <div class="prompt-wrapper" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="prompt-content" style="color: var(--amber);">Before starting the GAIN intelligence chain, gather and paste the following source material:
+
+TIER 1 — ESSENTIAL (always gather):
+□ Company website: About Us, Services, Leadership, Investor Relations, Newsroom
+□ Annual report / investor presentation (PDF — attach or paste key sections)
+□ LinkedIn company page: About section, recent 10-15 posts, featured leaders, jobs tab
+□ Target stakeholder LinkedIn profiles: posts from last 6 months, recommendations, activity
+
+TIER 2 — HIGH VALUE (gather for Level 2-3 meetings):
+□ Company careers page: open roles, hiring volume, benefits, culture statements
+□ Sustainability / ESG page: commitments, targets, community investment
+□ LinkedIn company events: upcoming and past, attendance numbers
+□ Stakeholder newsletters or Substack (if they publish)
+□ Glassdoor / employee reviews (culture signals, not individual complaints)
+
+TIER 3 — DEEP PROTOCOL (gather for strategic accounts):
+□ Companies House filings (private companies)
+□ Earnings call transcripts
+□ Trade press coverage (last 12 months)
+□ Industry body memberships and speaking engagements
+□ Patent filings or regulatory submissions
+
+For each source, copy and paste the full text into your AI conversation. The prompts that follow are designed to process this raw material.
+
+[PASTE YOUR ADDITIONAL CONTEXT HERE] — Add any human intelligence: corridor conversations, event observations, competitor rumours, relationship history.</div>
+                    <div class="console-actions">
+                         <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                        <button class="action-btn btn-copy" onclick="copyPrompt(this)" style="color: var(--amber);">COPY</button>
+                    </div>
+                </div>
+
+                <div class="experience-header" style="color: var(--amber);">WHAT EXPERIENCE SEES — DRAFT</div>
+                <p class="experience-prose" style="color: var(--amber);">The careers page is the most underused intelligence source in enterprise sales. Meridian has 14 open roles — 6 in resilience, 5 in tech. That's not an aspiration; that's a confirmed transformation. The Resilience Analyst role in Manchester has 124 applicants. They can afford to be selective. Your proposal team needs to match that quality bar.</p>
+            </div>
+
+            <div style="border: 2px dashed var(--amber); border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+                <div class="step-block" style="margin-top: 0;">
+                    <div class="step-num" style="opacity: 0.5; color: var(--amber);">B</div>
+                    <div class="step-content">
+                        <span class="step-counter" style="color: var(--amber);">NEW PROMPT — DRAFT</span>
+                        <div class="step-title-row">
+                            <h2 class="step-title" style="color: var(--amber);">Belief System Decoder</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(245, 158, 11, 0.05); border-left: 2px solid var(--amber); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0;">
+                     <p style="font-size: 0.95rem; color: var(--amber); margin: 0;">This is the prompt that most differentiates GAIN from every other sales methodology. W1-05 profiles who someone is. This prompt decodes how they think.</p>
+                </div>
+                
+                <div class="prompt-wrapper" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="prompt-content" style="color: var(--amber);">Using the stakeholder profile from W1-05 AND their raw LinkedIn posts, articles, newsletter content, and any public commentary — go deeper.
+
+I don't want to know what this person does. I want to know how they decide.
+
+Analyse:
+
+1. CORE CONVICTION: What does this person fundamentally believe about their domain? What principle do they return to repeatedly? This is the belief that drives every decision they make. Cite the evidence.
+
+2. DECISION TRIGGERS: What makes them say yes? What makes them resist? What conditions need to be true before they'll commit? Look for patterns in what they praise vs what they criticise.
+
+3. COMMUNICATION PATTERNS: How do they signal agreement? How do they signal disagreement? Do they ask questions or make statements? Do they use data or narrative? Are they direct or consensus-seeking?
+
+4. DIAGNOSTIC QUESTIONS THEY'LL ASK YOU: Based on their conviction and communication style — what will they test you on? What question will they ask in the first 10 minutes that determines whether you're credible or generic?
+
+5. TRUST ARCHITECTURE: What earns trust with this person? Speed? Evidence? Honesty about limitations? Track record? Referrals? What destroys it?
+
+6. RELATIONSHIP TO OTHER STAKEHOLDERS: Where are the alliances and tensions? Who do they defer to? Who defers to them? What political dynamics should I navigate?
+
+FORMAT: For every claim, cite the specific source (LinkedIn post date, article title, recommendation text). If you're inferring rather than observing, mark it as "INFERENCE — based on [evidence]."</div>
+                    <div class="console-actions">
+                         <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                        <button class="action-btn btn-copy" onclick="copyPrompt(this)" style="color: var(--amber);">COPY</button>
+                    </div>
+                </div>
+
+                <div class="experience-header" style="color: var(--amber);">WHAT EXPERIENCE SEES — DRAFT</div>
+                <p class="experience-prose" style="color: var(--amber);">W1-05 tells you Osei is the CRO with 26 years' experience. This prompt tells you he'll ask "what's your evidence?" in the first meeting, that he pauses before responding (don't fill the silence), and that he frames disagreement as "I don't have sufficient evidence" rather than "I disagree."</p>
+            </div>
+
+            <div style="border: 2px dashed var(--amber); border-radius: 12px; padding: 2rem; margin-bottom: 3rem;">
+                <div class="step-block" style="margin-top: 0;">
+                    <div class="step-num" style="opacity: 0.5; color: var(--amber);">X</div>
+                    <div class="step-content">
+                        <span class="step-counter" style="color: var(--amber);">NEW PROMPT — DRAFT</span>
+                        <div class="step-title-row">
+                            <h2 class="step-title" style="color: var(--amber);">Cross-Source Analysis</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(245, 158, 11, 0.05); border-left: 2px solid var(--amber); padding: 1rem; margin-bottom: 1rem; border-radius: 0 6px 6px 0;">
+                     <p style="font-size: 0.95rem; color: var(--amber); margin: 0;">The website tells you what they want regulators to see. LinkedIn tells you what they want the market to think. The gaps between these three sources are where the real intelligence lives.</p>
+                </div>
+                
+                <div class="prompt-wrapper" style="border-color: rgba(245, 158, 11, 0.3);">
+                    <div class="prompt-content" style="color: var(--amber);">I've provided intelligence from multiple sources about [COMPANY]: their corporate website, LinkedIn company page, individual stakeholder profiles and posts, and any additional materials.
+
+Now compare them. I want to understand the gaps.
+
+Analyse:
+
+1. NARRATIVE CONSISTENCY: Where do the website, LinkedIn, and individual posts tell the same story? This is what's genuinely true — multiple sources confirm it.
+
+2. NARRATIVE GAPS: Where does the website say one thing and LinkedIn say another? Where do individuals contradict the corporate message? These gaps reveal what's aspirational vs actual.
+
+3. URGENCY SIGNALS: Cross-reference job postings, LinkedIn posts, newsroom dates, and regulatory deadlines. Build a timeline that explains WHY NOW. What combination of events created the current buying moment?
+
+4. CULTURAL SIGNALS: Compare the corporate "Life" tab, employee stories, Glassdoor reviews, and leadership posts. Where is the culture genuinely strong? Where is there tension between stated values and lived experience?
+
+5. HIDDEN INTELLIGENCE: What did you find on one source that doesn't appear anywhere else? A LinkedIn post about a specific challenge. A job posting that reveals a capability gap. An event that signals strategic direction. These are the insights no competitor will have.
+
+6. ENGAGEMENT PATTERNS: Which company posts get the most engagement? What topics does the market respond to? This tells you how to frame your value proposition in language that resonates externally.
+
+FORMAT: For each finding, cite the specific source and explain why the gap or signal matters for a sales engagement.</div>
+                    <div class="console-actions">
+                         <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
+                        <button class="action-btn btn-copy" onclick="copyPrompt(this)" style="color: var(--amber);">COPY</button>
+                    </div>
+                </div>
+
+                <div class="experience-header" style="color: var(--amber);">WHAT EXPERIENCE SEES — DRAFT</div>
+                <p class="experience-prose" style="color: var(--amber);">Meridian's website says "Availability, not assets." Their LinkedIn posts about resilience get 2-5x the engagement of generic corporate content. Jennifer Morris's newsletter has 3,240 subscribers — that's a personal brand built on the company's strategic priority.</p>
             </div>
         </div>
 
@@ -758,149 +1323,4 @@ FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Fl
 
             <div class="failure-box">
                 <h3 class="failure-title">FAILURE 3: False Confidence</h3>
-                <p style="margin: 0; font-size: 0.95rem;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was 9 months old.</p>
-                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes within 48 hours of the meeting.</span>
-            </div>
-        </div>
-
-        <div class="container-wide reveal">
-            <div class="section-divider" style="margin-top: 6rem;">
-                <div class="divider-line"></div>
-                <div class="divider-label">PROMPT LIBRARY</div>
-                <div class="divider-line"></div>
-            </div>
-            
-            <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
-
-            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">COMPANY INTELLIGENCE</h4>
-            <div class="library-grid">
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-01')">W1-01 // 9-PILLAR RESEARCH <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-02')">W1-02 // COMPACT RESEARCH <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-03')">W1-03 // BUDGET DETECTION <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-04')">W1-04 // BUDGET CYCLE <span class="copy-badge">Copy</span></button>
-            </div>
-
-            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">PEOPLE INTELLIGENCE</h4>
-            <div class="library-grid">
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-05')">W1-05 // EXEC INTELLIGENCE <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-06')">W1-06 // COMPACT PROFILE <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-07')">W1-07 // HIRING SIGNALS <span class="copy-badge">Copy</span></button>
-            </div>
-
-            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">SYNTHESIS & MATCHING</h4>
-            <div class="library-grid">
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-08')">W1-08 // BATTLE CARD <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-09')">W1-09 // CAPABILITY MATCH <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-10')">W1-10 // SLIDE RELEVANCY <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-14')">W1-14 // EXEC BRIEFING <span class="copy-badge">Copy</span></button>
-            </div>
-
-            <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">RISK & ADVANCED</h4>
-            <div class="library-grid">
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-11')">W1-11 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-12')">W1-12 // OBJECTION PREP <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-13')">W1-13 // HALLUCINATION CHECK <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-15')">W1-15 // MULTI-SOURCE <span class="copy-badge">Copy</span></button>
-                <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-16')">W1-16 // GOVERNANCE MAP <span class="copy-badge">Copy</span></button>
-            </div>
-        </div>
-
-    </main>
-
-    <footer>
-        <div class="footer-inner">
-            <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
-            <div class="footer-right">
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                    AI Is Not Your Cheerleader →
-                </a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            No hype. Just results. © 2026
-        </div>
-    </footer>
-
-    <script>
-        // TOGGLE PROMPT EXPANSION
-        function togglePrompt(btn) {
-            const content = btn.parentElement.previousElementSibling;
-            content.classList.toggle('expanded');
-            btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
-        }
-
-        // TOGGLE TOOLKIT
-        function toggleToolkit(el) {
-            el.classList.toggle('open');
-            const content = el.nextElementSibling;
-            content.classList.toggle('expanded');
-            if (content.classList.contains('expanded')) {
-                setTimeout(() => {
-                    content.querySelectorAll('.reveal').forEach(r => r.classList.add('active'));
-                }, 100);
-            }
-        }
-
-        // COPY FUNCTIONALITY
-        function copyPrompt(btn) {
-            const content = btn.parentElement.previousElementSibling.innerText;
-            navigator.clipboard.writeText(content).then(() => {
-                const original = btn.innerText;
-                btn.innerText = 'COPIED ✓';
-                btn.style.color = '#10b981';
-                setTimeout(() => {
-                    btn.innerText = original;
-                    btn.style.color = '';
-                }, 2000);
-            });
-        }
-
-        // LIBRARY COPY FUNCTIONALITY
-        function copyLibraryPrompt(btn, promptID) {
-            const titles = document.querySelectorAll('.console-title');
-            let foundCode = null;
-
-            titles.forEach(title => {
-                if (title.innerText.includes(promptID)) {
-                    const wrapper = title.nextElementSibling;
-                    const content = wrapper.querySelector('.prompt-content');
-                    if (content) foundCode = content.innerText;
-                }
-            });
-
-            if (foundCode) {
-                navigator.clipboard.writeText(foundCode).then(() => {
-                    const badge = btn.querySelector('.copy-badge');
-                    const original = badge.innerText;
-                    badge.innerText = 'COPIED';
-                    badge.style.background = '#10b981';
-                    setTimeout(() => {
-                        badge.innerText = original;
-                        badge.style.background = '';
-                    }, 2000);
-                });
-            } else {
-                console.warn('Prompt ID not found:', promptID);
-            }
-        }
-
-        // SCROLL REVEAL
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        });
-    </script>
-</body>
-</html>
+                <p style="margin: 0; font-size:
