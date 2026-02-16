@@ -10,120 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <style>
-        /* --- PAGE SPECIFIC STYLES --- */
-
-        /* Hero Override for Center Alignment on Contact Page */
-        .dark-header-block {
-            background: var(--bg-body);
-            padding: 6rem 2rem 4rem 2rem;
-            border-bottom: 1px solid var(--border-dynamic);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        /* Contact Form Styling */
-        .contact-card { 
-            background: var(--bg-card); 
-            border: 1px solid var(--border-dynamic); 
-            border-radius: 12px; 
-            padding: 2.5rem; 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .input-group { margin-bottom: 1.5rem; }
-        .input-group label { 
-            display: block; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            color: var(--slate); 
-            margin-bottom: 0.5rem; 
-            letter-spacing: 0.05em; 
-        }
-        
-        .input-field { 
-            width: 100%; 
-            padding: 0.8rem 1rem; 
-            background: var(--bg-container); 
-            border: 1px solid var(--border-dynamic); 
-            border-radius: 6px; 
-            color: var(--text-heading); 
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-        .input-field:focus { 
-            outline: none; 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
-        }
-
-        .submit-btn { 
-            width: 100%; 
-            padding: 1rem; 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            border-radius: 6px; 
-            font-weight: 800; 
-            font-size: 0.9rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.05em; 
-            cursor: pointer; 
-            transition: 0.2s;
-            margin-top: 0.5rem;
-        }
-        .submit-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
-
-        /* Contact Info Grid */
-        .contact-info { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 1.5rem; 
-            margin-top: 3rem; 
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dynamic);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .info-card:hover { transform: translateY(-2px); border-color: var(--primary); }
-
-        .info-card h4 { 
-            font-size: 0.75rem; 
-            color: var(--slate); 
-            text-transform: uppercase; 
-            margin-bottom: 0.5rem; 
-            font-weight: 800; 
-            letter-spacing: 0.05em;
-        }
-        .info-card p, .info-card a { 
-            color: var(--text-body); 
-            font-weight: 600; 
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .info-card a:hover { color: var(--primary); }
-
-        @media (max-width: 600px) {
-            .contact-info { grid-template-columns: 1fr; }
-            .contact-card { padding: 1.5rem; }
-        }
-    </style>
 </head>
 <body class="hero-compact">
 
@@ -158,14 +44,14 @@
                     </div>
                 </div>
                 <a href="visuals.html">Visuals</a>
-                <a href="contact.html" class="nav-cta">Contact</a>
+                <a href="contact.html" class="nav-cta active">Contact</a>
             </div>
         </nav>
     
         <header class="dark-header-block">
             <div class="hero-impact">
                 <div class="hero-content reveal">
-                    <h1 class="hero-headline" style="text-align: center;">
+                    <h1 class="hero-headline">
                         <span style="color: #ffffff; display: block;">THE PROMPTS ARE FREE.</span>
                         <span style="color: #3b82f6; display: block;">THE JUDGMENT IS HARD-EARNED.</span>
                     </h1>
@@ -255,7 +141,7 @@
             });
         }
         
-        // Scroll Reveal with immediate check for elements already in viewport
+        // Scroll Reveal
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(e => { 
                 if (e.isIntersecting) e.target.classList.add('active'); 
@@ -263,12 +149,10 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight) {
                 el.classList.add('active');
             }
-            // Observe for future scroll reveals
             revealObserver.observe(el);
         });
     });
