@@ -8,15 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* BENTLEY DESIGN SYSTEM - STEER VARIANT */
+        /* BENTLEY / STEER DESIGN SYSTEM */
         :root {
             --primary: #3b82f6;
             --primary-dim: rgba(59, 130, 246, 0.1);
             --slate: #94a3b8;
-            --bg-body: #0f172a; /* Lighter Steer Background */
-            --bg-card: #1e293b;
+            --bg-body: #020617; /* Deep Steer Black */
+            --bg-card: #0f172a; /* Slightly lighter for cards */
             --bg-console: #020617;
             --text-body: #cbd5e1;
             --text-heading: #ffffff;
@@ -25,6 +24,7 @@
             --amber-dim: rgba(245, 158, 11, 0.1);
             --green: #10b981;
             --green-dim: rgba(16, 185, 129, 0.1);
+            --red: #ef4444;
             --radius-std: 12px;
             --font-main: 'Inter', sans-serif;
             --font-mono: 'Monaco', 'Consolas', monospace;
@@ -36,54 +36,83 @@
         a { color: var(--primary); text-decoration: none; transition: 0.2s; }
         a:hover { color: #60a5fa; }
 
-        /* NAV - STEER STYLE */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
-        .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; }
-        .nav-links { display: flex; gap: 2rem; align-items: center; }
-        .nav-links a { color: var(--slate); font-size: 0.9rem; font-weight: 500; }
+        /* 1. FULL WIDTH NAVIGATION (Matches Screenshot) */
+        nav { 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 1.2rem 3rem; 
+            background: rgba(2, 6, 23, 0.95); /* Dark background */
+            backdrop-filter: blur(10px);
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 1000; 
+            border-bottom: 1px solid var(--border-dynamic);
+        }
+        .nav-brand { font-weight: 900; letter-spacing: 0.05em; color: white; font-size: 1.1rem; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+        .nav-links a { color: #cbd5e1; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
         .nav-links a:hover, .nav-links a.active { color: white; }
-        .nav-dropdown { position: relative; }
-        .dropdown-content { display: none; position: absolute; top: 100%; left: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 200px; padding: 0.5rem 0; z-index: 20; }
+        .nav-cta { 
+            border: 1px solid rgba(255,255,255,0.2); 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            color: white !important;
+            transition: all 0.2s ease;
+        }
+        .nav-cta:hover { border-color: white; background: rgba(255,255,255,0.05); }
+        
+        /* Dropdowns */
+        .nav-dropdown { position: relative; cursor: pointer; }
+        .dropdown-content { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-card); border: 1px solid var(--border-dynamic); border-radius: 8px; min-width: 220px; padding: 0.5rem 0; z-index: 1001; margin-top: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .nav-dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 0.5rem 1rem; color: var(--text-body); }
-        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; }
-        .nav-cta { background: transparent; border: 1px solid var(--border-dynamic); color: white !important; padding: 8px 16px; border-radius: 6px; font-weight: 600; transition: 0.2s; }
-        .nav-cta:hover { border-color: var(--primary); background: rgba(59, 130, 246, 0.1); }
+        .dropdown-content a { display: block; padding: 0.8rem 1.5rem; color: var(--slate); text-transform: none; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: white; padding-left: 1.8rem; }
+        .dropdown-content a:last-child { border-bottom: none; }
 
-        /* HERO - STEER COMPACT STYLE */
-        .dark-header-block { position: relative; padding: 6rem 0 4rem 0; overflow: hidden; background: #020617; }
-        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.75; pointer-events: none; z-index: 0; }
-        .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
-        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; }
-        .hero-subtext { font-size: 1.25rem; font-weight: 400; color: var(--text-body); max-width: 600px; margin: 0 auto; }
+        /* HERO - STEER STYLE */
+        .dark-header-block { position: relative; padding: 10rem 0 6rem 0; overflow: hidden; background: var(--bg-body); }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; pointer-events: none; z-index: 0; mix-blend-mode: luminosity; }
+        .hero-impact { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem; text-align: center; }
+        .hero-pre { color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem; display: block; }
+        .hero-headline { font-size: 3.5rem; font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 2rem; color: white; }
+        .hero-subtext { font-size: 1.25rem; font-weight: 400; color: var(--slate); max-width: 600px; margin: 0 auto; }
+        .hero-meta { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-top: 3rem; display: block; opacity: 0.7; }
 
-        /* LAYOUT CONTAINERS */
-        .page-container { width: 100%; padding: 0 1.5rem; }
-        .container-prose { max-width: 800px; margin: 0 auto; position: relative; }
-        .container-wide { max-width: 1100px; margin: 0 auto; position: relative; }
+        /* CONTAINERS */
+        .container-prose { max-width: 800px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
+        .container-wide { max-width: 1200px; margin: 0 auto; position: relative; padding: 0 1.5rem; }
 
-        /* COMPONENT: STANDARD STEP HEADER (Strict Parallel Layout) */
+        /* 2. STRICT PARALLEL STEP HEADERS */
         .step-block { 
             display: flex; 
-            align-items: flex-start; /* Ensures top alignment */
             gap: 2rem; 
-            margin-top: 5rem; 
+            margin-top: 6rem; 
             margin-bottom: 2rem; 
+            align-items: flex-start; /* Key: Aligns top */
         }
         .step-num { 
-            font-size: 3.5rem; 
+            font-size: 4rem; 
             font-weight: 900; 
             color: var(--slate); 
-            opacity: 0.25; 
+            opacity: 0.2; 
             line-height: 0.8;
-            min-width: 80px; /* Enforces column width */
-            flex-shrink: 0;  /* Prevents shrinking */
+            min-width: 80px; /* Fixed width prevents wrapping */
+            flex-shrink: 0; 
         }
-        .step-meta { 
-            display: flex; 
-            flex-direction: column; 
+        .step-content {
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            padding-top: 5px; /* Visual alignment with top of numbers */
+            padding-top: 0.2rem; /* Optical alignment with number */
+        }
+        .step-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
         .step-counter { 
             font-size: 0.7rem; 
@@ -91,104 +120,115 @@
             color: var(--slate); 
             letter-spacing: 0.15em; 
             text-transform: uppercase; 
-            margin-bottom: 0.5rem; 
-            display: block;
+            margin-bottom: 0.25rem; 
         }
         .step-title { 
-            font-size: 1.5rem; 
+            font-size: 1.75rem; 
             font-weight: 800; 
             color: white; 
             margin: 0; 
-            line-height: 1.1;
+            line-height: 1.1; 
         }
-        .time-pill { 
+        .pill-blue { 
             display: inline-block; 
             background: rgba(59, 130, 246, 0.1); 
             border: 1px solid rgba(59, 130, 246, 0.2);
             color: var(--primary); 
             font-size: 0.65rem; 
             font-weight: 700; 
-            padding: 4px 8px; 
+            padding: 3px 8px; 
             border-radius: 4px; 
-            margin-top: 0.8rem; 
-            align-self: flex-start;
+            vertical-align: middle;
+            margin-top: 0.5rem; /* Puts it on '2nd line' logic if needed */
         }
 
-        /* COMPONENT: EXPERIENCE SECTION (Steer Style) */
-        .experience-box {
-            background: transparent;
-            padding: 1.5rem 0;
-            margin-top: 2rem;
-            border: none; /* No border as requested */
-        }
-        .experience-header {
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #f59e0b; /* Amber Steer Colour */
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-        }
-        .experience-content {
-            font-size: 1rem;
-            color: var(--text-body);
-            margin: 0;
-            font-style: normal;
-        }
+        /* 3. STEP 00 LIST STYLE (Matches Image) */
+        .list-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+        .list-col h3 { color: var(--primary); font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
+        .list-item { display: flex; margin-bottom: 0.8rem; font-size: 0.95rem; color: var(--slate); align-items: baseline; }
+        .list-num { color: white; font-weight: 700; margin-right: 0.8rem; min-width: 25px; }
 
-        /* COMPONENT: CONSOLES */
-        .console-header-v2 { background: var(--bg-card); padding: 12px 1.5rem; border-radius: 12px 12px 0 0; border: 1px solid var(--border-dynamic); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        /* COMPONENTS */
+        .blue-callout-short { background: var(--primary-dim); border-left: 2px solid var(--primary); padding: 1rem 1.5rem; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; font-size: 0.95rem; color: #e2e8f0; }
+        
+        .experience-header { font-size: 0.8rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2rem; margin-bottom: 0.5rem; }
+        .experience-prose { font-size: 1rem; color: var(--text-body); line-height: 1.6; }
+
+        /* WORKED EXAMPLES & FAILURES */
+        .worked-example-box { 
+            background: rgba(16, 185, 129, 0.05); 
+            border-left: 3px solid var(--green); 
+            padding: 1.5rem; 
+            margin-top: 2rem; 
+            border-radius: 0 8px 8px 0;
+        }
+        .example-title { color: var(--green); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        
+        .failure-box {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 3px solid var(--red);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+        .failure-title { color: white; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .failure-rule { color: white; font-weight: 700; font-size: 0.9rem; margin-top: 1rem; display: block; }
+        .failure-red-text { color: var(--red); display: inline; font-weight: 800; }
+
+        /* CONSOLE */
+        .console-header-v2 { background: var(--bg-card); padding: 10px 1.5rem; border-radius: 8px 8px 0 0; border: 1px solid var(--border-dynamic); border-bottom: none; display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
         .traffic-lights { display: flex; gap: 6px; }
         .traffic-lights span { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
         .traffic-lights span:nth-child(1) { background: #ff5f56; }
         .traffic-lights span:nth-child(2) { background: #ffbd2e; }
         .traffic-lights span:nth-child(3) { background: #27c93f; }
-        .console-title { font-size: 0.75rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; font-family: var(--font-mono); }
-        .prompt-wrapper { background: var(--bg-console); border: 1px solid var(--border-dynamic); border-radius: 0 0 12px 12px; position: relative; overflow: hidden; }
+        .console-title { font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; font-family: var(--font-mono); text-transform: uppercase; }
+        .prompt-wrapper { background: var(--bg-console); border: 1px solid var(--border-dynamic); border-radius: 0 0 8px 8px; position: relative; overflow: hidden; }
         .prompt-content { padding: 1.5rem; color: #e2e8f0; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; max-height: 140px; overflow: hidden; transition: max-height 0.4s ease; position: relative; white-space: pre-wrap; }
         .prompt-content.expanded { max-height: 3000px; }
-        .console-actions { display: flex; border-top: 1px solid var(--border-dynamic); background: #0b1120; }
-        .action-btn { background: transparent; border: none; padding: 12px 1.5rem; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: var(--font-main); }
+        .console-actions { display: flex; border-top: 1px solid var(--border-dynamic); background: rgba(255,255,255,0.02); }
+        .action-btn { background: transparent; border: none; padding: 10px 1.5rem; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; font-family: var(--font-main); text-transform: uppercase; letter-spacing: 0.05em; }
         .btn-expand { color: var(--primary); flex-grow: 1; text-align: left; }
-        .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); font-weight: 700; letter-spacing: 0.05em; }
+        .btn-copy { color: var(--slate); border-left: 1px solid var(--border-dynamic); }
+        .btn-copy:hover { color: white; background: rgba(255,255,255,0.05); }
 
-        /* OTHER COMPONENTS */
-        .worked-example-box { background: var(--green-dim); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
-        .example-tag { font-size: 0.7rem; font-weight: 800; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.5rem; display: block; }
-        
-        .section-divider { display: flex; align-items: center; gap: 1rem; margin: 4rem 0 2rem 0; }
+        /* DIVIDERS */
+        .section-divider { display: flex; align-items: center; gap: 1rem; margin: 5rem 0 3rem 0; }
         .divider-line { flex-grow: 1; height: 1px; background: var(--border-dynamic); }
-        .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; }
+        .divider-label { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); white-space: nowrap; text-transform: uppercase; }
 
+        /* LIBRARY */
         .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 4rem; }
-        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
-        .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; transition: 0.2s; }
-        .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: var(--text-body); padding: 14px 18px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; letter-spacing: 0.02em; }
+        .library-btn:hover { border-color: var(--primary); transform: translateY(-2px); color: white; }
+        .copy-badge { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; color: var(--slate); background: rgba(255,255,255,0.05); padding: 3px 8px; border-radius: 3px; }
         .library-btn:hover .copy-badge { background: var(--primary); color: white; }
 
-        /* FOOTER */
-        footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 6rem; background: var(--bg-body); text-align: center; }
-        .footer-subtle { color: var(--slate); font-size: 0.8rem; opacity: 0.6; margin-top: 1rem; }
+        /* FOOTER (Wide Layout) */
+        footer { border-top: 1px solid var(--border-dynamic); padding: 4rem 0; margin-top: 8rem; background: var(--bg-body); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        .footer-brand { font-weight: 900; letter-spacing: 0.15em; color: white; font-size: 1rem; text-transform: uppercase; }
+        .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-link { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: 0.2s; }
+        .footer-link:hover { color: white; }
+        .footer-bottom { text-align: center; color: var(--slate); font-size: 0.8rem; margin-top: 3rem; opacity: 0.5; }
 
+        /* UTILS */
         .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="hero-compact">
-
-    <div id="scroll-progress"></div>
+<body>
 
     <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu" style="display:none;">
-            <span></span><span></span><span></span>
-        </button>
+        
         <div class="nav-links">
             <a href="foundations.html">Foundations</a>
             <a href="steer.html">Steer</a>
             
             <div class="nav-dropdown">
-                <span class="nav-link-main" style="cursor: pointer;">About ▾</span>
+                <span>About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
@@ -197,97 +237,88 @@
             </div>
 
             <div class="nav-dropdown">
-                <span class="nav-link-main" style="cursor: pointer;">GAIN Series ▾</span>
+                <span class="active" style="color: white;">GAIN Series ▾</span>
                 <div class="dropdown-content">
-                    <a href="week1.html">1: KNOW — Intelligence Layer</a>
-                    <a href="week2.html">2: MAP — Strategic Mapping</a>
-                    <a href="week3.html">3: WIN — Winning the Deal</a>
-                    <a href="week4.html">4: GROW — Continuous Growth</a>
+                    <a href="week1.html">1: KNOW — Intelligence</a>
+                    <a href="week2.html">2: MAP — Omniscience</a>
+                    <a href="week3.html">3: WIN — Oxygen</a>
+                    <a href="week4.html">4: GROW — Velocity</a>
                 </div>
             </div>
+            
             <a href="visuals.html">Visuals</a>
-            <a href="contact.html" class="nav-cta">Contact</a>
+            <a href="contact.html" class="nav-cta">CONTACT</a>
         </div>
     </nav>
 
     <header class="dark-header-block">
-        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Omniscience Engine" style="opacity: 0.75;">
+        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Omniscience Engine">
         <div class="hero-impact">
-            <div class="hero-content reveal" style="text-align: center;">
-                <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">WEEK 2 — [A] ASSESS / MAP THEM — OMNISCIENCE ENGINE</p>
-                <h1 class="hero-headline">
-                    <span style="color: #ffffff; display: block;">You mapped one person.</span>
-                    <span style="color: #3b82f6; display: block;">Now map the deal.</span>
-                </h1>
-                <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                <p class="hero-subtext">
-                    From first stakeholder to full authority map. The political intelligence engine that wins complex deals.
-                </p>
-            </div>
+            <span class="hero-pre">WEEK 2 — [A] ASSESS / MAP THEM — OMNISCIENCE ENGINE</span>
+            <h1 class="hero-headline">
+                <span style="color: #ffffff; display: block;">You mapped one person.</span>
+                <span style="color: #3b82f6; display: block;">Now map the deal.</span>
+            </h1>
+            <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
+            <p class="hero-subtext">
+                From first stakeholder to full authority map. The political intelligence engine that wins complex deals.
+            </p>
+            <span class="hero-meta">1-4 HOURS — FROM SINGLE CONTACT TO DEAL STRATEGY</span>
         </div>
     </header>
 
     <main>
         
         <div class="container-prose reveal">
-            
-            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 0; padding: 2rem;">
-                <h3 style="font-size: 1.1rem; color: white; margin-bottom: 1rem;">The Context</h3>
+            <div class="worked-example-box" style="background: var(--bg-card); border-left: none; border: 1px solid var(--border-dynamic);">
                 <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                    <p style="margin: 0; font-size: 0.95rem;">Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.</p>
+                    <h3 style="font-size: 1.1rem; color: white; margin-bottom: 1rem;">The Context</h3>
+                    <p style="margin: 0; font-size: 0.95rem; color: var(--text-body);">Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>Week 2 exists because complex deals are won by coalitions, not champions.</p>
                 </div>
             </div>
 
             <div class="blue-callout-short" style="margin-top: 2rem;">
                 <strong>Completed Week 1?</strong> This week builds directly on Week 1 intelligence. If you haven't run the Intelligence Layer prompts, start there.
             </div>
-
-            <div style="text-align: center; margin: 4rem 0;">
-                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Omniscience Flow</p>
-                <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Steps 4-5 build the map. Steps 6-7 turn it into strategy.</p>
-            </div>
         </div>
 
         <div class="container-prose reveal">
-            <div class="step-block">
-                <div class="step-num">00</div>
-                <div class="step-meta">
-                    <span class="step-counter">PRE-FLIGHT</span>
-                    <h2 class="step-title">Before You Begin</h2>
+            
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-label">BEFORE YOU BEGIN</div>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="list-grid">
+                <div class="list-col">
+                    <h3>GATHER</h3>
+                    <div class="list-item"><span class="list-num">01:</span> Week 1 outputs (budget, research)</div>
+                    <div class="list-item"><span class="list-num">02:</span> RFP, ITT, or opportunity brief</div>
+                    <div class="list-item"><span class="list-num">03:</span> Meeting notes from initial engagement</div>
+                    <div class="list-item"><span class="list-num">04:</span> LinkedIn profiles for ALL known stakeholders</div>
+                </div>
+                <div class="list-col">
+                    <h3>PREPARE</h3>
+                    <div class="list-item"><span class="list-num">05:</span> Stakeholder register (names encountered)</div>
+                    <div class="list-item"><span class="list-num">06:</span> Relationship audit (who knows who?)</div>
+                    <div class="list-item"><span class="list-num">07:</span> Evaluation criteria (if available)</div>
+                    <div class="list-item"><span class="list-num">08:</span> Relevant case studies (W1-09)</div>
                 </div>
             </div>
 
-            <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
-                    <h3 style="font-size: 0.9rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem;">GATHER INPUTS</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-body); margin: 0; line-height: 1.6;">
-                        <strong>01:</strong> Week 1 outputs<br>
-                        <strong>02:</strong> RFP or Opportunity Brief<br>
-                        <strong>03:</strong> Meeting Notes<br>
-                        <strong>04:</strong> Stakeholder LinkedIn Profiles
-                    </p>
-                </div>
-                <div style="background: var(--bg-card); padding: 1.5rem; border-radius: 8px; border-top: 2px solid var(--primary);">
-                    <h3 style="font-size: 0.9rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem;">PREPARE OUTPUTS</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-body); margin: 0; line-height: 1.6;">
-                        <strong>05:</strong> Stakeholder Register<br>
-                        <strong>06:</strong> Relationship Audit<br>
-                        <strong>07:</strong> Evaluation Criteria<br>
-                        <strong>08:</strong> Relevant Case Studies
-                    </p>
-                </div>
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <p style="color: white; font-size: 0.95rem;">
+                    <strong style="color: var(--amber);">! No RFP?</strong> This week works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.
+                </p>
             </div>
 
-            <div class="warning-block">
-                <div class="warning-title"><span>⚠️</span> NO RFP?</div>
-                <p class="warning-text">This week works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.</p>
-            </div>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">01</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 1 OF 10</span>
                     <h2 class="step-title">Decode the Opportunity</h2>
                     <span class="time-pill">~20 MIN</span>
@@ -329,21 +360,19 @@ Explain your reasoning.
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).</p>
+                <p style="margin-bottom: 0;"><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
             </div>
 
-            <div class="experience-box">
-                <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                <p class="experience-content">The trigger question is the most important. Expiry = commodity mindset. Regulatory = risk-averse. Board mandate = strategic. The same RFP reads completely differently once you know which triggered it.</p>
-            </div>
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The trigger question is the most important. Expiry = commodity mindset. Regulatory = risk-averse. Board mandate = strategic. The same RFP reads completely differently once you know which triggered it.</p>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">02</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 2 OF 10</span>
                     <h2 class="step-title">Find the People</h2>
                     <span class="time-pill">~15 MIN</span>
@@ -376,21 +405,19 @@ I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, Linked
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p>Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).</p>
+                <p style="margin-bottom: 0;"><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
             </div>
 
-            <div class="experience-box">
-                <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                <p class="experience-content">The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent.</p>
-            </div>
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent.</p>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">03</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 3 OF 10</span>
                     <h2 class="step-title">Decode Requirements</h2>
                     <span class="time-pill">~15 MIN</span>
@@ -427,17 +454,17 @@ Output as a table.
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.</p>
+                <p><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.</p>
+                <p style="margin-bottom: 0;"><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
             </div>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">04</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 4 OF 10</span>
                     <h2 class="step-title">Map Motivations</h2>
                     <span class="time-pill">~20 MIN</span>
@@ -471,21 +498,19 @@ Generate a 'Deep Motivation Profile':
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.</p>
+                <p style="margin-bottom: 0;"><strong>The Black Swan:</strong> His Post #4 says explicitly: "We're not outsourcing this to a consulting firm." This is a BLOCKER signal. If your proposal reads like a consulting pitch, he will kill it.</p>
             </div>
 
-            <div class="experience-box">
-                <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                <p class="experience-content">A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens. Follow the incentives, not the LinkedIn posts.</p>
-            </div>
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens. Follow the incentives, not the LinkedIn posts.</p>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">05</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 5 OF 10</span>
                     <h2 class="step-title">Map Authority</h2>
                     <span class="time-pill">~20 MIN</span>
@@ -525,21 +550,19 @@ Create a 'Political Authority Map' for this deal:
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.</p>
+                <p style="margin-bottom: 0;"><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
             </div>
 
-            <div class="experience-box">
-                <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                <p class="experience-content">The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable.</p>
-            </div>
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable.</p>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">06</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 6 OF 10</span>
                     <h2 class="step-title">Plan Engagement</h2>
                     <span class="time-pill">~15 MIN</span>
@@ -572,17 +595,17 @@ Structure it as a meeting preparation guide:
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Morris:</strong> Lead with resilience peer credibility and transparency.</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."</p>
+                <p><strong>Morris:</strong> Lead with resilience peer credibility and transparency.</p>
+                <p style="margin-bottom: 0;"><strong>Hale:</strong> Lead with technical architecture and cloud migration proof points.</p>
             </div>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">07</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 7 OF 10</span>
                     <h2 class="step-title">Deal Strategy</h2>
                     <span class="time-pill">~15 MIN</span>
@@ -616,21 +639,19 @@ Sections:
             </div>
 
             <div class="worked-example-box">
-                <span class="example-tag">MERIDIAN WORKED EXAMPLE</span>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;"><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."</p>
-                <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
+                <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
+                <p><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."</p>
+                <p style="margin-bottom: 0;"><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
             </div>
 
-            <div class="experience-box">
-                <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                <p class="experience-content">The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal.</p>
-            </div>
+            <div class="experience-header">WHAT EXPERIENCE SEES</div>
+            <p class="experience-prose">The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal.</p>
         </div>
 
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num">08</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 8 OF 10</span>
                     <h2 class="step-title">Cross-Stakeholder Dynamics</h2>
                     <span class="time-pill">ADVANCED</span>
@@ -658,7 +679,7 @@ Sections:
 
             <div class="step-block">
                 <div class="step-num">09</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 9 OF 10</span>
                     <h2 class="step-title">Culture & Values Alignment</h2>
                     <span class="time-pill">ADVANCED</span>
@@ -688,7 +709,7 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
 
             <div class="step-block">
                 <div class="step-num">10</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">STEP 10 OF 10</span>
                     <h2 class="step-title">Human Risk & TUPE</h2>
                     <span class="time-pill">ADVANCED</span>
@@ -717,7 +738,7 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
         <div class="container-prose reveal">
             <div class="step-block">
                 <div class="step-num" style="opacity: 0.2;">E</div>
-                <div class="step-meta">
+                <div class="step-content">
                     <span class="step-counter">INTERLUDE</span>
                     <h2 class="step-title">The Engineering Layer</h2>
                     <span class="time-pill">OPTIONAL</span>
@@ -813,28 +834,22 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
                 <div class="divider-line"></div>
             </div>
 
-            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic);">
-                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 1: The Invisible Stakeholder</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Won the technical evaluation. Lost at final board. A non-executive director — never mentioned in any document — had a prior relationship with the competitor's CEO.</p>
-                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: Your stakeholder map is never complete. Always ask: "Who ISN'T on the list that should be?"</p>
-                </div>
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 1: The Invisible Stakeholder</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Won the technical evaluation. Lost at final board. A non-executive director — never mentioned in any document — had a prior relationship with the competitor's CEO.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Your stakeholder map is never complete. Always ask: "Who ISN'T on the list that should be?"</span>
             </div>
 
-            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 1rem;">
-                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 2: The Coalition That Wasn't</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Mapped 8 stakeholders. Discovered at orals that the CIO and CFO had fundamentally different visions for the programme. Our proposal forced the confrontation. They chose to delay rather than decide.</p>
-                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: If two stakeholders both say "yes" but mean different things, you have a time bomb.</p>
-                </div>
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 2: The Coalition That Wasn't</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Mapped 8 stakeholders. Discovered at orals that the CIO and CFO had fundamentally different visions for the programme. Our proposal forced the confrontation. They chose to delay rather than decide.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> If two stakeholders both say "yes" but mean different things, you have a time bomb.</span>
             </div>
 
-            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); margin-top: 1rem;">
-                <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                    <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">FAILURE 3: The Map That Decayed</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Built a map in January. Submitted in April. The procurement director had moved teams in February. Three months of strategy built on an org chart that no longer existed.</p>
-                    <p style="font-size: 0.85rem; color: #ef4444; font-weight: 700;">RULE: Refresh within 2 weeks of any deadline.</p>
-                </div>
+            <div class="failure-box">
+                <h3 class="failure-title">FAILURE 3: The Map That Decayed</h3>
+                <p style="margin: 0; font-size: 0.95rem;">Built a map in January. Submitted in April. The procurement director had moved teams in February. Three months of strategy built on an org chart that no longer existed.</p>
+                <span class="failure-rule"><span class="failure-red-text">RULE:</span> Refresh within 2 weeks of any deadline.</span>
             </div>
         </div>
 
@@ -879,18 +894,18 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
     <footer>
         <div class="footer-inner">
             <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
-            <div class="footer-links">
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px; color: var(--slate);">
+            <div class="footer-right">
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>
-                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-size: 0.85rem;">
+                <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
                     AI Is Not Your Cheerleader →
                 </a>
             </div>
         </div>
-        <div class="footer-subtle">
+        <div class="footer-bottom">
             No hype. Just results. © 2026
         </div>
     </footer>
@@ -946,18 +961,8 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
             }
         }
 
-        // MOBILE MENU TOGGLE
+        // SCROLL REVEAL
         document.addEventListener('DOMContentLoaded', () => {
-            const toggle = document.getElementById('mobile-menu-toggle');
-            const nav = document.querySelector('.nav-links');
-            
-            if (toggle) {
-                toggle.addEventListener('click', () => {
-                    nav.classList.toggle('active');
-                });
-            }
-
-            // SCROLL REVEAL
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
