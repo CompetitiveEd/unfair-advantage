@@ -460,8 +460,8 @@ This briefing should be ready to review on a phone screen 10 minutes before walk
         </div>
 
         <div class="container-wide reveal">
-            <div class="toolkit-wrapper" onclick="toggleToolkit(this)">
-                <div class="toolkit-toggle">
+            <div class="toolkit-wrapper">
+                <div class="toolkit-toggle" onclick="toggleToolkit(this)">
                     <div class="toggle-text">
                         <h3>EXTENDED TOOLKIT — 10 ADDITIONAL PROMPTS</h3>
                         <p>Compact variants, hiring signals, slide relevancy, pre-mortem, objection prep, hallucination check, multi-source analysis, and governance mapping.</p>
@@ -1124,11 +1124,17 @@ FORMAT: For each finding, cite the specific source and explain why the gap or si
             btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
         }
 
-        // TOGGLE TOOLKIT
-        function toggleToolkit(el) {
-            el.classList.toggle('open');
-            const content = el.nextElementSibling;
+        // TOGGLE TOOLKIT - UPDATED FUNCTION
+        function toggleToolkit(btn) {
+            // Find parent wrapper to toggle arrow
+            const wrapper = btn.closest('.toolkit-wrapper');
+            // Find sibling content to expand
+            const content = wrapper.querySelector('.toolkit-content');
+            
+            wrapper.classList.toggle('open');
             content.classList.toggle('expanded');
+            
+            // Trigger scroll reveal inside if opening
             if (content.classList.contains('expanded')) {
                 setTimeout(() => {
                     content.querySelectorAll('.reveal').forEach(r => r.classList.add('active'));
