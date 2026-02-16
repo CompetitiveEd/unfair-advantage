@@ -9,108 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* PAGE SPECIFIC STYLES FOR FRAMEWORKS */
-        
-        /* Framework Card Matrix */
-        .framework-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .framework-node {
-            background: var(--bg-card);
-            border: 1px solid var(--border-dynamic);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .framework-node:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
-
-        /* Color Coding Borders for Categories */
-        .node-mindset { border-left: 3px solid #3b82f6; } /* Blue */
-        .node-tactic { border-left: 3px solid #10b981; }  /* Green */
-        .node-strategy { border-left: 3px solid #f59e0b; } /* Amber */
-
-        .fw-title {
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .fw-author {
-            color: var(--primary);
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .fw-desc {
-            color: var(--text-body);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        /* The "Quote Console" */
-        .quote-console {
-            background: #0f172a;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 12px;
-            padding: 3rem;
-            position: relative;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.05);
-        }
-        
-        .quote-mark {
-            font-size: 4rem;
-            color: rgba(59, 130, 246, 0.2);
-            font-family: serif;
-            position: absolute;
-            top: 1rem;
-            left: 2rem;
-            line-height: 1;
-        }
-
-        .quote-text {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: white;
-            line-height: 1.4;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .quote-author {
-            font-size: 0.9rem;
-            color: var(--primary);
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) { 
-            .quote-text { font-size: 1.1rem; }
-            .quote-console { padding: 2rem; }
-        }
-    </style>
 </head>
 <body class="hero-compact">
 
@@ -128,7 +26,7 @@
                 <span class="nav-link-main">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
-                    <a href="frameworks.html">Frameworks</a>
+                    <a href="frameworks.html" style="color: var(--primary);">Frameworks</a>
                     <a href="blueprint.html">Blueprint</a>
                 </div>
             </div>
@@ -179,9 +77,11 @@
                     <span style="font-size: 0.75rem; font-weight: 700; color: var(--slate); display: flex; align-items: center; gap: 0.5rem;">
                         <span style="width: 12px; height: 12px; background: #3b82f6; border-radius: 2px; display: inline-block;"></span> MINDSET
                     </span>
+                    
                     <span style="font-size: 0.75rem; font-weight: 700; color: var(--slate); display: flex; align-items: center; gap: 0.5rem;">
                         <span style="width: 12px; height: 12px; background: #10b981; border-radius: 2px; display: inline-block;"></span> TACTIC
                     </span>
+                    
                     <span style="font-size: 0.75rem; font-weight: 700; color: var(--slate); display: flex; align-items: center; gap: 0.5rem;">
                         <span style="width: 12px; height: 12px; background: #f59e0b; border-radius: 2px; display: inline-block;"></span> STRATEGY
                     </span>
@@ -430,7 +330,7 @@
             });
         }
         
-        // Scroll Reveal with immediate check for elements already in viewport
+        // Scroll Reveal
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(e => { 
                 if (e.isIntersecting) e.target.classList.add('active'); 
@@ -438,12 +338,10 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight) {
                 el.classList.add('active');
             }
-            // Observe for future scroll reveals
             revealObserver.observe(el);
         });
     });
