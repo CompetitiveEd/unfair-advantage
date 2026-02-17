@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Week 4: Continuous Growth. Operationalising AI across the pursuit lifecycle for account growth.">
-    <title>Week 4: Continuous Growth | The Unfair Advantage</title>
+    <title>Week 4: Continuous Growth | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="hero-compact">
 
     <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
@@ -46,7 +46,7 @@
     </nav>
 
     <header class="dark-header-block">
-        <img src="assets/images/week4-hero.png" class="hero-bg" alt="Continuous Growth">
+        <img src="assets/images/week4-hero.png" class="hero-bg" alt="Continuous Growth" style="opacity: 0.55;">
         <div class="hero-impact">
             <span class="hero-pre">WEEK 4 — [N] NURTURE / GROW THEM — CONTINUOUS GROWTH</span>
             <h1 class="hero-headline">
@@ -748,7 +748,7 @@ Compare this month's sources against baseline. Flag ONLY changes:
                 </a>
             </div>
         </div>
-        <div class="footer-bottom">
+        <div class="footer-subtle">
             No hype. Just results. © 2026
         </div>
     </footer>
@@ -804,8 +804,17 @@ Compare this month's sources against baseline. Flag ONLY changes:
             }
         }
 
-        // SCROLL REVEAL
+        // MOBILE MENU + SCROLL REVEAL
         document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -814,7 +823,13 @@ Compare this month's sources against baseline. Flag ONLY changes:
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                observer.observe(el);
+            });
         });
     </script>
 </body>
