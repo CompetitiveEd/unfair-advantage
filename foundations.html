@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="hero-compact">
 
     <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
@@ -22,7 +22,7 @@
             <a href="steer.html">Steer</a>
             
             <div class="nav-dropdown">
-                <span class="nav-link-text">About ▾</span>
+                <span class="nav-link-main">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
@@ -31,12 +31,12 @@
             </div>
             
             <div class="nav-dropdown">
-                <span class="nav-link-text">GAIN Series ▾</span>
+                <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
-                    <a href="week1.html">1: KNOW — Intelligence</a>
+                    <a href="week1.html">1: KNOW — Intelligence Layer</a>
                     <a href="week2.html">2: MAP — Strategic Mapping</a>
-                    <a href="week3.html">3: WIN — Oxygen</a>
-                    <a href="week4.html">4: GROW — Velocity</a>
+                    <a href="week3.html">3: WIN — Winning the Deal</a>
+                    <a href="week4.html">4: GROW — Continuous Growth</a>
                 </div>
             </div>
             
@@ -46,7 +46,7 @@
     </nav>
 
     <header class="dark-header-block">
-        <img src="assets/images/foundation-hero.png" class="hero-bg" alt="Foundation Layer">
+        <img src="assets/images/foundation-hero.png" class="hero-bg" alt="Foundation Layer" style="opacity: 0.55;">
         <div class="hero-impact">
             <span class="hero-pre">THE REVENUE ARCHITECTURE</span>
             <h1 class="hero-headline">
@@ -167,7 +167,7 @@
                 EQ + IQ + AI allows a much better return on resources. The quadrant gives leaders the map to make the allocation call — it doesn't make it for them.
             </p>
 
-            <div class="quadrant-wrapper">
+            <div class="quadrant-wrapper" style="max-width: 800px; margin: 0 auto;">
                 <div class="quad-card" style="border-left: 4px solid #93c5fd;">
                     <span class="quad-label">PROACTIVE • STANDARD</span>
                     <div class="quad-resource">Exploitation of Pod Model</div>
@@ -185,13 +185,6 @@
                     <div class="quad-resource">Client Team Led</div>
                 </div>
             </div>
-        </div>
-
-        <div class="interlude-block reveal" style="margin-top: 4rem;">
-            <div class="interlude-head">THE PLACEHOLDER ACTION</div>
-            <p class="interlude-body">
-                [David: Insert the finalized "Strategic Hook" / HUMINT pivot details here once decided. This section is currently reserved for the core differentiator explanation.]
-            </p>
         </div>
 
     </main>
@@ -217,21 +210,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const toggle = document.getElementById('mobile-menu-toggle');
-            const nav = document.querySelector('.nav-links');
-            if (toggle) {
-                toggle.addEventListener('click', () => {
-                    nav.classList.toggle('active');
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
                 });
             }
-
+            
+            // Scroll Reveal with immediate check for elements already in viewport
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(e => { 
                     if (e.isIntersecting) e.target.classList.add('active'); 
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
         });
     </script>
 </body>
