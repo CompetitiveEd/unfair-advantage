@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Steer, Don't Drift: The Navigation Layer. Governance backed by £183M in portfolio execution.">
-    <title>Steer, Don't Drift | The Unfair Advantage</title>
+    <title>Steer, Don't Drift | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="hero-compact">
 
     <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
@@ -22,7 +22,7 @@
             <a href="steer.html" class="active" style="color: white;">Steer</a>
             
             <div class="nav-dropdown">
-                <span class="nav-link-text">About ▾</span>
+                <span class="nav-link-main">About ▾</span>
                 <div class="dropdown-content">
                     <a href="origins.html">Origins</a>
                     <a href="frameworks.html">Frameworks</a>
@@ -31,12 +31,12 @@
             </div>
             
             <div class="nav-dropdown">
-                <span class="nav-link-text">GAIN Series ▾</span>
+                <span class="nav-link-main">GAIN Series ▾</span>
                 <div class="dropdown-content">
-                    <a href="week1.html">1: KNOW — Intelligence</a>
+                    <a href="week1.html">1: KNOW — Intelligence Layer</a>
                     <a href="week2.html">2: MAP — Strategic Mapping</a>
-                    <a href="week3.html">3: WIN — Oxygen</a>
-                    <a href="week4.html">4: GROW — Velocity</a>
+                    <a href="week3.html">3: WIN — Winning the Deal</a>
+                    <a href="week4.html">4: GROW — Continuous Growth</a>
                 </div>
             </div>
             
@@ -46,7 +46,7 @@
     </nav>
 
     <header class="dark-header-block">
-        <img src="assets/images/steer-hero.png" class="hero-bg" alt="Oxygen Effect">
+        <img src="assets/images/steer-hero.png" class="hero-bg" alt="Steer Navigation Layer" style="opacity: 0.6;">
         <div class="hero-impact">
             <span class="hero-pre">THE NAVIGATION LAYER</span>
             <h1 class="hero-headline">
@@ -205,21 +205,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const toggle = document.getElementById('mobile-menu-toggle');
-            const nav = document.querySelector('.nav-links');
-            if (toggle) {
-                toggle.addEventListener('click', () => {
-                    nav.classList.toggle('active');
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
                 });
             }
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
+            
+            // Scroll Reveal with immediate check for elements already in viewport
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
                 });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
         });
     </script>
 </body>
