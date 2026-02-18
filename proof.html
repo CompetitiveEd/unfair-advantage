@@ -33,6 +33,14 @@
             background: var(--border-dynamic);
             margin: 1rem 0;
         }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
         .comparison-table th, .comparison-table td {
             padding: 1rem;
             text-align: left;
@@ -43,6 +51,11 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--slate);
+            background: rgba(255,255,255,0.02);
+        }
+        .comparison-table td {
+            font-size: 0.9rem;
+            color: var(--text-body);
         }
         .executive-insight-box {
             background: rgba(59, 130, 246, 0.05);
@@ -50,21 +63,73 @@
             padding: 2rem;
             margin: 2.5rem 0;
         }
+        /* Bar Chart Styles */
+        .chart-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        .chart-label {
+            width: 60px;
+            color: var(--slate);
+            font-weight: 600;
+            text-align: right;
+            padding-right: 1rem;
+        }
+        .chart-track {
+            flex-grow: 1;
+            background: rgba(255,255,255,0.05);
+            height: 30px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        .chart-bar {
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.8rem;
+            transition: width 1s ease-out;
+            width: 0; /* Animated via JS or inline style */
+        }
+        .chart-bar.beat {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+        .plan-marker {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.3);
+            z-index: 10;
+        }
+        .plan-label {
+            position: absolute;
+            top: -18px;
+            font-size: 0.7rem;
+            color: var(--slate);
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="hero-compact">
 
 <div class="page-container">
      <nav>
-            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-              <div class="nav-links"> 
-                    <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html">Human+AI</a>
-    
-                <div class="nav-dropdown">
+        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links">
+            <a href="thesis.html">The Thesis</a>
+            <a href="human+ai.html">Human+AI</a>
+            <div class="nav-dropdown">
                 <span class="nav-link-main">Prompt Toolkit ▾</span>
                 <div class="dropdown-content">
                     <a href="know.html">[G] Gather | Know them</a>
@@ -73,145 +138,278 @@
                     <a href="grow.html">[N] Nurture | Grow them</a>
                 </div>
             </div>
-
-                    <div class="nav-dropdown">
-                        <span class="nav-link-main">Evidence ▾</span>
-                        <div class="dropdown-content">
-                            <a href="revenue-case.html">The Revenue Case</a>
-                            <a href="story.html">The Story</a>
-                            <a href="thinking.html">The Thinking</a>
-                            <a href="proof.html">The Proof</a>
-                        </div>
-                    </div>
-                    <a href="dashboards.html">Dashboards</a>
-                    <a href="contact.html" class="nav-cta">Engage Me</a>
+            <div class="nav-dropdown">
+                <span class="nav-link-main">Evidence ▾</span>
+                <div class="dropdown-content">
+                    <a href="revenue-case.html">The Revenue Case</a>
+                    <a href="story.html">The Story</a>
+                    <a href="thinking.html">The Thinking</a>
+                    <a href="proof.html">The Proof</a>
                 </div>
-        </nav>
+            </div>
+            <a href="dashboards.html">Dashboards</a>
+            <a href="contact.html" class="nav-cta">Engage Me</a>
+        </div>
+    </nav>
 
     <header class="dark-header-block">
-        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Executive Boardroom" style="opacity: 0.65;">
+        <img src="assets/images/week1-hero.png" class="hero-bg" alt="Evidence Background" style="opacity: 0.65;">
         <div class="hero-impact">
-            <div class="hero-content reveal">
-                <span style="color: #60a5fa; display: block; font-size: 0.75rem; font-weight: 900; letter-spacing: 0.5em; text-transform: uppercase; margin-bottom: 1rem;">THE PROOF OF WORK</span>
-                <h1 class="hero-headline">
-                    <span style="color: white; display: block;">GAIN IS THE DIGITAL EVOLUTION OF A</span>
-                    <span style="color: #3b82f6; display: block;">£50M+ INDUSTRIAL ENGINE.</span>
-                </h1>
-                                <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                <p class="hero-subtext">Before AI, we built this manually. 18 months to turn a fragmented unit into a scalable revenue machine. GAIN now does the same in minutes.</p>
-            </div>
+            <span class="hero-pre">THE PROOF — EVIDENCE OF WORK</span>
+            <h1 class="hero-headline">
+                <span style="color: white; display: block;">THREE TRANSFORMATIONS.</span>
+                <span style="color: #3b82f6; display: block;">SAME PLAYBOOK.</span>
+            </h1>
+            <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+            <p class="hero-subtext">The numbers behind the methodology.</p>
         </div>
     </header>
 
-    <main class="container">
-        <section style="padding: 4rem 0;">
-            <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); padding: 2rem; margin-bottom: 3rem;">
-                <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Starting Point</h2>
-                <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                    <p class="body-prose" style="margin: 0 0 1rem 0;">In 2017, I inherited a solutions unit inside a global technology company. Strong propositions. Talented people. Weak execution. Messaging was diluted across competing narratives, and every deal relied on hero-effort from a few individuals.</p>
-                    <p class="body-prose" style="margin: 0 0 1rem 0;">What followed was an 18-month transformation built on four levers — the same four levers that now power GAIN. These numbers aren't projections. They're outcomes.</p>
-                    <p class="body-prose" style="margin: 0; font-weight: 700; color: white;">The methodology is the same. Only the speed has changed.</p>
+    <main class="container-wide">
+        
+        <div class="container-prose reveal" style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
+            <p class="body-prose" style="margin-bottom: 1.5rem;">
+                In each case, the starting conditions were identical: strong propositions, talented people, weak execution. Messaging diluted. Every deal reliant on hero-effort. No shared language. No system.
+            </p>
+            <p class="body-prose" style="font-weight: 700; color: white;">
+                The diagnostic was always the same. The methodology was always the same. Only the speed has changed.
+            </p>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">PROOF OF WORK 01 — THE GO-TO-MARKET</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <p class="body-prose reveal" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-style: italic; color: var(--slate);">
+            A professional services unit inside a FTSE-listed technology company. Business consensus: it loses money. Leadership wanted it gone.
+        </p>
+
+        <div class="container-prose reveal" style="margin-bottom: 3rem;">
+            <p class="body-prose">
+                The breakthrough was a single folded piece of paper. Twelve steps a customer needed for a successful migration. Not what the business sold — what the customer needed. When pitched, the question wasn't 'buy our services.' It was: 'here's the journey — what can you do, what can we do?' It became the most successful proposition in the business. It went viral. It became standard.
+            </p>
+            <p class="body-prose">
+                The team was built from scratch. Non-traditional hires. An analyst retrained into sales. A software specialist who'd never touched services became a top performer. Recognition was quarterly, not annual. The culture attracted talent that conventional recruitment missed.
+            </p>
+        </div>
+
+        <div class="impact-dashboard reveal" style="margin-bottom: 3rem;">
+            <div class="impact-metric">
+                <span class="metric-val">170%+</span>
+                <span class="metric-label">Revenue Growth</span>
+                <span class="metric-context">Professional Services</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">137%</span>
+                <span class="metric-label">vs Plan</span>
+                <span class="metric-context">Final year contribution</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">2-in-3</span>
+                <span class="metric-label">Win Rate</span>
+                <span class="metric-context">On competitive bids</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">3x</span>
+                <span class="metric-label">Output per Head</span>
+                <span class="metric-context">Same methodology, fewer people</span>
+            </div>
+        </div>
+
+        <div class="reveal" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <div class="chart-row">
+                <div class="chart-label">Year 1</div>
+                <div class="chart-track">
+                    <div class="chart-bar" style="width: 26%;">£3.9M</div>
                 </div>
             </div>
-
-            <div class="grid-3-col">
-                <div class="talent-card gain-card">
-                    <h3 class="talent-card-title">£50M+</h3>
-                    <p class="gain-subheading">Migration Revenue</p>
-                    <div class="talent-card-divider"></div>
-                    <p class="talent-card-text">Generated through a structured 12-phase migration framework that simplified complex desktop transformation.</p>
-                </div>
-                <div class="talent-card gain-card">
-                    <h3 class="talent-card-title">170%</h3>
-                    <p class="gain-subheading">Services Growth</p>
-                    <div class="talent-card-divider"></div>
-                    <p class="talent-card-text">Achieved by repositioning professional services from reactive projects to proactive IP.</p>
-                </div>
-                <div class="talent-card gain-card">
-                    <h3 class="talent-card-title">2x</h3>
-                    <p class="gain-subheading">Margin Expansion</p>
-                    <div class="talent-card-divider"></div>
-                    <p class="talent-card-text">Margins doubled across resold and managed services by standardising the "Digital Me" delivery model.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="reveal" style="padding: 4rem 0; border-top: 1px solid var(--border-dynamic);">
-            <h2 class="section-heading-standard">The DNA of GAIN</h2>
-            <p class="body-prose">The four pillars of the £50M turnaround are now encoded into the GAIN prompt architecture:</p>
-            
-            <div class="table-container">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Lever (2017 Manual)</th>
-                            <th>Objective</th>
-                            <th>GAIN Evolution (AI + Judgment)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Digital Engagement Model</strong></td>
-                            <td>Align messaging & artifacts</td>
-                            <td><strong>[Gather]: KNOW — Intelligence</strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Enabling Sales Communities</strong></td>
-                            <td>Map stakeholders & influence</td>
-                            <td><strong>[Assess]: MAP — Strategic Mapping</strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Named Account Campaigns</strong></td>
-                            <td>Targeted Win Themes</td>
-                            <td><strong>[Influence]: WIN — Winning the Deal</strong></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Stakeholder Leadership</strong></td>
-                            <td>Mitigate Intelligence Decay</td>
-                            <td><strong>[Nurture]: GROW — Continuous Growth</strong></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="reveal" style="padding: 4rem 0; border-top: 1px solid var(--border-dynamic);">
-            <h2 class="section-heading-standard">What Actually Happened</h2>
-            <div style="max-width: 800px; margin: 0 auto;">
-                <p class="body-prose" style="margin-bottom: 1.5rem;">The diagnostic phase revealed a "Silent Exit" in progress: pipeline coverage was thin, and the sales team had no shared language for qualification. The resistance was real — senior sellers didn't want a framework. "I know my accounts" was the refrain.</p>
-                
-                <div class="executive-insight-box">
-                    <h3 style="color: #3b82f6; font-size: 0.9rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;">Executive Insight for PE Partners</h3>
-                    <p style="color: white; font-size: 1.1rem; font-weight: 500; margin: 0;">Methodology is not training; it is governance. Individual talent is a variable. A system is a constant. We build the operating rhythm that sustains performance after the 'hero' effort ends.</p>
-                </div>
-
-                <p class="body-prose">By month 18, the system proved itself. One account director used the mapping approach to find that his 'sure-thing' champion had been re-organised out. He changed strategy and won. He became the loudest advocate.</p>
-            </div>
-        </section>
-
-        <section class="reveal" style="padding: 4rem 0; border-top: 1px solid var(--border-dynamic);">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">WHERE THIS BREAKS</div>
-                <div class="divider-line"></div>
-            </div>
-            <div style="max-width: 800px; margin: 2rem auto 0 auto;">
-                <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic);">
-                    <div style="border-left: 3px solid #ef4444; padding-left: 1.5rem;">
-                        <h3 style="font-size: 1.1rem; color: var(--text-heading); margin: 0 0 0.5rem 0;">The Middle Management Gap</h3>
-                        <p class="body-prose" style="font-size: 0.9rem;">I underestimated the middle layer. Account directors adopted the system, but team leaders reverted to old habits. The system worked when I was in the room. This is why GAIN Grow them focuses on <strong>Commercial Governance</strong> — the operating rhythm that ensures the methodology outlives the architect.</p>
+            <div class="chart-row">
+                <div class="chart-label">Year 2</div>
+                <div class="chart-track">
+                    <div class="plan-marker" style="left: 40%;">
+                        <span class="plan-label">Plan £6M</span>
                     </div>
+                    <div class="chart-bar" style="width: 46%;">£6.9M</div>
                 </div>
             </div>
-        </section>
-
-        <section class="reveal" style="padding: 4rem 0; text-align: center; border-top: 1px solid var(--border-dynamic);">
-            <p class="body-prose" style="max-width: 600px; margin: 0 auto 2rem auto;">This is proof of work. For the philosophy, start with Origins. For the operating system, start with [Gather] Know them.</p>
-            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-                <a href="origins.html" class="btn-schedule" style="display: inline-block; padding: 1rem 2.5rem; font-size: 0.85rem;">READ THE ORIGINS STORY</a>
-                <a href="know.html" class="btn-schedule" style="display: inline-block; padding: 1rem 2.5rem; font-size: 0.85rem; background: transparent; border: 1px solid var(--primary); color: var(--primary);">START WITH [Gather]</a>
+            <div class="chart-row">
+                <div class="chart-label">Year 3</div>
+                <div class="chart-track">
+                    <div class="plan-marker" style="left: 57%;">
+                        <span class="plan-label">Plan £8.6M</span>
+                    </div>
+                    <div class="chart-bar" style="width: 62%;">£9.4M</div>
+                </div>
             </div>
-        </section>
+            <div class="chart-row">
+                <div class="chart-label">Year 4</div>
+                <div class="chart-track">
+                    <div class="plan-marker" style="left: 72%;">
+                        <span class="plan-label">Plan £10.9M</span>
+                    </div>
+                    <div class="chart-bar beat" style="width: 100%;">£15.0M</div>
+                </div>
+            </div>
+            <p class="body-prose" style="text-align: center; font-size: 0.9rem; margin-top: 1rem; color: white;">
+                The plan was linear. The methodology wasn't.
+            </p>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">PROOF OF WORK 02 — THE PORTFOLIO ENGINE</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <p class="body-prose reveal" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-style: italic; color: var(--slate);">
+            Same FTSE-listed company. Larger canvas. Strategic architect behind an enterprise portfolio transformation.
+        </p>
+
+        <div class="container-prose reveal" style="margin-bottom: 3rem;">
+            <p class="body-prose">
+                The tool was a four-pillar execution grid — Digital Engagement, Sales Communities, Campaigns, Stakeholder Leadership. Each pillar broken into operational boxes, colour-coded by priority, executed in phases.
+            </p>
+            <p class="body-prose">
+                Those four pillars are now encoded into GAIN — Gather, Assess, Influence, Nurture. The structure didn't change. The speed did.
+            </p>
+        </div>
+
+        <div class="impact-dashboard reveal" style="margin-bottom: 3rem;">
+            <div class="impact-metric">
+                <span class="metric-val">£183M</span>
+                <span class="metric-label">Portfolio Value</span>
+                <span class="metric-context">From £35M base</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">51.3%</span>
+                <span class="metric-label">CAGR</span>
+                <span class="metric-context">Compound annual growth</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">170%</span>
+                <span class="metric-label">Services Growth</span>
+                <span class="metric-context">Professional services repositioned</span>
+            </div>
+            <div class="impact-metric">
+                <span class="metric-val">+6%</span>
+                <span class="metric-label">Contract Base YoY</span>
+                <span class="metric-context">Exceeding targets</span>
+            </div>
+        </div>
+
+        <div class="reveal" style="max-width: 900px; margin: 0 auto 4rem auto;">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>The Manual Lever</th>
+                        <th>Objective</th>
+                        <th>GAIN Phase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Digital Engagement Model</td>
+                        <td>Align messaging & artefacts</td>
+                        <td>[G] Gather — Know</td>
+                    </tr>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Enabling Sales Communities</td>
+                        <td>Map stakeholders & influence</td>
+                        <td>[A] Assess — Map</td>
+                    </tr>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Named Account Campaigns</td>
+                        <td>Targeted win themes</td>
+                        <td>[I] Influence — Win</td>
+                    </tr>
+                    <tr>
+                        <td style="color: white; font-weight: 600;">Stakeholder Leadership</td>
+                        <td>Mitigate intelligence decay</td>
+                        <td>[N] Nurture — Grow</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">PROOF OF WORK 03 — THE PEOPLE MULTIPLIER</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <p class="body-prose reveal" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-style: italic; color: var(--slate);">
+            A neglected enterprise maintenance business. Under-resourced. Under-invested. Every stone uncovered a problem.
+        </p>
+
+        <div class="container-prose reveal" style="margin-bottom: 3rem;">
+            <p class="body-prose">
+                Five-day diagnostic. Interviewed everyone — delivery, project, sales, account, sector, marketing. Found unstructured lost cost across twelve operational elements. Identified a multi-billion addressable market at single-digit penetration. Then rebuilt the team — not by hiring experienced sellers, but by giving undervalued people a system.
+            </p>
+        </div>
+
+        <div class="grid-3-col reveal" style="margin-bottom: 3rem;">
+            <div class="card">
+                <h3 class="doctrine-title">The Engineer</h3>
+                <p class="body-prose" style="font-size: 0.9rem;">
+                    A senior technical professional on a comfortable salary. Didn't want sales. Took honest persuasion over months. Within two years: enterprise deals exceeding £10M annually. Margins above 50%.
+                </p>
+            </div>
+            <div class="card">
+                <h3 class="doctrine-title">The Administrator</h3>
+                <p class="body-prose" style="font-size: 0.9rem;">
+                    A renewals back-office role. Underrated. Afraid of his own potential. Moved into a dedicated client-facing position with a system behind him. Generated more individual revenue than anyone in the group's history. Won the organisation's highest performance award. Repeated it the following year.
+                </p>
+            </div>
+            <div class="card">
+                <h3 class="doctrine-title">The Culture</h3>
+                <p class="body-prose" style="font-size: 0.9rem;">
+                    Quarterly recognition, not annual. A signed baseball bat for the home run. A cap for the quarter leader. The team went from zero pipeline to consistent over-achievement across the group.
+                </p>
+            </div>
+        </div>
+
+        <p class="body-prose reveal" style="text-align: center; color: white; font-size: 1.1rem; font-weight: 600; margin-bottom: 4rem;">
+            These people didn't suddenly become talented. They always were. The system gave them structure. The methodology gave them confidence. The leadership gave them permission.
+        </p>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">WHERE THIS BREAKS</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="grid-2-col reveal" style="margin-bottom: 4rem;">
+            <div class="card" style="border-left: 4px solid var(--red);">
+                <h3 class="doctrine-title" style="color: var(--red);">The Middle Management Gap</h3>
+                <p class="body-prose" style="font-size: 0.9rem;">
+                    The system was underestimated at the middle layer. Account directors adopted it. Team leaders reverted to old habits. It worked when the architect was in the room. This is why GAIN's Grow phase focuses on Commercial Governance — the operating rhythm that ensures the methodology outlives any individual.
+                </p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--red);">
+                <h3 class="doctrine-title" style="color: var(--red);">The Confidence Problem</h3>
+                <p class="body-prose" style="font-size: 0.9rem;">
+                    Not every person responds to a system. Some sellers define themselves by instinct and resist structure on principle. The methodology doesn't fix ego. It works for people who want to be better — not people convinced they already are.
+                </p>
+            </div>
+        </div>
+
+        <div class="quote-console reveal" style="margin-bottom: 4rem;">
+            <span class="quote-mark">“</span>
+            <p class="quote-text">
+                Three starting points. Three scales. Three teams. Same methodology. Same result: broken systems turned into operating engines.
+            </p>
+            <span class="quote-author">DAVID MATTHEWS</span>
+        </div>
+
+        <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="revenue-case.html" class="btn-schedule">WHAT HAPPENS IN 90 DAYS →</a>
+                <a href="story.html" class="btn-schedule" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">READ THE ORIGIN STORY →</a>
+            </div>
+        </div>
+
     </main>
 
     <footer>
