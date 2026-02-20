@@ -4,151 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="GAIN Dashboard Toolkit: interactive tools to visualise sales intelligence.">
-   <title>The Dashboards | David Matthews</title>
+    <title>The Dashboards | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* VISUALS PAGE SPECIFIC DIAGRAM STYLES */
-        /* These styles are specific to the complex diagrams and are retained here */
-        
-        /* Section Separator Styling */
-        .section-separator-container {
-            text-align: center;
-            margin-top: 5rem;
-            margin-bottom: 3rem;
-        }
-        .section-separator-subtext {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            letter-spacing: -0.01em;
-        }
-        
-        /* Visual Panel Containers */
-        .visual-panel {
-            background: #1e293b;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-        }
+        /* McKinsey-style tight formatting overrides */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 2rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
 
-        /* Context Bar */
-        .context-bar { background: rgba(59, 130, 246, 0.05); border-left: 2px solid var(--primary); padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0; }
+        /* Command Card Layout (The New Visual Container) */
+        .cmd-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin-bottom: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .cmd-header { background: rgba(0,0,0,0.3); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .cmd-title { font-size: 0.85rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 1rem; margin: 0; }
+        .cmd-num { color: #3b82f6; opacity: 0.8; font-feature-settings: "tnum"; font-weight: 900; }
+        .cmd-tag { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; margin: 0; }
+        .cmd-insight { margin: 1.5rem 1.5rem 1.5rem 1.5rem; background: rgba(59,130,246,0.03); border-left: 3px solid #3b82f6; padding: 1rem 1.5rem; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; border-radius: 0 4px 4px 0; }
+        .cmd-insight strong { color: white; }
+        .cmd-visual { padding: 0 1.5rem 1.5rem 1.5rem; overflow-x: auto; }
 
-        /* Diagram Specific Overrides */
+        /* Global Legend Bar */
+        .legend-bar { display: flex; flex-wrap: wrap; gap: 2rem; background: #0f172a; border: 1px solid rgba(255,255,255,0.05); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 3rem; justify-content: center; }
+        .legend-group { display: flex; align-items: center; gap: 1rem; }
+        .legend-title { font-size: 0.7rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.1em; }
+        .legend-item { font-size: 0.8rem; color: #cbd5e1; display: flex; align-items: center; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .sq { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+        /* Existing Diagram Styles Maintained */
         .matrix-quadrant-label { color: var(--slate); font-weight: 600; font-size: 0.7rem; padding: 5px; position: absolute; }
         .matrix-container { position: relative; width: 100%; border: 1px dashed rgba(255,255,255,0.1); margin: 0 auto; background: rgba(0,0,0,0.2); }
         .stakeholder-dot { width: 12px; height: 12px; border-radius: 50%; position: absolute; transform: translate(-50%, 50%); cursor: pointer; border: 2px solid #0f172a; transition: transform 0.2s; }
         .stakeholder-dot:hover { transform: translate(-50%, 50%) scale(1.5); z-index: 10; }
-        
-        /* Dot Colors */
-        .dot-blue { background: #3b82f6; }
-        .dot-amber { background: #f59e0b; }
-        .dot-green { background: #10b981; }
-        .dot-champion { background: #10b981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3); }
-
-        /* Org Chart */
+        .dot-blue { background: #3b82f6; } .dot-amber { background: #f59e0b; } .dot-green { background: #10b981; } .dot-champion { background: #10b981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3); }
         .org-tree { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
         .org-level { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .org-node { background: #0f172a; color: white; border: 2px solid; border-radius: 6px; padding: 10px; width: 140px; text-align: center; position: relative; font-size: 0.8rem; }
         .node-status { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 20px; height: 4px; border-radius: 2px; }
-
-        /* Gantt/Timeline Scroll */
-        .timeline-scroll { overflow-x: auto; padding-bottom: 1rem; }
+        .timeline-scroll { overflow-x: auto; padding-bottom: 0.5rem; }
         .gantt-grid { display: grid; grid-template-columns: 150px repeat(12, 60px); gap: 2px; min-width: 870px; }
         .gantt-header { color: var(--slate); font-size: 0.7rem; font-weight: 700; text-align: center; padding: 5px; border-bottom: 1px solid var(--border-dynamic); }
         .gantt-row-label { color: white; font-size: 0.75rem; font-weight: 600; padding: 8px; display: flex; align-items: center; background: rgba(255,255,255,0.02); }
         .gantt-bar { border-radius: 4px; margin: 4px 0; font-size: 0.6rem; color: white; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-
-        /* Bar Chart Rows */
         .bar-chart-row { display: flex; align-items: center; margin-bottom: 1rem; }
         .bar-label { width: 120px; font-size: 0.8rem; font-weight: 600; color: white; padding-right: 1rem; text-align: right; }
         .bar-track { flex-grow: 1; height: 24px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; display: flex; }
         .bar-segment { height: 100%; transition: width 0.5s ease; }
-
-        /* Bubble Chart */
         .bubble-chart { height: 350px; position: relative; border: 1px dashed rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); }
         .bubble { position: absolute; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: white; transform: translate(-50%, 50%); opacity: 0.9; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-        /* Timeline Map */
         .timeline-map-grid { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; min-width: 900px; position: relative; height: 150px; border-bottom: 2px solid var(--slate); }
         .tm-phase { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; height: 60px; margin-top: 40px; border-radius: 4px; }
         .tm-deadline { position: absolute; top: 0; bottom: 0; width: 2px; z-index: 5; }
         .tm-hard { background: #ef4444; } .tm-soft { background: #f59e0b; border-style: dashed; }
         .tm-deadline-label { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; font-weight: 700; color: white; background: #0f172a; padding: 2px 4px; border-radius: 2px; }
         .tm-compression { background: rgba(239, 68, 68, 0.1); height: 100%; border-left: 1px dashed #ef4444; border-right: 1px dashed #ef4444; position: absolute; top: 0; z-index: 0; display: flex; align-items: flex-end; justify-content: center; font-size: 0.6rem; color: #ef4444; font-weight: 700; }
-
-        /* Commercial Flow */
         .flow-container { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
         .flow-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; width: 220px; }
         .flow-card ul { padding-left: 1.2rem; margin: 0; font-size: 0.8rem; }
-
-        /* Heatmap Grid */
         .heatmap-grid { display: grid; grid-template-columns: 180px repeat(5, 1fr); gap: 1px; min-width: 700px; }
         .heatmap-cell { padding: 10px; font-size: 0.75rem; text-align: center; border: 1px solid var(--border-dynamic); color: white; display: flex; align-items: center; justify-content: center; }
         .heatmap-header { color: var(--slate); background: rgba(255,255,255,0.05); font-weight: 700; }
-        .hm-strong { background: #10b981; color: #0f172a; font-weight: 700; }
-        .hm-med { background: #f59e0b; color: #0f172a; font-weight: 700; }
-        .hm-weak { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
-
-        /* Coalition Map */
+        .hm-strong { background: #10b981; color: #0f172a; font-weight: 700; } .hm-med { background: #f59e0b; color: #0f172a; font-weight: 700; } .hm-weak { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
         .coalition-container { height: 400px; position: relative; background: radial-gradient(circle at center, rgba(59,130,246,0.1) 0%, rgba(15,23,42,0) 70%); }
         .coalition-centre { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; background: #0f172a; border: 3px solid white; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; font-weight: 800; color: white; z-index: 10; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
         .coalition-node { position: absolute; background: #1e293b; border: 2px solid; padding: 10px; border-radius: 8px; width: 120px; font-size: 0.75rem; text-align: center; transform: translate(-50%, -50%); z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
         .coalition-line { position: absolute; height: 2px; transform-origin: 0 50%; z-index: 1; }
         .line-green { background: #10b981; } .line-amber { background: #f59e0b; } .line-blue { background: #3b82f6; }
-
-        /* White Space Grid */
         .whitespace-grid { display: grid; grid-template-columns: 120px repeat(5, 1fr); gap: 4px; min-width: 700px; }
         .ws-cell { border: 1px solid var(--border-dynamic); color: #0f172a; font-weight: 700; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 4px; }
-        .ws-green { background: #10b981; }
-        .ws-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
-        .ws-white { background: rgba(255,255,255,0.05); color: var(--slate); font-weight: 400; border: 1px dashed rgba(255,255,255,0.2); }
-
-        /* Dashboard Grid */
+        .ws-green { background: #10b981; } .ws-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); } .ws-white { background: rgba(255,255,255,0.05); color: var(--slate); font-weight: 400; border: 1px dashed rgba(255,255,255,0.2); }
         .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
         .dash-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; }
         .rag-indicator { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
 
-        /* Library Buttons */
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 2rem; }
-        .library-btn { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-body); padding: 12px 15px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; }
-        .library-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--primary); color: white; transform: translateY(-1px); }
-        .copy-badge { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 4px; padding: 3px 10px; font-size: 0.6rem; color: var(--primary); font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; }
-        .library-btn:hover .copy-badge { background: var(--primary); color: white; border-color: var(--primary); }
+        /* Terminal Prompt Library */
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2rem; margin-top: 4rem; margin-bottom: 4rem; }
+        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
 
-        /* Legend Toggling */
-        .legend-body { display: none; }
-        .legend-body.active { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-
-        /* Step Headers Sync */
-        .step-header-block { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; margin-top: 4rem; }
-        .large-step-number { font-size: 3rem; font-weight: 900; line-height: 1; color: var(--slate); opacity: 0.25; font-feature-settings: "tnum"; }
-        .step-meta { display: flex; flex-direction: row; align-items: center; gap: 1rem; width: 100%; }
-        .step-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0; line-height: 1; }
-        .pill-blue { margin: 0; display: inline-block; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; white-space: nowrap; }
-        .step-counter { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; color: var(--slate); text-transform: uppercase; margin-bottom: 0.2rem; }
+        @media (max-width: 900px) {
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .cmd-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+        }
     </style>
 </head>
 <body class="hero-compact">
 
-    <div id="scroll-progress"></div>
-
-    <div class="page-container content-reveal">
-       
-       <nav>
+    <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
         <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
             <span></span><span></span><span></span>
         </button>
         <div class="nav-links"> 
-            
             <div class="nav-dropdown">
                 <span class="nav-link-main">Evidence ▾</span>
                 <div class="dropdown-content">
@@ -158,7 +112,6 @@
                     <a href="thinking.html">The Thinking</a>
                 </div>
             </div>
-
             <div class="nav-dropdown">
                 <span class="nav-link-main">The System ▾</span>
                 <div class="dropdown-content">
@@ -167,7 +120,6 @@
                     <a href="edge.html">The Edge</a>
                 </div>
             </div>
-
             <div class="nav-dropdown">
                 <span class="nav-link-main">Prompt Toolkit ▾</span>
                 <div class="dropdown-content">
@@ -177,236 +129,195 @@
                     <a href="grow.html">[N] Nurture | Grow them</a>
                 </div>
             </div>
-            
             <a href="dashboards.html" style="color: var(--primary);">Dashboards</a>
             <a href="contact.html" class="nav-cta">Engage Me</a>
         </div>
     </nav>
 
+    <header class="dark-header-block">
+        <picture>
+            <source srcset="assets/images/dashboards.avif" type="image/avif">
+            <img src="assets/images/dashboards.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
+        </picture>
+        <div class="hero-impact">
+            <span class="hero-pre">THE DASHBOARD TOOLKIT</span>
+            <h1 class="hero-headline">
+                <span style="color: #ffffff; display: block;">THE SAME INTELLIGENCE.</span>
+                <span style="color: #3b82f6; display: block;">NOW YOU CAN SEE IT.</span>
+            </h1>
+            <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+            <p class="hero-subtext">
+                Data without formatting is noise. Formatting without automation is a tax on commercial capacity.
+            </p>
+        </div>
+    </header>
+
+    <main class="container-wide">
         
-        <header class="dark-header-block">
-          <picture>
-    <source srcset="assets/images/dashboards.avif" type="image/avif">
-    <img src="assets/images/dashboards.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
-</picture>
-            <div class="hero-impact">
-                <div class="hero-content reveal" style="text-align: center;">
-                    <p style="color: #60a5fa; font-size: 0.8rem; font-weight: 900; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2rem;">GAIN DASHBOARD TOOLKIT</p>
-                    <h1 class="hero-headline">
-                        <span style="color: #ffffff; display: block;">THE SAME INTELLIGENCE.</span>
-                        <span style="color: #3b82f6; display: block;">NOW YOU CAN SEE IT.</span>
-                    </h1>
-                     <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
-                 <p class="hero-subtext">
-                       Intelligence you can see, not just read.
-                    </p>
-                    <p style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase; margin-top: 3rem;">
-                        INTERACTIVE TOOLS — FROM STAKEHOLDER MAPS TO ACCOUNT DASHBOARDS
-                    </p>
+        <div class="container-wide reveal">
+            <div class="page-index-nav">
+                <div class="index-step"><span>01. Stakeholder Intel</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>02. Bid Intel</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>03. Win Strategy</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>04. Account Growth</span></div>
+            </div>
+        </div>
+
+        <div class="container-prose reveal" style="text-align: center; margin-bottom: 3rem;">
+            <p class="body-prose" style="font-size: 0.95rem;">
+                In 2005, these governance artefacts took weeks to build in Visio and Excel. Today, they are generated in minutes using the GAIN outputs. The 14 interactive exhibits below represent a complete commercial operating system built from fictional Meridian Financial Services data.
+            </p>
+        </div>
+
+        <div class="legend-bar reveal">
+            <div class="legend-group">
+                <span class="legend-title">Relationship:</span>
+                <span class="legend-item"><span class="dot dot-blue"></span> Unknown</span>
+                <span class="legend-item"><span class="dot dot-amber"></span> Targeted</span>
+                <span class="legend-item"><span class="dot dot-green"></span> Established</span>
+            </div>
+            <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.1);"></div>
+            <div class="legend-group">
+                <span class="legend-title">Scoring Risk:</span>
+                <span class="legend-item"><span class="sq" style="background: #10b981;"></span> Strong</span>
+                <span class="legend-item"><span class="sq" style="background: #f59e0b;"></span> Moderate</span>
+                <span class="legend-item"><span class="sq" style="background: #ef4444;"></span> Weak</span>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">01. STAKEHOLDER INTELLIGENCE</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">01</span> Authority & Influence 2x2</h3>
+                <span class="cmd-tag">OUTPUT: W2-05</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> The formal org chart lies. This matrix plots formal authority against informal influence. The top-right quadrant is your real decision-making committee.
+            </div>
+            <div class="cmd-visual">
+                <div class="matrix-container" style="height: 400px; max-width: 800px;">
+                    <div class="matrix-quadrant-label" style="top: 0; right: 0;">High Auth / High Inf</div>
+                    <div class="matrix-quadrant-label" style="top: 0; left: 0;">High Auth / Low Inf</div>
+                    <div class="matrix-quadrant-label" style="bottom: 0; right: 0;">Low Auth / High Inf</div>
+                    <div class="matrix-quadrant-label" style="bottom: 0; left: 0;">Low Auth / Low Inf</div>
+                    
+                    <div style="position: absolute; left: -30px; top: 50%; transform: rotate(-90deg); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">AUTHORITY</div>
+                    <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">INFLUENCE</div>
+
+                    <div class="stakeholder-dot dot-blue" style="bottom: 90%; left: 90%;" title="James Whitfield (CEO) - Unknown"></div>
+                    <div class="stakeholder-dot dot-green" style="bottom: 85%; left: 80%;" title="Richard Hale (CIO) - Established"></div>
+                    <div class="stakeholder-dot dot-champion" style="bottom: 60%; left: 85%;" title="Jennifer Morris (Dir. Resilience) - CHAMPION"></div>
+                    <div class="stakeholder-dot dot-amber" style="bottom: 88%; left: 30%;" title="Mark Thompson (CFO) - Targeted"></div>
+                    <div class="stakeholder-dot dot-green" style="bottom: 50%; left: 20%;" title="Sarah Blackwell (Procurement) - Established"></div>
+                    <div class="stakeholder-dot dot-amber" style="bottom: 20%; left: 75%;" title="Andrew Chen (Head of Infra) - Targeted"></div>
+                    <div class="stakeholder-dot dot-amber" style="bottom: 82%; left: 70%;" title="David Osei (CRO) - Targeted"></div>
+                    <div class="stakeholder-dot dot-blue" style="bottom: 85%; left: 15%;" title="David Harrison (COO) - Unknown"></div>
                 </div>
             </div>
-        </header>
+        </div>
 
-    <main style="margin-top: -4rem; position: relative; z-index: 2;">
-        
-        <section class="reveal">
-            <div class="container" style="max-width: 800px;">
-                
-                <div class="worked-example-box" style="background: var(--bg-card); border-color: var(--border-dynamic); padding: 2rem;">
-                    <h2 class="section-heading-standard" style="text-align: left; margin-bottom: 1rem;">The Origin</h2>
-                    <div style="border-left: 3px solid var(--primary); padding-left: 1.5rem;">
-                        <p class="body-prose" style="margin: 0;">In 2005, these visualisations were Visio diagrams, hand-drawn 2x2 charts, and colour-coded org charts maintained in Word documents. They took weeks to build. <br><br>These are the same tools, modernised. Each one is generated from GAIN prompt outputs using the Meridian Financial Services fictional data set. They show what your intelligence LOOKS like when it's structured.</p>
-                    </div>
-                </div>
-
-                <div class="note-box note-blue reveal" style="margin-top: 2rem;">
-                    <div class="note-box-icon">💡</div>
-                    <div class="note-box-content">
-                        <h4 style="color: #60a5fa; margin: 0 0 0.5rem 0; font-size: 0.9rem; font-weight: 800;">WHY VISUALISE?</h4>
-                        <p style="font-size: 0.9rem; margin-bottom: 0.8rem;"><strong>These diagrams should be part of your thinking.</strong> Governance artefacts and account planning tools that previously took days — org charts, stakeholder maps, bid scorecards — generated in minutes from your GAIN prompt outputs. Dynamically updated, not manually maintained.</p>
-                        <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Release your team.</strong> The formatting is always the time-killer. Automating the visual layer releases bid team members from the monotony so they can use their time as value.</p>
-                    </div>
-                </div>
-
-                <div class="visual-panel reveal" style="padding: 1.5rem; margin-top: 3rem; background: rgba(255,255,255,0.02);">
-                    <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="this.parentElement.querySelector('.legend-body').classList.toggle('active')">
-                        <h3 class="visual-title" style="margin: 0; font-size: 0.9rem; color: var(--primary);">🔑 Global Colour Key</h3>
-                        <span style="color: var(--slate);">▾</span>
-                    </div>
-                    <div class="legend-body active" style="margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <div>
-                            <p style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Relationship Status</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3b82f6; margin-right: 8px;"></span> Blue — Unknown</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; margin-right: 8px;"></span> Amber — Targeted</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin-right: 8px;"></span> Green — Established</p>
-                        </div>
-                        <div>
-                            <p style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Scoring / Risk</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #10b981; margin-right: 8px;"></span> Green — Strong / Safe</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #f59e0b; margin-right: 8px;"></span> Amber — Moderate / Risk</p>
-                            <p style="font-size: 0.8rem; color: var(--slate);"><span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: #ef4444; margin-right: 8px;"></span> Red — Weak / Danger</p>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">02</span> Relationship-Aware Org Chart</h3>
+                <span class="cmd-tag">OUTPUT: W2-02</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> A standard org chart is passive. This maps your precise relationship coverage against the hierarchy. Blue boxes immediately highlight where you are blind.
+            </div>
+            <div class="cmd-visual">
+                <div class="org-tree">
+                    <div class="org-level">
+                        <div class="org-node" style="border-color: #3b82f6;">
+                            <div class="node-status" style="background: #3b82f6;"></div><strong>J. Whitfield</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CEO</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="section-separator-container reveal">
-                    <div class="divider-line" style="background: rgba(255,255,255,0.1); width: 80px; height: 1px; margin: 0 auto 1.5rem auto;"></div>
-                    <span class="divider-label">STAKEHOLDER INTELLIGENCE</span>
-                    <p style="font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; margin-top: 0.5rem;">GATHER · KNOW + ASSESS · MAP</p>
-                    <p class="section-separator-subtext">Map the People. Map the Power.</p>
-                </div>
-
-                <div class="step-header-block reveal">
-                    <div class="large-step-number">01</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 1 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Authority & Influence 2x2</h3>
-                            <div class="pill-blue">OUTPUT OF W2-05</div>
+                    <div class="org-level">
+                        <div class="org-node" style="border-color: #f59e0b;">
+                            <div class="node-status" style="background: #f59e0b;"></div><strong>M. Thompson</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CFO</span>
+                        </div>
+                        <div class="org-node" style="border-color: #10b981;">
+                            <div class="node-status" style="background: #10b981;"></div><strong>R. Hale</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CIO</span>
+                        </div>
+                        <div class="org-node" style="border-color: #f59e0b;">
+                            <div class="node-status" style="background: #f59e0b;"></div><strong>D. Osei</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CRO</span>
+                        </div>
+                        <div class="org-node" style="border-color: #3b82f6;">
+                            <div class="node-status" style="background: #3b82f6;"></div><strong>D. Harrison</strong><br><span style="font-size:0.7rem; opacity: 0.7;">COO</span>
+                        </div>
+                    </div>
+                    <div class="org-level">
+                        <div class="org-node" style="border-color: #10b981;">
+                            <div class="node-status" style="background: #10b981;"></div><strong>S. Blackwell</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Procurement</span>
+                        </div>
+                        <div class="org-node" style="border-color: #f59e0b;">
+                            <div class="node-status" style="background: #f59e0b;"></div><strong>A. Chen</strong><br><span style="font-size:0.7rem; opacity: 0.7;">IT Infra</span>
+                        </div>
+                        <div class="org-node" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);">
+                            <div class="node-status" style="background: #10b981;"></div><strong>J. Morris</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Resilience</span>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">The single most important visual. Plotted by formal authority (vertical) and informal influence (horizontal). Colour shows relationship status.</p>
-                </div>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">03</span> Engagement Sequence</h3>
+                <span class="cmd-tag">OUTPUT: W2-06</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> You cannot approach everyone at once. This Gantt restricts random selling and enforces a structured critical path of WHO to meet and WHEN.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
+                    <div class="gantt-grid">
+                        <div class="gantt-header">STAKEHOLDER</div>
+                        <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
+                        <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
+                        <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
 
-                <div class="visual-panel reveal">
-                    <div class="matrix-container" style="height: 400px;">
-                        <div class="matrix-quadrant-label" style="top: 0; right: 0;">High Auth / High Inf</div>
-                        <div class="matrix-quadrant-label" style="top: 0; left: 0;">High Auth / Low Inf</div>
-                        <div class="matrix-quadrant-label" style="bottom: 0; right: 0;">Low Auth / High Inf</div>
-                        <div class="matrix-quadrant-label" style="bottom: 0; left: 0;">Low Auth / Low Inf</div>
-                        
-                        <div style="position: absolute; left: -30px; top: 50%; transform: rotate(-90deg); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">AUTHORITY</div>
-                        <div style="position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 2px;">INFLUENCE</div>
+                        <div class="gantt-row-label">J. Morris (Champ)</div>
+                        <div style="grid-column: 2 / span 2; background: #10b981;" class="gantt-bar">Deepen Support</div>
+                        <div style="grid-column: 7 / span 1; background: #10b981;" class="gantt-bar">Coach</div>
 
-                        <div class="stakeholder-dot dot-blue" style="bottom: 90%; left: 90%;" title="James Whitfield (CEO) - Unknown"></div>
-                        <div class="stakeholder-dot dot-green" style="bottom: 85%; left: 80%;" title="Richard Hale (CIO) - Established"></div>
-                         <div class="stakeholder-dot dot-champion" style="bottom: 60%; left: 85%;" title="Jennifer Morris (Dir. Resilience) - CHAMPION"></div>
-                        <div class="stakeholder-dot dot-amber" style="bottom: 88%; left: 30%;" title="Mark Thompson (CFO) - Targeted"></div>
-                        <div class="stakeholder-dot dot-green" style="bottom: 50%; left: 20%;" title="Sarah Blackwell (Procurement) - Established"></div>
-                        <div class="stakeholder-dot dot-amber" style="bottom: 20%; left: 75%;" title="Andrew Chen (Head of Infra) - Targeted"></div>
-                        <div class="stakeholder-dot dot-amber" style="bottom: 82%; left: 70%;" title="David Osei (CRO) - Targeted"></div>
-                        <div class="stakeholder-dot dot-blue" style="bottom: 85%; left: 15%;" title="David Harrison (COO) - Unknown"></div>
+                        <div class="gantt-row-label">S. Blackwell (Proc)</div>
+                        <div style="grid-column: 3 / span 2; background: #3b82f6;" class="gantt-bar">Clarification</div>
+                        <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Negotiate</div>
+
+                        <div class="gantt-row-label">A. Chen (Tech)</div>
+                        <div style="grid-column: 4 / span 2; background: #f59e0b;" class="gantt-bar">Tech Workshop</div>
+
+                        <div class="gantt-row-label">R. Hale (CIO)</div>
+                        <div style="grid-column: 5 / span 1; background: #ef4444;" class="gantt-bar">Exec Briefing</div>
+
+                        <div class="gantt-row-label">D. Osei (CRO)</div>
+                        <div style="grid-column: 6 / span 2; background: #f59e0b;" class="gantt-bar">Governance</div>
+
+                        <div class="gantt-row-label">M. Thompson (CFO)</div>
+                        <div style="grid-column: 8 / span 1; background: #64748b;" class="gantt-bar">Commercial</div>
+
+                        <div class="gantt-row-label">D. Harrison (COO)</div>
+                        <div style="grid-column: 2 / span 12; color: var(--slate); font-style: italic; font-size: 0.7rem; padding: 0.5rem;">Monitor only — no direct engagement</div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">02</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 2 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Relationship-Aware Org Chart</h3>
-                            <div class="pill-blue">OUTPUT OF W2-02</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Not just reporting lines. This chart adds two dimensions: Awareness (Relationship Status colour) and Role.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="org-tree">
-                        <div class="org-level">
-                            <div class="org-node" style="border-color: #3b82f6;">
-                                <div class="node-status" style="background: #3b82f6;"></div><strong>J. Whitfield</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CEO</span>
-                            </div>
-                        </div>
-                        <div class="org-level">
-                            <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>M. Thompson</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CFO</span>
-                            </div>
-                            <div class="org-node" style="border-color: #10b981;">
-                                <div class="node-status" style="background: #10b981;"></div><strong>R. Hale</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CIO</span>
-                            </div>
-                            <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>D. Osei</strong><br><span style="font-size:0.7rem; opacity: 0.7;">CRO</span>
-                            </div>
-                            <div class="org-node" style="border-color: #3b82f6;">
-                                <div class="node-status" style="background: #3b82f6;"></div><strong>D. Harrison</strong><br><span style="font-size:0.7rem; opacity: 0.7;">COO</span>
-                            </div>
-                        </div>
-                        <div class="org-level">
-                            <div class="org-node" style="border-color: #10b981;">
-                                <div class="node-status" style="background: #10b981;"></div><strong>S. Blackwell</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Procurement</span>
-                            </div>
-                            <div class="org-node" style="border-color: #f59e0b;">
-                                <div class="node-status" style="background: #f59e0b;"></div><strong>A. Chen</strong><br><span style="font-size:0.7rem; opacity: 0.7;">IT Infra</span>
-                            </div>
-                            <div class="org-node" style="border-color: #10b981; background: rgba(16, 185, 129, 0.1);">
-                                <div class="node-status" style="background: #10b981;"></div><strong>J. Morris</strong><br><span style="font-size:0.7rem; opacity: 0.7;">Resilience</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">03</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 3 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Engagement Sequence</h3>
-                            <div class="pill-blue">OUTPUT OF W2-06</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">You can't approach everyone at once. This maps WHO to approach, WHEN, and in what ORDER.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="timeline-scroll">
-                        <div class="gantt-grid">
-                            <div class="gantt-header">STAKEHOLDER</div>
-                            <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
-                            <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
-                            <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
-
-                            <div class="gantt-row-label">J. Morris (Champ)</div>
-                            <div style="grid-column: 2 / span 2; background: #10b981;" class="gantt-bar">Deepen Support</div>
-                            <div style="grid-column: 7 / span 1; background: #10b981;" class="gantt-bar">Coach</div>
-
-                            <div class="gantt-row-label">S. Blackwell (Proc)</div>
-                            <div style="grid-column: 3 / span 2; background: #3b82f6;" class="gantt-bar">Clarification</div>
-                            <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Negotiate</div>
-
-                            <div class="gantt-row-label">A. Chen (Tech)</div>
-                            <div style="grid-column: 4 / span 2; background: #f59e0b;" class="gantt-bar">Tech Workshop</div>
-
-                            <div class="gantt-row-label">R. Hale (CIO)</div>
-                            <div style="grid-column: 5 / span 1; background: #ef4444;" class="gantt-bar">Exec Briefing</div>
-
-                            <div class="gantt-row-label">D. Osei (CRO)</div>
-                            <div style="grid-column: 6 / span 2; background: #f59e0b;" class="gantt-bar">Governance Alignment</div>
-
-                            <div class="gantt-row-label">M. Thompson (CFO)</div>
-                            <div style="grid-column: 8 / span 1; background: #64748b;" class="gantt-bar">Commercial</div>
-
-                            <div class="gantt-row-label">D. Harrison (COO)</div>
-                            <div style="grid-column: 2 / span 12; color: var(--slate); font-style: italic; font-size: 0.7rem; padding: 0.5rem;">Monitor only — no direct engagement</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">04</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 4 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Scoring Power Map</h3>
-                            <div class="pill-blue">OUTPUT OF W2-05</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Who controls the points? This bar chart shows exactly how much of the final decision each stakeholder influences.</p>
-                </div>
-
-                <div class="visual-panel reveal">
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">04</span> Scoring Power Map</h3>
+                <span class="cmd-tag">OUTPUT: W2-05</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> Don't just look at the evaluation criteria percentages. This maps which specific human controls those percentages. It connects the math to the man.
+            </div>
+            <div class="cmd-visual">
+                <div style="max-width: 800px; margin: 0 auto;">
                     <div class="bar-chart-row">
                         <div class="bar-label">Technical (25%)</div>
                         <div class="bar-track">
@@ -449,306 +360,266 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="section-separator-container reveal">
-                    <div class="divider-line" style="background: rgba(255,255,255,0.1); width: 80px; height: 1px; margin: 0 auto 1.5rem auto;"></div>
-                    <span class="divider-label">BID INTELLIGENCE</span>
-                    <p style="font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; margin-top: 0.5rem;">ASSESS · MAP + INFLUENCE · WIN</p>
-                    <p class="section-separator-subtext">See the Deal. Score the Deal.</p>
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">02. BID INTELLIGENCE</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">05</span> Scoring Weight Visualiser</h3>
+                <span class="cmd-tag">OUTPUT: W3-03</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> Visualises the effort vs. reward landscape. A criterion worth 25% requires 5x the narrative effort of one worth 5%. Teams naturally over-invest in what they like doing; this corrects the drift.
+            </div>
+            <div class="cmd-visual">
+                <div class="bubble-chart" style="max-width: 800px; margin: 0 auto;">
+                    <div class="bubble" style="bottom: 80%; left: 80%; width: 90px; height: 90px; background: #10b981;">Tech (25%)</div>
+                    <div class="bubble" style="bottom: 60%; left: 50%; width: 80px; height: 80px; background: #f59e0b;">Comm (20%)</div>
+                    <div class="bubble" style="bottom: 60%; left: 85%; width: 80px; height: 80px; background: #10b981;">Svc (20%)</div>
+                    <div class="bubble" style="bottom: 40%; left: 75%; width: 60px; height: 60px; background: #10b981;">Team (15%)</div>
+                    <div class="bubble" style="bottom: 40%; left: 55%; width: 60px; height: 60px; background: #f59e0b;">Auto (15%)</div>
+                    <div class="bubble" style="bottom: 10%; left: 20%; width: 40px; height: 40px; background: #94a3b8;">Soc (5%)</div>                         
+                    <div style="position: absolute; left: 10px; top: 10px; font-size: 0.7rem; color: var(--slate); font-weight: 700;">Y: HIGH WEIGHT</div>
+                    <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.7rem; color: var(--slate); font-weight: 700;">X: HIGH CONFIDENCE</div>
                 </div>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">05</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 5 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Scoring Weight Visualisation</h3>
-                            <div class="pill-blue">OUTPUT OF W3-03</div>
-                        </div>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">06</span> Timeline & Compression Map</h3>
+                <span class="cmd-tag">OUTPUT: W2-01</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> Procurement processes always compress. The red zones highlight where the buyer will be forced to compromise on process due to overlapping deadlines. That is where you exert influence.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
+                    <div class="timeline-map-grid">
+                        <div class="tm-compression" style="grid-column: 9 / span 2;"></div>
+                        <div class="tm-compression" style="grid-column: 16 / span 6;"></div>
+
+                        <div class="tm-phase" style="grid-column: 1 / span 2;">Issued</div>
+                        <div class="tm-phase" style="grid-column: 3 / span 4;">Clarification</div>
+                        <div class="tm-phase" style="grid-column: 7 / span 2; border-right: 2px solid #ef4444;">Submission</div>
+                        <div class="tm-phase" style="grid-column: 9 / span 2;">Tech Eval</div>
+                        <div class="tm-phase" style="grid-column: 11 / span 1;">Comm Eval</div>
+                        <div class="tm-phase" style="grid-column: 12 / span 1;">Orals</div>
+                        <div class="tm-phase" style="grid-column: 13 / span 2;">Selection</div>
+                        <div class="tm-phase" style="grid-column: 15 / span 1;">Preferred</div>
+                        <div class="tm-phase" style="grid-column: 16 / span 6;">Contracting</div>
+                        <div class="tm-phase" style="grid-column: 22 / span 1;">Go-Live</div>
+
+                        <div class="tm-deadline tm-hard" style="left: 0; grid-column: 7;"><div class="tm-deadline-label">Submit</div></div>
+                        <div class="tm-deadline tm-soft" style="left: 0; grid-column: 12;"><div class="tm-deadline-label">Orals</div></div>
+                        <div class="tm-deadline tm-hard" style="left: 0; grid-column: 16;"><div class="tm-deadline-label">Sign</div></div>
+                        <div class="tm-deadline tm-hard" style="right: 0; grid-column: 22;"><div class="tm-deadline-label">ISO 22301</div></div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">A criterion worth 25% deserves 5x the effort of one worth 5%. This bubble chart visualises the effort landscape.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="bubble-chart">
-                        <div class="bubble" style="bottom: 80%; left: 80%; width: 90px; height: 90px; background: #10b981;">Tech (25%)</div>
-                        <div class="bubble" style="bottom: 60%; left: 50%; width: 80px; height: 80px; background: #f59e0b;">Comm (20%)</div>
-                        <div class="bubble" style="bottom: 60%; left: 85%; width: 80px; height: 80px; background: #10b981;">Svc (20%)</div>
-                        <div class="bubble" style="bottom: 40%; left: 75%; width: 60px; height: 60px; background: #10b981;">Team (15%)</div>
-                        <div class="bubble" style="bottom: 40%; left: 55%; width: 60px; height: 60px; background: #f59e0b;">Auto (15%)</div>
-                        <div class="bubble" style="bottom: 10%; left: 20%; width: 40px; height: 40px; background: #94a3b8;">Soc (5%)</div>                          
-                        <div style="position: absolute; left: 10px; top: 10px; font-size: 0.7rem; color: var(--slate);">HIGH WEIGHT</div>
-                        <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.7rem; color: var(--slate);">HIGH CONFIDENCE</div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">06</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 6 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Timeline Map</h3>
-                            <div class="pill-blue">OUTPUT OF W2-01</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Compression points are where the buyer will compromise on process. This map identifies where your preparation matters most.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="timeline-scroll">
-                        <div class="timeline-map-grid">
-                            <div class="tm-compression" style="grid-column: 9 / span 2;"></div>
-                            <div class="tm-compression" style="grid-column: 16 / span 6;"></div>
-
-                            <div class="tm-phase" style="grid-column: 1 / span 2;">Issued</div>
-                            <div class="tm-phase" style="grid-column: 3 / span 4;">Clarification</div>
-                            <div class="tm-phase" style="grid-column: 7 / span 2; border-right: 2px solid #ef4444;">Submission</div>
-                            <div class="tm-phase" style="grid-column: 9 / span 2;">Tech Eval</div>
-                            <div class="tm-phase" style="grid-column: 11 / span 1;">Comm Eval</div>
-                            <div class="tm-phase" style="grid-column: 12 / span 1;">Orals</div>
-                            <div class="tm-phase" style="grid-column: 13 / span 2;">Selection</div>
-                            <div class="tm-phase" style="grid-column: 15 / span 1;">Preferred</div>
-                            <div class="tm-phase" style="grid-column: 16 / span 6;">Contracting</div>
-                            <div class="tm-phase" style="grid-column: 22 / span 1;">Go-Live</div>
-
-                            <div class="tm-deadline tm-hard" style="left: 0; grid-column: 7;"><div class="tm-deadline-label">Submit</div></div>
-                            <div class="tm-deadline tm-soft" style="left: 0; grid-column: 12;"><div class="tm-deadline-label">Orals</div></div>
-                            <div class="tm-deadline tm-hard" style="left: 0; grid-column: 16;"><div class="tm-deadline-label">Sign</div></div>
-                            <div class="tm-deadline tm-hard" style="right: 0; grid-column: 22;"><div class="tm-deadline-label">ISO 22301</div></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">07</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 7 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Service Tower Breakdown</h3>
-                            <div class="pill-blue">OUTPUT OF W2-03</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Shows the scope landscape: which towers are biggest, where TUPE implications exist, and where the differentiation sits.</p>
-                </div>
-
-                <div class="visual-panel reveal">
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">07</span> Service Tower Breakdown</h3>
+                <span class="cmd-tag">OUTPUT: W2-03</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> Shows the scope landscape instantly. Which towers hold the highest margin, where TUPE legal implications exist, and where the strategic differentiation sits vs standard commodity.
+            </div>
+            <div class="cmd-visual">
+                <div style="max-width: 800px; margin: 0 auto;">
                     <div class="bar-chart-row">
                         <div class="bar-label">Infrastructure</div>
                         <div class="bar-track">
-                            <div class="bar-segment" style="width: 100%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£2.1M (TUPE)</div>
+                            <div class="bar-segment" style="width: 100%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">£2.1M (TUPE)</div>
                         </div>
                     </div>
                     <div class="bar-chart-row">
                         <div class="bar-label">Service Desk</div>
                         <div class="bar-track">
-                            <div class="bar-segment" style="width: 70%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£1.4M (TUPE)</div>
+                            <div class="bar-segment" style="width: 70%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">£1.4M (TUPE)</div>
                         </div>
                     </div>
                     <div class="bar-chart-row">
                         <div class="bar-label">Resilience</div>
                         <div class="bar-track">
-                            <div class="bar-segment" style="width: 40%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.8M (New)</div>
+                            <div class="bar-segment" style="width: 40%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">£0.8M (New)</div>
                         </div>
                     </div>
                     <div class="bar-chart-row">
                         <div class="bar-label">Network</div>
                         <div class="bar-track">
-                            <div class="bar-segment" style="width: 30%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.6M (TUPE)</div>
+                            <div class="bar-segment" style="width: 30%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">£0.6M (TUPE)</div>
                         </div>
                     </div>
                     <div class="bar-chart-row">
                         <div class="bar-label">Automation</div>
                         <div class="bar-track">
-                            <div class="bar-segment" style="width: 20%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">£0.4M (New)</div>
+                            <div class="bar-segment" style="width: 20%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">£0.4M (New)</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">08</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 8 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Commercial Mechanism</h3>
-                            <div class="pill-blue">OUTPUT OF W2-01</div>
-                        </div>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">08</span> Commercial Mechanism</h3>
+                <span class="cmd-tag">OUTPUT: W2-01</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> A visual summary for the CFO conversation. It proves you understand that the deal isn't just a fixed price—it's a system of deferred risk, shared savings, and joint innovation.
+            </div>
+            <div class="cmd-visual">
+                <div class="flow-container">
+                    <div class="flow-card" style="border-left: 4px solid #3b82f6;">
+                        <h4 style="color: white; margin-top: 0;">BASE CONTRACT</h4>
+                        <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: white;">£5.3M / year</p>
+                        <ul style="color: var(--slate);">
+                            <li>Fixed Price</li>
+                            <li>5 Towers</li>
+                            <li>Paid Monthly</li>
+                        </ul>
+                    </div>
+                    <div class="flow-card" style="border-left: 4px solid #f59e0b;">
+                        <h4 style="color: white; margin-top: 0;">DEFERRED (10%)</h4>
+                        <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: white;">£530k Held</p>
+                        <ul style="color: var(--slate);">
+                            <li>Released at:</li>
+                            <li>6 Months</li>
+                            <li>12 Months</li>
+                            <li>18 Months</li>
+                        </ul>
+                    </div>
+                    <div class="flow-card" style="border-left: 4px solid #10b981;">
+                        <h4 style="color: white; margin-top: 0;">GAIN SHARE</h4>
+                        <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: white;">60/40 Split</p>
+                        <ul style="color: var(--slate);">
+                            <li>Savings > Y1 Base</li>
+                            <li>Unlimited Upside</li>
+                        </ul>
+                    </div>
+                    <div class="flow-card" style="border-left: 4px solid #10b981;">
+                        <h4 style="color: white; margin-top: 0;">INNOVATION FUND</h4>
+                        <p style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: white;">£106k (2%)</p>
+                        <ul style="color: var(--slate);">
+                            <li>Ring-fenced</li>
+                            <li>Joint Governance</li>
+                            <li>Re-investment</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Maps how payments flow, where risk sits, and where innovation is rewarded. Crucial for the CFO conversation.</p>
-                </div>
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">03. WIN STRATEGY</div>
+            <div class="divider-line"></div>
+        </div>
 
-                <div class="visual-panel reveal">
-                    <div class="flow-container">
-                        <div class="flow-card" style="border-left: 4px solid #3b82f6;">
-                            <h4 style="color: white; margin-top: 0;">BASE CONTRACT</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£5.3M / year</p>
-                            <ul style="color: var(--slate);">
-                                <li>Fixed Price</li>
-                                <li>5 Towers</li>
-                                <li>Paid Monthly</li>
-                            </ul>
-                        </div>
-                        <div class="flow-card" style="border-left: 4px solid #f59e0b;">
-                            <h4 style="color: white; margin-top: 0;">DEFERRED (10%)</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£530k Held</p>
-                            <ul style="color: var(--slate);">
-                                <li>Released at:</li>
-                                <li>6 Months</li>
-                                <li>12 Months</li>
-                                <li>18 Months</li>
-                            </ul>
-                        </div>
-                        <div class="flow-card" style="border-left: 4px solid #10b981;">
-                            <h4 style="color: white; margin-top: 0;">GAIN SHARE</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">60/40 Split</p>
-                            <ul style="color: var(--slate);">
-                                <li>Savings > Y1 Baseline</li>
-                                <li>Unlimited Upside</li>
-                            </ul>
-                        </div>
-                        <div class="flow-card" style="border-left: 4px solid #10b981;">
-                            <h4 style="color: white; margin-top: 0;">INNOVATION FUND</h4>
-                            <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; color: white;">£106k (2%)</p>
-                            <ul style="color: var(--slate);">
-                                <li>Ring-fenced</li>
-                                <li>Joint Governance</li>
-                                <li>Re-investment</li>
-                            </ul>
-                        </div>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">09</span> Win Theme Deployment</h3>
+                <span class="cmd-tag">OUTPUT: W3-01</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> A win theme is useless if it's only in the executive summary. This grid audits your bid response to ensure strategic themes permeate every single technical and commercial touchpoint.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
+                    <div class="heatmap-grid">
+                        <div class="heatmap-cell heatmap-header">THEME / TOUCHPOINT</div>
+                        <div class="heatmap-cell heatmap-header">Exec Summary</div>
+                        <div class="heatmap-cell heatmap-header">Tech Response</div>
+                        <div class="heatmap-cell heatmap-header">Commercial</div>
+                        <div class="heatmap-cell heatmap-header">Orals</div>
+                        <div class="heatmap-cell heatmap-header">Stakeholder Mtgs</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">1. Operational Resilience</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-weak">Weak</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-med">Present</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">2. Automation First</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-med">Present</div>
+                        <div class="heatmap-cell hm-med">Present</div>
+                        <div class="heatmap-cell hm-weak">Weak</div>
+
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 600;">3. Capability Building</div>
+                        <div class="heatmap-cell hm-med">Present</div>
+                        <div class="heatmap-cell hm-weak">Weak</div>
+                        <div class="heatmap-cell hm-weak">Weak</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
+                        <div class="heatmap-cell hm-strong">STRONG</div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="section-separator-container reveal">
-                    <div class="divider-line" style="background: rgba(255,255,255,0.1); width: 80px; height: 1px; margin: 0 auto 1.5rem auto;"></div>
-                    <span class="divider-label">WIN STRATEGY</span>
-                    <p style="font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; margin-top: 0.5rem;">INFLUENCE · WIN</p>
-                    <p class="section-separator-subtext">Build the Case. Win the Room.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">09</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 9 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Win Theme Deployment</h3>
-                            <div class="pill-blue">OUTPUT OF W3-01</div>
-                        </div>
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">10</span> Coalition Map</h3>
+                <span class="cmd-tag">OUTPUT: W2-05</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> You do not need to win everyone; you need to build the minimum winning coalition. This isolates the internal politics and identifies the single 'Linchpin' node blocking or enabling the deal.
+            </div>
+            <div class="cmd-visual">
+                <div class="coalition-container" style="max-width: 800px; margin: 0 auto;">
+                    <div class="coalition-centre">MERIDIAN ORT DEAL</div>
+                    
+                    <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(-45deg);"></div>
+                    <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(45deg);"></div>
+                    <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(-135deg);"></div>
+                    <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(135deg);"></div>
+                    <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 220px; transform: rotate(-90deg);"></div> 
+                    <div class="coalition-line line-blue" style="top: 50%; left: 50%; width: 220px; transform: rotate(0deg);"></div> 
+                    
+                    <div class="coalition-node" style="top: 20%; left: 70%; border-color: #10b981;">
+                        <strong>Jennifer Morris</strong><br><span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">CHAMPION</span><br><span style="font-size: 0.7rem;">Needs: Evidence</span>
+                    </div>
+                    <div class="coalition-node" style="top: 80%; left: 70%; border-color: #10b981;">
+                        <strong>Richard Hale</strong><br><span style="font-size: 0.7rem; color: #10b981;">TECH AUTH</span><br><span style="font-size: 0.7rem;">Needs: Automation</span>
+                    </div>
+                    <div class="coalition-node" style="top: 20%; left: 30%; border-color: #f59e0b;">
+                        <strong>Mark Thompson</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">ECO BUYER</span><br><span style="font-size: 0.7rem;">Needs: ROI</span>
+                    </div>
+                    <div class="coalition-node" style="top: 80%; left: 30%; border-color: #f59e0b;">
+                        <strong>Andrew Chen</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">VALIDATOR</span><br><span style="font-size: 0.7rem;">Needs: Competence</span>
+                    </div>
+                    
+                    <div class="coalition-node" style="top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.8;">
+                        <strong>S. Blackwell</strong><br><span style="font-size: 0.7rem;">GATEKEEPER</span>
+                    </div>
+                    <div class="coalition-node" style="top: 50%; right: 5%; transform: translateY(-50%); opacity: 0.7; border-color: #3b82f6;">
+                        <strong>J. Whitfield</strong><br><span style="font-size: 0.7rem;">APPROVER</span>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">A strategy, not a slogan. Shows how each win theme deploys across every touchpoint, from summary to presentation.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="timeline-scroll">
-                        <div class="heatmap-grid">
-                            <div class="heatmap-cell heatmap-header">THEME / TOUCHPOINT</div>
-                            <div class="heatmap-cell heatmap-header">Exec Summary</div>
-                            <div class="heatmap-cell heatmap-header">Tech Response</div>
-                            <div class="heatmap-cell heatmap-header">Commercial</div>
-                            <div class="heatmap-cell heatmap-header">Orals</div>
-                            <div class="heatmap-cell heatmap-header">Stakeholder Mtgs</div>
-
-                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">1. Operational Resilience</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-weak">Weak</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-med">Present</div>
-
-                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">2. Automation First</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-med">Present</div>
-                            <div class="heatmap-cell hm-med">Present</div>
-                            <div class="heatmap-cell hm-weak">Weak</div>
-
-                            <div class="heatmap-cell" style="text-align: left; font-weight: 600;">3. Capability Building</div>
-                            <div class="heatmap-cell hm-med">Present</div>
-                            <div class="heatmap-cell hm-weak">Weak</div>
-                            <div class="heatmap-cell hm-weak">Weak</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                            <div class="heatmap-cell hm-strong">STRONG</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">10</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 10 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Coalition Map</h3>
-                            <div class="pill-blue">OUTPUT OF W2-05</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">You don't need everyone. You need the minimum winning coalition. This maps the critical path to "Yes."</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="coalition-container">
-                        <div class="coalition-centre">MERIDIAN ORT DEAL</div>
-                        
-                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(-45deg);"></div>
-                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 150px; transform: rotate(45deg);"></div>
-                        <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(-135deg);"></div>
-                        <div class="coalition-line line-amber" style="top: 50%; left: 50%; width: 150px; transform: rotate(135deg);"></div>
-                        <div class="coalition-line line-green" style="top: 50%; left: 50%; width: 220px; transform: rotate(-90deg);"></div> 
-                        <div class="coalition-line line-blue" style="top: 50%; left: 50%; width: 220px; transform: rotate(0deg);"></div> 
-                        
-                        <div class="coalition-node" style="top: 20%; left: 70%; border-color: #10b981;">
-                            <strong>Jennifer Morris</strong><br><span style="font-size: 0.7rem; color: #10b981; font-weight: 700;">CHAMPION</span><br><span style="font-size: 0.7rem;">Needs: Evidence</span>
-                        </div>
-                        <div class="coalition-node" style="top: 80%; left: 70%; border-color: #10b981;">
-                            <strong>Richard Hale</strong><br><span style="font-size: 0.7rem; color: #10b981;">TECH AUTH</span><br><span style="font-size: 0.7rem;">Needs: Automation</span>
-                        </div>
-                        <div class="coalition-node" style="top: 20%; left: 30%; border-color: #f59e0b;">
-                            <strong>Mark Thompson</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">ECO BUYER</span><br><span style="font-size: 0.7rem;">Needs: ROI</span>
-                        </div>
-                        <div class="coalition-node" style="top: 80%; left: 30%; border-color: #f59e0b;">
-                            <strong>Andrew Chen</strong><br><span style="font-size: 0.7rem; color: #f59e0b;">VALIDATOR</span><br><span style="font-size: 0.7rem;">Needs: Competence</span>
-                        </div>
-                        
-                        <div class="coalition-node" style="top: 10%; left: 50%; transform: translateX(-50%); opacity: 0.8;">
-                            <strong>S. Blackwell</strong><br><span style="font-size: 0.7rem;">GATEKEEPER</span>
-                        </div>
-                        <div class="coalition-node" style="top: 50%; right: 5%; transform: translateY(-50%); opacity: 0.7; border-color: #3b82f6;">
-                            <strong>J. Whitfield</strong><br><span style="font-size: 0.7rem;">APPROVER</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">11</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 11 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Risk & Gap Heatmap</h3>
-                            <div class="pill-blue">OUTPUT OF W3-05</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">The pre-submission reality check. Where are you strong? Where are you exposed? This is the honest view of your win probability.</p>
-                </div>
-
-                <div class="visual-panel reveal">
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">11</span> Risk & Gap Heatmap</h3>
+                <span class="cmd-tag">OUTPUT: W3-05</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> The pre-submission reality check. This strips away seller optimism and forces an objective, comparative view of where you are exposed to competitors.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
                     <div class="heatmap-grid" style="grid-template-columns: 200px 1fr 1fr 1fr 1fr;">
                         <div class="heatmap-cell heatmap-header">CRITERION</div>
                         <div class="heatmap-cell heatmap-header">YOU</div>
@@ -760,7 +631,7 @@
                         <div class="heatmap-cell hm-strong">4</div>
                         <div class="heatmap-cell hm-strong">4</div>
                         <div class="heatmap-cell hm-med">3</div>
-                        <div class="heatmap-cell">Level</div>
+                        <div class="heatmap-cell" style="color: #cbd5e1;">Level</div>
 
                         <div class="heatmap-cell" style="text-align: left; font-weight: 600;">Service Del (20%)</div>
                         <div class="heatmap-cell hm-strong">5</div>
@@ -790,295 +661,232 @@
                         <div class="heatmap-cell hm-med">3</div>
                         <div class="heatmap-cell hm-med">3</div>
                         <div class="heatmap-cell hm-strong">4</div>
-                        <div class="heatmap-cell">Gap</div>
+                        <div class="heatmap-cell" style="color: #cbd5e1;">Gap</div>
                         
-                        <div class="heatmap-cell" style="text-align: left; font-weight: 700; background: rgba(255,255,255,0.1);">WEIGHTED</div>
-                        <div class="heatmap-cell" style="font-weight: 700; background: rgba(255,255,255,0.1);">3.95</div>
-                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">3.35</div>
-                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">3.10</div>
-                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.1);">WIN</div>
+                        <div class="heatmap-cell" style="text-align: left; font-weight: 700; background: rgba(255,255,255,0.05);">WEIGHTED SCORE</div>
+                        <div class="heatmap-cell" style="font-weight: 700; background: rgba(255,255,255,0.05);">3.95</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.05);">3.35</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.05);">3.10</div>
+                        <div class="heatmap-cell" style="background: rgba(255,255,255,0.05); color: #10b981; font-weight: 800;">PROBABLE WIN</div>
                     </div>
                 </div>
-
-                <div class="section-separator-container reveal">
-                    <div class="divider-line" style="background: rgba(255,255,255,0.1); width: 80px; height: 1px; margin: 0 auto 1.5rem auto;"></div>
-                    <span class="divider-label">ACCOUNT GROWTH</span>
-                    <p style="font-size: 0.7rem; font-weight: 700; color: var(--slate); letter-spacing: 0.1em; margin-top: 0.5rem;">NURTURE · GROW</p>
-                    <p class="section-separator-subtext">Maintain the Account. Grow the Franchise.</p>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">12</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 12 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">White Space Analysis</h3>
-                            <div class="pill-blue">OUTPUT OF W4-01</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Maps your current services against the client's full landscape. White space is where you're not present but could be. Every white box is an opportunity.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="timeline-scroll">
-                        <div class="whitespace-grid">
-                            <div></div>
-                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">MANAGED SVC</div>
-                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">PROJECTS</div>
-                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">CONSULTING</div>
-                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">STAFFING</div>
-                            <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">LICENSING</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Infrastructure</div>
-                            <div class="ws-cell ws-green">MERIDIAN</div>
-                            <div class="ws-cell ws-green">MERIDIAN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Service Desk</div>
-                            <div class="ws-cell ws-green">MERIDIAN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Resilience</div>
-                            <div class="ws-cell ws-green">MERIDIAN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Network</div>
-                            <div class="ws-cell ws-red">ACME</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Security</div>
-                            <div class="ws-cell ws-red">SECURECO</div>
-                            <div class="ws-cell ws-red">SECURECO</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-red">SECURECO</div>
-
-                            <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Cloud</div>
-                            <div class="ws-cell ws-white">OPPORTUNITY</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                            <div class="ws-cell ws-white">OPEN</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">13</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 13 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">90-Day Campaign Timeline</h3>
-                            <div class="pill-blue">OUTPUT OF W4-03</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">Not 'maintain the relationship.' A specific, 12-week plan with named actions, named owners, and measurable milestones. This is the operating document.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="timeline-scroll">
-                        <div class="gantt-grid">
-                            <div class="gantt-header">STREAM</div>
-                            <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
-                            <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
-                            <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
-
-                            <div class="gantt-row-label">RELATIONSHIP</div>
-                            <div style="grid-column: 3 / span 1; background: #10b981;" class="gantt-bar">Q1 Review</div>
-                            <div style="grid-column: 5 / span 1; background: #10b981;" class="gantt-bar">Cloud Pres</div>
-                            <div style="grid-column: 8 / span 1; background: #10b981;" class="gantt-bar">CTO Intro</div>
-                            <div style="grid-column: 12 / span 1; background: #10b981;" class="gantt-bar">Exec Sponsor</div>
-
-                            <div class="gantt-row-label">OPPORTUNITY</div>
-                            <div style="grid-column: 4 / span 1; background: #3b82f6;" class="gantt-bar">Cloud Prop</div>
-                            <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Data W'shop</div>
-                            <div style="grid-column: 11 / span 1; background: #3b82f6;" class="gantt-bar">Network Prop</div>
-
-                            <div class="gantt-row-label">SERVICE</div>
-                            <div style="grid-column: 2 / span 1; background: #f59e0b;" class="gantt-bar">Review Prep</div>
-                            <div style="grid-column: 7 / span 1; background: #f59e0b;" class="gantt-bar">Innov Rpt</div>
-
-                            <div class="gantt-row-label">DEFENCE</div>
-                            <div style="grid-column: 6 / span 1; background: #ef4444;" class="gantt-bar">Comp Intel</div>
-                            <div style="grid-column: 11 / span 1; background: #ef4444;" class="gantt-bar">Net Strategy</div>
-                            
-                             <div class="gantt-row-label" style="background: transparent;">GOVERNANCE</div>
-                            <div style="grid-column: 10 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
-                            <div style="grid-column: 13 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step-header-block reveal" style="margin-top: 4rem;">
-                    <div class="large-step-number">14</div>
-                    <div style="width: 100%;">
-                        <span class="step-counter">VISUAL 14 OF 14</span>
-                        <div class="step-meta">
-                            <h3 class="step-title">Account Health Dashboard</h3>
-                            <div class="pill-blue">OUTPUT OF W4-05</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="context-bar reveal">
-                    <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 0;">This is the governance artefact. If your account health can't fit on one page, you don't know the account well enough.</p>
-                </div>
-
-                <div class="visual-panel reveal">
-                    <div class="dashboard-grid">
-                        <div class="dash-card">
-                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACCOUNT SNAPSHOT</h4>
-                            <div style="font-weight: 700; margin-bottom: 0.5rem; color: white;">Meridian Fin. Svcs</div>
-                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Contract: £5.3M/yr</div>
-                            <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Tenure: 18 Months</div>
-                            <div style="font-size: 0.85rem; color: var(--text-body);">Contact: J. Morris</div>
-                        </div>
-                        <div class="dash-card">
-                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">PERFORMANCE</h4>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #10b981;"></span> SLA: 99.2%</div>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #f59e0b;"></span> Relationship: Amber</div>
-                            <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #10b981;"></span> Commercial: Green</div>
-                             <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-body);"><span class="rag-indicator" style="background: #f59e0b;"></span> Pipeline: £2.1M</div>
-                        </div>
-                        <div class="dash-card">
-                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">TOP 3 RISKS</h4>
-                            <ul style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
-                                <li style="margin-bottom: 0.5rem;">New CIO (No relationship)</li>
-                                <li style="margin-bottom: 0.5rem;">Network renewal (Competitor)</li>
-                                <li style="margin-bottom: 0.5rem;">Innovation fund unused</li>
-                            </ul>
-                        </div>
-                        <div class="dash-card">
-                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">TOP 3 OPPS</h4>
-                            <ul style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
-                                <li style="margin-bottom: 0.5rem;">Cloud Migration (£800k)</li>
-                                <li style="margin-bottom: 0.5rem;">Data & Analytics (£1.2M)</li>
-                                <li style="margin-bottom: 0.5rem;">Network Displacement</li>
-                            </ul>
-                        </div>
-                        <div class="dash-card">
-                            <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">90-DAY PRIORITIES</h4>
-                             <ol style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
-                                <li style="margin-bottom: 0.5rem;">Establish CIO relationship</li>
-                                <li style="margin-bottom: 0.5rem;">Propose cloud migration</li>
-                                <li style="margin-bottom: 0.5rem;">Network displace strategy</li>
-                             </ol>
-                        </div>
-                        <div class="dash-card">
-                             <h4 style="margin: 0 0 1rem 0; font-size: 0.9rem; color: var(--slate);">ACTIONS REQUIRED</h4>
-                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-body);">⬜ Cloud presales invest</div>
-                             <div style="font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-body);">⬜ CEO sponsor meeting</div>
-                             <div style="font-size: 0.85rem; color: var(--text-body);">⬜ Review network intel</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section-divider" style="margin-top: 6rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">VISUAL PROMPT LIBRARY</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">The prompts to generate these specific diagrams from your own data.</p>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STAKEHOLDER MAPPING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-01')">01 // AUTHORITY 2x2 <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-02')">02 // AWARE ORG CHART <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-03')">03 // ENGAGE SEQUENCE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-04')">04 // SCORING POWER <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">BID INTELLIGENCE</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-05')">05 // WEIGHT VISUALISER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-06')">06 // TIMELINE MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-07')">07 // TOWER BREAKDOWN <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-08')">08 // COMMERCIAL FLOW <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">WIN STRATEGY</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-09')">09 // THEME DEPLOYMENT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-10')">10 // COALITION MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-11')">11 // RISK HEATMAP <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ACCOUNT GROWTH</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-12')">12 // WHITE SPACE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-13')">13 // 90-DAY PLAN <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-14')">14 // HEALTH DASHBOARD <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <div style="display: none;">
-                    <div class="prompt-console-title">VP-01</div>
-                    <div><pre><code>Act as a Data Visualisation Architect. Take the data from my 'Authority Map' output. Generate an HTML/CSS scatter plot where: X-Axis is 'Influence' (Low-High), Y-Axis is 'Authority' (Low-High). Plot each stakeholder as a dot. Color code dots: Blue (Unknown), Amber (Targeted), Green (Established).</code></pre></div>
-                    
-                    <div class="prompt-console-title">VP-02</div>
-                    <div><pre><code>Create a CSS Flexbox Org Chart based on the Stakeholder Register. For each node box, include Name, Role, and a color-coded status bar indicating Relationship Strength (Red/Amber/Green).</code></pre></div>
-
-                    <div class="prompt-console-title">VP-03</div>
-                    <div><pre><code>Generate a CSS Grid Gantt Chart showing the 12-week engagement plan. Rows = Stakeholders. Columns = Weeks. Plot the specific engagement actions (Intro, Workshop, Proposal) as colored bars.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-04</div>
-                    <div><pre><code>Create a Stacked Bar Chart in CSS. Each bar represents an Evaluation Criterion (e.g., Technical, Commercial). The segments of the bar should represent which stakeholder influences that score, proportional to their authority.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-05</div>
-                    <div><pre><code>Create a Bubble Chart where Bubble Size = Evaluation Weighting (%). Color = Our Confidence Level (Green=High, Red=Low). Label each bubble with the Criterion Name.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-06</div>
-                    <div><pre><code>Generate a horizontal timeline map. Mark key dates (Submission, Orals, Sign) as vertical lines. Show 'Compression Zones' where multiple deadlines overlap or duration is short.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-07</div>
-                    <div><pre><code>Create a Bar Chart breaking down the deal scope by Service Tower. Height = Cost/Value. Color = TUPE status (Blue=Transfer, Green=New Scope).</code></pre></div>
-
-                    <div class="prompt-console-title">VP-08</div>
-                    <div><pre><code>Create a 'Money Flow' diagram using CSS cards connected by arrows. Show Base Contract value, Risk Pot, Gain Share mechanism, and Innovation Fund.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-09</div>
-                    <div><pre><code>Create a Heatmap Table. Rows = Win Themes. Columns = Touchpoints (Exec Summary, Tech Response, Orals). Cells = Deployment Strength (Strong/Weak/Absent).</code></pre></div>
-
-                    <div class="prompt-console-title">VP-10</div>
-                    <div><pre><code>Create a Network Diagram (Node Link). Central node = 'The Deal'. Surrounding nodes = Key Stakeholders. Connectors = Influence Lines (Green=Support, Red=Blocker). Identify the 'Linchpin' node.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-11</div>
-                    <div><pre><code>Create a Comparative Heatmap. Columns = Us vs Competitor A vs Competitor B. Rows = Evaluation Criteria. Color code cells by win probability.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-12</div>
-                    <div><pre><code>Create a White Space Analysis Grid. Rows = Service Lines. Columns = Business Units. Mark cells as 'Incumbent' (Red), 'Us' (Green), or 'Open Opportunity' (White).</code></pre></div>
-
-                    <div class="prompt-console-title">VP-13</div>
-                    <div><pre><code>Generate a 90-Day Campaign Gantt Chart. Group rows by stream: Relationship, Service, Opportunity, Defence. Mark key milestones as diamonds.</code></pre></div>
-
-                    <div class="prompt-console-title">VP-14</div>
-                    <div><pre><code>Create a One-Page CSS Dashboard Grid. Panels: Account Snapshot, Financial Performance, Top 3 Risks, Top 3 Opportunities, 90-Day Actions. Use RAG (Red/Amber/Green) indicators.</code></pre></div>
-                </div>
-
-                <div style="text-align: center; margin-top: 4rem; margin-bottom: 4rem;">
-                    <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-body); margin-bottom: 2rem;">Turn these dashboards into reality.</p>
-                    <a href="know.html" class="btn-schedule" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: 700;">START WITH [Gather] Know Them</a>
-                </div>
-
             </div>
-        </section>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">04. ACCOUNT GROWTH</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">12</span> White Space Analysis</h3>
+                <span class="cmd-tag">OUTPUT: W4-01</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> Expansion requires seeing where you aren't. Every white box is an open cross-sell opportunity. Every red box is an incumbent you need to displace.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
+                    <div class="whitespace-grid">
+                        <div></div>
+                        <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">MANAGED SVC</div>
+                        <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">PROJECTS</div>
+                        <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">CONSULTING</div>
+                        <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">STAFFING</div>
+                        <div style="text-align: center; font-weight: 700; font-size: 0.7rem; color: var(--slate);">LICENSING</div>
+
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Infrastructure</div>
+                        <div class="ws-cell ws-green">MERIDIAN</div>
+                        <div class="ws-cell ws-green">MERIDIAN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Service Desk</div>
+                        <div class="ws-cell ws-green">MERIDIAN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Resilience</div>
+                        <div class="ws-cell ws-green">MERIDIAN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Network</div>
+                        <div class="ws-cell ws-red">ACME</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Security</div>
+                        <div class="ws-cell ws-red">SECURECO</div>
+                        <div class="ws-cell ws-red">SECURECO</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-red">SECURECO</div>
+
+                        <div style="font-weight: 600; font-size: 0.8rem; padding-top: 1rem; color: white;">Cloud</div>
+                        <div class="ws-cell ws-white" style="border-color: #f59e0b; color: #f59e0b;">OPPORTUNITY</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                        <div class="ws-cell ws-white">OPEN</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">13</span> 90-Day Campaign Timeline</h3>
+                <span class="cmd-tag">OUTPUT: W4-03</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> "Maintain the relationship" is not a strategy. This Gantt assigns specific operational outputs across Service, Opportunity, and Defence streams over a strict 12-week sprint.
+            </div>
+            <div class="cmd-visual">
+                <div class="timeline-scroll">
+                    <div class="gantt-grid">
+                        <div class="gantt-header">STREAM</div>
+                        <div class="gantt-header">W1</div> <div class="gantt-header">W2</div> <div class="gantt-header">W3</div> <div class="gantt-header">W4</div>
+                        <div class="gantt-header">W5</div> <div class="gantt-header">W6</div> <div class="gantt-header">W7</div> <div class="gantt-header">W8</div>
+                        <div class="gantt-header">W9</div> <div class="gantt-header">W10</div> <div class="gantt-header">W11</div> <div class="gantt-header">W12</div>
+
+                        <div class="gantt-row-label">RELATIONSHIP</div>
+                        <div style="grid-column: 3 / span 1; background: #10b981;" class="gantt-bar">Q1 Review</div>
+                        <div style="grid-column: 5 / span 1; background: #10b981;" class="gantt-bar">Cloud Pres</div>
+                        <div style="grid-column: 8 / span 1; background: #10b981;" class="gantt-bar">CTO Intro</div>
+                        <div style="grid-column: 12 / span 1; background: #10b981;" class="gantt-bar">Exec Sponsor</div>
+
+                        <div class="gantt-row-label">OPPORTUNITY</div>
+                        <div style="grid-column: 4 / span 1; background: #3b82f6;" class="gantt-bar">Cloud Prop</div>
+                        <div style="grid-column: 9 / span 1; background: #3b82f6;" class="gantt-bar">Data W'shop</div>
+                        <div style="grid-column: 11 / span 1; background: #3b82f6;" class="gantt-bar">Network Prop</div>
+
+                        <div class="gantt-row-label">SERVICE</div>
+                        <div style="grid-column: 2 / span 1; background: #f59e0b;" class="gantt-bar">Review Prep</div>
+                        <div style="grid-column: 7 / span 1; background: #f59e0b;" class="gantt-bar">Innov Rpt</div>
+
+                        <div class="gantt-row-label">DEFENCE</div>
+                        <div style="grid-column: 6 / span 1; background: #ef4444;" class="gantt-bar">Comp Intel</div>
+                        <div style="grid-column: 11 / span 1; background: #ef4444;" class="gantt-bar">Net Strategy</div>
+                        
+                        <div class="gantt-row-label" style="background: transparent;">GOVERNANCE</div>
+                        <div style="grid-column: 10 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
+                        <div style="grid-column: 13 / span 1; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: white;">◆</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cmd-card reveal">
+            <div class="cmd-header">
+                <h3 class="cmd-title"><span class="cmd-num">14</span> Account Health Dashboard</h3>
+                <span class="cmd-tag">OUTPUT: W4-05</span>
+            </div>
+            <div class="cmd-insight">
+                <strong>The Insight:</strong> The ultimate governance artefact. If your account health cannot fit on a single page, the signal is lost in the noise. This forces absolute commercial clarity.
+            </div>
+            <div class="cmd-visual">
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--slate);">ACCOUNT SNAPSHOT</h4>
+                        <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; color: white;">Meridian Fin. Svcs</div>
+                        <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Contract: £5.3M/yr</div>
+                        <div style="font-size: 0.85rem; margin-bottom: 0.25rem; color: var(--text-body);">Tenure: 18 Months</div>
+                        <div style="font-size: 0.85rem; color: var(--text-body);">Sponsor: J. Morris</div>
+                    </div>
+                    <div class="dash-card">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--slate);">PERFORMANCE</h4>
+                        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: white; font-weight: 600;"><span class="rag-indicator" style="background: #10b981;"></span> SLA: 99.2%</div>
+                        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: white; font-weight: 600;"><span class="rag-indicator" style="background: #f59e0b;"></span> Rel Health: Amber</div>
+                        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: white; font-weight: 600;"><span class="rag-indicator" style="background: #10b981;"></span> Margin: Green</div>
+                        <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: white; font-weight: 600;"><span class="rag-indicator" style="background: #f59e0b;"></span> Pipeline: £2.1M</div>
+                    </div>
+                    <div class="dash-card">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--slate);">TOP 3 RISKS</h4>
+                        <ul style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: var(--text-body);">
+                            <li style="margin-bottom: 0.5rem;">New CIO (No relationship)</li>
+                            <li style="margin-bottom: 0.5rem;">Network renewal (Competitor)</li>
+                            <li style="margin-bottom: 0.5rem;">Innovation fund unused</li>
+                        </ul>
+                    </div>
+                    <div class="dash-card">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--slate);">90-DAY PRIORITIES</h4>
+                        <ol style="padding-left: 1rem; margin: 0; font-size: 0.85rem; color: white; font-weight: 600;">
+                            <li style="margin-bottom: 0.5rem;">Establish CIO back-channel</li>
+                            <li style="margin-bottom: 0.5rem;">Pitch Cloud Migration</li>
+                            <li style="margin-bottom: 0.5rem;">Defend Network footprint</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="terminal-repo reveal">
+            <div class="terminal-header">
+                System Command: Generate.Visualisation();
+            </div>
+            <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 2rem;">
+                These exact AI prompts translate unstructured data into the interactive HTML/CSS arrays shown above. Copy and run them directly in your LLM window alongside your GAIN research.
+            </p>
+
+            <div class="library-grid">
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-01')">01_AUTHORITY_MATRIX <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-02')">02_ORG_CHART <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-03')">03_ENGAGE_SEQ <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-04')">04_SCORING_MAP <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-05')">05_WEIGHT_VIS <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-06')">06_TIMELINE_MAP <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-07')">07_TOWER_BREAK <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-08')">08_COMM_FLOW <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-09')">09_THEME_DEPLOY <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-10')">10_COALITION_MAP <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-11')">11_RISK_HEATMAP <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-12')">12_WHITE_SPACE <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-13')">13_90_DAY_PLAN <span class="copy-badge">[COPY]</span></button>
+                <button class="library-btn" onclick="copyLibraryPrompt(this, 'VP-14')">14_HEALTH_DASH <span class="copy-badge">[COPY]</span></button>
+            </div>
+
+            <div style="display: none;">
+                <div class="prompt-console-title">VP-01</div>
+                <div><pre><code>Act as a Data Visualisation Architect. Take the data from my 'Authority Map' output. Generate an HTML/CSS scatter plot where: X-Axis is 'Influence' (Low-High), Y-Axis is 'Authority' (Low-High). Plot each stakeholder as a dot. Color code dots: Blue (Unknown), Amber (Targeted), Green (Established).</code></pre></div>
+                <div class="prompt-console-title">VP-02</div>
+                <div><pre><code>Create a CSS Flexbox Org Chart based on the Stakeholder Register. For each node box, include Name, Role, and a color-coded status bar indicating Relationship Strength (Red/Amber/Green).</code></pre></div>
+                <div class="prompt-console-title">VP-03</div>
+                <div><pre><code>Generate a CSS Grid Gantt Chart showing the 12-week engagement plan. Rows = Stakeholders. Columns = Weeks. Plot the specific engagement actions (Intro, Workshop, Proposal) as colored bars.</code></pre></div>
+                <div class="prompt-console-title">VP-04</div>
+                <div><pre><code>Create a Stacked Bar Chart in CSS. Each bar represents an Evaluation Criterion (e.g., Technical, Commercial). The segments of the bar should represent which stakeholder influences that score, proportional to their authority.</code></pre></div>
+                <div class="prompt-console-title">VP-05</div>
+                <div><pre><code>Create a Bubble Chart where Bubble Size = Evaluation Weighting (%). Color = Our Confidence Level (Green=High, Red=Low). Label each bubble with the Criterion Name.</code></pre></div>
+                <div class="prompt-console-title">VP-06</div>
+                <div><pre><code>Generate a horizontal timeline map. Mark key dates (Submission, Orals, Sign) as vertical lines. Show 'Compression Zones' where multiple deadlines overlap or duration is short.</code></pre></div>
+                <div class="prompt-console-title">VP-07</div>
+                <div><pre><code>Create a Bar Chart breaking down the deal scope by Service Tower. Height = Cost/Value. Color = TUPE status (Blue=Transfer, Green=New Scope).</code></pre></div>
+                <div class="prompt-console-title">VP-08</div>
+                <div><pre><code>Create a 'Money Flow' diagram using CSS cards connected by arrows. Show Base Contract value, Risk Pot, Gain Share mechanism, and Innovation Fund.</code></pre></div>
+                <div class="prompt-console-title">VP-09</div>
+                <div><pre><code>Create a Heatmap Table. Rows = Win Themes. Columns = Touchpoints (Exec Summary, Tech Response, Orals). Cells = Deployment Strength (Strong/Weak/Absent).</code></pre></div>
+                <div class="prompt-console-title">VP-10</div>
+                <div><pre><code>Create a Network Diagram (Node Link). Central node = 'The Deal'. Surrounding nodes = Key Stakeholders. Connectors = Influence Lines (Green=Support, Red=Blocker). Identify the 'Linchpin' node.</code></pre></div>
+                <div class="prompt-console-title">VP-11</div>
+                <div><pre><code>Create a Comparative Heatmap. Columns = Us vs Competitor A vs Competitor B. Rows = Evaluation Criteria. Color code cells by win probability.</code></pre></div>
+                <div class="prompt-console-title">VP-12</div>
+                <div><pre><code>Create a White Space Analysis Grid. Rows = Service Lines. Columns = Business Units. Mark cells as 'Incumbent' (Red), 'Us' (Green), or 'Open Opportunity' (White).</code></pre></div>
+                <div class="prompt-console-title">VP-13</div>
+                <div><pre><code>Generate a 90-Day Campaign Gantt Chart. Group rows by stream: Relationship, Service, Opportunity, Defence. Mark key milestones as diamonds.</code></pre></div>
+                <div class="prompt-console-title">VP-14</div>
+                <div><pre><code>Create a One-Page CSS Dashboard Grid. Panels: Account Snapshot, Financial Performance, Top 3 Risks, Top 3 Opportunities, 90-Day Actions. Use RAG (Red/Amber/Green) indicators.</code></pre></div>
+            </div>
+        </div>
+
     </main>
 
     <footer>
@@ -1099,11 +907,10 @@
             No hype. Just results. © 2026
         </div>
     </footer>
-    </div>
+</div>
 
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Mobile menu toggle
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const navLinks = document.querySelector('.nav-links');
         if (mobileMenuToggle && navLinks) {
@@ -1113,7 +920,6 @@
             });
         }
         
-        // Scroll Reveal with immediate check for elements already in viewport
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(e => { 
                 if (e.isIntersecting) e.target.classList.add('active'); 
@@ -1121,19 +927,15 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => {
-            // Immediately show elements already in viewport
             const rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight) {
                 el.classList.add('active');
             }
-            // Observe for future scroll reveals
             revealObserver.observe(el);
         });
     });
 
-    // Copy Library Prompt Logic
     function copyLibraryPrompt(btn, promptID) {
-        // Find the hidden prompt content
         const titles = document.querySelectorAll('.prompt-console-title');
         let targetCode = "";
         
@@ -1146,12 +948,15 @@
         if (targetCode) {
             navigator.clipboard.writeText(targetCode).then(() => {
                 const badge = btn.querySelector('.copy-badge');
-                const originalText = badge.innerText;
-                badge.innerText = "COPIED";
-                btn.classList.add('copied');
+                badge.innerText = "[COPIED]";
+                btn.style.borderColor = "#10b981";
+                btn.style.color = "#10b981";
+                badge.style.color = "#10b981";
                 setTimeout(() => {
-                    badge.innerText = originalText;
-                    btn.classList.remove('copied');
+                    badge.innerText = "[COPY]";
+                    btn.style.borderColor = "";
+                    btn.style.color = "";
+                    badge.style.color = "";
                 }, 2000);
             });
         }

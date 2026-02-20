@@ -10,113 +10,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        .discipline-card {
-            background: var(--bg-card, rgba(30, 41, 59, 0.5));
-            border: 1px solid var(--border-dynamic, rgba(255,255,255,0.08));
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            margin-bottom: 2rem;
-        }
-        .discipline-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #3b82f6;
-            opacity: 0.3;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-        .discipline-title {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-        }
-        .discipline-subtitle {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-        }
-        .discipline-quote {
-            font-style: italic;
-            color: #cbd5e1;
-            font-size: 1rem;
-            line-height: 1.6;
-            border-left: 3px solid #3b82f6;
-            padding-left: 1.25rem;
-            margin-bottom: 2rem;
-        }
-        .discipline-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .discipline-table tr {
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .discipline-table tr:last-child {
-            border-bottom: none;
-        }
-        .discipline-table td {
-            padding: 0.75rem 0;
-            vertical-align: top;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        .discipline-table td:first-child {
-            width: 35%;
-            font-weight: 700;
-            color: white;
-            padding-right: 1.5rem;
-        }
-        .discipline-table td:last-child {
-            color: #94a3b8;
-        }
-        .convergence-block {
-            background: rgba(59, 130, 246, 0.05);
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin: 3rem 0;
-        }
-        .convergence-line {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            line-height: 2.2;
-            letter-spacing: 0.02em;
-        }
-        .convergence-line strong {
-            color: white;
-            font-weight: 600;
-        }
-        .convergence-arrow {
-            color: #3b82f6;
-            margin: 0 0.5rem;
-        }
-        .convergence-result {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(59, 130, 246, 0.2);
-        }
-        .convergence-final {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: white;
-            line-height: 1.4;
-        }
-        .convergence-final span {
-            color: #3b82f6;
-        }
+        /* McKinsey-style tight formatting overrides */
+        .grid-2-col-edge { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+        
+        .discipline-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .discipline-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #3b82f6; }
+        
+        .discipline-number { font-size: 0.75rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .discipline-title { font-size: 1.1rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .discipline-subtitle { font-size: 0.8rem; color: #94a3b8; font-weight: 500; margin-bottom: 1rem; }
+        
+        .discipline-quote { font-style: italic; color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; border-left: 2px solid rgba(255,255,255,0.1); padding-left: 1rem; margin-bottom: 1.5rem; }
+        
+        .discipline-list { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .discipline-list li { font-size: 0.85rem; line-height: 1.5; color: #94a3b8; margin-bottom: 0.75rem; padding-left: 1rem; position: relative; }
+        .discipline-list li::before { content: "•"; position: absolute; left: 0; color: #3b82f6; font-weight: 900; }
+        .discipline-list li strong { color: white; font-weight: 600; }
 
-        @media (max-width: 768px) {
-            .discipline-table td:first-child {
-                width: 40%;
-            }
-            .discipline-card {
-                padding: 1.5rem 1.25rem;
-            }
+        /* The Commercial Impact Footer */
+        .commercial-impact { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+        .impact-label { color: #3b82f6; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+        .impact-value { color: white; font-weight: 500; margin-left: 0.5rem; }
+
+        /* The Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 0 auto 2rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.7rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 0.9rem; font-weight: 900; }
+
+        /* Exhibit Formats */
+        .mckinsey-exhibit { background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 3rem; }
+        .exhibit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .exhibit-col { border-top: 2px solid #3b82f6; padding-top: 1rem; }
+        .exhibit-col-title { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .exhibit-col-body { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+
+        /* Convergence Visual Equation */
+        .convergence-equation { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 3rem auto 4rem auto; max-width: 900px; flex-wrap: wrap; }
+        .eq-box { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center; flex: 1; min-width: 200px; }
+        .eq-box.highlight { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+        .eq-operator { font-size: 2rem; color: #64748b; font-weight: 300; }
+        .eq-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 0.5rem; }
+        .eq-value { display: block; font-size: 1.1rem; font-weight: 700; color: white; }
+        .eq-box.highlight .eq-value { color: #3b82f6; }
+
+        @media (max-width: 900px) {
+            .grid-2-col-edge, .exhibit-grid { grid-template-columns: 1fr; }
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .convergence-equation { flex-direction: column; }
         }
     </style>
 </head>
@@ -124,53 +66,47 @@
 
     <div class="page-container">
         <nav>
-        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-links"> 
-            
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Evidence ▾</span>
-                <div class="dropdown-content">
-                    <a href="revenue-case.html">The Revenue Case</a>
-                    <a href="proof.html">The Proof</a>
-                    <a href="story.html">The Story</a>
-                    <a href="thinking.html">The Thinking</a>
+            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links"> 
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Evidence ▾</span>
+                    <div class="dropdown-content">
+                        <a href="revenue-case.html">The Revenue Case</a>
+                        <a href="proof.html">The Proof</a>
+                        <a href="story.html">The Story</a>
+                        <a href="thinking.html">The Thinking</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">The System ▾</span>
-                <div class="dropdown-content">
-                    <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html">Human+AI</a>
-                     <a href="edge.html" style="color: var(--primary);">The Edge</a>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">The System ▾</span>
+                    <div class="dropdown-content">
+                        <a href="thesis.html">The Thesis</a>
+                        <a href="human+ai.html">Human+AI</a>
+                        <a href="edge.html" style="color: var(--primary);">The Edge</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Prompt Toolkit ▾</span>
-                <div class="dropdown-content">
-                    <a href="know.html">[G] Gather | Know them</a>
-                    <a href="map.html">[A] Assess | Map them</a>
-                    <a href="win.html">[I] Influence | Win them</a>
-                    <a href="grow.html">[N] Nurture | Grow them</a>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <div class="dropdown-content">
+                        <a href="know.html">[G] Gather | Know them</a>
+                        <a href="map.html">[A] Assess | Map them</a>
+                        <a href="win.html">[I] Influence | Win them</a>
+                        <a href="grow.html">[N] Nurture | Grow them</a>
+                    </div>
                 </div>
+                <a href="dashboards.html">Dashboards</a>
+                <a href="contact.html" class="nav-cta">Engage Me</a>
             </div>
-            
-            <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
-        </div>
-    </nav>
+        </nav>
         
-       
-       <header class="dark-header-block">
-    <picture>
-    <source srcset="assets/images/edge.avif" type="image/avif">
-    <img src="assets/images/edge.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
-</picture>
-    <div class="hero-impact">
+        <header class="dark-header-block">
+            <picture>
+                <source srcset="assets/images/edge.avif" type="image/avif">
+                <img src="assets/images/edge.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
+            </picture>
             <div class="hero-impact">
                 <span class="hero-pre">THE OPERATING SYSTEM</span>
                 <h1 class="hero-headline">
@@ -179,25 +115,39 @@
                 </h1>
                 <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
                 <p class="hero-subtext">
-                    The psychology behind GAIN — and why the prompts work.
+                    The intellectual property behind GAIN — and why the prompts actually work.
                 </p>
             </div>
         </header>
 
         <main class="container-wide">
 
-            <!-- NARRATIVE INTRO -->
-            <section class="reveal" style="padding: 3rem 0 1rem 0;">
-                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 1.5rem auto; font-size: 1.1rem; color: #cbd5e1;">
-                    I didn't set out to build a methodology. I set out to stop losing.
-                </p>
-                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 1.5rem auto;">
-                    Early in my career, I lost deals I should have won. Not because the solution was wrong — because I didn't understand the person across the table. I was selling to a job title. They were deciding from a belief system I couldn't see.
-                </p>
-                <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto;">
-                    Five disciplines — accumulated over 25 years, none of them planned — converged into the judgment layer that powers everything on this site. The AI finds the patterns. These five disciplines decide which patterns matter.
-                </p>
-            </section>
+            <div class="container-wide reveal">
+                <div class="page-index-nav">
+                    <div class="index-step"><span>01. Leadership</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>02. Behavioural Science</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>03. Transformation</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>04. Intelligence</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>05. Execution</span></div>
+                </div>
+            </div>
+
+            <div class="mckinsey-exhibit reveal" style="margin-top: 1rem;">
+                <div class="exhibit-grid">
+                    <div class="exhibit-col" style="border-top-color: #f59e0b;">
+                        <div class="exhibit-col-title" style="color: #f59e0b;">The Catalyst</div>
+                        <div class="exhibit-col-body">Enterprise deals aren't lost on technology specs. They are lost on invisible human belief systems. AI alone cannot decode them.</div>
+                    </div>
+                    <div class="exhibit-col">
+                        <div class="exhibit-col-title" style="color: #3b82f6;">The Asset</div>
+                        <div class="exhibit-col-body">25 years of accumulated failures, lost revenue, and hard-won intelligence scaling a £790M IT portfolio.</div>
+                    </div>
+                    <div class="exhibit-col" style="border-top-color: #22c55e;">
+                        <div class="exhibit-col-title" style="color: #22c55e;">The Output</div>
+                        <div class="exhibit-col-body">Five disparate disciplines converging into a single commercial operating system: The GAIN Methodology.</div>
+                    </div>
+                </div>
+            </div>
 
             <div class="section-divider">
                 <div class="divider-line"></div>
@@ -205,182 +155,129 @@
                 <div class="divider-line"></div>
             </div>
 
-            <!-- DISCIPLINE 01 -->
-            <div class="discipline-card reveal">
-                <div class="discipline-number">01</div>
-                <div class="discipline-title">Leadership and Followship</div>
-                <div class="discipline-subtitle">Sandhurst Royal Military Academy</div>
-                <div class="discipline-quote">
-                    "Plans fail on contact with reality. What survives is intent."
+            <div class="grid-2-col-edge reveal">
+                <div class="discipline-card">
+                    <div class="discipline-number">Discipline 01</div>
+                    <div class="discipline-title">Leadership & Followship</div>
+                    <div class="discipline-subtitle">Sandhurst Royal Military Academy</div>
+                    <div class="discipline-quote">
+                        "Plans fail on contact with reality. What survives is intent."
+                    </div>
+                    <ul class="discipline-list">
+                        <li><strong>Mission Command:</strong> Give intent, not instructions. The prompts give you what to look for, not what to say.</li>
+                        <li><strong>Operating under uncertainty:</strong> Every prompt includes "WHAT EXPERIENCE SEES" because reality will break the AI's plan.</li>
+                        <li><strong>Discipline enables freedom:</strong> RED/AMBER/GREEN security classifications provide the structure to move fast safely.</li>
+                    </ul>
+                    <div class="commercial-impact">
+                        <span class="impact-label">Commercial Impact:</span>
+                        <span class="impact-value">Ensures rapid deal execution without compromising enterprise data governance.</span>
+                    </div>
                 </div>
-                <table class="discipline-table">
-                    <tr>
-                        <td>Mission Command — give intent, not instructions</td>
-                        <td>The prompts give you what to look for, not what to say. Trust the user with intelligence, not scripts.</td>
-                    </tr>
-                    <tr>
-                        <td>Operating under uncertainty</td>
-                        <td>Every prompt includes "WHAT EXPERIENCE SEES" — because the AI output is the plan, and reality will break it.</td>
-                    </tr>
-                    <tr>
-                        <td>Followership before leadership</td>
-                        <td>The site gives everything away. Authority is earned by the work, not claimed by the headline.</td>
-                    </tr>
-                    <tr>
-                        <td>Discipline enables freedom</td>
-                        <td>RED / AMBER / GREEN security classifications. Not bureaucracy — the structure that lets you move fast safely.</td>
-                    </tr>
-                </table>
+
+                <div class="discipline-card">
+                    <div class="discipline-number">Discipline 02</div>
+                    <div class="discipline-title">Behavioural Science</div>
+                    <div class="discipline-subtitle">NLP Practitioner · Clinical Hypnotherapy</div>
+                    <div class="discipline-quote">
+                        "People decide based on belief systems, then seek evidence to confirm what they already believe."
+                    </div>
+                    <ul class="discipline-list">
+                        <li><strong>Epistemology Mapping:</strong> Decoding how each stakeholder validates truth (data, relationships, or intuition).</li>
+                        <li><strong>The 6 Drivers:</strong> Safety, Order, Power, Achievement, Affiliation, Sustainability map to limbic responses, not logic.</li>
+                        <li><strong>Reframing:</strong> Objection handling doesn't counter objections — it changes their meaning. ("Too small" → "Nimble.")</li>
+                    </ul>
+                    <div class="commercial-impact">
+                        <span class="impact-label">Commercial Impact:</span>
+                        <span class="impact-value">Reduces stalled pipeline by reframing unspoken objections before they solidify into "no decision."</span>
+                    </div>
+                </div>
+
+                <div class="discipline-card">
+                    <div class="discipline-number">Discipline 03</div>
+                    <div class="discipline-title">Strategic Transformation</div>
+                    <div class="discipline-subtitle">Harvard Business School — Exec Ed</div>
+                    <div class="discipline-quote">
+                        "Stop thinking about what you're selling. Start thinking about what the buyer's world looks like."
+                    </div>
+                    <ul class="discipline-list">
+                        <li><strong>The Buyer's Lens:</strong> GAIN starts from their world, not your solution.</li>
+                        <li><strong>Shareholder Value:</strong> The only language that survives the board is EBITDA, margin, and pipeline velocity.</li>
+                        <li><strong>Narrative Architecture:</strong> Transformation is a story told to the market, not a project plan.</li>
+                    </ul>
+                    <div class="commercial-impact">
+                        <span class="impact-label">Commercial Impact:</span>
+                        <span class="impact-value">Elevates sales conversations from technical procurement up to the C-Suite.</span>
+                    </div>
+                </div>
+
+                <div class="discipline-card">
+                    <div class="discipline-number">Discipline 04</div>
+                    <div class="discipline-title">Intelligence</div>
+                    <div class="discipline-subtitle">HUMINT Doctrine → Commercial Practice</div>
+                    <div class="discipline-quote">
+                        "The political map of any deal is invisible — until you learn to look for it systematically."
+                    </div>
+                    <ul class="discipline-list">
+                        <li><strong>The Org Chart Lies:</strong> The MAP phase exists because the real power structure is informal.</li>
+                        <li><strong>Sphere of Influence:</strong> Distinguishing what you can control from what you can only shape.</li>
+                        <li><strong>Influence Sequencing:</strong> Gather → Assess → Influence → Nurture. Intelligence before action. Always.</li>
+                    </ul>
+                    <div class="commercial-impact">
+                        <span class="impact-label">Commercial Impact:</span>
+                        <span class="impact-value">Prevents late-stage deal collapse by exposing the shadow org chart and hidden detractors.</span>
+                    </div>
+                </div>
+
+                <div class="discipline-card" style="grid-column: 1 / -1;">
+                    <div class="discipline-number">Discipline 05</div>
+                    <div class="discipline-title">25 Years of Live Deals</div>
+                    <div class="discipline-subtitle">£790M Career Portfolio · Enterprise IT Services</div>
+                    <div class="discipline-quote" style="max-width: 800px;">
+                        "Every framework breaks in practice. Every failure refined the judgment. The AI finds the 80%. The last 20% only comes from having been in the room when things went wrong."
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; flex-grow: 1;">
+                        <ul class="discipline-list">
+                            <li><strong>The deal you prepare for is not the deal you fight:</strong> The map is not the terrain.</li>
+                            <li><strong>"WHERE THIS BREAKS":</strong> The failure modes on this site were earned through lost revenue.</li>
+                        </ul>
+                        <ul class="discipline-list">
+                            <li><strong>Execution beats perfection:</strong> A 20-minute executed plan beats a 4-hour perfect plan.</li>
+                            <li><strong>Scalable Advantage:</strong> Preparation is the only competitive edge you can systematise.</li>
+                        </ul>
+                    </div>
+                    <div class="commercial-impact">
+                        <span class="impact-label">Commercial Impact:</span>
+                        <span class="impact-value">Drives team adoption. Turns theoretical frameworks into a high-velocity, field-tested execution rhythm.</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- DISCIPLINE 02 -->
-            <div class="discipline-card reveal">
-                <div class="discipline-number">02</div>
-                <div class="discipline-title">Clinical Behavioural Science</div>
-                <div class="discipline-subtitle">NLP Practitioner · Clinical Hypnotherapy · Counselling</div>
-                <div class="discipline-quote">
-                    "People don't decide based on evidence. They decide based on belief systems, then seek evidence to confirm what they already believe."
-                </div>
-                <table class="discipline-table">
-                    <tr>
-                        <td>Belief systems are invisible operating systems</td>
-                        <td>Epistemology Mapping — decoding how each stakeholder validates truth: data, relationships, precedent, or intuition.</td>
-                    </tr>
-                    <tr>
-                        <td>Decisions are emotional, then rationalised</td>
-                        <td>The 6 Drivers (Safety, Order, Power, Achievement, Affiliation, Sustainability) map to limbic responses, not logical evaluation.</td>
-                    </tr>
-                    <tr>
-                        <td>Reframing changes meaning without changing content</td>
-                        <td>Objection handling doesn't counter objections — it reframes them. "Too small" → "Nimble enough for a named team."</td>
-                    </tr>
-                    <tr>
-                        <td>Meta-Programs filter all perception</td>
-                        <td>Stakeholder profiling decodes Toward/Away, Internal/External, Big Picture/Detail from public behaviour.</td>
-                    </tr>
-                    <tr>
-                        <td>Rapport precedes influence</td>
-                        <td>Every GATHER prompt builds rapport through demonstrated knowledge before any INFLUENCE prompt attempts persuasion.</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- DISCIPLINE 03 -->
-            <div class="discipline-card reveal">
-                <div class="discipline-number">03</div>
-                <div class="discipline-title">Strategic Transformation</div>
-                <div class="discipline-subtitle">Harvard Business School — Executive Education</div>
-                <div class="discipline-quote">
-                    "Stop thinking about what you're selling. Start thinking about what the buyer's world looks like from the inside."
-                </div>
-                <table class="discipline-table">
-                    <tr>
-                        <td>Customer experience is the strategic lens</td>
-                        <td>GAIN starts from the buyer's world, not the seller's solution. Every prompt asks "what does their world look like?"</td>
-                    </tr>
-                    <tr>
-                        <td>Shareholder value is the only language that survives the board</td>
-                        <td>The Thesis and Revenue Case speak EBITDA, margin, pipeline velocity — not "AI capabilities."</td>
-                    </tr>
-                    <tr>
-                        <td>Transformation is a narrative, not a project plan</td>
-                        <td>The Proof page tells a transformation story, not a delivery report.</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- DISCIPLINE 04 -->
-            <div class="discipline-card reveal">
-                <div class="discipline-number">04</div>
-                <div class="discipline-title">Intelligence</div>
-                <div class="discipline-subtitle">HUMINT Intelligence Doctrine → Commercial Practice</div>
-                <div class="discipline-quote">
-                    "The political map of any deal is invisible to most sellers. It was invisible to me, too — until I learned to look for it systematically."
-                </div>
-                <table class="discipline-table">
-                    <tr>
-                        <td>The political map matters more than the technical one</td>
-                        <td>The MAP phase exists because the org chart lies. The real power structure is invisible without systematic mapping.</td>
-                    </tr>
-                    <tr>
-                        <td>Sphere of Influence — control vs. influence</td>
-                        <td>Every stakeholder prompt distinguishes what you can change from what you can only shape.</td>
-                    </tr>
-                    <tr>
-                        <td>Perception IS reality</td>
-                        <td>The prompts don't just find facts — they decode how facts are perceived by each individual.</td>
-                    </tr>
-                    <tr>
-                        <td>Influence sequencing — order matters</td>
-                        <td>GAIN phases are sequential: Gather → Assess → Influence → Nurture. Intelligence before action. Always.</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- DISCIPLINE 05 -->
-            <div class="discipline-card reveal">
-                <div class="discipline-number">05</div>
-                <div class="discipline-title">25 Years of Live Deals</div>
-                <div class="discipline-subtitle">£790M Career Portfolio · Enterprise IT Services</div>
-                <div class="discipline-quote">
-                    "Every framework breaks in practice. Every failure refined the judgment. The AI finds the 80%. The last 20% only comes from having been in the room when things went wrong."
-                </div>
-                <table class="discipline-table">
-                    <tr>
-                        <td>The deal you prepare for is not the deal you fight</td>
-                        <td>"WHAT EXPERIENCE SEES" exists because AI gives you the map — but the terrain is different every time.</td>
-                    </tr>
-                    <tr>
-                        <td>Every framework breaks in practice</td>
-                        <td>"WHERE THIS BREAKS" on the homepage isn't modesty — it's earned through failures that cost real money.</td>
-                    </tr>
-                    <tr>
-                        <td>The best system is the one you actually use</td>
-                        <td>20-minute execution, not 4-hour perfection. A seller who uses 80% beats one who plans 100% and executes 0%.</td>
-                    </tr>
-                    <tr>
-                        <td>Nobody was fired for being well-prepared</td>
-                        <td>The entire site exists because preparation is the only competitive advantage that scales.</td>
-                    </tr>
-                </table>
-            </div>
-
-            <!-- THE CONVERGENCE -->
-            <div class="section-divider">
+            <div class="section-divider" style="margin-top: 3rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">THE CONVERGENCE</div>
                 <div class="divider-line"></div>
             </div>
 
-            <div class="convergence-block reveal">
-                <div class="convergence-line">
-                    <strong>Leadership & Followship</strong> <span class="convergence-arrow">→</span> Governance · Trust · Mission Command
+            <div class="convergence-equation reveal">
+                <div class="eq-box">
+                    <span class="eq-label">THE 5 DISCIPLINES</span>
+                    <span class="eq-value">Human Judgment</span>
                 </div>
-                <div class="convergence-line">
-                    <strong>Clinical Behavioural Science</strong> <span class="convergence-arrow">→</span> Belief Systems · Decision Psychology · Reframing
+                <div class="eq-operator">+</div>
+                <div class="eq-box" style="border-color: rgba(59, 130, 246, 0.3);">
+                    <span class="eq-label">AI PROCESSING</span>
+                    <span class="eq-value">Data Synthesis</span>
                 </div>
-                <div class="convergence-line">
-                    <strong>Strategic Transformation</strong> <span class="convergence-arrow">→</span> Buyer's Lens · Shareholder Language · Narrative
-                </div>
-                <div class="convergence-line">
-                    <strong>Intelligence</strong> <span class="convergence-arrow">→</span> Political Mapping · Perception · Influence Sequencing
-                </div>
-                <div class="convergence-line">
-                    <strong>25 Years of Live Deals</strong> <span class="convergence-arrow">→</span> Pattern Recognition · Failure Wisdom · Execution
-                </div>
-
-                <div class="convergence-result">
-                    <div class="convergence-final">
-                        AI handles the data.<br>
-                        <span>The judgment handles the human.</span>
-                    </div>
+                <div class="eq-operator">=</div>
+                <div class="eq-box highlight">
+                    <span class="eq-label">THE OUTCOME</span>
+                    <span class="eq-value">The GAIN Edge</span>
                 </div>
             </div>
 
-            <!-- CTA -->
-            <div class="reveal" style="text-align: center; padding: 2rem 0 3rem 0;">
-                <a href="know.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 1.1rem; border-bottom: 1px solid #3b82f6; padding-bottom: 2px;">
-                    Start with [Gather]: Know Them →
+            <div class="reveal" style="text-align: center; padding: 0 0 4rem 0;">
+                <a href="know.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #3b82f6; padding-bottom: 2px;">
+                    Enter The Toolkit →
                 </a>
             </div>
 

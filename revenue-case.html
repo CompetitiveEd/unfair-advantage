@@ -10,47 +10,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Specific styles for the Revenue Case page */
-        .revenue-case-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
+        /* McKinsey-style tight formatting overrides */
+        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .grid-4-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        
+        .card.compact { padding: 1.25rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; }
+        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.25rem; margin-top: 0.5rem; }
+        .card.compact .doctrine-subtitle { font-size: 0.75rem; margin-bottom: 0.75rem; color: #94a3b8; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; }
+        
+        .fail-card-sleek { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 8px; }
+        .fail-card-sleek .fail-head { font-size: 0.95rem; color: white; font-weight: 700; margin-bottom: 0.5rem; }
+        .fail-card-sleek .fail-body { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0; line-height: 1.5; }
+        
+        /* The Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 1.5rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        @media (max-width: 900px) {
+            .grid-3-col, .grid-4-col { grid-template-columns: repeat(2, 1fr); }
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         }
-        .revenue-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 2rem;
-            border-radius: 4px;
-        }
-        .revenue-metric {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #3b82f6;
-            margin: 1rem 0;
-        }
-        .revenue-list li {
-            margin-bottom: 0.8rem;
-            color: #cbd5e1;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-        .revenue-list li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #3b82f6;
-        }
-        .text-hero-wrapper {
-            padding: 8rem 2rem 4rem 2rem;
-            text-align: center;
-            background: var(--bg-body);
+        @media (max-width: 600px) {
+            .grid-3-col, .grid-4-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body class="hero-compact">
 
-<nav>
+    <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
         <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
             <span></span><span></span><span></span>
@@ -71,7 +62,7 @@
                 <span class="nav-link-main">The System ▾</span>
                 <div class="dropdown-content">
                     <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html" style="color: var(--primary);">Human+AI</a>
+                    <a href="human+ai.html">Human+AI</a>
                     <a href="edge.html">The Edge</a>
                 </div>
             </div>
@@ -91,9 +82,7 @@
         </div>
     </nav>
 
-    
-
-        <header class="dark-header-block">
+    <header class="dark-header-block">
         <picture>
     <source srcset="assets/images/revcase.avif" type="image/avif">
     <img src="assets/images/revcase.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
@@ -106,16 +95,24 @@
             </h1>
             <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
             <p class="hero-subtext">
-                One deal. One team. The rest follow the money
+                One deal. One team. The rest follow the money.
             </p>
         </div>
     </header>
 
-        <div class="container-wide" style="padding-top: 2rem; padding-bottom: 4rem;">
+    <main class="container-wide">
+        
+        <div class="container-wide reveal">
+            <div class="page-index-nav">
+                <div class="index-step"><span>01. Impact</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>02. Economics</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>03. The 90-Day Arc</span></div>
+            </div>
+        </div>
 
         <div class="section-divider">
             <div class="divider-line"></div>
-            <div class="divider-label">WHAT THE NUMBERS LOOK LIKE</div>
+            <div class="divider-label">01. WHAT THE NUMBERS LOOK LIKE</div>
             <div class="divider-line"></div>
         </div>
 
@@ -142,143 +139,126 @@
             </div>
         </div>
 
-        <p class="body-prose reveal" style="text-align: center; max-width: 700px; margin: 2rem auto 4rem auto;">
+        <p class="body-prose reveal" style="text-align: center; max-width: 700px; margin: 2rem auto 3rem auto; font-size: 0.9rem;">
             Derived from three transformation cycles where the methodology was applied manually. GAIN compresses the same approach — the intelligence phase that took weeks now takes hours.
         </p>
 
-        <div class="worked-example-box reveal" style="background: var(--bg-card); border-color: var(--border-dynamic); border-left: 4px solid var(--primary); padding: 2rem; margin-bottom: 4rem;">
-            <h3 class="doctrine-title" style="margin-bottom: 1.5rem;">The Commercial Case</h3>
-            <p class="body-prose" style="margin-bottom: 1.5rem;">
+        <div class="section-divider reveal">
+            <div class="divider-line"></div>
+            <div class="divider-label">02. THE COMMERCIAL ECONOMICS</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="worked-example-box reveal" style="background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; margin-bottom: 4rem; border-radius: 8px;">
+            <p class="body-prose" style="text-align: center; font-size: 0.95rem; margin-bottom: 2rem; color: white; font-weight: 600;">
                 The argument isn't about adding headcount. It's about multiplying output from the headcount you have.
             </p>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
-                <div>
-                    <div style="font-size: 0.75rem; color: var(--slate); text-transform: uppercase; font-weight: 700;">Revenue per seller</div>
+            
+            <div class="grid-4-col" style="margin-bottom: 2rem;">
+                <div style="border-top: 2px solid #3b82f6; padding-top: 1rem;">
+                    <div style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Revenue per seller</div>
                     <div style="font-size: 0.95rem; color: white;">Baseline → 3-5x baseline</div>
                 </div>
-                <div>
-                    <div style="font-size: 0.75rem; color: var(--slate); text-transform: uppercase; font-weight: 700;">Pursuit quality</div>
-                    <div style="font-size: 0.95rem; color: white;">Respond to everything → Qualify ruthlessly</div>
+                <div style="border-top: 2px solid #3b82f6; padding-top: 1rem;">
+                    <div style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Pursuit quality</div>
+                    <div style="font-size: 0.95rem; color: white;">Respond to all → Qualify ruthlessly</div>
                 </div>
-                <div>
-                    <div style="font-size: 0.75rem; color: var(--slate); text-transform: uppercase; font-weight: 700;">Intelligence investment</div>
-                    <div style="font-size: 0.95rem; color: white;">Days per account → Hours per account</div>
+                <div style="border-top: 2px solid #3b82f6; padding-top: 1rem;">
+                    <div style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Intelligence load</div>
+                    <div style="font-size: 0.95rem; color: white;">Days per account → Hours</div>
                 </div>
-                <div>
-                    <div style="font-size: 0.75rem; color: var(--slate); text-transform: uppercase; font-weight: 700;">Win rate</div>
+                <div style="border-top: 2px solid #3b82f6; padding-top: 1rem;">
+                    <div style="font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Win rate</div>
                     <div style="font-size: 0.95rem; color: white;">~33% → ~66%</div>
                 </div>
             </div>
-            <p class="body-prose" style="font-weight: 700; color: white;">
-                The best sellers don't work harder. They know more. GAIN is how they know more — without adding analysts or consultants to the payroll.
-            </p>
-       </div>
-
-    </div>
-
-    <main class="container-wide">
-        
-        <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
-            <p class="body-prose" style="margin-bottom: 1.5rem;">
-                Every transformation started the same way. Not with a strategy deck. With a diagnostic.
-            </p>
-            <p class="body-prose">
-                Interview everyone. Map the landscape. Find what's broken. Pick one deal. Apply the system. Win it. The person sitting next to the winner asks 'how did you do that?' — and adoption begins.
+            
+            <p style="text-align: center; font-size: 0.85rem; color: #cbd5e1; margin: 0; font-style: italic;">
+                The best sellers don't work harder. They know more. GAIN is how they know more — without adding analysts to the payroll.
             </p>
         </div>
 
         <div class="section-divider">
             <div class="divider-line"></div>
-            <div class="divider-label">THE 90-DAY ARC</div>
+            <div class="divider-label">03. THE 90-DAY ARC</div>
             <div class="divider-line"></div>
         </div>
 
-        <div class="revenue-case-grid reveal">
-            <div class="doctrine-card" style="border-left: 4px solid var(--primary);">
+        <div class="container-prose reveal" style="text-align: center; margin-bottom: 2.5rem;">
+            <p class="body-prose" style="font-size: 0.9rem;">
+                Every transformation started the same way. Not with a strategy deck. With a diagnostic. Pick one deal. Apply the system. Win it. The person sitting next to the winner asks 'how did you do that?' — and adoption begins.
+            </p>
+        </div>
+
+        <div class="grid-3-col reveal" style="margin-bottom: 4rem;">
+            <div class="card compact" style="border-top: 3px solid #3b82f6;">
                 <span class="doctrine-tag">DAYS 1-30</span>
                 <h3 class="doctrine-title">GATHER + ASSESS</h3>
                 <p class="doctrine-subtitle">Intelligence, not action.</p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1rem;">
-                    The first 30 days are diagnostic. Financial baseline — the real P&L, not the reported one. Account tiering — top 10, contenders, whitespace. Account intelligence on every key relationship — customer trajectory, competitive landscape, pipeline gaps.
+                <p class="body-prose" style="margin-bottom: 1rem;">
+                    Financial baseline — the real P&L, not the reported one. Account tiering — top 10, contenders, whitespace. Identify the unstructured cost — the invisible waste that's been there so long nobody notices it.
                 </p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1.5rem;">
-                    Team assessment across three dimensions: License (do people have permission to act?), Capability (do they have the skills and tools?), Motivation (what actually drives them?). Identify the unstructured cost — the invisible waste that's been there so long nobody notices it.
-                </p>
-                <p style="font-size: 0.85rem; font-style: italic; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 1rem;">
-                    In one diagnostic, sellers gave different answers when asked what the company actually sold. The diagnostic doesn't find surprises. It finds what everyone knows but nobody has written down.
+                <p style="font-size: 0.75rem; font-style: italic; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin: 0;">
+                    "The diagnostic doesn't find surprises. It finds what everyone knows but nobody has written down."
                 </p>
             </div>
 
-            <div class="doctrine-card" style="border-left: 4px solid #f59e0b;">
+            <div class="card compact" style="border-top: 3px solid #f59e0b;">
                 <span class="doctrine-tag">DAYS 31-60</span>
                 <h3 class="doctrine-title">INFLUENCE + BUILD</h3>
-                <p class="doctrine-subtitle">Crystallise the message. Pick the fight.</p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1rem;">
-                    Value proposition sharpened to one sentence. Nine customer evidence stories that any seller can deploy in conversation. A go-to-market framework simple enough to go viral — the equivalent of one folded piece of paper that became a £55M business.
+                <p class="doctrine-subtitle">Pick the fight.</p>
+                <p class="body-prose" style="margin-bottom: 1rem;">
+                    Value proposition sharpened to one sentence. Nine customer evidence stories any seller can deploy. Then: pick one strategic complex deal. Deploy full GAIN methodology. Arm the champion.
                 </p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1.5rem;">
-                    Seller accountability and behaviours agreed — not mandated, agreed. Reward architecture aligned to the right outcomes. Then: pick one strategic complex deal. Deploy full GAIN methodology. Arm the champion with a story they can sell when you're not in the room.
-                </p>
-                <p style="font-size: 0.85rem; font-style: italic; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 1rem;">
-                    If a seller can't explain the framework in two minutes, they won't use it. If a customer can't see themselves in it, they won't buy it. The art is making twenty-five years of complexity look like common sense.
+                <p style="font-size: 0.75rem; font-style: italic; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin: 0;">
+                    "If a seller can't explain the framework in two minutes, they won't use it."
                 </p>
             </div>
 
-            <div class="doctrine-card" style="border-left: 4px solid var(--green);">
+            <div class="card compact" style="border-top: 3px solid #22c55e;">
                 <span class="doctrine-tag">DAYS 61-90</span>
                 <h3 class="doctrine-title">WIN + MEASURE</h3>
                 <p class="doctrine-subtitle">Evidence, not celebration.</p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1rem;">
-                    The strategic deal closes — or is measurably advanced. Every seller can pitch the value proposition and deploy the evidence. Pipeline coverage is measurably improved. Win rate on competitive bids is tracked.
+                <p class="body-prose" style="margin-bottom: 1rem;">
+                    The strategic deal closes. Pipeline coverage is measurably improved. Win rate is tracked. The team sees it work on a real deal with real money. Then: plan the next cycle.
                 </p>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1.5rem;">
-                    The team sees it work on a real deal with real money. Then: plan the next 90 days. Because the first 90 isn't a programme. It's the first cycle of a continuous operating rhythm.
-                </p>
-                <p style="font-size: 0.85rem; font-style: italic; color: var(--slate); border-top: 1px solid var(--border-dynamic); padding-top: 1rem;">
-                    A senior seller used the intelligence mapping and discovered his 'sure-thing' champion had been reorganised out of the decision. Changed strategy. Won. Became the loudest advocate for the methodology. That's how adoption works — not by mandate, by evidence.
+                <p style="font-size: 0.75rem; font-style: italic; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; margin: 0;">
+                    "That's how adoption works — not by mandate, by evidence."
                 </p>
             </div>
         </div>
 
-        <div class="section-divider">
+        <div class="section-divider reveal">
             <div class="divider-line"></div>
             <div class="divider-label">WHY THIS WORKS</div>
             <div class="divider-line"></div>
         </div>
 
-        <div class="grid-2-col reveal">
-            <div class="card" style="border-left: 4px solid var(--red);">
-                <h3 class="doctrine-title" style="color: var(--red);">The Consultant Trap</h3>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;" class="reveal">
+            <div class="fail-card-sleek" style="border-left: 3px solid #ef4444;">
+                <div class="fail-head" style="color: #ef4444;">The Consultant Trap</div>
+                <p class="fail-body">
                     Mandate a new methodology from the top down. Sales teams ignore it. Adoption fails. CRM fills with fake compliance data. The methodology dies when the consultant leaves.
                 </p>
-                <p class="body-prose" style="font-size: 0.95rem;">
-                    Why it fails: sellers see it as management theatre. It takes months to roll out. Results take longer. The only people who comply are the ones who didn't need help.
-                </p>
             </div>
-            <div class="card" style="border-left: 4px solid var(--primary);">
-                <h3 class="doctrine-title" style="color: var(--primary);">Adoption by Results</h3>
-                <p class="body-prose" style="font-size: 0.95rem; margin-bottom: 1rem;">
-                    Use intelligence to win a deal the team didn't expect to win. The person next to the winner asks how. Adoption is pulled, not pushed.
-                </p>
-                <p class="body-prose" style="font-size: 0.95rem;">
-                    Why it works: success creates demand. It works on the live deal you have today. Real data from real wins. The methodology sustains because the results sustain.
+            <div class="fail-card-sleek" style="border-left: 3px solid #3b82f6;">
+                <div class="fail-head" style="color: #3b82f6;">Adoption by Results</div>
+                <p class="fail-body">
+                    Use intelligence to win a deal the team didn't expect to win. The person next to the winner asks how. Adoption is pulled, not pushed. The methodology sustains because the results sustain.
                 </p>
             </div>
         </div>
 
-
-
         <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
-            <h2 style="color: white; font-size: 2.5rem; font-weight: 900; margin-bottom: 1.5rem;">Stop debating. Start winning.</h2>
-            <p class="body-prose" style="margin-bottom: 2rem;">
+            <h2 style="color: white; font-size: 2rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.02em;">Stop debating. Start winning.</h2>
+            <p class="body-prose" style="margin-bottom: 2rem; font-size: 0.95rem;">
                 Take a live deal. Apply the intelligence layer. Win it. Measure the delta. Then decide.
             </p>
             <a href="contact.html" class="btn-schedule">LET'S LOOK AT A LIVE DEAL</a>
             
             <div style="margin-top: 2rem; display: flex; gap: 2rem; justify-content: center;">
-                <a href="proof.html" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">See the evidence → The Proof</a>
-                <a href="story.html" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">Read the origin story → The Story</a>
+                <a href="proof.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">See the evidence → The Proof</a>
+                <a href="story.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Read the origin story → The Story</a>
             </div>
         </div>
 

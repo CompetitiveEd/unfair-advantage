@@ -10,22 +10,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Local override for the comparison grid */
-        .comparison-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; padding: 1.5rem; border-bottom: 1px solid var(--border-dynamic); }
-        .comparison-row:last-child { border-bottom: none; }
-        .col-header { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--primary); text-transform: uppercase; }
-        .col-text { font-size: 0.9rem; color: var(--text-body); }
-        .col-judgment { color: white; font-weight: 600; }
-        @media (max-width: 768px) {
-            .comparison-row { grid-template-columns: 1fr; gap: 0.5rem; background: var(--bg-card); margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--border-dynamic); }
-            .col-header { display: block; margin-bottom: 0.25rem; color: var(--slate); font-size: 0.65rem; }
-            .col-judgment { color: var(--primary); }
+        /* McKinsey-style tight formatting overrides */
+        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .grid-2-col-sleek { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+        
+        .card.compact { padding: 1.25rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; }
+        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.5rem; margin-top: 0; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; margin: 0; }
+
+        /* The Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 2rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* S-C-R Framework Grid */
+        .scr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .scr-col { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; border-top: 3px solid transparent; }
+        .scr-title { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.75rem; color: white; }
+        .scr-body { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin: 0; }
+        .scr-lesson { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 1rem; padding-top: 0.75rem; font-size: 0.75rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; text-align: right; }
+
+        /* Principles Block */
+        .principles-box { background: rgba(59, 130, 246, 0.05); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; }
+        .principles-list { list-style: none; padding: 0; margin: 0; }
+        .principles-list li { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.75rem; padding-left: 1rem; position: relative; }
+        .principles-list li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; font-weight: 700; }
+        .principles-list li:last-child { margin-bottom: 0; }
+
+        /* Evolution Grid */
+        .evolution-grid { display: grid; gap: 0.75rem; margin: 2rem auto 4rem auto; max-width: 900px; }
+        .evo-header { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 1rem; padding: 0 1.5rem 0.5rem 1.5rem; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.05em; }
+        .evo-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 1rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem 1.5rem; align-items: center; }
+        .evo-left { font-size: 0.9rem; color: #94a3b8; }
+        .evo-arrow { color: #3b82f6; font-weight: bold; text-align: center; }
+        .evo-right { font-size: 0.9rem; color: white; font-weight: 600; }
+
+        @media (max-width: 900px) {
+            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: repeat(2, 1fr); }
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        }
+        @media (max-width: 600px) {
+            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: 1fr; }
+            .evo-row, .evo-header { grid-template-columns: 1fr; text-align: center; gap: 0.5rem; }
+            .evo-header { display: none; }
+            .evo-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
         }
     </style>
 </head>
 <body class="hero-compact">
 
-<nav>
+    <nav>
         <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
         <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
             <span></span><span></span><span></span>
@@ -37,7 +73,7 @@
                 <div class="dropdown-content">
                     <a href="revenue-case.html">The Revenue Case</a>
                     <a href="proof.html">The Proof</a>
-                      <a href="story.html" style="color: var(--primary);">The Story</a>
+                    <a href="story.html" style="color: var(--primary);">The Story</a>
                     <a href="thinking.html">The Thinking</a>
                 </div>
             </div>
@@ -66,13 +102,11 @@
         </div>
     </nav>
 
-   
-
     <header class="dark-header-block">
         <picture>
-    <source srcset="assets/images/story.avif" type="image/avif">
-    <img src="assets/images/story.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
-</picture>
+            <source srcset="assets/images/story.avif" type="image/avif">
+            <img src="assets/images/story.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
+        </picture>
         <div class="hero-impact">
             <span class="hero-pre">THE STORY — WHY THIS METHODOLOGY EXISTS</span>
             <h1 class="hero-headline">
@@ -86,209 +120,119 @@
         </div>
     </header>
 
-    <main>
+    <main class="container-wide">
         
-        <div class="container-prose reveal">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">THE PATTERN</div>
-                <div class="divider-line"></div>
-            </div>
-
-            <p class="body-prose" style="margin-bottom: 2rem;">
-Don't rest. Do the right thing. Do it differently every day.
-Not persistence — preparation. Research the landscape before you enter it. Invest in yourself before you ask others to invest in you.
-Then change it. Optimise it. Bring people with you. Build followers, not detractors.
-If a system depends on the person who built it, it isn't a system. It's a bottleneck.
-                
-                "Don't rest. Do the right thing. Do it differently every day."<br>
-                Not persistence — preparation. Research the landscape before you enter it. Invest in yourself before you ask others to invest in you.
-            </p>
-
-            <p class="body-prose">
-                Then change it. Optimise it. Bring people with you. Build followers, not detractors.
-            </p>
-
-            <p class="body-prose" style="text-align: center; font-weight: 700; color: white; font-size: 1.2rem; margin-top: 3rem; margin-bottom: 3rem; border-top: 1px solid var(--border-dynamic); border-bottom: 1px solid var(--border-dynamic); padding: 2rem 0;">
-                "If a system depends on the person who built it, it isn't a system. It's a bottleneck."
-            </p>
-        </div>
-
         <div class="container-wide reveal">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">THE CATALYST</div>
-                <div class="divider-line"></div>
-            </div>
-
-            <div class="grid-2-col">
-                <div class="card" style="border-left: 4px solid var(--red);">
-                    <h3 class="doctrine-title" style="color: var(--red);">The Silent Exit</h3>
-                    <p class="body-prose" style="font-size: 0.95rem;">
-                        A major renewal worth eight figures. Dashboard green. SLAs perfect. The client simply stopped talking.
-                    </p>
-                    <p class="body-prose" style="font-size: 0.95rem; margin: 0;">
-                        The realisation came too late: data is not a relationship. They didn't leave because of failed metrics. They left because of failed relevance. Managed, not led.
-                    </p>
-                </div>
-                <div class="card" style="border-left: 4px solid var(--green);">
-                    <h3 class="doctrine-title" style="color: var(--green);">The System Response</h3>
-                    <p class="body-prose" style="font-size: 0.95rem;">
-                        The vow: never let green dashboards lie again. Build a manual system to map the human terrain of every deal — who holds real power, what they believe, where the risk sits that data can't see.
-                    </p>
-                    <p class="body-prose" style="font-size: 0.95rem; margin: 0;">
-                        That system became the architecture behind three commercial transformations. Today, it is GAIN. The medium changed. The discipline didn't.
-                    </p>
-                </div>
+            <div class="page-index-nav">
+                <div class="index-step"><span>01. The Pattern</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>02. The Catalyst</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>03. The Architecture</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>04. The Evolution</span></div>
             </div>
         </div>
 
-        <div class="container-wide reveal">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">THREE ERAS</div>
-                <div class="divider-line"></div>
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">01. THE PATTERN</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="principles-box reveal" style="max-width: 800px; margin: 0 auto 4rem auto;">
+            <p style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: white; margin-bottom: 1rem;">The Operational Doctrine:</p>
+            <ul class="principles-list">
+                <li><strong>Preparation over persistence.</strong> Research the landscape before you enter it. Invest in yourself before you ask others to invest in you.</li>
+                <li><strong>Change it. Optimise it. Bring people with you.</strong> Build followers, not detractors.</li>
+                <li><strong style="color: white;">If a system depends on the person who built it, it isn't a system. It's a bottleneck.</strong></li>
+            </ul>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">02. THE CATALYST</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="grid-2-col-sleek reveal" style="margin-bottom: 4rem;">
+            <div class="card compact" style="border-top: 3px solid #ef4444;">
+                <h3 class="doctrine-title" style="color: #ef4444;">The Silent Exit</h3>
+                <p class="body-prose">
+                    A major renewal worth eight figures. Dashboard green. SLAs perfect. The client simply stopped talking. The realisation came too late: data is not a relationship. They didn't leave because of failed metrics. They left because of failed relevance. Managed, not led.
+                </p>
             </div>
-
-            <div class="doctrine-grid" style="grid-template-columns: 1fr;">
-                <div class="doctrine-card">
-                    <span class="doctrine-tag">ERA 01</span>
-                    <h3 class="doctrine-title">THE FIXER</h3>
-                    <p class="doctrine-subtitle">Regulated infrastructure. National utilities.</p>
-                    <p class="body-prose" style="font-size: 0.95rem;">
-                        Early career across regulated industries and national infrastructure. Rebuilt operational systems that hadn't been touched in years. Optimised databases across eighteen locations. Designed self-healing environments that deployed nationally without on-site support. Built service management operations for 500+ staff. Every role followed the same pattern: broken system, no mandate to fix it — fix it anyway.
-                    </p>
-                    <div style="border-top: 1px solid var(--border-dynamic); margin-top: 1.5rem; padding-top: 1rem; text-align: right;">
-                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">LESSON: Build it to work without you.</span>
-                    </div>
-                </div>
-
-                <div class="doctrine-card">
-                    <span class="doctrine-tag">ERA 02</span>
-                    <h3 class="doctrine-title">THE ARCHITECT</h3>
-                    <p class="doctrine-subtitle">FTSE-listed technology company. Three transformations.</p>
-                    <p class="body-prose" style="font-size: 0.95rem;">
-                        A professional services unit the business wanted to kill became the fastest-growing division. A neglected maintenance portfolio became the highest-performing in the group. A £35M enterprise book grew to over £183M. Same playbook every time: gather the intelligence, map the political terrain, build a go-to-market simple enough to go viral, develop people the organisation had overlooked. The four pillars used in every transformation — Digital Engagement, Sales Communities, Campaigns, Stakeholder Leadership — are now encoded into GAIN as Gather, Assess, Influence, Nurture.
-                    </p>
-                    <div style="border-top: 1px solid var(--border-dynamic); margin-top: 1.5rem; padding-top: 1rem; text-align: right;">
-                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">LESSON: The methodology scales. The judgment doesn't copy.</span>
-                    </div>
-                </div>
-
-                <div class="doctrine-card">
-                    <span class="doctrine-tag">ERA 03</span>
-                    <h3 class="doctrine-title">THE COMPRESSION</h3>
-                    <p class="doctrine-subtitle">AI-first company. The realisation.</p>
-                    <p class="body-prose" style="font-size: 0.95rem;">
-                        Working inside a smaller AI-first business, the commercial problems were identical — sellers couldn't articulate the value proposition, no account intelligence, no system. But prompting changed everything. The intelligence gathering, stakeholder mapping, and win theme development that used to take weeks compressed to minutes. What didn't compress: knowing which findings matter, distinguishing title from power, reading when data is lying. That's accumulated experience. That can't be prompted. GAIN was born.
-                    </p>
-                    <div style="border-top: 1px solid var(--border-dynamic); margin-top: 1.5rem; padding-top: 1rem; text-align: right;">
-                        <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">LESSON: AI compresses the grunt work. Judgment remains human.</span>
-                    </div>
-                </div>
+            <div class="card compact" style="border-top: 3px solid #22c55e;">
+                <h3 class="doctrine-title" style="color: #22c55e;">The System Response</h3>
+                <p class="body-prose">
+                    The vow: never let green dashboards lie again. Built a manual system to map the human terrain of every deal — who holds real power, what they believe, where the risk sits that data can't see. That system became the architecture behind three commercial transformations. Today, it is GAIN.
+                </p>
             </div>
         </div>
 
-        <div class="container-wide reveal">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">THE EVOLUTION</div>
-                <div class="divider-line"></div>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-dynamic); border-radius: 12px; overflow: hidden;">
-                <div class="comparison-row" style="background: var(--bg-card); border-bottom: 2px solid var(--border-dynamic);">
-                    <div class="col-header">The Manual Way</div>
-                    <div class="col-header">The GAIN Way (AI)</div>
-                    <div class="col-header" style="color: white;">What Didn't Change</div>
-                </div>
-
-                <div class="comparison-row">
-                    <div>
-                        <span class="col-header mobile-only">Manual:</span>
-                        <span class="col-text">Annual reports read manually</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">GAIN:</span>
-                        <span class="col-text">9-Pillar Deep Research (20 min)</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">Constant:</span>
-                        <span class="col-judgment">Knowing which findings matter</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div>
-                        <span class="col-header mobile-only">Manual:</span>
-                        <span class="col-text">IT spend estimated from conversations</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">GAIN:</span>
-                        <span class="col-text">Budget Signal Detection</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">Constant:</span>
-                        <span class="col-judgment">Knowing where money sits</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div>
-                        <span class="col-header mobile-only">Manual:</span>
-                        <span class="col-text">Org charts drawn in Visio</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">GAIN:</span>
-                        <span class="col-text">Authority Mapping</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">Constant:</span>
-                        <span class="col-judgment">Distinguishing title from power</span>
-                    </div>
-                </div>
-
-                <div class="comparison-row">
-                    <div>
-                        <span class="col-header mobile-only">Manual:</span>
-                        <span class="col-text">People profiled from memory</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">GAIN:</span>
-                        <span class="col-text">Executive Intelligence (15 min)</span>
-                    </div>
-                    <div>
-                        <span class="col-header mobile-only">Constant:</span>
-                        <span class="col-judgment">Knowing what makes them tick</span>
-                    </div>
-                </div>
-            </div>
-
-            <p class="body-prose reveal" style="text-align: center; margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-                The right column is the point. Frameworks don't win deals. Judgment wins deals. AI eliminates the manual work that used to consume it.
-            </p>
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">03. THE ARCHITECTURE</div>
+            <div class="divider-line"></div>
         </div>
 
-        <div class="container-wide reveal">
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-label">BEFORE AI</div>
-                <div class="divider-line"></div>
+        <div class="scr-grid reveal">
+            <div class="scr-col" style="border-top-color: #f59e0b;">
+                <div class="scr-title" style="color: #f59e0b;">ERA 01: THE FIXER</div>
+                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">Regulated infrastructure. National utilities.</p>
+                <p class="scr-body">
+                    Early career across regulated industries. Rebuilt operational systems untouched for years. Designed self-healing environments deployed nationally without on-site support. Built service management operations for 500+ staff. Every role followed the same pattern: broken system, no mandate to fix it — fix it anyway.
+                </p>
+                <div class="scr-lesson">Lesson: Build it to work without you</div>
             </div>
 
-            <div class="grid-2-col">
-                <div class="card">
-                    <h3 class="doctrine-title">The Account Campaign</h3>
-                    <p class="body-prose" style="font-size: 0.95rem; margin: 0;">
-                        A hand-built campaign document for a Top 10 law firm. Company overview. IT spend estimation. Goals and issues. Organisational structure. Authority and influence mapping. Competition log. Opportunity tracking. Psychological profiles of every decision-maker — analytical style, personal preferences, connection mapping. Built by hand. Twenty years before AI. The same structure now powers GAIN's Gather and Assess phases.
-                    </p>
-                </div>
-                <div class="card">
-                    <h3 class="doctrine-title">The Cartography Sessions</h3>
-                    <p class="body-prose" style="font-size: 0.95rem; margin: 0;">
-                        For complex bids and transformations: 30-50 stakeholders in a room, structured discovery, output captured as a single visual — current state left, future state right, transformation path between. More actionable intelligence in half a day than months of conventional consulting. The insight was never in the drawing. It was in knowing which questions to ask.
-                    </p>
-                </div>
+            <div class="scr-col" style="border-top-color: #3b82f6;">
+                <div class="scr-title" style="color: #3b82f6;">ERA 02: THE ARCHITECT</div>
+                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">FTSE-listed technology company.</p>
+                <p class="scr-body">
+                    A professional services unit the business wanted to kill became the fastest-growing division. A £35M enterprise book grew to over £183M. Same playbook every time: gather intelligence, map the political terrain, build a go-to-market simple enough to go viral. 
+                </p>
+                <div class="scr-lesson">Lesson: The methodology scales. Judgment doesn't.</div>
+            </div>
+
+            <div class="scr-col" style="border-top-color: #22c55e;">
+                <div class="scr-title" style="color: #22c55e;">ERA 03: THE COMPRESSION</div>
+                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">AI-first company. The realisation.</p>
+                <p class="scr-body">
+                    Commercial problems were identical — no account intelligence, no system. But prompting changed everything. The intelligence gathering that used to take weeks compressed to minutes. What didn't compress: knowing which findings matter. GAIN was born.
+                </p>
+                <div class="scr-lesson">Lesson: AI compresses grunt work. Judgment remains human.</div>
+            </div>
+        </div>
+
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <div class="divider-label">04. THE EVOLUTION</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="evolution-grid reveal">
+            <div class="evo-header">
+                <div>The Analogue Strategy (Took Weeks)</div>
+                <div></div>
+                <div>The GAIN Equivalent (Takes Hours)</div>
+            </div>
+            <div class="evo-row">
+                <div class="evo-left">Annual reports read manually. IT spend estimated from conversations.</div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-right">[G] GATHER — 9-Pillar Deep Research & Budget Signals (20 min)</div>
+            </div>
+            <div class="evo-row">
+                <div class="evo-left">Org charts drawn in Visio. People profiled from memory.</div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-right">[A] ASSESS — Authority Mapping & Exec Intelligence (15 min)</div>
+            </div>
+            <div class="evo-row">
+                <div class="evo-left">Manual, hand-built campaign documents for Top 10 accounts.</div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-right">[I] INFLUENCE — Rapid Executive Narrative Design</div>
+            </div>
+            <div class="evo-row">
+                <div class="evo-left">Half-day "Cartography Sessions" with 30-50 stakeholders.</div>
+                <div class="evo-arrow">→</div>
+                <div class="evo-right">[N] NURTURE — Continuous Competitive Early Warning</div>
             </div>
         </div>
 
@@ -332,7 +276,6 @@ If a system depends on the person who built it, it isn't a system. It's a bottle
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Mobile menu toggle
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const navLinks = document.querySelector('.nav-links');
             if (mobileMenuToggle && navLinks) {
@@ -341,23 +284,15 @@ If a system depends on the person who built it, it isn't a system. It's a bottle
                     navLinks.classList.toggle('active');
                 });
             }
-            
-            // Scroll Reveal with immediate check for elements already in viewport
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(e => { 
-                    if (e.isIntersecting) e.target.classList.add('active'); 
-                });
+                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.reveal').forEach(el => {
                 const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    el.classList.add('active');
-                }
+                if (rect.top < window.innerHeight) el.classList.add('active');
                 revealObserver.observe(el);
             });
         });
     </script>
 </body>
-
 </html>
