@@ -945,12 +945,13 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
             let foundCode = null;
 
             titles.forEach(title => {
-                if (title.innerText.includes(promptID)) {
-                    const wrapper = title.nextElementSibling;
-                    const content = wrapper.querySelector('.prompt-content');
-                    if (content) foundCode = content.innerText;
-                }
-            });
+    if (title.innerText.includes(promptID)) {
+        // Step up to the header, then over to the wrapper
+        const wrapper = title.parentElement.nextElementSibling; 
+        const content = wrapper.querySelector('.prompt-content');
+        if (content) foundCode = content.innerText;
+    }
+});
 
             if (foundCode) {
                 navigator.clipboard.writeText(foundCode).then(() => {

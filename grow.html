@@ -863,14 +863,14 @@ Compare this month's sources against baseline. Flag ONLY changes:
             const titles = document.querySelectorAll('.console-title');
             let foundCode = null;
 
-            titles.forEach(title => {
-                if (title.innerText.includes(promptID)) {
-                    const wrapper = title.nextElementSibling;
-                    const content = wrapper.querySelector('.prompt-content');
-                    if (content) foundCode = content.innerText;
-                }
-            });
-
+titles.forEach(title => {
+    if (title.innerText.includes(promptID)) {
+        // Step up to the header, then over to the wrapper
+        const wrapper = title.parentElement.nextElementSibling; 
+        const content = wrapper.querySelector('.prompt-content');
+        if (content) foundCode = content.innerText;
+    }
+});
             if (foundCode) {
                 navigator.clipboard.writeText(foundCode).then(() => {
                     const badge = btn.querySelector('.copy-badge');
