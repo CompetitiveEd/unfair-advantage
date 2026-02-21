@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         /* McKinsey-style tight formatting overrides */
+        .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
         .index-step { display: flex; align-items: center; gap: 1.5rem; }
         .index-step span { color: #cbd5e1; }
@@ -20,10 +22,13 @@
         .driver-box { background: rgba(15,23,42,0.8); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2rem; margin-bottom: 4rem; position: relative; overflow: hidden; }
         .driver-box::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: #3b82f6; }
         .driver-title { font-size: 0.85rem; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
-        .driver-text { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin: 0; }
+
+        /* The Chessboard Flow */
+        .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
+        .pill-blue-flow.active { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
 
         /* Command Card Layout (For Prompts) */
-        .cmd-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin-bottom: 3rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .cmd-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin-bottom: 4rem; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
         .cmd-header { background: rgba(0,0,0,0.3); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .cmd-title { font-size: 0.85rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 1rem; margin: 0; }
         .cmd-id { color: #3b82f6; opacity: 0.8; font-family: monospace; font-size: 0.9rem; }
@@ -46,16 +51,14 @@
 
         /* Experience Box */
         .exp-box { background: rgba(59,130,246,0.03); border-top: 1px solid rgba(59,130,246,0.2); padding: 1.5rem; }
-        .exp-title { font-size: 0.75rem; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        .exp-text { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin: 0; }
+        .exp-title { font-size: 0.75rem; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
 
         /* Human Checkpoint */
-        .human-checkpoint { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-left: 4px solid #f59e0b; padding: 1.5rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; }
-        .hc-title { color: #f59e0b; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
-        .hc-text { color: #cbd5e1; font-size: 0.85rem; margin: 0; line-height: 1.5; }
+        .human-checkpoint { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-left: 4px solid #f59e0b; padding: 2rem; margin-bottom: 4rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hc-title { color: #f59e0b; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
 
         /* Terminal Prompt Library (Advanced) */
-        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2rem; margin-top: 4rem; margin-bottom: 4rem; }
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
         .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
         .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
         .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
@@ -133,25 +136,31 @@
 
         <main class="container-wide">
 
-            <div class="container-wide reveal">
-                <div class="page-index-nav">
-                    <div class="index-step"><span>01. Scrape The Data</span> <span class="index-arrow">→</span></div>
-                    <div class="index-step"><span>02. Synthesise Intelligence</span> <span class="index-arrow">→</span></div>
-                    <div class="index-step"><span>03. The Executive Briefing</span></div>
-                </div>
-            </div>
-
-            <div class="driver-box reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
+            <div class="driver-box reveal" style="max-width: 900px; margin-left: auto; margin-right: auto; margin-top: 2rem;">
                 <div class="driver-title">THE PSYCHOLOGY: DRIVER 01 (SAFETY)</div>
-                <p class="driver-text">
+                <p class="body-prose">
                     Research is not about gathering facts. It is about <strong>lowering buyer cortisol</strong>. Humans are biologically wired to fear vendor failure. When you ask basic discovery questions ("Tell me about your priorities"), you trigger that fear. When you quote their own earnings call back to them to frame your solution, you prove you are a safe pair of hands. This core prompt chain ensures you never walk into a room blind.
                 </p>
             </div>
 
-            <div class="section-divider reveal">
-                <div class="divider-line"></div>
-                <div class="divider-label">STEP 01: THE SCRAPE PROTOCOL</div>
-                <div class="divider-line"></div>
+            <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Prompt Chain</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">COMPANY INTEL</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">FIND MONEY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">PROFILE PEOPLE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">BATTLE CARD</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">CAPABILITY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">BRIEFING</span>
+                </div>
+                <p class="body-prose" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    Enterprise sales is a chessboard, not a straight line. Steps 1-3 extract intelligence. Steps 4-5 synthesise strategy. Step 6 creates the deliverable.
+                </p>
             </div>
 
             <div class="cmd-card reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
@@ -179,15 +188,9 @@ I will provide:
 Acknowledge this instruction. I will paste the data in the next prompt.</pre>
                 </div>
                 <div class="exp-box">
-                    <div class="exp-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> What Experience Sees</div>
-                    <p class="exp-text">The "Careers" page is the most underused intelligence source. If a company says they are focused on AI, but has zero open reqs for Data Scientists, the initiative is fake. If they have 14 open roles for compliance officers, the regulator has them under pressure.</p>
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">The "Careers" page is the most underused intelligence source. If a company says they are focused on AI, but has zero open reqs for Data Scientists, the initiative is fake. If they have 14 open roles for compliance officers, the regulator has them under pressure.</p>
                 </div>
-            </div>
-
-            <div class="section-divider reveal">
-                <div class="divider-line"></div>
-                <div class="divider-label">STEP 02: SYNTHESISE INTELLIGENCE</div>
-                <div class="divider-line"></div>
             </div>
 
             <div class="cmd-card reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
@@ -220,8 +223,8 @@ Using the source data provided, extract intelligence across these 9 pillars:
 FORMAT: Structure each pillar with 3-5 key findings. For every claim, cite the source document. Flag anything you cannot verify as "UNVERIFIED."</pre>
                 </div>
                 <div class="exp-box">
-                    <div class="exp-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> What Experience Sees</div>
-                    <p class="exp-text">Pay attention to Pillar 8 (Stakeholder Language). If the CEO says "Continuous Business Availability" and you pitch "Disaster Recovery," you sound like a vendor. If you use their exact language, you sound like an insider.</p>
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">Pay attention to Pillar 8 (Stakeholder Language). If the CEO says "Continuous Business Availability" and you pitch "Disaster Recovery," you sound like a generic vendor. If you use their exact language, you sound like an insider.</p>
                 </div>
             </div>
 
@@ -253,8 +256,8 @@ For each finding:
 — Frame the reallocation argument: "You're currently spending time/money on [boring problem]. Redirecting even a portion toward [solution] eliminates the root cause."</pre>
                 </div>
                 <div class="exp-box">
-                    <div class="exp-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> What Experience Sees</div>
-                    <p class="exp-text">If a company mentions a shift from "self-assessment" to "structured vendor interviews" in their risk disclosures, that implies massive manual labour cost. That is your entry point. Solve the boring problem first.</p>
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">If a company mentions a shift from "self-assessment" to "structured vendor interviews" in their risk disclosures, that implies massive manual labour cost. That is your entry point. Solve the boring problem first.</p>
                 </div>
             </div>
 
@@ -283,30 +286,84 @@ Analyse:
 5. THE ONE QUESTION: Give me ONE discovery question to ask them that demonstrates I understand their personal agenda. It must make them think: "This person has done their homework."</pre>
                 </div>
                 <div class="exp-box">
-                    <div class="exp-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> What Experience Sees</div>
-                    <p class="exp-text">If an executive frequently shares their team's failures publicly (e.g., "We missed our Q3 deployment target, here is why..."), they value transparency over polish. Do not walk into that meeting with a glossy, perfect slide deck. Lead with what your solution struggles with.</p>
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">If an executive frequently shares their team's failures publicly (e.g., "We missed our Q3 deployment target, here is why..."), they value transparency over polish. Do not walk into that meeting with a glossy, perfect slide deck. Lead with what your solution struggles with.</p>
                 </div>
             </div>
 
-            <div class="human-checkpoint reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
+            <div class="human-checkpoint reveal">
                 <h4 class="hc-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                     HUMAN CHECKPOINT (EQ OVERRIDE)
                 </h4>
-                <p class="hc-text">
+                <p class="body-prose">
                     Do not run the final briefing prompt yet. Stop and read the AI's analysis. Does the tone feel right for this specific executive? Are the budget arguments realistic for this sector? The AI has assembled the data—<strong>you must now inject your commercial intuition</strong>. Filter out the noise before generating the final asset.
                 </p>
             </div>
 
-            <div class="section-divider reveal">
-                <div class="divider-line"></div>
-                <div class="divider-label">STEP 03: THE DELIVERABLE</div>
-                <div class="divider-line"></div>
+            <div class="cmd-card reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
+                <div class="cmd-header">
+                    <h3 class="cmd-title"><span class="cmd-id">[G-05]</span> Synthesise Battle Card</h3>
+                    <span class="gov-tag gov-amber">Public Data Only</span>
+                </div>
+                <div class="cmd-objective">
+                    Turns intelligence into ammunition. A single-page reference for the meeting: Hooks, Landmines, and the "North Star".
+                </div>
+                <div class="terminal-block">
+                    <div class="terminal-header-bar">
+                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                    </div>
+                    <pre class="prompt-text">Using all the intelligence gathered so far — company research, budget signals, and stakeholder profile — create a 1-page Executive Battle Card.
+
+Structure:
+
+1. CFO NORTH STAR: The single strategic priority that defines this company's direction right now. Use their exact language.
+2. THE THREE HOOKS: Three conversation-opening insights derived from the research. Each hook must:
+   — Reference a specific finding from the research (with source)
+   — Connect to a capability you could provide
+   — Be framed as an observation, not a pitch ("I noticed..." not "We offer...")
+3. BOARDROOM QUESTION: One question designed for a board-level audience that demonstrates strategic understanding of their roadmap.
+4. LANDMINES: What topics should you AVOID? What past failures or sensitivities should you navigate carefully?</pre>
+                </div>
+                <div class="exp-box">
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">The Landmine section is critical. If the prospect recently fired a vendor for a botched cloud migration, talking about your own cloud capabilities too early will trigger their defense mechanisms. You must navigate around the blast radius.</p>
+                </div>
             </div>
 
             <div class="cmd-card reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
                 <div class="cmd-header">
-                    <h3 class="cmd-title"><span class="cmd-id">[G-05]</span> The Executive Briefing</h3>
+                    <h3 class="cmd-title"><span class="cmd-id">[G-06]</span> Capability Matching</h3>
+                    <span class="gov-tag gov-red">Internal Data Risk</span>
+                </div>
+                <div class="cmd-objective">
+                    Don't pitch generic capabilities. Match your proof points to their specific pain points and language. <strong>WARNING: Requires pasting internal company materials into the AI.</strong>
+                </div>
+                <div class="terminal-block">
+                    <div class="terminal-header-bar">
+                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                    </div>
+                    <pre class="prompt-text">Based on the company research, stakeholder profile, and battle card I've provided, search the following materials from MY company for the best matches:
+
+[PASTE: Your company's case studies, solution descriptions, or capability statements]
+
+Find:
+1. CASE STUDIES: Which client stories are most relevant to this prospect's specific situation? Match on industry, challenge type, scale, and outcomes.
+2. PROOF POINTS: Specific metrics or outcomes from our work that directly address their stated pain points.
+3. LANGUAGE ALIGNMENT: Where do our materials already use their language? Where do we need to translate? 
+4. GAPS: Where does this prospect need something we don't have a clear proof point for? These become discovery questions, not weaknesses to hide.</pre>
+                </div>
+                <div class="exp-box">
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">You aren't looking for a perfect product match; you are looking for a story. If the client is struggling with manual integration overhead, pull the case study where you eliminated 40 hours of manual reconciliation, not the one where you built a shiny new app.</p>
+                </div>
+            </div>
+
+            <div class="cmd-card reveal" style="max-width: 900px; margin-left: auto; margin-right: auto;">
+                <div class="cmd-header">
+                    <h3 class="cmd-title"><span class="cmd-id">[G-07]</span> The Executive Briefing</h3>
                     <span class="gov-tag gov-amber">Public Data Only</span>
                 </div>
                 <div class="cmd-objective">
@@ -329,9 +386,7 @@ Primary objective: The one outcome that makes this meeting a success.
 Discovery questions: The 3 exact questions I must ask, ranked by priority.
 
 SECTION 3: KEY MESSAGING (THE HOOKS)
-Three conversation-opening insights derived from the research. Each must:
-— Reference a specific finding (with source)
-— Be framed as an observation, not a pitch ("I noticed..." not "We offer...")
+Three conversation-opening insights derived from the research. 
 
 SECTION 4: LANDMINES
 What topics should I AVOID? What past failures or sensitivities should I navigate carefully?
@@ -339,8 +394,8 @@ What topics should I AVOID? What past failures or sensitivities should I navigat
 FORMAT: Concise. Bullet points. Ready to read on a mobile device.</pre>
                 </div>
                 <div class="exp-box">
-                    <div class="exp-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg> What Experience Sees</div>
-                    <p class="exp-text">The briefing isn't a script to read aloud; it's a confidence engine. When you know the 'Landmines' and 'Hooks' cold, your cortisol drops. You stop thinking about your notes and start actively listening to the room. That presence is what wins the deal.</p>
+                    <div class="exp-title">WHAT EXPERIENCE SEES</div>
+                    <p class="body-prose">The briefing isn't a script to read aloud; it's a confidence engine. When you know the 'Landmines' and 'Hooks' cold, your cortisol drops. You stop thinking about your notes and start actively listening to the room. That presence is what wins the deal.</p>
                 </div>
             </div>
 
@@ -348,76 +403,57 @@ FORMAT: Concise. Bullet points. Ready to read on a mobile device.</pre>
                 <div class="terminal-header">
                     ADVANCED INTELLIGENCE ARCHIVE // For Practitioner Use
                 </div>
-                <p style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 2rem;">
+                <p class="body-prose" style="margin-bottom: 2rem;">
                     The core pipeline above solves 80% of meetings. These specialised prompts are for the other 20%: complex accounts, highly regulated entities, and deep-dive deal forensics. Click to copy directly to your clipboard.
                 </p>
 
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-02')">01_COMPACT_9_PILLAR <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-04')">02_BUDGET_CYCLE_PREDICT <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-06')">03_COMPACT_EXEC_PROFILE <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-07')">04_HIRING_SIGNAL_DECODE <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-10')">05_SLIDE_RELEVANCY_AUDIT <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-11')">06_PRE_MORTEM_SIMULATOR <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-13')">07_HALLUCINATION_CHECKER <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-15')">08_MULTI_SOURCE_ANALYSIS <span class="copy-badge">[COPY]</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-16')">09_NED_GOVERNANCE_MAP <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-01')">01_SOURCE_SCRAPING <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-02')">02_COMPACT_9_PILLAR <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-04')">03_BUDGET_CYCLE_PREDICT <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-06')">04_COMPACT_EXEC_PROFILE <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-07')">05_HIRING_SIGNAL_DECODE <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-10')">06_SLIDE_RELEVANCY_AUDIT <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-11')">07_PRE_MORTEM_SIMULATOR <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-12')">08_ACCUSATION_AUDIT_PREP <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-13')">09_HALLUCINATION_CHECKER <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-15')">10_MULTI_SOURCE_ANALYSIS <span class="copy-badge">[COPY]</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W1-16')">11_NED_GOVERNANCE_MAP <span class="copy-badge">[COPY]</span></button>
                 </div>
 
                 <div style="display: none;">
+                    <div class="prompt-console-title">W1-01</div>
+                    <div><pre>Before starting the GAIN intelligence chain, I am going to feed you raw source material. Do not analyse it yet. Just confirm receipt. I will provide: Company website, Annual report, LinkedIn company page, Target stakeholder profiles.</pre></div>
+                    
                     <div class="prompt-console-title">W1-02</div>
-                    <div><pre><code>Act as a Market Intelligence Analyst preparing a rapid pre-meeting brief.
-Extract intelligence across the 9 pillars (Strategy, Finance, Pain Points, Competitors, Tech, Regs, People, Language, Timeline) but in COMPACT format.
-FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Flag anything unverified. This briefing should be readable in 3 minutes.</code></pre></div>
+                    <div><pre>Act as a Market Intelligence Analyst preparing a rapid pre-meeting brief. Extract intelligence across the 9 pillars (Strategy, Finance, Pain Points, Competitors, Tech, Regs, People, Language, Timeline) but in COMPACT format. FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Flag anything unverified. This briefing should be readable in 3 minutes.</pre></div>
                     
                     <div class="prompt-console-title">W1-04</div>
-                    <div><pre><code>Based on the company's fiscal year end (FYE), predict their budget cycle behaviour.
-1. IDENTIFY: When is their FYE?
-2. MAPPING: Budget Setting Phase (Months 10-12)? Release Phase (Months 1-2)? Use-it-or-lose-it Phase (Month 11)?
-3. CURRENT STATUS: Where are we TODAY in their cycle?
-4. STRATEGY: Should I be pitching "spend now for impact" or "plan now for next year's budget"?</code></pre></div>
+                    <div><pre>Based on the company's fiscal year end (FYE), predict their budget cycle behaviour. 1. IDENTIFY: When is their FYE? 2. MAPPING: Budget Setting Phase (Months 10-12)? Release Phase (Months 1-2)? Use-it-or-lose-it Phase (Month 11)? 3. CURRENT STATUS: Where are we TODAY in their cycle? 4. STRATEGY: Should I be pitching "spend now for impact" or "plan now for next year's budget"?</pre></div>
 
                     <div class="prompt-console-title">W1-06</div>
-                    <div><pre><code>Analyse this LinkedIn profile. Produce a COMPACT PROFILE:
-1. ROLE SUMMARY: What they own. Who they report to. One sentence.
-2. TOP 3 PRIORITIES: Based on posts. Three bullet points.
-3. DECISION STYLE: Evidence-based or intuitive? One sentence.
-4. THE ONE QUESTION: A discovery question proving deep homework.
-5. RAPPORT HOOK: Personal dimension for an opener.</code></pre></div>
+                    <div><pre>Analyse this LinkedIn profile. Produce a COMPACT PROFILE: 1. ROLE SUMMARY: What they own. Who they report to. One sentence. 2. TOP 3 PRIORITIES: Based on posts. Three bullet points. 3. DECISION STYLE: Evidence-based or intuitive? One sentence. 4. THE ONE QUESTION: A discovery question proving deep homework. 5. RAPPORT HOOK: Personal dimension for an opener.</pre></div>
 
                     <div class="prompt-console-title">W1-07</div>
-                    <div><pre><code>Analyse these 3 recent job descriptions to find the "Hidden Mandate."
-1. WHAT'S MISSING: What skills are they hiring for that they don't have internally?
-2. TECH STACK: What specific tools are listed?
-3. REPORTING LINE: Who does this role report to?
-4. KEYWORDS: What words appear most often?
-5. CONCLUSION: Based on these hires, what unannounced project are they about to launch?</code></pre></div>
+                    <div><pre>Analyse these 3 recent job descriptions to find the "Hidden Mandate." 1. WHAT'S MISSING: What skills are they hiring for that they don't have internally? 2. TECH STACK: What specific tools are listed? 3. REPORTING LINE: Who does this role report to? 4. KEYWORDS: What words appear most often? 5. CONCLUSION: Based on these hires, what unannounced project are they about to launch?</pre></div>
 
                     <div class="prompt-console-title">W1-10</div>
-                    <div><pre><code>Based on the intelligence provided, audit my standard presentation deck outline.
-For each slide, recommend: KEEP, CUT, MODIFY, REORDER, or CREATE.
-CRITICAL: The first slide after the title must address THEIR context, not our company overview. Limit to 12 slides for a 30-min meeting.</code></pre></div>
+                    <div><pre>Based on the intelligence provided, audit my standard presentation deck outline. For each slide, recommend: KEEP, CUT, MODIFY, REORDER, or CREATE. CRITICAL: The first slide after the title must address THEIR context, not our company overview. Limit to 12 slides for a 30-min meeting.</pre></div>
 
                     <div class="prompt-console-title">W1-11</div>
-                    <div><pre><code>Imagine it is 6 months from now and we LOST this deal.
-Generate the 5 most likely reasons why we lost (e.g., Status Quo, Price, Stalled, Ignored Pain Point, Blocked by Detractor).
-For each reason, give me one pre-emptive action to take NOW to prevent it.</code></pre></div>
+                    <div><pre>Imagine it is 6 months from now and we LOST this deal. Generate the 5 most likely reasons why we lost (e.g., Status Quo, Price, Stalled, Ignored Pain Point, Blocked by Detractor). For each reason, give me one pre-emptive action to take NOW to prevent it.</pre></div>
+
+                    <div class="prompt-console-title">W1-12</div>
+                    <div><pre>Based on the company research, stakeholder profile, and battle card — identify the 3 most likely objections this prospect will raise. Write an Accusation Audit (Voss framework) for each. Format: "You're probably thinking [specific concern]. And you'd be right to think that. Here's what I'd want to know if I were in your position..."</pre></div>
 
                     <div class="prompt-console-title">W1-13</div>
-                    <div><pre><code>Verify every specific claim in the generated briefing against the original source text.
-Output a table: 1. CLAIM | 2. SOURCE (exact quote) | 3. VERDICT (VERIFIED / AMBIGUOUS / HALLUCINATED).
-If you cannot find a direct quote, mark it HALLUCINATED.</code></pre></div>
+                    <div><pre>Verify every specific claim in the generated briefing against the original source text. Output a table: 1. CLAIM | 2. SOURCE (exact quote) | 3. VERDICT (VERIFIED / AMBIGUOUS / HALLUCINATED). If you cannot find a direct quote, mark it HALLUCINATED.</pre></div>
 
                     <div class="prompt-console-title">W1-15</div>
-                    <div><pre><code>CROSS-REFERENCE the provided sources (Website vs LinkedIn vs Financials).
-1. NARRATIVE GAPS: Where does the website say one thing and LinkedIn/Financials say another?
-2. URGENCY SIGNALS: Build a timeline of recent announcements to explain WHY NOW.
-3. HIDDEN INTEL: What appears on only one source that others omit?</code></pre></div>
+                    <div><pre>CROSS-REFERENCE the provided sources (Website vs LinkedIn vs Financials). 1. NARRATIVE GAPS: Where does the website say one thing and LinkedIn/Financials say another? 2. URGENCY SIGNALS: Build a timeline of recent announcements to explain WHY NOW. 3. HIDDEN INTEL: What appears on only one source that others omit?</pre></div>
 
                     <div class="prompt-console-title">W1-16</div>
-                    <div><pre><code>Map the Governance structure and Non-Executive Directors (NEDs).
-1. COMMITTEE STRUCTURE: Who chairs Audit, Risk, and Remuneration? Which committee approves this deal?
-2. NED NETWORK MAP: What other boards do these NEDs sit on? Are there shared NEDs with our existing clients (for warm intros)?</code></pre></div>
+                    <div><pre>Map the Governance structure and Non-Executive Directors (NEDs). 1. COMMITTEE STRUCTURE: Who chairs Audit, Risk, and Remuneration? Which committee approves this deal? 2. NED NETWORK MAP: What other boards do these NEDs sit on? Are there shared NEDs with our existing clients (for warm intros)?</pre></div>
                 </div>
             </div>
 
@@ -516,11 +552,13 @@ If you cannot find a direct quote, mark it HALLUCINATED.</code></pre></div>
                     
                     setTimeout(() => {
                         badge.innerText = original;
-                        btn.style.borderColor = '';
-                        btn.style.color = '';
-                        badge.style.color = '';
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.color = '#cbd5e1';
+                        badge.style.color = '#3b82f6';
                     }, 2000);
                 });
+            } else {
+                console.error("Could not find prompt ID: " + promptID);
             }
         }
     </script>
