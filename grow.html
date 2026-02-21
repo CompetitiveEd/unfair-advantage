@@ -3,186 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nuture Continuous Growth. Operationalising AI across the pursuit lifecycle for account growth.">
-    <title>[N] Nurture - Grow them | David Matthews</title>
+    <meta name="description" content="Nurture Continuous Growth. Operationalising AI across the pursuit lifecycle for account growth.">
+    <title>[N] Nurture: Grow them | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* High-Density Typography */
+        .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
+        /* Page Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* The 2x2 Top Briefing Grid */
+        .top-briefing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto 4rem auto; }
+        .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+        .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Specific Card Accents */
+        .card-narrative { border-left: 3px solid #3b82f6; }
+        .card-narrative .briefing-card-title { color: #3b82f6; }
+        .card-psychology { border-left: 3px solid #8b5cf6; }
+        .card-psychology .briefing-card-title { color: #8b5cf6; }
+        
+        .gov-legend-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .checklist-item span { color: #3b82f6; font-weight: bold; }
+
+        /* Governance Tags */
+        .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+        /* The Chessboard Flow */
+        .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
+        .pill-blue-flow.active { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+
+        /* Command Dashboard (Accordion Layout) */
+        .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
+        .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .accordion-header:hover { background: rgba(255,255,255,0.02); }
+        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
+        .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
+        
+        .accordion-content { display: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
+        .accordion-item.open .accordion-content { display: block; }
+        .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
+        .accordion-item.open .accordion-toggle-btn { color: white; }
+
+        /* The New 4-Box Matrix */
+        .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
+        .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
+        
+        .box-objective .matrix-title { color: #94a3b8; }
+        .box-edge { border-left: 2px solid #f59e0b; }
+        .box-edge .matrix-title { color: #f59e0b; }
+        .box-output { border-left: 2px solid #3b82f6; }
+        .box-output .matrix-title { color: #3b82f6; }
+        .box-override { border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+        .box-override .matrix-title { color: #10b981; }
+
+        /* View Code Reveal */
+        .view-code-wrapper { text-align: center; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .btn-view-code { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .btn-view-code:hover { background: #3b82f6; color: white; }
+        
+        .terminal-container { display: none; margin-top: 1.5rem; }
+        .terminal-container.active { display: block; }
+        
+        /* Terminal Styling */
+        .terminal-block { background: #0f172a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .terminal-header-bar { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .terminal-dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; background: #334155; }
+        .copy-btn { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .copy-btn:hover { background: #3b82f6; color: white; }
+        .prompt-text { padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
+
+        /* Failures / Pitfalls Grid */
+        .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-red-text { color: #ef4444; font-weight: 900; }
+        
+        /* Terminal Prompt Library (Archive) */
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .top-briefing-grid { grid-template-columns: 1fr; }
+            .prompt-matrix { grid-template-columns: 1fr; }
+            .failures-grid { grid-template-columns: 1fr; }
+            .accordion-title-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
 </head>
 <body class="hero-compact">
 
     <div class="page-container">
-       
-       <nav>
-        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-links"> 
-            
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Evidence ▾</span>
-                <div class="dropdown-content">
-                    <a href="revenue-case.html">The Revenue Case</a>
-                    <a href="proof.html">The Proof</a>
-                    <a href="story.html">The Story</a>
-                    <a href="thinking.html">The Thinking</a>
-                </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">The System ▾</span>
-                <div class="dropdown-content">
-                    <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html">Human+AI</a>
-                    <a href="edge.html">The Edge</a>
-                </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Prompt Toolkit ▾</span>
-                <div class="dropdown-content">
-                    <a href="know.html">[G] Gather | Know them</a>
-                    <a href="map.html">[A] Assess | Map them</a>
-                    <a href="win.html">[I] Influence | Win them</a>
-                     <a href="grow.html" style="color: var(--primary);">[N] Nurture | Grow them</a>
-                </div>
-            </div>
-            
-            <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
-        </div>
-    </nav>
-       
         
+        <nav>
+            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links"> 
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Evidence ▾</span>
+                    <div class="dropdown-content">
+                        <a href="revenue-case.html">The Revenue Case</a>
+                        <a href="proof.html">The Proof</a>
+                        <a href="story.html">The Story</a>
+                        <a href="thinking.html">The Thinking</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">The System ▾</span>
+                    <div class="dropdown-content">
+                        <a href="thesis.html">The Thesis</a>
+                        <a href="human+ai.html">Human+AI</a>
+                        <a href="edge.html">The Edge</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <div class="dropdown-content">
+                        <a href="know.html">[G] Gather | Know them</a>
+                        <a href="map.html">[A] Assess | Map them</a>
+                        <a href="win.html">[I] Influence | Win them</a>
+                        <a href="grow.html" style="color: var(--primary);">[N] Nurture | Grow them</a>
+                    </div>
+                </div>
+                <a href="dashboards.html">Dashboards</a>
+                <a href="contact.html" class="nav-cta">Engage Me</a>
+            </div>
+        </nav>
 
         <header class="dark-header-block">
             <picture>
-    <source srcset="assets/images/grow.avif" type="image/avif">
-    <img src="assets/images/grow.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
-</picture>
+                <source srcset="assets/images/grow.avif" type="image/avif">
+                <img src="assets/images/grow.webp" class="hero-bg" alt="Nurturing the Account" style="opacity: 0.55;">
+            </picture>
             <div class="hero-impact">
                 <span class="hero-pre">[N] NURTURE | GROW THEM</span>
                 <h1 class="hero-headline">
                     <span style="color: #ffffff; display: block;">ONE DEAL IS AN EVENT.</span>
                     <span style="color: #3b82f6; display: block;">A FRANCHISE IS A SYSTEM.</span>
                 </h1>
-                <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+                <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
                 <p class="hero-subtext">
-                    The deal doesn't end at signature. This is where revenue is protected, expanded, and compounded.
+                    The deal doesn't end at signature. This is where revenue compounds.
                 </p>
-                <span class="hero-meta">CONTINUOUS — FROM SINGLE DEAL TO ACCOUNT FRANCHISE</span>
+                <span style="display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase;">
+                    CONTINUOUS — FROM SINGLE DEAL TO ACCOUNT FRANCHISE
+                </span>
             </div>
         </header>
+
         <main class="container-wide">
-            <div class="container-prose reveal">
-                <div class="phase-anchor">This is NURTURE — the fourth discipline of GAIN. Grow or die.</div>
 
-                <div class="worked-example-clean" style="margin-top: 0;">
-                    <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
-                        <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
-                        James had delivered brilliantly for 18 months. SLAs green across the board. Then he lost £2M of expansion business. Not because his delivery was poor. Because while he was focused on what he was already doing, someone else was having conversations about what the client needed next. [Nurture] Grow is the system that prevents this.
-                    </div>
-                </div>
-
-                <div class="blue-callout-short" style="margin-top: 2rem;">
-                    <strong>This week is different.</strong> This phase is different. Gather, Map, and Win are sequential. Grow is continuous. These prompts run monthly, quarterly, on every signal. They're the operating rhythm of account management.
+            <div class="container-wide reveal">
+                <div class="page-index-nav">
+                    <div class="index-step"><span>01. The Briefing</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>02. The Operating Rhythm</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>03. The Archive</span></div>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
+            <div class="top-briefing-grid reveal">
+                
+                <div class="briefing-card card-narrative">
+                    <div class="briefing-card-title">THE NARRATIVE</div>
+                    <p class="body-prose" style="font-style: italic;">
+                        James delivered brilliantly for 18 months. SLAs green across the board. Then he lost £2M of expansion business. Not because his delivery was poor, but because while he was focused on what he was already doing, someone else was having a conversation about what the client needed next.<br><br>
+                        <strong>[Nurture]</strong> is the system that prevents you from being blindsided in your own account.
+                    </p>
                 </div>
 
-                <div class="list-grid">
-                    <div class="list-col">
-                        <h3>GATHER</h3>
-                        <div class="list-item"><span class="list-num">01:</span> Current contract scope — what you deliver, SLA performance</div>
-                        <div class="list-item"><span class="list-num">02:</span> Latest company research — refresh [Gather] intelligence</div>
-                        <div class="list-item"><span class="list-num">03:</span> Account team knowledge — incident reports, governance notes</div>
-                        <div class="list-item"><span class="list-num">04:</span> Stakeholder updates — new hires, departures, reorgs</div>
+                <div class="briefing-card card-psychology">
+                    <div class="briefing-card-title">THE PSYCHOLOGY (MOMENTUM)</div>
+                    <p class="body-prose">
+                        Accounts do not stand still. They are either growing or dying. The moment you transition from "Strategic Partner" to "Reliable Utility" in the client's mind, you have lost control of the account. You must manufacture momentum. The AI's job is to scan the horizon so you can focus on the relationship.
+                    </p>
+                </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe for free AI tools. Uses LinkedIn or external research.</p>
                     </div>
-                    <div class="list-col">
-                        <h3>PREPARE</h3>
-                        <div class="list-item"><span class="list-num">05:</span> Current pipeline — opportunities already identified</div>
-                        <div class="list-item"><span class="list-num">06:</span> Competitor intelligence — who else serves this account?</div>
-                        <div class="list-item"><span class="list-num">07:</span> Relationship audit — who do you know well? Who is new?</div>
-                        <div class="list-item"><span class="list-num">08:</span> Contract timeline — renewal dates (yours and theirs)</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting SLA reports or contract data. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
                     </div>
                 </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">THE INGREDIENTS</div>
+                    <p class="body-prose" style="font-size: 0.8rem; margin-bottom: 1rem; font-style: italic;">To run the continuous cadence, gather these monthly:</p>
+                    <div class="checklist-item"><span>□</span> Current SLA and incident reports</div>
+                    <div class="checklist-item"><span>□</span> Governance notes / QBR transcripts</div>
+                    <div class="checklist-item"><span>□</span> Fresh LinkedIn scans of key stakeholders</div>
+                    <div class="checklist-item"><span>□</span> Your current internal account pipeline</div>
+                </div>
+
             </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
+            <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Continuous Rhythm</p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">FIND EXPANSION</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">EXPAND MAP</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">CAMPAIGN</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">QUALIFY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">DASHBOARD</span>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Continuous Operating Rhythm</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue-flow">FIND EXPANSION</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">EXPAND MAP</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">CAMPAIGN</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">QUALIFY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow active">DASHBOARD</span>
-                    </div>
-
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;">
-                        <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">RENEWAL</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">NEW LEADER</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">THREAT DETECT</span>
-                        <span style="color: var(--slate); opacity: 0.3;">•</span>
-                        <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: var(--slate); border-color: var(--border-dynamic); font-size: 0.6rem;">VALUE REPORT</span>
-                    </div>
-
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Row 1: The core account cycle. Row 2: Event-triggered and periodic prompts that run continuously.</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1.5rem;">
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: #94a3b8; border-color: rgba(255,255,255,0.1); font-size: 0.65rem;">RENEWAL</span>
+                    <span style="color: #64748b; opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: #94a3b8; border-color: rgba(255,255,255,0.1); font-size: 0.65rem;">NEW LEADER</span>
+                    <span style="color: #64748b; opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: #94a3b8; border-color: rgba(255,255,255,0.1); font-size: 0.65rem;">THREAT DETECT</span>
+                    <span style="color: #64748b; opacity: 0.3;">•</span>
+                    <span class="pill-blue-flow" style="background: rgba(255,255,255,0.03); color: #94a3b8; border-color: rgba(255,255,255,0.1); font-size: 0.65rem;">VALUE REPORT</span>
                 </div>
+
+                <p class="body-prose" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    Gather, Map, and Win are sequential. Nurture is not. Row 1 is the core account cycle. Row 2 contains the event-triggered prompts that run continuously.
+                </p>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">00</div>
-                    <div class="step-content">
-                        <span class="step-counter">PRE-START</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Warning Brief</h2>
-                            <span class="time-pill">~15 MIN</span>
+            <div class="category-section reveal">
+                <div class="category-title">00. The Pre-Start (Contract Handover)</div>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-00]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">The Warning Brief</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Bridges the gap between Sales and Delivery. Translates the winning proposal into strict commercial boundaries to prevent "scope creep" on Day 1.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Winning the bid is useless if you lose money on the delivery. This generates the commercial armour that protects your margin.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"The 'No' List: App remediation is strictly excluded. If the client asks for it, it immediately triggers a Change Request."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Do not email this. Put the Delivery Lead in a room, project this output on the screen, and make them verbally confirm they understand the "No" list.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Role: You are a Commercial Risk Officer bridging Sales and Delivery.
 
-                <div class="blue-callout-short">
-                    This prevents the "Sales sold a Ferrari, Delivery built a Fiat" argument. Ensures commercial protections survive into operations.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-00 // WARNING BRIEF GENERATOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Role: You are a Commercial Risk Officer bridging Sales and Delivery.
-
-Input: Winning Proposal, Commercial Exclusions (E-03), Signed Contract.
+Input: Winning Proposal, Commercial Exclusions, Signed Contract.
 
 Task: Draft a "Warning Brief" for the Delivery Lead.
 Structure:
@@ -191,48 +308,54 @@ Structure:
 3. THE LANDMINES: Contract vs Proposal differences.
 4. COMMERCIAL TRIGGERS: Events that must trigger a Change Request.
 
-[PASTE DOCUMENTS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">Winning the bid is useless if you lose money on the delivery. This prompt generates the commercial armour that protects your margin from "scope creep" and "data migration black holes" the moment the contract starts.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">01</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 1 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Find Expansion</h2>
-                            <span class="time-pill">~30 MIN</span>
+[PASTE DOCUMENTS HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="blue-callout-short">
-                    You see their operations from the inside. The Account Edition of Boring But Expensive finds the NEXT set of problems you can solve.
-                </div>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 01: The Core Account Cycle</div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-01]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Find Expansion Signals</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-01 // BORING BUT EXPENSIVE — ACCOUNT EDITION</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Strategic Account Director.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">The 'Account Edition' of Boring But Expensive. You see their operations from the inside. This finds the NEXT set of problems you can solve.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Service desk tickets and incident reports are goldmines. Recurring operational friction in areas you *don't* manage is your next pipeline opportunity.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Signal: Micro-outage cost is £2.8M and rising. This signals a need for the 'Predictive Resilience' module we didn't sell in Year 1."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ask your delivery engineers for the raw incident logs, not the polished QBR summary. The AI needs the raw mess to find the patterns.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Strategic Account Director.
 
 Input: Service reviews, incident reports, meeting minutes.
 
@@ -245,48 +368,50 @@ Look for:
 
 Output as a 'Growth Opportunity Register'.
 
-[PASTE DATA HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Signal 1:</strong> Service Desk FCR is 58% (target 72%). This signals a training/knowledge gap we can fill.<br><strong>Signal 2:</strong> Micro-outage cost is £2.8M and rising. This signals a need for the "Predictive Resilience" module we didn't sell in Year 1.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">02</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 2 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Expand the Map</h2>
-                            <span class="time-pill">~20 MIN</span>
+[PASTE DATA HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Who do you need to know that you don't know yet — and who in your existing network can introduce you?
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-02]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Stakeholder Expansion Mapper</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-02 // STAKEHOLDER EXPANSION MAPPING</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Networking Strategist.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Maps who you need to know in a new department, and exactly who in your existing network can introduce you to them.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Cold calling into an existing account is a failure of account management. Use the political capital you've earned to get a warm intro.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"The Bridge: Jennifer Morris (Current Champion) reports to David Osei (CRO Target). Drafts email for Jennifer to send to David."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Before you ask a champion for an intro, ask yourself: Have we actually delivered enough value for them to risk their own reputation recommending us?</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Networking Strategist.
 
 Context: We work with [EXISTING CONTACTS] in [DEPARTMENT].
 Target: We want to expand into [NEW DEPARTMENT].
@@ -295,48 +420,50 @@ Target: We want to expand into [NEW DEPARTMENT].
 2. Map the 'Bridge': How likely is it that our existing contacts know them?
 3. Draft a 'Referral Request': Write the email asking our champion to introduce us.
 
-[PASTE CURRENT CONTACTS AND TARGET AREA HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">You currently have strong relationships with Andrew Chen (IT Infrastructure). The expansion target is David Osei (CRO).<br><strong>Bridge:</strong> Jennifer Morris reports to Osei. We have delivered the ISO 22301 success for Morris. She is the bridge. The referral request: "Jennifer, David Osei mentioned third-party risk in his annual report. We have data from your audit that supports his point. Would you be open to a joint briefing?"</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">03</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 3 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Plan the Campaign</h2>
-                            <span class="time-pill">~30 MIN</span>
+[PASTE CURRENT CONTACTS AND TARGET AREA HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    A specific, 12-week plan with named actions, named owners, and measurable milestones. This is the operating document.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-03]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">90-Day Campaign Assembly</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-03 // 90-DAY CAMPAIGN ASSEMBLY</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Campaign Director.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Builds a specific, 12-week execution plan with named actions, named owners, and measurable milestones to drive an expansion opportunity.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">A strategy without a timeline is just a wish. The campaign assembly forces accountability onto the account team.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Month 1: Value workshop with Finance. Month 2: Capability proof. Month 3: Proposal aligned to their September budget cycle."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">A campaign without weekly governance is fiction. Put this output directly into your CRM or Monday morning team meeting agenda.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Campaign Director.
 
 Goal: Move from [CURRENT STATE] to [DESIRED STATE].
 
@@ -348,96 +475,100 @@ For each week define:
 - The Owner.
 - The Success Metric.
 
-[PASTE GOAL AND CONTEXT HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Goal:</strong> Secure Year 2 Cloud Migration Budget.<br><strong>Month 1:</strong> Capacity forecasting data (from HIO platform) presented to Chen.<br><strong>Month 2:</strong> "Cloud Economics" workshop with Finance.<br><strong>Month 3:</strong> Proposal submission aligned to September budget cycle.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">04</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 4 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Qualify</h2>
-                            <span class="time-pill">~15 MIN</span>
+[PASTE GOAL AND CONTEXT HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Not every opportunity deserves investment. This prompt forces the qualification decision with evidence.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-04]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Qualify In / Qualify Out</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-04 // QUALIFY IN / QUALIFY OUT</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Sales Director.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Not every opportunity inside an existing account deserves investment. This forces a brutal, evidence-based qualification decision using MEDDIC.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Account teams often chase "friendly" contacts for dead-end deals while ignoring the hostile stakeholders with actual budget.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"RED: Decision Criteria. (Security Ops may have preferred vendor). Recommendation: PURSUE — but fix the red before Month 2."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">If the AI recommends "Pursue" but flags that you don't have access to the Economic Buyer, manually override the decision to "Park."</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Sales Director.
 
 Evaluate opportunity against MEDDIC framework. Score each letter Red/Amber/Green.
 - Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion.
 
 Recommendation: PURSUE, PARK, or WALK AWAY? Explain why.
 
-[PASTE FACTS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">Run W4-04 against the security ops expansion opportunity.<br><strong>GREEN:</strong> Metrics (incident handoff data proves problem), Champion (Morris).<br><strong>AMBER:</strong> Economic Buyer (Thompson hasn't been engaged yet).<br><strong>RED:</strong> Decision Criteria (Security Ops may have preferred vendor — intelligence gap).<br>Recommendation: PURSUE — but fix the red before Month 2.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">05</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 5 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">The Dashboard</h2>
-                            <span class="time-pill">~15 MIN</span>
+[PASTE FACTS HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    One page. This is what the Managing Director sees quarterly. Performance RAG. Risks. Opportunities.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-05]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Account Health Dashboard</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-05 // ACCOUNT HEALTH DASHBOARD</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Synthesize account data into a 'One-Page Executive Dashboard'.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Synthesises all tactical account data into a single, executive-ready dashboard showing Performance RAG, Risks, and Opportunities.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Your Managing Director doesn't want to read a 12-page status report. Give them the single page that tells them if the revenue is safe or at risk.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Financial: GREEN. Strategic: AMBER (Phase 2 launching, we are not positioned). Opportunity: Innovation Fund is underspent."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Never send a dashboard showing "RED" without manually adding your 3-step action plan to turn it Green directly beneath it.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Synthesize account data into a 'One-Page Executive Dashboard'.
 
 Sections:
 1. Financial Health (Revenue, Margin).
@@ -447,48 +578,54 @@ Sections:
 5. Top 3 Growth Opportunities.
 6. Top 3 Risks.
 
-[PASTE ALL ACCOUNT DATA HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Financial:</strong> GREEN — £16.5M contract performing.<br><strong>Strategic:</strong> AMBER — "Meridian 2030" Phase 2 is launching, and we are not yet positioned for the Data Platform work.<br><strong>Opportunity:</strong> Innovation Fund (£320k) is currently underspent. Risk of "use-it-or-lose-it" clawback.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">06</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 6 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Renewal Intelligence</h2>
-                            <span class="time-pill">~30 MIN</span>
+[PASTE ALL ACCOUNT DATA HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="blue-callout-short">
-                    Renewals are won or lost 18 months before expiry. This prompt builds the renewal strategy while you still have time.
-                </div>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 02: Event-Triggered Actions</div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-06]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Renewal Intelligence (18-Month Out)</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-06 // CONTRACT RENEWAL INTELLIGENCE</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a strategic account director planning for renewal 18 months out.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Builds the renewal strategy while you still have time to influence the outcome, assessing what has changed since you won the deal.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Renewals are won or lost 18 months before expiry. If you're only thinking about renewal when procurement sends you a letter, you've already lost.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Risk Assessment: Original sponsor has left. Value Delivered: Strong operational, weak strategic. Plan: Execute Value Report to new C-Suite immediately."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Force the AI to evaluate your pricing model against current market conditions. Are you currently charging a premium that a disruptor will undercut?</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a strategic account director planning for renewal 18 months out.
 
 Produce:
 1. RENEWAL RISK ASSESSMENT: What has changed since contract award?
@@ -498,48 +635,50 @@ Produce:
 5. RENEWAL STRATEGY: Renew as-is, expand, or transform?
 6. 18-MONTH ACTION PLAN.
 
-[PASTE CONTRACT DATA, PERFORMANCE, STAKEHOLDER MAP]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">The Helios contract runs 5+2 years. The extension decision comes at month 48. That means the extension conversation starts internally at Meridian around month 36. Helios needs to be shaping that conversation from month 30. If you're only thinking about renewal when procurement sends you a letter, you've already lost.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">07</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 7 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">New Leadership Response</h2>
-                            <span class="time-pill">~20 MIN</span>
+[PASTE CONTRACT DATA, PERFORMANCE, STAKEHOLDER MAP]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Every leadership change is a threat and an opportunity. This prompt builds the rapid response plan for the first 30 days.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-07]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">New Leadership Response Protocol</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-07 // NEW LEADERSHIP RESPONSE PROTOCOL</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">A new senior leader has joined.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">A rapid-response plan for the first 30 days when a new executive joins your client. Every new leader is both a threat and an opportunity.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">A meeting without intelligence is a pitch. A meeting with intelligence is a conversation. Get informed first, get introduced second.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Threat: New CIO used our main competitor at their last firm. Plan: Do not pitch. Lead with a 'State of the Union' data briefing on their new estate."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">If the AI suggests reaching out directly on LinkedIn, ignore it. Have your executive sponsor at the client introduce you as a trusted advisor.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">A new senior leader has joined the client organization.
 
 1. PROFILE: Career, priorities, previous vendors.
 2. THREAT ASSESSMENT: Did they use a competitor?
@@ -547,95 +686,99 @@ Produce:
 4. 30-DAY ENGAGEMENT PLAN: Who introduces us? What do we lead with?
 5. FIRST MEETING BRIEFING.
 
-[PASTE LINKEDIN PROFILE AND CONTEXT]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The first instinct is to get in front of the new leader fast. The experienced instinct is to get informed first and introduced second. A meeting without intelligence is a pitch. A meeting with intelligence is a conversation.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">08</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 8 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Threat Detection</h2>
-                            <span class="time-pill">MONTHLY</span>
+[PASTE LINKEDIN PROFILE AND CONTEXT]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Competitors don't announce they're targeting your account. This prompt builds the monthly early warning scan.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-08]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Threat Detection Scan</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-08 // COMPETITIVE THREAT DETECTION</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a competitive intelligence analyst.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Analyses subtle signals to detect if a competitor is circling your account before it's too late.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Competitors don't announce they are targeting your account. They do it through LinkedIn connections, conference alignments, and quiet meetings.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Threat (HIGH): Procurement lead connected with two competitor Sales Directors last week. Recommend: Pre-emptive commercial health-check meeting."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Don't act paranoid. If you detect a threat, never mention the competitor. Just aggressively reinforce your unique value in that exact area.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a competitive intelligence analyst.
 
 Check for signals: LinkedIn connections, Hiring patterns, Event attendance, Operational mentions, Procurement activity.
 
 For each signal: Rate threat level (LOW/MED/HIGH) and recommend action.
 
-[PASTE OBSERVATIONS AND GOVERNANCE NOTES]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">Monthly scan reveals: Sarah Blackwell (Procurement) connected with two sales directors from a global competitor on LinkedIn last week. Harrison mentioned "exploring options for network infrastructure" in the last governance meeting. A competitor presented at the same FCA resilience conference Jennifer Morris attended.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">09</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 9 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Value Realisation</h2>
-                            <span class="time-pill">QUARTERLY</span>
+[PASTE OBSERVATIONS AND GOVERNANCE NOTES]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    This is the document that goes to the board — not operational metrics, but business outcomes enabled by the partnership.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-09]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Value Realisation Report</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-09 // VALUE REALISATION REPORT GENERATOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a strategic account director producing a board-level report.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Translates operational metrics into a board-level report focused on business outcomes enabled by the partnership.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">SLA reports are for IT managers. Value reports are for the board. If the board only sees how much you cost, and never sees what you enable, you are a commodity.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"SLA: 99.7% availability. <br>Value Report: 'Reduced alert noise by 67%, freeing 340 FTE hours for the Meridian 2030 programme.'"</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">If the AI cannot tie your operational metric to one of the CFO's strategic pillars (found in Phase G), then the metric is useless to the board.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a strategic account director producing a board-level report.
 
 Produce:
 1. EXECUTIVE SUMMARY: Business value delivered.
@@ -644,48 +787,50 @@ Produce:
 4. STRATEGIC ALIGNMENT: Mapping to their priorities.
 5. FORWARD VIEW.
 
-[PASTE PERFORMANCE DATA AND BUSINESS CONTEXT]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">The SLA report says: "99.7% availability, P1 incidents resolved within SLA."<br>The value report says: "Achieved ISO 22301 certification milestone 2 months early (Accelerator Bonus triggered). Reduced alert noise by 67%, freeing 340 FTE hours for the Meridian 2030 programme."<br>The first is for the IT manager. The second is for the board.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">10</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 10 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Intelligence Refresh</h2>
-                            <span class="time-pill">MONTHLY</span>
+[PASTE PERFORMANCE DATA AND BUSINESS CONTEXT]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    This prompt runs the intelligence refresh monthly — flagging what has CHANGED since your last scan.
-                </div>
-
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-10]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">Continuous Intelligence Monitor</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt uses publicly available information only. Safe to use in any AI tool including free-tier ChatGPT, Gemini, or Claude.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-10 // CONTINUOUS INTELLIGENCE MONITOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as an intelligence analyst.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Runs a monthly automated check of your original Gather intelligence to flag exactly what has changed.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The original intelligence you gathered in Month 1 is obsolete by Month 6. If you don't refresh the data, you'll pitch an old strategy to a new problem.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Change Flag: Meridian posted 3 new job listings for 'Cloud Security Architect' — signals Phase 2 of transformation is moving to execution."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Set a calendar reminder for the first Tuesday of every month. Feed the new PRs and Job Board data into this prompt. It takes 5 minutes to stay relevant.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as an intelligence analyst.
 
 Compare this month's sources against baseline. Flag ONLY changes:
 1. NEW STRATEGIC SIGNALS.
@@ -694,48 +839,50 @@ Compare this month's sources against baseline. Flag ONLY changes:
 4. REGULATORY CHANGES.
 5. COMPETITIVE SIGNALS.
 
-[PASTE THIS MONTH'S SOURCES AND BASELINE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">Monthly refresh flags: Meridian posted 3 new job listings for "Cloud Security Architect" — signals Phase 2 of Meridian 2030 is moving to execution. Whitfield's LinkedIn post mentions "pan-European resilience" — language suggesting geographic expansion. Thompson presented at an investor conference and referenced "managed services cost glide path".</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">11</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 11 OF 11</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Internal Business Case</h2>
-                            <span class="time-pill">~20 MIN</span>
+[PASTE THIS MONTH'S SOURCES AND BASELINE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Before you can win the deal externally, you need to win the resource allocation internally. This prompt builds the case for investment.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[N-11]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Internal Business Case Builder</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W4-11 // INTERNAL BUSINESS CASE BUILDER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a pursuit director. Build a one-page investment case.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Builds the commercial case for internal investment. Before you can win the deal externally, you need to win the resource allocation internally.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">If your internal business case doesn't include an honest assessment of "Win Probability," your leadership is making resource decisions blind.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Investment Required: 6 weeks of bid team time. Return: £65M contract, 14% margin, Flagship Reference. Recommendation: Pursue."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Do not let the AI fabricate margin projections. Inject your exact delivery costs manually before generating the final report.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a pursuit director. Build a one-page investment case.
 
 1. OPPORTUNITY SUMMARY.
 2. WIN PROBABILITY (Honest assessment).
@@ -745,88 +892,198 @@ Compare this month's sources against baseline. Flag ONLY changes:
 6. RISK FACTORS.
 7. RECOMMENDATION (Pursue/Park/Walk).
 
-[PASTE QUALIFICATION DATA AND DEAL CONTEXT]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+[PASTE QUALIFICATION DATA AND DEAL CONTEXT]</pre>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">The original Meridian pursuit required 6 weeks of bid team time and 2 senior engineers. The business case should quantify: £65-80M contract value over 5+2 years, 14% target margin, Meridian as a flagship regulated FS reference, portfolio effect. If your internal business case doesn't include win probability with honest reasoning, your leadership is making resource decisions blind.</p>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
+            <div class="container-wide reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 1: The Silent Exit</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">The dashboard was green. The AI sentiment analysis said "Strong". But the key decision-maker stopped attending QBRs three months ago. We lost the renewal to a competitor with lower uptime but higher trust.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Data is not a relationship. If you stop reading the room, you lose.</span>
-                </div>
+                <div class="failures-grid">
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 1: The Silent Exit</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">The dashboard was green. The AI sentiment analysis said "Strong". But the key decision-maker stopped attending QBRs three months ago. We lost the renewal.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Data is not a relationship. If you stop reading the room, you lose.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 2: The Campaign Nobody Followed</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Built a beautiful 90-day campaign. Reviewed it once. Never looked at it again. By [Nurture] Grow them, the campaign was fiction.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> A campaign without weekly governance is just a document.</span>
-                </div>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 2: The Fiction Campaign</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Built a beautiful 90-day campaign. Reviewed it once. Never looked at it again. By the time the RFP arrived, the campaign was entirely fiction.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> A campaign without weekly governance is just a document.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 3: The Renewal That Was Already Lost</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Delivery was excellent for four years. Every SLA met. But when the renewal conversation started, procurement had already shortlisted two competitors. A rival account director had been building relationships with the new CFO for 12 months.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Delivery earns the right to renew. It doesn't guarantee the renewal. If you're not running W4-08 (Threat Detection) continuously, someone else is doing the selling you've stopped doing.</span>
-                </div>
-            </div>
-
-            <div class="container-wide reveal">
-                <div class="section-divider" style="margin-top: 6rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">PROMPT LIBRARY</div>
-                    <div class="divider-line"></div>
-                </div>
-                
-                <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ACCOUNT INTELLIGENCE</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-00')">W4-00 // WARNING BRIEF <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-01')">W4-01 // EXPANSION SIGNALS <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-02')">W4-02 // STAKEHOLDER EXPANSION <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-10')">W4-10 // INTELLIGENCE REFRESH <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">CAMPAIGN PLANNING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-03')">W4-03 // 90-DAY CAMPAIGN <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-04')">W4-04 // QUALIFY IN/OUT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-05')">W4-05 // ACCOUNT DASHBOARD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-11')">W4-11 // BUSINESS CASE <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION & DEFENCE</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-06')">W4-06 // RENEWAL INTEL <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-07')">W4-07 // NEW LEADERSHIP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-08')">W4-08 // THREAT DETECTION <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W4-09')">W4-09 // VALUE REPORT <span class="copy-badge">Copy</span></button>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 3: Delivery Entitlement</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">Delivery was excellent for four years. But when the renewal started, procurement had already shortlisted competitors. Someone else was selling while we were resting.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Delivery earns the right to renew. It doesn't guarantee it. Run the Threat Scan continuously.</span>
+                    </div>
                 </div>
             </div>
 
             <div class="reveal" style="text-align: center; margin-top: 4rem; margin-bottom: 2rem; padding: 3rem 2rem; background: rgba(59, 130, 246, 0.03); border: 1px solid rgba(59, 130, 246, 0.1); border-radius: 12px;">
-                <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;">THE SWARM EFFECT</p>
-                <p style="font-size: 1.1rem; font-weight: 600; color: var(--text-heading); max-width: 600px; margin: 0 auto 1.5rem auto; line-height: 1.6;">This is where GAIN becomes continuous. Where the system moves as one. [Nurture] Grow them doesn't end — it feeds back into [Gather] Know them. Intelligence refreshes. Maps update. Win themes evolve. The flock turns together.</p>
-                <p style="font-size: 0.85rem; color: var(--slate); max-width: 500px; margin: 0 auto;">No single bird leads. The system leads. That's the unfair advantage.</p>
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;">THE SWARM EFFECT</p>
+                <p style="font-size: 1.1rem; font-weight: 600; color: white; max-width: 600px; margin: 0 auto 1.5rem auto; line-height: 1.6;">This is where GAIN becomes continuous. Where the system moves as one. [Nurture] Grow them doesn't end — it feeds back into [Gather] Know them. Intelligence refreshes. Maps update. Win themes evolve.</p>
+                <p style="font-size: 0.85rem; color: #94a3b8; max-width: 500px; margin: 0 auto;">No single bird leads. The system leads. That's the unfair advantage.</p>
+            </div>
+
+            <div class="terminal-repo reveal">
+                <div class="terminal-header">
+                    ADVANCED INTELLIGENCE ARCHIVE // Quick-Copy Terminal
+                </div>
+                <p class="body-prose" style="margin-bottom: 2rem;">
+                    For practitioners who know the system. Click to copy directly to your clipboard.
+                </p>
+
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ACCOUNT INTELLIGENCE</h4>
+                <div class="library-grid">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-00')">N-00 // WARNING BRIEF <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-01')">N-01 // EXPANSION SIGNALS <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-02')">N-02 // STAKEHOLDER EXPANSION <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-10')">N-10 // INTELLIGENCE REFRESH <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">CAMPAIGN PLANNING</h4>
+                <div class="library-grid">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-03')">N-03 // 90-DAY CAMPAIGN <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-04')">N-04 // QUALIFY IN/OUT <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-05')">N-05 // ACCOUNT DASHBOARD <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-11')">N-11 // BUSINESS CASE <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">EXECUTION & DEFENCE</h4>
+                <div class="library-grid" style="margin-bottom: 0;">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-06')">N-06 // RENEWAL INTEL <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-07')">N-07 // NEW LEADERSHIP <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-08')">N-08 // THREAT DETECTION <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'N-09')">N-09 // VALUE REPORT <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <div style="display: none;">
+                    <div class="prompt-console-title">N-00</div>
+                    <div><pre>Role: You are a Commercial Risk Officer bridging Sales and Delivery.
+Input: Winning Proposal, Commercial Exclusions, Signed Contract.
+Task: Draft a "Warning Brief" for the Delivery Lead.
+Structure:
+1. THE PROMISE: High-level summary of the outcome sold.
+2. THE "NO" LIST: Specific exclusions.
+3. THE LANDMINES: Contract vs Proposal differences.
+4. COMMERCIAL TRIGGERS: Events that must trigger a Change Request.
+[PASTE DOCUMENTS HERE]</pre></div>
+                    
+                    <div class="prompt-console-title">N-01</div>
+                    <div><pre>Act as a Strategic Account Director.
+Input: Service reviews, incident reports, meeting minutes.
+Task: Identify 'Expansion Signals' (White Space Analysis).
+Look for:
+1. Operational friction in areas we DON'T manage.
+2. Recurring manual workarounds.
+3. Complaints about other vendors.
+4. Compliance risks adjacent to our scope.
+Output as a 'Growth Opportunity Register'.
+[PASTE DATA HERE]</pre></div>
+                    
+                    <div class="prompt-console-title">N-02</div>
+                    <div><pre>Act as a Networking Strategist.
+Context: We work with [EXISTING CONTACTS] in [DEPARTMENT].
+Target: We want to expand into [NEW DEPARTMENT].
+1. Who are the 'Target Roles' we need to reach?
+2. Map the 'Bridge': How likely is it that our existing contacts know them?
+3. Draft a 'Referral Request': Write the email asking our champion to introduce us.
+[PASTE CURRENT CONTACTS AND TARGET AREA HERE]</pre></div>
+
+                    <div class="prompt-console-title">N-03</div>
+                    <div><pre>Act as a Campaign Director.
+Goal: Move from [CURRENT STATE] to [DESIRED STATE].
+Create a '90-Day Campaign Plan' (Week by Week).
+Phases: Discovery, Value Engineering, Proposal.
+For each week define: The Action, The Owner, The Success Metric.
+[PASTE GOAL AND CONTEXT HERE]</pre></div>
+
+                    <div class="prompt-console-title">N-04</div>
+                    <div><pre>Act as a Sales Director.
+Evaluate opportunity against MEDDIC framework. Score each letter Red/Amber/Green.
+Recommendation: PURSUE, PARK, or WALK AWAY? Explain why.
+[PASTE FACTS HERE]</pre></div>
+
+                    <div class="prompt-console-title">N-05</div>
+                    <div><pre>Synthesize account data into a 'One-Page Executive Dashboard'.
+Sections:
+1. Financial Health (Revenue, Margin).
+2. Operational Health (SLA, Incidents).
+3. Relationship Health (Coverage).
+4. Strategic Alignment (Future relevance).
+5. Top 3 Growth Opportunities.
+6. Top 3 Risks.
+[PASTE ALL ACCOUNT DATA HERE]</pre></div>
+
+                    <div class="prompt-console-title">N-06</div>
+                    <div><pre>Act as a strategic account director planning for renewal 18 months out.
+Produce:
+1. RENEWAL RISK ASSESSMENT.
+2. VALUE DELIVERED vs PROMISED.
+3. STAKEHOLDER SENTIMENT.
+4. COMPETITIVE THREAT.
+5. RENEWAL STRATEGY: Renew as-is, expand, or transform?
+6. 18-MONTH ACTION PLAN.
+[PASTE CONTRACT DATA AND PERFORMANCE HERE]</pre></div>
+
+                    <div class="prompt-console-title">N-07</div>
+                    <div><pre>A new senior leader has joined the client organization.
+1. PROFILE: Career, priorities, previous vendors.
+2. THREAT ASSESSMENT: Did they use a competitor?
+3. OPPORTUNITY ASSESSMENT: Alignment with our unsold capabilities?
+4. 30-DAY ENGAGEMENT PLAN.
+5. FIRST MEETING BRIEFING.
+[PASTE LINKEDIN PROFILE AND CONTEXT]</pre></div>
+
+                    <div class="prompt-console-title">N-08</div>
+                    <div><pre>Act as a competitive intelligence analyst.
+Check for signals: LinkedIn connections, Hiring patterns, Event attendance, Operational mentions, Procurement activity.
+For each signal: Rate threat level (LOW/MED/HIGH) and recommend action.
+[PASTE OBSERVATIONS AND GOVERNANCE NOTES]</pre></div>
+
+                    <div class="prompt-console-title">N-09</div>
+                    <div><pre>Act as a strategic account director producing a board-level report.
+Produce:
+1. EXECUTIVE SUMMARY: Business value delivered.
+2. OUTCOMES DELIVERED: "Protected £X revenue" not "Resolved incident".
+3. VALUE BEYOND CONTRACT: Innovation, risk mitigation.
+4. STRATEGIC ALIGNMENT: Mapping to their priorities.
+[PASTE PERFORMANCE DATA AND BUSINESS CONTEXT]</pre></div>
+
+                    <div class="prompt-console-title">N-10</div>
+                    <div><pre>Act as an intelligence analyst.
+Compare this month's sources against baseline. Flag ONLY changes:
+1. NEW STRATEGIC SIGNALS.
+2. LEADERSHIP CHANGES.
+3. FINANCIAL CHANGES.
+4. REGULATORY CHANGES.
+5. COMPETITIVE SIGNALS.
+[PASTE THIS MONTH'S SOURCES AND BASELINE]</pre></div>
+
+                    <div class="prompt-console-title">N-11</div>
+                    <div><pre>Act as a pursuit director. Build a one-page investment case.
+1. OPPORTUNITY SUMMARY.
+2. WIN PROBABILITY.
+3. INVESTMENT REQUIRED.
+4. EXPECTED RETURN.
+5. COMPETITIVE LANDSCAPE.
+6. RISK FACTORS.
+7. RECOMMENDATION (Pursue/Park/Walk).
+[PASTE QUALIFICATION DATA AND DEAL CONTEXT]</pre></div>
+                </div>
             </div>
 
             <div style="text-align: center; margin-top: 2rem; margin-bottom: 4rem;">
-                <a href="thesis.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: var(--primary); color: white; text-decoration: none; border-radius: 6px; font-weight: 700; margin-right: 1rem; transition: transform 0.2s;">REVISIT THE THESIS</a>
-                <a href="index.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-body); text-decoration: none; border-radius: 6px; font-weight: 700; transition: all 0.2s;">BACK TO START</a>
+                <a href="thesis.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: #3b82f6; color: white; text-decoration: none; border-radius: 6px; font-weight: 700; margin-right: 1rem; transition: background 0.2s;">REVISIT THE THESIS</a>
+                <a href="index.html" style="display: inline-block; padding: 1.25rem 3rem; font-size: 0.9rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #cbd5e1; text-decoration: none; border-radius: 6px; font-weight: 700; transition: all 0.2s;">BACK TO START</a>
             </div>
 
         </main>
@@ -849,87 +1106,119 @@ Compare this month's sources against baseline. Flag ONLY changes:
                 No hype. Just results. © 2026
             </div>
         </footer>
+    </div>
 
-        <script>
-            // TOGGLE PROMPT EXPANSION
-            function togglePrompt(btn) {
-                const content = btn.parentElement.previousElementSibling;
-                content.classList.toggle('expanded');
-                btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
             }
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
+                });
+            }, { threshold: 0.1 });
 
-            // COPY FUNCTIONALITY
-            function copyPrompt(btn) {
-                const content = btn.parentElement.previousElementSibling.innerText;
-                navigator.clipboard.writeText(content).then(() => {
-                    const original = btn.innerText;
-                    btn.innerText = 'COPIED ✓';
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
+        });
+
+        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        function toggleAccordion(header) {
+            const currentItem = header.parentElement;
+            const isOpen = currentItem.classList.contains('open');
+
+            if (!isOpen) {
+                currentItem.classList.add('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[− CLOSE]';
+            } else {
+                currentItem.classList.remove('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[+ VIEW]';
+            }
+        }
+
+        // VIEW CODE TOGGLE
+        function toggleCode(btn) {
+            const container = btn.parentElement.nextElementSibling;
+            const isActive = container.classList.contains('active');
+            
+            if(!isActive) {
+                container.classList.add('active');
+                btn.innerText = 'HIDE PROMPT CODE';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+            } else {
+                container.classList.remove('active');
+                btn.innerText = '👁 VIEW PROMPT CODE';
+                btn.style.background = 'transparent';
+                btn.style.color = '#3b82f6';
+            }
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        function copyPromptText(btn) {
+            const terminalBlock = btn.closest('.terminal-block');
+            const promptText = terminalBlock.querySelector('.prompt-text').innerText;
+            
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#3b82f6';
+                }, 2000);
+            });
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Archive Prompts)
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.prompt-console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const content = title.nextElementSibling; 
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = '[COPIED]';
+                    btn.style.borderColor = '#10b981';
                     btn.style.color = '#10b981';
+                    badge.style.color = '#10b981';
+                    
                     setTimeout(() => {
-                        btn.innerText = original;
-                        btn.style.color = '';
+                        badge.innerText = original;
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.color = '#cbd5e1';
+                        badge.style.color = '#3b82f6';
                     }, 2000);
                 });
+            } else {
+                console.error("Could not find prompt ID: " + promptID);
             }
-
-            // LIBRARY COPY FUNCTIONALITY
-            function copyLibraryPrompt(btn, promptID) {
-                const titles = document.querySelectorAll('.console-title');
-                let foundCode = null;
-
-                titles.forEach(title => {
-                    if (title.innerText.includes(promptID)) {
-                        // Step up to the header, then over to the wrapper
-                        const wrapper = title.parentElement.nextElementSibling; 
-                        const content = wrapper.querySelector('.prompt-content');
-                        if (content) foundCode = content.innerText;
-                    }
-                });
-
-                if (foundCode) {
-                    navigator.clipboard.writeText(foundCode).then(() => {
-                        const badge = btn.querySelector('.copy-badge');
-                        const original = badge.innerText;
-                        badge.innerText = 'COPIED';
-                        badge.style.background = '#10b981';
-                        setTimeout(() => {
-                            badge.innerText = original;
-                            badge.style.background = '';
-                        }, 2000);
-                    });
-                } else {
-                    console.warn('Prompt ID not found:', promptID);
-                }
-            }
-
-            // MOBILE MENU + SCROLL REVEAL
-            document.addEventListener('DOMContentLoaded', () => {
-                const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                if (mobileMenuToggle && navLinks) {
-                    mobileMenuToggle.addEventListener('click', () => {
-                        mobileMenuToggle.classList.toggle('active');
-                        navLinks.classList.toggle('active');
-                    });
-                }
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.reveal').forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top < window.innerHeight) {
-                        el.classList.add('active');
-                    }
-                    observer.observe(el);
-                });
-            });
-        </script>
-    </div>
+        }
+    </script>
 </body>
 </html>

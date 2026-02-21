@@ -3,61 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Win them - Generating outcome-centric sales narratives.">
-    <title>[I] Influence - WIN them | David Matthews</title>
+    <meta name="description" content="Influence them. Generate outcome-centric sales narratives with the GAIN Prompt Chain.">
+    <title>[I] Influence: Win them | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* High-Density Typography */
+        .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
+        /* Page Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* The 2x2 Top Briefing Grid */
+        .top-briefing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto 4rem auto; }
+        .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+        .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Specific Card Accents */
+        .card-narrative { border-left: 3px solid #3b82f6; }
+        .card-narrative .briefing-card-title { color: #3b82f6; }
+        .card-psychology { border-left: 3px solid #8b5cf6; }
+        .card-psychology .briefing-card-title { color: #8b5cf6; }
+        
+        .gov-legend-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .checklist-item span { color: #3b82f6; font-weight: bold; }
+
+        /* Governance Tags */
+        .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+        /* The Chessboard Flow */
+        .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
+        .pill-blue-flow.active { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+
+        /* Command Dashboard (Accordion Layout) */
+        .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
+        .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .accordion-header:hover { background: rgba(255,255,255,0.02); }
+        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
+        .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
+        
+        .accordion-content { display: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
+        .accordion-item.open .accordion-content { display: block; }
+        .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
+        .accordion-item.open .accordion-toggle-btn { color: white; }
+
+        /* The New 4-Box Matrix */
+        .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
+        .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
+        
+        .box-objective .matrix-title { color: #94a3b8; }
+        .box-edge { border-left: 2px solid #f59e0b; }
+        .box-edge .matrix-title { color: #f59e0b; }
+        .box-output { border-left: 2px solid #3b82f6; }
+        .box-output .matrix-title { color: #3b82f6; }
+        .box-override { border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+        .box-override .matrix-title { color: #10b981; }
+
+        /* View Code Reveal */
+        .view-code-wrapper { text-align: center; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .btn-view-code { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .btn-view-code:hover { background: #3b82f6; color: white; }
+        
+        .terminal-container { display: none; margin-top: 1.5rem; }
+        .terminal-container.active { display: block; }
+        
+        /* Terminal Styling */
+        .terminal-block { background: #0f172a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .terminal-header-bar { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .terminal-dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; background: #334155; }
+        .copy-btn { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .copy-btn:hover { background: #3b82f6; color: white; }
+        .prompt-text { padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
+
+        /* Failures / Pitfalls Grid */
+        .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-red-text { color: #ef4444; font-weight: 900; }
+        
+        /* Terminal Prompt Library (Archive) */
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .top-briefing-grid { grid-template-columns: 1fr; }
+            .prompt-matrix { grid-template-columns: 1fr; }
+            .failures-grid { grid-template-columns: 1fr; }
+            .accordion-title-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
 </head>
 <body class="hero-compact">
 
     <div class="page-container">
-       <nav>
-        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-links"> 
-            
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Evidence ▾</span>
-                <div class="dropdown-content">
-                    <a href="revenue-case.html">The Revenue Case</a>
-                    <a href="proof.html">The Proof</a>
-                    <a href="story.html">The Story</a>
-                    <a href="thinking.html">The Thinking</a>
+        
+        <nav>
+            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links"> 
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Evidence ▾</span>
+                    <div class="dropdown-content">
+                        <a href="revenue-case.html">The Revenue Case</a>
+                        <a href="proof.html">The Proof</a>
+                        <a href="story.html">The Story</a>
+                        <a href="thinking.html">The Thinking</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">The System ▾</span>
-                <div class="dropdown-content">
-                    <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html">Human+AI</a>
-                    <a href="edge.html">The Edge</a>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">The System ▾</span>
+                    <div class="dropdown-content">
+                        <a href="thesis.html">The Thesis</a>
+                        <a href="human+ai.html">Human+AI</a>
+                        <a href="edge.html">The Edge</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Prompt Toolkit ▾</span>
-                <div class="dropdown-content">
-                    <a href="know.html">[G] Gather | Know them</a>
-                    <a href="map.html">[A] Assess | Map them</a>
-                     <a href="win.html" style="color: var(--primary);">[I] Influence | Win them</a>
-                    <a href="grow.html">[N] Nurture | Grow them</a>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <div class="dropdown-content">
+                        <a href="know.html">[G] Gather | Know them</a>
+                        <a href="map.html">[A] Assess | Map them</a>
+                        <a href="win.html" style="color: var(--primary);">[I] Influence | Win them</a>
+                        <a href="grow.html">[N] Nurture | Grow them</a>
+                    </div>
                 </div>
+                <a href="dashboards.html">Dashboards</a>
+                <a href="contact.html" class="nav-cta">Engage Me</a>
             </div>
-            
-            <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
-        </div>
-   
+        </nav>
 
         <header class="dark-header-block">
             <picture>
                 <source srcset="assets/images/win.avif" type="image/avif">
-                <img src="assets/images/win.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
+                <img src="assets/images/win.webp" class="hero-bg" alt="Engineering the Win" style="opacity: 0.55;">
             </picture>
             <div class="hero-impact">
                 <span class="hero-pre">[I] INFLUENCE | WIN THEM</span>
@@ -67,146 +169,176 @@
                 </h1>
                 <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
                 <p class="hero-subtext">
-                    Arm your champion with a story they can sell.
+                    Arm your champion with a story they can sell internally.
                 </p>
-                <span class="hero-meta">HALF THE TIME — FROM DEAL STRATEGY TO WINNING SUBMISSION</span>
+                <span style="display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase;">
+                    HALF THE TIME — FROM DEAL STRATEGY TO WINNING SUBMISSION
+                </span>
             </div>
         </header>
 
-        <main class="container-wide">        
-            <div class="container-prose reveal">
-                <div class="phase-anchor">This is INFLUENCE — the third discipline of GAIN. Arm your champion.</div>
-                <div class="worked-example-clean" style="margin-top: 0;">
-                    <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
-                        <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
-                        The bid team had worked weekends for three weeks. The response was comprehensive — 200 pages. They scored third. The winner's response was 80 pages, but every section opened with the client's language. [Influence] Win them is the machinery that produces that response.
-                    </div>
-                </div>
-                <div class="blue-callout-short" style="margin-top: 2rem;">
-                    <strong>Completed KNOW & MAP them?</strong> This is WIN them &  uses your deal strategy, authority map, and stakeholder intelligence as inputs. The win themes can only be as sharp as the political intelligence behind them.
+        <main class="container-wide">
+
+            <div class="container-wide reveal">
+                <div class="page-index-nav">
+                    <div class="index-step"><span>01. The Briefing</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>02. Strategy & Intel</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>03. Response Writing</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>04. The Archive</span></div>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
+            <div class="top-briefing-grid reveal">
+                
+                <div class="briefing-card card-narrative">
+                    <div class="briefing-card-title">THE NARRATIVE</div>
+                    <p class="body-prose" style="font-style: italic;">
+                        The bid team had worked weekends for three weeks. The response was comprehensive — 200 pages of pristine capability data. They scored third.<br><br>
+                        The winner's response was only 80 pages, but every single section opened with the client's language and directly addressed their pain. <strong>[Influence]</strong> is the machinery that produces that 80-page response.
+                    </p>
                 </div>
-                <div class="list-grid">
-                    <div class="list-col">
-                        <h3>GATHER</h3>
-                        <div class="list-item"><span class="list-num">01:</span> Deal strategy (W2-07)</div>
-                        <div class="list-item"><span class="list-num">02:</span> Authority map (W2-05)</div>
-                        <div class="list-item"><span class="list-num">03:</span> Full evaluation criteria</div>
-                        <div class="list-item"><span class="list-num">04:</span> Capability statements</div>
+
+                <div class="briefing-card card-psychology">
+                    <div class="briefing-card-title">THE PSYCHOLOGY (RESONANCE)</div>
+                    <p class="body-prose">
+                        Evaluators are tired, bored, and looking for reasons to disqualify you. <strong>Cognitive fluency</strong> is your greatest weapon. If your response is hard to read or uses generic vendor language, their brain registers it as high-risk. You must reduce their cognitive load by feeding their exact language back to them.
+                    </p>
+                </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe for free AI tools. Competitor intel and generic criteria.</p>
                     </div>
-                    <div class="list-col">
-                        <h3>PREPARE</h3>
-                        <div class="list-item"><span class="list-num">05:</span> Draft response structure</div>
-                        <div class="list-item"><span class="list-num">06:</span> Competitor intelligence</div>
-                        <div class="list-item"><span class="list-num">07:</span> Win themes hypothesis</div>
-                        <div class="list-item"><span class="list-num">08:</span> Presentation team profiles</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting pricing or proprietary deal strategy. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
                     </div>
                 </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">THE INGREDIENTS</div>
+                    <p class="body-prose" style="font-size: 0.8rem; margin-bottom: 1rem; font-style: italic;">Before generating your submission, you need these inputs:</p>
+                    <div class="checklist-item"><span>□</span> The Deal Strategy (Output from Phase A)</div>
+                    <div class="checklist-item"><span>□</span> The Authority Map (Output from Phase A)</div>
+                    <div class="checklist-item"><span>□</span> The full evaluation criteria and weightings</div>
+                    <div class="checklist-item"><span>□</span> Your raw capability statements and case studies</div>
+                </div>
+
             </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
+            <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Winning Flow</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">WIN THEMES</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">COMPETE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">SCORE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">WRITE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">COMMERCIAL</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">PRESENT</span>
                 </div>
-                <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Winning Flow</p>
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue-flow">WIN THEMES</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">COMPETE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">SCORE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">WRITE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">PRESENT</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow active">COMMERCIAL</span>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 build strategy and scoring. Steps 4-5 write and validate. Steps 6-7 plan execution. Steps 8-9 produce the deliverables.</p>
-                </div>
+                <p class="body-prose" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    Phase 1 builds strategy and scoring. Phase 2 writes and validates. Phase 3 drives the commercial execution.
+                </p>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">00</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 0 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">The Pre-Mortem</h2>
-                            <span class="time-pill">MANDATORY</span>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 01: Strategy & Intelligence</div>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-01]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Deal Pre-Mortem Simulator</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
-                <div class="blue-callout-short">
-                    <strong>Stop Optimism Bias.</strong> Before you write a word, predict exactly how you will lose. If you can't name the reason, you haven't found the risk.
-                </div>
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">G-15 // DEAL PRE-MORTEM SIMULATOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">It is 6 months in the future. We have lost the [CLIENT] deal.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Stops optimism bias. Before you write a single word of your proposal, this prompt predicts exactly how you will lose the deal.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">If you can't name the exact reason you will lose, you haven't found the true risk. Hope is not a strategy; preemptive defence is.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Failure:</strong> "We relied on the CIO but the COO blocked us because of transition risk."<br><strong>Prevention:</strong> "Build a zero-disruption transition plan specifically for the COO."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Challenge the AI to focus heavily on the "Gotcha" failure—the hidden operational requirement that competitors know about but you don't.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">It is 6 months in the future. We have lost the [CLIENT] deal.
 The loss review states three reasons:
 1. The Political Failure (We backed the wrong person).
 2. The Value Failure (We were cheaper but "too risky").
 3. The "Gotcha" (We missed a hidden requirement).
 
 Based on the [RFP DOCUMENTS] and [STAKEHOLDER MAP], generate the specific narrative for each of these three failures.
-Then, for each failure, give me the ONE action I must take today to prevent it.</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Political Failure:</strong> "We relied on the CIO (Richard Hale) but the COO (Harrison) blocked us because our transition plan disrupted his operation."<br><strong>Prevention:</strong> Create a 'Zero-Disruption Transition Plan' specifically for Harrison, presented before submission.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">01</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 1 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Win Themes</h2>
-                            <span class="time-pill">~20 MIN</span>
+Then, for each failure, give me the ONE action I must take today to prevent it.</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="blue-callout-short">
-                    Win themes are not slogans. They're the three strategic threads that run through every volume of your response.
-                </div>
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-01 // WIN THEME GENERATOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Proposal Strategist.
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-02]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Win Theme Generator</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Develops 3 'Gold-Standard Win Themes' that solve a specific pain point, are provable with evidence, and are hard for competitors to claim.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">A win theme that only appears in the executive summary is a slogan. A win theme embedded in every single technical and commercial section is a strategy.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Theme 1:</strong> Transformation with Discipline. (Combines innovation with the COO's need for safety).<br><strong>Theme 2:</strong> Commercial Alignment through Gain-Share.</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">If the AI generates a theme like "We are a trusted partner", reject it instantly. Demand themes that are impossible for your competitors to legally claim.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Proposal Strategist.
 Context: We are bidding for [CLIENT] to provide [SERVICE].
 Our Deal Strategy (W2-07) identified these priorities: [PASTE DEAL STRATEGY].
 
@@ -216,53 +348,50 @@ Criteria for a Win Theme:
 2. It must be provable with evidence we have.
 3. It must be hard for competitors to claim.
 
-[PASTE CONTEXT/INPUTS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Theme 1:</strong> "Transformation with Discipline." (Combines Innovation with Harrison's need for safety).<br><strong>Theme 2:</strong> "Resilience as Operational DNA." (Aligns with Jennifer Morris's PRA focus).<br><strong>Theme 3:</strong> "Commercial Alignment." (Uses the Gain-Share model to prove we stand behind the outcome).</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">Theme deployment is what separates good bids from great ones. A win theme that only appears in the executive summary is a slogan. A win theme that appears in the technical response, the commercial proposal, the oral presentation, AND the informal stakeholder conversations is a strategy.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">02</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 2 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Competitor Intelligence</h2>
-                            <span class="time-pill">~15 MIN</span>
+[PASTE CONTEXT/INPUTS HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    You're not bidding in a vacuum. The evaluation panel is comparing you against specific alternatives. This prompt builds the competitive landscape.
-                </div>
-
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-03]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">Competitor Intelligence Synthesis</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt uses publicly available information only. Safe to use in any AI tool including free-tier ChatGPT, Gemini, or Claude.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-02 // COMPETITOR INTELLIGENCE SYNTHESIS</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Competitive Intelligence Analyst.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Anticipates the competitor's pitch, what they will whisper about you behind closed doors, and builds your pre-emptive "Kill Shot."</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">You are never bidding in a vacuum. Knowing what they will claim lets you pre-position by making your differentiation obvious without ever naming them.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Their Ghosting:</strong> 'They are too small to scale.'<br><strong>Kill Shot:</strong> 'We guarantee UK-only delivery, unlike global outsourcers who offshore your regulated data.'</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ask the AI to act as the competitor's Sales Director and write an attack email against your company. It exposes your vulnerabilities instantly.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Competitive Intelligence Analyst.
 We are competing against [COMPETITOR A] and [COMPETITOR B].
 
 Create a 'Competitive Positioning Matrix' (Markdown Table):
@@ -271,102 +400,105 @@ Create a 'Competitive Positioning Matrix' (Markdown Table):
 3. Our Counter-Narrative: How do we inoculate the client against their claims?
 4. The 'Kill Shot': Where are they demonstrably weak where we are strong?
 
-[PASTE COMPETITOR NAMES HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE (HELIOS vs GIANTS)</div>
-                    <p class="example-prose"><strong>Competitor:</strong> 'Goliath Corp' (Global Outsourcer).<br><strong>Their Pitch:</strong> "Scale and low cost."<br><strong>Our Ghosting:</strong> "You will be Client #840. You get the C-Team."<br><strong>Kill Shot:</strong> "Helios guarantees UK-only delivery. Goliath will offshore your regulated data."</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The 'if they say, we say' responses are the most practical output. Knowing what they'll claim lets you pre-position. Not by attacking them — by making your differentiation obvious without naming anyone.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">03</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 3 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Scoring Strategy</h2>
-                            <span class="time-pill">~20 MIN</span>
+[PASTE COMPETITOR NAMES HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Not every requirement deserves equal effort. A criterion worth 25% of the total score deserves five times the writing investment.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-04]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Tier-By-Tier Scoring Strategy</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-03 // TIER-BY-TIER SCORING STRATEGY</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Bid Manager optimizing for maximum weighted score.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Ranks criteria by weighted value to tell you exactly where to spend your writing energy to maximize points.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Junior bid managers try to get 5/5 on everything. Seniors spend 80% of their energy on the 20% of questions that are actually weighted for differentiation.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>High Value (25%):</strong> Innovation. Embed 3 case studies.<br><strong>Low Value (2%):</strong> Health & Safety. Provide standard MVR (Minimum Viable Response).</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Force the AI to identify the "Pass/Fail hygiene" questions so you can assign them to junior team members and keep your heavy-hitters focused.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Bid Manager optimizing for maximum weighted score.
 I am providing the Evaluation Criteria and Weightings.
 
 Create a 'Scoring Strategy Table':
 1. Rank criteria by 'Weighted Value'.
-2. Define exactly what evidence/case studies we must include to score a 5/5.
+2. Define exactly what evidence/case studies we must include to score a 5/5 on the top tier.
 3. Define the 'Minimum Viable Response' for low-value questions.
 
-[PASTE CRITERIA AND WEIGHTINGS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-                
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">Junior bid managers try to get 5/5 on everything. Senior bid managers know that 60% of the RFP is "Pass/Fail" hygiene. They spend 80% of their energy on the 20% of questions that are actually weighted for differentiation (Innovation, Cultural Fit, Transition Risk).</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">04</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 4 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Executive Summary</h2>
-                            <span class="time-pill">~30 MIN</span>
+[PASTE CRITERIA AND WEIGHTINGS HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="blue-callout-short">
-                    The executive summary is the most important section. Most are about the bidder. This one is about the client.
-                </div>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 02: Response Writing</div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-05]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Executive Summary Generator</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-04 // EXECUTIVE SUMMARY GENERATOR</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a professional copywriter using the 'Made to Stick' framework.
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Drafts a 4-Act 'Made to Stick' summary that makes the client's "New Way of Working" the hero, not your company.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The executive summary is the only section the true decision-makers will actually read. Most are about the bidder. Yours must be about the client.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>The Villain:</strong> The 47-minute availability gap.<br><strong>The Hero:</strong> The Meridian 2030 vision.<br><strong>The Proof:</strong> Helios delivered this for Excalibur Financial.</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">The AI will still try to make your product the hero. Edit the output so your product is strictly framed as the "Lightsaber"—the tool the client uses to win.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a professional copywriter using the 'Made to Stick' framework.
 Draft the structure of the Executive Summary.
 
 Structure it in 4 Acts:
@@ -377,206 +509,50 @@ Act 4: The Proof (Why Us).
 
 Embed our 3 Win Themes (W3-01) throughout.
 
-[PASTE WIN THEMES AND CONTEXT HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>The Villain:</strong> "The availability gap." (Legacy infra + rising expectations).<br><strong>The Hero:</strong> "Meridian 2030." (Their own vision).<br><strong>The Proof:</strong> "Helios has already delivered this journey for Excalibur Financial. We are 9 months ahead of where you need to be."</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The accusation audit embedded naturally is the subtle art. Don't open with 'We know you've been burned.' Instead: 'Investments that delivered below expectation are a pattern we've seen.' You've acknowledged the elephant. You've normalised it.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">05</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 5 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Self-Score</h2>
-                            <span class="time-pill">~20 MIN</span>
+[PASTE WIN THEMES AND CONTEXT HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Score your own response before they do. This prompt acts as an independent evaluator.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-05 // PRE-SUBMISSION SELF-SCORING</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a hostile procurement evaluator.
-I am providing you with the Criteria and our Draft Response.
-
-Task:
-1. Score our response out of 5 based STRICTLY on the criteria. Be harsh.
-2. Identify: "Where did we answer the question but fail to provide evidence?"
-3. Provide 3 specific bullet points on how to move the score up by +1 point.
-
-[PASTE CRITERIA AND DRAFT RESPONSE HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-                
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The "Self-Scoring Hubris" failure is real. Internal teams read what they *meant* to write. An AI (or an external reviewer) reads what is actually on the page. Use this prompt to find the "Evidence Gap."</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">06</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 6 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Orals Strategy</h2>
-                            <span class="time-pill">~30 MIN</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-06]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Response Section Writer</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
-
-                <div class="blue-callout-short">
-                    The opening 90 seconds set the tone. Match speaker credibility to stakeholder roles.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-06 // ORAL PRESENTATION STRATEGY</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Presentation Coach for a high-stakes pitch.
-Context: We are presenting to [CLIENT].
-
-Task:
-1. Script the 'First 90 Seconds': A hook that grabs attention. NOT "Hello, we are Helios."
-2. Speaker Allocation Strategy: Match speaker credibility to stakeholder roles.
-3. The 'Q&A Prep': Based on Risks (W2-07), what are the 3 hardest questions they will ask?
-
-[PASTE CONTEXT/RISKS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Speaker Strategy:</strong> Claire Beaumont (MD) opens to match Richard Hale (CIO) — peer to peer. Rachel Okonkwo (Resilience) answers all Jennifer Morris's questions. Do NOT let the Sales Director answer technical questions.<br><strong>The Hook:</strong> "We aren't here to sell you IT. We're here to guarantee the £3.1BN of premium that flows through it."</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">Sandhurst "Mission Command" applies here: Establish you understand their mission better than they have articulated it themselves. Once they feel understood, they stop evaluating and start listening.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">07</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 7 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Engagement Storyboard</h2>
-                            <span class="time-pill">~20 MIN</span>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Drafts specific response sections that open with the client's challenge, state your approach clearly, and embed the win theme naturally.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Evaluators skim. If your opening sentence is "We have 20 years of experience," they stop reading. Lead with their pain, end with your proof.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Question: Confirm ISO 22301.<br>Answer: We do not hold it today. But our methodology delivered it for Client A. Trust the team that built it."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Use this to draft the "first 80%" of the answer. Then, manually rewrite the opening and closing paragraphs to inject your personal commercial tone.</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="blue-callout-short">
-                    The storyboard turns your deal strategy into a visual timeline. Every touchpoint planned.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-07 // ENGAGEMENT STORYBOARD</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Pursuit Manager.
-Create a 'Pursuit Storyboard' (Timeline from now until Decision Date).
-
-Output a Mermaid.js gantt chart mapping:
-1. Submission Deadlines (Backward pass).
-2. Key Governance Gates.
-3. Stakeholder Engagement Points.
-4. Clarification Question Strategy.
-
-[PASTE TIMELINE/DEADLINES HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-                
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">Most teams plan the document. Winning teams plan the *influence*. The storyboard forces you to plan when you will speak to the CFO, not just when you will write the CFO's section.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">08</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 8 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Response Writer</h2>
-                            <span class="time-pill">~45 MIN</span>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="blue-callout-short">
-                    Drafting specific response sections. Opens with their challenge, not your capability. States your approach specifically, not generically.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-08 // RESPONSE SECTION WRITER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a senior bid writer producing a response section.
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a senior bid writer producing a response section.
 
 Inputs: 
 1. The specific requirement/question.
@@ -592,48 +568,105 @@ Write a response that:
 - Embeds the win theme naturally. 
 - Provides evidence for every claim.
 
-[PASTE INPUTS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-                
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE (THE HARD QUESTION)</div>
-                    <p class="example-prose"><strong>Question:</strong> "Confirm you hold ISO 22301 certification. If not, justify why we should trust your resilience."<br><strong>Helios Answer:</strong> We do not hold it today. We are targeting Q4 2026. However, our methodology has already delivered certification for [Client A] and [Client B]. We are not asking you to trust our certificate; we are asking you to trust the team that built the framework you are now adopting.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">09</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 9 OF 9</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Commercial Narrative</h2>
-                            <span class="time-pill">~30 MIN</span>
+[PASTE INPUTS HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    The strategic framing that shapes how evaluators interpret the numbers. Price vs Value. Investment vs Cost.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-07]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Pre-Submission Self-Scoring</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Acts as a hostile procurement evaluator to score your draft response strictly against the criteria before submission.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Internal teams read what they *meant* to write. An AI reads what is *actually* on the page. Use this to find your "Evidence Gaps."</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Score: 3/5. You answered the question but failed to provide quantitative evidence of past success. To score +1, add a specific metric."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Tell the AI to adopt the persona of your most skeptical stakeholder (e.g., the COO) and review the document solely looking for operational risk.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a hostile procurement evaluator.
+I am providing you with the Criteria and our Draft Response.
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W3-09 // COMMERCIAL NARRATIVE GENERATOR</div>
+Task:
+1. Score our response out of 5 based STRICTLY on the criteria. Be harsh.
+2. Identify: "Where did we answer the question but fail to provide evidence?"
+3. Provide 3 specific bullet points on how to move the score up by +1 point.
+
+[PASTE CRITERIA AND DRAFT RESPONSE HERE]</pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a commercial strategist.
+            </div>
+
+            <div class="category-section reveal">
+                <div class="category-title">Phase 03: Execution & Commercials</div>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-08]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Commercial Narrative Generator</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Writes the strategic narrative wrapper around your pricing schedule, framing it as an investment rather than a cost.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The strategic framing shapes how evaluators interpret the numbers. Never submit a raw pricing spreadsheet without a narrative attached.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Framing: Year 1 is an investment year. You are paying for the transformation that lowers Year 3-7 costs by 20%."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Verify every single number the AI references in the narrative against your actual Excel pricing model. Never trust the AI to do math.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a commercial strategist.
 
 Write the narrative wrapper around our pricing (NOT the schedule itself).
 
@@ -644,75 +677,285 @@ Produce:
 4. INVESTMENT NARRATIVE: Frame transition costs as investment with payback timeline.
 5. OBJECTION PRE-EMPTION: "Why higher than X?"
 
-[PASTE PRICING MODEL/STRATEGY HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+[PASTE PRICING MODEL/STRATEGY HERE]</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Framing:</strong> "Year 1 is an investment year. You are paying for the transformation that lowers Year 3-7 costs by 20%. We share the risk of this transition by deferring 50% of transformation fees until quality milestones are met."</p>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-09]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Oral Presentation Strategy</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Scripts the critical first 90 seconds and allocates your speakers to their stakeholders to match credibility perfectly.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The opening 90 seconds set the tone. Establish you understand their mission better than they do, and they stop evaluating and start listening.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Speaker Strategy: MD opens to match CIO. Resilience Lead answers technicals. Hook: 'We're here to guarantee your £3.1BN premium flow.'"</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Do not let the AI write a script to read aloud. Use it to build the structural choreography of the room, then speak from your own conviction.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Presentation Coach for a high-stakes pitch.
+Context: We are presenting to [CLIENT].
+
+Task:
+1. Script the 'First 90 Seconds': A hook that grabs attention. NOT "Hello, we are Helios."
+2. Speaker Allocation Strategy: Match speaker credibility to stakeholder roles.
+3. The 'Q&A Prep': Based on Risks (W2-07), what are the 3 hardest questions they will ask?
+
+[PASTE CONTEXT/RISKS HERE]</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[I-10]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">Engagement Storyboard</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Turns your deal strategy into a visual timeline with every touchpoint, governance gate, and submission deadline mapped.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Most teams plan the document. Winning teams plan the *influence*. Plan exactly when you will speak to the CFO, not just when you'll write their section.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Output: A Gantt chart mapping backward from the submission deadline, showing exactly when to deploy the Accusation Audit."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ensure you manually input internal vacation dates, board meetings, or client blackout periods before generating the timeline.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Pursuit Manager.
+Create a 'Pursuit Storyboard' (Timeline from now until Decision Date).
+
+Output a Mermaid.js gantt chart mapping:
+1. Submission Deadlines (Backward pass).
+2. Key Governance Gates.
+3. Stakeholder Engagement Points.
+4. Clarification Question Strategy.
+
+[PASTE TIMELINE/DEADLINES HERE]</pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
+            <div class="container-wide reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 1: Win Themes That Weren't Provable</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Evaluators loved the executive summary. Then they read the technical response and couldn't find the evidence.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> If you can't point to a specific case study — it's not a win theme.</span>
-                </div>
+                <div class="failures-grid">
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 1: Unprovable Themes</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Evaluators loved the executive summary. Then they read the technical response and couldn't find the evidence.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> If you can't point to a specific metric or case study — it's not a win theme.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 2: Self-Scoring Hubris</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Gave ourselves 4.5/5. Actual evaluation came back at 3.2. The internal team knew what they MEANT, not what they WROTE.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Ask someone who didn't write it to score it.</span>
-                </div>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 2: Self-Scoring Hubris</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Gave ourselves 4.5/5. Actual evaluation came back at 3.2. The internal team knew what they MEANT, not what they WROTE.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Ask someone who didn't write the response to score it.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 3: The Polished Presentation That Missed</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Spent two days rehearsing the orals. Slides were immaculate. Delivery was smooth. The panel asked one question: "How would you handle the TUPE transfer for the Manchester team?" Our best speaker — the sales director — froze. The technical lead who knew the answer wasn't presenting.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> The person who answers the hardest question must be in the room and briefed to lead.</span>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 3: The Polished Miss</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">The panel asked one technical question during orals. Our best speaker — the sales director — froze. The engineer who knew the answer wasn't there.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> The person who answers the hardest question must be in the room.</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="container-wide reveal">
-                <div class="section-divider" style="margin-top: 6rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">PROMPT LIBRARY</div>
-                    <div class="divider-line"></div>
+            <div class="terminal-repo reveal">
+                <div class="terminal-header">
+                    ADVANCED INTELLIGENCE ARCHIVE // Quick-Copy Terminal
                 </div>
-                
-                <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
+                <p class="body-prose" style="margin-bottom: 2rem;">
+                    For practitioners who know the system. Click to copy directly to your clipboard.
+                </p>
 
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STRATEGY & INTELLIGENCE</h4>
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STRATEGY & INTELLIGENCE</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-01')">W3-01 // WIN THEME GENERATOR <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-02')">W3-02 // COMPETITOR INTEL <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-03')">W3-03 // SCORING STRATEGY <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">RESPONSE WRITING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-04')">W3-04 // EXECUTIVE SUMMARY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-05')">W3-05 // SELF-SCORING <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-08')">W3-08 // RESPONSE WRITER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-15')">G-15 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-01')">I-01 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-02')">I-02 // WIN THEMES <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-03')">I-03 // COMPETITOR INTEL <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-04')">I-04 // SCORING STRATEGY <span class="copy-badge">Copy</span></button>
                 </div>
 
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">EXECUTION</h4>
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">RESPONSE WRITING</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-06')">W3-06 // ORALS STRATEGY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-07')">W3-07 // STORYBOARD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W3-09')">W3-09 // COMMERCIAL NARRATIVE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-05')">I-05 // EXEC SUMMARY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-06')">I-06 // RESPONSE WRITER <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-07')">I-07 // SELF-SCORING <span class="copy-badge">Copy</span></button>
                 </div>
+
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">EXECUTION & COMMERCIAL</h4>
+                <div class="library-grid" style="margin-bottom: 0;">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-08')">I-08 // COMMERCIAL NARRATIVE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-09')">I-09 // ORALS STRATEGY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-10')">I-10 // STORYBOARD <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <div style="display: none;">
+                    <div class="prompt-console-title">I-01</div>
+                    <div><pre>It is 6 months in the future. We have lost the [CLIENT] deal.
+The loss review states three reasons:
+1. The Political Failure (We backed the wrong person).
+2. The Value Failure (We were cheaper but "too risky").
+3. The "Gotcha" (We missed a hidden requirement).
+Based on the [RFP DOCUMENTS] and [STAKEHOLDER MAP], generate the specific narrative for each of these three failures.
+Then, for each failure, give me the ONE action I must take today to prevent it.</pre></div>
+                    
+                    <div class="prompt-console-title">I-02</div>
+                    <div><pre>Act as a Proposal Strategist.
+Context: We are bidding for [CLIENT] to provide [SERVICE].
+Our Deal Strategy identified these priorities: [PASTE DEAL STRATEGY].
+Task: Develop 3 'Gold-Standard Win Themes'.
+Criteria for a Win Theme:
+1. It must solve a specific client pain point.
+2. It must be provable with evidence we have.
+3. It must be hard for competitors to claim.
+[PASTE CONTEXT/INPUTS HERE]</pre></div>
+                    
+                    <div class="prompt-console-title">I-03</div>
+                    <div><pre>Act as a Competitive Intelligence Analyst.
+We are competing against [COMPETITOR A] and [COMPETITOR B].
+Create a 'Competitive Positioning Matrix' (Markdown Table):
+1. Their Likely Pitch: What will they claim is their USP?
+2. Their Likely Ghosting: What will they whisper about us?
+3. Our Counter-Narrative: How do we inoculate the client against their claims?
+4. The 'Kill Shot': Where are they demonstrably weak where we are strong?
+[PASTE COMPETITOR NAMES HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-04</div>
+                    <div><pre>Act as a Bid Manager optimizing for maximum weighted score.
+I am providing the Evaluation Criteria and Weightings.
+Create a 'Scoring Strategy Table':
+1. Rank criteria by 'Weighted Value'.
+2. Define exactly what evidence/case studies we must include to score a 5/5 on the top tier.
+3. Define the 'Minimum Viable Response' for low-value questions.
+[PASTE CRITERIA AND WEIGHTINGS HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-05</div>
+                    <div><pre>Act as a professional copywriter using the 'Made to Stick' framework.
+Draft the structure of the Executive Summary.
+Structure it in 4 Acts:
+Act 1: The Context (The 'Why Now').
+Act 2: The Complication (The 'Villain').
+Act 3: The Resolution (The 'Hero'). NOT US. The Hero is the 'New Way of Working'.
+Act 4: The Proof (Why Us).
+Embed our 3 Win Themes throughout.
+[PASTE WIN THEMES AND CONTEXT HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-06</div>
+                    <div><pre>Act as a senior bid writer producing a response section.
+Inputs: 
+1. The specific requirement/question.
+2. Evaluation criterion.
+3. The win theme to embed.
+4. Primary evaluator profile.
+5. Proof points to include.
+6. Word limit.
+Write a response that: 
+- Opens with THEIR challenge, not your capability. 
+- States your approach specifically. 
+- Embeds the win theme naturally. 
+- Provides evidence for every claim.
+[PASTE INPUTS HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-07</div>
+                    <div><pre>Act as a hostile procurement evaluator.
+I am providing you with the Criteria and our Draft Response.
+Task:
+1. Score our response out of 5 based STRICTLY on the criteria. Be harsh.
+2. Identify: "Where did we answer the question but fail to provide evidence?"
+3. Provide 3 specific bullet points on how to move the score up by +1 point.
+[PASTE CRITERIA AND DRAFT RESPONSE HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-08</div>
+                    <div><pre>Act as a commercial strategist.
+Write the narrative wrapper around our pricing (NOT the schedule itself).
+Produce:
+1. COMMERCIAL PHILOSOPHY: How our model aligns with their stated goals.
+2. VALUE FRAMING: Price vs Cost of Inaction / TCO.
+3. DIFFERENTIATORS: Gain-share, innovation funds, outcome links.
+4. INVESTMENT NARRATIVE: Frame transition costs as investment with payback timeline.
+5. OBJECTION PRE-EMPTION: "Why higher than X?"
+[PASTE PRICING MODEL/STRATEGY HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-09</div>
+                    <div><pre>Act as a Presentation Coach for a high-stakes pitch.
+Context: We are presenting to [CLIENT].
+Task:
+1. Script the 'First 90 Seconds': A hook that grabs attention. NOT "Hello, we are Helios."
+2. Speaker Allocation Strategy: Match speaker credibility to stakeholder roles.
+3. The 'Q&A Prep': Based on Risks, what are the 3 hardest questions they will ask?
+[PASTE CONTEXT/RISKS HERE]</pre></div>
+
+                    <div class="prompt-console-title">I-10</div>
+                    <div><pre>Act as a Pursuit Manager.
+Create a 'Pursuit Storyboard' (Timeline from now until Decision Date).
+Output a Mermaid.js gantt chart mapping:
+1. Submission Deadlines (Backward pass).
+2. Key Governance Gates.
+3. Stakeholder Engagement Points.
+4. Clarification Question Strategy.
+[PASTE TIMELINE/DEADLINES HERE]</pre></div>
+                </div>
+            </div>
+
+            <div class="reveal" style="text-align: center; padding-top: 2rem; padding-bottom: 4rem;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 1.5rem;">Deal won. Now, secure the renewal.</p>
+                <a href="grow.html" class="btn-schedule">PROCEED TO [N] NURTURE →</a>
             </div>
 
         </main>
@@ -735,87 +978,119 @@ Produce:
                 No hype. Just results. © 2026
             </div>
         </footer>
+    </div>
 
-        <script>
-            // TOGGLE PROMPT EXPANSION
-            function togglePrompt(btn) {
-                const content = btn.parentElement.previousElementSibling;
-                content.classList.toggle('expanded');
-                btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
             }
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
+                });
+            }, { threshold: 0.1 });
 
-            // COPY FUNCTIONALITY
-            function copyPrompt(btn) {
-                const content = btn.parentElement.previousElementSibling.innerText;
-                navigator.clipboard.writeText(content).then(() => {
-                    const original = btn.innerText;
-                    btn.innerText = 'COPIED ✓';
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
+        });
+
+        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        function toggleAccordion(header) {
+            const currentItem = header.parentElement;
+            const isOpen = currentItem.classList.contains('open');
+
+            if (!isOpen) {
+                currentItem.classList.add('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[− CLOSE]';
+            } else {
+                currentItem.classList.remove('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[+ VIEW]';
+            }
+        }
+
+        // VIEW CODE TOGGLE
+        function toggleCode(btn) {
+            const container = btn.parentElement.nextElementSibling;
+            const isActive = container.classList.contains('active');
+            
+            if(!isActive) {
+                container.classList.add('active');
+                btn.innerText = 'HIDE PROMPT CODE';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+            } else {
+                container.classList.remove('active');
+                btn.innerText = '👁 VIEW PROMPT CODE';
+                btn.style.background = 'transparent';
+                btn.style.color = '#3b82f6';
+            }
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        function copyPromptText(btn) {
+            const terminalBlock = btn.closest('.terminal-block');
+            const promptText = terminalBlock.querySelector('.prompt-text').innerText;
+            
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#3b82f6';
+                }, 2000);
+            });
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Archive Prompts)
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.prompt-console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const content = title.nextElementSibling; 
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = '[COPIED]';
+                    btn.style.borderColor = '#10b981';
                     btn.style.color = '#10b981';
+                    badge.style.color = '#10b981';
+                    
                     setTimeout(() => {
-                        btn.innerText = original;
-                        btn.style.color = '';
+                        badge.innerText = original;
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.color = '#cbd5e1';
+                        badge.style.color = '#3b82f6';
                     }, 2000);
                 });
+            } else {
+                console.error("Could not find prompt ID: " + promptID);
             }
-
-            // LIBRARY COPY FUNCTIONALITY
-            function copyLibraryPrompt(btn, promptID) {
-                const titles = document.querySelectorAll('.console-title');
-                let foundCode = null;
-
-                titles.forEach(title => {
-                    if (title.innerText.includes(promptID)) {
-                        // Step up to the header, then over to the wrapper
-                        const wrapper = title.parentElement.nextElementSibling; 
-                        const content = wrapper.querySelector('.prompt-content');
-                        if (content) foundCode = content.innerText;
-                    }
-                });
-
-                if (foundCode) {
-                    navigator.clipboard.writeText(foundCode).then(() => {
-                        const badge = btn.querySelector('.copy-badge');
-                        const original = badge.innerText;
-                        badge.innerText = 'COPIED';
-                        badge.style.background = '#10b981';
-                        setTimeout(() => {
-                            badge.innerText = original;
-                            badge.style.background = '';
-                        }, 2000);
-                    });
-                } else {
-                    console.warn('Prompt ID not found:', promptID);
-                }
-            }
-
-            // MOBILE MENU + SCROLL REVEAL
-            document.addEventListener('DOMContentLoaded', () => {
-                const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                if (mobileMenuToggle && navLinks) {
-                    mobileMenuToggle.addEventListener('click', () => {
-                        mobileMenuToggle.classList.toggle('active');
-                        navLinks.classList.toggle('active');
-                    });
-                }
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.reveal').forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top < window.innerHeight) {
-                        el.classList.add('active');
-                    }
-                    observer.observe(el);
-                });
-            });
-        </script>
-    </div>
+        }
+    </script>
 </body>
 </html>

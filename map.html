@@ -4,63 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Assess them - Generating outcome-centric sales narratives.">
-    <title>[A] Assess - MAP them | David Matthews</title>
+    <title>[A] Assess: Map them | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* High-Density Typography */
+        .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
+        /* Page Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* The 2x2 Top Briefing Grid */
+        .top-briefing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto 4rem auto; }
+        .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+        .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Specific Card Accents */
+        .card-narrative { border-left: 3px solid #3b82f6; }
+        .card-narrative .briefing-card-title { color: #3b82f6; }
+        .card-psychology { border-left: 3px solid #8b5cf6; }
+        .card-psychology .briefing-card-title { color: #8b5cf6; }
+        
+        .gov-legend-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .checklist-item span { color: #3b82f6; font-weight: bold; }
+
+        /* Governance Tags */
+        .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+        /* The Chessboard Flow */
+        .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
+        .pill-blue-flow.active { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+
+        /* Command Dashboard (Accordion Layout) */
+        .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
+        .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .accordion-header:hover { background: rgba(255,255,255,0.02); }
+        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
+        .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
+        
+        .accordion-content { display: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
+        .accordion-item.open .accordion-content { display: block; }
+        .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
+        .accordion-item.open .accordion-toggle-btn { color: white; }
+
+        /* The New 4-Box Matrix */
+        .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
+        .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
+        
+        .box-objective .matrix-title { color: #94a3b8; }
+        .box-edge { border-left: 2px solid #f59e0b; }
+        .box-edge .matrix-title { color: #f59e0b; }
+        .box-output { border-left: 2px solid #3b82f6; }
+        .box-output .matrix-title { color: #3b82f6; }
+        .box-override { border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+        .box-override .matrix-title { color: #10b981; }
+
+        /* View Code Reveal */
+        .view-code-wrapper { text-align: center; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .btn-view-code { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .btn-view-code:hover { background: #3b82f6; color: white; }
+        
+        .terminal-container { display: none; margin-top: 1.5rem; }
+        .terminal-container.active { display: block; }
+        
+        /* Terminal Styling */
+        .terminal-block { background: #0f172a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .terminal-header-bar { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .terminal-dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; background: #334155; }
+        .copy-btn { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .copy-btn:hover { background: #3b82f6; color: white; }
+        .prompt-text { padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
+
+        /* Failures / Pitfalls Grid */
+        .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-red-text { color: #ef4444; font-weight: 900; }
+
+        /* Toolkit Toggle */
+        .toolkit-wrapper { max-width: 900px; margin: 4rem auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(15,23,42,0.4); }
+        .toolkit-toggle { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .toolkit-toggle:hover { background: rgba(255,255,255,0.05); }
+        .toolkit-toggle h3 { font-size: 0.9rem; color: white; font-weight: 800; letter-spacing: 0.1em; margin: 0 0 0.5rem 0; }
+        .toolkit-toggle p { font-size: 0.8rem; color: #94a3b8; margin: 0; }
+        .toggle-arrow { color: #3b82f6; font-size: 1.2rem; transition: transform 0.3s; }
+        .toolkit-wrapper.open .toggle-arrow { transform: rotate(180deg); }
+        .toolkit-content { display: none; border-top: 1px solid rgba(255,255,255,0.1); padding: 2rem 0; }
+        .toolkit-content.expanded { display: block; }
+        
+        /* Terminal Prompt Library (Advanced) */
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .top-briefing-grid { grid-template-columns: 1fr; }
+            .prompt-matrix { grid-template-columns: 1fr; }
+            .failures-grid { grid-template-columns: 1fr; }
+            .accordion-title-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
 </head>
 <body class="hero-compact">
 
     <div class="page-container">
         
         <nav>
-        <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
-        <div class="nav-links"> 
-            
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Evidence ▾</span>
-                <div class="dropdown-content">
-                    <a href="revenue-case.html">The Revenue Case</a>
-                    <a href="proof.html">The Proof</a>
-                    <a href="story.html">The Story</a>
-                    <a href="thinking.html">The Thinking</a>
+            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links"> 
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Evidence ▾</span>
+                    <div class="dropdown-content">
+                        <a href="revenue-case.html">The Revenue Case</a>
+                        <a href="proof.html">The Proof</a>
+                        <a href="story.html">The Story</a>
+                        <a href="thinking.html">The Thinking</a>
+                    </div>
                 </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">The System ▾</span>
+                    <div class="dropdown-content">
+                        <a href="thesis.html">The Thesis</a>
+                        <a href="human+ai.html">Human+AI</a>
+                        <a href="edge.html">The Edge</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <div class="dropdown-content">
+                        <a href="know.html">[G] Gather | Know them</a>
+                        <a href="map.html" style="color: var(--primary);">[A] Assess | Map them</a>
+                        <a href="win.html">[I] Influence | Win them</a>
+                        <a href="grow.html">[N] Nurture | Grow them</a>
+                    </div>
+                </div>
+                <a href="dashboards.html">Dashboards</a>
+                <a href="contact.html" class="nav-cta">Engage Me</a>
             </div>
+        </nav>
 
-            <div class="nav-dropdown">
-                <span class="nav-link-main">The System ▾</span>
-                <div class="dropdown-content">
-                    <a href="thesis.html">The Thesis</a>
-                    <a href="human+ai.html">Human+AI</a>
-                    <a href="edge.html">The Edge</a>
-                </div>
-            </div>
-
-            <div class="nav-dropdown">
-                <span class="nav-link-main">Prompt Toolkit ▾</span>
-                <div class="dropdown-content">
-                    <a href="know.html">[G] Gather | Know them</a>
-                      <a href="map.html" style="color: var(--primary);">[A] Assess | Map them</a>
-                    <a href="win.html">[I] Influence | Win them</a>
-                    <a href="grow.html">[N] Nurture | Grow them</a>
-                </div>
-            </div>
-            
-            <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
-        </div>
-    </nav>
-        
-      
         <header class="dark-header-block">
             <picture>
-    <source srcset="assets/images/map.avif" type="image/avif">
-    <img src="assets/images/map.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
-</picture>
+                <source srcset="assets/images/map.avif" type="image/avif">
+                <img src="assets/images/map.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
+            </picture>
             <div class="hero-impact">
                 <span class="hero-pre">[A] ASSESS | MAP THEM</span>
                 <h1 class="hero-headline">
@@ -71,115 +182,130 @@
                 <p class="hero-subtext">
                     Complex deals are won by coalitions, not champions.
                 </p>
-                <span class="hero-meta">ONE HOUR — FROM RAW DATA TO INFLUENCE STRATEGY</span>
+                <span style="display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase;">
+                    ONE HOUR — FROM RAW DATA TO INFLUENCE STRATEGY
+                </span>
             </div>
         </header>
+
         <main class="container-wide">
-            <div class="container-prose reveal">
-                <div class="phase-anchor">This is ASSESS — the second discipline of GAIN. Map before you move.</div>
 
-                <div class="worked-example-clean" style="margin-top: 0;">
-                    <div class="example-prose" style="font-style: italic; border-left: 2px solid var(--primary); padding-left: 1.5rem; color: var(--slate);">
-                        <strong style="color: white; font-style: normal; display: block; margin-bottom: 0.5rem;">THE CONTEXT</strong>
-                        Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model. <br><br>[Assess] Map them exists because complex deals are won by coalitions, not champions.
-                    </div>
-                </div>
-
-                <div class="blue-callout-short" style="margin-top: 2rem;">
-                    <strong>Completed Gather?</strong> This builds directly on Gather intelligence. If you haven't run the Intelligence prompts [know them], start there.
+            <div class="container-wide reveal">
+                <div class="page-index-nav">
+                    <div class="index-step"><span>01. The Briefing</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>02. The Pipeline</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>03. Engineering & Toolkit</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>04. The Archive</span></div>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">BEFORE YOU BEGIN</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="list-grid">
-                    <div class="list-col">
-                        <h3>GATHER</h3>
-                        <div class="list-item"><span class="list-num">01:</span> Know outputs (budget, research)</div>
-                        <div class="list-item"><span class="list-num">02:</span> RFP, ITT, or opportunity brief</div>
-                        <div class="list-item"><span class="list-num">03:</span> Meeting notes from initial engagement</div>
-                        <div class="list-item"><span class="list-num">04:</span> LinkedIn profiles for ALL known stakeholders</div>
-                    </div>
-                    <div class="list-col">
-                        <h3>PREPARE</h3>
-                        <div class="list-item"><span class="list-num">05:</span> Stakeholder register (names encountered)</div>
-                        <div class="list-item"><span class="list-num">06:</span> Relationship audit (who knows who?)</div>
-                        <div class="list-item"><span class="list-num">07:</span> Evaluation criteria (if available)</div>
-                        <div class="list-item"><span class="list-num">08:</span> Relevant case studies (W1-09)</div>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-bottom: 4rem;">
-                    <p style="color: white; font-size: 0.95rem;">
-                        <strong style="color: var(--amber);">! No RFP?</strong> Prompts works with or without a formal document. The mapping works from meeting notes, org charts, or any source that reveals power.
+            <div class="top-briefing-grid reveal">
+                
+                <div class="briefing-card card-narrative">
+                    <div class="briefing-card-title">THE NARRATIVE</div>
+                    <p class="body-prose" style="font-style: italic;">
+                        Sarah won the first meeting. The Director loved the approach. Three months later, she lost the deal. Not because the solution was wrong, but because she built her strategy around one person. The CIO had different priorities. The CFO wanted a different model.<br><br>
+                        [Assess] exists because complex deals are won by coalitions, not champions.
                     </p>
                 </div>
-            </div>
 
-            <div class="container-prose reveal">
-                <div class="section-divider">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">THE FRAMEWORK</div>
-                    <div class="divider-line"></div>
+                <div class="briefing-card card-psychology">
+                    <div class="briefing-card-title">THE PSYCHOLOGY (AUTHORITY)</div>
+                    <p class="body-prose">
+                        The org chart tells you who executes. The shadow org chart tells you who approves. In enterprise sales, safety is found in numbers. If you only have one champion, you have a single point of failure. This methodology maps the political terrain so you never get blindsided by a veto.
+                    </p>
                 </div>
 
-                <div style="text-align: center; margin-bottom: 4rem; margin-top: 2rem;">
-                    <p style="font-size: 0.75rem; font-weight: 800; color: var(--primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Strategic Mapping Flow</p>
-                    
-                    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
-                        <span class="pill-blue-flow">DECODE OPPORTUNITY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">FIND PEOPLE</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">MAP MOTIVATIONS</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">ENGINEERING LAYER</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow">MAP AUTHORITY</span>
-                        <span style="color: var(--slate); font-weight: bold; opacity: 0.5;">→</span>
-                        <span class="pill-blue-flow active">DEAL STRATEGY</span>
+                <div class="briefing-card">
+                    <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe for free AI tools. Uses LinkedIn or public data.</p>
                     </div>
-
-                    <p style="font-size: 0.85rem; color: var(--slate); font-weight: 500; max-width: 600px; margin: 0 auto;">Steps 1-3 extract intelligence. Step 4 maps motivation. Step 4.5 creates commercial safety. Steps 5-7 turn it into strategy.</p>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting RFPs, proposals, or meeting notes. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
+                    </div>
                 </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">THE INGREDIENTS</div>
+                    <p class="body-prose" style="font-size: 0.8rem; margin-bottom: 1rem; font-style: italic;">To map the deal, you need the raw data. Gather these first:</p>
+                    <div class="checklist-item"><span>□</span> The RFP, ITT, or prospect briefing document</div>
+                    <div class="checklist-item"><span>□</span> Your unedited notes from initial meetings</div>
+                    <div class="checklist-item"><span>□</span> The intelligence outputs from the [G] Gather phase</div>
+                    <div class="checklist-item"><span>□</span> Target stakeholder LinkedIn profiles</div>
+                </div>
+
             </div>
 
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">01</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 1 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Decode the Opportunity</h2>
-                            <span class="time-pill">~20 MIN</span>
+            <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Strategic Mapping Flow</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">DECODE RFP</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">FIND PEOPLE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">MAP MOTIVATIONS</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">MAP AUTHORITY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">DEAL STRATEGY</span>
+                </div>
+                <p class="body-prose" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    Phase 1 decodes the mess. Phase 2 maps the people. Phase 3 builds the execution strategy.
+                </p>
+            </div>
+
+            <div class="category-section reveal">
+                <div class="category-title">Phase 01: Decode the Deal</div>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-01]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">RFP Strategic Decoder</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Every RFP tells two stories: the official requirements and the hidden pain points. This prompt reads the implicit signals behind the formal text.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The RFP was written because an incumbent failed. Find the failure in the subtext, pitch the cure. The "Trigger Event" determines if they are buying commodity or transformation.</p>
+                            </div>
 
-                <div class="blue-callout-short">
-                    Every RFP tells two stories: the official requirements and the hidden pain points. This prompt reads both.
-                </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Trigger Event:</strong> Not simple contract expiry. A triple trigger: Board Mandate + Regulatory Pressure + Operational Pain.<br><strong>Signal:</strong> Heavy emphasis on "outcome-linked pricing" means they got burned by Time & Materials billing.</p>
+                            </div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ask the AI: "Based on the jargon used, which specific department actually wrote Section 4 vs Section 5?" This tells you who really holds the pen.</p>
+                            </div>
+                        </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-01 // RFP STRATEGIC DECODER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as an expert Proposal Director and Strategic Deal Analyst.
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
 
-I am providing you with the text from an RFP / Opportunity Description for [INSERT CLIENT NAME].
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as an expert Proposal Director and Strategic Deal Analyst.
+
+I am providing you with the text from an RFP / Opportunity Description for [COMPANY].
 
 Your task is to decode the "story behind the document." 
 
@@ -195,108 +321,56 @@ B) Regulatory/Compliance Failure (Risk-averse, looking for safety)
 C) New Strategic Mandate (Transformation mindset, looking for innovation)
 Explain your reasoning.
 
-[PASTE RFP / OPPORTUNITY TEXT HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Trigger Event:</strong> Not simple contract expiry. It's a triple trigger: Board Mandate (Meridian 2030) + Regulatory Pressure (PRA Resilience) + Operational Pain (Legacy infra).<br><br><strong>Decoding:</strong> The narrative emphasis on "outcome-linked pricing" contradicts the 30% commercial weighting. The CIO's letter signals that commercial innovation matters more than the scoring table suggests.</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The trigger question is the most important. Expiry = commodity mindset. Regulatory = risk-averse. Board mandate = strategic. The same RFP reads completely differently once you know which triggered it.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">02</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 2 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Find the People</h2>
-                            <span class="time-pill">~15 MIN</span>
+[PASTE RFP / OPPORTUNITY TEXT HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    Builds the complete stakeholder register and—critically—identifies who is MISSING.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-02 // STAKEHOLDER DISCOVERY</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as a Strategic Account Manager.
-
-I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, LinkedIn exports].
-
-1. Extract every individual person named or referenced.
-2. Build a 'Stakeholder Register' table with columns: Name, Job Title, Role in Deal (Decision Maker/Influencer/Evaluator), Source of Info.
-3. Crucially, create a 'Missing Stakeholders' list. Based on a typical deal of this size and complexity ([INSERT DEAL SIZE/TYPE]), who is missing? (e.g., Is there a Procurement lead? A Privacy Officer? A CFO sponsor?). 
-4. For the missing roles, suggest the likely Job Titles we should search for on LinkedIn.
-
-[PASTE SOURCE MATERIAL HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose">Register should find 8+ names. The RFP only names Sarah Blackwell. LinkedIn/Website reveals Hale (CIO), Harrison (COO), Morris (Resilience).<br><br><strong>Missing:</strong> Who sits on the Risk Committee? Who approves the contract? Who is the TUPE lead?</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The research priority ranking is the real output. You can't profile everyone equally — time is finite. Influence × intelligence gap tells you where to invest. High influence, low knowledge = urgent.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">03</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 3 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Decode Requirements</h2>
-                            <span class="time-pill">~15 MIN</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-02]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Requirements Trauma Decoder</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Groups overly complex or punitive requirements to find the "Black Swan" pain points that the client won't openly admit to.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Every unusually specific requirement was born in a bad experience. High-density requirements equal high emotional pain. Don't just comply; differentiate here.</p>
+                            </div>
 
-                <div class="blue-callout-short">
-                    Every unusually specific requirement was born in a bad experience. This prompt does the archaeology.
-                </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is hyper-specific.<br><strong>Trauma:</strong> Their current 14,000 daily alerts are unmanageable. They had a vendor who delivered bodies, not outcomes.</p>
+                            </div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Tell the AI to cross-reference these "trauma clusters" against your own known capability gaps. Where does their highest pain meet your weakest feature?</p>
+                            </div>
+                        </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-03 // REQUIREMENTS DECODER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Analyze the requirements section of this RFP.
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Analyze the requirements section of this RFP/Document.
 
 Group the requirements into 'Clusters of Density' — areas where there are an unusually high number of specific, detailed, or punitive requirements.
 
@@ -309,257 +383,177 @@ For each Cluster:
 
 Output as a table.
 
-[PASTE REQUIREMENTS SECTION HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+[PASTE REQUIREMENTS SECTION HERE]</pre>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Resilience Cluster:</strong> "Regulatory notification workflows" implies they've been burned by a regulatory audit.<br><strong>Automation Cluster:</strong> "Reduce alert noise by >70%" is specific. They know their current 14,000 alerts are unmanageable.<br><strong>Trauma:</strong> A vendor who delivered bodies, not outcomes.</p>
                 </div>
             </div>
 
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">04</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 4 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Map Motivations</h2>
-                            <span class="time-pill">~20 MIN</span>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 02: Map the Board</div>
+
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-03]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Stakeholder Discovery</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Extracts every named entity from your meeting notes and documents, and critically, identifies who is missing from your radar.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">If you are selling a £5M transformation and you haven't met Procurement or the CISO, you aren't in a deal; you're just having a conversation.</p>
+                            </div>
+
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Current:</strong> Hale (CIO), Harrison (COO), Morris (Resilience).<br><strong>Missing:</strong> Who sits on the Risk Committee? Who actually signs the contract? Who handles TUPE?</p>
+                            </div>
+
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Prompt it to look for hidden "evaluators"—the technical or compliance staff who have absolutely no budget, but hold 100% veto power over the deal.</p>
+                            </div>
+                        </div>
+
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as a Strategic Account Manager.
+
+I am providing you with [INSERT SOURCE MATERIAL: RFP text, meeting notes, LinkedIn exports].
+
+1. Extract every individual person named or referenced.
+2. Build a 'Stakeholder Register' table with columns: Name, Job Title, Role in Deal (Decision Maker/Influencer/Evaluator), Source of Info.
+3. Crucially, create a 'Missing Stakeholders' list. Based on a typical deal of this size and complexity ([INSERT DEAL SIZE/TYPE]), who is missing? (e.g., Is there a Procurement lead? A Privacy Officer? A CFO sponsor?). 
+4. For the missing roles, suggest the likely Job Titles we should search for on LinkedIn.
+
+[PASTE SOURCE MATERIAL HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    What failure looks like for them specifically. The difference between knowing the org chart and knowing the politics.
-                </div>
-
-                <div class="blue-callout-short" style="margin-bottom: 1rem; border-color: var(--amber); background: rgba(245, 158, 11, 0.1); color: #fff;">
-                    <strong style="color: var(--amber);">Quick Start (5 Mins):</strong> If you don't have time for a deep profile, paste their LinkedIn 'About' section and last 3 posts. Ask: "What is the one metric this person is judged on?"
-                </div>
-
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-04]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">Motivation Map</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt uses publicly available information only. Safe to use in any AI tool including free-tier ChatGPT, Gemini, or Claude.</p>
-                </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Uncovers what success looks like for a stakeholder personally, mapping the gap between their stated goals and hidden drivers.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">People don't buy ROI or synergies. They buy promotions, safety, risk avoidance, and weekend free-time. Sell to the personal motivation.</p>
+                            </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-04 // STAKEHOLDER MOTIVATION MAP</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Act as an expert in Chris Voss's negotiation tactics and Cialdini's influence principles.
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Stated:</strong> "We need to modernise."<br><strong>Hidden:</strong> The CIO needs this deployed flawlessly before his performance review in November to secure his bonus.</p>
+                            </div>
+
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">If the AI returns generic corporate goals, reject it. Ask: "Based on their tenure and industry, what specific failure gets this person fired?"</p>
+                            </div>
+                        </div>
+
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Act as an expert in Chris Voss's negotiation tactics and Cialdini's influence principles.
 
 I am providing the profile for [STAKEHOLDER NAME], [JOB TITLE].
 
 Generate a 'Deep Motivation Profile':
-1. The 'Black Swan': What is the one piece of information that, if we knew it, would change how we approach them? (Hypothesize based on role/industry).
+1. The 'Black Swan': What is the one piece of information that, if we knew it, would change how we approach them?
 2. Stated vs. Hidden Drivers: What do they say they want (e.g., Innovation) vs. what their role/bonus actually rewards (e.g., Risk Reduction).
 3. The 'No-Oriented' Question: Draft a question designed to get them to say "No" to reveal their constraints (e.g., "Is it ridiculous to suggest that cost certainty is more important than feature breadth right now?").
 4. Success Definition: Complete this sentence for them: "I will be promoted/bonused next year if this project delivers..."
 
-[PASTE STAKEHOLDER PROFILE/LINKEDIN DATA HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt synthesises outputs from previous steps. If earlier steps included internal data, this output inherits that classification — treat as RED and use enterprise AI tools only.</p>
-                </div>
-
-                <div class="console-header-v2" style="margin-top: 1.5rem;">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-04b // PSYCHOLOGICAL DRIVER DECODER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Based on the motivation profile above, classify this stakeholder into one of the 6 Human Drivers:
-1. CERTAINTY (Safety, risk avoidance, predictable future)
-2. SIGNIFICANCE (Status, power, recognition, "being right")
-3. VARIETY (Novelty, change, disruption, boredom with status quo)
-4. LOVE/CONNECTION (Consensus, team harmony, people-pleaser)
-5. GROWTH (Learning, new capabilities, expanding scope)
-6. CONTRIBUTION (Legacy, mentorship, helping others)
-
-Which one is their PRIMARY driver? How do we frame our proposal to satisfy that specific psychological need?</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Stated vs Hidden:</strong> Harrison posts about operational excellence. But his hidden driver is the Meridian 2030 delivery milestones — his performance is tied to transforming operations without breaking production. He needs discipline, not experiments.<br><strong>Psychology:</strong> Harrison is driven by CERTAINTY. Pitching "Innovation" (Variety) scares him. Pitching "Proven Framework" (Certainty) wins him.</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">A CIO who posts about 'innovation' but whose bonus is tied to 'cost reduction' will evaluate your proposal through the cost lens. Follow the incentives, not the LinkedIn posts.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">4.5</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 4.5 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">The Engineering Layer</h2>
-                            <span class="time-pill">MANDATORY</span>
+[PASTE STAKEHOLDER PROFILE/LINKEDIN DATA HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="blue-callout-short">
-                    <strong>Governance Check:</strong> Before you map authority, you must map the complexity. These prompts translate technical mess into commercial safety. This prevents the "Sales sold a Ferrari, Delivery built a Fiat" disaster.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">E-01 // THE 'PLACEMAT' VISUALIZER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">ROLE: You are a Strategic Visualiser and Enterprise Architect. Goal: Synthesise complex transformation into a SINGLE visual "placemat".
-
-1. THE "FROM" STATE: Visual metaphor for current pain (e.g., "Tangled wires").
-2. THE "TO" STATE: Visual metaphor for solution (e.g., "Streamlined highway").
-3. THE BRIDGE: How do we visually represent the journey?
-4. THE "YES" LABELS: Specific client terms that must appear.
-5. CAPTIONING: Single sentence caption summarizing ROI.
-
-[PASTE CLIENT STATE AND GOALS]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2" style="margin-top: 1rem;">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">E-02 // THE LOGIC ENGINE</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">ROLE: Technical Solution Architect. Need a "Decision Logic Matrix" to categorize complexity.
-
-1. COMPLEXITY DRIVERS: Identify 5-7 factors (e.g., Legacy OS, Dongles).
-2. THE DECISION TREE: IF [Condition A] THEN [Action B] (Cost = X).
-3. CLASSIFICATION MATRIX: Define Simple / Medium / Complex / Toxic.
-4. SCORING MECHANISM: Assign risk scores to unknowns.
-
-[PASTE TECHNICAL SCOPE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2" style="margin-top: 1rem;">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">E-03 // THE COMMERCIAL SHIELD</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">ROLE: Commercial Risk Officer. Protect from "Black Hole" risks.
-
-1. THE "SILENT KILLERS": Requirements that look simple but have infinite cost depth.
-2. DEFENSIVE DEFINITIONS: In Scope vs Out of Scope vs Dependencies.
-3. DISCLAIMER: Define pricing as "Indicative based on assumptions".
-4. ASSUMPTION LOG: 5 critical assumptions that trigger Change Control.
-
-[PASTE RFP SCOPE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2" style="margin-top: 1rem;">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">E-04 // THE COMMERCIAL LEVER ENGINE</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">ROLE: Commercial Architect. Move from fixed price to "price sliders".
-
-1. THE LEVERS: Identify 3-5 variables (e.g., Service Window, Location, Speed).
-2. THE TRADE-OFFS: Cost Impact vs Risk Impact for each.
-3. RECOMMENDATION: The "Balanced" starting point.
-4. THE DIALOGUE: Script for the "Levers Conversation".
-
-[PASTE SOLUTION AND BUDGET]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">05</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 5 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Map Authority</h2>
-                            <span class="time-pill">~20 MIN</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-05]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Multi-Stakeholder Authority Map</h3>
                         </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Generates the Miller Heiman roles (Economic, Technical, User) and visualises the invisible lines of influence between them.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who make the decision inevitable.</p>
+                            </div>
 
-                <div class="blue-callout-short">
-                    The single most important output. Formal decision structure AND informal influence lines.
-                </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows.<br><strong>Blocker:</strong> Harrison (COO) — outsourcing scepticism.</p>
+                            </div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ask the AI to identify the weakest link in your winning coalition. If a competitor wanted to blow up your deal, who would they target?</p>
+                            </div>
+                        </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-05 // MULTI-STAKEHOLDER AUTHORITY MAP</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Synthesize all the stakeholder intelligence we have gathered so far.
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Synthesize all the stakeholder intelligence we have gathered so far.
 
 Create a 'Political Authority Map' for this deal:
 
@@ -577,81 +571,429 @@ Create a 'Political Authority Map' for this deal:
 
 FORMAT OUTPUT: Provide a text summary AND a Mermaid.js flowchart code block representing the influence network.
 
-[PASTE ALL STAKEHOLDER SUMMARIES HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Winning Coalition:</strong> Hale + Morris + Thompson. If those three support you, Osei follows and Harrison's objections become manageable.<br><strong>Blocker:</strong> David Harrison (COO) — outsourcing scepticism, zero-disruption requirement.</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The winning coalition is the strategic core. You don't need everyone. You need the MINIMUM set of stakeholders who, if they all support you, make the decision inevitable.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">06</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 6 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Plan Engagement</h2>
-                            <span class="time-pill">~15 MIN</span>
+[PASTE ALL STAKEHOLDER SUMMARIES HERE]</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="blue-callout-short">
-                    Specific value propositions, specific discovery questions, specific messaging guidance for each person.
-                </div>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 03: Deal Strategy</div>
 
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
+                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[A-06]</span>
+                            <span class="gov-tag gov-red">Internal Data</span>
+                            <h3 class="accordion-title">Deal Strategy Synthesis</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
+                    <div class="accordion-content">
+                        
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Condenses the entire intelligence campaign into a brutal, one-page execution plan.</p>
+                            </div>
+                            
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">If you can't fit your deal strategy on one page, you don't understand the deal. Complexity is the enemy of execution.</p>
+                            </div>
 
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-06 // PERSONALISED ENGAGEMENT PLANS</div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">MERIDIAN WORKED EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;"><strong>Win Themes:</strong> Resilience as operational DNA. Shared commercial risk.<br><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension.</p>
+                            </div>
+
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">The "No-Bid Criteria" is the most important section. Do not let the AI give you weak criteria. If you can't answer "when do we walk away?", you haven't qualified it.</p>
+                            </div>
+                        </div>
+
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">Synthesize everything into a 'One-Page Deal Strategy' (Plan on a Page).
+
+Sections:
+1. Executive Summary: The deal in 3 sentences (Context, Opportunity, Why Us).
+2. The Winning Coalition: The 3-4 people we are targeting.
+3. Three Key Win Themes: The strategic pillars of our bid.
+4. Top 3 Risks & Mitigations.
+5. Pricing Strategy Headline.
+6. The 'No-Bid' Criteria: Under what specific conditions should we walk away from this deal?
+
+[PASTE ALL PREVIOUS OUTPUTS HERE]</pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
+            </div>
+
+            <div class="toolkit-wrapper reveal">
+                <div class="toolkit-toggle" onclick="toggleToolkit(this)">
+                    <div class="toggle-text">
+                        <h3>ENGINEERING & EXTENDED TOOLKIT — 10 PROMPTS</h3>
+                        <p>Placemat visualisers, logic engines, commercial shields, engagement plans, and cultural alignment tools.</p>
+                    </div>
+                    <span class="toggle-arrow">▼</span>
+                </div>
+                
+                <div class="toolkit-content">
+                    
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-07]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">The 'Placemat' Visualizer</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Translates technical mess into a single, executive-friendly "From/To" visual summary.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Executives don't read 50-page architecture docs. They buy the 1-page placemat that makes them feel safe.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"From: Tangled systems and manual compliance. To: Streamlined API gateway. Bridge: 3-Phase structured migration."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Force the AI to rewrite the "To" state using exclusively the CFO's vocabulary. Erase all technical acronyms.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">ROLE: You are a Strategic Visualiser and Enterprise Architect. Goal: Synthesise complex transformation into a SINGLE visual "placemat".
+
+1. THE "FROM" STATE: Visual metaphor for current pain (e.g., "Tangled wires").
+2. THE "TO" STATE: Visual metaphor for solution (e.g., "Streamlined highway").
+3. THE BRIDGE: How do we visually represent the journey?
+4. THE "YES" LABELS: Specific client terms that must appear.
+5. CAPTIONING: Single sentence caption summarizing ROI.
+
+[PASTE CLIENT STATE AND GOALS]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-08]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">The Logic Engine</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Creates a decision tree to categorize technical complexity and standardize pricing.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Stop pricing everything as a bespoke science experiment. Group the technical mess into standard buckets.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Complexity Drivers: Legacy OS = Toxic. Classification Matrix: 40% Simple, 50% Medium, 10% Toxic."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Push the AI to define the exact boundary line between "Complex" and "Toxic". That line saves your delivery team.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">ROLE: Technical Solution Architect. Need a "Decision Logic Matrix" to categorize complexity.
+
+1. COMPLEXITY DRIVERS: Identify 5-7 factors (e.g., Legacy OS, Dongles).
+2. THE DECISION TREE: IF [Condition A] THEN [Action B] (Cost = X).
+3. CLASSIFICATION MATRIX: Define Simple / Medium / Complex / Toxic.
+4. SCORING MECHANISM: Assign risk scores to unknowns.
+
+[PASTE TECHNICAL SCOPE]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-09]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">The Commercial Shield</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Identifies the requirements that look simple but have infinite cost depth to protect your margins.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Revenue is vanity, margin is sanity. This prevents you from winning a deal that bankrupts your delivery team.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Silent Killer: 'Full historical data migration' has infinite depth. Solution: Add strict volume constraints."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Have the AI draft the exact, polite but firm disclaimer text you need to embed directly into the commercial schedule.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">ROLE: Commercial Risk Officer. Protect from "Black Hole" risks.
+
+1. THE "SILENT KILLERS": Requirements that look simple but have infinite cost depth.
+2. DEFENSIVE DEFINITIONS: In Scope vs Out of Scope vs Dependencies.
+3. DISCLAIMER: Define pricing as "Indicative based on assumptions".
+4. ASSUMPTION LOG: 5 critical assumptions that trigger Change Control.
+
+[PASTE RFP SCOPE]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-10]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">The Commercial Lever Engine</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Moves the negotiation from a binary "Too Expensive" to a collaborative "Which levers do you want to pull?"</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Never negotiate price without negotiating scope. If they want 20% off the price, give them 20% less of the service.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Levers: SLA window, onshore/offshore mix. Dialogue: 'To hit that budget, we can move to 9x5 support instead of 24x7.'"</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Ask the AI to rank the levers by which ones matter most to the CFO (cost) versus the CIO (risk). Play them off each other.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">ROLE: Commercial Architect. Move from fixed price to "price sliders".
+
+1. THE LEVERS: Identify 3-5 variables (e.g., Service Window, Location, Speed).
+2. THE TRADE-OFFS: Cost Impact vs Risk Impact for each.
+3. RECOMMENDATION: The "Balanced" starting point.
+4. THE DIALOGUE: Script for the "Levers Conversation".
+
+[PASTE SOLUTION AND BUDGET]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-11]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">Personalised Engagement Plans</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Scripts the exact approach, hooks, and "value drops" for your next interaction with a specific stakeholder.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Don't wing it. Know exactly what you need to extract from them and exactly what insight you need to drop in return.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Hook: Acknowledge the 47-min gap. Value Drop: Case study on 10-min resolution. Ask: Intro to the shadow approver."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">If the suggested hook feels too aggressive for British/European corporate culture, tell the AI to "Tone it down 20% and make it collaborative."</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
 
 Structure it as a meeting preparation guide:
 
 1. The Hook (First 2 mins): A specific insight or 'Accusation Audit' opener that proves we understand their world immediately.
 2. The Discovery Goal: What is the ONE piece of information we must learn from them in the next interaction?
-3. The Value Drop: What specific insight, data point, or case study should we share that helps them achieve THEIR personal goal (from the Motivation Map)?
+3. The Value Drop: What specific insight, data point, or case study should we share that helps them achieve THEIR personal goal?
 4. The Ask: What is the calibrated next step we should ask for?
 
-[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-12]</span>
+                                <span class="gov-tag gov-amber">Public Data</span>
+                                <h3 class="accordion-title">Psychological Driver Decoder</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Classifies a stakeholder into one of the 6 fundamental human drivers to shape how you frame the proposal.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Pitching "Innovation" to someone driven by "Certainty" terrifies them. Pitching "Safety" to someone driven by "Significance" bores them.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Driver: CERTAINTY. Frame the proposal around risk-mitigation and proven frameworks, not cutting-edge experiments."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Compare the AI's psychological read against how the person actually behaves in meetings. If they interrupt constantly, they are Significance-driven.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">Based on the motivation profile above, classify this stakeholder into one of the 6 Human Drivers:
+1. CERTAINTY (Safety, risk avoidance, predictable future)
+2. SIGNIFICANCE (Status, power, recognition, "being right")
+3. VARIETY (Novelty, change, disruption, boredom with status quo)
+4. LOVE/CONNECTION (Consensus, team harmony, people-pleaser)
+5. GROWTH (Learning, new capabilities, expanding scope)
+6. CONTRIBUTION (Legacy, mentorship, helping others)
+
+Which one is their PRIMARY driver? How do we frame our proposal to satisfy that specific psychological need?</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt uses publicly available information only. Safe to use in any AI tool including free-tier ChatGPT, Gemini, or Claude.</p>
-                </div>
 
-                <div class="console-header-v2" style="margin-top: 1.5rem;">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-11 // HUMINT ELICITATION SCRIPT</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">I need to uncover hidden intelligence that isn't in documents. I am meeting [STAKEHOLDER].
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-13]</span>
+                                <span class="gov-tag gov-amber">Public Data</span>
+                                <h3 class="accordion-title">HUMINT Elicitation Script</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Generates subtle "Corridor Questions" designed to elicit human intelligence about internal politics.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Never ask "What is your budget?" Ask "Who else needs to sign off for this budget to be released?" It uncovers the shadow org chart.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Script: 'The last time you tried to modernise this workflow, what was the internal roadblock that stopped it?'"</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Use these over coffee, not in a boardroom. Delivery tone matters more than the words. Stay curious, not interrogative.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">I need to uncover hidden intelligence that isn't in documents. I am meeting [STAKEHOLDER].
 
 Generate 3 'Corridor Questions' designed to elicit HUMINT (Human Intelligence) about internal politics.
 
@@ -663,98 +1005,50 @@ Focus on:
 2. Uncovering the previous failed attempt.
 3. Identifying the internal enemy.
 
-Script the questions to sound casual, not interrogative.</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Harrison:</strong> Lead with operational data, transition risk mitigation, zero-disruption guarantees. Don't say "innovation."<br><strong>HUMINT Question:</strong> "The last time you tried to modernise this workflow, what was the internal roadblock that stopped it?" (Reveals the blocker).</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">07</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 7 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Deal Strategy</h2>
-                            <span class="time-pill">~15 MIN</span>
+Script the questions to sound casual, not interrogative.</pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="blue-callout-short">
-                    Everything synthesised into one page. If you can't fit your deal strategy on one page, you don't understand the deal well enough.
-                </div>
-
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-07 // DEAL STRATEGY SYNTHESIS</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Synthesize everything into a 'One-Page Deal Strategy' (Plan on a Page).
-
-Sections:
-1. Executive Summary: The deal in 3 sentences (Context, Opportunity, Why Us).
-2. The Winning Coalition: The 3-4 people we are targeting.
-3. Three Key Win Themes: The strategic pillars of our bid.
-4. Top 3 Risks & Mitigations.
-5. Pricing Strategy Headline.
-6. The 'No-Bid' Criteria: Under what specific conditions should we walk away from this deal?
-
-[PASTE ALL PREVIOUS OUTPUTS HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="worked-example-clean">
-                    <div class="example-title">MERIDIAN WORKED EXAMPLE</div>
-                    <p class="example-prose"><strong>Win Themes:</strong> "Right size, right focus" + "Resilience as operational DNA" + "Commercial alignment through shared risk."<br><strong>No-Bid Criteria:</strong> Walk away if Harrison has already selected an incumbent extension or if evaluation is weighted >50% on price.</p>
-                </div>
-
-                <div class="experience-callout">
-                    <div class="experience-header">WHAT EXPERIENCE SEES</div>
-                    <p class="experience-prose">The no-bid criteria at the bottom is the section most people skip and most deals need. Under what circumstances do you walk away? If you can't answer that question, you haven't qualified the deal.</p>
-                </div>
-            </div>
-
-            <div class="container-prose reveal">
-                <div class="step-block">
-                    <div class="step-num">08</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 8 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Cross-Stakeholder Dynamics</h2>
-                            <span class="time-pill">ADVANCED</span>
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-14]</span>
+                                <span class="gov-tag gov-amber">Public Data</span>
+                                <h3 class="accordion-title">Cross-Stakeholder Dynamics</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
-                    </div>
-                </div>
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt synthesises outputs from previous steps. If earlier steps included internal data, this output inherits that classification — treat as RED and use enterprise AI tools only.</p>
-                </div>
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-08 // CROSS-STAKEHOLDER DYNAMICS MAP</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Synthesise all individual stakeholder profiles (minimum 3). Map how stakeholders INTERACT — not just what each wants individually.
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Maps how stakeholders interact with each other, uncovering alignment and political tension across the board.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">If the CIO hates the CFO's plan, and your proposal forces them to agree, they will kill the deal to avoid the conflict.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Tension Map: CFO wants cost certainty. COO wants zero disruption. If you pitch heavy transformation, COO will block CFO."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Look for the "Quiet Stakeholder". Absence of signal IS a signal. Ask the AI: "Who is conspicuously silent in this dynamic?"</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">Synthesise all individual stakeholder profiles (minimum 3). Map how stakeholders INTERACT — not just what each wants individually.
 
 1. ALIGNMENT MAP: Where do priorities agree across stakeholders? What shared language appears?
 2. TENSION MAP: Where do priorities conflict? (e.g., CFO wants cost certainty, CIO wants transformation investment, COO wants zero disruption).
@@ -764,35 +1058,50 @@ Sections:
 
 FORMAT OUTPUT: Provide a summary table AND a Mermaid.js graph showing influence flows.
 
-[PASTE ALL STAKEHOLDER PROFILES HERE]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="step-block">
-                    <div class="step-num">09</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 9 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Culture & Values Alignment</h2>
-                            <span class="time-pill">ADVANCED</span>
+[PASTE ALL STAKEHOLDER PROFILES HERE]</pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="failure-box" style="background: rgba(245, 158, 11, 0.04); border-left-color: var(--amber); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--amber); text-transform: uppercase;">AMBER — PUBLIC DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt uses publicly available information only. Safe to use in any AI tool including free-tier ChatGPT, Gemini, or Claude.</p>
-                </div>
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-09 // CULTURE & VALUES ALIGNMENT</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">Assess cultural compatibility between your organisation and the prospect for a long-term partnership.
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-15]</span>
+                                <span class="gov-tag gov-amber">Public Data</span>
+                                <h3 class="accordion-title">Culture & Values Alignment</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Assesses the cultural compatibility between your organisation and the prospect to prove long-term fit.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">When all vendors cost the same and do the same thing, the client buys the team they actually want to have a beer with.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Alignment: Both companies heavily index on 'Radical Transparency'. Prove it by sharing a failure in your pitch."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Watch out for "Culture Washing." If their website says "Move Fast" but their RFP demands 12 layers of governance, point out the discrepancy to the AI.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">Assess cultural compatibility between your organisation and the prospect for a long-term partnership.
 
 Using: prospect website culture/values, careers page, leadership LinkedIn posts, employee reviews.
 
@@ -802,111 +1111,267 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
 4. EVIDENCE FOR THE PROPOSAL: Specific cultural alignment proof points to embed.
 5. CULTURAL RISKS: Where might friction emerge?
 
-[PASTE CULTURAL MATERIALS FROM BOTH ORGANISATIONS]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
-                    </div>
-                </div>
-
-                <div class="step-block">
-                    <div class="step-num">10</div>
-                    <div class="step-content">
-                        <span class="step-counter">STEP 10 OF 10</span>
-                        <div class="step-title-row">
-                            <h2 class="step-title">Human Risk & TUPE</h2>
-                            <span class="time-pill">ADVANCED</span>
+[PASTE CULTURAL MATERIALS FROM BOTH ORGANISATIONS]</pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="failure-box" style="background: rgba(239, 68, 68, 0.04); border-left-color: var(--red); margin-top: 1.5rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem;">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
-                        <span style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: var(--red); text-transform: uppercase;">RED — INTERNAL DATA</span>
-                    </div>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--slate);">This prompt requires internal or client-sensitive information. Use ONLY in enterprise AI tools with data governance (ChatGPT Team/Enterprise, Claude Pro, or your organisation's approved platform). Do NOT paste proprietary data into free-tier AI tools.</p>
-                </div>
-                <div class="console-header-v2">
-                    <div class="traffic-lights"><span></span><span></span><span></span></div>
-                    <div class="console-title">W2-10 // THE HUMAN RISK & TUPE MAPPER</div>
-                </div>
-                <div class="prompt-wrapper">
-                    <div class="prompt-content">ROLE: You are a Human Capital Strategist and TUPE Expert. You are mapping the emotional and operational risks of a people transfer.
+
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[A-16]</span>
+                                <span class="gov-tag gov-red">Internal Data</span>
+                                <h3 class="accordion-title">Human Risk & TUPE Mapper</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Maps the emotional and operational risks of transferring staff (TUPE) from the client to your organisation.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">TUPE deals die on emotion, not spreadsheets. If the transferred staff revolt on Day 1, the contract will fail in Month 6.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Fear Factor: Loss of seniority. Day 1 Plan: Immediate townhall mapping their career paths in our org."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">AI can read policies, but it can't read the room. Before sending this plan, run it past your HR lead to verify it doesn't violate local employment laws.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">ROLE: You are a Human Capital Strategist and TUPE Expert. You are mapping the emotional and operational risks of a people transfer.
 
 1. THE FEAR FACTORS: Identify the top 3 anxieties for the transferred staff (e.g., "Will I have a job in 12 months?").
 2. THE KNOWLEDGE GAP: Identify which specific roles hold the "institutional DNA." If these people leave, what breaks?
 3. THE "VALUE MIRROR": Map the client's stated people values directly to your own.
 4. THE DAY 1 PLAN: Draft the "First 24 Hours" engagement plan for the transferred staff.
 
-[PASTE EMPLOYEE DATA AND CULTURAL RESEARCH]</div>
-                    <div class="console-actions">
-                        <button class="action-btn btn-expand" onclick="togglePrompt(this)">+ Read more</button>
-                        <button class="action-btn btn-copy" onclick="copyPrompt(this)">COPY</button>
+[PASTE EMPLOYEE DATA AND CULTURAL RESEARCH]</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
-            <div class="container-prose reveal">
+            <div class="container-wide reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 1: The Coalition That Wasn't</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">You had 3 "Yes" votes, but you didn't check if they got along. The CIO hated the CFO's plan. Your proposal forced them to align, so they killed it to avoid the conflict.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Don't just map individuals. Map the friction between them.</span>
-                </div>
+                <div class="failures-grid">
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 1: The Fake Coalition</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">You had 3 "Yes" votes, but you didn't check if they got along. The CIO hated the CFO's plan. Your proposal forced them to align, so they killed it to avoid the conflict.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Don't just map individuals. Map the friction between them.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 2: The Hostile Sponsor</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">Your champion was loud and supportive. You didn't realise they were losing a power struggle internally. Their support for you actually became a weapon used by their rivals to block the deal.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify your champion's actual political capital, not just their job title.</span>
-                </div>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 2: The Hostile Sponsor</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Your champion was loud and supportive. You didn't realise they were losing a power struggle internally. Their support actually became a weapon used by rivals to block the deal.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify your champion's political capital, not just their job title.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 3: Perfect Map, Wrong Company</h3>
-                    <p style="margin: 0; font-size: 0.95rem;">You mapped the Global HQ perfectly. But the decision was actually delegated to the Regional MD. You spent 6 weeks influencing people who had no vote.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Confirm the specific governance level for this specific contract value.</span>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 3: The Wrong Map</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">You mapped the Global HQ perfectly. But the decision was actually delegated to the Regional MD. You spent 6 weeks influencing people who had no vote.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Confirm governance delegation for this specific contract value.</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="container-wide reveal">
-                <div class="section-divider" style="margin-top: 6rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">PROMPT LIBRARY</div>
-                    <div class="divider-line"></div>
+            <div class="terminal-repo reveal">
+                <div class="terminal-header">
+                    ADVANCED INTELLIGENCE ARCHIVE // Quick-Copy Terminal
                 </div>
-                
-                <p style="text-align: center; color: var(--slate); font-size: 0.9rem; margin-bottom: 2rem;">Click to copy any prompt to your clipboard.</p>
+                <p class="body-prose" style="margin-bottom: 2rem;">
+                    For practitioners who know the system. Click to copy directly to your clipboard.
+                </p>
 
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">INTELLIGENCE EXTRACTION</h4>
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">INTELLIGENCE EXTRACTION</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-01')">W2-01 // RFP DECODER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-02')">W2-02 // STAKEHOLDER DISCOVERY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-03')">W2-03 // REQUIREMENTS DECODER <span class="copy-badge">Copy</span></button>
-                </div>
-
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">DEEP MAPPING</h4>
-                <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-04')">W2-04 // MOTIVATION MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-04b')">W2-04b // PSYCHOLOGY DECODER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-05')">W2-05 // AUTHORITY MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-06')">W2-06 // ENGAGEMENT CARD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-11')">W2-11 // HUMINT ELICITATION <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-07')">W2-07 // DEAL STRATEGY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-01')">A-01 // RFP DECODER <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-02')">A-02 // REQUIREMENTS DECODER <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-03')">A-03 // STAKEHOLDER DISCOVERY <span class="copy-badge">Copy</span></button>
                 </div>
 
-                <h4 style="color: var(--primary); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">ADVANCED & ENGINEERING</h4>
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">DEEP MAPPING</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-01')">E-01 // VISUAL PLACEMAT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-02')">E-02 // LOGIC ENGINE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-03')">E-03 // COMMERCIAL SHIELD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'E-04')">E-04 // LEVER ENGINE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-08')">W2-08 // DYNAMICS MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-09')">W2-09 // CULTURE ALIGNMENT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'W2-10')">W2-10 // HUMAN RISK/TUPE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-04')">A-04 // MOTIVATION MAP <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-05')">A-05 // AUTHORITY MAP <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-10')">A-10 // ENGAGEMENT PLANS <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-11')">A-11 // DEAL STRATEGY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-13')">A-13 // HUMINT ELICITATION <span class="copy-badge">Copy</span></button>
                 </div>
+
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">ADVANCED & ENGINEERING</h4>
+                <div class="library-grid" style="margin-bottom: 0;">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-06')">A-06 // VISUAL PLACEMAT <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-07')">A-07 // LOGIC ENGINE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-08')">A-08 // COMMERCIAL SHIELD <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-09')">A-09 // LEVER ENGINE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-12')">A-12 // PSYCHOLOGY DECODER <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-14')">A-14 // DYNAMICS MAP <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-15')">A-15 // CULTURE ALIGNMENT <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'A-16')">A-16 // HUMAN RISK/TUPE <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <div style="display: none;">
+                    <div class="prompt-console-title">A-01</div>
+                    <div><pre>Act as an expert Proposal Director and Strategic Deal Analyst.
+I am providing you with the text from an RFP / Opportunity Description.
+Analyze the text and produce a 'Strategic Decoding Table':
+1. EXPLICIT REQUIREMENT: What they strictly asked for.
+2. IMPLICIT SIGNAL: What the language intensity suggests is the real driver.
+3. LIKELY PAIN POINT: What specifically went wrong with the incumbent.
+4. RISK LEVEL: How dangerous this is if we get it wrong.
+Then, determine the 'Trigger Event': Contract Expiry, Regulatory Failure, or Strategic Mandate?
+[PASTE RFP TEXT HERE]</pre></div>
+                    
+                    <div class="prompt-console-title">A-02</div>
+                    <div><pre>Analyze the requirements section of this RFP/Document.
+Group the requirements into 'Clusters of Density'.
+For each Cluster:
+1. Name the 'Trauma': What specific operational failure likely happened in the past?
+2. Define our 'Response Strategy': Should we COMPLY, DIFFERENTIATE, or MITIGATE?
+Output as a table.
+[PASTE REQUIREMENTS SECTION HERE]</pre></div>
+                    
+                    <div class="prompt-console-title">A-03</div>
+                    <div><pre>Act as a Strategic Account Manager.
+I am providing you with [INSERT SOURCE MATERIAL].
+1. Extract every individual person named.
+2. Build a 'Stakeholder Register' table: Name, Title, Role (Decision Maker/Influencer/Evaluator).
+3. Create a 'Missing Stakeholders' list. Who is missing for a deal of this size?
+4. Suggest likely Job Titles to search for on LinkedIn.
+[PASTE SOURCE MATERIAL HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-04</div>
+                    <div><pre>Act as an expert in negotiation tactics. I am providing the profile for [STAKEHOLDER NAME].
+Generate a 'Deep Motivation Profile':
+1. The 'Black Swan': One piece of info that changes how we approach them.
+2. Stated vs. Hidden Drivers: What they say vs what their bonus rewards.
+3. The 'No-Oriented' Question: Draft a question designed to get them to say "No" to reveal constraints.
+4. Success Definition: Complete: "I will be promoted next year if..."
+[PASTE PROFILE DATA HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-05</div>
+                    <div><pre>Synthesize all stakeholder intelligence. Create a 'Political Authority Map':
+1. Classify each stakeholder into Miller Heiman roles (Economic, User, Technical, Coach).
+2. Map the 'Influence Network': Who influences whom?
+3. Identify the 'Winning Coalition': Which minimum set of 3-4 people makes the deal inevitable?
+4. Identify the 'Blockers': Who has the power to kill this deal?
+[PASTE ALL STAKEHOLDER SUMMARIES HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-06</div>
+                    <div><pre>ROLE: Strategic Visualiser. Synthesise complex transformation into a SINGLE visual "placemat".
+1. THE "FROM" STATE: Visual metaphor for current pain.
+2. THE "TO" STATE: Visual metaphor for solution.
+3. THE BRIDGE: How do we visually represent the journey?
+4. THE "YES" LABELS: Specific client terms that must appear.
+5. CAPTIONING: Single sentence caption summarizing ROI.
+[PASTE CLIENT STATE AND GOALS]</pre></div>
+
+                    <div class="prompt-console-title">A-07</div>
+                    <div><pre>ROLE: Technical Solution Architect. Need a "Decision Logic Matrix".
+1. COMPLEXITY DRIVERS: Identify 5-7 factors.
+2. THE DECISION TREE: IF [Condition A] THEN [Action B] (Cost = X).
+3. CLASSIFICATION MATRIX: Define Simple / Medium / Complex / Toxic.
+4. SCORING MECHANISM: Assign risk scores to unknowns.
+[PASTE TECHNICAL SCOPE]</pre></div>
+
+                    <div class="prompt-console-title">A-08</div>
+                    <div><pre>ROLE: Commercial Risk Officer. Protect from "Black Hole" risks.
+1. THE "SILENT KILLERS": Requirements that look simple but have infinite cost depth.
+2. DEFENSIVE DEFINITIONS: In Scope vs Out of Scope vs Dependencies.
+3. DISCLAIMER: Define pricing as "Indicative based on assumptions".
+4. ASSUMPTION LOG: 5 critical assumptions that trigger Change Control.
+[PASTE RFP SCOPE]</pre></div>
+
+                    <div class="prompt-console-title">A-09</div>
+                    <div><pre>ROLE: Commercial Architect. Move from fixed price to "price sliders".
+1. THE LEVERS: Identify 3-5 variables (e.g., Service Window).
+2. THE TRADE-OFFS: Cost Impact vs Risk Impact for each.
+3. RECOMMENDATION: The "Balanced" starting point.
+4. THE DIALOGUE: Script for the "Levers Conversation".
+[PASTE SOLUTION AND BUDGET]</pre></div>
+
+                    <div class="prompt-console-title">A-10</div>
+                    <div><pre>Create a 'Strategic Engagement Card' for [STAKEHOLDER NAME].
+1. The Hook: A specific insight or opener that proves we understand their world.
+2. The Discovery Goal: ONE piece of info we must learn.
+3. The Value Drop: Specific insight/case study to share that helps their personal goal.
+4. The Ask: What is the calibrated next step?
+[PASTE STAKEHOLDER MOTIVATION PROFILE HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-11</div>
+                    <div><pre>Synthesize everything into a 'One-Page Deal Strategy'.
+1. Executive Summary: Context, Opportunity, Why Us.
+2. The Winning Coalition: 3-4 target people.
+3. Three Key Win Themes.
+4. Top 3 Risks & Mitigations.
+5. Pricing Strategy Headline.
+6. The 'No-Bid' Criteria: When should we walk away?
+[PASTE ALL PREVIOUS OUTPUTS HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-12</div>
+                    <div><pre>Based on the motivation profile, classify this stakeholder into one of the 6 Human Drivers: Certainty, Significance, Variety, Love/Connection, Growth, Contribution.
+Which one is their PRIMARY driver? How do we frame our proposal to satisfy that need?</pre></div>
+
+                    <div class="prompt-console-title">A-13</div>
+                    <div><pre>Generate 3 'Corridor Questions' designed to elicit HUMINT about internal politics.
+Focus on: 1. Finding shadow approver. 2. Uncovering previous failed attempt. 3. Identifying internal enemy.
+Script the questions to sound casual, not interrogative.</pre></div>
+
+                    <div class="prompt-console-title">A-14</div>
+                    <div><pre>Map how stakeholders INTERACT.
+1. ALIGNMENT MAP: Shared priorities.
+2. TENSION MAP: Where do priorities conflict?
+3. INFLUENCE FLOW: Who defers to whom?
+4. COALITION SCENARIOS: If X champions, who follows?
+5. THE QUIET STAKEHOLDER: Who has been silent?
+[PASTE ALL STAKEHOLDER PROFILES HERE]</pre></div>
+
+                    <div class="prompt-console-title">A-15</div>
+                    <div><pre>Assess cultural compatibility for a long-term partnership.
+1. VALUES ALIGNMENT: Where is genuine overlap?
+2. WORKING STYLE: Formal/informal?
+3. CULTURAL SIGNALS: What does the RFP reveal?
+4. EVIDENCE: Proof points to embed.
+5. CULTURAL RISKS: Where might friction emerge?
+[PASTE CULTURAL MATERIALS]</pre></div>
+
+                    <div class="prompt-console-title">A-16</div>
+                    <div><pre>ROLE: Human Capital / TUPE Expert. Map the emotional risks of a people transfer.
+1. THE FEAR FACTORS: Top 3 anxieties for staff.
+2. THE KNOWLEDGE GAP: Who holds the "institutional DNA"?
+3. THE "VALUE MIRROR": Map client values to ours.
+4. THE DAY 1 PLAN: "First 24 Hours" engagement plan.
+[PASTE EMPLOYEE DATA]</pre></div>
+                </div>
+            </div>
+
+            <div class="reveal" style="text-align: center; padding-top: 2rem; padding-bottom: 4rem;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 1.5rem;">Terrain mapped. Now, engineer the narrative.</p>
+                <a href="win.html" class="btn-schedule">PROCEED TO [I] INFLUENCE →</a>
             </div>
 
         </main>
@@ -929,87 +1394,134 @@ Using: prospect website culture/values, careers page, leadership LinkedIn posts,
                 No hype. Just results. © 2026
             </div>
         </footer>
+    </div>
 
-        <script>
-            // TOGGLE PROMPT EXPANSION
-            function togglePrompt(btn) {
-                const content = btn.parentElement.previousElementSibling;
-                content.classList.toggle('expanded');
-                btn.innerText = content.classList.contains('expanded') ? '− Read less' : '+ Read more';
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
             }
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
+                });
+            }, { threshold: 0.1 });
 
-            // COPY FUNCTIONALITY
-            function copyPrompt(btn) {
-                const content = btn.parentElement.previousElementSibling.innerText;
-                navigator.clipboard.writeText(content).then(() => {
-                    const original = btn.innerText;
-                    btn.innerText = 'COPIED ✓';
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
+        });
+
+        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        function toggleAccordion(header) {
+            const currentItem = header.parentElement;
+            const isOpen = currentItem.classList.contains('open');
+
+            if (!isOpen) {
+                currentItem.classList.add('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[− CLOSE]';
+            } else {
+                currentItem.classList.remove('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[+ VIEW]';
+            }
+        }
+
+        // VIEW CODE TOGGLE
+        function toggleCode(btn) {
+            const container = btn.parentElement.nextElementSibling;
+            const isActive = container.classList.contains('active');
+            
+            if(!isActive) {
+                container.classList.add('active');
+                btn.innerText = 'HIDE PROMPT CODE';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+            } else {
+                container.classList.remove('active');
+                btn.innerText = '👁 VIEW PROMPT CODE';
+                btn.style.background = 'transparent';
+                btn.style.color = '#3b82f6';
+            }
+        }
+
+        // TOGGLE TOOLKIT
+        function toggleToolkit(btn) {
+            const wrapper = btn.closest('.toolkit-wrapper');
+            const content = wrapper.querySelector('.toolkit-content');
+            
+            wrapper.classList.toggle('open');
+            content.classList.toggle('expanded');
+            
+            if (content.classList.contains('expanded')) {
+                setTimeout(() => {
+                    content.querySelectorAll('.reveal').forEach(r => r.classList.add('active'));
+                }, 100);
+            }
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        function copyPromptText(btn) {
+            const terminalBlock = btn.closest('.terminal-block');
+            const promptText = terminalBlock.querySelector('.prompt-text').innerText;
+            
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#3b82f6';
+                }, 2000);
+            });
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Archive Prompts)
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.prompt-console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const content = title.nextElementSibling; 
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = '[COPIED]';
+                    btn.style.borderColor = '#10b981';
                     btn.style.color = '#10b981';
+                    badge.style.color = '#10b981';
+                    
                     setTimeout(() => {
-                        btn.innerText = original;
-                        btn.style.color = '';
+                        badge.innerText = original;
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.color = '#cbd5e1';
+                        badge.style.color = '#3b82f6';
                     }, 2000);
                 });
+            } else {
+                console.error("Could not find prompt ID: " + promptID);
             }
-
-            // LIBRARY COPY FUNCTIONALITY
-            function copyLibraryPrompt(btn, promptID) {
-                const titles = document.querySelectorAll('.console-title');
-                let foundCode = null;
-
-                titles.forEach(title => {
-                    if (title.innerText.includes(promptID)) {
-                        // Step up to the header, then over to the wrapper
-                        const wrapper = title.parentElement.nextElementSibling; 
-                        const content = wrapper.querySelector('.prompt-content');
-                        if (content) foundCode = content.innerText;
-                    }
-                });
-
-                if (foundCode) {
-                    navigator.clipboard.writeText(foundCode).then(() => {
-                        const badge = btn.querySelector('.copy-badge');
-                        const original = badge.innerText;
-                        badge.innerText = 'COPIED';
-                        badge.style.background = '#10b981';
-                        setTimeout(() => {
-                            badge.innerText = original;
-                            badge.style.background = '';
-                        }, 2000);
-                    });
-                } else {
-                    console.warn('Prompt ID not found:', promptID);
-                }
-            }
-
-            // SCROLL REVEAL
-            document.addEventListener('DOMContentLoaded', () => {
-                const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-                const navLinks = document.querySelector('.nav-links');
-                if (mobileMenuToggle && navLinks) {
-                    mobileMenuToggle.addEventListener('click', () => {
-                        mobileMenuToggle.classList.toggle('active');
-                        navLinks.classList.toggle('active');
-                    });
-                }
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.reveal').forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.top < window.innerHeight) {
-                        el.classList.add('active');
-                    }
-                    observer.observe(el);
-                });
-            });
-        </script>
-    </div>
+        }
+    </script>
 </body>
 </html>
