@@ -11,51 +11,46 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         /* McKinsey-style tight formatting overrides */
-        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
         .grid-2-col-sleek { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
         
-        .card.compact { padding: 1.25rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; }
-        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.5rem; margin-top: 0; }
-        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; margin: 0; }
-
+        .card.compact { padding: 1.5rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; flex-direction: column; }
+        .card.compact .doctrine-title { font-size: 1rem; margin-bottom: 0.5rem; margin-top: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: white; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; flex-grow: 1; }
+        
         /* The Index Navigation */
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 2rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
         .index-step { display: flex; align-items: center; gap: 1.5rem; }
         .index-step span { color: #cbd5e1; }
         .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
 
-        /* S-C-R Framework Grid */
-        .scr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
-        .scr-col { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 8px; border-top: 3px solid transparent; }
-        .scr-title { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.75rem; color: white; }
-        .scr-body { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin: 0; }
-        .scr-lesson { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 1rem; padding-top: 0.75rem; font-size: 0.75rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; text-align: right; }
+        /* Doctrine Grid (Vertical Stack for Eras) */
+        .doctrine-stack { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+        .scr-lesson { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 1.5rem; padding-top: 1rem; font-size: 0.7rem; color: #3b82f6; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-align: right; }
 
         /* Principles Block */
-        .principles-box { background: rgba(59, 130, 246, 0.05); border-left: 4px solid #3b82f6; padding: 1.5rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; }
+        .principles-box { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 2rem; margin-bottom: 3rem; border-radius: 8px; }
         .principles-list { list-style: none; padding: 0; margin: 0; }
-        .principles-list li { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 0.75rem; padding-left: 1rem; position: relative; }
-        .principles-list li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; font-weight: 700; }
+        .principles-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; line-height: 1.6; }
+        .principles-list li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; font-weight: 900; }
         .principles-list li:last-child { margin-bottom: 0; }
 
-        /* Evolution Grid */
-        .evolution-grid { display: grid; gap: 0.75rem; margin: 2rem auto 4rem auto; max-width: 900px; }
-        .evo-header { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 1rem; padding: 0 1.5rem 0.5rem 1.5rem; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.05em; }
-        .evo-row { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 1rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem 1.5rem; align-items: center; }
-        .evo-left { font-size: 0.9rem; color: #94a3b8; }
-        .evo-arrow { color: #3b82f6; font-weight: bold; text-align: center; }
-        .evo-right { font-size: 0.9rem; color: white; font-weight: 600; }
+        /* Exhibit Formats (The Evolution Table) */
+        .mckinsey-exhibit { background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .comparison-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .comparison-row:last-child { border-bottom: none; }
+        .col-header { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; }
+        .col-text { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .col-judgment { font-size: 0.85rem; color: white; font-weight: 600; line-height: 1.5; }
+        
+        .header-row { background: rgba(15,23,42,0.8); border-bottom: 2px solid rgba(255,255,255,0.1); }
 
         @media (max-width: 900px) {
-            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2-col-sleek { grid-template-columns: 1fr; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        }
-        @media (max-width: 600px) {
-            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: 1fr; }
-            .evo-row, .evo-header { grid-template-columns: 1fr; text-align: center; gap: 0.5rem; }
-            .evo-header { display: none; }
-            .evo-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
+            .comparison-row { grid-template-columns: 1fr; gap: 0.5rem; background: var(--bg-card); margin: 0 1rem 1rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+            .header-row { display: none; }
+            .col-header.mobile-only { display: block; margin-bottom: 0.25rem; color: #3b82f6; font-size: 0.65rem; margin-top: 0.5rem; }
         }
     </style>
 </head>
@@ -73,7 +68,7 @@
                 <div class="dropdown-content">
                     <a href="revenue-case.html">The Revenue Case</a>
                     <a href="proof.html">The Proof</a>
-                    <a href="story.html" style="color: var(--primary);">The Story</a>
+                    <a href="story.html">The Story</a>
                     <a href="thinking.html">The Thinking</a>
                 </div>
             </div>
@@ -138,9 +133,13 @@
         </div>
 
         <div class="principles-box reveal" style="max-width: 800px; margin: 0 auto 4rem auto;">
-            <p style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; color: white; margin-bottom: 1rem;">The Operational Doctrine:</p>
+            <p style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 1rem;">The Operational Doctrine:</p>
+            <p class="body-prose" style="font-size: 1.05rem; color: white; font-weight: 600; margin-bottom: 1.5rem; font-style: italic;">
+                "I despise wasted effort. Brute force doesn't scale. Leverage does."
+            </p>
             <ul class="principles-list">
-                <li><strong>Preparation over persistence.</strong> Research the landscape before you enter it. Invest in yourself before you ask others to invest in you.</li>
+                <li><strong>Dismantle the loss before building the win.</strong> Elite execution is rooted in loss-aversion. Map the risk, locate the detractor, and find the "Loss Themes" before you ever pitch a solution.</li>
+                <li><strong>Preparation over persistence.</strong> Find the single point of maximum impact. Doing the 'right thing' means not having to do a hundred wrong things.</li>
                 <li><strong>Change it. Optimise it. Bring people with you.</strong> Build followers, not detractors.</li>
                 <li><strong style="color: white;">If a system depends on the person who built it, it isn't a system. It's a bottleneck.</strong></li>
             </ul>
@@ -156,13 +155,13 @@
             <div class="card compact" style="border-top: 3px solid #ef4444;">
                 <h3 class="doctrine-title" style="color: #ef4444;">The Silent Exit</h3>
                 <p class="body-prose">
-                    A major renewal worth eight figures. Dashboard green. SLAs perfect. The client simply stopped talking. The realisation came too late: data is not a relationship. They didn't leave because of failed metrics. They left because of failed relevance. Managed, not led.
+                    A major renewal worth eight figures. Dashboard green. SLAs perfect. The client simply stopped talking. The realisation came too late: data is not a relationship. They didn't leave because of failed metrics. They left because of failed relevance. They were managed, not led.
                 </p>
             </div>
             <div class="card compact" style="border-top: 3px solid #22c55e;">
-                <h3 class="doctrine-title" style="color: #22c55e;">The System Response</h3>
+                <h3 class="doctrine-title" style="color: #22c55e;">The Behavioural Response</h3>
                 <p class="body-prose">
-                    The vow: never let green dashboards lie again. Built a manual system to map the human terrain of every deal — who holds real power, what they believe, where the risk sits that data can't see. That system became the architecture behind three commercial transformations. Today, it is GAIN.
+                    The vow: never let green dashboards lie again. This triggered a multi-year pursuit of Clinical Hypnotherapy, NLP, and behavioural science. Not as academia, but as a commercial survival tactic to map the invisible human terrain of every deal. Frameworks from Sandhurst to Harvard break if you can't decode the buyer's belief system. That architecture became GAIN.
                 </p>
             </div>
         </div>
@@ -173,32 +172,41 @@
             <div class="divider-line"></div>
         </div>
 
-        <div class="scr-grid reveal">
-            <div class="scr-col" style="border-top-color: #f59e0b;">
-                <div class="scr-title" style="color: #f59e0b;">ERA 01: THE FIXER</div>
-                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">Regulated infrastructure. National utilities.</p>
-                <p class="scr-body">
+        <div class="doctrine-stack reveal" style="margin-bottom: 4rem;">
+            <div class="card compact" style="border-left: 4px solid #f59e0b;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">ERA 01</span>
+                    <span style="font-size: 0.75rem; color: #f59e0b; font-style: italic;">Regulated infrastructure. National utilities.</span>
+                </div>
+                <h3 class="doctrine-title">THE FIXER</h3>
+                <p class="body-prose">
                     Early career across regulated industries. Rebuilt operational systems untouched for years. Designed self-healing environments deployed nationally without on-site support. Built service management operations for 500+ staff. Every role followed the same pattern: broken system, no mandate to fix it — fix it anyway.
                 </p>
-                <div class="scr-lesson">Lesson: Build it to work without you</div>
+                <div class="scr-lesson">LESSON: Build it to work without you</div>
             </div>
 
-            <div class="scr-col" style="border-top-color: #3b82f6;">
-                <div class="scr-title" style="color: #3b82f6;">ERA 02: THE ARCHITECT</div>
-                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">FTSE-listed technology company.</p>
-                <p class="scr-body">
-                    A professional services unit the business wanted to kill became the fastest-growing division. A £35M enterprise book grew to over £183M. Same playbook every time: gather intelligence, map the political terrain, build a go-to-market simple enough to go viral. 
+            <div class="card compact" style="border-left: 4px solid #3b82f6;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">ERA 02</span>
+                    <span style="font-size: 0.75rem; color: #3b82f6; font-style: italic;">FTSE-listed technology company.</span>
+                </div>
+                <h3 class="doctrine-title">THE ARCHITECT</h3>
+                <p class="body-prose">
+                    A professional services unit the business wanted to kill became the fastest-growing division. A £35M enterprise book grew to over £183M. Same playbook every time: gather intelligence, map the political terrain, build a go-to-market simple enough to go viral. The four pillars used in every transformation are now encoded into GAIN as Gather, Assess, Influence, Nurture.
                 </p>
-                <div class="scr-lesson">Lesson: The methodology scales. Judgment doesn't.</div>
+                <div class="scr-lesson">LESSON: The methodology scales. Judgment doesn't.</div>
             </div>
 
-            <div class="scr-col" style="border-top-color: #22c55e;">
-                <div class="scr-title" style="color: #22c55e;">ERA 03: THE COMPRESSION</div>
-                <p class="scr-body" style="margin-bottom: 1rem; font-style: italic; font-size: 0.8rem;">AI-first company. The realisation.</p>
-                <p class="scr-body">
+            <div class="card compact" style="border-left: 4px solid #22c55e;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;">ERA 03</span>
+                    <span style="font-size: 0.75rem; color: #22c55e; font-style: italic;">AI-first company. The realisation.</span>
+                </div>
+                <h3 class="doctrine-title">THE COMPRESSION</h3>
+                <p class="body-prose">
                     Commercial problems were identical — no account intelligence, no system. But prompting changed everything. The intelligence gathering that used to take weeks compressed to minutes. What didn't compress: knowing which findings matter. GAIN was born.
                 </p>
-                <div class="scr-lesson">Lesson: AI compresses grunt work. Judgment remains human.</div>
+                <div class="scr-lesson" style="color: #22c55e;">LESSON: AI compresses grunt work. Judgment remains human.</div>
             </div>
         </div>
 
@@ -208,33 +216,77 @@
             <div class="divider-line"></div>
         </div>
 
-        <div class="evolution-grid reveal">
-            <div class="evo-header">
-                <div>The Analogue Strategy (Took Weeks)</div>
-                <div></div>
-                <div>The GAIN Equivalent (Takes Hours)</div>
+        <div class="mckinsey-exhibit reveal">
+            <div class="comparison-row header-row">
+                <div class="col-header" style="color: #94a3b8;">The Analogue Strategy (Took Weeks)</div>
+                <div class="col-header" style="color: #3b82f6;">The GAIN Equivalent (Takes Hours)</div>
+                <div class="col-header" style="color: white;">What Didn't Change</div>
             </div>
-            <div class="evo-row">
-                <div class="evo-left">Annual reports read manually. IT spend estimated from conversations.</div>
-                <div class="evo-arrow">→</div>
-                <div class="evo-right">[G] GATHER — 9-Pillar Deep Research & Budget Signals (20 min)</div>
+
+            <div class="comparison-row">
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
+                    <span class="col-text">Annual reports read manually. IT spend estimated from conversations.</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
+                    <span class="col-text">[G] GATHER — 9-Pillar Deep Research & Budget Signals (20 min)</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
+                    <span class="col-judgment">Knowing which findings matter</span>
+                </div>
             </div>
-            <div class="evo-row">
-                <div class="evo-left">Org charts drawn in Visio. People profiled from memory.</div>
-                <div class="evo-arrow">→</div>
-                <div class="evo-right">[A] ASSESS — Authority Mapping & Exec Intelligence (15 min)</div>
+
+            <div class="comparison-row">
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
+                    <span class="col-text">Org charts drawn in Visio. People profiled from memory.</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
+                    <span class="col-text">[A] ASSESS — Authority Mapping & Exec Intelligence (15 min)</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
+                    <span class="col-judgment">Distinguishing title from power</span>
+                </div>
             </div>
-            <div class="evo-row">
-                <div class="evo-left">Manual, hand-built campaign documents for Top 10 accounts.</div>
-                <div class="evo-arrow">→</div>
-                <div class="evo-right">[I] INFLUENCE — Rapid Executive Narrative Design</div>
+
+            <div class="comparison-row">
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
+                    <span class="col-text">Manual, hand-built campaign documents for Top 10 accounts.</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
+                    <span class="col-text">[I] INFLUENCE — Rapid Executive Narrative Design</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
+                    <span class="col-judgment">Knowing what makes them tick</span>
+                </div>
             </div>
-            <div class="evo-row">
-                <div class="evo-left">Half-day "Cartography Sessions" with 30-50 stakeholders.</div>
-                <div class="evo-arrow">→</div>
-                <div class="evo-right">[N] NURTURE — Continuous Competitive Early Warning</div>
+
+            <div class="comparison-row">
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
+                    <span class="col-text">Half-day "Cartography Sessions" with 30-50 stakeholders.</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
+                    <span class="col-text">[N] NURTURE — Continuous Competitive Early Warning</span>
+                </div>
+                <div>
+                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
+                    <span class="col-judgment">Securing the internal champion</span>
+                </div>
             </div>
         </div>
+
+        <p class="body-prose reveal" style="text-align: center; margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            The right column is the point. Frameworks don't win deals. Judgment wins deals. AI simply eliminates the manual work that used to consume it.
+        </p>
 
         <div class="container-wide reveal" style="margin-top: 4rem; margin-bottom: 4rem;">
             <div class="quote-console">
@@ -246,10 +298,11 @@
             </div>
         </div>
 
-        <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+        <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
+            <h2 style="color: white; font-size: 2rem; font-weight: 900; margin-bottom: 2rem; letter-spacing: -0.02em;">See the financial impact.</h2>
             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="proof.html" class="btn-schedule">SEE THE NUMBERS →</a>
-                <a href="know.html" class="btn-schedule" style="background: transparent; border: 1px solid var(--primary);">START WITH GATHER</a>
+                <a href="know.html" class="btn-schedule" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">START WITH GATHER</a>
             </div>
         </div>
 
@@ -284,12 +337,18 @@
                     navLinks.classList.toggle('active');
                 });
             }
+            
             const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
+                });
             }, { threshold: 0.1 });
+
             document.querySelectorAll('.reveal').forEach(el => {
                 const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight) el.classList.add('active');
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
                 revealObserver.observe(el);
             });
         });
