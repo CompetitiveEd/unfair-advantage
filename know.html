@@ -63,7 +63,7 @@
 
         /* The New 4-Box Matrix */
         .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; }
+        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
         .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
         
         .box-objective .matrix-title { color: #94a3b8; }
@@ -94,10 +94,11 @@
         .human-checkpoint { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-left: 4px solid #f59e0b; padding: 2rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
         .hc-title { color: #f59e0b; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
 
-        /* Failures / Pitfalls */
-        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; margin-bottom: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        /* Failures / Pitfalls Grid */
+        .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
         .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
-        .failure-rule { display: inline-block; margin-top: 1rem; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.3rem 0.6rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
         .failure-red-text { color: #ef4444; font-weight: 900; }
 
         /* Toolkit Toggle */
@@ -128,6 +129,7 @@
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .top-briefing-grid { grid-template-columns: 1fr; }
             .prompt-matrix { grid-template-columns: 1fr; }
+            .failures-grid { grid-template-columns: 1fr; }
             .accordion-title-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
         }
     </style>
@@ -671,7 +673,24 @@ This briefing should be ready to review on a phone screen 10 minutes before walk
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">A faster variant of G-01 designed to be read in 3 minutes. Perfect for rapid prep.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">A faster variant of the deep research prompt. Outputs a scannable 3-minute read for rapid meeting prep.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Use this when you are pulled into a meeting with 15 minutes notice. It gives you the illusion of hours of prep.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">Bulleted summaries instead of paragraphs. Dense, factual, actionable data points.</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Skim the "Timeline" output immediately to see if there is an active compelling event you can leverage today.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -699,7 +718,24 @@ FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Fl
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Calculates exactly where the company is in their fiscal year to determine your pitch timing.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Calculates exactly where the company is in their fiscal year to determine your pitch timing.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">If you pitch "transformation" in month 11, you lose. Pitch "use-it-or-lose-it tactical fixes." If month 1, pitch the grand vision.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"FYE is March. Currently in Month 11. Strategy: Pitch immediate surplus spend."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Ask the AI: "Based on their FYE, when do departmental budgets typically get locked?" Use this to create urgency.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -729,7 +765,24 @@ FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Fl
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">A fast, 1-page cheat sheet for lower-tier stakeholder meetings.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">A fast, 1-page cheat sheet mapping a stakeholder's priorities and decision style.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Knowing *how* they consume info is as important as *what* they consume. If they post data, bring spreadsheets.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Decision Style: Evidence-based, highly risk-averse. Prefers formal narratives over bullet points."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Check their past companies manually. People buy what they know. If they implemented your competitor at their last job, they are biased.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -761,7 +814,24 @@ FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Fl
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Reads job descriptions to uncover the "Hidden Mandate" of a division.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Reads job descriptions to uncover the "Hidden Mandate" of a division before they announce it publicly.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Companies don't hire 5 Salesforce developers for maintenance. They are doing a migration. Pitch to the migration, not the status quo.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Missing Skill: AWS Architecture. Conclusion: Impending internal transition from legacy servers to cloud."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Ask the AI to identify the seniority of the roles. Senior hires mean strategy shift; junior hires mean execution backlog.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -792,7 +862,24 @@ Analyze these JDs to find the "Hidden Mandate."
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Audits your standard corporate pitch deck against the specific intelligence gathered.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Audits your standard corporate pitch deck against the specific intelligence gathered to prevent generic presentations.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">The fastest way to lose an executive is showing a generic "About Us" map slide. Cut ruthlessly. Only show what matters to their pain.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Slide 3 (Global Offices): CUT. Not relevant to their stated pain points. Move to Appendix."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Never let the AI dictate the opening slide. You must own the opening narrative based on the specific room dynamics.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -822,7 +909,24 @@ CONSTRAINTS: Maximum 12 slides for a 30-min meeting. The first slide after the t
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Dismantles the deal before it fails so you can preemptively secure it.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Dismantles the deal before it fails so you can preemptively secure it.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Hope is not a strategy. Mapping the exact reasons they will say "no" allows you to build those defenses into the opening pitch.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Failure Reason 1: Stalled by security review. Pre-emptive Action: Engage CISO tomorrow."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Challenge the AI. Ask: "What is the most irrational, purely political reason we could lose this deal?"</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -851,7 +955,24 @@ For each reason, give me one pre-emptive action to take NOW to prevent it.</pre>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Prepares the Chris Voss 'Accusation Audit' to disarm negativity before it's spoken.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Prepares the Chris Voss 'Accusation Audit' to disarm negativity before it's spoken.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Calling out the elephant in the room takes away its power. Say "We are the most expensive" before they do.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"You're probably thinking we are overkill for this phase. You're right to worry about bloated deployments. Here's why..."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Filter the AI's tone. AI tends to be overly polite and apologetic; accusation audits need to be blunt and fearless.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -883,7 +1004,24 @@ For each objection:
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Forces the AI to prove its own work to prevent fatal inaccuracies in your briefing.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Forces the AI to prove its own work against the source text to prevent fatal inaccuracies in your briefing.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Trusting an AI statistic in a board meeting is career suicide. Make the machine show its working before you present.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Verdict: HALLUCINATED. No direct quote found in Annual Report regarding a Q4 completion date."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">If it hallucinates once, scrutinize the entire document. Do a manual spot-check of the single most critical metric on the page.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -910,12 +1048,29 @@ If you cannot find a direct quote, mark it HALLUCINATED.</pre>
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-15]</span>
                                 <span class="gov-tag gov-amber">Public Data</span>
-                                <h3 class="accordion-title">Multi-Source Synthesis</h3>
+                                <h3 class="accordion-title">Cross-Reference Engine</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">An advanced timeline builder to uncover the "Why Now?" trigger.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Cross-references multiple documents to build a timeline and uncover the "Why Now?" trigger.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">The website is marketing. The financials are reality. The gap between the two is where your commercial leverage lives.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Narrative Gap: Website claims AI leadership, but 10-K lists legacy tech debt as critical risk."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Instruct the AI to heavily weight the Financials over the PR statements when resolving contradictions.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -944,7 +1099,24 @@ If you cannot find a direct quote, mark it HALLUCINATED.</pre>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
-                            <div class="cmd-objective">Maps the board-level power structures to find above-the-line routes into the account.</div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE OBJECTIVE</div>
+                                    <p class="body-prose">Maps the board-level power structures to find above-the-line routes into the account.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">The org chart tells you who executes. The board map tells you who actually approves the money.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                    <p class="body-prose" style="font-style: italic;">"Shared Connection: Lead NED sits on the board of our existing Tier 1 client."</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">If you find a shared connection, stop the AI work. Pick up the phone and call your existing client for backchannel intel.</p>
+                                </div>
+                            </div>
                             <div class="view-code-wrapper">
                                 <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
@@ -987,10 +1159,23 @@ Produce:
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
-                        <div class="cmd-objective">A strict checklist ensuring junior sellers gather the right data before prompting.</div>
-                        <div class="exp-box">
-                            <div class="exp-title" style="color:#f59e0b;">WHAT EXPERIENCE SEES</div>
-                            <p class="body-prose">The careers page is the most underused intelligence source. Meridian has 14 open roles — 6 in resilience. That's not an aspiration; that's a confirmed transformation.</p>
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">A strict checklist ensuring you gather the right data before prompting.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title" style="color:#f59e0b;">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Garbage in, garbage out. The quality of your prompt output is entirely dependent on the depth of the context you feed it.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Missing Tier 1 Data: Annual Report not attached. Halting analysis until provided."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Always add corridor gossip manually. The AI can't scrape what was said at the coffee machine.</p>
+                            </div>
                         </div>
                         <div class="view-code-wrapper">
                             <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
@@ -1030,10 +1215,23 @@ For each source, copy and paste the full text into your AI conversation.
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
-                        <div class="cmd-objective">Goes beyond "priorities" to map how an executive actually processes truth and risk.</div>
-                        <div class="exp-box">
-                            <div class="exp-title" style="color:#f59e0b;">WHAT EXPERIENCE SEES</div>
-                            <p class="body-prose">If they frame disagreement as "I don't have sufficient evidence" rather than "I disagree," you know to bring whitepapers, not marketing collateral.</p>
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Goes beyond "priorities" to map how an executive actually processes truth and risk.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title" style="color:#f59e0b;">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">If you pitch ROI to a buyer who is motivated by ego and status, you will lose. Map the human, not just the role.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Core Conviction: Values loyalty over innovation. Highly risk-averse in public forums."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Look at who they interact with most on LinkedIn. That reveals their internal circle of trust. Feed those specific names back into the AI.</p>
+                            </div>
                         </div>
                         <div class="view-code-wrapper">
                             <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
@@ -1064,12 +1262,29 @@ FORMAT: Cite the specific source (LinkedIn post date) for every claim.</pre>
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-19]</span>
                             <span class="gov-tag gov-amber">Public Data</span>
-                            <h3 class="accordion-title" style="color: #f59e0b;">Cross-Source Narrative Gap</h3>
+                            <h3 class="accordion-title" style="color: #f59e0b;">Narrative Gap Finder</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
-                        <div class="cmd-objective">Finds the friction between what marketing says and what finance reports.</div>
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE OBJECTIVE</div>
+                                <p class="body-prose">Finds the friction between what marketing says and what finance actually reports.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title" style="color:#f59e0b;">WHAT EXPERIENCE SEES</div>
+                                <p class="body-prose">Selling into the gap is how you elevate from a vendor to a strategic partner.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">OUTPUT EXAMPLE</div>
+                                <p class="body-prose" style="font-style: italic;">"Gap Identified: CEO claims 'hyper-growth focus', but current job postings are 90% cost-reduction and compliance roles."</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Ask yourself: "How does my solution specifically bridge this exact gap?" Turn the AI's observation into your thesis.</p>
+                            </div>
+                        </div>
                         <div class="view-code-wrapper">
                             <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                         </div>
@@ -1092,29 +1307,31 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
                 </div>
             </div>
 
-            <div class="container-prose reveal">
+            <div class="container-wide reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
-                    <div class="divider-label">04. WHERE THIS BREAKS</div>
+                    <div class="divider-label">WHERE THIS BREAKS</div>
                     <div class="divider-line"></div>
                 </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 1: Hallucination</h3>
-                    <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Use the Verification Prompt (G-14). If you can't see the source, it doesn't exist.</span>
-                </div>
+                <div class="failures-grid">
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 1: Hallucination</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Use the Verification Prompt (G-14). If you can't see the source, it doesn't exist.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 2: Over-reliance</h3>
-                    <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> AI generates 80%. The last 20%—the humanity—is yours.</span>
-                </div>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 2: Over-reliance</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it completely.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> AI generates 80%. The last 20%—the humanity—is yours.</span>
+                    </div>
 
-                <div class="failure-box">
-                    <h3 class="failure-title">FAILURE 3: False Confidence</h3>
-                    <p style="margin: 0; font-size:0.95rem; color: #cbd5e1;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was 9 months old.</p>
-                    <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes within 48 hours of the meeting.</span>
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 3: False Confidence</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was old.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes manually before the meeting.</span>
+                    </div>
                 </div>
             </div>
 
@@ -1132,7 +1349,7 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-02')">G-02 // FIND THE MONEY <span class="copy-badge">Copy</span></button>
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-07')">G-07 // 9-PILLAR COMPACT <span class="copy-badge">Copy</span></button>
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-08')">G-08 // BUDGET CYCLE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-15')">G-15 // MULTI-SOURCE <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-15')">G-15 // CROSS-REF ENGINE <span class="copy-badge">Copy</span></button>
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-19')">G-19 // NARRATIVE GAP <span class="copy-badge">Copy</span></button>
                 </div>
 
@@ -1140,8 +1357,8 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
                 <div class="library-grid">
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-03')">G-03 // EXEC INTELLIGENCE <span class="copy-badge">Copy</span></button>
                     <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-09')">G-09 // COMPACT PROFILE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-10')">G-10 // BELIEF DECODER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-11')">G-11 // HIRING SIGNALS <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-10')">G-10 // HIRING SIGNALS <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-18')">G-18 // BELIEF DECODER <span class="copy-badge">Copy</span></button>
                 </div>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">SYNTHESIS & MATCHING</h4>
