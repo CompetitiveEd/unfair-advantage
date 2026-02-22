@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Human+AI:AI+IQ+EQ. Governance backed by £183M in portfolio execution.">
-    <title> HUMAN+AI=THE EDGE| David Matthews</title>
+    <meta name="description" content="Human+AI: IQ+EQ+AI. Governance backed by £183M in portfolio execution.">
+    <title>HUMAN+AI = THE EDGE | David Matthews</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         /* McKinsey-style tight formatting overrides */
+        .grid-2-col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
         .grid-4-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .card.compact { padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; flex-direction: column; }
-        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.25rem; margin-top: 0.5rem; }
-        .card.compact .doctrine-subtitle { font-size: 0.75rem; margin-bottom: 0.75rem; color: #94a3b8; }
-        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.4; }
         
+        .card.compact { padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; flex-direction: column; transition: all 0.2s ease; }
+        .card.compact:hover { border-color: rgba(255,255,255,0.2); }
+        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.25rem; margin-top: 0.5rem; color: white; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; }
+        .card.compact .doctrine-subtitle { font-size: 0.75rem; margin-bottom: 0.75rem; color: #94a3b8; font-weight: 600; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; flex-grow: 1; margin: 0; }
+        
+        .doctrine-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; display: inline-block; margin-bottom: 0.25rem; }
+
         /* The Index Navigation */
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 1.5rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
         .index-step { display: flex; align-items: center; gap: 1.5rem; }
@@ -27,34 +32,58 @@
         .flight-journey { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
         .journey-node { flex: 1; border-top: 2px solid rgba(59,130,246,0.3); padding-top: 1rem; position: relative; }
         .journey-node::before { content: ''; position: absolute; top: -5px; left: 0; width: 8px; height: 8px; border-radius: 50%; background: #3b82f6; }
-        .journey-title { font-size: 0.85rem; font-weight: 700; color: white; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .journey-title { font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
         .journey-body { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
         
         /* Exhibit Formats */
-        .mckinsey-exhibit { background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 3rem; }
+        .mckinsey-exhibit { background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 2rem; margin-bottom: 3rem; }
         .exhibit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
         .exhibit-col { border-top: 2px solid #3b82f6; padding-top: 1rem; }
-        .exhibit-col-title { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .exhibit-col-title { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
         .exhibit-col-body { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+
+        /* The Data Pipeline UI */
+        .pipeline-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.5rem; max-width: 900px; margin: 2.5rem auto 2rem auto; padding: 2rem 1rem; background: rgba(15,23,42,0.8); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; box-shadow: inset 0 0 30px rgba(0,0,0,0.5); }
+        .node-ai { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 0.75rem 1rem; border-radius: 6px; text-align: center; flex: 1; min-width: 100px; }
+        .node-ai-title { font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: 0.05em; }
+        .node-ai-body { font-size: 0.8rem; color: #cbd5e1; font-weight: 500; }
+        .node-human { display: flex; align-items: center; gap: 0.5rem; color: #f59e0b; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; }
+        .node-human::before, .node-human::after { content: '→'; color: rgba(245,158,11,0.5); font-size: 1.2rem; }
+        .node-final { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); padding: 0.75rem 1rem; border-radius: 6px; text-align: center; flex: 1.2; min-width: 120px; box-shadow: 0 0 15px rgba(34,197,94,0.1); }
+        
+        /* Matrix Rules (Where it breaks) */
+        .fail-rule { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; margin-top: 1.5rem; }
         
         /* Tactical Utilities */
-        .utility-list { list-style: none; padding: 0; margin: 0 auto 2.5rem auto; max-width: 800px; }
-        .utility-list li { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 0; display: flex; gap: 1.5rem; align-items: baseline; }
+        .utility-list { list-style: none; padding: 0; margin: 0 auto 3rem auto; max-width: 800px; }
+        .utility-list li { border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.5rem 0; display: flex; gap: 1.5rem; align-items: baseline; }
         .utility-list li:last-child { border-bottom: none; }
-        .utility-num { color: #3b82f6; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; }
-        .utility-content p { margin: 0; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
-        
-        /* Copy Button */
-        .copy-btn { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; padding: 0.4rem 0.8rem; font-size: 0.7rem; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em; transition: all 0.2s ease; }
-        .copy-btn:hover { background: rgba(59,130,246,0.2); color: white; }
+        .utility-num { color: #3b82f6; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.1em; }
+        .utility-content p { margin: 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.6; }
+
+        /* Terminal Window */
+        .terminal-window { background: #0b1120; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); margin-top: 1rem; }
+        .terminal-header { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: #1e293b; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .terminal-dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.red { background: #ef4444; }
+        .dot.yellow { background: #f59e0b; }
+        .dot.green { background: #22c55e; }
+        .copy-btn { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.4); color: #93c5fd; padding: 0.3rem 0.8rem; font-size: 0.65rem; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; transition: all 0.2s ease; }
+        .copy-btn:hover { background: rgba(59,130,246,0.3); color: white; }
         
         @media (max-width: 900px) {
             .grid-4-col, .exhibit-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2-col { grid-template-columns: 1fr; }
             .flight-journey { flex-direction: column; }
             .journey-node { border-top: none; border-left: 2px solid rgba(59,130,246,0.3); padding-top: 0; padding-left: 1.5rem; padding-bottom: 1.5rem; }
             .journey-node::before { top: 0; left: -5px; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .pipeline-flow { flex-direction: column; align-items: stretch; }
+            .node-human::before { content: '↓'; }
+            .node-human::after { content: '↓'; }
+            .node-human { justify-content: center; padding: 0.5rem 0; }
         }
         @media (max-width: 600px) {
             .grid-4-col, .exhibit-grid { grid-template-columns: 1fr; }
@@ -102,10 +131,11 @@
             </div>
             
             <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
+            <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
         </div>
     </nav>
-    <header class="dark-header-block">
+
+    <header class="dark-header-block" style="padding-bottom: 3rem;">
         <picture>
             <source srcset="assets/images/humanai.avif" type="image/avif">
             <img src="assets/images/humanai.webp" class="hero-bg" alt="Human and AI collaboration" style="opacity: 0.55;">
@@ -116,7 +146,7 @@
                 <span style="color: #ffffff; display: block;">THE AI IS THE ENGINE.</span>
                 <span style="color: #3b82f6; display: block;">YOU OWN THE FLIGHT PLAN.</span>
             </h1>
-            <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
+            <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
             <p class="hero-subtext">
                 Speed without direction is just a faster way to get lost.
             </p>
@@ -136,19 +166,17 @@
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">01. FIELD-TESTED ACROSS £183M</div>
                 <div class="divider-line"></div>
             </div>
 
-            <div class="evidence-note" style="margin-bottom: 2rem;">
-                <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin: 0; text-align: center;">
-                    These aren't abstract principles. They are the operating rhythm behind a £35M → £183M portfolio transformation. One KPI doesn't govern a business. Four do.
-                </p>
-            </div>
+            <p class="body-prose" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; margin: 0 auto 3rem auto; text-align: center; max-width: 800px;">
+                These aren't abstract principles. They are the operating rhythm behind a £35M → £183M portfolio transformation. One KPI doesn't govern a business. Four do.
+            </p>
 
-            <div class="grid-4-col" style="margin-bottom: 3rem;">
+            <div class="grid-4-col" style="margin-bottom: 4rem;">
                 <div class="card compact">
                     <span class="doctrine-tag">IMPERATIVE 01</span>
                     <h3 class="doctrine-title">Lead & Grow</h3>
@@ -156,7 +184,7 @@
                     <p class="body-prose" style="margin-bottom: 0.75rem;">
                         <strong>The Why:</strong> Pursue growth, but not at any cost. Walk away from contracts with structural risk.
                     </p>
-                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8;">
+                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem;">
                         <strong>Measure:</strong> Forward order book, win ratio.
                     </p>
                 </div>
@@ -167,8 +195,8 @@
                     <p class="body-prose" style="margin-bottom: 0.75rem;">
                         <strong>The Why:</strong> Leverage standard offerings before building custom. Disrupt before being disrupted.
                     </p>
-                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8;">
-                        <strong>Measure:</strong> Relevant margin to service, bid efficiency.
+                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem;">
+                        <strong>Measure:</strong> Relevant margin to service.
                     </p>
                 </div>
                 <div class="card compact">
@@ -178,7 +206,7 @@
                     <p class="body-prose" style="margin-bottom: 0.75rem;">
                         <strong>The Why:</strong> Your installed base is your cheapest growth engine. Feed it constantly.
                     </p>
-                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8;">
+                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem;">
                         <strong>Measure:</strong> Erosion tracking, share of wallet.
                     </p>
                 </div>
@@ -189,7 +217,7 @@
                     <p class="body-prose" style="margin-bottom: 0.75rem;">
                         <strong>The Why:</strong> The way you won the last deal won't win the next one. Evolve constantly.
                     </p>
-                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8;">
+                    <p class="body-prose" style="margin: 0; font-size: 0.75rem; color: #94a3b8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem;">
                         <strong>Measure:</strong> Contract base expansion, NPS.
                     </p>
                 </div>
@@ -197,7 +225,7 @@
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">02. THE PHILOSOPHY</div>
                 <div class="divider-line"></div>
@@ -205,8 +233,8 @@
 
             <div class="mckinsey-exhibit">
                 <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <h3 style="color: white; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; letter-spacing: 0.05em;">THE JUDGMENT LAYER</h3>
-                    <p style="color: #94a3b8; font-size: 0.85rem; font-style: italic;">"Most AI sales tools give you better data. This one gives you better questions."</p>
+                    <h3 style="color: white; font-size: 1.1rem; font-weight: 800; margin-bottom: 0.25rem; letter-spacing: 0.05em;">THE JUDGMENT LAYER</h3>
+                    <p style="color: #3b82f6; font-size: 0.85rem; font-style: italic; font-weight: 600;">"Most AI sales tools give you better data. This one gives you better questions."</p>
                 </div>
                 
                 <p class="body-prose" style="font-size: 0.9rem; text-align: center; max-width: 700px; margin: 0 auto 2rem auto;">
@@ -232,11 +260,11 @@
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.25rem;">
-                    <p style="font-weight: 600; color: white; font-size: 0.85rem; margin-bottom: 0.75rem;">
+                <div style="text-align: center; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+                    <p style="font-weight: 600; color: white; font-size: 0.85rem; margin-bottom: 1rem;">
                         None of this is in the prompts. All of it is why the prompts work.
                     </p>
-                    <a href="edge.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    <a href="edge.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #3b82f6; padding-bottom: 2px;">
                         Explore the disciplines → The Edge
                     </a>
                 </div>
@@ -244,14 +272,14 @@
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
-                <div class="divider-label">03. THE PROCESS</div>
+                <div class="divider-label">03. THE PROCESS PIPELINE</div>
                 <div class="divider-line"></div>
             </div>
 
-            <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-size: 0.9rem;">
-                You don't take off without knowing the destination, the fuel, the weather, and the landing strip. 
+            <p class="body-prose" style="text-align: center; max-width: 700px; margin: 0 auto 2rem auto; font-size: 0.95rem;">
+                You don't take off without knowing the destination, the fuel, the weather, and the landing strip.
             </p>
 
             <div class="flight-journey">
@@ -273,76 +301,99 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; margin: 2.5rem auto 2rem auto; max-width: 800px;">
-                <div style="background: rgba(59,130,246,0.15); border-radius: 6px; padding: 0.6rem 1rem; text-align: center;">
-                    <div style="font-size: 0.65rem; text-transform: uppercase; color: #64748b;">Step 1</div>
-                    <div style="font-size: 0.8rem; color: #cbd5e1;">Company Intel</div>
+            <div class="pipeline-flow">
+                <div class="node-ai">
+                    <div class="node-ai-title">Step 1</div>
+                    <div class="node-ai-body">Company Intel</div>
                 </div>
-                <div style="color: #f59e0b; display: flex; align-items: center; font-size: 0.75rem; font-weight: 600;">→ YOU →</div>
-                <div style="background: rgba(59,130,246,0.15); border-radius: 6px; padding: 0.6rem 1rem; text-align: center;">
-                    <div style="font-size: 0.65rem; text-transform: uppercase; color: #64748b;">Step 2</div>
-                    <div style="font-size: 0.8rem; color: #cbd5e1;">Find Money</div>
+                <div class="node-human">YOU</div>
+                <div class="node-ai">
+                    <div class="node-ai-title">Step 2</div>
+                    <div class="node-ai-body">Find Money</div>
                 </div>
-                <div style="color: #f59e0b; display: flex; align-items: center; font-size: 0.75rem; font-weight: 600;">→ YOU →</div>
-                <div style="background: rgba(59,130,246,0.15); border-radius: 6px; padding: 0.6rem 1rem; text-align: center;">
-                    <div style="font-size: 0.65rem; text-transform: uppercase; color: #64748b;">Step 3</div>
-                    <div style="font-size: 0.8rem; color: #cbd5e1;">Profile People</div>
+                <div class="node-human">YOU</div>
+                <div class="node-ai">
+                    <div class="node-ai-title">Step 3</div>
+                    <div class="node-ai-body">Profile People</div>
                 </div>
-                <div style="color: #f59e0b; display: flex; align-items: center; font-size: 0.75rem; font-weight: 600;">→ YOU →</div>
-                <div style="background: rgba(59,130,246,0.15); border-radius: 6px; padding: 0.6rem 1rem; text-align: center;">
-                    <div style="font-size: 0.65rem; text-transform: uppercase; color: #64748b;">Step 4</div>
-                    <div style="font-size: 0.8rem; color: #cbd5e1;">Battle Card</div>
+                <div class="node-human">YOU</div>
+                <div class="node-ai">
+                    <div class="node-ai-title">Step 4</div>
+                    <div class="node-ai-body">Battle Card</div>
                 </div>
-                <div style="color: #f59e0b; display: flex; align-items: center; font-size: 0.75rem; font-weight: 600;">→ YOU →</div>
-                <div style="background: rgba(59,130,246,0.25); border: 1px solid #3b82f6; border-radius: 6px; padding: 0.6rem 1rem; text-align: center;">
-                    <div style="font-size: 0.65rem; text-transform: uppercase; color: #3b82f6;">Step 5</div>
-                    <div style="font-size: 0.8rem; color: white; font-weight: 600;">Briefing</div>
+                <div class="node-human">YOU</div>
+                <div class="node-final">
+                    <div class="node-ai-title" style="color: #4ade80;">Step 5</div>
+                    <div class="node-ai-body" style="color: white; font-weight: 800;">The Briefing</div>
                 </div>
             </div>
 
-            <div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; max-width: 800px; margin: 0 auto 3rem auto;">
-                <p style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-weight: 700;">What this looks like in practice</p>
-                <div style="display: grid; gap: 0.75rem;">
-                    <div style="display: flex; gap: 1rem;"><span style="color: #3b82f6; font-weight: 700; width: 120px; flex-shrink: 0; font-size: 0.85rem;">The Baseline:</span> <span style="color: #cbd5e1; font-size: 0.85rem;">Pillar 7 flags a generic "resilience skills gap."</span></div>
-                    <div style="display: flex; gap: 1rem;"><span style="color: #f59e0b; font-weight: 700; width: 120px; flex-shrink: 0; font-size: 0.85rem;">The Injection:</span> <span style="color: #cbd5e1; font-size: 0.85rem;">You know the gap is specifically in the Manchester office, causing friction with London.</span></div>
-                    <div style="display: flex; gap: 1rem;"><span style="color: #3b82f6; font-weight: 700; width: 120px; flex-shrink: 0; font-size: 0.85rem;">The Action:</span> <span style="color: #cbd5e1; font-size: 0.85rem;">You steer Step 2: <em>"Isolate skills-gap costs by region."</em></span></div>
-                    <div style="display: flex; gap: 1rem;"><span style="color: #22c55e; font-weight: 700; width: 120px; flex-shrink: 0; font-size: 0.85rem;">The Result:</span> <span style="color: white; font-size: 0.85rem;">The stakeholder asks, <em>"How did they know that?"</em> (They didn't. You did. AI amplified it.)</span></div>
+            <div style="background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2rem; max-width: 800px; margin: 0 auto 4rem auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <p style="font-size: 0.75rem; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; font-weight: 800;">What this looks like in practice</p>
+                <div style="display: grid; gap: 1rem;">
+                    <div style="display: flex; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                        <span style="color: #94a3b8; font-weight: 800; width: 120px; flex-shrink: 0; font-size: 0.85rem; text-transform: uppercase;">The Baseline</span> 
+                        <span style="color: #cbd5e1; font-size: 0.9rem;">Pillar 7 flags a generic "resilience skills gap."</span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                        <span style="color: #f59e0b; font-weight: 800; width: 120px; flex-shrink: 0; font-size: 0.85rem; text-transform: uppercase;">The Injection</span> 
+                        <span style="color: white; font-size: 0.9rem;">You know the gap is specifically in the Manchester office, causing friction with London.</span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                        <span style="color: #3b82f6; font-weight: 800; width: 120px; flex-shrink: 0; font-size: 0.85rem; text-transform: uppercase;">The Action</span> 
+                        <span style="color: #cbd5e1; font-size: 0.9rem;">You steer Step 2: <em>"Isolate skills-gap costs by region."</em></span>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem;">
+                        <span style="color: #22c55e; font-weight: 800; width: 120px; flex-shrink: 0; font-size: 0.85rem; text-transform: uppercase;">The Result</span> 
+                        <span style="color: white; font-size: 0.9rem;">The stakeholder asks, <em>"How did they know that?"</em> (They didn't. You did. AI amplified it.)</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label" style="color: #ef4444;">04. WHERE THIS BREAKS</div>
                 <div class="divider-line"></div>
             </div>
 
-            <div class="grid-4-col" style="margin-bottom: 3rem;">
-                <div class="card compact" style="grid-column: span 2; border-top: 3px solid #ef4444;">
-                    <h4 class="fail-head" style="font-size: 1rem; margin-bottom: 0.5rem; color: white;">THE DRIFT (Unconscious)</h4>
-                    <p class="fail-body" style="font-size: 0.85rem; line-height: 1.5; margin: 0; color: #cbd5e1;">A script makes you robotic. AI agents negotiating with AI agents. No room for instinct, rapport, or timing. "Write me an email to the CFO" &rarr; Result: Ignored.</p>
+            <div class="grid-2-col" style="margin-bottom: 2rem;">
+                <div class="card compact" style="border-top: 3px solid #94a3b8;">
+                    <h4 style="font-size: 1rem; margin-top: 0; margin-bottom: 0.5rem; color: white; text-transform: uppercase; font-weight: 800;">THE DRIFT (Unconscious)</h4>
+                    <p style="font-size: 0.85rem; line-height: 1.6; margin: 0; color: #cbd5e1;">A script makes you robotic. AI agents negotiating with AI agents. No room for instinct, rapport, or timing. "Write me an email to the CFO" &rarr; Result: Ignored.</p>
                 </div>
-                <div class="card compact" style="grid-column: span 2; border-top: 3px solid #10b981;">
-                    <h4 class="fail-head" style="color: #10b981; font-size: 1rem; margin-bottom: 0.5rem;">IQ+EQ+AI (Active)</h4>
-                    <p class="fail-body" style="font-size: 0.85rem; line-height: 1.5; margin: 0; color: #cbd5e1;">Preparation makes you confident. 4 hours of AI research so you walk in informed and fully present. "Act as a cynical CFO..." &rarr; Result: Advantage.</p>
+                <div class="card compact" style="border-top: 3px solid #10b981;">
+                    <h4 style="color: #10b981; font-size: 1rem; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 800;">IQ+EQ+AI (Active)</h4>
+                    <p style="font-size: 0.85rem; line-height: 1.6; margin: 0; color: #cbd5e1;">Preparation makes you confident. 4 hours of AI research compressed into minutes so you walk in informed and fully present. "Act as a cynical CFO..." &rarr; Result: Advantage.</p>
                 </div>
+            </div>
 
-                <div class="failure-box" style="grid-column: span 2; border: 1px solid rgba(239,68,68,0.2); background: rgba(239,68,68,0.05); padding: 1.5rem; border-radius: 8px;">
-                    <h3 style="color: white; font-size: 1rem; margin-bottom: 0.5rem;">Wrong Context In</h3>
-                    <p style="margin: 0 0 1rem 0; font-size: 0.85rem; line-height: 1.5; color: #cbd5e1;">You steer the AI toward Manchester because you heard about the skills gap — but your info was old. The AI builds a strategy for a problem that no longer exists.</p>
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #ef4444; text-transform: uppercase;">RULE: Verify your human intel before injecting it.</span>
+            <div class="grid-2-col" style="margin-bottom: 4rem;">
+                <div class="card compact" style="border-top: 3px solid #ef4444; justify-content: space-between;">
+                    <div>
+                        <h3 style="color: white; font-size: 1rem; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; font-weight: 800;">Wrong Context In</h3>
+                        <p style="margin: 0; font-size: 0.85rem; line-height: 1.6; color: #cbd5e1;">You steer the AI toward Manchester because you heard about the skills gap — but your info was old. The AI builds a strategy for a problem that no longer exists.</p>
+                    </div>
+                    <div class="fail-rule" style="color: #ef4444;">
+                        RULE: VERIFY INTEL BEFORE INJECTION
+                    </div>
                 </div>
-                <div class="failure-box" style="grid-column: span 2; border: 1px solid rgba(239,68,68,0.2); background: rgba(239,68,68,0.05); padding: 1.5rem; border-radius: 8px;">
-                    <h3 style="color: white; font-size: 1rem; margin-bottom: 0.5rem;">Over-Steering</h3>
-                    <p style="margin: 0 0 1rem 0; font-size: 0.85rem; line-height: 1.5; color: #cbd5e1;">You're so certain the CTO is the decision-maker that you steer every prompt toward technical priorities. The AI confirms your bias beautifully.</p>
-                    <span style="font-size: 0.75rem; font-weight: 700; color: #ef4444; text-transform: uppercase;">RULE: Steer the research, not the conclusion.</span>
+                
+                <div class="card compact" style="border-top: 3px solid #ef4444; justify-content: space-between;">
+                    <div>
+                        <h3 style="color: white; font-size: 1rem; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; font-weight: 800;">Over-Steering</h3>
+                        <p style="margin: 0; font-size: 0.85rem; line-height: 1.6; color: #cbd5e1;">You're so certain the CTO is the decision-maker that you steer every prompt toward technical priorities. The AI confirms your bias beautifully.</p>
+                    </div>
+                    <div class="fail-rule" style="color: #ef4444;">
+                        RULE: STEER THE RESEARCH, NOT THE CONCLUSION
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label" style="color: #3b82f6;">05. TACTICAL UTILITIES</div>
                 <div class="divider-line"></div>
@@ -369,43 +420,56 @@
                 <li>
                     <span class="utility-num">03</span>
                     <div class="utility-content">
-                        <p><strong style="color: white;">Read the output critically, not gratefully.</strong> AI produces confident, well-structured text regardless of accuracy. Your job is to verify the hard facts and filter the synthetic hallucinations before the briefing.</p>
+                        <p><strong style="color: white;">READ CRITICALLY, NOT GRATEFULLY.</strong><br>
+                        AI produces confident, well-structured text regardless of accuracy. Your job is to verify the hard facts and filter the synthetic hallucinations before the briefing.</p>
                     </div>
                 </li>
                 <li>
                     <span class="utility-num">04</span>
                     <div class="utility-content">
-                        <p><strong style="color: #ef4444;">Sanitise the Input.</strong> Never upload proprietary pricing or unannounced PII into public AI models. Use abstractions. Data governance is the price of admission for enterprise AI execution.</p>
+                        <p><strong style="color: #ef4444;">SANITISE THE INPUT.</strong><br>
+                        Never upload proprietary pricing or unannounced PII into public AI models. Use abstractions. Data governance is the price of admission for enterprise AI execution.</p>
                     </div>
                 </li>
             </ul>
 
             <div style="max-width: 800px; margin: 0 auto 4rem auto;">
-                <p style="text-align: center; font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.5rem;">When the context window fills, use the handoff protocol to bridge the intelligence gap.</p>
+                <p style="text-align: center; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1.5rem;">When the context window fills, use the handoff protocol to bridge the intelligence gap.</p>
                 
-                <div style="background: #1a1a2e; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); background: #0f172a;">
-                        <span style="font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; font-weight: 700;">Chat Handoff Protocol</span>
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <span style="font-size: 0.7rem; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; font-weight: 700; margin-left: 1rem; flex-grow: 1; text-align: left;">Chat Handoff Protocol</span>
                         <button class="copy-btn" id="copyHandoffBtn" onclick="copyHandoffText()">Copy Prompt</button>
                     </div>
-                    <div style="padding: 1.5rem; background: #0b1120;">
-<pre id="handoffText" style="margin: 0; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap; line-height: 1.5;">I'm continuing research on [COMPANY NAME] for a meeting with [STAKEHOLDER].
+                    <div style="padding: 2rem; background: #0b1120;">
+<pre id="handoffText" style="margin: 0; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; color: #60a5fa; white-space: pre-wrap; line-height: 1.6;">I'm continuing research on <span style="color: #f87171;">[COMPANY NAME]</span> for a meeting with <span style="color: #f87171;">[STAKEHOLDER]</span>.
 
-COMPANY CONTEXT: [Paste 3 most important findings]
-STAKEHOLDER PROFILE: [Key details: role, decision style]
-WHAT I NEED NEXT: [The specific step you're continuing with]
-MY KNOWLEDGE: [Personal observations, adjustments]
+<span style="color: #a78bfa; font-weight: bold;">COMPANY CONTEXT:</span> <span style="color: #cbd5e1;">[Paste 3 most important findings]</span>
+<span style="color: #a78bfa; font-weight: bold;">STAKEHOLDER PROFILE:</span> <span style="color: #cbd5e1;">[Key details: role, decision style]</span>
+<span style="color: #a78bfa; font-weight: bold;">WHAT I NEED NEXT:</span> <span style="color: #cbd5e1;">[The specific step you're continuing with]</span>
+<span style="color: #a78bfa; font-weight: bold;">MY KNOWLEDGE:</span> <span style="color: #cbd5e1;">[Personal observations, adjustments]</span>
 
 Continue from here. Do not re-research what I've provided — build on it.</pre>
                     </div>
                 </div>
             </div>
             
-            <div class="reveal" style="text-align: center; padding: 0 0 4rem 0;">
-                <a href="know.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #3b82f6; padding-bottom: 2px;">
-                    Enter the Prompt Toolkit →
+            <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
+                <h2 style="color: white; font-size: 2.25rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.02em;">Take control of the engine.</h2>
+                <p class="body-prose" style="margin-bottom: 2.5rem; font-size: 0.95rem;">
+                    Access the exact prompt architecture required to execute these frameworks.
+                </p>
+                
+                <a href="know.html" style="display: inline-block; background: rgba(15,23,42,0.85); border: 1px solid rgba(59,130,246,0.4); padding: 0.85rem 1.75rem; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-radius: 6px; letter-spacing: 0.05em; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; text-transform: uppercase;">
+                    ENTER THE PROMPT TOOLKIT &rarr;
                 </a>
             </div>
+
         </div>
 
     </main>

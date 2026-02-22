@@ -11,36 +11,51 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .card.compact { padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; flex-direction: column; }
-        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.25rem; margin-top: 0.5rem; }
+        .card.compact { padding: 1.25rem; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px; display: flex; flex-direction: column; transition: all 0.2s ease; }
+        .card.compact:hover { border-color: rgba(255,255,255,0.2); }
+        .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.25rem; margin-top: 0.5rem; color: white; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; }
         .card.compact .doctrine-subtitle { font-size: 0.75rem; margin-bottom: 0.75rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
-        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; flex-grow: 1; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; flex-grow: 1; margin: 0; }
         
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 1.5rem auto; padding: 1rem 0; border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
         .index-step { display: flex; align-items: center; gap: 1.5rem; }
         .index-step span { color: #cbd5e1; }
         .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
 
-        .linear-constraint-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); margin: 0 auto 1rem auto; max-width: 900px; }
-        .lc-col { padding: 1.25rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        /* Blue Growth Arrows */
+        .yield-arrow { font-size: 0.75em; display: inline-block; margin-left: 2px; }
+
+        /* Doctrine Quote Block */
+        .doctrine-quote { background: rgba(15,23,42,0.8); border: 1px solid rgba(59,130,246,0.3); border-left: 4px solid #3b82f6; padding: 2.5rem; border-radius: 8px; margin-bottom: 4rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 800px; margin-left: auto; margin-right: auto; }
+        .doctrine-quote-text { font-size: 1.1rem; color: white; font-weight: 600; line-height: 1.6; margin: 0; font-style: italic; }
+        .doctrine-quote-text strong { color: #3b82f6; font-weight: 800; }
+
+        /* Sleek Progress Bar Grid (The Model) */
+        .linear-constraint-grid { display: flex; border-radius: 8px; overflow: hidden; border: 1px solid rgba(59, 130, 246, 0.3); margin: 0 auto 3rem auto; max-width: 1000px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .lc-col { flex: 1; padding: 1.5rem; border-right: 1px solid rgba(255, 255, 255, 0.05); }
         .lc-col:last-child { border-right: none; }
-        .lc-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
-        .lc-title { font-size: 0.85rem; margin-bottom: 0.25rem; font-weight: 600; }
-        .lc-sub { font-size: 0.75rem; }
+        .lc-tag { font-size: 0.65rem; color: white; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; opacity: 0.8; }
+        .lc-title { font-size: 0.95rem; color: white; margin-bottom: 0.25rem; font-weight: 800; text-transform: uppercase; }
+        .lc-sub { font-size: 0.75rem; color: #cbd5e1; font-weight: 600; }
 
         /* Strategic Impact Footer for Drivers */
         .driver-impact { margin-top: 1.25rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem; }
         .impact-label { color: #3b82f6; font-weight: 800; text-transform: uppercase; }
         .impact-value { color: white; margin-left: 0.25rem; }
 
+        /* Doctrine Tags */
+        .doctrine-tag { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem; }
+
         @media (max-width: 900px) {
-            .grid-3-col, .linear-constraint-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-3-col { grid-template-columns: repeat(2, 1fr); }
+            .linear-constraint-grid { flex-direction: column; }
             .lc-col { border-bottom: 1px solid rgba(255, 255, 255, 0.05); border-right: none; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+            .span-mobile-full { grid-column: 1 / -1 !important; }
         }
         @media (max-width: 600px) {
-            .grid-3-col, .linear-constraint-grid { grid-template-columns: 1fr; }
+            .grid-3-col { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -65,9 +80,9 @@
             </div>
 
             <div class="nav-dropdown">
-                <span class="nav-link-main" style="color: var(--primary);">The System ▾</span>
+                <span class="nav-link-main" style="color: #3b82f6;">The System ▾</span>
                 <div class="dropdown-content">
-                    <a href="thesis.html" style="color: var(--primary);">The Thesis</a>
+                    <a href="thesis.html" style="color: #3b82f6;">The Thesis</a>
                     <a href="human+ai.html">Human+AI</a>
                     <a href="edge.html">The Edge</a>
                     <a href="architecture.html">The Architecture</a>
@@ -85,11 +100,11 @@
             </div>
             
             <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
+            <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
         </div>
     </nav>
 
-    <header class="dark-header-block">
+    <header class="dark-header-block" style="padding-bottom: 3rem;">
         <picture>
             <source srcset="assets/images/thesis.avif" type="image/avif">
             <img src="assets/images/thesis.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
@@ -119,45 +134,48 @@
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">01. THE IMPACT</div>
                 <div class="divider-line"></div>
             </div>
-            <div class="impact-dashboard" style="margin-bottom: 2rem;">
+            <div class="impact-dashboard" style="margin-bottom: 3rem;">
                 <div class="impact-metric">
-                    <span class="metric-val">3x</span>
+                    <span class="metric-val">3x <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                     <span class="metric-label">PIPELINE VELOCITY</span>
                     <span class="metric-context">Cash Flow Efficiency</span>
                 </div>
                 <div class="impact-metric">
-                    <span class="metric-val">+22%</span>
+                    <span class="metric-val">+22% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                     <span class="metric-label">DEAL SIZE (ACV)</span>
                     <span class="metric-context">Market Penetration</span>
                 </div>
                 <div class="impact-metric">
-                    <span class="metric-val">+15%</span>
+                    <span class="metric-val">+15% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                     <span class="metric-label">WIN RATIO</span>
                     <span class="metric-context">Forecast Predictability</span>
                 </div>
                 <div class="impact-metric">
-                    <span class="metric-val">-40%</span>
+                    <span class="metric-val">-40% <span class="yield-arrow" style="color: #10b981;">↓</span></span>
                     <span class="metric-label">COST OF SALE</span>
                     <span class="metric-context">EBITDA Protection</span>
                 </div>
             </div>
-            <div class="bridge-copy" style="margin-bottom: 3rem; font-size: 1rem;">
-                "These numbers didn’t come from software. They came from understanding how humans decide. <strong style="color: white;">For 25 years, I engineered this manually. GAIN digitises that judgment.</strong>"
+            
+            <div class="doctrine-quote">
+                <p class="doctrine-quote-text">
+                    "These numbers didn’t come from software. They came from understanding how humans decide. <strong>For 25 years, I engineered this manually. GAIN digitises that judgment.</strong>"
+                </p>
             </div>
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">02. THE CONTEXT</div>
                 <div class="divider-line"></div>
             </div>
-            <div class="grid-3-col" style="margin-bottom: 3rem;">
+            <div class="grid-3-col" style="margin-bottom: 4rem;">
                 <div class="card compact">
                     <span class="doctrine-tag">SHIFT 01</span>
                     <h3 class="doctrine-title">Intelligence Explosion</h3>
@@ -178,55 +196,68 @@
                     <h3 class="doctrine-title">The Content Trap</h3>
                     <p class="body-prose">AI can generate a flawless 50-page proposal in seconds. Perfect prose is a commodity. The differentiator is no longer how well you write, but how accurately you diagnose.</p>
                 </div>
-                <div class="card" style="grid-column: span 2; border-top: 3px solid #ef4444; background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.5) 100%); padding: 1.5rem; border-radius: 8px;">
-    <div style="font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: #ef4444; text-transform: uppercase; margin-bottom: 0.75rem; display: inline-block; padding: 0.2rem 0.5rem; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 4px; background: rgba(239, 68, 68, 0.1);">
-        SHIFT 05
-    </div>
-    <h3 style="font-size: 1rem; font-weight: 800; color: white; margin-bottom: 0.5rem; margin-top: 0.5rem;">The Buyer Has AI Too</h3>
-    <p class="body-prose" style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
-        Procurement uses AI to score you before a human reads a word. If your proof of work isn't visible and formatted for machines, you're disqualified early. "We'll share under NDA" is no longer a strategy.
-    </p>
-</div>
+                
+                <div class="card compact span-mobile-full" style="grid-column: span 2; border-top: 3px solid #ef4444; background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.5) 100%);">
+                    <span class="doctrine-tag" style="color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); padding: 0.2rem 0.5rem; border-radius: 4px; display: inline-block; width: max-content;">SHIFT 05</span>
+                    <h3 class="doctrine-title" style="font-size: 1.15rem; color: white;">The Buyer Has AI Too</h3>
+                    <p class="body-prose" style="font-size: 0.9rem;">
+                        Procurement uses AI to score you before a human reads a word. If your proof of work isn't visible and formatted for machines, you're disqualified early. "We'll share under NDA" is no longer a strategy.
+                    </p>
+                </div>
             </div>
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
-                <div class="divider-label">03. THE MODEL</div>
+                <div class="divider-label">03. THE COMPRESSION MODEL</div>
                 <div class="divider-line"></div>
             </div>
-            <div class="linear-constraint-grid">
+            
+            <p class="body-prose" style="text-align: center; max-width: 800px; margin: 0 auto 2rem auto;">
+                Don't boil the ocean. Match the methodology to the deal complexity. A simple service renewal shouldn't trigger a massive intelligence operation, but a 9-month Tier-1 strategic bid demands the full GAIN ecosystem to compress manual research into weeks.
+            </p>
+
+            <div class="linear-constraint-grid" style="margin-bottom: 0;">
                 <div class="lc-col" style="background: rgba(71,85,105,0.2);">
                     <div class="lc-tag">Service-Led</div>
                     <div class="lc-title">Minimal GAIN</div>
-                    <div class="lc-sub">Hours</div>
+                    <p class="body-prose" style="font-size: 0.75rem; margin-bottom: 1rem; color: #94a3b8;">Minor projects and standard renewals. Let the services team run it. Manual execution is fine here.</p>
+                    <div class="lc-sub">Execution: <span style="color: white;">Hours</span></div>
                 </div>
-                <div class="lc-col" style="background: rgba(59,130,246,0.1);">
+                <div class="lc-col" style="background: rgba(59,130,246,0.15);">
                     <div class="lc-tag">Standard Proactive</div>
-                    <div class="lc-title">Some GAIN</div>
-                    <div class="lc-sub">Days</div>
+                    <div class="lc-title">Targeted GAIN</div>
+                    <p class="body-prose" style="font-size: 0.75rem; margin-bottom: 1rem; color: #94a3b8;">Mid-market plays. Inject specific Gather/Assess prompts to speed up baseline research.</p>
+                    <div class="lc-sub">Execution: <span style="color: white;">Days</span></div>
                 </div>
-                <div class="lc-col" style="background: rgba(59,130,246,0.2);">
+                <div class="lc-col" style="background: rgba(59,130,246,0.3);">
                     <div class="lc-tag">Complex Reactive</div>
-                    <div class="lc-title">Full GAIN</div>
-                    <div class="lc-sub">Weeks → Days</div>
+                    <div class="lc-title">Heavy GAIN Prep</div>
+                    <p class="body-prose" style="font-size: 0.75rem; margin-bottom: 1rem; color: #94a3b8;">High-stakes RFPs. The engine handles heavy data synthesis, saving massive manual effort.</p>
+                    <div class="lc-sub">Compressed: <span style="color: white;">Weeks → Days</span></div>
                 </div>
-                <div class="lc-col" style="background: rgba(59,130,246,0.35);">
+                <div class="lc-col" style="background: rgba(59,130,246,0.45);">
                     <div class="lc-tag">Strategic Complex</div>
-                    <div class="lc-title">GAIN Transforms</div>
-                    <div class="lc-sub">Months → Weeks</div>
+                    <div class="lc-title">Full Ecosystem</div>
+                    <p class="body-prose" style="font-size: 0.75rem; margin-bottom: 1rem; color: white;">Tier 1 targets (e.g., Banking). The full methodology is deployed to restructure the narrative entirely.</p>
+                    <div class="lc-sub">Compressed: <span style="color: white;">Months → Weeks</span></div>
                 </div>
             </div>
+            
+            <div style="max-width: 1000px; margin: 0 auto 4rem auto; display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; background: rgba(15,23,42,0.8); border: 1px solid rgba(59, 130, 246, 0.3); border-top: none; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                <span style="font-size: 0.7rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">&larr; Manual / Services Led</span>
+                <div style="flex-grow: 1; height: 2px; background: linear-gradient(90deg, rgba(100,116,139,0.2) 0%, rgba(59,130,246,0.8) 100%); margin: 0 1rem;"></div>
+                <span style="font-size: 0.7rem; color: #3b82f6; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Maximum AI Leverage &rarr;</span>
+            </div>
         </div>
-
         <div class="container-wide reveal">
-            <div class="section-divider">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label">04. BEHAVIOURAL ARCHITECTURE</div>
                 <div class="divider-line"></div>
             </div>
-            <div class="grid-3-col" style="margin-bottom: 2rem;">
+            <div class="grid-3-col" style="margin-bottom: 4rem;">
                 <div class="card compact">
                     <span class="doctrine-tag">DRIVER 01</span>
                     <h3 class="doctrine-title">SAFETY</h3>
@@ -273,7 +304,7 @@
         </div>
 
         <div class="container-wide reveal">
-            <div class="section-divider" style="margin-top: 3rem;">
+            <div class="section-divider" style="margin-bottom: 2rem;">
                 <div class="divider-line"></div>
                 <div class="divider-label" style="color: #f59e0b;">05. THE PHILOSOPHY (TOOLS ≠ TALENT)</div>
                 <div class="divider-line"></div>
@@ -294,21 +325,27 @@
                 </div>
             </div>
             
-            <div class="card" style="border-top: 3px solid #8b5cf6; background: rgba(15, 23, 42, 0.6); padding: 1.5rem; border-radius: 8px; margin-bottom: 3rem;">
-                <h3 style="font-size: 1rem; font-weight: 800; color: white; margin-bottom: 0.5rem; margin-top: 0;">The Reality of GAIN</h3>
-                <p class="body-prose" style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1rem;">
+            <div class="card" style="border-top: 4px solid #8b5cf6; background: rgba(15, 23, 42, 0.8); padding: 2rem; border-radius: 8px; margin-bottom: 4rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: white; margin-bottom: 0.75rem; margin-top: 0; text-transform: uppercase;">The Reality of GAIN</h3>
+                <p class="body-prose" style="font-size: 0.95rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 1.5rem;">
                     The exact same reality applies to GAIN. I can give you every prompt required to Gather intelligence, Assess authority, Influence a board, and Nurture an enterprise account. I can give you the question lists, the frameworks, and the precise AI inputs. But without the commercial scars to know <em>when</em> to execute a play, the intuition to read the invisible politics in the room, and the empathy to build a true champion, those prompts are just useless noise.
                 </p>
-                <div style="font-size: 0.95rem; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.05em;">
+                <div style="font-size: 1rem; font-weight: 800; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 1.5rem; border-top: 1px solid rgba(139,92,246,0.3);">
                     You get the tools, but you don't get the transformation. AI handles the data. The judgment handles the human. And the judgment is hard-earned.
                 </div>
             </div>
 
-            <div style="text-align: center; padding: 1.5rem 0 4rem 0;">
-                <a href="edge.html" style="color: #3b82f6; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #3b82f6; padding-bottom: 2px;">
-                    See the full operating edge →
+            <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
+                <h2 style="color: white; font-size: 2.25rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.02em;">Ready to see the difference?</h2>
+                <p class="body-prose" style="margin-bottom: 2.5rem; font-size: 0.95rem;">
+                    See how the GAIN methodology separates human judgment from synthetic noise.
+                </p>
+                
+                <a href="edge.html" style="display: inline-block; background: rgba(15,23,42,0.85); border: 1px solid rgba(59,130,246,0.4); padding: 0.85rem 1.75rem; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-radius: 6px; letter-spacing: 0.05em; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; text-transform: uppercase;">
+                    SEE THE FULL OPERATING EDGE &rarr;
                 </a>
             </div>
+            
         </div>
     </main>
 
