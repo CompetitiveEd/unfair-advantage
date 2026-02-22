@@ -13,22 +13,25 @@
 
     <style>
         /* McKinsey-style tight formatting overrides */
+        .grid-2-col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
         .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .grid-2-col-sleek { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
         
-        .card.compact { padding: 1.25rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; }
+        .card.compact { padding: 1.25rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; flex-direction: column; transition: all 0.2s ease; }
+        .card.compact:hover { border-color: rgba(255,255,255,0.2); }
         .card.compact .doctrine-title { font-size: 0.95rem; margin-bottom: 0.5rem; margin-top: 0; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; color: white; }
-        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; flex-grow: 1; }
         
-        .fail-card-sleek { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.25rem; border-radius: 8px; border-left: 3px solid #ef4444; }
-        .fail-card-sleek .fail-head { font-size: 0.95rem; color: #ef4444; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .fail-card-sleek .fail-body { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 0; line-height: 1.6; }
-
         /* The Index Navigation */
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 2rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
         .index-step { display: flex; align-items: center; gap: 1.5rem; }
         .index-step span { color: #cbd5e1; }
         .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* Where AI Breaks Utility / Fail Rules */
+        .fail-rule { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; margin-top: 1.5rem; }
+
+        /* Blue Growth Arrows */
+        .yield-arrow { font-size: 0.75em; display: inline-block; margin-left: 2px; }
 
         /* Bar Chart Styles */
         .chart-row { display: flex; align-items: center; margin-bottom: 1rem; font-size: 0.85rem; }
@@ -52,12 +55,12 @@
         .evo-right { font-size: 0.85rem; color: white; font-weight: 600; }
 
         @media (max-width: 900px) {
-            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-2-col, .grid-3-col, .scr-grid { grid-template-columns: repeat(2, 1fr); }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         }
         @media (max-width: 600px) {
-            .grid-3-col, .grid-2-col-sleek, .scr-grid { grid-template-columns: 1fr; }
+            .grid-2-col, .grid-3-col, .scr-grid { grid-template-columns: 1fr; }
             .evo-row, .evo-header { grid-template-columns: 1fr; text-align: center; gap: 0.5rem; }
             .evo-header { display: none; }
             .evo-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
@@ -77,9 +80,10 @@
                 <span class="nav-link-main">Evidence ▾</span>
                 <div class="dropdown-content">
                     <a href="revenue-case.html">The Revenue Case</a>
-                    <a href="proof.html" style="color: var(--primary);">The Proof</a>
+                    <a href="proof.html" style="color: #3b82f6;">The Proof</a>
                     <a href="story.html">The Story</a>
                     <a href="thinking.html">The Thinking</a>
+                    <a href="data-room.html">The Data Room</a>
                 </div>
             </div>
 
@@ -89,6 +93,7 @@
                     <a href="thesis.html">The Thesis</a>
                     <a href="human+ai.html">Human+AI</a>
                     <a href="edge.html">The Edge</a>
+                    <a href="architecture.html">The Architecture</a>
                 </div>
             </div>
 
@@ -103,13 +108,13 @@
             </div>
             
             <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
+            <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
         </div>
     </nav>
 
 <div class="page-container">
      
-    <header class="dark-header-block">
+    <header class="dark-header-block" style="padding-bottom: 4rem;">
         <picture>
             <source srcset="assets/images/proof.avif" type="image/avif">
             <img src="assets/images/proof.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
@@ -137,15 +142,15 @@
         </div>
 
         <div class="container-prose reveal" style="text-align: center; margin-bottom: 3rem;">
-            <p class="body-prose" style="margin-bottom: 1rem; font-size: 0.85rem;">
+            <p class="body-prose" style="margin-bottom: 1rem; font-size: 0.95rem;">
                 In each case, the starting conditions were identical: strong propositions, talented people, weak execution. Messaging diluted. Every deal reliant on hero-effort. No shared language. No system.
             </p>
-            <p class="body-prose" style="font-weight: 700; color: white; font-size: 0.85rem;">
+            <p class="body-prose" style="font-weight: 700; color: white; font-size: 0.95rem;">
                 The diagnostic was always the same. The execution was always the same. Only the scale changed.
             </p>
         </div>
 
-        <div class="section-divider">
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">01. THE GO-TO-MARKET</div>
             <div class="divider-line"></div>
@@ -168,22 +173,22 @@
 
         <div class="impact-dashboard reveal" style="margin-bottom: 3rem;">
             <div class="impact-metric">
-                <span class="metric-val">170%+</span>
+                <span class="metric-val">170%+ <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Revenue Growth</span>
                 <span class="metric-context">Professional Services</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">137%</span>
+                <span class="metric-val">137% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">vs Plan</span>
                 <span class="metric-context">Final year contribution</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">2-in-3</span>
+                <span class="metric-val">2-in-3 <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Win Rate</span>
                 <span class="metric-context">On competitive bids</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">3x</span>
+                <span class="metric-val">3x <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Output per Head</span>
                 <span class="metric-context">Same methodology, fewer people</span>
             </div>
@@ -219,7 +224,7 @@
             </p>
         </div>
 
-        <div class="section-divider">
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">02. THE PORTFOLIO ENGINE</div>
             <div class="divider-line"></div>
@@ -242,22 +247,22 @@
 
         <div class="impact-dashboard reveal" style="margin-bottom: 3rem;">
             <div class="impact-metric">
-                <span class="metric-val">£183M</span>
+                <span class="metric-val">£183M <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Portfolio Value</span>
                 <span class="metric-context">From £35M base</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">51.3%</span>
+                <span class="metric-val">51.3% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">CAGR</span>
                 <span class="metric-context">Compound annual growth</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">170%</span>
+                <span class="metric-val">170% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Services Growth</span>
                 <span class="metric-context">Professional services repositioned</span>
             </div>
             <div class="impact-metric">
-                <span class="metric-val">+6%</span>
+                <span class="metric-val">+6% <span class="yield-arrow" style="color: #3b82f6;">↑</span></span>
                 <span class="metric-label" style="font-size: 0.75rem;">Contract Base YoY</span>
                 <span class="metric-context">Exceeding targets</span>
             </div>
@@ -291,7 +296,7 @@
             </div>
         </div>
 
-        <div class="section-divider">
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">03. THE PEOPLE MULTIPLIER</div>
             <div class="divider-line"></div>
@@ -337,25 +342,34 @@
             These people didn't suddenly become talented. They always were. The system gave them structure. The methodology gave them confidence. The leadership gave them permission.
         </p>
 
-        <div class="section-divider">
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">04. WHERE THIS BREAKS</div>
             <div class="divider-line"></div>
         </div>
 
-        <div class="grid-2-col-sleek reveal" style="margin-bottom: 4rem;">
-            <div class="fail-card-sleek">
-                <div class="fail-head">The Middle Management Gap</div>
-                <p class="fail-body">
-                    The system was underestimated at the middle layer. Account directors adopted it. Team leaders reverted to old habits. It worked when the architect was in the room. This is why GAIN's Grow phase focuses on Commercial Governance — the operating rhythm that ensures the methodology outlives any individual.
-                </p>
+        <div class="grid-2-col reveal" style="margin-bottom: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            
+            <div class="card compact" style="border-top: 3px solid #ef4444; justify-content: space-between;">
+                <div>
+                    <h3 style="color: white; font-size: 1rem; margin-top: 0; margin-bottom: 0.75rem;">The Middle Management Gap</h3>
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">The system was underestimated at the middle layer. Account directors adopted it. Team leaders reverted to old habits. It worked when the architect was in the room. This is why GAIN's Grow phase focuses on Commercial Governance — the operating rhythm that ensures the methodology outlives any individual.</p>
+                </div>
+                <div class="fail-rule" style="color: #ef4444;">
+                    RESULT: SYSTEM DECAY
+                </div>
             </div>
-            <div class="fail-card-sleek">
-                <div class="fail-head">The Confidence Problem</div>
-                <p class="fail-body">
-                    Not every person responds to a system. Some sellers define themselves by instinct and resist structure on principle. The methodology doesn't fix ego. It works for people who want to be better — not people convinced they already are.
-                </p>
+
+            <div class="card compact" style="border-top: 3px solid #f59e0b; justify-content: space-between;">
+                <div>
+                    <h3 style="color: white; font-size: 1rem; margin-top: 0; margin-bottom: 0.75rem;">The Confidence Problem</h3>
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">Not every person responds to a system. Some sellers define themselves by instinct and resist structure on principle. The methodology doesn't fix ego. It works for people who want to be better — not people convinced they already are.</p>
+                </div>
+                <div class="fail-rule" style="color: #f59e0b;">
+                    RESULT: ISOLATED HEROES
+                </div>
             </div>
+
         </div>
 
         <div class="quote-console reveal" style="margin-bottom: 4rem;">
@@ -366,10 +380,16 @@
             <span class="quote-author">DAVID MATTHEWS</span>
         </div>
 
-        <div class="reveal" style="text-align: center; margin-bottom: 4rem;">
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="contact.html" class="btn-schedule">TEST IT ON A LIVE DEAL →</a>
-                <a href="story.html" class="btn-schedule" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">READ THE ORIGIN STORY →</a>
+        <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
+            <h2 style="color: white; font-size: 2.25rem; font-weight: 900; margin-bottom: 2.5rem; letter-spacing: -0.02em;">Ready to build the engine?</h2>
+            
+            <a href="contact.html" style="display: inline-block; background: rgba(15,23,42,0.85); border: 1px solid rgba(59,130,246,0.4); padding: 0.85rem 1.75rem; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-radius: 6px; letter-spacing: 0.05em; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; text-transform: uppercase;">
+                TEST IT ON A LIVE DEAL &rarr;
+            </a>
+            
+            <div style="margin-top: 2.5rem; display: flex; gap: 2.5rem; justify-content: center;">
+                <a href="story.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Read the origin story →</a>
+                <a href="architecture.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">See the Architecture →</a>
             </div>
         </div>
         
@@ -380,8 +400,8 @@
         <div class="footer-inner">
             <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
             <div class="footer-right">
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7; margin-right: 1.5rem;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle;">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>

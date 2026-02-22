@@ -14,7 +14,8 @@
         .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
         .grid-2-col-sleek { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
         
-        .card.compact { padding: 1.5rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; flex-direction: column; }
+        .card.compact { padding: 1.5rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; flex-direction: column; transition: all 0.2s ease; }
+        .card.compact:hover { border-color: rgba(255,255,255,0.2); }
         .card.compact .doctrine-title { font-size: 1rem; margin-bottom: 0.5rem; margin-top: 0; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: white; }
         .card.compact .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; flex-grow: 1; }
         
@@ -24,34 +25,39 @@
         .index-step span { color: #cbd5e1; }
         .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
 
-        /* Doctrine Grid (Vertical Stack for Eras) */
-        .doctrine-stack { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 900px; margin: 0 auto; }
-        .scr-lesson { border-top: 1px solid rgba(255,255,255,0.05); margin-top: 1.5rem; padding-top: 1rem; font-size: 0.7rem; color: #3b82f6; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-align: right; }
+        /* Timeline Stack for Eras */
+        .timeline-stack { display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto; }
+        .timeline-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 2rem; position: relative; overflow: hidden; }
+        .timeline-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+        .timeline-card.era-1::before { background: #f59e0b; }
+        .timeline-card.era-2::before { background: #3b82f6; }
+        .timeline-card.era-3::before { background: #22c55e; }
+        .era-tag { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+        .era-title { font-size: 1.25rem; font-weight: 800; color: white; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .era-context { font-size: 0.8rem; font-style: italic; font-weight: 600; margin: 0 0 1.25rem 0; }
+        .era-footer { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
 
-        /* Principles Block */
-        .principles-box { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-left: 4px solid #3b82f6; padding: 2rem; margin-bottom: 3rem; border-radius: 8px; }
-        .principles-list { list-style: none; padding: 0; margin: 0; }
-        .principles-list li { font-size: 0.85rem; color: #cbd5e1; margin-bottom: 1rem; padding-left: 1.5rem; position: relative; line-height: 1.6; }
-        .principles-list li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; font-weight: 900; }
-        .principles-list li:last-child { margin-bottom: 0; }
-
-        /* Exhibit Formats (The Evolution Table) */
-        .mckinsey-exhibit { background: rgba(15,23,42,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .comparison-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .comparison-row:last-child { border-bottom: none; }
-        .col-header { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; color: #94a3b8; text-transform: uppercase; }
-        .col-text { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
-        .col-judgment { font-size: 0.85rem; color: white; font-weight: 600; line-height: 1.5; }
-        
-        .header-row { background: rgba(15,23,42,0.8); border-bottom: 2px solid rgba(255,255,255,0.1); }
+        /* Evolution Data Table */
+        .evolution-table { background: rgba(15,23,42,0.6); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; overflow: hidden; max-width: 900px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .evo-header { display: grid; grid-template-columns: 1fr 40px 1fr 1fr; gap: 1rem; padding: 1.25rem 1.5rem; background: rgba(59,130,246,0.1); border-bottom: 1px solid rgba(59,130,246,0.2); font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: #94a3b8; letter-spacing: 0.05em; }
+        .evo-row { display: grid; grid-template-columns: 1fr 40px 1fr 1fr; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; transition: background 0.2s ease; }
+        .evo-row:hover { background: rgba(255,255,255,0.02); }
+        .evo-row:last-child { border-bottom: none; }
+        .evo-left { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .evo-arrow { color: #3b82f6; font-weight: bold; text-align: center; }
+        .evo-mid { font-size: 0.85rem; color: #3b82f6; font-weight: 600; line-height: 1.5; }
+        .evo-right { font-size: 0.85rem; color: white; font-weight: 700; line-height: 1.5; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1rem; }
 
         @media (max-width: 900px) {
             .grid-2-col-sleek { grid-template-columns: 1fr; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-            .comparison-row { grid-template-columns: 1fr; gap: 0.5rem; background: var(--bg-card); margin: 0 1rem 1rem 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-            .header-row { display: none; }
-            .col-header.mobile-only { display: block; margin-bottom: 0.25rem; color: #3b82f6; font-size: 0.65rem; margin-top: 0.5rem; }
+            
+            .evo-header { display: none; }
+            .evo-row { grid-template-columns: 1fr; text-align: left; gap: 0.75rem; padding: 1.5rem; }
+            .evo-arrow { display: none; }
+            .evo-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.75rem; color: #10b981; }
+            .evo-mid::before { content: "GAIN: "; color: #94a3b8; font-weight: 400; }
         }
     </style>
 </head>
@@ -69,8 +75,9 @@
                 <div class="dropdown-content">
                     <a href="revenue-case.html">The Revenue Case</a>
                     <a href="proof.html">The Proof</a>
-                    <a href="story.html">The Story</a>
+                    <a href="story.html" style="color: #3b82f6;">The Story</a>
                     <a href="thinking.html">The Thinking</a>
+                    <a href="data-room.html">The Data Room</a>
                 </div>
             </div>
 
@@ -80,6 +87,7 @@
                     <a href="thesis.html">The Thesis</a>
                     <a href="human+ai.html">Human+AI</a>
                     <a href="edge.html">The Edge</a>
+                    <a href="architecture.html">The Architecture</a>
                 </div>
             </div>
 
@@ -94,11 +102,11 @@
             </div>
             
             <a href="dashboards.html">Dashboards</a>
-            <a href="contact.html" class="nav-cta">Engage Me</a>
+            <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
         </div>
     </nav>
 
-    <header class="dark-header-block">
+    <header class="dark-header-block" style="padding-bottom: 3rem;">
         <picture>
             <source srcset="assets/images/story.avif" type="image/avif">
             <img src="assets/images/story.webp" class="hero-bg" alt="Mapping the Deal" style="opacity: 0.55;">
@@ -109,7 +117,7 @@
                 <span style="color: #ffffff; display: block;">GAIN DIDN'T START WITH AI.</span>
                 <span style="color: #3b82f6; display: block;">IT STARTED IN WORKSHOP ROOMS.</span>
             </h1>
-            <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 2.5rem auto;"></div>
+            <div style="width: 80px; height: 2px; background: rgba(255,255,255,0.2); margin: 1.5rem auto;"></div>
             <p class="hero-subtext">
                 Three transformations. Same playbook. The methodology existed long before the technology caught up.
             </p>
@@ -120,7 +128,7 @@
         
         <div class="container-wide reveal">
             <div class="page-index-nav">
-                <div class="index-step"><span>01. The Pattern</span> <span class="index-arrow">→</span></div>
+                <div class="index-step"><span>01. The Doctrine</span> <span class="index-arrow">→</span></div>
                 <div class="index-step"><span>02. The Catalyst</span> <span class="index-arrow">→</span></div>
                 <div class="index-step"><span>03. The Architecture</span> <span class="index-arrow">→</span></div>
                 <div class="index-step"><span>04. The Evolution</span></div>
@@ -129,11 +137,11 @@
 
        <div class="reveal" style="max-width: 900px; margin: 0 auto 4rem auto;">
             
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <span style="display: inline-block; padding: 0.3rem 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; color: #3b82f6; margin-bottom: 1.25rem;">
+            <div style="background: rgba(15,23,42,0.8); border: 1px solid rgba(59,130,246,0.3); border-left: 4px solid #3b82f6; padding: 2.5rem; border-radius: 8px; margin-bottom: 3rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <span style="display: inline-block; font-size: 0.75rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; color: #3b82f6; margin-bottom: 1rem;">
                     The Operational Doctrine
                 </span>
-                <h2 style="font-size: 1.6rem; color: white; font-weight: 900; letter-spacing: -0.01em; line-height: 1.4; margin: 0; max-width: 750px; margin-left: auto; margin-right: auto; font-style: italic;">
+                <h2 style="font-size: 1.6rem; color: white; font-weight: 900; letter-spacing: -0.01em; line-height: 1.4; margin: 0; font-style: italic;">
                     "The landscape evolves every day.<br><span style="color: #94a3b8;">The fundamental discipline does not.</span>"
                 </h2>
             </div>
@@ -143,7 +151,7 @@
                 <div class="card compact" style="border-top: 3px solid #3b82f6;">
                     <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">RULE 01</div>
                     <h3 style="font-size: 0.95rem; color: white; font-weight: 800; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase;">Qualify Out Early</h3>
-                    <p class="body-prose" style="margin: 0;">
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                         Let's get real or let's not play. Refuse to waste cycles on deals where the decision is already made. Don't be column fodder. Maximum leverage means eliminating a hundred wrong actions by default.
                     </p>
                 </div>
@@ -151,7 +159,7 @@
                 <div class="card compact" style="border-top: 3px solid #f59e0b;">
                     <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">RULE 02</div>
                     <h3 style="font-size: 0.95rem; color: white; font-weight: 800; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase;">The Chess Match</h3>
-                    <p class="body-prose" style="margin: 0;">
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                         GAIN is not sequential; it is a continuous loop. Today, the C-suite is firewalled. You cannot brute-force access. You must map their circle of influence and orchestrate the introduction.
                     </p>
                 </div>
@@ -159,7 +167,7 @@
                 <div class="card compact" style="border-top: 3px solid #ef4444;">
                     <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">RULE 03</div>
                     <h3 style="font-size: 0.95rem; color: white; font-weight: 800; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase;">Dismantle The Fear</h3>
-                    <p class="body-prose" style="margin: 0;">
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                         In enterprise services, a failed delivery costs the stakeholder their reputation. You are not selling a solution; you are mitigating their risk. Dismantle the 'Loss Themes' before you ever build the 'Win Themes.'
                     </p>
                 </div>
@@ -167,7 +175,7 @@
                 <div class="card compact" style="border-top: 3px solid #22c55e;">
                     <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">RULE 04</div>
                     <h3 style="font-size: 0.95rem; color: white; font-weight: 800; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase;">Evolve Continuously</h3>
-                    <p class="body-prose" style="margin: 0;">
+                    <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                         Tactics change—from analog SWOT analysis to AI prompting—but human connection remains the ultimate edge. If a system depends on the person who built it, it's a bottleneck.
                     </p>
                 </div>
@@ -175,163 +183,136 @@
             </div>
         </div>
 
-        <div class="section-divider">
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">02. THE CATALYST</div>
             <div class="divider-line"></div>
         </div>
 
         <div class="grid-2-col-sleek reveal" style="margin-bottom: 4rem;">
-            <div class="card compact" style="border-top: 3px solid #ef4444;">
+            <div class="card compact" style="border-top: 3px solid #ef4444; justify-content: start;">
                 <h3 class="doctrine-title" style="color: #ef4444;">The Silent Exit</h3>
-                <p class="body-prose">
+                <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                     A major renewal worth eight figures. Dashboard green. SLAs perfect. But the client simply stopped talking. Access that used to be easy was suddenly firewalled. The realisation came too late: data is not a relationship. They didn't leave because of failed metrics. They left because of failed relevance. They were managed, not led.
                 </p>
             </div>
-            <div class="card compact" style="border-top: 3px solid #22c55e;">
-                <h3 class="doctrine-title" style="color: #22c55e;">The Behavioural Response</h3>
-                <p class="body-prose">
+            <div class="card compact" style="border-top: 3px solid #10b981; justify-content: start;">
+                <h3 class="doctrine-title" style="color: #10b981;">The Behavioural Response</h3>
+                <p style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                     The vow: never let green dashboards lie again. Fear of choosing the wrong supplier drives enterprise decisions. This triggered the integration of NLP and behavioural science into the commercial process. Not as an academic exercise, but as a survival tactic to map invisible human terrain. AI may synthesize the data, but only human judgment can secure the connection.
                 </p>
             </div>
         </div>
 
-       <div class="grid-3-col reveal" style="margin-bottom: 4rem; align-items: stretch;">
-            <div class="card compact" style="border-top: 3px solid #f59e0b;">
-                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">ERA 01</span>
-                <h3 class="doctrine-title" style="color: #f59e0b; font-size: 1.1rem; margin-bottom: 0.5rem;">THE FIXER</h3>
-                <p style="font-size: 0.75rem; color: #f59e0b; font-style: italic; margin-top: 0; margin-bottom: 1rem; font-weight: 600;">Regulated infrastructure. National utilities.</p>
-                
-                <p class="body-prose" style="margin-bottom: 1.5rem;">
+        <div class="section-divider" style="margin-bottom: 2rem;">
+            <div class="divider-line"></div>
+            <div class="divider-label">03. THE ARCHITECTURE</div>
+            <div class="divider-line"></div>
+        </div>
+
+        <div class="timeline-stack reveal" style="margin-bottom: 4rem;">
+            
+            <div class="timeline-card era-1">
+                <span class="era-tag" style="color: #f59e0b;">ERA 01</span>
+                <h3 class="era-title">THE FIXER</h3>
+                <p class="era-context" style="color: #f59e0b;">Regulated infrastructure. National utilities.</p>
+                <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
                     Early career across regulated industries. Rebuilt operational systems untouched for years. Designed self-healing environments deployed nationally without on-site support. Built service management operations for 500+ staff. Every role followed the same pattern: broken system, no mandate to fix it — fix it anyway.
                 </p>
-                
-                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(245,158,11,0.3); font-size: 0.7rem; color: #f59e0b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-align: right;">
+                <div class="era-footer" style="color: #f59e0b;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     LESSON: Build it to work without you
                 </div>
             </div>
 
-            <div class="card compact" style="border-top: 3px solid #3b82f6;">
-                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">ERA 02</span>
-                <h3 class="doctrine-title" style="color: #3b82f6; font-size: 1.1rem; margin-bottom: 0.5rem;">THE ARCHITECT</h3>
-                <p style="font-size: 0.75rem; color: #3b82f6; font-style: italic; margin-top: 0; margin-bottom: 1rem; font-weight: 600;">FTSE-listed technology company.</p>
-                
-                <p class="body-prose" style="margin-bottom: 1.5rem;">
-                    A professional services unit the business wanted to kill became the fastest-growing division. A £35M enterprise book grew to over £183M. Same playbook every time: gather intelligence, map the political terrain, build a go-to-market simple enough to go viral. The four pillars used in every transformation are now encoded into GAIN.
+            <div class="timeline-card era-2">
+                <span class="era-tag" style="color: #3b82f6;">ERA 02</span>
+                <h3 class="era-title">THE ARCHITECT</h3>
+                <p class="era-context" style="color: #3b82f6;">FTSE-listed technology company.</p>
+                <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
+                    A professional services unit the business wanted to kill became the fastest-growing division. A £35M enterprise book grew to over £183M. Same playbook every time: gather intelligence, map the political terrain, build a go-to-market simple enough to go viral. The four pillars used in every transformation are now encoded into the GAIN framework.
                 </p>
-                
-                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(59,130,246,0.3); font-size: 0.7rem; color: #3b82f6; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-align: right;">
+                <div class="era-footer" style="color: #3b82f6;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     LESSON: The methodology scales. Judgment doesn't.
                 </div>
             </div>
 
-            <div class="card compact" style="border-top: 3px solid #22c55e;">
-                <span style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;">ERA 03</span>
-                <h3 class="doctrine-title" style="color: #22c55e; font-size: 1.1rem; margin-bottom: 0.5rem;">THE COMPRESSION</h3>
-                <p style="font-size: 0.75rem; color: #22c55e; font-style: italic; margin-top: 0; margin-bottom: 1rem; font-weight: 600;">AI-first company. The realisation.</p>
-                
-                <p class="body-prose" style="margin-bottom: 1.5rem;">
-                    Commercial problems were identical — no account intelligence, no system. But prompting changed everything. The manual intelligence gathering that used to take weeks compressed to minutes. What didn't compress: knowing which findings matter and decoding human power structures. GAIN was born.
+            <div class="timeline-card era-3">
+                <span class="era-tag" style="color: #22c55e;">ERA 03</span>
+                <h3 class="era-title">THE COMPRESSION</h3>
+                <p class="era-context" style="color: #22c55e;">AI-first company. The realisation.</p>
+                <p style="font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin: 0;">
+                    Commercial problems were identical — no account intelligence, no system. But AI prompting changed everything. The manual intelligence gathering that used to take weeks compressed to minutes. What didn't compress: knowing which findings matter and decoding human power structures. GAIN was born as the ultimate hybrid engine.
                 </p>
-                
-                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(34,197,94,0.3); font-size: 0.7rem; color: #22c55e; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-align: right;">
+                <div class="era-footer" style="color: #22c55e;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     LESSON: AI compresses grunt work. Judgment remains human.
                 </div>
             </div>
+
         </div>
-        <div class="section-divider">
+
+        <div class="section-divider" style="margin-bottom: 2rem;">
             <div class="divider-line"></div>
             <div class="divider-label">04. THE EVOLUTION</div>
             <div class="divider-line"></div>
         </div>
 
-        <div class="mckinsey-exhibit reveal">
-            <div class="comparison-row header-row">
-                <div class="col-header" style="color: #94a3b8;">The Analogue Strategy (Took Weeks)</div>
-                <div class="col-header" style="color: #3b82f6;">The GAIN Equivalent (Takes Hours)</div>
-                <div class="col-header" style="color: white;">What Didn't Change</div>
+        <div class="evolution-table reveal" style="margin-bottom: 2rem;">
+            <div class="evo-header">
+                <div>The Analogue Reality (Took Weeks)</div>
+                <div></div>
+                <div>The GAIN Era (Takes Hours)</div>
+                <div style="color: white;">The Human Constant</div>
+            </div>
+            
+            <div class="evo-row">
+                <div class="evo-left">Annual reports read manually. IT spend estimated from slow conversations.</div>
+                <div class="evo-arrow">&rarr;</div>
+                <div class="evo-mid">[G] GATHER — Deep budget signals extracted in seconds.</div>
+                <div class="evo-right">Knowing which numbers matter to the deal.</div>
+            </div>
+            
+            <div class="evo-row">
+                <div class="evo-left">Org charts drawn in Visio. People profiled slowly from memory.</div>
+                <div class="evo-arrow">&rarr;</div>
+                <div class="evo-mid">[A] ASSESS — AI-Assisted Political Mapping across the board.</div>
+                <div class="evo-right">Distinguishing a job title from actual power.</div>
+            </div>
+            
+            <div class="evo-row">
+                <div class="evo-left">Manual, hand-built campaign documents for Top 10 accounts only.</div>
+                <div class="evo-arrow">&rarr;</div>
+                <div class="evo-mid">[I] INFLUENCE — Rapid Executive Narrative Design for all deals.</div>
+                <div class="evo-right">Understanding what makes the buyer a hero.</div>
             </div>
 
-            <div class="comparison-row">
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
-                    <span class="col-text">Annual reports read manually. IT spend estimated from conversations.</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
-                    <span class="col-text">[G] GATHER — 9-Pillar Deep Research & Budget Signals (20 min)</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
-                    <span class="col-judgment">Knowing which findings matter</span>
-                </div>
-            </div>
-
-            <div class="comparison-row">
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
-                    <span class="col-text">Org charts drawn in Visio. People profiled from memory.</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
-                    <span class="col-text">[A] ASSESS — Authority Mapping & Exec Intelligence (15 min)</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
-                    <span class="col-judgment">Distinguishing title from power</span>
-                </div>
-            </div>
-
-            <div class="comparison-row">
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
-                    <span class="col-text">Manual, hand-built campaign documents for Top 10 accounts.</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
-                    <span class="col-text">[I] INFLUENCE — Rapid Executive Narrative Design</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
-                    <span class="col-judgment">Knowing what makes them tick</span>
-                </div>
-            </div>
-
-            <div class="comparison-row">
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Manual:</span>
-                    <span class="col-text">Half-day "Cartography Sessions" with 30-50 stakeholders.</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">GAIN:</span>
-                    <span class="col-text">[N] NURTURE — Continuous Competitive Early Warning</span>
-                </div>
-                <div>
-                    <span class="col-header mobile-only" style="display: none;">Constant:</span>
-                    <span class="col-judgment">Securing the internal champion</span>
-                </div>
+            <div class="evo-row">
+                <div class="evo-left">Half-day "Cartography Sessions" with 30-50 stakeholders.</div>
+                <div class="evo-arrow">&rarr;</div>
+                <div class="evo-mid">[N] NURTURE — Continuous Competitive Early Warning systems.</div>
+                <div class="evo-right">Securing and arming the internal champion.</div>
             </div>
         </div>
 
-        <p class="body-prose reveal" style="text-align: center; margin-top: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            The right column is the point. Frameworks don't win deals. Judgment wins deals. AI simply eliminates the manual work that used to consume it.
+        <p class="body-prose reveal" style="text-align: center; margin-top: 1.5rem; max-width: 800px; margin-left: auto; margin-right: auto; font-style: italic;">
+            The right column is the point. Frameworks don't win deals. Judgment wins deals. AI simply eliminates the manual work that used to prevent it.
         </p>
 
-        <div class="container-wide reveal" style="margin-top: 4rem; margin-bottom: 4rem;">
-            <div class="quote-console">
-                <span class="quote-mark">“</span>
-                <p class="quote-text">
-                    AI didn't create this methodology. AI compressed it. The thinking is twenty-five years old. The execution is twenty-five minutes.
-                </p>
-                <span class="quote-author">DAVID MATTHEWS</span>
-            </div>
-        </div>
-
-        <div class="reveal" style="text-align: center; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
-            <h2 style="color: white; font-size: 2rem; font-weight: 900; margin-bottom: 2rem; letter-spacing: -0.02em;">See the financial impact.</h2>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="proof.html" class="btn-schedule">SEE THE NUMBERS →</a>
-                <a href="know.html" class="btn-schedule" style="background: transparent; border: 1px solid var(--primary); color: var(--primary);">START WITH GATHER</a>
+        <div class="reveal" style="text-align: center; margin-top: 5rem; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
+            <h2 style="color: white; font-size: 2.25rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.02em;">Don't believe the story. Believe the math.</h2>
+            <p class="body-prose" style="margin-bottom: 2.5rem; font-size: 0.95rem;">
+                See the exact financial impact this methodology had across three business transformations.
+            </p>
+            
+            <a href="proof.html" style="display: inline-block; background: rgba(15,23,42,0.85); border: 1px solid rgba(59,130,246,0.4); padding: 0.85rem 1.75rem; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-radius: 6px; letter-spacing: 0.05em; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; text-transform: uppercase;">
+                SEE THE FULL PROOF &rarr;
+            </a>
+            
+            <div style="margin-top: 2.5rem; display: flex; gap: 2.5rem; justify-content: center;">
+                <a href="revenue-case.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">See the 90-Day Arc →</a>
+                <a href="contact.html" style="color: var(--primary); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Let's look at a live deal →</a>
             </div>
         </div>
 
@@ -341,8 +322,8 @@
         <div class="footer-inner">
             <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
             <div class="footer-right">
-                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
-                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7; margin-right: 1.5rem;">
+                    <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle;">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>
