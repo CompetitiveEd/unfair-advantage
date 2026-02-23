@@ -3,197 +3,866 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAIN | Phase 1: KNOW (Intelligence)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="Know them. Reclaim 4 hours per meeting with the GAIN Prompt Chain.">
+    <title>[G] Gather: Know them | David Matthews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* High-Density Typography */
         body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         * { box-sizing: border-box; }
-        h1, h2, h3 { margin-top: 0; }
-
+        h1, h2, h3, h4 { margin-top: 0; }
+        .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
         /* Navigation */
         nav { background: #0f172a; padding: 1rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 900; color: white; letter-spacing: -0.05em; }
-        .logo span { color: #3b82f6; }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: #3b82f6; }
-
-        /* Main Container */
-        .container { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
-        .phase-header { margin-bottom: 3rem; border-left: 4px solid #3b82f6; padding-left: 1.5rem; }
-        .phase-title { font-size: 2.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-        .phase-desc { font-size: 1.1rem; color: #94a3b8; max-width: 700px; line-height: 1.6; }
-
-        /* Prompt Cards */
-        .prompt-grid { display: grid; gap: 2rem; }
-        .prompt-card { background: #0f172a; border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .prompt-header { background: #1e293b; padding: 1.25rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .prompt-title { font-family: monospace; font-size: 1rem; font-weight: 700; color: #60a5fa; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.75rem; }
-        .prompt-tag { font-size: 0.65rem; background: rgba(59,130,246,0.1); color: #60a5fa; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid rgba(59,130,246,0.3); }
+        .nav-brand { font-size: 1.25rem; font-weight: 900; color: white; letter-spacing: -0.05em; text-decoration: none; }
+        .nav-brand span { color: #3b82f6; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a, .nav-link-main { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-main { color: #3b82f6; }
         
-        /* Code Block */
-        .prompt-body { padding: 2rem; }
-        .code-container { position: relative; background: #000; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
-        .code-area { width: 100%; height: 350px; background: transparent; color: #34d399; font-family: monospace; font-size: 0.85rem; line-height: 1.6; padding: 1.5rem; border: none; resize: vertical; outline: none; }
-        .code-area::-webkit-scrollbar { width: 8px; }
-        .code-area::-webkit-scrollbar-track { background: #0f172a; }
-        .code-area::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        
-        .btn-copy { position: absolute; top: 1rem; right: 1rem; background: #3b82f6; border: none; color: white; padding: 0.5rem 1rem; border-radius: 4px; font-family: monospace; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .btn-copy:hover { background: #2563eb; }
+        .nav-dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: #0f172a; min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(59,130,246,0.3); border-radius: 6px; top: 100%; left: 0; z-index: 1000; overflow: hidden; }
+        .dropdown-content a { color: #cbd5e1; padding: 1rem 1.5rem; text-decoration: none; display: block; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown-content a:hover { background-color: rgba(59,130,246,0.1); color: white; }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .nav-cta { background: #3b82f6; color: white !important; padding: 0.5rem 1rem; border-radius: 4px; }
+        .nav-cta:hover { background: #2563eb; }
 
-        .system-warning { background: rgba(245, 158, 11, 0.05); border-left: 3px solid #f59e0b; padding: 1rem 1.5rem; margin-top: 1.5rem; border-radius: 0 4px 4px 0; }
-        .warning-title { font-family: monospace; font-size: 0.75rem; color: #f59e0b; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase; }
-        .warning-text { font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .mobile-menu-toggle span { display: block; width: 25px; height: 3px; background: white; transition: 0.3s; }
+
+        /* Header */
+        .dark-header-block { position: relative; padding: 6rem 2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); overflow: hidden; background: #0b1120; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .hero-impact { position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
+        .hero-pre { font-size: 0.8rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 1rem; }
+        .hero-headline { font-size: 3rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+        .hero-subtext { font-size: 1.2rem; color: #94a3b8; margin: 0; }
+
+        .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        /* Page Index Navigation */
+        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
+        .index-step { display: flex; align-items: center; gap: 1.5rem; }
+        .index-step span { color: #cbd5e1; }
+        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+
+        /* The 2x2 Top Briefing Grid */
+        .top-briefing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto 4rem auto; }
+        .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
+        .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .card-narrative { border-left: 3px solid #3b82f6; }
+        .card-narrative .briefing-card-title { color: #3b82f6; }
+        .card-psychology { border-left: 3px solid #8b5cf6; }
+        .card-psychology .briefing-card-title { color: #8b5cf6; }
+        
+        .gov-legend-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; }
+        .checklist-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; }
+        .checklist-item span { color: #3b82f6; font-weight: bold; }
+
+        /* Governance Tags */
+        .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+        .gov-purple { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #8b5cf6; }
+
+        /* The Chessboard Flow */
+        .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
+        .pill-blue-flow.active { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+
+        /* Command Dashboard (Accordion Layout) */
+        .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
+        .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .accordion-header:hover { background: rgba(255,255,255,0.02); }
+        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
+        .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
+        .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
+        
+        .accordion-content { display: none; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.5rem; }
+        .accordion-item.open .accordion-content { display: block; }
+        .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
+        .accordion-item.open .accordion-toggle-btn { color: white; }
+
+        /* The 4-Box Matrix */
+        .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
+        .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
+        
+        .box-objective .matrix-title { color: #94a3b8; }
+        .box-edge { border-left: 2px solid #f59e0b; }
+        .box-edge .matrix-title { color: #f59e0b; }
+        .box-output { border-left: 2px solid #3b82f6; }
+        .box-output .matrix-title { color: #3b82f6; }
+        .box-override { border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+        .box-override .matrix-title { color: #10b981; }
+
+        /* View Code Reveal */
+        .view-code-wrapper { text-align: center; padding-top: 1rem; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .btn-view-code { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+        .btn-view-code:hover { background: #3b82f6; color: white; }
+        
+        .terminal-container { display: none; margin-top: 1.5rem; }
+        .terminal-container.active { display: block; }
+        
+        /* Terminal Styling */
+        .terminal-block { background: #0f172a; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .terminal-header-bar { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.5rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .terminal-dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; background: #334155; }
+        .copy-btn { background: transparent; border: 1px solid #3b82f6; color: #3b82f6; font-size: 0.65rem; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; }
+        .copy-btn:hover { background: #3b82f6; color: white; }
+        .prompt-text { padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
+
+        /* Human Checkpoint */
+        .human-checkpoint { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-left: 4px solid #f59e0b; padding: 2rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hc-title { color: #f59e0b; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
+
+        /* Failures / Pitfalls Grid */
+        .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-red-text { color: #ef4444; font-weight: 900; }
+        
+        /* Terminal Prompt Library (Advanced) */
+        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .index-arrow { display: none; }
+            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .top-briefing-grid { grid-template-columns: 1fr; }
+            .prompt-matrix { grid-template-columns: 1fr; }
+            .failures-grid { grid-template-columns: 1fr; }
+            .accordion-title-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">GAIN<span>.</span></div>
-        <div class="nav-links">
-            <a href="know.html" class="active">01. Know</a>
-            <a href="#">02. Show</a>
-            <a href="#">03. Flow</a>
-            <a href="compiler.html" style="color: #10b981;">>_Compiler</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="phase-header">
-            <h1 class="phase-title">PHASE 1: KNOW</h1>
-            <p class="phase-desc">The intelligence gathering engine. Run these prompts to decode the macro strategy, extract financial forensics, and map the executive power structure. Save outputs to your <code>02_Processed_Intel</code> directory.</p>
-        </div>
-
-        <div class="prompt-grid">
-
-            <div class="prompt-card">
-                <div class="prompt-header">
-                    <div class="prompt-title">[G-01] MACRO STRATEGY & VULNERABILITY <span class="prompt-tag">BOARD LEVEL</span></div>
-                </div>
-                <div class="prompt-body">
-                    <div class="code-container">
-                        <button class="btn-copy" onclick="copyCode('code-g01', this)">COPY PROMPT</button>
-                        <textarea id="code-g01" class="code-area" readonly>
-TARGET COMPANY: [Insert Target Company]
-SELLER CONTEXT: [Insert Your Company/Solution, or type "None"]
-DATA SOURCE: [Type "USE MEMORY" or paste Annual Report/10-K Data here]
-
-## OUTPUT DIRECTIVE
-Output strictly as a Markdown block. At the very top of your response, BEFORE the intelligence begins, you must output this exact warning:
-> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-01_Macro_Intel.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
-
-## ROLE & OBJECTIVE
-Act as a Tier-1 Management Consultant and OSINT Analyst. Decode the provided corporate data. Do not use marketing fluff. Speak in hard metrics, boardroom realities, and structural risks.
-
-## EXECUTION
-1. THE 9-PILLAR RADAR: Categorize the corporate reality into 9 strict pillars: Financials, Market Position, Product/Service, Technology/Infra, Operations, Regulatory/Compliance, Leadership, Talent/Culture, External Threats. Rate each pillar's Risk Level (Low/Med/High/CRITICAL).
-2. THE BLEEDING NECKS: Isolate the top 3 highest-risk pillars. What is the explicit consequence if they fail to fix them within 12 months?
-3. THE WEDGE (If Seller Context is provided): Map exactly how the Seller's capabilities directly neutralize the Top 3 Bleeding Necks.
-                        </textarea>
+    <div class="page-container">
+        
+        <nav>
+            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
+            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links"> 
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">Evidence ▾</span>
+                    <div class="dropdown-content">
+                        <a href="revenue-case.html">The Revenue Case</a>
+                        <a href="proof.html">The Proof</a>
+                        <a href="story.html">The Story</a>
+                        <a href="thinking.html">The Thinking</a>
                     </div>
+                </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main">The System ▾</span>
+                    <div class="dropdown-content">
+                        <a href="thesis.html">The Thesis</a>
+                        <a href="human+ai.html">Human+AI</a>
+                        <a href="edge.html">The Edge</a>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <span class="nav-link-main" style="color: #3b82f6;">Prompt Toolkit ▾</span>
+                    <div class="dropdown-content">
+                        <a href="know.html" style="color: #3b82f6;">[G] Gather | Know them</a>
+                        <a href="map.html">[A] Assess | Map them</a>
+                        <a href="win.html">[I] Influence | Win them</a>
+                        <a href="grow.html">[N] Nurture | Grow them</a>
+                    </div>
+                </div>
+                <a href="dashboards.html">Dashboards</a>
+                <a href="contact.html" class="nav-cta">Engage Me</a>
+            </div>
+        </nav>
+
+        <header class="dark-header-block">
+            <picture>
+                <source srcset="assets/images/know.avif" type="image/avif">
+                <img src="assets/images/know.webp" class="hero-bg" alt="Gather Context" style="opacity: 0.55;">
+            </picture>
+            <div class="hero-impact">
+                <span class="hero-pre">[G] GATHER | KNOW THEM</span>
+                <h1 class="hero-headline">
+                    <span style="color: #ffffff; display: block;">AI HANDLES THE STORM.</span>
+                    <span style="color: #3b82f6; display: block;">YOU HANDLE THE HUMAN.</span>
+                </h1>
+                <div style="width: 60px; height: 3px; background: rgba(255,255,255,0.1); margin: 2.5rem auto;"></div>
+                <p class="hero-subtext">
+                    Know their board-level priorities before they say a word.
+                </p>
+                <span style="display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.15em; color: #94a3b8; text-transform: uppercase;">
+                    20 MINUTES — FROM ANNUAL REPORT TO EXECUTIVE BRIEFING
+                </span>
+            </div>
+        </header>
+
+        <main class="container-wide">
+
+            <div class="container-wide reveal">
+                <div class="page-index-nav">
+                    <div class="index-step"><span>01. The Briefing</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>02. The Pipeline</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>03. Advanced Tools</span> <span class="index-arrow">→</span></div>
+                    <div class="index-step"><span>04. The Archive</span></div>
                 </div>
             </div>
 
-            <div class="prompt-card">
-                <div class="prompt-header">
-                    <div class="prompt-title">[G-02] FINANCIAL FORENSICS & REALLOCATION <span class="prompt-tag">CFO LENS</span></div>
+            <div class="top-briefing-grid reveal">
+                
+                <div class="briefing-card card-narrative">
+                    <div class="briefing-card-title">THE NARRATIVE</div>
+                    <p class="body-prose" style="font-style: italic;">
+                        Tom had 30 minutes before a CFO meeting. He ran the annual report through the G-01 research prompt. He found the CFO used "cost-to-serve" 17 times and "innovation" twice.<br><br>
+                        He dropped "digital transformation" from his pitch and led with "operational efficiency." The CFO leaned forward and said: <em>"You're the only one who seemed to understand what we're actually trying to do."</em>
+                    </p>
                 </div>
-                <div class="prompt-body">
-                    <div class="code-container">
-                        <button class="btn-copy" onclick="copyCode('code-g02', this)">COPY PROMPT</button>
-                        <textarea id="code-g02" class="code-area" readonly>
-TARGET COMPANY: [Insert Target Company]
-TARGET FINANCIALS: [Paste 10-K/EBITDA data, or type "USE MEMORY"]
-SELLER CONTEXT: [Insert Your Company/Solution, or type "None"]
 
-## OUTPUT DIRECTIVE
-Output strictly as a Markdown block. At the very top of your response, BEFORE the intelligence begins, you must output this exact warning:
-> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-02_Financial_Forensics.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+                <div class="briefing-card card-psychology">
+                    <div class="briefing-card-title">THE PSYCHOLOGY (SAFETY)</div>
+                    <p class="body-prose">
+                        Research is not about gathering facts. It is about <strong>lowering buyer cortisol</strong>. Humans are biologically wired to fear vendor failure. When you ask basic discovery questions ("Tell me about your priorities"), you trigger that fear. When you quote their own earnings call back to them to frame your solution, you prove you are a safe pair of hands.
+                    </p>
+                </div>
 
-## ROLE & OBJECTIVE
-Act as a forensic forensic accountant and CFO whisperer. Your goal is to find the "hidden OPEX leak"—the money the target company is currently wasting on manual processes, tech debt, or compliance penalties. 
-
-## EXECUTION
-1. THE 10-K TRANSLATION: Translate their financial metrics into operational realities (e.g., What does a 3% drop in margin actually mean for their hiring freeze?).
-2. THE OPEX LEAK: Based on their industry and size, mathematically estimate where they are bleeding operational expenditure (e.g., manual compliance tracking, legacy server maintenance, service desk escalations). State the estimated £/$ value of this bleed.
-3. THE REALLOCATION WATERFALL: If a Seller Context is provided, build a value bridge. Show exactly how the Seller's solution stops the OPEX leak, and how that recovered money can self-fund the Seller's contract.
-                        </textarea>
+                <div class="briefing-card">
+                    <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe to use in free AI tools. Contains no internal IP.</p>
+                    </div>
+                    <div class="gov-legend-item">
+                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting your company's IP. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
                     </div>
                 </div>
+
+                <div class="briefing-card">
+                    <div class="briefing-card-title">THE INGREDIENTS</div>
+                    <p class="body-prose" style="font-size: 0.8rem; margin-bottom: 1rem; font-style: italic;">You cannot run the engine without fuel. Download these first:</p>
+                    <div class="checklist-item"><span>□</span> Annual report (PDF from investor relations)</div>
+                    <div class="checklist-item"><span>□</span> Target stakeholder LinkedIn profiles</div>
+                    <div class="checklist-item"><span>□</span> Company careers page (open roles)</div>
+                    <div class="checklist-item"><span>□</span> Recent press releases / earnings calls</div>
+                </div>
+
             </div>
 
-            <div class="prompt-card">
-                <div class="prompt-header">
-                    <div class="prompt-title">[G-03] ADVANCED HUMINT & BEHAVIOURAL TEARDOWN <span class="prompt-tag">PSYCHOLOGY</span></div>
+            <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 0.75rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">The Prompt Chain</p>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.6rem; margin-bottom: 1rem;">
+                    <span class="pill-blue-flow">COMPANY INTEL</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">FIND MONEY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">PROFILE PEOPLE</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">BATTLE CARD</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow">CAPABILITY</span>
+                    <span style="color: #64748b; font-weight: bold; opacity: 0.5;">→</span>
+                    <span class="pill-blue-flow active">BRIEFING</span>
                 </div>
-                <div class="prompt-body">
-                    <div class="system-warning" style="margin-top: 0; margin-bottom: 1.5rem;">
-                        <div class="warning-title">OPERATIONAL NOTE: THE LOOP</div>
-                        <div class="warning-text">Run this prompt individually for EVERY member of the buying committee (Champion, Economic Buyer, Evaluator). Save each output as a separate file.</div>
+                <p class="body-prose" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                    You have a meeting with a new client. Run through these 6 steps to build your intelligence profile. Enterprise sales is a chessboard, not a straight line. 
+                </p>
+            </div>
+
+            <div class="category-section reveal">
+                <div class="category-title">Phase 01: Company Intelligence</div>
+
+                <div class="accordion-item open">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[G-01]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">The Dynamic Account Planner</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[− CLOSE]</span>
                     </div>
-                    <div class="code-container">
-                        <button class="btn-copy" onclick="copyCode('code-g03', this)">COPY PROMPT</button>
-                        <textarea id="code-g03" class="code-area" readonly>
-TARGET EXECUTIVE: [Insert Name & Title]
-TARGET COMPANY: [Insert Company Name]
-DATA SOURCE: [Paste LinkedIn scrape/CRM notes, or type "USE MEMORY"]
-HUMAN SIGNAL: [Insert observational notes from calls, or type "None"]
+                    <div class="accordion-content" style="display: block;">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Focus Area]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>The 9-Pillar Framework.</strong> Routes execution path based on variables. Uses the <strong>Objective Analysis Protocol</strong> to hunt for "Narrative Friction" between the Annual Report and ground-level reality (Glassdoor, Bloomberg).</span>
+                            </div>
+                        </div>
+
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE ENGINE LOGIC</div>
+                                <p class="body-prose">This is not a standard prompt; it’s an IF/THEN routing engine. It reads your three variables and autonomously decides whether to build a full strategic sales pitch, conduct an unbiased deep-dive into a specific domain, or audit a single company.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">THE POWER OF "NONE"</div>
+                                <p class="body-prose">Don't force a sales pitch if you're just doing early discovery. By typing 'None' into the <em>Seller Company</em> or <em>Focus Area</em> fields, you instruct the AI to drop its 'sales bias' and act strictly as an objective, deep-research intelligence analyst.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">ROUTING EXAMPLES</div>
+                                <p class="body-prose" style="font-size: 0.8rem; line-height: 1.8;">
+                                    <strong style="color: #fff;">Full Strike:</strong> Target + Seller + Focus = Tailored pitch.<br>
+                                    <strong style="color: #fff;">Domain Recon:</strong> Target + 'None' + Focus = Unbiased intelligence.<br>
+                                    <strong style="color: #fff;">Seller Audit:</strong> 'None' + Seller + 'None' = Own proposition breakdown.
+                                </p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">DEFINING THE DOMAIN</div>
+                                <p class="body-prose">The AI is only as sharp as the boundaries you set. If your Focus Area is just 'IT', you will get generic rubbish. Be highly specific. Use terms like 'End User Computing & Service Desk Consolidation' to hunt for high-value pain points.</p>
+                            </div>
+                        </div>
+
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET COMPANY: [Insert Target Company, or type "None"]
+SELLER COMPANY: [Insert Your Company/Solution, or type "None"]
+FOCUS AREA: [Insert Domain, e.g., End User Environment, or type "None"]
+DATA SOURCE & HUMAN SIGNAL: [Type "Search the web autonomously", OR paste Annual Report/10-K, unstructured notes, LinkedIn posts, or corridor gossip here]
 
 ## OUTPUT DIRECTIVE
 Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
-> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-03_Profile_[FirstName_LastName].md` (replace brackets with actual name, use underscores for spaces). Save it directly into your workspace folder: `02_Processed_Intel`.
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-01_Macro_Intel.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
-Act as an Advanced HUMINT Profiler and Behavioral Psychologist. Decode the provided data using NLP analysis and the 6 GAIN Behavioral Drivers.
+Act as a Tier-1 Management Consultant and OSINT Analyst. Conduct a multi-stage deep research sweep. 
+**OBJECTIVE ANALYSIS PROTOCOL:** Do not just parrot the company's biased Annual Report. Autonomously deduce their industry and state it explicitly at the top of your report. Cross-reference their corporate claims against relevant domain intelligence (Bloomberg, Flight Global, or trade journals) and Glassdoor employee sentiment. Find the friction where the CEO says "Transformation" but the risk register says "Supply Chain Debt." Find the Narrative Gap.
 
-## PHASE 1: DATA AUDIT & NETWORK GAPS
-* State if the Primary Target Profile is Verified.
-* List any Relational Profiles Provided.
-* Identify NETWORK GAPS (Targeted Hunt List): Based on their role, deduce which peer or superior holds veto power. Instruct the human to manually scrape these missing profiles.
+## EXECUTION ROUTING LOGIC
+* PATH 1: THE FULL STRIKE (Target + Seller + Focus provided) -> Execute all phases. Map Seller to Target's specific Focus Area pain points.
+* PATH 2: DOMAIN RECON (Target + Focus provided | Seller is "None") -> Execute Phases 1, 2 & 4. Pure intelligence gathering. Do NOT write a sales pitch.
+* PATH 3: SELLER AUDIT (Seller provided | Target + Focus are "None") -> Execute Phase 3 only as an objective audit of the Seller.
+* PATH 4: GENERAL PLAN (Target + Seller provided | Focus is "None") -> Execute Phase 1, 3 & 4. Map Seller to Macro pain points.
 
-## PHASE 2: NLP & BEHAVIORAL MODALITY
-Analyze their writing style and communication patterns:
-1. VAK Modality: Are they Visual (see/look), Auditory (hear/discuss), or Kinesthetic (feel/grasp)?
-2. Processing Style & Quirks: How do they structure their thoughts? Humor? Bullets?
+## PHASE 1: MACRO BUSINESS CONTEXT (The 9-Pillars)
+(Skip if Target is "None")
+Apply the specific regulatory and macroeconomic lens for this company's industry. Provide 3-5 concise bullet points per pillar. Weight priorities based on any human signals provided.
+1. STRATEGIC PRIORITIES: Board-level goals and CEO direction.
+2. FINANCIAL SIGNALS: Revenue trends, margin pressure. Flag hard numbers.
+3. PAIN POINTS: Stated challenges vs. external reality (Narrative Gap). 
+4. COMPETITIVE POSITIONING: Market position and threat landscape.
+5. TECHNOLOGY DIRECTION: Broad digital transformation priorities.
+6. REGULATORY & COMPLIANCE: Industry-specific regulations (e.g., PRA, FCA, FAA, HSE) and upcoming deadlines.
+7. PEOPLE & CULTURE: Hiring gaps, leadership changes, and Glassdoor reality checks.
+8. STAKEHOLDER LANGUAGE: Specific phrases executives use repeatedly.
+9. TIMELINE & DEADLINES: Fiscal year, budget cycles, compelled events.
+**THE BLEEDING NECKS:** Conclude Phase 1 by isolating the top 3 highest-risk pillars based on your analysis. Format these 3 bullet points in **BOLD**.
 
-## PHASE 3: THE 6 GAIN DRIVERS MAPPING
-Map their psychology:
-1. SAFETY: What triggers their amygdala fear response? How do we clear it?
-2. ORDER: How do we reduce their cognitive load?
-3. POWER: Where do they actually sit in the informal influence map?
-4. ACHIEVEMENT: What makes them the hero?
-5. AFFILIATION: Who is in their internal coalition?
-6. SUSTAINABILITY: What threatens their 18-month horizon?
+## PHASE 2: MICRO-DOMAIN EXTRACTION
+(Execute only if Focus Area is NOT "None" AND Target is NOT "None")
+Hunt for information regarding the Target specifically within the Focus Area:
+1. DOMAIN INITIATIVES: What are they actively building/changing here?
+2. DOMAIN PAIN POINTS: Specific operational bottlenecks.
+3. CURRENT VENDOR LANDSCAPE: Incumbents, platforms, or massive legacy debt.
 
-## PHASE 4: THE INSIGHT-BASED HOOKS
-Provide the exact 3 Insight-Based Questions to ask them in the room:
-1. The Disruption Question (To challenge the status quo)
-2. The Reframe Question (To change how they view the problem)
-3. The Commitment Question (To test their intent to act)
-                        </textarea>
+## PHASE 3: SELLER CAPABILITIES & PITCH MAPPING
+(Execute only if Seller is NOT "None")
+1. **THE 3 PITCH ANGLES:** Create 3 highly specific pitch angles connecting the Seller's capabilities to the Target's pain points.
+2. **PREDICTED OBJECTIONS & COUNTERS:** Detail the top 2 objections the Target will raise based on their industry or scale, and script the exact counter-argument.
+
+## PHASE 4: THE OPERATOR LOOP (Human Override)
+Conclude your output by explicitly asking the human operator: *"Would you like to look at any specific areas further, or did any specific proprietary platforms/acquisitions catch your eye?"* Provide 2-3 highly specific, intelligent suggestions for deep-dives based on the company's unique tech stack, recent M&A, or shadow-IT.</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[G-02]</span>
+                            <span class="gov-tag gov-amber">Public Data</span>
+                            <h3 class="accordion-title">FINANCIAL FORENSICS — Finding the Money</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[G-01 Context]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Leak Extraction & Reallocation.</strong> Scans macro strategy to find manual processing waste and technical debt, calculating the FTE cost to generate a reallocation argument.</span>
+                            </div>
+                        </div>
+
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE ENGINE LOGIC</div>
+                                <p class="body-prose">You can't sell without budget. This engine hunts for 'Boring But Expensive' operational leaks. It finds the wasted OPEX you can steal to fund your solution.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">THE POWER OF "NONE"</div>
+                                <p class="body-prose">Leave the Seller field blank to act as a pure forensic accountant calculating FTE waste. Add a Seller to weaponize the data into an aggressive 'Reallocation Attack'.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">DEFINING THE INPUTS</div>
+                                <p class="body-prose">Feed it the exact output from G-01. It uses that macro strategy as a baseline to hunt the web for hidden financial leaks and vendor dependencies.</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Check the 'Owner' field. If the AI flags a leak but misidentifies the budget owner, manually verify if it sits with IT Ops or Risk.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET COMPANY: [Insert Target]
+SELLER COMPANY: [Insert Your Company, or type "None"]
+G-01 CONTEXT: [Paste G-01 output here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-02_Financial_Forensics.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+
+## ROLE & OBJECTIVE
+Act as a Senior Financial Analyst. Identify "Boring But Expensive" problems—cost centers visible to the CFO, reliant on manual labor, hidden in G-01 Context.
+
+## EXECUTION ROUTING
+* PATH A: FORENSIC ACCOUNTANT (Seller is "None") -> Find leaks, estimate FTE cost.
+* PATH B: REALLOCATION ATTACKER (Seller provided) -> Map leaks to Seller and write the Reallocation Argument.
+
+## PHASE 1: FINANCIAL LEAK EXTRACTION
+Search for waste in: Manual Processes, Integration Friction, Compliance Burden, Vendor Dependency, Technical Debt.
+
+## PHASE 2: OUTPUT
+Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCATION ARGUMENT.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-        </div>
+            <div class="category-section reveal">
+                <div class="category-title">Phase 02: People Intelligence</div>
+
+                <div class="human-checkpoint" style="background: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2); border-left-color: #8b5cf6;">
+                    <h4 class="hc-title" style="color: #8b5cf6;">THE PROPRIETARY MULTIPLIER (GOOD TO GREAT)</h4>
+                    <p class="body-prose">Public data gets you to the door; proprietary data gets you inside. Before running G-03, check your own CRM. Do you have notes from a past QBR? Did this executive use your product at their last company? <strong>Feed this hidden data into the prompts to build an insurmountable moat against generic AI outreach.</strong></p>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="accordion-title-group">
+                            <span class="accordion-id">[G-03]</span>
+                            <span class="gov-tag gov-purple" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #8b5cf6;">Public + Private Data</span>
+                            <h3 class="accordion-title">EXECUTIVE INTELLIGENCE — Decoding the Human</h3>
+                        </div>
+                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+                    </div>
+                    <div class="accordion-content">
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(139, 92, 246, 0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #8b5cf6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Exec]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Scrape & CRM Data]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Requires internal CRM access</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #8b5cf6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>NLP & GAIN Driver Mapping.</strong> Decodes the executive's VAK modality (Visual/Auditory/Kinesthetic) and cross-references public footprint with private CRM data to map their psychological triggers.</span>
+                            </div>
+                        </div>
+
+                        <div class="prompt-matrix">
+                            <div class="matrix-box box-objective">
+                                <div class="matrix-title">THE ENGINE LOGIC</div>
+                                <p class="body-prose">This is both a psychological profile and a hunting map. It extracts their decision-making architecture while hunting for network overlaps.</p>
+                            </div>
+                            <div class="matrix-box box-edge">
+                                <div class="matrix-title">THE POWER OF "NONE"</div>
+                                <p class="body-prose">If you type 'None' for the Target Company, the AI performs a pure psychological and career-trajectory teardown of the individual.</p>
+                            </div>
+                            <div class="matrix-box box-output">
+                                <div class="matrix-title">DEFINING THE INPUTS</div>
+                                <p class="body-prose">Paste raw LinkedIn posts, article text, and <strong>crucially, your internal CRM history and meeting notes</strong> to give the AI access to non-public relationship dynamics.</p>
+                            </div>
+                            <div class="matrix-box box-override">
+                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                <p class="body-prose">Check the "Current Activity" section. The AI is instructed not to condense the raw truth—pivot your email strategy to support their immediate reality.</p>
+                            </div>
+                        </div>
+                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET EXECUTIVE: [Insert Name & Title]
+TARGET COMPANY: [Insert Target Company, or type "None"]
+SCRAPED CONTEXT: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
+INTERNAL CRM & NETWORK DATA: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-03_Profile_[FirstName_LastName].md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+
+## ROLE & OBJECTIVE
+Act as an autonomous Senior Profiler and Investigative Analyst. Decode the provided contexts AND autonomously search the web for external data. Do not over-condense the raw truth into generic corporate speak.
+
+## EXECUTION ROUTING LOGIC
+* PATH A (Company Provided): Execute Phases 1, 2, and 3. 
+* PATH B (Company is "None"): Skip the "Strategic Alignment" section in Phase 3.
+
+## PHASE 1: THE BREADCRUMB TRAIL (Hard Facts, Network & Recency)
+1. EXTERNAL FOOTPRINT: Search the web. Patents? Major conferences? Media quotes?
+2. ROLE TRANSLATION: What does this specific title actually mean for this company? 
+3. PROPRIETARY OVERLAP (CRITICAL): Analyze the [Internal CRM & Network Data]. Mutual connections?
+4. NETWORK OVERLAP (PUBLIC): List previous companies and past projects.
+5. THE HIDDEN HOOK: Analyze volunteer work, hobbies, or non-work mentions.
+6. CURRENT ACTIVITY & TOP OF MIND: Analyze recent posts. Give me the raw, honest reality of what is currently on their desk.
+
+## PHASE 2: THE BEHAVIORAL TEARDOWN (Psychology & Contact)
+1. CORE CONVICTION: Fundamental principle or philosophy?
+2. DECISION TRIGGERS: What makes them say yes? What makes them resist? 
+3. TRUST ARCHITECTURE: What specific actions earn trust? 
+4. COMMUNICATION PROTOCOL: Specify email length, tone, formats, and buzzwords they hate.
+
+## PHASE 3: STRATEGIC ALIGNMENT & ENGAGEMENT
+1. NARRATIVE FRICTION: Are they fighting against internal corporate constraints?
+2. THE ONE QUESTION: Give me ONE highly specific discovery question.
+
+## STRICT ANTI-HALLUCINATION & IDENTITY GUARDRAILS
+* THE DISAMBIGUATION PROTOCOL: Aggressively cross-reference web searches against the [Scraped Context]. Found data MUST contain matching "Anchor Data". 
+* SOURCE EVERYTHING: Append a brief citation. THE "UNVERIFIED" RULE: Do not guess.</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-wide reveal">
+                <div class="section-divider" style="margin-top: 4rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <div style="height: 1px; width: 100px; background: rgba(255,255,255,0.1);"></div>
+                    <div style="font-size: 0.7rem; font-weight: 800; color: #64748b; letter-spacing: 0.2em;">WHERE THIS BREAKS</div>
+                    <div style="height: 1px; width: 100px; background: rgba(255,255,255,0.1);"></div>
+                </div>
+
+                <div class="failures-grid">
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 1: Hallucination</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify the source. If you can't see the source, it doesn't exist.</span>
+                    </div>
+
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 2: Over-reliance</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it completely.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> AI generates 80%. The last 20%—the humanity—is yours.</span>
+                    </div>
+
+                    <div class="failure-box">
+                        <h3 class="failure-title">FAILURE 3: False Confidence</h3>
+                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was old.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes manually before the meeting.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-repo reveal">
+                <div class="terminal-header">
+                    CORE INTELLIGENCE ARCHIVE // Quick-Copy Terminal
+                </div>
+                <p class="body-prose" style="margin-bottom: 2rem;">
+                    For practitioners who know the system. Click to copy directly to your clipboard.
+                </p>
+
+                <div class="library-grid">
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-01')">G-01 // The Dynamic Account Planner <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-02')">G-02 // FIND THE MONEY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-03')">G-03 // EXEC INTELLIGENCE <span class="copy-badge">Copy</span></button>
+                </div>
+
+                <div style="display: none;">
+                    <div class="prompt-console-title">G-01</div>
+                    <div><pre>TARGET COMPANY: [Insert Target Company]
+SELLER CONTEXT: [Insert Your Company/Solution]
+FOCUS AREA / DOMAIN: [Insert Domain, e.g., End User Environment]
+DATA SOURCE & HUMAN SIGNAL: [Type "Search the web autonomously", OR paste Annual Report/10-K, unstructured notes, LinkedIn posts, or corridor gossip here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-01_Macro_Intel.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+
+## ROLE & OBJECTIVE
+Act as a Tier-1 Management Consultant and OSINT Analyst. Conduct a multi-stage deep research sweep. 
+**OBJECTIVE ANALYSIS PROTOCOL:** Do not just parrot the company's biased Annual Report. Autonomously deduce their industry and state it explicitly at the top of your report. Cross-reference their corporate claims against relevant domain intelligence (Bloomberg, Flight Global, or trade journals) and Glassdoor employee sentiment. Find the friction where the CEO says "Transformation" but the risk register says "Supply Chain Debt." Find the Narrative Gap.
+
+## EXECUTION ROUTING LOGIC
+* PATH 1: THE FULL STRIKE (Target + Seller + Focus provided)
+* PATH 2: DOMAIN RECON (Target + Focus provided | Seller is "None")
+* PATH 3: SELLER AUDIT (Seller provided | Target + Focus are "None")
+* PATH 4: GENERAL PLAN (Target + Seller provided | Focus is "None")
+
+## PHASE 1: MACRO BUSINESS CONTEXT (The 9-Pillars)
+Apply the specific regulatory and macroeconomic lens. Provide 3-5 concise bullet points per pillar. 
+1. STRATEGIC PRIORITIES: Board-level goals.
+2. FINANCIAL SIGNALS: Revenue trends, margin pressure. 
+3. PAIN POINTS: Narrative Gap analysis (Claims vs. Reality).
+4. COMPETITIVE POSITIONING: Market threat landscape.
+5. TECHNOLOGY DIRECTION: CAPEX priorities.
+6. REGULATORY & COMPLIANCE: Sector-specific mandates (PRA, FAA, HSE).
+7. PEOPLE & CULTURE: Talent gaps & Glassdoor reality checks.
+8. STAKEHOLDER LANGUAGE: Phrases executives use repeatedly.
+9. TIMELINE & DEADLINES: Fiscal year, budget cycles.
+**THE BLEEDING NECKS:** Conclude by isolating the top 3 highest-risk pillars in **BOLD**.
+
+## PHASE 2: MICRO-DOMAIN EXTRACTION
+(If Focus Area provided) Hunt for Domain Initiatives, Pain Points, and Current Vendor Landscape.
+
+## PHASE 4: THE OPERATOR LOOP (Human Override)
+Conclude by asking: "Would you like to look at any specific areas further?" Provide 2-3 specific suggestions for deep-dives based on tech stack or M&A.</pre></div>
+                    
+                    <div class="prompt-console-title">G-02</div>
+                    <div><pre>TARGET COMPANY: [Insert Target]
+SELLER COMPANY: [Insert Your Company, or type "None"]
+G-01 CONTEXT: [Paste G-01 output here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-02_Financial_Forensics.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+
+## ROLE & OBJECTIVE
+Act as a Senior Financial Analyst. Identify "Boring But Expensive" problems—cost centers visible to the CFO, reliant on manual labor, hidden in G-01 Context.
+
+## EXECUTION ROUTING
+* PATH A: FORENSIC ACCOUNTANT (Seller is "None") -> Find leaks, estimate FTE cost.
+* PATH B: REALLOCATION ATTACKER (Seller provided) -> Map leaks to Seller and write the Reallocation Argument.
+
+## PHASE 1: FINANCIAL LEAK EXTRACTION
+Search for waste in: Manual Processes, Integration Friction, Compliance Burden, Vendor Dependency, Technical Debt.
+
+## PHASE 2: OUTPUT
+Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCATION ARGUMENT.</pre></div>
+                    
+                    <div class="prompt-console-title">G-03</div>
+                    <div><pre>TARGET EXECUTIVE: [Insert Name & Title]
+TARGET COMPANY: [Insert Target Company, or type "None"]
+SCRAPED CONTEXT: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
+INTERNAL CRM & NETWORK DATA: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-03_Profile_[FirstName_LastName].md`. Save it directly into your workspace folder: `02_Processed_Intel`.
+
+## ROLE & OBJECTIVE
+Act as an autonomous Senior Profiler and Investigative Analyst. Decode the provided contexts AND autonomously search the web for external data. Do not over-condense the raw truth into generic corporate speak.
+
+## EXECUTION ROUTING LOGIC
+* PATH A (Company Provided): Execute Phases 1, 2, and 3. 
+* PATH B (Company is "None"): Skip the "Strategic Alignment" section in Phase 3.
+
+## PHASE 1: THE BREADCRUMB TRAIL (Hard Facts, Network & Recency)
+1. EXTERNAL FOOTPRINT: Search the web. Patents? Major conferences? Media quotes?
+2. ROLE TRANSLATION: What does this specific title actually mean for this company? 
+3. PROPRIETARY OVERLAP (CRITICAL): Analyze the [Internal CRM & Network Data]. Mutual connections?
+4. NETWORK OVERLAP (PUBLIC): List previous companies and past projects.
+5. THE HIDDEN HOOK: Analyze volunteer work, hobbies, or non-work mentions.
+6. CURRENT ACTIVITY & TOP OF MIND: Analyze recent posts. Give me the raw, honest reality of what is currently on their desk.
+
+## PHASE 2: THE BEHAVIORAL TEARDOWN (Psychology & Contact)
+1. CORE CONVICTION: Fundamental principle or philosophy?
+2. DECISION TRIGGERS: What makes them say yes? What makes them resist? 
+3. TRUST ARCHITECTURE: What specific actions earn trust? 
+4. COMMUNICATION PROTOCOL: Specify email length, tone, formats, and buzzwords they hate.
+
+## PHASE 3: STRATEGIC ALIGNMENT & ENGAGEMENT
+1. NARRATIVE FRICTION: Are they fighting against internal corporate constraints?
+2. THE ONE QUESTION: Give me ONE highly specific discovery question.
+
+## STRICT ANTI-HALLUCINATION & IDENTITY GUARDRAILS
+* THE DISAMBIGUATION PROTOCOL: Aggressively cross-reference web searches against the [Scraped Context]. Found data MUST contain matching "Anchor Data". 
+* SOURCE EVERYTHING: Append a brief citation. THE "UNVERIFIED" RULE: Do not guess.</pre></div>
+
+                </div>
+            </div>
+
+            <div class="reveal" style="text-align: center; padding-top: 2rem; padding-bottom: 4rem;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 1.5rem;">Intelligence gathered. Now, map the politics.</p>
+                <a href="map.html" class="btn-schedule">PROCEED TO [A] ASSESS →</a>
+            </div>
+
+        </main>
+
+        <footer>
+            <div class="footer-inner">
+                <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
+                <div class="footer-right">
+                    <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7;">
+                        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                        AI Is Not Your Cheerleader →
+                    </a>
+                </div>
+            </div>
+            <div class="footer-subtle">
+                No hype. Just results. © 2026
+            </div>
+        </footer>
     </div>
 
     <script>
-        function copyCode(elementId, btnElement) {
-            const codeArea = document.getElementById(elementId);
-            codeArea.select();
-            codeArea.setSelectionRange(0, 99999); 
-            navigator.clipboard.writeText(codeArea.value);
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (mobileMenuToggle && navLinks) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenuToggle.classList.toggle('active');
+                    navLinks.classList.toggle('active');
+                });
+            }
             
-            const originalText = btnElement.innerText;
-            btnElement.innerText = "COPIED!";
-            btnElement.style.background = "#10b981";
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => { 
+                    if (e.isIntersecting) e.target.classList.add('active'); 
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add('active');
+                }
+                revealObserver.observe(el);
+            });
+        });
+
+        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        function toggleAccordion(header) {
+            const currentItem = header.parentElement;
+            const isOpen = currentItem.classList.contains('open');
+
+            if (!isOpen) {
+                currentItem.classList.add('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[− CLOSE]';
+            } else {
+                currentItem.classList.remove('open');
+                const btn = header.querySelector('.accordion-toggle-btn');
+                if(btn) btn.innerText = '[+ VIEW]';
+            }
+        }
+
+        // VIEW CODE TOGGLE
+        function toggleCode(btn) {
+            const container = btn.parentElement.nextElementSibling;
+            const isActive = container.classList.contains('active');
             
-            setTimeout(() => {
-                btnElement.innerText = originalText;
-                btnElement.style.background = "#3b82f6";
-            }, 2000);
+            if(!isActive) {
+                container.classList.add('active');
+                btn.innerText = 'HIDE PROMPT CODE';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+            } else {
+                container.classList.remove('active');
+                btn.innerText = '👁 VIEW PROMPT CODE';
+                btn.style.background = 'transparent';
+                btn.style.color = '#3b82f6';
+            }
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        function copyPromptText(btn) {
+            const terminalBlock = btn.closest('.terminal-block');
+            const promptText = terminalBlock.querySelector('.prompt-text').innerText;
+            
+            navigator.clipboard.writeText(promptText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'COPIED ✓';
+                btn.style.background = '#3b82f6';
+                btn.style.color = 'white';
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#3b82f6';
+                }, 2000);
+            });
+        }
+
+        // COPY TO CLIPBOARD FUNCTION (Archive Prompts)
+        function copyLibraryPrompt(btn, promptID) {
+            const titles = document.querySelectorAll('.prompt-console-title');
+            let foundCode = null;
+
+            titles.forEach(title => {
+                if (title.innerText.includes(promptID)) {
+                    const content = title.nextElementSibling; 
+                    if (content) foundCode = content.innerText;
+                }
+            });
+
+            if (foundCode) {
+                navigator.clipboard.writeText(foundCode).then(() => {
+                    const badge = btn.querySelector('.copy-badge');
+                    const original = badge.innerText;
+                    badge.innerText = '[COPIED]';
+                    btn.style.borderColor = '#10b981';
+                    btn.style.color = '#10b981';
+                    badge.style.color = '#10b981';
+                    
+                    setTimeout(() => {
+                        badge.innerText = original;
+                        btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                        btn.style.color = '#cbd5e1';
+                        badge.style.color = '#3b82f6';
+                    }, 2000);
+                });
+            } else {
+                console.error("Could not find prompt ID: " + promptID);
+            }
         }
     </script>
 </body>
