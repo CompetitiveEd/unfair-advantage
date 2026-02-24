@@ -8,10 +8,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <style>
         /* High-Density Typography */
+        body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        * { box-sizing: border-box; }
+        h1, h2, h3, h4 { margin-top: 0; }
         .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
+        /* Navigation */
+        nav { background: #0f172a; padding: 1rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .nav-brand { font-size: 1.25rem; font-weight: 900; color: white; letter-spacing: -0.05em; text-decoration: none; }
+        .nav-brand span { color: #3b82f6; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a, .nav-link-main { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-main { color: #3b82f6; }
+        
+        .nav-dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: #0f172a; min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(59,130,246,0.3); border-radius: 6px; top: 100%; left: 0; z-index: 1000; overflow: hidden; }
+        .dropdown-content a { color: #cbd5e1; padding: 1rem 1.5rem; text-decoration: none; display: block; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown-content a:hover { background-color: rgba(59,130,246,0.1); color: white; }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .nav-cta { background: #3b82f6; color: white !important; padding: 0.5rem 1rem; border-radius: 4px; }
+        .nav-cta:hover { background: #2563eb; }
+
+        .mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .mobile-menu-toggle span { display: block; width: 25px; height: 3px; background: white; transition: 0.3s; }
+
+        /* Header */
+        .dark-header-block { position: relative; padding: 6rem 2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); overflow: hidden; background: #0b1120; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .hero-impact { position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
+        .hero-pre { font-size: 0.8rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 1rem; }
+        .hero-headline { font-size: 3rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+        .hero-subtext { font-size: 1.2rem; color: #94a3b8; margin: 0; }
+
+        .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
         /* Page Index Navigation */
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
@@ -24,7 +55,6 @@
         .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
         .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         
-        /* Specific Card Accents */
         .card-narrative { border-left: 3px solid #3b82f6; }
         .card-narrative .briefing-card-title { color: #3b82f6; }
         .card-psychology { border-left: 3px solid #8b5cf6; }
@@ -36,8 +66,11 @@
 
         /* Governance Tags */
         .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
-        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; }
         .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+        /* Action Tag */
+        .action-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; background: rgba(255,255,255,0.05); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); }
 
         /* The Chessboard Flow */
         .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
@@ -45,13 +78,13 @@
 
         /* Command Dashboard (Accordion Layout) */
         .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
         
-        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 1rem; overflow: hidden; transition: border-color 0.2s; }
         .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
         .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
         .accordion-header:hover { background: rgba(255,255,255,0.02); }
-        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-title-group { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
         .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
         .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
         .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
@@ -61,7 +94,7 @@
         .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
         .accordion-item.open .accordion-toggle-btn { color: white; }
 
-        /* The New 4-Box Matrix */
+        /* The 4-Box Matrix */
         .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
         .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
         .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
@@ -90,22 +123,60 @@
         .copy-btn:hover { background: #3b82f6; color: white; }
         .prompt-text { padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
 
-        /* Failures / Pitfalls Grid */
+        /* Human Checkpoints & Failures */
+        .human-checkpoint { padding: 2rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hc-title { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
+
+        .section-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .divider-line { height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1); }
+        .divider-label { font-size: 0.7rem; font-weight: 800; color: #64748b; letter-spacing: 0.2em; white-space: nowrap; }
+
         .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
         .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
-        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
-        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
         .failure-red-text { color: #ef4444; font-weight: 900; }
+
+        /* Toolkit Toggle & Prompt Library */
+        .toolkit-wrapper { max-width: 900px; margin: 4rem auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(15,23,42,0.4); }
+        .toolkit-toggle { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
+        .toolkit-toggle:hover { background: rgba(255,255,255,0.05); }
+        .toolkit-toggle h3 { font-size: 0.9rem; color: white; font-weight: 800; letter-spacing: 0.1em; margin: 0 0 0.5rem 0; }
+        .toolkit-toggle p { font-size: 0.8rem; color: #94a3b8; margin: 0; }
+        .toggle-arrow { color: #3b82f6; font-size: 1.2rem; transition: transform 0.3s; }
+        .toolkit-wrapper.open .toggle-arrow { transform: rotate(180deg); }
+        .toolkit-content { display: none; border-top: 1px solid rgba(255,255,255,0.1); padding: 2rem 0; }
+        .toolkit-content.expanded { display: block; }
         
-        /* Terminal Prompt Library (Archive) */
-        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
-        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
-        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
-        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
-        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; color: #cbd5e1; }
+        
+        .library-btn-public:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .library-btn-public .copy-badge { color: #3b82f6; }
+
+        .library-btn-private:hover { background: rgba(239,68,68,0.1); border-color: #ef4444; color: white; }
+        .library-btn-private .copy-badge { color: #ef4444; }
+        
+        /* Restricted Button Styles */
+        .library-btn-restricted { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #64748b; cursor: not-allowed; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; font-family: monospace; }
+        .library-btn-restricted .copy-badge { color: #64748b; }
+        
+        .copy-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+
+        /* Footer Additions */
+        footer { padding: 3rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-brand { color: white; font-weight: 900; letter-spacing: -0.05em; text-decoration: none; font-size: 1.25rem; }
+        .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-link { color: #94a3b8; font-size: 0.8rem; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.2s; }
+        .footer-link:hover { color: #3b82f6; }
+        .footer-subtle { text-align: center; color: #64748b; font-size: 0.75rem; margin-top: 2rem; font-weight: 500; }
+        
+        .btn-schedule { display: inline-block; background: #3b82f6; color: white; padding: 1rem 2.5rem; border-radius: 6px; text-decoration: none; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; }
+        .btn-schedule:hover { background: #2563eb; }
 
         @media (max-width: 900px) {
+            .nav-links { display: none; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .top-briefing-grid { grid-template-columns: 1fr; }
@@ -132,6 +203,7 @@
                         <a href="proof.html">The Proof</a>
                         <a href="story.html">The Story</a>
                         <a href="thinking.html">The Thinking</a>
+                        <a href="data-room.html">The Data Room</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
@@ -140,19 +212,20 @@
                         <a href="thesis.html">The Thesis</a>
                         <a href="human+ai.html">Human+AI</a>
                         <a href="edge.html">The Edge</a>
+                        <a href="architecture.html">The Architecture</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
-                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <span class="nav-link-main" style="color: #3b82f6;">Prompt Toolkit ▾</span>
                     <div class="dropdown-content">
                         <a href="know.html">[G] Gather | Know them</a>
                         <a href="map.html">[A] Assess | Map them</a>
-                        <a href="win.html" style="color: var(--primary);">[I] Influence | Win them</a>
+                        <a href="win.html" style="color: #3b82f6;">[I] Influence | Win them</a>
                         <a href="grow.html">[N] Nurture | Grow them</a>
                     </div>
                 </div>
                 <a href="dashboards.html">Dashboards</a>
-                <a href="contact.html" class="nav-cta">Engage Me</a>
+                <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
             </div>
         </nav>
 
@@ -208,11 +281,11 @@
                 <div class="briefing-card">
                     <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
                     <div class="gov-legend-item">
-                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <span class="gov-tag gov-blue">PUBLIC DATA</span>
                         <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe for free AI tools. Competitor intel and generic criteria.</p>
                     </div>
                     <div class="gov-legend-item">
-                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <span class="gov-tag gov-red">PRIVATE DATA</span>
                         <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting pricing or proprietary deal strategy. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
                     </div>
                 </div>
@@ -248,6 +321,16 @@
                 </p>
             </div>
 
+            <div class="human-checkpoint reveal" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); border-left-color: #ef4444;">
+                <h4 class="hc-title" style="color: #ef4444;">🛑 OPSEC AIRWALL: SECURE YOUR DATA</h4>
+                <p class="body-prose">Proprietary intelligence, Intellectual Property (IP), and customer-secured data must never be copied into a public, open LLM. If you are unsure, check your internal data governance policy. Do not feed internal CRM data, NDA-protected meeting notes, or internal product IP into public, open AI models. Switch to your secure, enterprise-approved AI environment before running any prompt marked with a Red 'Private Data' tag.</p>
+            </div>
+
+            <div class="human-checkpoint reveal" style="background: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2); border-left-color: #8b5cf6; margin-bottom: 4rem;">
+                <h4 class="hc-title" style="color: #8b5cf6;">THE PROPRIETARY MULTIPLIER (GOOD TO GREAT)</h4>
+                <p class="body-prose">Public data gets you to the door; proprietary data gets you inside. Before running these prompts, check your own CRM. Do you have notes from a past QBR? Did this executive use your product at their last company? <strong>Feed this hidden data into the prompts to build an insurmountable moat against generic AI outreach. Remember: if you put any proprietary data into any public prompts they become private and should be classified as private status.</strong></p>
+            </div>
+
             <div class="category-section reveal">
                 <div class="category-title">Phase 01: Strategy & Scoring</div>
 
@@ -255,12 +338,27 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-01]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Deal Pre-Mortem Simulator</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">PRE-MORTEM</span>
+                            <h3 class="accordion-title">DEAL PRE-MORTEM SIMULATOR</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Deal Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Known Competitor]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Failure Forensics.</strong> Simulates the exact scenarios where you lose the deal based on intelligence so you can preemptively defend against them.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -279,8 +377,18 @@
                                 <p class="body-prose">Focus on the "Gotcha" failure—the hidden operational requirement or political landmine that your internal coach hasn't told you about yet.</p>
                             </div>
                         </div>
-                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">DEAL CONTEXT: [Paste Deal Strategy from A-06]
+
+                        <div class="view-code-wrapper">
+                            <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                        </div>
+
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">DEAL CONTEXT: [Paste Deal Strategy from A-06]
 KNOWN COMPETITOR: [Insert Competitor Name, or type "None"]
 
 ## ROLE & OBJECTIVE
@@ -297,7 +405,9 @@ Generate specific narratives for the 3 reasons we lost:
 3. THE "GOTCHA": What hidden operational requirement did we fail to address?
 
 ## PHASE 2: PRE-EMPTIVE DEFENCE
-For each failure, provide the ONE tactical adjustment we must make to our proposal narrative today to prevent this outcome.</pre></div></div>
+For each failure, provide the ONE tactical adjustment we must make to our proposal narrative today to prevent this outcome.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -305,12 +415,27 @@ For each failure, provide the ONE tactical adjustment we must make to our propos
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-02]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Win Theme Architect</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">WIN THEMES</span>
+                            <h3 class="accordion-title">WIN THEME ARCHITECT</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Client Pain Points]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Solution Evidence]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Narrative Construction.</strong> Develops 3 'Gold-Standard Win Themes' that are provable with evidence and impossible for competitors to claim.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -329,8 +454,15 @@ For each failure, provide the ONE tactical adjustment we must make to our propos
                                 <p class="body-prose">If the AI generates a theme like "We are a trusted partner", reject it. Demand themes that are impossible for your competitors to legally duplicate.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">CLIENT PAIN POINTS: [Paste from G-01/G-02]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">CLIENT PAIN POINTS: [Paste from G-01/G-02]
 SOLUTION EVIDENCE: [Paste Case Study summaries or IP, or type "None"]
 
 ## ROLE & OBJECTIVE
@@ -345,7 +477,9 @@ For each theme:
 1. THE CHALLENGE: The specific client pain or "Trauma" this solves.
 2. THE THEME NAME: A punchy, outcome-focused title (e.g., "Zero-Disruption Migration").
 3. THE PROOF POINT: The specific metric or story that makes this claim undeniable.
-4. THE COMPETITIVE EDGE: Why the competitor will struggle to counter this.</pre></div></div>
+4. THE COMPETITIVE EDGE: Why the competitor will struggle to counter this.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -353,12 +487,27 @@ For each theme:
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-03]</span>
-                            <span class="gov-tag gov-amber">Public Data</span>
-                            <h3 class="accordion-title">Competitor Kill-Shot Logic</h3>
+                            <span class="gov-tag gov-blue">Public Data</span>
+                            <span class="action-tag">COMPETITOR INTEL</span>
+                            <h3 class="accordion-title">COMPETITOR KILL-SHOT LOGIC</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Competitor]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Our Weakness]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Pre-emptive Defence.</strong> Anticipates the competitor's attack and builds the "Ghosting" strategy to discredit them without naming them.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -377,8 +526,15 @@ For each theme:
                                 <p class="body-prose">Check that the "Kill Shot" doesn't sound like unprofessional mud-slinging. It should sound like "Industry Best Practice" that the competitor just happens to fail at.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET COMPETITOR: [Insert Competitor Name, or type "None"]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET COMPETITOR: [Insert Competitor Name, or type "None"]
 OUR WEAKNESS: [Insert your known vulnerability, or type "None"]
 
 ## ROLE & OBJECTIVE
@@ -392,7 +548,9 @@ Act as a Competitive Intelligence Analyst. Your goal is to build a "Ghosting Str
 1. THEIR LIKELY GHOSTING: What will they whisper about us? 
 2. THE INOCULATION: How do we address that weakness in our proposal first?
 3. THE TRAP QUESTION: Draft one question for our champion to ask the competitor that exposes their primary weakness.
-4. THE DIFFERENTIATOR: The one thing we do that they physically or commercially cannot.</pre></div></div>
+4. THE DIFFERENTIATOR: The one thing we do that they physically or commercially cannot.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -400,12 +558,24 @@ Act as a Competitive Intelligence Analyst. Your goal is to build a "Ghosting Str
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-04]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Evaluation Scoring Strategy</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">SCORING STRATEGY</span>
+                            <h3 class="accordion-title">EVALUATION SCORING STRATEGY</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Evaluation Criteria]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Resource Allocation.</strong> Ranks criteria by weighted value to dictate exactly where writing energy should be spent to maximize mathematical points.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -424,8 +594,15 @@ Act as a Competitive Intelligence Analyst. Your goal is to build a "Ghosting Str
                                 <p class="body-prose">Verify the "Hygiene" questions (Pass/Fail). If you fail a 0% weighted mandatory question, the 100% weighting elsewhere doesn't matter.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">EVALUATION CRITERIA: [Paste requirements and weightings]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">EVALUATION CRITERIA: [Paste requirements and weightings]
 
 ## ROLE & OBJECTIVE
 Act as a Bid Manager optimizing for maximum weighted score. Your goal is to create a "Writing Priority Map".
@@ -436,7 +613,9 @@ Act as a Bid Manager optimizing for maximum weighted score. Your goal is to crea
 3. TIER 2 (HYGIENE): Which questions are "Pass/Fail" or low weighting where we should use boilerplate?
 
 ## PHASE 2: RESOURCE ALLOCATION
-Identify the 3 sections where we must assign our most senior technical and commercial writers.</pre></div></div>
+Identify the 3 sections where we must assign our most senior technical and commercial writers.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -448,12 +627,29 @@ Identify the 3 sections where we must assign our most senior technical and comme
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-05]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">The 4-Act Executive Summary</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">EXEC SUMMARY</span>
+                            <h3 class="accordion-title">THE 4-ACT EXECUTIVE SUMMARY</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Client Vision]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[The Villain (Pain)]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Win Themes]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Narrative Construction.</strong> Drafts a high-stakes summary using the 'Made to Stick' framework. It makes the client's "New Way of Working" the hero, not you.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -472,8 +668,15 @@ Identify the 3 sections where we must assign our most senior technical and comme
                                 <p class="body-prose">The AI will try to be humble. Edit the "Proof" section to ensure you sound like the ONLY safe choice in the market.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">CLIENT VISION: [Paste the 'To' state from A-07]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">CLIENT VISION: [Paste the 'To' state from A-07]
 THE VILLAIN (PAIN): [Paste from G-02 or A-02, or type "None"]
 WIN THEMES: [Paste output from I-02]
 
@@ -489,7 +692,9 @@ Act 4: THE PROOF (Why we are the only team capable of delivering Act 3).
 ## CONSTRAINTS
 * Maximum 500 words.
 * Use "You/Your" (the client) 3x more often than "We/Us" (the vendor).
-* Embed the 3 Win Themes naturally into the narrative.</pre></div></div>
+* Embed the 3 Win Themes naturally into the narrative.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -497,12 +702,29 @@ Act 4: THE PROOF (Why we are the only team capable of delivering Act 3).
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-06]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Response Section Drafter</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">RESPONSE WRITER</span>
+                            <h3 class="accordion-title">RESPONSE SECTION DRAFTER</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[RFP Question]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Evaluation Criteria]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Proof Points]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Content Generation.</strong> Generates high-scoring technical or operational responses that lead with the client's challenge and end with proven outcomes.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -521,8 +743,15 @@ Act 4: THE PROOF (Why we are the only team capable of delivering Act 3).
                                 <p class="body-prose">Manually check the word count. AI tends to be "chatty". Trim the fluff to ensure the core approach and proof points are visible in the first 2 paragraphs.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">RFP QUESTION: [Paste the exact question]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">RFP QUESTION: [Paste the exact question]
 EVALUATION CRITERIA: [Paste how this is scored]
 OUR PROOF POINTS: [Paste case study metrics or IP, or type "None"]
 
@@ -537,7 +766,9 @@ Act as a Senior Proposal Writer. Draft a response that maximizes points and buil
 ## WRITING STYLE
 * Professional, assertive, and outcome-centric.
 * Use active verbs.
-* Avoid generic "marketing fluff" (e.g., "passionate", "world-class").</pre></div></div>
+* Avoid generic "marketing fluff" (e.g., "passionate", "world-class").</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -545,12 +776,27 @@ Act as a Senior Proposal Writer. Draft a response that maximizes points and buil
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[I-07]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Procurement "Devil's Advocate" Audit</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">SELF-SCORING</span>
+                            <h3 class="accordion-title">PROCUREMENT "DEVIL'S ADVOCATE" AUDIT</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Evaluation Criteria]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Draft Response]</span>
+                                <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Red Team Review.</strong> Acts as a hostile procurement evaluator to find the weak spots in your draft before you submit it to the actual client.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -569,8 +815,15 @@ Act as a Senior Proposal Writer. Draft a response that maximizes points and buil
                                 <p class="body-prose">If the AI scores you a 5/5, it's being too nice. Tell it to "Adopt the persona of a cynical, budget-cutting Procurement Lead" and run the audit again.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">EVALUATION CRITERIA: [Paste how they score responses, or type "None"]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">EVALUATION CRITERIA: [Paste how they score responses, or type "None"]
 DRAFT RESPONSE: [Paste your draft section]
 
 ## ROLE & OBJECTIVE
@@ -580,45 +833,79 @@ Act as a cynical, senior Procurement Evaluator. Your goal is to find reasons to 
 1. THE SCORE: Based on the criteria, score this response out of 5.
 2. THE GAP: Where did we make a claim without providing evidence? 
 3. THE FRICTION: Identify 2 sentences that are overly "vendor-centric" or jargon-heavy.
-4. THE +1 STRATEGY: What exactly must we add to this draft to move it from a 3/5 to a 5/5?</pre></div></div>
+4. THE +1 STRATEGY: What exactly must we add to this draft to move it from a 3/5 to a 5/5?</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-
-            <div class="category-section reveal">
-                <div class="category-title">Phase 03: Commercials & Orals</div>
-
-                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title-group">
-                            <span class="accordion-id">[I-08]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Commercial Narrative Architect</h3>
-                        </div>
-                        <span class="accordion-toggle-btn">[+ VIEW]</span>
+            <div class="toolkit-wrapper reveal" style="margin-top: 4rem; margin-bottom: 4rem;">
+                <div class="toolkit-toggle" onclick="toggleToolkit(this)">
+                    <div class="toggle-text">
+                        <h3>ENGINEERING & EXTENDED TOOLKIT — 3 PROMPTS</h3>
+                        <p style="margin: 0; font-size: 0.8rem; color: #94a3b8;">Commercial narratives, oral choreography, and pursuit storyboards.</p>
                     </div>
-                    <div class="accordion-content">
-                        <div class="prompt-matrix">
-                            <div class="matrix-box box-objective">
-                                <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">Writes the strategic narrative wrapper around your pricing schedule, framing it as a ROI-driven investment rather than a commodity cost.</p>
+                    <span class="toggle-arrow" style="color: #3b82f6; font-size: 1.2rem; transition: transform 0.3s;">▼</span>
+                </div>
+                
+                <div class="toolkit-content">
+                    
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[I-08]</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">COMMERCIAL NARRATIVE</span>
+                                <h3 class="accordion-title">COMMERCIAL NARRATIVE ARCHITECT</h3>
                             </div>
-                            <div class="matrix-box box-edge">
-                                <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Type 'None' for Financial Leaks to get a standard "Value for Money" summary. Paste the specific Leaks found in G-02, and the AI frames your price as "Self-Funding" by showing how it captures that wasted capital.</p>
-                            </div>
-                            <div class="matrix-box box-output">
-                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
-                                <p class="body-prose">The strategic framing shapes how evaluators interpret the spreadsheet. Never submit numbers without a narrative that anchors them to the cost of inaction.</p>
-                            </div>
-                            <div class="matrix-box box-override">
-                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                <p class="body-prose">Verify every number the AI references against your final pricing model. AI is a world-class storyteller but a third-class accountant.</p>
-                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
-                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">PRICING SCHEDULE: [Paste Pricing Summary]
+                        <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Pricing Schedule]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[CFO North Star]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Financial Leaks]</span>
+                                    <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Financial Translation.</strong> Writes the strategic narrative wrapper around your pricing schedule, framing it as a ROI-driven investment rather than a commodity cost.</span>
+                                </div>
+                            </div>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE ENGINE LOGIC</div>
+                                    <p class="body-prose">Writes the strategic narrative wrapper around your pricing schedule, framing it as a ROI-driven investment rather than a commodity cost.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">THE POWER OF "NONE"</div>
+                                    <p class="body-prose">Type 'None' for Financial Leaks to get a standard "Value for Money" summary. Paste the specific Leaks found in G-02, and the AI frames your price as "Self-Funding".</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">The strategic framing shapes how evaluators interpret the spreadsheet. Never submit numbers without a narrative that anchors them to the cost of inaction.</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Verify every number the AI references against your final pricing model. AI is a world-class storyteller but a third-class accountant.</p>
+                                </div>
+                            </div>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
+                            </div>
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">PRICING SCHEDULE: [Paste Pricing Summary]
 CFO NORTH STAR: [Paste from G-04]
 FINANCIAL LEAKS: [Paste from G-02, or type "None"]
 
@@ -633,40 +920,68 @@ Act as a Senior Commercial Strategist. Write the narrative introduction to our C
 
 ## CONSTRAINTS
 - Professional, authoritative, and boardroom-ready.
-- NO marketing fluff. Strictly financial and operational logic.</pre></div></div>
+- NO marketing fluff. Strictly financial and operational logic.</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title-group">
-                            <span class="accordion-id">[I-09]</span>
-                            <span class="gov-tag gov-red">Internal Data</span>
-                            <h3 class="accordion-title">Oral Presentation Choreography</h3>
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[I-09]</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">ORALS STRATEGY</span>
+                                <h3 class="accordion-title">ORAL PRESENTATION CHOREOGRAPHY</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
-                        <span class="accordion-toggle-btn">[+ VIEW]</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="prompt-matrix">
-                            <div class="matrix-box box-objective">
-                                <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">Scripts the critical first 90 seconds and allocates your speakers to their client counterparts to maximize trust and credibility in the room.</p>
+                        <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[The Mission]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[The Panel]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Panel Personalities]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Our Team]</span>
+                                    <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Presentation Dynamics.</strong> Scripts the critical first 90 seconds and allocates your speakers to their client counterparts to maximize trust and credibility in the room.</span>
+                                </div>
                             </div>
-                            <div class="matrix-box box-edge">
-                                <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Input 'None' for Panel Personalities to get a standard speaker plan. Input the individual "Human Drivers" (from A-12), and the AI scripts specific psychological hooks to win over each person on the panel.</p>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE ENGINE LOGIC</div>
+                                    <p class="body-prose">Scripts the critical first 90 seconds and allocates your speakers to their client counterparts to maximize trust and credibility in the room.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">THE POWER OF "NONE"</div>
+                                    <p class="body-prose">Input 'None' for Panel Personalities to get a standard speaker plan. Input the individual "Human Drivers" (from A-12), and the AI scripts specific psychological hooks to win over each person.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">The first 90 seconds decide the outcome. Establish you understand their mission better than they do, and they stop 'evaluating' and start 'listening'.</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Choreography matters more than scripts. The person who can answer the hardest question must be the one most visible in the room, even if they aren't the primary speaker.</p>
+                                </div>
                             </div>
-                            <div class="matrix-box box-output">
-                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
-                                <p class="body-prose">The first 90 seconds decide the outcome. Establish you understand their mission better than they do, and they stop 'evaluating' and start 'listening'.</p>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
-                            <div class="matrix-box box-override">
-                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                <p class="body-prose">Choreography matters more than scripts. The person who can answer the hardest question must be the one most visible in the room, even if they aren't the primary speaker.</p>
-                            </div>
-                        </div>
-                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">THE MISSION: [Paste Client Vision from I-05]
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">THE MISSION: [Paste Client Vision from I-05]
 THE PANEL: [Insert names and roles of the evaluators]
 PANEL PERSONALITIES: [Paste Human Drivers from A-12, or type "None"]
 OUR TEAM: [Insert names and roles of our speakers]
@@ -680,40 +995,66 @@ Act as a world-class Oral Presentation Coach. Choreograph our final board-level 
 3. THE "GOLDEN THREAD": Define the one phrase we must repeat 3-5 times to anchor our win themes.
 
 ## Q&A PREP
-Based on the risks we identified in I-01, list the 3 hardest questions this panel will ask and script a 'State-the-Fact' response for each.</pre></div></div>
+Based on the risks we identified in I-01, list the 3 hardest questions this panel will ask and script a 'State-the-Fact' response for each.</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="accordion-item">
-                    <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title-group">
-                            <span class="accordion-id">[I-10]</span>
-                            <span class="gov-tag gov-amber">Public Data</span>
-                            <h3 class="accordion-title">The Pursuit Storyboard</h3>
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="accordion-title-group">
+                                <span class="accordion-id">[I-10]</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">STORYBOARD</span>
+                                <h3 class="accordion-title">THE PURSUIT STORYBOARD</h3>
+                            </div>
+                            <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
-                        <span class="accordion-toggle-btn">[+ VIEW]</span>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="prompt-matrix">
-                            <div class="matrix-box box-objective">
-                                <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">Turns your static deal strategy into a visual timeline with every touchpoint, governance gate, and submission deadline mapped in reverse.</p>
+                        <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Submission Date]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Governance Gates]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Engagement Strategy]</span>
+                                    <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Timeline Mapping.</strong> Turns your static deal strategy into a visual timeline with every touchpoint, governance gate, and submission deadline mapped in reverse.</span>
+                                </div>
                             </div>
-                            <div class="matrix-box box-edge">
-                                <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Type 'None' for Governance Gates to get a simple drafting timeline. Input the actual Board meeting dates, and the AI maps your "Warm Wedge" (G-04) engagement strategy to hit right before they vote.</p>
+                            <div class="prompt-matrix">
+                                <div class="matrix-box box-objective">
+                                    <div class="matrix-title">THE ENGINE LOGIC</div>
+                                    <p class="body-prose">Turns your static deal strategy into a visual timeline with every touchpoint, governance gate, and submission deadline mapped in reverse.</p>
+                                </div>
+                                <div class="matrix-box box-edge">
+                                    <div class="matrix-title">THE POWER OF "NONE"</div>
+                                    <p class="body-prose">Type 'None' for Governance Gates to get a simple drafting timeline. Input the actual Board meeting dates, and the AI maps your "Warm Wedge" (G-04) engagement strategy to hit right before they vote.</p>
+                                </div>
+                                <div class="matrix-box box-output">
+                                    <div class="matrix-title">WHAT EXPERIENCE SEES</div>
+                                    <p class="body-prose">Most teams plan the document creation. Winning teams plan the influence. Know exactly when you will speak to the CFO, not just when you'll finish their section.</p>
+                                </div>
+                                <div class="matrix-box box-override">
+                                    <div class="matrix-title">THE HUMAN OVERRIDE</div>
+                                    <p class="body-prose">Manually adjust for "Institutional Silence" periods (blackout dates) where reaching out to stakeholders might actually penalize your score.</p>
+                                </div>
                             </div>
-                            <div class="matrix-box box-output">
-                                <div class="matrix-title">WHAT EXPERIENCE SEES</div>
-                                <p class="body-prose">Most teams plan the document creation. Winning teams plan the influence. Know exactly when you will speak to the CFO, not just when you'll finish their section.</p>
+                            <div class="view-code-wrapper">
+                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
                             </div>
-                            <div class="matrix-box box-override">
-                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                <p class="body-prose">Manually adjust for "Institutional Silence" periods (blackout dates) where reaching out to stakeholders might actually penalize your score.</p>
-                            </div>
-                        </div>
-                        <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">SUBMISSION DATE: [Insert Date]
+                            <div class="terminal-container">
+                                <div class="terminal-block">
+                                    <div class="terminal-header-bar">
+                                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                        <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                    </div>
+                                    <pre class="prompt-text">SUBMISSION DATE: [Insert Date]
 GOVERNANCE GATES: [Insert internal/client board dates, or type "None"]
 ENGAGEMENT STRATEGY: [Paste from G-04 / A-11]
 
@@ -725,12 +1066,16 @@ Act as a Pursuit Manager. Create a 'Pursuit Storyboard' that maps the influence 
 2. INFLUENCE TOUCHPOINTS: Define exactly which days we should deploy our "Warm Wedges" or "Corridor Questions" to align with their [GOVERNANCE GATES].
 3. CLARIFICATION WINDOW: Script the strategy for the clarification question (CQ) period—how to use CQs to 'ghost' competitors.
 
-FORMAT OUTPUT: Provide a clear chronological table of actions.</pre></div></div>
+FORMAT OUTPUT: Provide a clear chronological table of actions.</pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div></div>
 
-            <div class="container-wide reveal">
+                </div>
+            </div>
+
+            <div class="container-prose reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
@@ -758,147 +1103,183 @@ FORMAT OUTPUT: Provide a clear chronological table of actions.</pre></div></div>
                 </div>
             </div>
 
-            <div class="terminal-repo reveal">
-                <div class="terminal-header">
-                    ADVANCED INTELLIGENCE ARCHIVE // Quick-Copy Terminal
+            <div class="container-wide reveal active">
+                <div class="section-divider" style="margin-top: 6rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <div style="height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1);"></div>
+                    <div style="font-size: 0.7rem; font-weight: 800; color: #64748b; letter-spacing: 0.2em; white-space: nowrap;">PROMPT LIBRARY</div>
+                    <div style="height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1);"></div>
                 </div>
-                <p class="body-prose" style="margin-bottom: 2rem;">
-                    For practitioners who know the system. Click to copy directly to your clipboard.
-                </p>
+                
+                <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 3rem;">Click to copy any active prompt to your clipboard.</p>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">STRATEGY & INTELLIGENCE</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-01')">I-01 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-02')">I-02 // WIN THEMES <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-03')">I-03 // COMPETITOR INTEL <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-04')">I-04 // SCORING STRATEGY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-01')">
+                        <span style="color: #cbd5e1;">I-01 // PRE-MORTEM</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-02')">
+                        <span style="color: #cbd5e1;">I-02 // WIN THEMES</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-public" onclick="copyLibraryPrompt(this, 'I-03')">
+                        <span style="color: #cbd5e1;">I-03 // COMPETITOR INTEL</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-04')">
+                        <span style="color: #cbd5e1;">I-04 // SCORING STRATEGY</span> <span class="copy-badge">Copy</span>
+                    </button>
                 </div>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">RESPONSE WRITING</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-05')">I-05 // EXEC SUMMARY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-06')">I-06 // RESPONSE WRITER <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-07')">I-07 // SELF-SCORING <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-05')">
+                        <span style="color: #cbd5e1;">I-05 // EXEC SUMMARY</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-06')">
+                        <span style="color: #cbd5e1;">I-06 // RESPONSE WRITER</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'I-07')">
+                        <span style="color: #cbd5e1;">I-07 // SELF-SCORING</span> <span class="copy-badge">Copy</span>
+                    </button>
                 </div>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">EXECUTION & COMMERCIAL</h4>
                 <div class="library-grid" style="margin-bottom: 0;">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-08')">I-08 // COMMERCIAL NARRATIVE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-09')">I-09 // ORALS STRATEGY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'I-10')">I-10 // STORYBOARD <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn-restricted">
+                        <span>I-08 // COMMERCIAL NARRATIVE</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>I-09 // ORALS STRATEGY</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>I-10 // STORYBOARD</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
                 </div>
 
                 <div style="display: none;">
                     <div class="prompt-console-title">I-01</div>
-                    <div><pre>It is 6 months in the future. We have lost the [CLIENT] deal.
-The loss review states three reasons:
-1. The Political Failure (We backed the wrong person).
-2. The Value Failure (We were cheaper but "too risky").
-3. The "Gotcha" (We missed a hidden requirement).
-Based on the [RFP DOCUMENTS] and [STAKEHOLDER MAP], generate the specific narrative for each of these three failures.
-Then, for each failure, give me the ONE action I must take today to prevent it.</pre></div>
+                    <div><pre>DEAL CONTEXT: [Paste Deal Strategy from A-06]
+KNOWN COMPETITOR: [Insert Competitor Name, or type "None"]
+
+## ROLE & OBJECTIVE
+Act as a Deal Forensics Expert. We are conducting a Pre-Mortem. Imagine it is 6 months from now and we have definitively LOST this deal.
+
+## EXECUTION ROUTING
+* PATH A (Competitor Provided): Simulate a loss based on competitor displacement and trap-setting.
+* PATH B (Competitor "None"): Simulate a loss based on "No Decision", budget reallocation, or internal friction.
+
+## PHASE 1: THE FAILURE NARRATIVES
+Generate specific narratives for the 3 reasons we lost:
+1. THE POLITICAL FAILURE: Who did we misread? Who held the veto?
+2. THE VALUE FAILURE: Where did our ROI story break down against the CFO's North Star?
+3. THE "GOTCHA": What hidden operational requirement did we fail to address?
+
+## PHASE 2: PRE-EMPTIVE DEFENCE
+For each failure, provide the ONE tactical adjustment we must make to our proposal narrative today to prevent this outcome.</pre></div>
                     
                     <div class="prompt-console-title">I-02</div>
-                    <div><pre>Act as a Proposal Strategist.
-Context: We are bidding for [CLIENT] to provide [SERVICE].
-Our Deal Strategy identified these priorities: [PASTE DEAL STRATEGY].
-Task: Develop 3 'Gold-Standard Win Themes'.
-Criteria for a Win Theme:
-1. It must solve a specific client pain point.
-2. It must be provable with evidence we have.
-3. It must be hard for competitors to claim.
-[PASTE CONTEXT/INPUTS HERE]</pre></div>
+                    <div><pre>CLIENT PAIN POINTS: [Paste from G-01/G-02]
+SOLUTION EVIDENCE: [Paste Case Study summaries or IP, or type "None"]
+
+## ROLE & OBJECTIVE
+Act as a Proposal Strategist. Your task is to develop 3 'Gold-Standard Win Themes' that solve a specific client pain point and are provable with hard evidence.
+
+## EXECUTION ROUTING
+* PATH A (Evidence Provided): Map the Win Themes strictly to what we can prove with our data.
+* PATH B (Evidence "None"): Identify the "Ideal" Win Themes we need to build a story around (and flag the evidence gaps).
+
+## THE WIN THEME ARCHITECTURE
+For each theme:
+1. THE CHALLENGE: The specific client pain or "Trauma" this solves.
+2. THE THEME NAME: A punchy, outcome-focused title (e.g., "Zero-Disruption Migration").
+3. THE PROOF POINT: The specific metric or story that makes this claim undeniable.
+4. THE COMPETITIVE EDGE: Why the competitor will struggle to counter this.</pre></div>
                     
                     <div class="prompt-console-title">I-03</div>
-                    <div><pre>Act as a Competitive Intelligence Analyst.
-We are competing against [COMPETITOR A] and [COMPETITOR B].
-Create a 'Competitive Positioning Matrix' (Markdown Table):
-1. Their Likely Pitch: What will they claim is their USP?
-2. Their Likely Ghosting: What will they whisper about us?
-3. Our Counter-Narrative: How do we inoculate the client against their claims?
-4. The 'Kill Shot': Where are they demonstrably weak where we are strong?
-[PASTE COMPETITOR NAMES HERE]</pre></div>
+                    <div><pre>TARGET COMPETITOR: [Insert Competitor Name, or type "None"]
+OUR WEAKNESS: [Insert your known vulnerability, or type "None"]
+
+## ROLE & OBJECTIVE
+Act as a Competitive Intelligence Analyst. Your goal is to build a "Ghosting Strategy" that discredits the competitor's likely pitch before they make it.
+
+## EXECUTION ROUTING
+* PATH A (Competitor Provided): Build a target-specific attack and defense map.
+* PATH B (Competitor "None"): Build a general "Industry Standard" defense against low-cost or high-volume incumbents.
+
+## THE KILL-SHOT MATRIX
+1. THEIR LIKELY GHOSTING: What will they whisper about us? 
+2. THE INOCULATION: How do we address that weakness in our proposal first?
+3. THE TRAP QUESTION: Draft one question for our champion to ask the competitor that exposes their primary weakness.
+4. THE DIFFERENTIATOR: The one thing we do that they physically or commercially cannot.</pre></div>
 
                     <div class="prompt-console-title">I-04</div>
-                    <div><pre>Act as a Bid Manager optimizing for maximum weighted score.
-I am providing the Evaluation Criteria and Weightings.
-Create a 'Scoring Strategy Table':
-1. Rank criteria by 'Weighted Value'.
-2. Define exactly what evidence/case studies we must include to score a 5/5 on the top tier.
-3. Define the 'Minimum Viable Response' for low-value questions.
-[PASTE CRITERIA AND WEIGHTINGS HERE]</pre></div>
+                    <div><pre>EVALUATION CRITERIA: [Paste requirements and weightings]
+
+## ROLE & OBJECTIVE
+Act as a Bid Manager optimizing for maximum weighted score. Your goal is to create a "Writing Priority Map".
+
+## PHASE 1: THE SCORING HEAT-MAP
+1. TIER 1 (CRITICAL): Which 3 questions account for >50% of the non-price score?
+2. THE 5/5 BAR: For the Tier 1 questions, what specific evidence must we provide to ensure the evaluator cannot justify anything less than a perfect score?
+3. TIER 2 (HYGIENE): Which questions are "Pass/Fail" or low weighting where we should use boilerplate?
+
+## PHASE 2: RESOURCE ALLOCATION
+Identify the 3 sections where we must assign our most senior technical and commercial writers.</pre></div>
 
                     <div class="prompt-console-title">I-05</div>
-                    <div><pre>Act as a professional copywriter using the 'Made to Stick' framework.
-Draft the structure of the Executive Summary.
-Structure it in 4 Acts:
-Act 1: The Context (The 'Why Now').
-Act 2: The Complication (The 'Villain').
-Act 3: The Resolution (The 'Hero'). NOT US. The Hero is the 'New Way of Working'.
-Act 4: The Proof (Why Us).
-Embed our 3 Win Themes throughout.
-[PASTE WIN THEMES AND CONTEXT HERE]</pre></div>
+                    <div><pre>CLIENT VISION: [Paste the 'To' state from A-07]
+THE VILLAIN (PAIN): [Paste from G-02 or A-02, or type "None"]
+WIN THEMES: [Paste output from I-02]
+
+## ROLE & OBJECTIVE
+Act as a world-class Executive Speechwriter and Copywriter. Draft a 4-Act Executive Summary that is "Made to Stick".
+
+## THE 4-ACT STRUCTURE
+Act 1: THE CONTEXT (The 'Why Now' - using the client's macro language).
+Act 2: THE VILLAIN (The pain/risk that makes the status quo impossible).
+Act 3: THE RESOLUTION (The Hero - The 'New Way of Working' enabled by us).
+Act 4: THE PROOF (Why we are the only team capable of delivering Act 3).
+
+## CONSTRAINTS
+* Maximum 500 words.
+* Use "You/Your" (the client) 3x more often than "We/Us" (the vendor).
+* Embed the 3 Win Themes naturally into the narrative.</pre></div>
 
                     <div class="prompt-console-title">I-06</div>
-                    <div><pre>Act as a senior bid writer producing a response section.
-Inputs: 
-1. The specific requirement/question.
-2. Evaluation criterion.
-3. The win theme to embed.
-4. Primary evaluator profile.
-5. Proof points to include.
-6. Word limit.
-Write a response that: 
-- Opens with THEIR challenge, not your capability. 
-- States your approach specifically. 
-- Embeds the win theme naturally. 
-- Provides evidence for every claim.
-[PASTE INPUTS HERE]</pre></div>
+                    <div><pre>RFP QUESTION: [Paste the exact question]
+EVALUATION CRITERIA: [Paste how this is scored]
+OUR PROOF POINTS: [Paste case study metrics or IP, or type "None"]
+
+## ROLE & OBJECTIVE
+Act as a Senior Proposal Writer. Draft a response that maximizes points and builds executive trust.
+
+## THE RESPONSE ARCHITECTURE
+1. THE CHALLENGE (THE 'WHY'): 1 paragraph acknowledging the complexity and risk behind their question.
+2. THE APPROACH (THE 'HOW'): 2-3 paragraphs detailing our specific, proven methodology.
+3. THE OUTCOME (THE 'PROOF'): [If Proof Provided] A specific example of where we did this before and the metric we achieved.
+
+## WRITING STYLE
+* Professional, assertive, and outcome-centric.
+* Use active verbs.
+* Avoid generic "marketing fluff" (e.g., "passionate", "world-class").</pre></div>
 
                     <div class="prompt-console-title">I-07</div>
-                    <div><pre>Act as a hostile procurement evaluator.
-I am providing you with the Criteria and our Draft Response.
-Task:
-1. Score our response out of 5 based STRICTLY on the criteria. Be harsh.
-2. Identify: "Where did we answer the question but fail to provide evidence?"
-3. Provide 3 specific bullet points on how to move the score up by +1 point.
-[PASTE CRITERIA AND DRAFT RESPONSE HERE]</pre></div>
+                    <div><pre>EVALUATION CRITERIA: [Paste how they score responses, or type "None"]
+DRAFT RESPONSE: [Paste your draft section]
 
-                    <div class="prompt-console-title">I-08</div>
-                    <div><pre>Act as a commercial strategist.
-Write the narrative wrapper around our pricing (NOT the schedule itself).
-Produce:
-1. COMMERCIAL PHILOSOPHY: How our model aligns with their stated goals.
-2. VALUE FRAMING: Price vs Cost of Inaction / TCO.
-3. DIFFERENTIATORS: Gain-share, innovation funds, outcome links.
-4. INVESTMENT NARRATIVE: Frame transition costs as investment with payback timeline.
-5. OBJECTION PRE-EMPTION: "Why higher than X?"
-[PASTE PRICING MODEL/STRATEGY HERE]</pre></div>
+## ROLE & OBJECTIVE
+Act as a cynical, senior Procurement Evaluator. Your goal is to find reasons to mark down this response. Be brutal.
 
-                    <div class="prompt-console-title">I-09</div>
-                    <div><pre>Act as a Presentation Coach for a high-stakes pitch.
-Context: We are presenting to [CLIENT].
-Task:
-1. Script the 'First 90 Seconds': A hook that grabs attention. NOT "Hello, we are Helios."
-2. Speaker Allocation Strategy: Match speaker credibility to stakeholder roles.
-3. The 'Q&A Prep': Based on Risks, what are the 3 hardest questions they will ask?
-[PASTE CONTEXT/RISKS HERE]</pre></div>
-
-                    <div class="prompt-console-title">I-10</div>
-                    <div><pre>Act as a Pursuit Manager.
-Create a 'Pursuit Storyboard' (Timeline from now until Decision Date).
-Output a Mermaid.js gantt chart mapping:
-1. Submission Deadlines (Backward pass).
-2. Key Governance Gates.
-3. Stakeholder Engagement Points.
-4. Clarification Question Strategy.
-[PASTE TIMELINE/DEADLINES HERE]</pre></div>
+## THE AUDIT
+1. THE SCORE: Based on the criteria, score this response out of 5.
+2. THE GAP: Where did we make a claim without providing evidence? 
+3. THE FRICTION: Identify 2 sentences that are overly "vendor-centric" or jargon-heavy.
+4. THE +1 STRATEGY: What exactly must we add to this draft to move it from a 3/5 to a 5/5?</pre></div>
                 </div>
+
             </div>
 
             <div class="reveal" style="text-align: center; padding-top: 2rem; padding-bottom: 4rem;">
                 <p style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 1.5rem;">Deal won. Now, secure the renewal.</p>
-                <a href="grow.html" class="btn-schedule">PROCEED TO [N] NURTURE →</a>
+                <a href="grow.html" class="btn-schedule" style="text-decoration: none; background: #3b82f6; color: white; padding: 1rem 2rem; border-radius: 6px; font-weight: 700;">PROCEED TO [N] NURTURE →</a>
             </div>
 
         </main>
@@ -949,7 +1330,7 @@ Output a Mermaid.js gantt chart mapping:
             });
         });
 
-        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        // ACCORDION TOGGLE SCRIPT
         function toggleAccordion(header) {
             const currentItem = header.parentElement;
             const isOpen = currentItem.classList.contains('open');
@@ -983,7 +1364,22 @@ Output a Mermaid.js gantt chart mapping:
             }
         }
 
-        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        // TOGGLE TOOLKIT
+        function toggleToolkit(btn) {
+            const wrapper = btn.closest('.toolkit-wrapper');
+            const content = wrapper.querySelector('.toolkit-content');
+            
+            wrapper.classList.toggle('open');
+            content.classList.toggle('expanded');
+            
+            if (content.classList.contains('expanded')) {
+                setTimeout(() => {
+                    content.querySelectorAll('.reveal').forEach(r => r.classList.add('active'));
+                }, 100);
+            }
+        }
+
+        // COPY TO CLIPBOARD FUNCTION
         function copyPromptText(btn) {
             const terminalBlock = btn.closest('.terminal-block');
             const promptText = terminalBlock.querySelector('.prompt-text').innerText;
@@ -1027,7 +1423,7 @@ Output a Mermaid.js gantt chart mapping:
                         badge.innerText = original;
                         btn.style.borderColor = 'rgba(255,255,255,0.1)';
                         btn.style.color = '#cbd5e1';
-                        badge.style.color = '#3b82f6';
+                        badge.style.color = btn.classList.contains('library-btn-private') ? '#ef4444' : '#3b82f6';
                     }, 2000);
                 });
             } else {
