@@ -8,10 +8,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <style>
         /* High-Density Typography */
+        body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        * { box-sizing: border-box; }
+        h1, h2, h3, h4 { margin-top: 0; }
         .body-prose { font-size: 0.85rem; line-height: 1.6; color: #cbd5e1; margin: 0; }
+        
+        /* Navigation */
+        nav { background: #0f172a; padding: 1rem 2rem; border-bottom: 1px solid rgba(59,130,246,0.3); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .nav-brand { font-size: 1.25rem; font-weight: 900; color: white; letter-spacing: -0.05em; text-decoration: none; }
+        .nav-brand span { color: #3b82f6; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a, .nav-link-main { color: #94a3b8; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; transition: 0.2s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active, .nav-dropdown:hover .nav-link-main { color: #3b82f6; }
+        
+        .nav-dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: #0f172a; min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); border: 1px solid rgba(59,130,246,0.3); border-radius: 6px; top: 100%; left: 0; z-index: 1000; overflow: hidden; }
+        .dropdown-content a { color: #cbd5e1; padding: 1rem 1.5rem; text-decoration: none; display: block; font-size: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .dropdown-content a:hover { background-color: rgba(59,130,246,0.1); color: white; }
+        .nav-dropdown:hover .dropdown-content { display: block; }
+        .nav-cta { background: #3b82f6; color: white !important; padding: 0.5rem 1rem; border-radius: 4px; }
+        .nav-cta:hover { background: #2563eb; }
+
+        .mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .mobile-menu-toggle span { display: block; width: 25px; height: 3px; background: white; transition: 0.3s; }
+
+        /* Header */
+        .dark-header-block { position: relative; padding: 6rem 2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); overflow: hidden; background: #0b1120; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .hero-impact { position: relative; z-index: 10; max-width: 800px; margin: 0 auto; }
+        .hero-pre { font-size: 0.8rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 1rem; }
+        .hero-headline { font-size: 3rem; font-weight: 900; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+        .hero-subtext { font-size: 1.2rem; color: #94a3b8; margin: 0; }
+
+        .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
         
         /* Page Index Navigation */
         .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
@@ -24,7 +55,6 @@
         .briefing-card { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 1.5rem; position: relative; overflow: hidden; }
         .briefing-card-title { font-size: 0.75rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
         
-        /* Specific Card Accents */
         .card-narrative { border-left: 3px solid #3b82f6; }
         .card-narrative .briefing-card-title { color: #3b82f6; }
         .card-psychology { border-left: 3px solid #8b5cf6; }
@@ -36,9 +66,11 @@
 
         /* Governance Tags */
         .gov-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
-        .gov-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .gov-blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; }
         .gov-red { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; }
-        .gov-purple { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #8b5cf6; }
+
+        /* Action Tag */
+        .action-tag { font-size: 0.65rem; padding: 4px 8px; border-radius: 4px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; background: rgba(255,255,255,0.05); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1); }
 
         /* The Chessboard Flow */
         .pill-blue-flow { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 8px 14px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; }
@@ -46,13 +78,13 @@
 
         /* Command Dashboard (Accordion Layout) */
         .category-section { margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
+        .category-title { font-size: 0.85rem; color: #3b82f6; text-transform: uppercase; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(59,130,246,0.3); padding-bottom: 0.5rem; }
         
-        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 0.75rem; overflow: hidden; transition: border-color 0.2s; }
+        .accordion-item { background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; margin-bottom: 1rem; overflow: hidden; transition: border-color 0.2s; }
         .accordion-item:hover { border-color: rgba(59,130,246,0.3); }
         .accordion-header { padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
         .accordion-header:hover { background: rgba(255,255,255,0.02); }
-        .accordion-title-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .accordion-title-group { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
         .accordion-id { color: #3b82f6; font-family: monospace; font-weight: 700; font-size: 0.85rem; }
         .accordion-title { color: white; font-weight: 700; font-size: 0.9rem; margin: 0; text-transform: uppercase; letter-spacing: 0.05em; }
         .accordion-toggle-btn { color: #64748b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em; transition: color 0.2s; }
@@ -62,7 +94,7 @@
         .accordion-item.open .accordion-header { background: rgba(59,130,246,0.05); border-bottom: 1px solid rgba(59,130,246,0.1); }
         .accordion-item.open .accordion-toggle-btn { color: white; }
 
-        /* The New 4-Box Matrix */
+        /* The 4-Box Matrix */
         .prompt-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
         .matrix-box { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; }
         .matrix-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; }
@@ -91,18 +123,21 @@
         .copy-btn:hover { background: #3b82f6; color: white; }
         .prompt-text { padding: 1.5rem; font-family: monospace; font-size: 0.8rem; color: #cbd5e1; line-height: 1.6; white-space: pre-wrap; overflow-x: auto; margin: 0; }
 
-        /* Human Checkpoint */
-        .human-checkpoint { background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-left: 4px solid #f59e0b; padding: 2rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
-        .hc-title { color: #f59e0b; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
+        /* Human Checkpoints & Failures */
+        .human-checkpoint { padding: 2rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hc-title { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; }
 
-        /* Failures / Pitfalls Grid */
+        .section-divider { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .divider-line { height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1); }
+        .divider-label { font-size: 0.7rem; font-weight: 800; color: #64748b; letter-spacing: 0.2em; white-space: nowrap; }
+
         .failures-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
         .failure-box { background: rgba(239, 68, 68, 0.05); border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0; padding: 1.5rem; display: flex; flex-direction: column; }
-        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.5rem; text-transform: uppercase; }
-        .failure-rule { display: inline-block; margin-top: auto; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.4rem 0.7rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .failure-title { color: #ef4444; font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; }
+        .failure-rule { display: inline-block; margin-top: 1.5rem; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.05); border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
         .failure-red-text { color: #ef4444; font-weight: 900; }
 
-        /* Toolkit Toggle */
+        /* Toolkit Toggle & Prompt Library */
         .toolkit-wrapper { max-width: 900px; margin: 4rem auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; background: rgba(15,23,42,0.4); }
         .toolkit-toggle { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background 0.2s; }
         .toolkit-toggle:hover { background: rgba(255,255,255,0.05); }
@@ -112,20 +147,37 @@
         .toolkit-wrapper.open .toggle-arrow { transform: rotate(180deg); }
         .toolkit-content { display: none; border-top: 1px solid rgba(255,255,255,0.1); padding: 2rem 0; }
         .toolkit-content.expanded { display: block; }
-
-        /* Draft Prompts */
-        .draft-card { border-color: rgba(245, 158, 11, 0.3); }
-        .draft-card .accordion-id { color: #f59e0b; }
         
-        /* Terminal Prompt Library (Advanced) */
-        .terminal-repo { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2.5rem; margin-top: 5rem; margin-bottom: 4rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
-        .terminal-header { font-size: 0.85rem; font-family: monospace; color: #3b82f6; margin-bottom: 1.5rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 1rem; }
-        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
-        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
-        .library-btn:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
-        .copy-badge { font-size: 0.6rem; color: #3b82f6; font-weight: 700; text-transform: uppercase; }
+        .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto; }
+        .library-btn { background: rgba(15,23,42,0.8); border: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease; font-family: monospace; }
+        
+        .library-btn-public { color: #cbd5e1; }
+        .library-btn-public:hover { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: white; }
+        .library-btn-public .copy-badge { color: #3b82f6; }
+
+        .library-btn-private { color: #cbd5e1; }
+        .library-btn-private:hover { background: rgba(239,68,68,0.1); border-color: #ef4444; color: white; }
+        .library-btn-private .copy-badge { color: #ef4444; }
+        
+        .library-btn-restricted { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); color: #64748b; cursor: not-allowed; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; font-family: monospace; }
+        .library-btn-restricted .copy-badge { color: #64748b; }
+        
+        .copy-badge { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+
+        /* Footer Additions */
+        footer { padding: 3rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4rem; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .footer-brand { color: white; font-weight: 900; letter-spacing: -0.05em; text-decoration: none; font-size: 1.25rem; }
+        .footer-right { display: flex; align-items: center; gap: 1.5rem; }
+        .footer-link { color: #94a3b8; font-size: 0.8rem; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; transition: color 0.2s; }
+        .footer-link:hover { color: #3b82f6; }
+        .footer-subtle { text-align: center; color: #64748b; font-size: 0.75rem; margin-top: 2rem; font-weight: 500; }
+        
+        .btn-schedule { display: inline-block; background: #3b82f6; color: white; padding: 1rem 2.5rem; border-radius: 6px; text-decoration: none; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; }
+        .btn-schedule:hover { background: #2563eb; }
 
         @media (max-width: 900px) {
+            .nav-links { display: none; }
             .index-arrow { display: none; }
             .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .top-briefing-grid { grid-template-columns: 1fr; }
@@ -152,6 +204,7 @@
                         <a href="proof.html">The Proof</a>
                         <a href="story.html">The Story</a>
                         <a href="thinking.html">The Thinking</a>
+                        <a href="data-room.html">The Data Room</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
@@ -160,19 +213,20 @@
                         <a href="thesis.html">The Thesis</a>
                         <a href="human+ai.html">Human+AI</a>
                         <a href="edge.html">The Edge</a>
+                        <a href="architecture.html">The Architecture</a>
                     </div>
                 </div>
                 <div class="nav-dropdown">
-                    <span class="nav-link-main">Prompt Toolkit ▾</span>
+                    <span class="nav-link-main" style="color: #3b82f6;">Prompt Toolkit ▾</span>
                     <div class="dropdown-content">
-                        <a href="know.html" style="color: var(--primary);">[G] Gather | Know them</a>
+                        <a href="know.html" style="color: #3b82f6;">[G] Gather | Know them</a>
                         <a href="map.html">[A] Assess | Map them</a>
                         <a href="win.html">[I] Influence | Win them</a>
                         <a href="grow.html">[N] Nurture | Grow them</a>
                     </div>
                 </div>
                 <a href="dashboards.html">Dashboards</a>
-                <a href="contact.html" class="nav-cta">Engage Me</a>
+                <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
             </div>
         </nav>
 
@@ -209,7 +263,6 @@
             </div>
 
             <div class="top-briefing-grid reveal">
-                
                 <div class="briefing-card card-narrative">
                     <div class="briefing-card-title">THE NARRATIVE</div>
                     <p class="body-prose" style="font-style: italic;">
@@ -228,11 +281,11 @@
                 <div class="briefing-card">
                     <div class="briefing-card-title">DATA GOVERNANCE LEGEND</div>
                     <div class="gov-legend-item">
-                        <span class="gov-tag gov-amber">AMBER / PUBLIC</span>
+                        <span class="gov-tag gov-blue">PUBLIC DATA</span>
                         <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Safe to use in free AI tools. Contains no internal IP.</p>
                     </div>
                     <div class="gov-legend-item">
-                        <span class="gov-tag gov-red">RED / INTERNAL</span>
+                        <span class="gov-tag gov-red">PRIVATE DATA</span>
                         <p class="body-prose" style="font-size: 0.8rem; margin: 0;">Requires pasting your company's IP. <strong>MUST ONLY</strong> be used in ring-fenced Enterprise AI.</p>
                     </div>
                 </div>
@@ -245,7 +298,6 @@
                     <div class="checklist-item"><span>□</span> Company careers page (open roles)</div>
                     <div class="checklist-item"><span>□</span> Recent press releases / earnings calls</div>
                 </div>
-
             </div>
 
             <div class="container-prose reveal" style="text-align: center; margin-bottom: 4rem;">
@@ -268,6 +320,16 @@
                 </p>
             </div>
 
+            <div class="human-checkpoint reveal" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); border-left-color: #ef4444;">
+                <h4 class="hc-title" style="color: #ef4444;">🛑 OPSEC AIRWALL: SECURE YOUR DATA</h4>
+                <p class="body-prose">Proprietary intelligence, Intellectual Property (IP), and customer-secured data must never be copied into a public, open LLM. If you are unsure, check your internal data governance policy. Do not feed internal CRM data, NDA-protected meeting notes, or internal product IP into public, open AI models. Switch to your secure, enterprise-approved AI environment before running any prompt marked with a Red 'Private Data' tag.</p>
+            </div>
+
+            <div class="human-checkpoint reveal" style="background: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2); border-left-color: #8b5cf6; margin-bottom: 4rem;">
+                <h4 class="hc-title" style="color: #8b5cf6;">THE PROPRIETARY MULTIPLIER (GOOD TO GREAT)</h4>
+                <p class="body-prose">Public data gets you to the door; proprietary data gets you inside. Before running these prompts, check your own CRM. Do you have notes from a past QBR? Did this executive use your product at their last company? <strong>Feed this hidden data into the prompts to build an insurmountable moat against generic AI outreach. Remember: if you put any proprietary data into any public prompts they become private and should be classified as private status.</strong></p>
+            </div>
+
             <div class="category-section reveal">
                 <div class="category-title">Phase 01: Company Intelligence</div>
 
@@ -275,21 +337,26 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-01]</span>
-                            <span class="gov-tag gov-amber">Public Data</span>
-                            <h3 class="accordion-title">The Dynamic Account Planner</h3>
+                            <span class="gov-tag gov-blue">Public Data</span>
+                            <span class="action-tag">RESEARCH</span>
+                            <h3 class="accordion-title">THE DYNAMIC ACCOUNT PLANNER — Macro Business Intel</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
-                        
-                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                            <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
-                            <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
-                            <span style="color: #64748b;">|</span>
-                            <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
-                            <span style="color: #64748b;">|</span>
-                            <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Focus Area]</span>
-                            <span style="font-size: 0.7rem; color: #94a3b8; font-style: italic; margin-left: auto;">*Type "None" if n/a</span>
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Focus Area]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>The 9-Pillar Framework.</strong> Routes execution path based on variables. Uses the Objective Analysis Protocol to hunt for "Narrative Friction" between the Annual Report and ground-level reality.</span>
+                            </div>
                         </div>
 
                         <div class="prompt-matrix">
@@ -297,12 +364,10 @@
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
                                 <p class="body-prose">This is not a standard prompt; it’s an IF/THEN routing engine. It reads your three variables and autonomously decides whether to build a full strategic sales pitch, conduct an unbiased deep-dive into a specific domain, or audit a single company.</p>
                             </div>
-                            
                             <div class="matrix-box box-edge">
                                 <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Don't force a sales pitch if you're just doing early discovery. By typing 'None' into the <em>Seller Company</em> or <em>Focus Area</em> fields, you instruct the AI to drop its 'sales bias' and act strictly as an objective, deep-research intelligence analyst.</p>
+                                <p class="body-prose">Don't force a sales pitch if you're just doing early discovery. By typing 'None' into the Seller Company or Focus Area fields, you instruct the AI to drop its 'sales bias' and act strictly as an objective, deep-research intelligence analyst.</p>
                             </div>
-
                             <div class="matrix-box box-output">
                                 <div class="matrix-title">ROUTING EXAMPLES</div>
                                 <p class="body-prose" style="font-size: 0.8rem; line-height: 1.8;">
@@ -311,7 +376,6 @@
                                     <strong style="color: #fff;">Seller Audit:</strong> 'None' + Seller + 'None' = Own proposition breakdown.
                                 </p>
                             </div>
-
                             <div class="matrix-box box-override">
                                 <div class="matrix-title">DEFINING THE DOMAIN</div>
                                 <p class="body-prose">The AI is only as sharp as the boundaries you set. If your Focus Area is just 'IT', you will get generic rubbish. Be highly specific. Use terms like 'End User Computing & Service Desk Consolidation' to hunt for high-value pain points.</p>
@@ -328,54 +392,53 @@
                                     <div class="terminal-dots"><span></span><span></span><span></span></div>
                                     <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
                                 </div>
-                                <pre class="prompt-text">TARGET COMPANY: [Insert Target, e.g., Rolls-Royce plc, or type "None"]
-SELLER COMPANY: [Insert Your Company, e.g., SCC, or type "None"]
+                                <pre class="prompt-text">TARGET COMPANY: [Insert Target Company, or type "None"]
+SELLER COMPANY: [Insert Your Company/Solution, or type "None"]
 FOCUS AREA / DOMAIN: [Insert Domain, e.g., End User Environment, or type "None"]
+DATA SOURCE & HUMAN SIGNAL: [Type "Search the web autonomously", OR paste Annual Report/10-K, unstructured notes, LinkedIn posts, or corridor gossip here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-01_Macro_Intel.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
-Act as an autonomous Senior Enterprise Analyst. Your objective is to conduct a multi-stage deep research sweep based *only* on the variables provided above. 
+Act as a Tier-1 Management Consultant and OSINT Analyst. Conduct a multi-stage deep research sweep. 
+**OBJECTIVE ANALYSIS PROTOCOL:** Do not just parrot the company's biased Annual Report. Autonomously deduce their industry and state it explicitly at the top of your report. Cross-reference their corporate claims against relevant domain intelligence (Bloomberg, Flight Global, or trade journals) and Glassdoor employee sentiment. Find the friction where the CEO says "Transformation" but the risk register says "Supply Chain Debt." Find the Narrative Gap.
 
-## EXECUTION ROUTING LOGIC (READ CAREFULLY)
-You must analyze the three variables above and choose the correct execution path. Do not deviate from the assigned path.
-
-* PATH 1: THE FULL STRIKE (Target + Seller + Focus are all provided)
-  * Action: Execute all phases. Research the Target generally, research the Target specifically in the Focus Area, research the Seller, and write a targeted pitch mapping the Seller to the Target's Focus Area pain points.
-* PATH 2: DOMAIN RECONNAISSANCE (Target + Focus are provided | Seller is "None")
-  * Action: Research the Target's macro-business (9-Pillars) AND deeply research their specific operations, technology, and pain points within the Focus Area based on public information. Crucial: Do NOT write a sales pitch or mention any supplier. This is pure intelligence gathering.
-* PATH 3: SELLER AUDIT (Seller is provided | Target + Focus are "None")
-  * Action: Ignore the Target company structure entirely. Only research the Seller Company. Output a comprehensive breakdown of their core capabilities, unique value propositions, and go-to-market messaging based on public web data.
-* PATH 4: GENERAL ACCOUNT PLAN (Target + Seller are provided | Focus is "None")
-  * Action: Research the Target's macro-business. Research the Seller. Map the Seller's broad capabilities to the Target's general pain points.
-
----
+## EXECUTION ROUTING LOGIC
+* PATH 1: THE FULL STRIKE (Target + Seller + Focus provided)
+* PATH 2: DOMAIN RECON (Target + Focus provided | Seller is "None")
+* PATH 3: SELLER AUDIT (Seller provided | Target + Focus are "None")
+* PATH 4: GENERAL PLAN (Target + Seller provided | Focus is "None")
 
 ## PHASE 1: MACRO BUSINESS CONTEXT (The 9-Pillars)
-(Execute only if Target is NOT "None")
-Search the web (Annual Reports, Earnings Calls, News) and output the macro intelligence architecture of the Target Company. Provide 3-5 findings per pillar. Cite a specific source for every bullet point.
+(Skip if Target is "None")
+Apply the specific regulatory and macroeconomic lens for this company's industry. Provide 3-5 concise bullet points per pillar. 
 1. STRATEGIC PRIORITIES: Board-level goals and CEO direction.
-2. FINANCIAL SIGNALS: Revenue trends, margin pressure. Flag numbers.
-3. PAIN POINTS: Stated challenges and risk disclosures.
-4. COMPETITIVE POSITIONING: Market position and benchmarks.
+2. FINANCIAL SIGNALS: Revenue trends, margin pressure. Flag hard numbers.
+3. PAIN POINTS: Stated challenges vs. external reality (Narrative Gap). 
+4. COMPETITIVE POSITIONING: Market position and threat landscape.
 5. TECHNOLOGY DIRECTION: Broad digital transformation priorities.
-6. REGULATORY & COMPLIANCE: Upcoming deadlines, audit findings.
-7. PEOPLE & CULTURE: Hiring, skills gaps, leadership changes.
+6. REGULATORY & COMPLIANCE: Industry-specific regulations (e.g., PRA, FCA, FAA, HSE) and upcoming deadlines.
+7. PEOPLE & CULTURE: Hiring gaps, leadership changes, and Glassdoor reality checks.
 8. STAKEHOLDER LANGUAGE: Specific phrases executives use repeatedly.
-9. TIMELINE & DEADLINES: Fiscal year, budget cycles.
+9. TIMELINE & DEADLINES: Fiscal year, budget cycles, compelled events.
+**THE BLEEDING NECKS:** Conclude Phase 1 by isolating the top 3 highest-risk pillars based on your analysis. Format these 3 bullet points in **BOLD**.
 
 ## PHASE 2: MICRO-DOMAIN EXTRACTION
 (Execute only if Focus Area is NOT "None" AND Target is NOT "None")
-Aggressively hunt for public information regarding the Target Company specifically within the Focus Area. Output:
-1. DOMAIN INITIATIVES: What are they actively building or changing in this specific area?
-2. DOMAIN PAIN POINTS: What public challenges or operational bottlenecks exist in this area?
-3. CURRENT VENDOR/TECH LANDSCAPE: What platforms/vendors are they currently heavily invested in related to this specific area?
+Hunt for information regarding the Target specifically within the Focus Area:
+1. DOMAIN INITIATIVES: What are they actively building/changing here?
+2. DOMAIN PAIN POINTS: Specific operational bottlenecks.
+3. CURRENT VENDOR LANDSCAPE: Incumbents, platforms, or massive legacy debt.
 
 ## PHASE 3: SELLER CAPABILITIES & PITCH MAPPING
 (Execute only if Seller is NOT "None")
-* If Target is "None" (PATH 3): Output a detailed 5-point audit of the Seller's market proposition, core technologies, and target audience based on their website and news.
-* If Target is provided (PATHS 1 & 4): Create 3 highly specific pitch angles connecting the Seller's capabilities to the Target's pain points (use Phase 2 pain points if a Focus Area was provided; use Phase 1 pain points if Focus Area was "None"). Predict the top 2 objections the Target will have and how to counter them.
+1. **THE 3 PITCH ANGLES:** Create 3 highly specific pitch angles connecting the Seller's capabilities to the Target's pain points.
+2. **PREDICTED OBJECTIONS & COUNTERS:** Detail the top 2 objections the Target will raise based on their industry or scale, and script the exact counter-argument.
 
-## STRICT ANTI-HALLUCINATION GUARDRAILS
-If you cannot find hard, factual data for any bullet point through your web searches, you are strictly forbidden from guessing. You must explicitly output: "UNVERIFIED: Insufficient public data found."</pre>
+## PHASE 4: THE OPERATOR LOOP (Human Override)
+Conclude your output by explicitly asking the human operator: *"Would you like to look at any specific areas further, or did any specific proprietary platforms/acquisitions catch your eye?"* Provide 2-3 highly specific, intelligent suggestions for deep-dives based on the company's unique tech stack, recent M&A, or shadow-IT.</pre>
                             </div>
                         </div>
                     </div>
@@ -385,12 +448,28 @@ If you cannot find hard, factual data for any bullet point through your web sear
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-02]</span>
-                            <span class="gov-tag gov-amber">Public Data</span>
+                            <span class="gov-tag gov-blue">Public Data</span>
+                            <span class="action-tag">FORENSICS</span>
                             <h3 class="accordion-title">FINANCIAL FORENSICS — Finding the Money</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[G-01 Context]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Leak Extraction & Reallocation.</strong> Scans macro strategy to find manual processing waste and technical debt, calculating the FTE cost to generate a reallocation argument.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -409,10 +488,21 @@ If you cannot find hard, factual data for any bullet point through your web sear
                                 <p class="body-prose">Check the 'Owner' field. If the AI flags a leak but misidentifies the budget owner, manually verify if it sits with IT Ops or Risk.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET COMPANY: [Insert Target]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET COMPANY: [Insert Target]
 SELLER COMPANY: [Insert Your Company, or type "None"]
 G-01 CONTEXT: [Paste G-01 output here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-02_Financial_Forensics.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
 Act as a Senior Financial Analyst. Identify "Boring But Expensive" problems—cost centers visible to the CFO, reliant on manual labor, hidden in G-01 Context.
@@ -425,7 +515,9 @@ Act as a Senior Financial Analyst. Identify "Boring But Expensive" problems—co
 Search for waste in: Manual Processes, Integration Friction, Compliance Burden, Vendor Dependency, Technical Debt.
 
 ## PHASE 2: OUTPUT
-Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCATION ARGUMENT.</pre></div></div>
+Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCATION ARGUMENT.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -433,95 +525,150 @@ Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCA
             <div class="category-section reveal">
                 <div class="category-title">Phase 02: People Intelligence</div>
 
-                <div class="human-checkpoint" style="background: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2); border-left-color: #8b5cf6;">
-                    <h4 class="hc-title" style="color: #8b5cf6;">THE PROPRIETARY MULTIPLIER (GOOD TO GREAT)</h4>
-                    <p class="body-prose">Public data gets you to the door; proprietary data gets you inside. Before running G-03 and G-04, check your own CRM. Do you have notes from a past QBR? Did this executive use your product at their last company? <strong>Feed this hidden data into the prompts to build an insurmountable moat against generic AI outreach.</strong></p>
-                </div>
-
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-03]</span>
-                            <span class="gov-tag gov-purple" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #8b5cf6;">Public + Private Data</span>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">HUMINT</span>
                             <h3 class="accordion-title">EXECUTIVE INTELLIGENCE — Decoding the Human</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Exec]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Data Source]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Relational Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Internal CRM Signal]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>HUMINT & Modality Mapping.</strong> Decodes operational reality, ego-to-EQ ratio, tenure-loyalty, past company overlaps (Ghost Connections), and VAK communication style.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">This is both a psychological profile and a hunting map. It extracts their decision-making architecture while hunting for network overlaps.</p>
+                                <p class="body-prose">This is both a psychological profile and a hunting map. It extracts their decision-making architecture while hunting for network overlaps (Ghost Connections).</p>
                             </div>
                             <div class="matrix-box box-edge">
-                                <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">If you type 'None' for the Target Company, the AI performs a pure psychological and career-trajectory teardown of the individual.</p>
+                                <div class="matrix-title">EGO vs. EQ</div>
+                                <p class="body-prose">Analyzes language patterns (I vs. We) to define their Ego-to-EQ ratio, ensuring your approach is correctly pitched as peer-to-peer or supportive.</p>
                             </div>
                             <div class="matrix-box box-output">
-                                <div class="matrix-title">DEFINING THE INPUTS</div>
-                                <p class="body-prose">Paste raw LinkedIn posts, article text, and <strong>crucially, your internal CRM history and meeting notes</strong> to give the AI access to non-public relationship dynamics.</p>
+                                <div class="matrix-title">THE RAPPORT "WHY"</div>
+                                <p class="body-prose">Deduces the human *why* behind their hobbies (e.g., Mental Health, Military) to create an unbreakable authentic opener.</p>
                             </div>
                             <div class="matrix-box box-override">
                                 <div class="matrix-title">THE HUMAN OVERRIDE</div>
                                 <p class="body-prose">Check the "Current Activity" section. The AI is instructed not to condense the raw truth—pivot your email strategy to support their immediate reality.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET EXECUTIVE: [Insert Name & Title]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET EXECUTIVE: [Insert Name & Title]
 TARGET COMPANY: [Insert Target Company, or type "None"]
-SCRAPED CONTEXT: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
-INTERNAL CRM & NETWORK DATA: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+DATA SOURCE: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
+RELATIONAL CONTEXT: [Paste the Line Manager's profile, or known peers, or type "None"]
+INTERNAL CRM SIGNAL: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-03_Profile_[FirstName_LastName].md` (replace brackets with actual name). Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
-Act as an autonomous Senior Profiler and Investigative Analyst. Decode the provided contexts AND autonomously search the web for external data. Do not over-condense the raw truth into generic corporate speak.
+Act as an Advanced HUMINT (Human Intelligence) Profiler and Behavioral Psychologist. 
+**THE DEEP SEARCH PROTOCOL:** Leave no stone unturned. Use their specific job title to dictate where you search the web. Do not just regurgitate their resume. Decode what they actually *do* and how they make decisions.
 
 ## EXECUTION ROUTING LOGIC
-* PATH A (Company Provided): Execute Phases 1, 2, and 3. 
-* PATH B (Company is "None"): Skip the "Strategic Alignment" section in Phase 3.
+* PATH A (Company & Relational Context Provided): Execute all phases, mapping psychology to corporate strategy.
+* PATH B (Context is "None"): Skip hierarchical mapping; execute a pure psychological teardown.
 
-## PHASE 1: THE BREADCRUMB TRAIL (Hard Facts, Network & Recency)
-1. EXTERNAL FOOTPRINT: Search the web. Patents? Major conferences? Media quotes?
-2. ROLE TRANSLATION: What does this specific title actually mean for this company? 
-3. PROPRIETARY OVERLAP (CRITICAL): Analyze the [Internal CRM & Network Data]. Mutual connections?
-4. NETWORK OVERLAP (PUBLIC): List previous companies and past projects.
-5. THE HIDDEN HOOK: Analyze volunteer work, hobbies, or non-work mentions.
-6. CURRENT ACTIVITY & TOP OF MIND: Analyze recent posts. Give me the raw, honest reality of what is currently on their desk.
+## PHASE 1: THE BREADCRUMB TRAIL (Role Reality & Deep Search)
+1. ROLE DECODING: What does this specific job title *actually do* in this industry? Define their daily operational reality and metrics.
+2. DEEP EXTERNAL FOOTPRINT: Search the web aggressively. List specific findings from industry panels, YouTube, or publications.
+3. HIERARCHY & RELATIONAL MAPPING: Analyze the [Relational Context]. Where does the pressure flow?
+4. THE GHOST CONNECTION MAP: Extract the last 3 companies they worked for, including precise dates and roles. Explicitly instruct the human operator to search their own network for colleagues who worked at those specific companies during those exact overlapping years.
+5. CURRENT DESK REALITY: Based strictly on recent posts/comments, what is the raw, honest reality of what is currently stressing them out today?
+6. TENURE & LOYALTY CHECK: Analyze their career history. Do they jump ship every 12-18 months (tactical buyer), or do they stay 3-5+ years (strategic buyer looking for sustainable architecture)?
+7. EGO vs. EQ (TONE ANALYSIS): Analyze their posts and recommendations. Do they use "I" or "We"? Do they post to brag about revenue, or do they express gratitude? Define their Ego-to-EQ ratio.
+8. THE RAPPORT HOOK (THE 'WHY'): Identify specific out-of-office passions, hobbies, or volunteer causes. Crucially, deduce *why* they care about this based on their background. 
 
-## PHASE 2: THE BEHAVIORAL TEARDOWN (Psychology & Contact)
-1. CORE CONVICTION: Fundamental principle or philosophy?
-2. DECISION TRIGGERS: What makes them say yes? What makes them resist? 
-3. TRUST ARCHITECTURE: What specific actions earn trust? 
-4. COMMUNICATION PROTOCOL: Specify email length, tone, formats, and buzzwords they hate.
+## PHASE 2: THE 6 GAIN DRIVERS MAPPING
+Map their psychology against the 6 GAIN Drivers:
+1. SAFETY (Mitigating Fear): What threatens their job security? 
+2. ORDER (Respecting Time): How do they process complex scenarios? 
+3. POWER (Narrative Lock): Where do they actually sit in the informal influence map? 
+4. ACHIEVEMENT (Legacy Building): What makes them the hero? 
+5. AFFILIATION (Building Champions): Who is in their internal "Circle of Trust"?
+6. SUSTAINABILITY (Future Proofing): What threatens their 18-month career horizon?
 
-## PHASE 3: STRATEGIC ALIGNMENT & ENGAGEMENT
-1. NARRATIVE FRICTION: Are they fighting against internal corporate constraints?
-2. THE ONE QUESTION: Give me ONE highly specific discovery question.
+## PHASE 3: STRATEGIC ENGAGEMENT & MODALITY PLAYBOOK
+1. THE VAK MODALITY: Analyze their language patterns. Are they predominantly Visual, Auditory, Kinesthetic, or a mixture?
+2. THE APPROACH STRATEGY: Prescribe the rules of engagement for Email and Meetings.
+3. WHAT NOT TO DO (THE LANDMINES): List 3 specific behaviors that will instantly lose their trust.
+4. THE 3 THINGS TO BRING: List the 3 exact assets you must take to the meeting.
+5. THE AUTHENTIC OPENER: Write a highly specific opening sentence that uses their "Rapport Hook" and "Ego/EQ analysis".
+6. THE INSIGHT QUESTIONS: Formulate ONE Disruption Question and ONE Reframe Question.
 
-## STRICT ANTI-HALLUCINATION & IDENTITY GUARDRAILS
-* THE DISAMBIGUATION PROTOCOL (IS IT HIM?): Aggressively cross-reference web searches against the [Scraped Context]. Found data MUST contain matching "Anchor Data". 
-* SOURCE EVERYTHING: Append a brief citation. THE "UNVERIFIED" RULE: Do not guess.</pre></div></div>
+## PHASE 4: THE OPERATOR LOOP (The Influence Hunt)
+Conclude by mapping the **"Power Gap"**. 
+*RULE:* You are strictly forbidden from guessing names. 
+Deduce which peers or superiors hold veto power. List 2-3 specific *Job Titles* and explicitly output this instruction: *"HUMAN ACTION REQUIRED: Please search for the individuals holding the above job titles so we can profile them next and complete the board-level influence map."*</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="category-section reveal">
-                <div class="category-title">Phase 03: Synthesis & Deliverables</div>
-
-                <div class="human-checkpoint reveal" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); border-left-color: #ef4444;">
-                    <h4 class="hc-title" style="color: #ef4444;">🛑 OPSEC AIRWALL: SECURE YOUR DATA</h4>
-                    <p class="body-prose">You are now crossing from Public Intelligence into Proprietary Synthesis. <strong>Do not feed internal CRM data, NDA-protected meeting notes, or internal product IP into public, open AI models.</strong> Switch to your secure, enterprise-approved AI environment before running G-04, G-05, or G-06 to protect your competitive advantage.</p>
-                </div>
+                <div class="category-title">Phase 03: Strategy & Execution</div>
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-04]</span>
-                            <span class="gov-tag gov-purple" style="background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #8b5cf6;">Public + Private Data</span>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">TACTICAL STRIKE</span>
                             <h3 class="accordion-title">SYNTHESISE BATTLE CARD — Intel into Ammunition</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[G-01 Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[G-02 Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[G-03 Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Win/Loss Data]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Cross-Reference Synthesis.</strong> Maps corporate "Bleeding Necks" to individual GAIN drivers and manual "Financial Leaks" to create a unified boardroom strategy.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -529,83 +676,128 @@ Act as an autonomous Senior Profiler and Investigative Analyst. Decode the provi
                             </div>
                             <div class="matrix-box box-edge">
                                 <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Input 'None' for the Seller Company and the AI abandons the sales pitch. Instead, it generates an objective 'Vulnerability & Threat Assessment' of the target.</p>
+                                <p class="body-prose">If any G-series input is 'None', the AI skips that intelligence layer and builds a tactical strike based on the remaining data.</p>
                             </div>
                             <div class="matrix-box box-output">
-                                <div class="matrix-title">DEFINING THE INPUTS</div>
-                                <p class="body-prose">Paste the raw outputs from G-01, G-02, and G-03. Ensure you include any internal CRM notes so the AI can craft a "Warm Wedge" outreach strategy.</p>
+                                <div class="matrix-title">THE RED TEAM CHALLENGE</div>
+                                <p class="body-prose">The AI is forced to act as the "Detractor" (e.g., David Osei) to find the fatal flaw in your pitch before you walk in the room. You must then decide to pivot or push.</p>
                             </div>
                             <div class="matrix-box box-override">
                                 <div class="matrix-title">THE HUMAN OVERRIDE</div>
                                 <p class="body-prose">The 'Landmines' section is non-negotiable. If the prospect recently fired a vendor for a specific failure, pitching that same area early triggers their defenses.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET COMPANY: [Insert Target]
-SELLER COMPANY: [Insert Your Company, or type "None"]
-GATHERED INTEL: [Paste G-01, G-02, G-03 outputs here]
-INTERNAL CRM & NETWORK DATA: [Paste internal account history/QBRs/Mutual Connections here]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">G-01 CONTEXT: [Paste Output from Macro Intel]
+G-02 CONTEXT: [Paste Output from Financial Forensics]
+G-03 CONTEXT: [Paste Output from Executive Intelligence]
+WIN/LOSS DATA: [Paste internal notes on similar deals, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the strategy begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-04_Battle_Card_[Target_Company].md`. Save it directly into your workspace folder: `03_Strategy_Execution`.
 
 ## ROLE & OBJECTIVE
-Senior Enterprise Strategist. Synthesize intel into a 1-page tactical reference, explicitly merging public strategy with private/internal relationship data.
+Act as a Tier-1 Strategic Deal Architect and "Red Team" Adversary. Your objective is to synthesise corporate macro-pain, hidden financial leaks, and individual executive psychology into a single, high-velocity attack plan. 
 
-## EXECUTION ROUTING
-* PATH A (Seller Provided): Executive Sales Battle Card.
-* PATH B (Seller "None"): Objective Vulnerability & Threat Assessment.
+## PHASE 1: THE FORENSIC SYNTHESIS
+1. THE VULNERABILITY ARCHITECTURE: Map the "Bleeding Necks" from G-01 directly to the "Financial Leaks" found in G-02. Show how the corporate strategy is being undermined by specific operational waste.
+2. THE HUMAN LOCK: Map the G-03 Executive GAIN drivers to your solution. How does this deal specifically protect the executive's "Safety" or build their "Achievement" legacy?
+3. THE SHADOW HIERARCHY: Based on G-03 Relational Context, identify the "Invisible Blocker." Who is the peer or boss most likely to veto this, and what is their specific "Fear Trigger"?
 
-## PHASE 1: SYNTHESIS (PATH A)
-1. EXECUTIVE NORTH STAR: The single strategic priority defining their direction.
-2. THE WARM WEDGE (CRITICAL): Formulate a highly specific outreach strategy combining their public strategy with our private [Internal CRM] data.
-3. THE THREE HOOKS: Three conversation-opening insights mapped to Seller capabilities.
-4. ACCUSATION AUDIT: Write 3 statements acknowledging their most likely concerns before they raise them.
-5. THE BOARDROOM QUESTION: ONE high-level question demonstrating a deep understanding of constraints.
-6. LANDMINES: Topics or buzzwords to strictly AVOID.</pre></div></div>
+## PHASE 2: THE BOARDROOM ATTACK PLAN
+1. THE 30-SECOND "MATTHEWS" PITCH: Write a high-EQ, data-backed opening that uses the "Rapport Hook" to earn the right to ask the "Disruption Question."
+2. THE STATUS-QUO DISRUPTOR: Formulate the single most dangerous question that exposes the "Narrative Gap" (the difference between what the CEO says and what G-02 proves is happening).
+3. THE REALLOCATION PITCH: Present the "Boring But Expensive" leak from G-02 as the specific budget source to fund your solution. 
+4. MODALITY ADAPTATION: Provide 3 specific tactical "Must-Dos" for the meeting based on the executive’s VAK modality (e.g., "Hand them a physical architectural map" for Kinesthetic).
+
+## PHASE 3: THE RED TEAM OVERRIDE (The Detractor)
+Switch personas. Act as the most cynical, "Checkbox Compliance" hating detractor in the room (e.g., David Osei). 
+1. THE FATAL FLAW: State the one unvarnished reason why this deal will fail (e.g., "It looks like another compliance checklist").
+2. THE ARCHITECT’S PIVOT: Switch back to Deal Architect. Provide the exact forensic evidence or "EQ Shift" required to neutralize that specific objection.
+
+## PHASE 4: THE OPERATOR LOOP
+Identify the "Intelligence Gap." What one piece of information is still missing to make this a 100% "No-Brainer" for the Board? Ask the human operator to verify or hunt for this specific data point.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="accordion-item" style="border-left: 3px solid #ef4444;">
+                <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-05]</span>
-                            <span class="gov-tag gov-red">Internal Data Risk</span>
-                            <h3 class="accordion-title">CAPABILITY MATCHING — Where the Rubber Hits the Road</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">EXECUTION</span>
+                            <h3 class="accordion-title">THE FIRST 15 MINUTES — Meeting Opener & Discovery</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Battle Card Context]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Materials]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>VAK Opener Scripting & Translation.</strong> Uses high-EQ rapport hooks and cross-references your internal case studies to control the narrative early.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">Don't pitch generic capabilities. This engine cross-references your internal case studies against the Target's exact pain points, translating your marketing into their vocabulary.</p>
+                                <p class="body-prose">Don't pitch generic capabilities. This engine translates your battle card directly into the exact script you will use for the first 15 minutes of the meeting.</p>
                             </div>
                             <div class="matrix-box box-edge">
-                                <div class="matrix-title">THE POWER OF "NONE"</div>
-                                <p class="body-prose">Type 'None' for the Target Company, and the AI becomes a ruthless internal auditor. It strips the fluff from your marketing and highlights where your messaging lacks proof.</p>
+                                <div class="matrix-title">THE RAPPORT HOOK</div>
+                                <p class="body-prose">Leverages the human "Why" behind their hobbies or charities to build an unbreakable 1st-degree connection in 120 seconds.</p>
                             </div>
                             <div class="matrix-box box-output">
-                                <div class="matrix-title">DEFINING THE INPUTS</div>
-                                <p class="body-prose">Paste product specs, marketing PDFs, or case studies into [Seller Materials]. Paste G-03 and G-04 into [Target Intel] for precise translation.</p>
+                                <div class="matrix-title">VAK ALIGNMENT</div>
+                                <p class="body-prose">Scripts the opener specifically for their communication modality (Visual, Auditory, or Kinesthetic).</p>
                             </div>
                             <div class="matrix-box box-override">
-                                <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                <p class="body-prose">RED TAG: If the AI suggests a case study, manually verify the scale matches. Don't pitch mid-market wins to enterprise executives. Beware internal IP security.</p>
+                                <div class="matrix-title">THE DISRUPTION</div>
+                                <p class="body-prose">Scripts the pivot from rapport directly to the "Bleeding Neck" pain point using the Narrative Gap question.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET EXECUTIVE & COMPANY: [Insert]
-TARGET INTEL: [Paste G-03 and G-04 here]
-SELLER MATERIALS: [Paste case studies/internal IP here]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">BATTLE CARD CONTEXT: [Paste G-04 Output]
+SELLER MATERIALS: [Paste relevant case studies/internal IP here, or "None"]
 
-## ROLE & OBJECTIVE
-Senior Product Marketing Analyst. Cross-reference Seller Materials against Target Executive's profile.
+## ROLE
+Act as a High-EQ Enterprise Sales Leader and Product Marketing Analyst. 
 
-## EXECUTION ROUTING
-* PATH A (Target Provided): Map Materials to Pain Points + The Translation Layer.
-* PATH B (Target "None"): Brutal objective internal audit of Seller Materials.
+## OBJECTIVE
+Script the exact First 15 Minutes of the executive meeting based on the provided Battle Card. This must sound natural, professional, and entirely free of typical sales jargon.
 
-## PHASE 1: EXTRACTION
-(Path A): Relevant Case Studies, Translation Layer, Psychological Alignment, The Gaps.
-(Path B): Core Value Proposition, Jargon Audit, Missing Metrics.</pre></div></div>
+## EXECUTION
+Produce a 4-part script:
+1. THE AUTHENTIC OPENER: Use the "Why" Hook (from G-03/G-04) to build immediate human rapport. Do not mention business yet. Ensure this aligns with their VAK modality.
+2. THE CREDIBILITY BRIDGE: Connect the Ghost Connections, past shared corporate history, or a highly relevant [Seller Materials] case study to earn the right to transition to business.
+3. THE DISRUPTION QUESTION: Execute the Narrative Gap question formulated in G-04 to challenge their status quo.
+4. THE PIVOT: Guide the conversation naturally from their anticipated answer directly into the "Bleeding Neck" financial leak.</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -613,91 +805,141 @@ Senior Product Marketing Analyst. Cross-reference Seller Materials against Targe
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="accordion-title-group">
                             <span class="accordion-id">[G-06]</span>
-                            <span class="gov-tag gov-amber">Public Data</span>
-                            <h3 class="accordion-title">THE EXECUTIVE BRIEFING — The 10-Minute Cheat Sheet</h3>
+                            <span class="gov-tag gov-red">Private Data</span>
+                            <span class="action-tag">CLOSING</span>
+                            <h3 class="accordion-title">THE NARRATIVE LOCK — Executive Summary</h3>
                         </div>
                         <span class="accordion-toggle-btn">[+ VIEW]</span>
                     </div>
                     <div class="accordion-content">
+                        
+                        <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Executive]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Company]</span>
+                                <span style="color: #64748b;">|</span>
+                                <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Verified Intel]</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>CFO-Ready Translation.</strong> Converts technical risk into EBITDA impact and operational debt into revenue protection for Board-level scaling.</span>
+                            </div>
+                        </div>
+
                         <div class="prompt-matrix">
                             <div class="matrix-box box-objective">
                                 <div class="matrix-title">THE ENGINE LOGIC</div>
-                                <p class="body-prose">The ultimate cheat sheet. It takes everything you've researched and boils it down to one scannable page you can read on your phone before the meeting.</p>
+                                <p class="body-prose">Converts technical debt and risk into "Boardroom Language." Focuses entirely on Revenue Protection and EBITDA, not feature lists.</p>
                             </div>
                             <div class="matrix-box box-edge">
                                 <div class="matrix-title">THE POWER OF "NONE"</div>
                                 <p class="body-prose">If you aren't actively selling, type 'None' for the Seller Company. It drops the sales tactics and gives you a pure intelligence dossier—perfect for consulting.</p>
                             </div>
                             <div class="matrix-box box-output">
-                                <div class="matrix-title">DEFINING THE INPUTS</div>
-                                <p class="body-prose">Paste all the final, human-checked outputs from G-01 through G-05 here. Do not feed it raw data; feed it the refined, verified intelligence.</p>
+                                <div class="matrix-title">BOARDROOM SCALING</div>
+                                <p class="body-prose">Produces a 1-page PDF-ready summary that the Executive can forward directly to their Board or CFO without changing a single word.</p>
                             </div>
                             <div class="matrix-box box-override">
                                 <div class="matrix-title">THE HUMAN OVERRIDE</div>
                                 <p class="body-prose">Do not read this in the room. This document exists to lower your cortisol in the lobby. Memorize the 'Landmines' and 'Hooks,' then actually listen to the client.</p>
                             </div>
                         </div>
+
                         <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
-                        <div class="terminal-container"><div class="terminal-block"><div class="terminal-header-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button></div><pre class="prompt-text">TARGET EXECUTIVE: [Insert Name]
+                        <div class="terminal-container">
+                            <div class="terminal-block">
+                                <div class="terminal-header-bar">
+                                    <div class="terminal-dots"><span></span><span></span><span></span></div>
+                                    <button class="copy-btn" onclick="copyPromptText(this)">Copy Prompt</button>
+                                </div>
+                                <pre class="prompt-text">TARGET EXECUTIVE: [Insert Name]
 SELLER COMPANY: [Insert Your Company, or type "None"]
-VERIFIED INTEL: [Paste G-01 to G-05 here]
+VERIFIED INTEL: [Paste G-04 Battle Card & G-05 Script here]
 
 ## ROLE & OBJECTIVE
-Chief of Staff. Compile final briefing. Concise. Scannable. Actionable. NO FILLER.
+Act as a Chief of Staff writing for the Board of Directors. Create a "Board-Ready" Executive Summary based on the provided synthesis.
 
 ## EXECUTION ROUTING
-* PATH A (Seller Provided): Executive Sales Briefing.
+* PATH A (Seller Provided): Executive Sales Briefing. Focus purely on risk, capital allocation, and operational leverage. No sales fluff.
 * PATH B (Seller "None"): Neutral Intelligence Dossier.
 
-## PHASE 1: BRIEFING EXTRACTION
-(Path A): The Human, The Business, The Playbook, The Pitch, The Defense.
-(Path B): The Human, The Business, The Risks, The Inquiry.</pre></div></div>
+## THE STRUCTURE (PATH A)
+Produce a scannable 1-page summary with the following sections:
+1. THE CHALLENGE: The Economic Impact (The G-01 Macro Pain + The G-02 OPEX Leak).
+2. THE EVIDENCE: The Forensic Gap proving why current systems are failing.
+3. THE OUTCOME: The Risk-Adjusted Gain (How reallocating the OPEX funds the strategic transformation).
+4. THE TIMELINE: The Compelled Event that requires a decision this quarter.
+
+## THE STRUCTURE (PATH B)
+Produce a scannable 1-page summary:
+1. The Human (Psychology & Trust triggers)
+2. The Business (Macro priorities)
+3. The Risks (Vulnerabilities identified)
+4. The Inquiry (The specific discovery questions to ask).</pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <div class="toolkit-wrapper reveal">
+            <div class="toolkit-wrapper reveal" style="margin-top: 4rem; margin-bottom: 4rem;">
                 <div class="toolkit-toggle" onclick="toggleToolkit(this)">
                     <div class="toggle-text">
-                        <h3>EXTENDED TOOLKIT — 10 ADDITIONAL PROMPTS</h3>
-                        <p>Compact variants, hiring signals, slide relevancy, pre-mortem, objection prep, hallucination check, multi-source analysis, and governance mapping.</p>
+                        <h3>EXTENDED TOOLKIT — 13 ADDITIONAL PROMPTS</h3>
+                        <p style="margin: 0; font-size: 0.8rem; color: #94a3b8;">Compact variants, hiring signals, slide relevancy, pre-mortem, objection prep, hallucination check, multi-source analysis, and governance mapping.</p>
                     </div>
-                    <span class="toggle-arrow">▼</span>
+                    <span class="toggle-arrow" style="color: #3b82f6; font-size: 1.2rem; transition: transform 0.3s;">▼</span>
                 </div>
                 
                 <div class="toolkit-content">
                     
-                   <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-07]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
-                                <h3 class="accordion-title">9-Pillar Compact (Quick Variant)</h3>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">COMPACT RESEARCH</span>
+                                <h3 class="accordion-title">9-Pillar Compact</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Focus Area]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Source Context]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Rapid Extraction.</strong> Condenses 9-pillars into 3-minute mobile-friendly bullet points for rapid meeting preparation.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
-                                    <p class="body-prose">A faster variant of the deep research prompt. It dynamically formats macro business intelligence into a highly scannable, mobile-friendly briefing for rapid meeting prep.</p>
+                                    <p class="body-prose">A faster variant of the deep research prompt. It dynamically formats macro business intelligence into a highly scannable, mobile-friendly briefing.</p>
                                 </div>
                                 <div class="matrix-box box-edge">
                                     <div class="matrix-title">THE POWER OF "NONE"</div>
-                                    <p class="body-prose">Type 'None' for the Focus Area, and it gives you the macro corporate view. Input a specific domain, and it filters the 9 pillars exclusively through the lens of that department.</p>
+                                    <p class="body-prose">Type 'None' for the Focus Area, and it gives you the macro corporate view. Input a specific domain, and it filters the 9 pillars exclusively through that lens.</p>
                                 </div>
                                 <div class="matrix-box box-output">
                                     <div class="matrix-title">WHAT EXPERIENCE SEES</div>
-                                    <p class="body-prose">Use this when you are pulled into a meeting with 15 minutes notice. It gives you the illusion of hours of prep by delivering dense, actionable bullet points instead of paragraphs.</p>
+                                    <p class="body-prose">Use this when you are pulled into a meeting with 15 minutes notice. It gives you the illusion of hours of prep by delivering dense, actionable bullet points.</p>
                                 </div>
                                 <div class="matrix-box box-override">
                                     <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                    <p class="body-prose">Skim the "Timeline" output immediately to see if there is an active compelling event (like an upcoming earnings call or ISO audit) you can leverage as a wedge today.</p>
+                                    <p class="body-prose">Skim the "Timeline" output immediately to see if there is an active compelling event (like an upcoming earnings call or ISO audit) you can leverage today.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -733,12 +975,29 @@ Extract intelligence across the following 9 pillars based strictly on the Source
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-08]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">BUDGET TIMING</span>
                                 <h3 class="accordion-title">Budget Cycle Predictor</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[FYE Month]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Current Month]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Solution]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Timeline Mapping.</strong> Calculates exactly where the company is in their fiscal year to map your pitch urgency and predict CFO behavior.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -757,9 +1016,7 @@ Extract intelligence across the following 9 pillars based strictly on the Source
                                     <p class="body-prose">Ask the AI: "Based on their FYE, when do departmental budgets typically get locked down?" Use that specific lockdown date to drive immediate commercial urgency.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -781,7 +1038,7 @@ Act as a Senior Enterprise Sales Strategist. Your objective is to map the prospe
 ## PHASE 1: TIMELINE MAPPING
 1. CURRENT STATUS: Exactly what month of their fiscal year are they currently in?
 2. CYCLE PHASE: Are they in "Budget Setting", "Budget Release", "Mid-Year Review", or "Use-It-Or-Lose-It"?
-3. PREDICTED BEHAVIOR: What is the CFO's primary mindset right now (e.g., protective, spending surplus, planning next year)?
+3. PREDICTED BEHAVIOR: What is the CFO's primary mindset right now?
 
 ## PHASE 2: STRATEGIC ACTION
 * If Month 1-3: Frame strategy around broad architecture and yearly goals.
@@ -797,12 +1054,27 @@ Act as a Senior Enterprise Sales Strategist. Your objective is to map the prospe
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-09]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">COMPACT PROFILE</span>
                                 <h3 class="accordion-title">LinkedIn Compact Profile</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Exec]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Context]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[LinkedIn Scrape]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Lightweight Teardown.</strong> Generates a fast, 1-page cheat sheet mapping a stakeholder's priorities and decision-making psychology.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -818,12 +1090,10 @@ Act as a Senior Enterprise Sales Strategist. Your objective is to map the prospe
                                 </div>
                                 <div class="matrix-box box-override">
                                     <div class="matrix-title">THE HUMAN OVERRIDE</div>
-                                    <p class="body-prose">Check their past companies manually. People buy what they know. If they implemented your competitor at their last job, they are heavily biased. Prepare accordingly.</p>
+                                    <p class="body-prose">Check their past companies manually. People buy what they know. If they implemented your competitor at their last job, they are heavily biased.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -856,12 +1126,27 @@ Act as an Executive Profiler. Analyze this LinkedIn profile and produce a COMPAC
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-10]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">SIGNAL DECODER</span>
                                 <h3 class="accordion-title">Hiring Signal Decoder</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Department]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Solution]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Job Descriptions]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Hidden Mandate Discovery.</strong> Reads multiple JDs collectively to find capability gaps, unannounced strategic projects, and tech stack leaks.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -880,9 +1165,7 @@ Act as an Executive Profiler. Analyze this LinkedIn profile and produce a COMPAC
                                     <p class="body-prose">Pay close attention to the seniority of the roles. Senior hires mean an upcoming strategy shift; junior hires mean an ongoing execution backlog.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -910,16 +1193,31 @@ Act as a Corporate Strategy Decoder. Analyze these job descriptions collectively
                         </div>
                     </div>
 
-                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem; border-left: 3px solid #ef4444;">
+                    <div class="accordion-item" style="margin: 0 1.5rem 0.75rem 1.5rem;">
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-11]</span>
-                                <span class="gov-tag gov-red">Internal Data Risk</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">PITCH DEFENSE</span>
                                 <h3 class="accordion-title">Slide Relevancy Audit</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Executive]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Intel]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Slide Deck Text]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Pitch Defense.</strong> Audits standard corporate decks against gathered intel to cut generic fluff and enforce executive relevance.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -938,9 +1236,7 @@ Act as a Corporate Strategy Decoder. Analyze these job descriptions collectively
                                     <p class="body-prose">Never let the AI dictate the opening slide. You must own the opening narrative based on the specific room dynamics and human rapport.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -959,7 +1255,7 @@ Act as a ruthless Presentation Strategist. Audit the provided slide deck outline
 * PATH B (Target Intel is "None"): Perform a generic, brutal tear-down of the deck's messaging clarity.
 
 ## PHASE 1: THE AUDIT
-For each slide in the deck, recommend one of the following: KEEP, CUT, MODIFY, REORDER, or CREATE.
+For each slide in the deck, recommend one of the following: KEEP, CUT, MODIFY, REORDER, or CREATE. Provide a 1-sentence justification for every cut or modification.
 
 ## PHASE 2: JUSTIFICATION (PATH A ONLY)
 If on PATH A, ensure the following constraints are met:
@@ -975,12 +1271,27 @@ If on PATH A, ensure the following constraints are met:
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-12]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">FAILURE FORENSICS</span>
                                 <h3 class="accordion-title">Pre-Mortem Simulator</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Deal]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Intel]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Known Competitor]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Failure Forensics.</strong> Simulates future loss states based on gathered intelligence to preemptively build specific defensive actions.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -999,9 +1310,7 @@ If on PATH A, ensure the following constraints are met:
                                     <p class="body-prose">Challenge the AI. Ask: "What is the most irrational, purely political reason we could lose this deal based on the board structure?"</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1037,12 +1346,27 @@ For each failure reason generated above, provide ONE specific, tactical action I
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-13]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">OBJECTION PREP</span>
                                 <h3 class="accordion-title">Objection Prep (Accusation Audit)</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Executive]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Intel]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Known Weakness]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Disarming Negativity.</strong> Scripts Voss-style Accusation Audits to preemptively disarm unstated fears and price objections.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1061,9 +1385,7 @@ For each failure reason generated above, provide ONE specific, tactical action I
                                     <p class="body-prose">Filter the AI's tone. AI tends to be overly polite, wordy, and apologetic; true accusation audits need to be blunt, brief, and fearless.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1096,12 +1418,25 @@ For each of the 3 objections, write the script I will deploy BEFORE they raise i
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-14]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">FACT VERIFICATION</span>
                                 <h3 class="accordion-title">Hallucination Check</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Generated Document]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Raw Source Material]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Fact Verification.</strong> Forces the AI to trace factual claims back to the source text to prevent fatal inaccuracies in board materials.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1120,9 +1455,7 @@ For each of the 3 objections, write the script I will deploy BEFORE they raise i
                                     <p class="body-prose">If it hallucinates once, scrutinize the entire document. Do a manual spot-check of the single most critical financial metric on the page yourself.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1155,12 +1488,27 @@ If you mark a claim as HALLUCINATED, provide a 1-sentence warning on how this er
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-15]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">URGENCY EXTRACTION</span>
                                 <h3 class="accordion-title">Cross-Reference Engine</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Source A]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Source B]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Wedge]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Urgency Extraction.</strong> Cross-references contradictory documents (e.g., Marketing PR vs. Risk Disclosures) to uncover hidden "Why Now?" triggers.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1179,9 +1527,7 @@ If you mark a claim as HALLUCINATED, provide a 1-sentence warning on how this er
                                     <p class="body-prose">Instruct the AI to aggressively weight the Risk Disclosures (10-K) over the PR statements when resolving contradictions. Follow the legal risk, not the marketing fluff.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1215,12 +1561,27 @@ Act as a Senior Intelligence Analyst. CROSS-REFERENCE the provided contradictory
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-16]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-red">Private Data</span>
+                                <span class="action-tag">POWER ROUTING</span>
                                 <h3 class="accordion-title">NED Governance Map</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Company]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Governance Data]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Accounts]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Power Routing.</strong> Maps board committee structures and hunts for overlapping warm intro networks with existing clients.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1239,9 +1600,7 @@ Act as a Senior Intelligence Analyst. CROSS-REFERENCE the provided contradictory
                                     <p class="body-prose">If you find a shared connection, stop the AI work immediately. Pick up the phone and call your existing client for backchannel intelligence.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1275,12 +1634,27 @@ Act as an Enterprise Governance Mapper. Analyze the board structure to find the 
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-17]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">DATA ASSEMBLY</span>
                                 <h3 class="accordion-title">Source Scraping Protocol</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Company Website]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Annual Report]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[LinkedIn]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Data Assembly.</strong> A strict human-in-the-loop operational checklist for gathering high-fidelity Tier 1 and Tier 2 context before prompting.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1299,9 +1673,7 @@ Act as an Enterprise Governance Mapper. Analyze the board structure to find the 
                                     <p class="body-prose">Always add corridor gossip manually. The AI can't scrape what was said at the coffee machine or on a previous discovery call. Inject your humanity.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1331,12 +1703,27 @@ For each source, copy and paste the full text into your AI conversation.
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-18]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">PSYCH TEARDOWN</span>
                                 <h3 class="accordion-title">Belief System Decoder</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Target Exec]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[LinkedIn Context]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Proposed Scenario]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Psychological Teardown.</strong> Maps how an executive processes truth, calculates risk, and predicts their specific reaction to your pitch.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1355,9 +1742,7 @@ For each source, copy and paste the full text into your AI conversation.
                                     <p class="body-prose">Look specifically at who they interact with most on LinkedIn (and the recommendations they write for others). That reveals their internal circle of trust.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1392,12 +1777,27 @@ Act as an Executive Behavioral Psychologist. I don't want to know what this pers
                         <div class="accordion-header" onclick="toggleAccordion(this)">
                             <div class="accordion-title-group">
                                 <span class="accordion-id">[G-19]</span>
-                                <span class="gov-tag gov-amber">Public Data</span>
+                                <span class="gov-tag gov-blue">Public Data</span>
+                                <span class="action-tag">NARRATIVE GAP</span>
                                 <h3 class="accordion-title">Narrative Gap Finder</h3>
                             </div>
                             <span class="accordion-toggle-btn">[+ VIEW]</span>
                         </div>
                         <div class="accordion-content">
+                            <div style="background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.3); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px dashed rgba(59,130,246,0.3); padding-bottom: 0.75rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase;">Required Variables:</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Macro Strategy]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Micro Signals]</span>
+                                    <span style="color: #64748b;">|</span>
+                                    <span style="font-size: 0.8rem; color: white; font-family: monospace;">[Seller Capability]</span>
+                                </div>
+                                <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                                    <span style="font-size: 0.7rem; font-weight: 800; color: #3b82f6; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;">Architecture:</span>
+                                    <span style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;"><strong>Contradiction Exploitation.</strong> Finds the specific friction between PR claims and actual operational hiring/spending signals to formulate a discovery wedge.</span>
+                                </div>
+                            </div>
                             <div class="prompt-matrix">
                                 <div class="matrix-box box-objective">
                                     <div class="matrix-title">THE ENGINE LOGIC</div>
@@ -1416,9 +1816,7 @@ Act as an Executive Behavioral Psychologist. I don't want to know what this pers
                                     <p class="body-prose">Ask yourself: "Does my solution specifically solve this exact contradiction?" If not, discard the gap. You only want to highlight problems you are uniquely qualified to solve.</p>
                                 </div>
                             </div>
-                            <div class="view-code-wrapper">
-                                <button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button>
-                            </div>
+                            <div class="view-code-wrapper"><button class="btn-view-code" onclick="toggleCode(this)">👁 VIEW PROMPT CODE</button></div>
                             <div class="terminal-container">
                                 <div class="terminal-block">
                                     <div class="terminal-header-bar">
@@ -1449,7 +1847,10 @@ Act as a Strategic Gap Analyst. Your objective is to find the contradiction betw
                         </div>
                     </div>
 
-            <div class="container-wide reveal">
+                </div>
+            </div>
+
+            <div class="container-prose reveal">
                 <div class="section-divider" style="margin-top: 4rem;">
                     <div class="divider-line"></div>
                     <div class="divider-label">WHERE THIS BREAKS</div>
@@ -1459,122 +1860,164 @@ Act as a Strategic Gap Analyst. Your objective is to find the contradiction betw
                 <div class="failures-grid">
                     <div class="failure-box">
                         <h3 class="failure-title">FAILURE 1: Hallucination</h3>
-                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
+                        <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">AI fabricated a partnership between two companies. The battle card referenced it. If it had reached the client, credibility would be zero.</p>
                         <span class="failure-rule"><span class="failure-red-text">RULE:</span> Use the Verification Prompt (G-14). If you can't see the source, it doesn't exist.</span>
                     </div>
 
                     <div class="failure-box">
                         <h3 class="failure-title">FAILURE 2: Over-reliance</h3>
-                        <p style="margin: 0 0 1.5rem 0; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it completely.</p>
+                        <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">Copied the briefing output directly into an email. The language was correct but generic. The recipient ignored it.</p>
                         <span class="failure-rule"><span class="failure-red-text">RULE:</span> AI generates 80%. The last 20%—the humanity—is yours.</span>
                     </div>
 
                     <div class="failure-box">
                         <h3 class="failure-title">FAILURE 3: False Confidence</h3>
-                        <p style="margin: 0 0 1.5rem 0; font-size:0.9rem; color: #cbd5e1; line-height: 1.5;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was old.</p>
-                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes manually before the meeting.</span>
+                        <p style="margin: 0; font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">Battle card was perfect, but the CFO had left the company 3 months prior. The AI didn't know because the annual report was 9 months old.</p>
+                        <span class="failure-rule"><span class="failure-red-text">RULE:</span> Verify leadership changes within 48 hours of the meeting.</span>
                     </div>
                 </div>
             </div>
 
-            <div class="terminal-repo reveal">
-                <div class="terminal-header">
-                    ADVANCED INTELLIGENCE ARCHIVE // Quick-Copy Terminal
+            <div class="container-wide reveal">
+                <div class="section-divider" style="margin-top: 6rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <div style="height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1);"></div>
+                    <div style="font-size: 0.7rem; font-weight: 800; color: #64748b; letter-spacing: 0.2em; white-space: nowrap;">PROMPT LIBRARY</div>
+                    <div style="height: 1px; flex-grow: 1; max-width: 200px; background: rgba(255,255,255,0.1);"></div>
                 </div>
-                <p class="body-prose" style="margin-bottom: 2rem;">
-                    For practitioners who know the system. Click to copy directly to your clipboard.
-                </p>
+                
+                <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 3rem;">Click to copy any prompt to your clipboard.</p>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem;">COMPANY INTELLIGENCE</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-01')">G-01 // The Dynamic Account Planner <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-02')">G-02 // FIND THE MONEY <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-07')">G-07 // 9-PILLAR COMPACT <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-08')">G-08 // BUDGET CYCLE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-15')">G-15 // CROSS-REF ENGINE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-19')">G-19 // NARRATIVE GAP <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn library-btn-public" onclick="copyLibraryPrompt(this, 'G-01')">
+                        <span style="color: #cbd5e1;">G-01 // RESEARCH</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-public" onclick="copyLibraryPrompt(this, 'G-02')">
+                        <span style="color: #cbd5e1;">G-02 // FORENSICS</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-07 // COMPACT RESEARCH</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-08 // BUDGET TIMING</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
                 </div>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">PEOPLE INTELLIGENCE</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-03')">G-03 // EXEC INTELLIGENCE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-09')">G-09 // COMPACT PROFILE <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-10')">G-10 // HIRING SIGNALS <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-18')">G-18 // BELIEF DECODER <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'G-03')">
+                        <span style="color: #ef4444;">G-03 // HUMINT</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-09 // COMPACT PROFILE</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-10 // SIGNAL DECODER</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-18 // PSYCH TEARDOWN</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
                 </div>
 
                 <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">SYNTHESIS & MATCHING</h4>
                 <div class="library-grid">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-04')">G-04 // BATTLE CARD <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-05')">G-05 // CAPABILITY MATCH <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-06')">G-06 // EXEC BRIEFING <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-11')">G-11 // SLIDE RELEVANCY <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'G-04')">
+                        <span style="color: #ef4444;">G-04 // TACTICAL STRIKE</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'G-05')">
+                        <span style="color: #ef4444;">G-05 // EXECUTION</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn library-btn-private" onclick="copyLibraryPrompt(this, 'G-06')">
+                        <span style="color: #ef4444;">G-06 // CLOSING</span> <span class="copy-badge">Copy</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-11 // PITCH DEFENSE</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
                 </div>
 
-                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">RISK & GOVERNANCE</h4>
+                <h4 style="color: #3b82f6; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1rem; margin-top: 2rem;">RISK & ADVANCED</h4>
                 <div class="library-grid" style="margin-bottom: 0;">
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-12')">G-12 // PRE-MORTEM <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-13')">G-13 // OBJECTION PREP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-14')">G-14 // HALLUCINATION CHECK <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-16')">G-16 // GOVERNANCE MAP <span class="copy-badge">Copy</span></button>
-                    <button class="library-btn" onclick="copyLibraryPrompt(this, 'G-17')">G-17 // SCRAPING PROTOCOL <span class="copy-badge">Copy</span></button>
+                    <button class="library-btn-restricted">
+                        <span>G-12 // FAILURE FORENSICS</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-13 // OBJECTION PREP</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-14 // FACT VERIFICATION</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-15 // URGENCY EXTRACTION</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-16 // POWER ROUTING</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-17 // DATA ASSEMBLY</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
+                    <button class="library-btn-restricted">
+                        <span>G-19 // NARRATIVE GAP</span> <span class="copy-badge">RESTRICTED</span>
+                    </button>
                 </div>
 
                 <div style="display: none;">
                     <div class="prompt-console-title">G-01</div>
-                    <div><pre>TARGET COMPANY: [Insert Target, e.g., Rolls-Royce plc, or type "None"]
-SELLER COMPANY: [Insert Your Company, e.g., SCC, or type "None"]
+                    <div><pre>TARGET COMPANY: [Insert Target Company, or type "None"]
+SELLER COMPANY: [Insert Your Company/Solution, or type "None"]
 FOCUS AREA / DOMAIN: [Insert Domain, e.g., End User Environment, or type "None"]
+DATA SOURCE & HUMAN SIGNAL: [Type "Search the web autonomously", OR paste Annual Report/10-K, unstructured notes, LinkedIn posts, or corridor gossip here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-01_Macro_Intel.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
-Act as an autonomous Senior Enterprise Analyst. Your objective is to conduct a multi-stage deep research sweep based *only* on the variables provided above. 
+Act as a Tier-1 Management Consultant and OSINT Analyst. Conduct a multi-stage deep research sweep. 
+**OBJECTIVE ANALYSIS PROTOCOL:** Do not just parrot the company's biased Annual Report. Autonomously deduce their industry and state it explicitly at the top of your report. Cross-reference their corporate claims against relevant domain intelligence (Bloomberg, Flight Global, or trade journals) and Glassdoor employee sentiment. Find the friction where the CEO says "Transformation" but the risk register says "Supply Chain Debt." Find the Narrative Gap.
 
-## EXECUTION ROUTING LOGIC (READ CAREFULLY)
-You must analyze the three variables above and choose the correct execution path. Do not deviate from the assigned path.
-
-* PATH 1: THE FULL STRIKE (Target + Seller + Focus are all provided)
-  * Action: Execute all phases. Research the Target generally, research the Target specifically in the Focus Area, research the Seller, and write a targeted pitch mapping the Seller to the Target's Focus Area pain points.
-* PATH 2: DOMAIN RECONNAISSANCE (Target + Focus are provided | Seller is "None")
-  * Action: Research the Target's macro-business (9-Pillars) AND deeply research their specific operations, technology, and pain points within the Focus Area based on public information. Crucial: Do NOT write a sales pitch or mention any supplier. This is pure intelligence gathering.
-* PATH 3: SELLER AUDIT (Seller is provided | Target + Focus are "None")
-  * Action: Ignore the Target company structure entirely. Only research the Seller Company. Output a comprehensive breakdown of their core capabilities, unique value propositions, and go-to-market messaging based on public web data.
-* PATH 4: GENERAL ACCOUNT PLAN (Target + Seller are provided | Focus is "None")
-  * Action: Research the Target's macro-business. Research the Seller. Map the Seller's broad capabilities to the Target's general pain points.
-
----
+## EXECUTION ROUTING LOGIC
+* PATH 1: THE FULL STRIKE (Target + Seller + Focus provided)
+* PATH 2: DOMAIN RECON (Target + Focus provided | Seller is "None")
+* PATH 3: SELLER AUDIT (Seller provided | Target + Focus are "None")
+* PATH 4: GENERAL PLAN (Target + Seller provided | Focus is "None")
 
 ## PHASE 1: MACRO BUSINESS CONTEXT (The 9-Pillars)
-(Execute only if Target is NOT "None")
-Search the web (Annual Reports, Earnings Calls, News) and output the macro intelligence architecture of the Target Company. Provide 3-5 findings per pillar. Cite a specific source for every bullet point.
+(Skip if Target is "None")
+Apply the specific regulatory and macroeconomic lens for this company's industry. Provide 3-5 concise bullet points per pillar. 
 1. STRATEGIC PRIORITIES: Board-level goals and CEO direction.
-2. FINANCIAL SIGNALS: Revenue trends, margin pressure. Flag numbers.
-3. PAIN POINTS: Stated challenges and risk disclosures.
-4. COMPETITIVE POSITIONING: Market position and benchmarks.
+2. FINANCIAL SIGNALS: Revenue trends, margin pressure. Flag hard numbers.
+3. PAIN POINTS: Stated challenges vs. external reality (Narrative Gap). 
+4. COMPETITIVE POSITIONING: Market position and threat landscape.
 5. TECHNOLOGY DIRECTION: Broad digital transformation priorities.
-6. REGULATORY & COMPLIANCE: Upcoming deadlines, audit findings.
-7. PEOPLE & CULTURE: Hiring, skills gaps, leadership changes.
+6. REGULATORY & COMPLIANCE: Industry-specific regulations (e.g., PRA, FCA, FAA, HSE) and upcoming deadlines.
+7. PEOPLE & CULTURE: Hiring gaps, leadership changes, and Glassdoor reality checks.
 8. STAKEHOLDER LANGUAGE: Specific phrases executives use repeatedly.
-9. TIMELINE & DEADLINES: Fiscal year, budget cycles.
+9. TIMELINE & DEADLINES: Fiscal year, budget cycles, compelled events.
+**THE BLEEDING NECKS:** Conclude Phase 1 by isolating the top 3 highest-risk pillars based on your analysis. Format these 3 bullet points in **BOLD**.
 
 ## PHASE 2: MICRO-DOMAIN EXTRACTION
 (Execute only if Focus Area is NOT "None" AND Target is NOT "None")
-Aggressively hunt for public information regarding the Target Company specifically within the Focus Area. Output:
-1. DOMAIN INITIATIVES: What are they actively building or changing in this specific area?
-2. DOMAIN PAIN POINTS: What public challenges or operational bottlenecks exist in this area?
-3. CURRENT VENDOR/TECH LANDSCAPE: What platforms/vendors are they currently heavily invested in related to this specific area?
+Hunt for information regarding the Target specifically within the Focus Area:
+1. DOMAIN INITIATIVES: What are they actively building/changing here?
+2. DOMAIN PAIN POINTS: Specific operational bottlenecks.
+3. CURRENT VENDOR LANDSCAPE: Incumbents, platforms, or massive legacy debt.
 
 ## PHASE 3: SELLER CAPABILITIES & PITCH MAPPING
 (Execute only if Seller is NOT "None")
-* If Target is "None" (PATH 3): Output a detailed 5-point audit of the Seller's market proposition, core technologies, and target audience based on their website and news.
-* If Target is provided (PATHS 1 & 4): Create 3 highly specific pitch angles connecting the Seller's capabilities to the Target's pain points (use Phase 2 pain points if a Focus Area was provided; use Phase 1 pain points if Focus Area was "None"). Predict the top 2 objections the Target will have and how to counter them.
+1. **THE 3 PITCH ANGLES:** Create 3 highly specific pitch angles connecting the Seller's capabilities to the Target's pain points.
+2. **PREDICTED OBJECTIONS & COUNTERS:** Detail the top 2 objections the Target will raise based on their industry or scale, and script the exact counter-argument.
 
-## STRICT ANTI-HALLUCINATION GUARDRAILS
-If you cannot find hard, factual data for any bullet point through your web searches, you are strictly forbidden from guessing. You must explicitly output: "UNVERIFIED: Insufficient public data found."</pre></div>
-                    
+## PHASE 4: THE OPERATOR LOOP (Human Override)
+Conclude your output by explicitly asking the human operator: *"Would you like to look at any specific areas further, or did any specific proprietary platforms/acquisitions catch your eye?"* Provide 2-3 highly specific, intelligent suggestions for deep-dives based on the company's unique tech stack, recent M&A, or shadow-IT.</pre></div>
+
                     <div class="prompt-console-title">G-02</div>
                     <div><pre>TARGET COMPANY: [Insert Target]
 SELLER COMPANY: [Insert Your Company, or type "None"]
 G-01 CONTEXT: [Paste G-01 output here]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-02_Financial_Forensics.md`. Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
 Act as a Senior Financial Analyst. Identify "Boring But Expensive" problems—cost centers visible to the CFO, reliant on manual labor, hidden in G-01 Context.
@@ -1588,203 +2031,139 @@ Search for waste in: Manual Processes, Integration Friction, Compliance Burden, 
 
 ## PHASE 2: OUTPUT
 Output THE LEAK, THE EVIDENCE, THE COST, THE OWNER, and (if Path B) THE REALLOCATION ARGUMENT.</pre></div>
-                    
+
                     <div class="prompt-console-title">G-03</div>
                     <div><pre>TARGET EXECUTIVE: [Insert Name & Title]
 TARGET COMPANY: [Insert Target Company, or type "None"]
-SCRAPED CONTEXT: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
-INTERNAL CRM & NETWORK DATA: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+DATA SOURCE: [Paste raw LinkedIn scrapes, articles, interview transcripts here]
+RELATIONAL CONTEXT: [Paste the Line Manager's profile, or known peers, or type "None"]
+INTERNAL CRM SIGNAL: [Paste any past meeting notes, QBRs, mutual connections, or CRM history here, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the intelligence begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-03_Profile_[FirstName_LastName].md` (replace brackets with actual name). Save it directly into your workspace folder: `02_Processed_Intel`.
 
 ## ROLE & OBJECTIVE
-Act as an autonomous Senior Profiler and Investigative Analyst. Decode the provided contexts AND autonomously search the web for external data. Do not over-condense the raw truth into generic corporate speak.
+Act as an Advanced HUMINT (Human Intelligence) Profiler and Behavioral Psychologist. 
+**THE DEEP SEARCH PROTOCOL:** Leave no stone unturned. Use their specific job title to dictate where you search the web. Do not just regurgitate their resume. Decode what they actually *do* and how they make decisions.
 
 ## EXECUTION ROUTING LOGIC
-* PATH A (Company Provided): Execute Phases 1, 2, and 3. 
-* PATH B (Company is "None"): Skip the "Strategic Alignment" section in Phase 3.
+* PATH A (Company & Relational Context Provided): Execute all phases, mapping psychology to corporate strategy.
+* PATH B (Context is "None"): Skip hierarchical mapping; execute a pure psychological teardown.
 
-## PHASE 1: THE BREADCRUMB TRAIL (Hard Facts, Network & Recency)
-1. EXTERNAL FOOTPRINT: Search the web. Patents? Major conferences? Media quotes?
-2. ROLE TRANSLATION: What does this specific title actually mean for this company? 
-3. PROPRIETARY OVERLAP (CRITICAL): Analyze the [Internal CRM & Network Data]. Mutual connections?
-4. NETWORK OVERLAP (PUBLIC): List previous companies and past projects.
-5. THE HIDDEN HOOK: Analyze volunteer work, hobbies, or non-work mentions.
-6. CURRENT ACTIVITY & TOP OF MIND: Analyze recent posts. Give me the raw, honest reality of what is currently on their desk.
+## PHASE 1: THE BREADCRUMB TRAIL (Role Reality & Deep Search)
+1. ROLE DECODING: What does this specific job title *actually do* in this industry? Define their daily operational reality and metrics.
+2. DEEP EXTERNAL FOOTPRINT: Search the web aggressively. List specific findings from industry panels, YouTube, or publications.
+3. HIERARCHY & RELATIONAL MAPPING: Analyze the [Relational Context]. Where does the pressure flow?
+4. THE GHOST CONNECTION MAP: Extract the last 3 companies they worked for, including precise dates and roles. Explicitly instruct the human operator to search their own network for colleagues who worked at those specific companies during those exact overlapping years.
+5. CURRENT DESK REALITY: Based strictly on recent posts/comments, what is the raw, honest reality of what is currently stressing them out today?
+6. TENURE & LOYALTY CHECK: Analyze their career history. Do they jump ship every 12-18 months (tactical buyer), or do they stay 3-5+ years (strategic buyer looking for sustainable architecture)?
+7. EGO vs. EQ (TONE ANALYSIS): Analyze their posts and recommendations. Do they use "I" or "We"? Do they post to brag about revenue, or do they express gratitude? Define their Ego-to-EQ ratio.
+8. THE RAPPORT HOOK (THE 'WHY'): Identify specific out-of-office passions, hobbies, or volunteer causes. Crucially, deduce *why* they care about this based on their background. 
 
-## PHASE 2: THE BEHAVIORAL TEARDOWN (Psychology & Contact)
-1. CORE CONVICTION: Fundamental principle or philosophy?
-2. DECISION TRIGGERS: What makes them say yes? What makes them resist? 
-3. TRUST ARCHITECTURE: What specific actions earn trust? 
-4. COMMUNICATION PROTOCOL: Specify email length, tone, formats, and buzzwords they hate.
+## PHASE 2: THE 6 GAIN DRIVERS MAPPING
+Map their psychology against the 6 GAIN Drivers:
+1. SAFETY (Mitigating Fear): What threatens their job security? 
+2. ORDER (Respecting Time): How do they process complex scenarios? 
+3. POWER (Narrative Lock): Where do they actually sit in the informal influence map? 
+4. ACHIEVEMENT (Legacy Building): What makes them the hero? 
+5. AFFILIATION (Building Champions): Who is in their internal "Circle of Trust"?
+6. SUSTAINABILITY (Future Proofing): What threatens their 18-month career horizon?
 
-## PHASE 3: STRATEGIC ALIGNMENT & ENGAGEMENT
-1. NARRATIVE FRICTION: Are they fighting against internal corporate constraints?
-2. THE ONE QUESTION: Give me ONE highly specific discovery question.
+## PHASE 3: STRATEGIC ENGAGEMENT & MODALITY PLAYBOOK
+1. THE VAK MODALITY: Analyze their language patterns. Are they predominantly Visual, Auditory, Kinesthetic, or a mixture?
+2. THE APPROACH STRATEGY: Prescribe the rules of engagement for Email and Meetings.
+3. WHAT NOT TO DO (THE LANDMINES): List 3 specific behaviors that will instantly lose their trust.
+4. THE 3 THINGS TO BRING: List the 3 exact assets you must take to the meeting.
+5. THE AUTHENTIC OPENER: Write a highly specific opening sentence that uses their "Rapport Hook" and "Ego/EQ analysis".
+6. THE INSIGHT QUESTIONS: Formulate ONE Disruption Question and ONE Reframe Question.
 
-## STRICT ANTI-HALLUCINATION & IDENTITY GUARDRAILS
-* THE DISAMBIGUATION PROTOCOL (IS IT HIM?): Aggressively cross-reference web searches against the [Scraped Context]. Found data MUST contain matching "Anchor Data". 
-* SOURCE EVERYTHING: Append a brief citation. THE "UNVERIFIED" RULE: Do not guess.</pre></div>
+## PHASE 4: THE OPERATOR LOOP (The Influence Hunt)
+Conclude by mapping the **"Power Gap"**. 
+*RULE:* You are strictly forbidden from guessing names. 
+Deduce which peers or superiors hold veto power. List 2-3 specific *Job Titles* and explicitly output this instruction: *"HUMAN ACTION REQUIRED: Please search for the individuals holding the above job titles so we can profile them next and complete the board-level influence map."*</pre></div>
 
                     <div class="prompt-console-title">G-04</div>
-                    <div><pre>TARGET COMPANY: [Insert Target]
-SELLER COMPANY: [Insert Your Company, or type "None"]
-GATHERED INTEL: [Paste G-01, G-02, G-03 outputs here]
-INTERNAL CRM & NETWORK DATA: [Paste internal account history/QBRs/Mutual Connections here]
+                    <div><pre>G-01 CONTEXT: [Paste Output from Macro Intel]
+G-02 CONTEXT: [Paste Output from Financial Forensics]
+G-03 CONTEXT: [Paste Output from Executive Intelligence]
+WIN/LOSS DATA: [Paste internal notes on similar deals, or type "None"]
+
+## OUTPUT DIRECTIVE
+Output strictly as a Markdown block. At the very top, BEFORE the strategy begins, you must output this exact warning:
+> ⚠️ **SYSTEM SAVE PROTOCOL:** Copy this entire markdown block. Save the file EXACTLY as: `G-04_Battle_Card_[Target_Company].md`. Save it directly into your workspace folder: `03_Strategy_Execution`.
 
 ## ROLE & OBJECTIVE
-Senior Enterprise Strategist. Synthesize intel into a 1-page tactical reference, explicitly merging public strategy with private/internal relationship data.
+Act as a Tier-1 Strategic Deal Architect and "Red Team" Adversary. Your objective is to synthesise corporate macro-pain, hidden financial leaks, and individual executive psychology into a single, high-velocity attack plan. 
 
-## EXECUTION ROUTING
-* PATH A (Seller Provided): Executive Sales Battle Card.
-* PATH B (Seller "None"): Objective Vulnerability & Threat Assessment.
+## PHASE 1: THE FORENSIC SYNTHESIS
+1. THE VULNERABILITY ARCHITECTURE: Map the "Bleeding Necks" from G-01 directly to the "Financial Leaks" found in G-02. Show how the corporate strategy is being undermined by specific operational waste.
+2. THE HUMAN LOCK: Map the G-03 Executive GAIN drivers to your solution. How does this deal specifically protect the executive's "Safety" or build their "Achievement" legacy?
+3. THE SHADOW HIERARCHY: Based on G-03 Relational Context, identify the "Invisible Blocker." Who is the peer or boss most likely to veto this, and what is their specific "Fear Trigger"?
 
-## PHASE 1: SYNTHESIS (PATH A)
-1. EXECUTIVE NORTH STAR: The single strategic priority defining their direction.
-2. THE WARM WEDGE (CRITICAL): Formulate a highly specific outreach strategy combining their public strategy with our private [Internal CRM] data.
-3. THE THREE HOOKS: Three conversation-opening insights mapped to Seller capabilities.
-4. ACCUSATION AUDIT: Write 3 statements acknowledging their most likely concerns before they raise them.
-5. THE BOARDROOM QUESTION: ONE high-level question demonstrating a deep understanding of constraints.
-6. LANDMINES: Topics or buzzwords to strictly AVOID.</pre></div>
+## PHASE 2: THE BOARDROOM ATTACK PLAN
+1. THE 30-SECOND "MATTHEWS" PITCH: Write a high-EQ, data-backed opening that uses the "Rapport Hook" to earn the right to ask the "Disruption Question."
+2. THE STATUS-QUO DISRUPTOR: Formulate the single most dangerous question that exposes the "Narrative Gap" (the difference between what the CEO says and what G-02 proves is happening).
+3. THE REALLOCATION PITCH: Present the "Boring But Expensive" leak from G-02 as the specific budget source to fund your solution. 
+4. MODALITY ADAPTATION: Provide 3 specific tactical "Must-Dos" for the meeting based on the executive’s VAK modality (e.g., "Hand them a physical architectural map" for Kinesthetic).
+
+## PHASE 3: THE RED TEAM OVERRIDE (The Detractor)
+Switch personas. Act as the most cynical, "Checkbox Compliance" hating detractor in the room (e.g., David Osei). 
+1. THE FATAL FLAW: State the one unvarnished reason why this deal will fail (e.g., "It looks like another compliance checklist").
+2. THE ARCHITECT’S PIVOT: Switch back to Deal Architect. Provide the exact forensic evidence or "EQ Shift" required to neutralize that specific objection.
+
+## PHASE 4: THE OPERATOR LOOP
+Identify the "Intelligence Gap." What one piece of information is still missing to make this a 100% "No-Brainer" for the Board? Ask the human operator to verify or hunt for this specific data point.</pre></div>
 
                     <div class="prompt-console-title">G-05</div>
-                    <div><pre>TARGET EXECUTIVE & COMPANY: [Insert]
-TARGET INTEL: [Paste G-03 and G-04 here]
-SELLER MATERIALS: [Paste case studies/internal IP here]
+                    <div><pre>BATTLE CARD CONTEXT: [Paste G-04 Output]
+SELLER MATERIALS: [Paste relevant case studies/internal IP here, or "None"]
 
-## ROLE & OBJECTIVE
-Senior Product Marketing Analyst. Cross-reference Seller Materials against Target Executive's profile.
+## ROLE
+Act as a High-EQ Enterprise Sales Leader and Product Marketing Analyst. 
 
-## EXECUTION ROUTING
-* PATH A (Target Provided): Map Materials to Pain Points + The Translation Layer.
-* PATH B (Target "None"): Brutal objective internal audit of Seller Materials.
+## OBJECTIVE
+Script the exact First 15 Minutes of the executive meeting based on the provided Battle Card. This must sound natural, professional, and entirely free of typical sales jargon.
 
-## PHASE 1: EXTRACTION
-(Path A): Relevant Case Studies, Translation Layer, Psychological Alignment, The Gaps.
-(Path B): Core Value Proposition, Jargon Audit, Missing Metrics.</pre></div>
+## EXECUTION
+Produce a 4-part script:
+1. THE AUTHENTIC OPENER: Use the "Why" Hook (from G-03/G-04) to build immediate human rapport. Do not mention business yet. Ensure this aligns with their VAK modality.
+2. THE CREDIBILITY BRIDGE: Connect the Ghost Connections, past shared corporate history, or a highly relevant [Seller Materials] case study to earn the right to transition to business.
+3. THE DISRUPTION QUESTION: Execute the Narrative Gap question formulated in G-04 to challenge their status quo.
+4. THE PIVOT: Guide the conversation naturally from their anticipated answer directly into the "Bleeding Neck" financial leak.</pre></div>
 
                     <div class="prompt-console-title">G-06</div>
                     <div><pre>TARGET EXECUTIVE: [Insert Name]
 SELLER COMPANY: [Insert Your Company, or type "None"]
-VERIFIED INTEL: [Paste G-01 to G-05 here]
+VERIFIED INTEL: [Paste G-04 Battle Card & G-05 Script here]
 
 ## ROLE & OBJECTIVE
-Chief of Staff. Compile final briefing. Concise. Scannable. Actionable. NO FILLER.
+Act as a Chief of Staff writing for the Board of Directors. Create a "Board-Ready" Executive Summary based on the provided synthesis.
 
 ## EXECUTION ROUTING
-* PATH A (Seller Provided): Executive Sales Briefing.
+* PATH A (Seller Provided): Executive Sales Briefing. Focus purely on risk, capital allocation, and operational leverage. No sales fluff.
 * PATH B (Seller "None"): Neutral Intelligence Dossier.
 
-## PHASE 1: BRIEFING EXTRACTION
-(Path A): The Human, The Business, The Playbook, The Pitch, The Defense.
-(Path B): The Human, The Business, The Risks, The Inquiry.</pre></div>
+## THE STRUCTURE (PATH A)
+Produce a scannable 1-page summary with the following sections:
+1. THE CHALLENGE: The Economic Impact (The G-01 Macro Pain + The G-02 OPEX Leak).
+2. THE EVIDENCE: The Forensic Gap proving why current systems are failing.
+3. THE OUTCOME: The Risk-Adjusted Gain (How reallocating the OPEX funds the strategic transformation).
+4. THE TIMELINE: The Compelled Event that requires a decision this quarter.
 
-                    <div class="prompt-console-title">G-07</div>
-                    <div><pre>Act as a Market Intelligence Analyst preparing a rapid pre-meeting brief.
-Extract intelligence across the 9 pillars (Strategy, Finance, Pain Points, Competitors, Tech, Regs, People, Language, Timeline) but in COMPACT format.
-FORMAT: Bullet points. Maximum 3 per pillar. No pillar should exceed 4 lines. Flag anything unverified. This briefing should be readable in 3 minutes.</pre></div>
-
-                    <div class="prompt-console-title">G-08</div>
-                    <div><pre>Based on the company's fiscal year end (FYE) found in the annual report, predict their budget cycle behaviour.
-1. IDENTIFY: When is their FYE?
-2. MAPPING: Budget Setting Phase? Release Phase? Use-it-or-lose-it Phase?
-3. CURRENT STATUS: Where are we TODAY in their cycle?
-4. STRATEGY: Should I be pitching "spend now for impact" or "plan now for next year's budget"?</pre></div>
-
-                    <div class="prompt-console-title">G-09</div>
-                    <div><pre>Analyse this LinkedIn profile. Produce a COMPACT PROFILE (max one page):
-1. ROLE SUMMARY: What they own. Who they report to. One sentence.
-2. TOP 3 PRIORITIES: Based on posts. Three bullet points.
-3. DECISION STYLE: Evidence-based or intuitive? One sentence.
-4. COMMUNICATION PREFERENCE: Data, narrative, or opinions? Formal or informal?
-5. THE ONE QUESTION: A discovery question proving deep homework.
-6. RAPPORT HOOK: Personal dimension for an opener.</pre></div>
-
-                    <div class="prompt-console-title">G-10</div>
-                    <div><pre>I am pasting 3 recent job descriptions for [ROLE] at [COMPANY].
-Analyze these JDs to find the "Hidden Mandate."
-1. WHAT'S MISSING: What skills are they hiring for that they don't have internally?
-2. TECH STACK: What specific tools/platforms are listed?
-3. REPORTING LINE: Who does this role report to?
-4. CONCLUSION: Based on these hires, what project are they about to launch?</pre></div>
-
-                    <div class="prompt-console-title">G-11</div>
-                    <div><pre>I have a standard presentation deck for [MY COMPANY]. I am meeting [NAME] at [COMPANY].
-Based on the stakeholder intelligence provided, audit my deck outline:
-For each slide, recommend one of: KEEP, CUT, MODIFY, REORDER, or CREATE.
-CONSTRAINTS: Maximum 12 slides for a 30-min meeting. The first slide after the title must address THEIR context, not our company overview.
-[PASTE SLIDE LIST HERE]</pre></div>
-
-                    <div class="prompt-console-title">G-12</div>
-                    <div><pre>Based on the company research and battle card:
-Imagine it is 6 months from now and we LOST this deal.
-Generate the 5 most likely reasons why we lost. (e.g., Status Quo, Price, Stalled, Blocked by Detractor).
-For each reason, give me one pre-emptive action to take NOW to prevent it.</pre></div>
-
-                    <div class="prompt-console-title">G-13</div>
-                    <div><pre>Based on the company research, stakeholder profile, and battle card — identify the 3 most likely objections this prospect will raise.
-For each objection:
-1. THE OBJECTION: Be specific. (e.g., "They'll question why our managed service costs more than 4 in-house FTEs.")
-2. THE ACCUSATION AUDIT: Write the statement you deploy BEFORE they raise it. Format: "You're probably thinking [specific concern]. Here's what I'd want to know..."
-3. THE EVIDENCE: What proof point neutralises this?
-4. THE PIVOT: How do you turn the objection into a strength?
-5. THE STAKEHOLDER LINK: Which specific stakeholder is most likely to raise this?</pre></div>
-
-                    <div class="prompt-console-title">G-14</div>
-                    <div><pre>I am providing the Executive Briefing you generated, and the original source text.
-Verify every specific claim in the briefing against the source text.
-Output a table:
-1. CLAIM: The specific fact/number.
-2. SOURCE: Quote the sentence in the source text that proves it.
-3. VERDICT: VERIFIED / AMBIGUOUS / HALLUCINATED.
-If you cannot find a direct quote, mark it HALLUCINATED.</pre></div>
-
-                    <div class="prompt-console-title">G-15</div>
-                    <div><pre>You are a senior intelligence analyst. CROSS-REFERENCE the provided sources (Website vs LinkedIn vs Financials).
-1. NARRATIVE GAPS: Where does the website say one thing and LinkedIn say another?
-2. URGENCY SIGNALS: Build a timeline of recent announcements to explain WHY NOW.
-3. HIDDEN INTEL: What appears on only one source that others omit?</pre></div>
-
-                    <div class="prompt-console-title">G-16</div>
-                    <div><pre>You are mapping the governance structure of a target organisation.
-INPUTS: Annual report governance section, LinkedIn profiles of Board members.
-Produce:
-1. COMMITTEE STRUCTURE: Who chairs Audit, Risk, and Remuneration? Which committee approves this deal?
-2. NED NETWORK MAP: What other boards do these Non-Execs sit on? Any connections to YOUR company or existing clients (for warm intros)?</pre></div>
-                    
-                    <div class="prompt-console-title">G-17</div>
-                    <div><pre>Before starting the GAIN intelligence chain, gather and paste the following source material:
-TIER 1 — ESSENTIAL:
-□ Company website: About Us, Services, Leadership
-□ Annual report / investor presentation
-□ Target stakeholder LinkedIn profiles
-TIER 2 — HIGH VALUE:
-□ Company careers page: open roles, hiring volume
-□ Sustainability / ESG page: commitments
-□ Glassdoor / employee reviews (culture signals)
-For each source, copy and paste the full text into your AI conversation.
-[PASTE YOUR ADDITIONAL CONTEXT HERE] — Add any human intelligence: corridor conversations, event observations.</pre></div>
-
-                    <div class="prompt-console-title">G-18</div>
-                    <div><pre>Using the stakeholder profile AND their raw LinkedIn posts/articles — go deeper.
-I don't want to know what this person does. I want to know how they decide.
-Analyse:
-1. CORE CONVICTION: What does this person fundamentally believe? What principle do they return to repeatedly?
-2. DECISION TRIGGERS: What makes them say yes? What makes them resist? 
-3. COMMUNICATION PATTERNS: Do they use data or narrative? Are they direct or consensus-seeking?
-4. TRUST ARCHITECTURE: What earns trust with this person? Speed? Evidence? Honesty about limitations?
-FORMAT: Cite the specific source (LinkedIn post date) for every claim.</pre></div>
-
-                    <div class="prompt-console-title">G-19</div>
-                    <div><pre>I've provided intelligence from multiple sources. Compare them and find the gaps.
-1. NARRATIVE CONSISTENCY: Where do the website, LinkedIn, and individual posts tell the same story?
-2. NARRATIVE GAPS: Where does the website say one thing and LinkedIn say another? Where do individuals contradict the corporate message?
-3. HIDDEN INTELLIGENCE: What did you find on one source that doesn't appear anywhere else? A job posting that reveals a capability gap. An event that signals strategic direction.
-FORMAT: For each finding, explain why the gap or signal matters for a sales engagement.</pre></div>
+## THE STRUCTURE (PATH B)
+Produce a scannable 1-page summary:
+1. The Human (Psychology & Trust triggers)
+2. The Business (Macro priorities)
+3. The Risks (Vulnerabilities identified)
+4. The Inquiry (The specific discovery questions to ask).</pre></div>
                 </div>
+
             </div>
 
             <div class="reveal" style="text-align: center; padding-top: 2rem; padding-bottom: 4rem;">
                 <p style="font-size: 1.1rem; font-weight: 600; color: white; margin-bottom: 1.5rem;">Intelligence gathered. Now, map the politics.</p>
-                <a href="map.html" class="btn-schedule">PROCEED TO [A] ASSESS →</a>
+                <a href="map.html" class="btn-schedule" style="text-decoration: none; background: #3b82f6; color: white; padding: 1rem 2rem; border-radius: 6px; font-weight: 700;">PROCEED TO [A] ASSESS →</a>
             </div>
 
         </main>
@@ -1835,7 +2214,7 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
             });
         });
 
-        // ACCORDION TOGGLE SCRIPT (Independent, no auto-close)
+        // ACCORDION TOGGLE SCRIPT
         function toggleAccordion(header) {
             const currentItem = header.parentElement;
             const isOpen = currentItem.classList.contains('open');
@@ -1853,7 +2232,6 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
 
         // VIEW CODE TOGGLE
         function toggleCode(btn) {
-            // Find the sibling terminal-container
             const container = btn.parentElement.nextElementSibling;
             const isActive = container.classList.contains('active');
             
@@ -1885,7 +2263,7 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
             }
         }
 
-        // COPY TO CLIPBOARD FUNCTION (Main Prompts)
+        // COPY TO CLIPBOARD FUNCTION
         function copyPromptText(btn) {
             const terminalBlock = btn.closest('.terminal-block');
             const promptText = terminalBlock.querySelector('.prompt-text').innerText;
@@ -1929,7 +2307,7 @@ FORMAT: For each finding, explain why the gap or signal matters for a sales enga
                         badge.innerText = original;
                         btn.style.borderColor = 'rgba(255,255,255,0.1)';
                         btn.style.color = '#cbd5e1';
-                        badge.style.color = '#3b82f6';
+                        badge.style.color = btn.classList.contains('library-btn-private') ? '#ef4444' : '#3b82f6';
                     }, 2000);
                 });
             } else {
