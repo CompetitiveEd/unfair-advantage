@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIN | Master Dashboard Compiler</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0b1120; color: #cbd5e1; font-family: 'Inter', sans-serif; margin: 0; padding: 3rem; }
+        * { box-sizing: border-box; }
+        h1, h2, h3, h4 { margin-top: 0; }
+        
+        .compiler-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 400px 1fr; gap: 3rem; }
+
+        /* Left Panel - Selection */
+        .panel { background: #0f172a; border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .panel-header { font-family: monospace; font-size: 0.85rem; font-weight: 700; color: #60a5fa; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+        
+        /* Scanner Button */
+        .scan-box { background: rgba(59,130,246,0.05); border: 1px dashed #3b82f6; border-radius: 6px; padding: 1.5rem; text-align: center; margin-bottom: 2rem; }
+        .scan-label { display: inline-block; background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.2s; }
+        .scan-label:hover { background: #2563eb; }
+        input[type="file"] { display: none; }
+        .scan-hint { font-family: monospace; font-size: 0.7rem; color: #64748b; margin-top: 1rem; display: block; }
+
+        /* Dynamic Checkboxes */
+        .form-group { margin-bottom: 1rem; padding: 1rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; }
+        .checkbox-label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: white; margin-bottom: 0.25rem; }
+        .checkbox-label input { width: 16px; height: 16px; accent-color: #3b82f6; cursor: pointer; }
+        .file-hint { font-family: monospace; font-size: 0.65rem; color: #64748b; margin-left: 1.75rem; display: block; }
+        
+        .empty-state { font-family: monospace; font-size: 0.8rem; color: #64748b; text-align: center; padding: 2rem 0; }
+
+        /* Right Panel - Code Output */
+        .code-panel { display: flex; flex-direction: column; }
+        .code-area { background: #000; border: 1px solid rgba(255,255,255,0.1); border-radius: 6px; padding: 1.5rem; font-family: monospace; font-size: 0.85rem; color: #34d399; line-height: 1.6; flex: 1; resize: none; width: 100%; outline: none; }
+        
+        .action-bar { display: flex; justify-content: flex-end; margin-top: 1rem; }
+        .btn-copy { background: #10b981; border: none; color: white; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; transition: 0.2s; }
+        .btn-copy:hover { background: #059669; }
+        .btn-copy:disabled { background: #334155; color: #94a3b8; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <div class="compiler-container">
+        
+        <div class="panel">
+            <div class="panel-header">1. Target Directory Scan</div>
+            
+            <div class="scan-box">
+                <label class="scan-label">
+                    Scan Account Folder
+                    <input type="file" id="folderInput" webkitdirectory directory multiple onchange="scanFolder(event)">
+                </label>
+                <span class="scan-hint">Select the folder containing your .md intelligence files.</span>
+            </div>
+
+            <div class="panel-header">2. Select Components to Render</div>
+            <div id="fileList">
+                <div class="empty-state">Waiting for folder scan...</div>
+            </div>
+        </div>
+
+        <div class="panel code-panel">
+            <div class="panel-header">3. Master LLM Ticket</div>
+            <textarea id="promptOutput" class="code-area" readonly placeholder="Your AI prompt will generate here once you scan a folder and select files..."></textarea>
+            
+            <div class="action-bar">
+                <button id="copyBtn" class="btn-copy" onclick="copyPrompt()" disabled>Copy Ticket to Clipboard</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let discoveredFiles = [];
+
+        function scanFolder(event) {
+            const files = event.target.files;
+            const fileListDiv = document.getElementById('fileList');
+            fileListDiv.innerHTML = '';
+            discoveredFiles = [];
+
+            let foundFiles = false;
+
+            for (let i = 0; i < files.length; i++) {
+                const fileName = files[i].name;
+                
+                // Only process .md files that start with G-
+                if (fileName.endsWith('.md') && fileName.startsWith('G-')) {
+                    foundFiles = true;
+                    let displayName = fileName;
+                    let type = '';
+
+                    // Make the display names pretty based on our naming convention
+                    if (fileName.includes('G-01')) {
+                        displayName = '[VP-01] Macro Strategy Radar';
+                        type = 'G01';
+                    } else if (fileName.includes('G-02')) {
+                        displayName = '[VP-02] Financial Forensics';
+                        type = 'G02';
+                    } else if (fileName.includes('G-03')) {
+                        // Extract the name: G-03_Profile_Jennifer_Morris.md -> Jennifer Morris
+                        let execName = fileName.replace('G-03_Profile_', '').replace('.md', '').replace(/_/g, ' ');
+                        displayName = `[VP-03] Executive Dossier: ${execName}`;
+                        type = 'G03';
+                    }
+
+                    discoveredFiles.push({ filename: fileName, displayName: displayName, type: type });
+
+                    // Generate the HTML for the checkbox
+                    const group = document.createElement('div');
+                    group.className = 'form-group';
+                    group.innerHTML = `
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="file-checkbox" value="${fileName}" data-display="${displayName}" checked onchange="generatePrompt()">
+                            ${displayName}
+                        </label>
+                        <span class="file-hint">Source: ${fileName}</span>
+                    `;
+                    fileListDiv.appendChild(group);
+                }
+            }
+
+            if (!foundFiles) {
+                fileListDiv.innerHTML = `<div class="empty-state" style="color:#ef4444;">No G-Series .md files found in this folder.</div>`;
+                document.getElementById('promptOutput').value = '';
+                document.getElementById('copyBtn').disabled = true;
+            } else {
+                generatePrompt();
+                document.getElementById('copyBtn').disabled = false;
+            }
+        }
+
+        function generatePrompt() {
+            const checkboxes = document.querySelectorAll('.file-checkbox:checked');
+            
+            if (checkboxes.length === 0) {
+                document.getElementById('promptOutput').value = 'Please select at least one file to render.';
+                return;
+            }
+
+            let prompt = `## ROLE & OBJECTIVE\n`;
+            prompt += `Act as a Senior UI/UX Front-End Developer. I will provide a ZIP file containing local Markdown intelligence files. Your objective is to render a single-file, self-contained HTML/CSS dashboard (The GAIN Account Pack) based strictly on my selections below.\n\n`;
+            
+            prompt += `## REQUIRED DASHBOARD COMPONENTS:\n`;
+            checkboxes.forEach(cb => {
+                prompt += `- ${cb.getAttribute('data-display')} (Source: ${cb.value})\n`;
+            });
+
+            prompt += `\n## DESIGN SYSTEM STRICT CONSTRAINTS:\n`;
+            prompt += `1. AESTHETIC: Brutalist, Dark Mode, Terminal Interface.\n`;
+            prompt += `2. COLORS: Background (#0b1120), Cards (#0f172a), Borders (rgba(59,130,246,0.3)). Accents: Critical/Trigger (#ef4444), Trust/Fund (#10b981), Neutral (#3b82f6).\n`;
+            prompt += `3. TYPOGRAPHY: 'Inter' sans-serif for body, strictly 'monospace' for terminal labels, tags, and citations.\n`;
+            prompt += `4. OUTPUT FORMAT: Output ONLY the raw, complete HTML code block. Embed all CSS within the <style> tags in the <head>. Do not output partial code.\n\n`;
+
+            prompt += `## DATA INGESTION PROTOCOL:\n`;
+            prompt += `Read the requested markdown files from the attached ZIP. Extract the exact numbers, quotes, triggers, and hooks, and map them into the CSS grid components. Ensure all sources are cited visually using. Do not hallucinate data.\n\n`;
+            
+            prompt += `## EXECUTION PROTOCOL:\n`;
+            prompt += `I am uploading a ZIP file now. Read it, extract the data from the selected files above, and EXECUTE BUILD.`;
+
+            document.getElementById('promptOutput').value = prompt;
+        }
+
+        function copyPrompt() {
+            const copyText = document.getElementById("promptOutput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = "COPIED TO CLIPBOARD!";
+            setTimeout(() => {
+                btn.innerText = "Copy Ticket to Clipboard";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
