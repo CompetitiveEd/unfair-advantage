@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-gray-950 text-gray-100 font-sans">
+<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="David Matthews | The GAIN Methodology. The Revenue Case and Implementation Arc.">
     <title>David Matthews | The Revenue Case</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    colors: {
+                        primary: 'oklch(0.72 0.14 240)',
+                        success: 'oklch(0.78 0.13 150)',
+                        warning: 'oklch(0.75 0.15 80)',
+                        danger: 'oklch(0.68 0.16 30)',
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
@@ -22,12 +30,16 @@
             }
         }
     </script>
+
     <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: rgb(59 130 246 / 0.5); color: white; }
+
         .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
         .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
         .reveal.slide-left.active { transform: translateX(0) scale(1); }
-        
         .dur-600 { transition-duration: 600ms; }
         .dur-700 { transition-duration: 700ms; }
         .dur-800 { transition-duration: 800ms; }
@@ -35,304 +47,326 @@
         .dur-1000 { transition-duration: 1000ms; }
         .dur-1100 { transition-duration: 1100ms; }
 
-        .dropdown-menu { display: none; }
-        .group:hover .dropdown-menu { display: block; }
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.4); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
+            border-radius: 1rem;
+        }
+
+        main h1 { font-size: clamp(3rem, 7vw, 5rem); line-height: 1.1; }
+        main h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; margin-bottom: 1rem; }
+        main h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 700; margin-bottom: 0.75rem; }
+        main p { font-size: 1rem; line-height: 1.5; margin-bottom: 1rem; color: #d1d5db; }
+
+        .radial-item {
+            --tx: 0px;
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 70px; 
+            height: 70px;
+            margin-left: -35px;
+            margin-top: -35px;
+            background: rgba(23, 23, 23, 0.92); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 9999px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            font-weight: 600; 
+            text-align: center; 
+            padding: 6px;
+            opacity: 0; 
+            transform: translate(var(--tx), 0) scale(0);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .radial-item:hover { 
+            transform: translate(var(--tx), 0) scale(1.12) !important; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6); 
+        }
+        .radial-toggle:checked ~ .radial-items .radial-item { 
+            opacity: 1; 
+            transform: translate(var(--tx), 0) scale(1); 
+        }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-neutral-950 text-neutral-100 antialiased">
 
-<nav class="bg-gray-800 text-green-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-lg text-sm md:text-base font-medium">
-    <a href="newindex.html" class="hover:text-white transition-colors">Home</a>
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+
+    <a href="index.html" class="hover:text-white transition-colors">Home</a>
     <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
     <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
-    <div class="relative group cursor-pointer pb-1">
-        <span class="hover:text-white transition-colors flex items-center gap-1">The System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-52 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            <a href="newedge.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">How It's Built</a>
-            <a href="newstory.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors border-b border-gray-700/50">The Story</a>
-            <a href="newknow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Gather [Know]</a>
-            <a href="newmap.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Assess [Map]</a>
-            <a href="newwin.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Influence [Win]</a>
-            <a href="newgrow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400 border-b border-gray-700/50">Nurture [Grow]</a>
-            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Dashboards</a>
+    <div class="relative pb-1 radial-menu">
+        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
+        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
+            GAIN <span class="text-xs opacity-70">▾</span>
+        </label>
+
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="newknow.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-3xl font-black text-blue-400">G</span>
+                <span class="text-xs text-blue-300 mt-1 font-medium">Gather</span>
+            </a>
+            <a href="newmap.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-3xl font-black text-violet-400">A</span>
+                <span class="text-xs text-violet-300 mt-1 font-medium">Assess</span>
+            </a>
+            <a href="newwin.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-3xl font-black text-amber-400">I</span>
+                <span class="text-xs text-amber-300 mt-1 font-medium">Influence</span>
+            </a>
+            <a href="newgrow.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-3xl font-black text-emerald-400">N</span>
+                <span class="text-xs text-emerald-300 mt-1 font-medium">Nurture</span>
+            </a>
         </div>
     </div>
 
-    <a href="newengage.html" class="hover:text-yellow-300 transition-colors font-bold text-yellow-400">Engage</a>
+    <div class="relative group cursor-pointer pb-1 h-full flex items-center">
+        <span class="hover:text-white transition-colors flex items-center gap-1">System ▾</span>
+        <div class="dropdown-menu absolute left-0 top-full w-72 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-150">
+            <a href="newedge.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">Why It Works</a>
+            <a href="newarchitecture.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">How It's Built</a>
+            <a href="newstory.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm border-b border-white/5">The Story</a>
+            <a href="newdashboards.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm font-medium">Dashboards</a>
+        </div>
+    </div>
+
+    <a href="newengage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
 
-<div class="pt-20 md:pt-24 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <header class="mb-10 md:mb-14">
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-10">
-            
-            <div class="lg:col-span-3">
-                <div class="text-sm text-gray-500 font-mono tracking-widest uppercase mb-4 flex items-center gap-3 reveal">
-                    <span class="text-white font-bold tracking-wider">The Revenue Case</span>
-                    <span class="text-gray-600">|</span>
-                    <span class="text-red-400 font-bold flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
-                        Judgment is the last £m skill.
-                    </span>
-                </div>
-
-                <h1 class="reveal text-3xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-5">
-                    <span class="text-white block">DON'T TRANSFORM.</span>
-                    <span class="text-blue-500 block mt-1">JUST WIN ONE DEAL.</span>
-                </h1>
-
-                <p class="reveal text-base md:text-lg text-gray-300 max-w-xl mb-5 leading-relaxed font-medium">
-                    Tools don't close deals. Trained sellers don't close deals. Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.
-                </p>
-
-                <p class="reveal text-base text-red-400/80 font-bold mb-6">
-                    Same tools as everyone else. Same AI. The execution gap isn't technology. It's people.
-                </p>
-
-                <div class="reveal">
-                    <a href="newengage.html" class="inline-flex items-center gap-3 bg-yellow-500/10 border border-yellow-500/50 px-6 py-3 text-yellow-400 font-bold text-base rounded-lg shadow-lg hover:bg-yellow-500/20 hover:border-yellow-400 transition-all duration-300">
-                        Test it on a live deal → <span class="font-black">Engage</span>
-                    </a>
-                </div>
+    <header class="mb-12 glass-panel rounded-2xl overflow-hidden relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-neutral-900/80 to-neutral-950 opacity-90"></div>
+        <div class="relative z-10 p-8 md:p-12">
+            <div class="text-sm text-neutral-500 font-mono tracking-widest uppercase mb-6 flex items-center gap-3">
+                <span class="text-white font-bold tracking-wider">The Revenue Case</span>
+                <span class="text-neutral-600">|</span>
+                <span class="text-neutral-300 font-medium">Judgment is the last £m skill.</span>
             </div>
 
-            <div class="lg:col-span-2 flex flex-col gap-3">
-                <div class="reveal dur-700 bg-gray-800/95 border border-gray-700 rounded-lg p-5 shadow-xl hover:border-blue-500/50 transition-colors">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-extrabold text-gray-400 uppercase tracking-widest block mb-1">Pipeline Velocity</span>
-                            <div class="text-3xl font-black text-white leading-none">3x <span class="text-blue-500 text-lg font-bold ml-1">Speed</span></div>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-2"><a href="newproof.html" class="text-blue-400 hover:underline">Case 03</a> — unlocking latent team capability, stripping dead deals.</p>
-                </div>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight text-white mb-8">
+                <span class="block">DON'T TRANSFORM.</span>
+                <span class="block text-blue-400">JUST WIN ONE DEAL.</span>
+            </h1>
 
-                <div class="reveal dur-900 bg-gray-800/95 border border-gray-700 rounded-lg p-5 shadow-xl hover:border-emerald-500/50 transition-colors">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-extrabold text-gray-400 uppercase tracking-widest block mb-1">ACV Increase</span>
-                            <div class="text-3xl font-black text-white leading-none">+22% <span class="text-emerald-500 text-lg font-bold ml-1">Lift</span></div>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-2"><a href="newproof.html" class="text-blue-400 hover:underline">Case 01</a> — shifting narrative from technical features to risk mitigation.</p>
-                </div>
+            <p class="text-lg md:text-xl text-neutral-300 max-w-3xl mb-6 leading-relaxed font-medium">
+                Tools don't close deals. Trained sellers don't close deals. Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.
+            </p>
 
-                <div class="reveal dur-1100 bg-gray-800/95 border border-gray-700 rounded-lg p-5 shadow-xl hover:border-red-500/50 transition-colors">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="text-xs font-extrabold text-gray-400 uppercase tracking-widest block mb-1">Cost of Sale</span>
-                            <div class="text-3xl font-black text-white leading-none">-40% <span class="text-red-500 text-lg font-bold ml-1">Drop</span></div>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-2"><a href="newproof.html" class="text-blue-400 hover:underline">Case 02</a> — intelligence compressed from weeks to hours.</p>
-                </div>
+            <p class="text-base md:text-lg text-neutral-400 mb-8">
+                Same tools as everyone else. Same AI. The execution gap isn't technology. It's people.
+            </p>
 
-                <div class="reveal dur-1100 bg-gray-950/60 border border-gray-800 rounded-lg p-5 shadow-inner">
-                    <p class="text-sm text-gray-300 leading-relaxed font-medium">
-                        Most operating partners apply generic playbooks. <span class="text-white font-bold">GAIN is one operating system applied to the three things that actually move enterprise value.</span>
-                    </p>
-                </div>
-            </div>
+            <a href="newengage.html" class="inline-flex items-center gap-3 bg-amber-500/10 border border-amber-500/50 px-8 py-4 text-amber-400 font-bold text-lg rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] transition-all duration-300 hover:-translate-y-1">
+                Test it on a live deal → Engage
+            </a>
         </div>
     </header>
 
-    <main>
-
-        <div class="mb-10 md:mb-14 reveal">
-            <div class="bg-gray-950/80 border border-red-900/30 rounded-lg p-5 md:p-6">
-                <h2 class="text-xs font-black text-red-500 uppercase tracking-widest mb-4">The Cost of Inaction</h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="border-l-2 border-red-500/50 pl-3">
-                        <h3 class="text-sm font-black text-white">Stagnated portfolios.</h3>
-                    </div>
-                    <div class="border-l-2 border-red-500/50 pl-3">
-                        <h3 class="text-sm font-black text-white">Sellers commoditised.</h3>
-                    </div>
-                    <div class="border-l-2 border-red-500/50 pl-3">
-                        <h3 class="text-sm font-black text-white">Flat margins.</h3>
-                    </div>
-                    <div class="border-l-2 border-red-500/50 pl-3">
-                        <h3 class="text-sm font-black text-white">Zombie assets.</h3>
-                    </div>
-                </div>
-                <p class="text-sm text-red-400 font-bold mt-4">Every quarter the execution gap widens, your best people burn on dead deals.</p>
-            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <div class="glass-panel rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300">
+            <div class="text-xs text-neutral-500 uppercase tracking-widest font-bold mb-2">Pipeline Velocity</div>
+            <div class="text-4xl font-black text-white mb-2">3x <span class="text-blue-400 text-2xl">Speed</span></div>
+            <p class="text-sm text-neutral-400">Case 03 — unlocking latent team capability, stripping dead deals.</p>
         </div>
 
-        <div class="mb-10 md:mb-14 reveal">
-            <div class="flex items-center gap-4 mb-5">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-gray-500 uppercase">The Implementation Arc</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-gray-900/60 border border-gray-800 border-t-2 border-t-blue-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-2">01. Prove It <span class="text-gray-500 font-normal text-xs">(Day 1-30)</span></h3>
-                    <p class="text-sm text-gray-300 leading-relaxed">One live deal. High stakes, stalling or at risk. Map the hidden stakeholders. Rewrite the executive narrative. Close it. That's not training. That's licence to believe.</p>
-                </div>
-                <div class="bg-gray-900/60 border border-gray-800 border-t-2 border-t-purple-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-2">02. Codify It <span class="text-gray-500 font-normal text-xs">(Day 30-60)</span></h3>
-                    <p class="text-sm text-gray-300 leading-relaxed">The win becomes the playbook. AI-assisted intelligence, stakeholder mapping, narrative architecture — built for your proposition. A pilot pod runs the next deal independently. If they can't, the methodology failed.</p>
-                </div>
-                <div class="bg-gray-900/60 border border-gray-800 border-t-2 border-t-emerald-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-2">03. Scale It <span class="text-gray-500 font-normal text-xs">(Day 60-90+)</span></h3>
-                    <p class="text-sm text-gray-300 leading-relaxed">Intelligence gathering drops from weeks to 20 minutes. Dead bids killed in week one, not quarter three. Cost of sale falls. Deal size rises.</p>
-                </div>
-            </div>
+        <div class="glass-panel rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300">
+            <div class="text-xs text-neutral-500 uppercase tracking-widest font-bold mb-2">ACV Increase</div>
+            <div class="text-4xl font-black text-white mb-2">+22% <span class="text-emerald-400 text-2xl">Lift</span></div>
+            <p class="text-sm text-neutral-400">Case 01 — shifting narrative from technical features to risk mitigation.</p>
         </div>
 
-        <div class="mb-10 md:mb-14 reveal dur-700 bg-gray-900/60 border border-gray-800 rounded-xl p-5 md:p-6 shadow-xl">
-            <h2 class="text-base font-black text-white uppercase tracking-tight mb-4 border-b border-gray-800 pb-3">Worked Example: The 35-Day Sprint</h2>
+        <div class="glass-panel rounded-2xl p-6 hover:-translate-y-1 transition-all duration-300">
+            <div class="text-xs text-neutral-500 uppercase tracking-widest font-bold mb-2">Cost of Sale</div>
+            <div class="text-4xl font-black text-white mb-2">-40% <span class="text-red-400 text-2xl">Drop</span></div>
+            <p class="text-sm text-neutral-400">Case 02 — intelligence compressed from weeks to hours.</p>
+        </div>
+    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                <div class="bg-gray-950/50 rounded-lg border border-gray-800/50 p-4">
-                    <div class="text-blue-400 font-mono text-xs font-bold mb-1">DAY 01</div>
-                    <h4 class="text-sm font-bold text-white mb-1">Target Selection</h4>
-                    <p class="text-xs text-gray-400">£2M renewal written off as a loss.</p>
-                </div>
-                <div class="bg-gray-950/50 rounded-lg border border-gray-800/50 p-4">
-                    <div class="text-blue-400 font-mono text-xs font-bold mb-1">DAY 07</div>
-                    <h4 class="text-sm font-bold text-white mb-1">Friction Mapping</h4>
-                    <p class="text-xs text-gray-400">3 hidden stakeholders. CFO's true mandate identified.</p>
-                </div>
-                <div class="bg-gray-950/50 rounded-lg border border-gray-800/50 p-4">
-                    <div class="text-blue-400 font-mono text-xs font-bold mb-1">DAY 14</div>
-                    <h4 class="text-sm font-bold text-white mb-1">Narrative Rewrite</h4>
-                    <p class="text-xs text-gray-400">Repositioned around CFO fear. Retention as migration penalty.</p>
-                </div>
-                <div class="bg-blue-900/20 rounded-lg border border-blue-800/50 p-4">
-                    <div class="text-blue-400 font-mono text-xs font-bold mb-1">DAY 28</div>
-                    <h4 class="text-sm font-bold text-white mb-1">The Win</h4>
-                    <p class="text-xs text-gray-300">£2M retention + £1.2M expansion. Bypassed procurement.</p>
-                </div>
-                <div class="bg-gray-950/50 rounded-lg border border-gray-800/50 p-4">
-                    <div class="text-emerald-400 font-mono text-xs font-bold mb-1">DAY 35</div>
-                    <h4 class="text-sm font-bold text-white mb-1">Scale Prep</h4>
-                    <p class="text-xs text-gray-400">Single victory becomes the portfolio blueprint.</p>
-                </div>
-            </div>
+    <div class="glass-panel rounded-2xl p-8 text-center mb-12 max-w-3xl mx-auto">
+        <p class="text-base md:text-lg text-neutral-300 leading-relaxed font-medium">
+            Most operating partners apply generic playbooks. <span class="text-white font-bold">GAIN is one operating system applied to the three things that actually move enterprise value.</span>
+        </p>
+    </div>
+
+    <div class="mb-12">
+        <div class="flex items-center gap-6 mb-8">
+            <div class="h-px bg-white/5 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-neutral-400 uppercase">The Implementation Arc</div>
+            <div class="h-px bg-white/5 flex-1"></div>
         </div>
 
-        <div class="mb-10 md:mb-14 reveal bg-gray-950/80 border border-red-900/30 rounded-xl p-5 md:p-6">
-            <h2 class="text-xs font-black text-red-400 uppercase tracking-widest mb-4">Meanwhile, in your pipeline</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <p class="text-sm text-gray-300 border-l-2 border-red-500/40 pl-3">Sellers waiting for permission instead of acting.</p>
-                <p class="text-sm text-gray-300 border-l-2 border-red-500/40 pl-3">Proposals answering the wrong question because nobody mapped the org.</p>
-                <p class="text-sm text-gray-300 border-l-2 border-red-500/40 pl-3">Pipeline reviews measuring activity, not intent.</p>
-            </div>
-            <p class="text-xs text-gray-500 mt-3 font-bold">One deal fixes all three.</p>
-        </div>
-
-        <div class="mb-10 md:mb-14">
-            <div class="flex items-center gap-4 mb-5 reveal">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-red-500 uppercase">Where This Fails</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-blue-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">01. Prove It <span class="text-neutral-400 text-sm">(Day 1-30)</span></h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">One live deal. High stakes, stalling or at risk. Map the hidden stakeholders. Rewrite the executive narrative. Close it. That's not training. That's licence to believe.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="reveal dur-700 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-5">
-                    <h3 class="text-sm text-white font-bold mb-2">Wrong Deal Selected</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">Trying to rescue a mathematically dead deal. If the competitor's software is physically integrated, strategy won't save you.</p>
-                </div>
-                <div class="reveal dur-900 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-5">
-                    <h3 class="text-sm text-white font-bold mb-2">No Sponsor Authority</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">Deploying at mid-management level. GAIN requires C-Suite engagement. Middle management rejects risk-based narratives.</p>
-                </div>
-                <div class="reveal dur-1100 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-5">
-                    <h3 class="text-sm text-white font-bold mb-2">Success Isn't Defined</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed">If the team can't articulate what a good quarter looks like beyond a revenue number, the methodology has nothing to anchor to.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-10 md:mb-14 reveal">
-            <p class="text-base md:text-lg text-gray-300 font-medium leading-relaxed mb-3">
-                That's the deal engine. Here's what it builds when you point it at the portfolio.
-            </p>
-            <p class="text-xs text-gray-500">
-                Already convinced? <a href="newengage.html" class="text-yellow-400 hover:text-yellow-300 font-bold transition-colors">Engage →</a>
-            </p>
-        </div>
-
-        <div class="mb-10 md:mb-14 reveal bg-gray-950/80 border border-gray-800 rounded-xl p-5 md:p-6">
-            <p class="text-sm md:text-base text-gray-300 leading-relaxed">
-                It's not three separate things. It's one system with three outcomes. You can't leverage sales without fixing operations. You can't fix operations without the right people architecture. You can't get the right people architecture without licence, capability, and motivation. The £183m proof isn't a sales story. It's a business architecture story where sales happened to be the most visible result.
-            </p>
-        </div>
-
-        <div class="pt-10 mb-10 md:mb-14">
-            <div class="flex items-center gap-4 mb-6 reveal">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-blue-500 uppercase">What One Deal Builds</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-violet-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">02. Codify It <span class="text-neutral-400 text-sm">(Day 30-60)</span></h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">The win becomes the playbook. AI-assisted intelligence, stakeholder mapping, narrative architecture — built for your proposition. A pilot pod runs the next deal independently. If they can't, the methodology failed.</p>
             </div>
 
-            <div class="reveal mb-6 text-center">
-                <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed font-medium">
-                    You've seen what it does to a deal. Repositioning a business is slower, harder, and breaks more things before it fixes them. <span class="text-white font-bold">Here's what it builds.</span>
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-emerald-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-3">03. Scale It <span class="text-neutral-400 text-sm">(Day 60-90+)</span></h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">Intelligence gathering drops from weeks to 20 minutes. Dead bids killed in week one, not quarter three. Cost of sale falls. Deal size rises.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-panel rounded-2xl p-8 mb-12">
+        <h2 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-6">Worked Example: The 35-Day Sprint</h2>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div class="glass-panel bg-neutral-950/40 p-5 rounded-xl">
+                <div class="text-blue-400 font-mono text-xs font-bold mb-2">DAY 01</div>
+                <h4 class="text-sm font-bold text-white mb-2">Target Selection</h4>
+                <p class="text-xs text-neutral-300">£2M renewal written off as a loss.</p>
+            </div>
+            <div class="glass-panel bg-neutral-950/40 p-5 rounded-xl">
+                <div class="text-blue-400 font-mono text-xs font-bold mb-2">DAY 07</div>
+                <h4 class="text-sm font-bold text-white mb-2">Friction Mapping</h4>
+                <p class="text-xs text-neutral-300">3 hidden stakeholders. CFO's true mandate identified.</p>
+            </div>
+            <div class="glass-panel bg-neutral-950/40 p-5 rounded-xl">
+                <div class="text-blue-400 font-mono text-xs font-bold mb-2">DAY 14</div>
+                <h4 class="text-sm font-bold text-white mb-2">Narrative Rewrite</h4>
+                <p class="text-xs text-neutral-300">Repositioned around CFO fear. Retention as migration penalty.</p>
+            </div>
+            <div class="glass-panel bg-blue-950/30 p-5 rounded-xl border border-blue-500/20">
+                <div class="text-blue-400 font-mono text-xs font-bold mb-2">DAY 28</div>
+                <h4 class="text-sm font-bold text-white mb-2">The Win</h4>
+                <p class="text-xs text-neutral-200">£2M retention + £1.2M expansion. Bypassed procurement.</p>
+            </div>
+            <div class="glass-panel bg-neutral-950/40 p-5 rounded-xl">
+                <div class="text-emerald-400 font-mono text-xs font-bold mb-2">DAY 35</div>
+                <h4 class="text-sm font-bold text-white mb-2">Scale Prep</h4>
+                <p class="text-xs text-neutral-300">Single victory becomes the portfolio blueprint.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-panel rounded-2xl p-8 mb-12 bg-neutral-950/60 border border-red-900/20">
+        <h2 class="text-lg font-black text-red-400 uppercase tracking-widest mb-4">Meanwhile, in your pipeline</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <p class="text-sm text-neutral-300 border-l-4 border-red-500/30 pl-4">Sellers waiting for permission instead of acting.</p>
+            <p class="text-sm text-neutral-300 border-l-4 border-red-500/30 pl-4">Proposals answering the wrong question because nobody mapped the org.</p>
+            <p class="text-sm text-neutral-300 border-l-4 border-red-500/30 pl-4">Pipeline reviews measuring activity, not intent.</p>
+        </div>
+        <p class="text-sm text-neutral-400 mt-6 font-medium">One deal fixes all three.</p>
+    </div>
+
+    <div class="mb-12">
+        <div class="flex items-center gap-6 mb-8">
+            <div class="h-px bg-white/5 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-red-400 uppercase">Where This Fails</div>
+            <div class="h-px bg-white/5 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-red-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white mb-3">Wrong Deal Selected</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">Trying to rescue a mathematically dead deal. If the competitor's software is physically integrated, strategy won't save you.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-red-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white mb-3">No Sponsor Authority</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">Deploying at mid-management level. GAIN requires C-Suite engagement. Middle management rejects risk-based narratives.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-red-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white mb-3">Success Isn't Defined</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed">If the team can't articulate what a good quarter looks like beyond a revenue number, the methodology has nothing to anchor to.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-12 text-center">
+        <p class="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed mb-4">
+            That's the deal engine. Here's what it builds when you point it at the portfolio.
+        </p>
+        <p class="text-sm text-neutral-500">
+            Already convinced? <a href="newengage.html" class="text-amber-400 hover:text-amber-300 font-bold transition-colors">Engage →</a>
+        </p>
+    </div>
+
+    <div class="glass-panel rounded-2xl p-8 mb-12">
+        <p class="text-base md:text-lg text-neutral-300 leading-relaxed">
+            It's not three separate things. It's one system with three outcomes. You can't leverage sales without fixing operations. You can't fix operations without the right people architecture. You can't get the right people architecture without licence, capability, and motivation. The £183m proof isn't a sales story. It's a business architecture story where sales happened to be the most visible result.
+        </p>
+    </div>
+
+    <div class="mb-12">
+        <div class="flex items-center gap-6 mb-8">
+            <div class="h-px bg-white/5 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-blue-400 uppercase">What One Deal Builds</div>
+            <div class="h-px bg-white/5 flex-1"></div>
+        </div>
+
+        <p class="text-lg text-neutral-300 max-w-3xl mx-auto text-center mb-8 leading-relaxed font-medium">
+            You've seen what it does to a deal. Repositioning a business is slower, harder, and breaks more things before it fixes them. <span class="text-white font-bold">Here's what it builds.</span>
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-blue-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4">The Profit Chain</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-4">
+                    Pipeline without delivery infrastructure is a liability. One methodology aligned every function — sales, pre-sales, delivery, finance, governance — into a single chain. £35m to £183m. Not a sales result. An architectural one.
+                </p>
+                <p class="text-xs text-neutral-400 border-t border-white/5 pt-3">
+                    <span class="text-blue-400 font-bold">Heskett & Narayandas, HBS:</span> Internal service quality drives employee capability, drives customer value, drives growth.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 reveal">
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-violet-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4">The Operating System</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-4">
+                    Five inherited businesses. No common proposition. No standard cost model. Sellers avoiding the hard work. One methodology built a 12-component framework from nothing. Gartner-validated. 4.2M users. 70 countries.
+                </p>
+                <p class="text-xs text-neutral-400 border-t border-white/5 pt-3">
+                    <span class="text-violet-400 font-bold">Moon, HBS:</span> Winning is deliberate trade-offs and internal architecture to deliver them.
+                </p>
+            </div>
 
-                <div class="bg-gray-900/50 border border-gray-800 border-t-2 border-t-blue-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-3">The Profit Chain</h3>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                        Pipeline without delivery infrastructure is a liability. One methodology aligned every function — sales, pre-sales, delivery, finance, governance — into a single chain. £35m to £183m. Not a sales result. An architectural one.
-                    </p>
-                    <p class="text-xs text-gray-500 mt-3 border-t border-gray-800 pt-3">
-                        <span class="text-blue-400 font-bold">Heskett & Narayandas, HBS:</span> Internal service quality drives employee capability, drives customer value, drives growth.
-                    </p>
-                </div>
-
-                <div class="bg-gray-900/50 border border-gray-800 border-t-2 border-t-purple-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-3">The Operating System</h3>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                        Five inherited businesses. No common proposition. No standard cost model. Sellers avoiding the hard work. One methodology built a 12-component framework from nothing. Gartner-validated. 4.2M users. 70 countries.
-                    </p>
-                    <p class="text-xs text-gray-500 mt-3 border-t border-gray-800 pt-3">
-                        <span class="text-purple-400 font-bold">Moon, HBS:</span> Winning is deliberate trade-offs and internal architecture to deliver them.
-                    </p>
-                </div>
-
-                <div class="bg-gray-900/50 border border-gray-800 border-t-2 border-t-emerald-500 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-widest mb-3">Licence · Capability · Motivation</h3>
-                    <p class="text-sm text-gray-300 leading-relaxed mb-3">
-                        £9M business. One founder. Nobody else could run it. The PE playbook says replace the person. One methodology diagnosed what was missing — licence, capability, motivation — and built the architecture so the business runs without its founder. Three-year exit plan now in progress.
-                    </p>
-                    <p class="text-xs text-gray-500 mt-3 border-t border-gray-800 pt-3">
-                        <span class="text-emerald-400 font-bold">Buell, HBS:</span> The mechanism that turns "doing less with less" into "doing more with less."
-                    </p>
-                </div>
-
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-emerald-500/30 hover:-translate-y-1 transition-all">
+                <h3 class="text-lg font-black text-white uppercase tracking-tight mb-4">Licence · Capability · Motivation</h3>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-4">
+                    £9M business. One founder. Nobody else could run it. The PE playbook says replace the person. One methodology diagnosed what was missing — licence, capability, motivation — and built the architecture so the business runs without its founder. Three-year exit plan now in progress.
+                </p>
+                <p class="text-xs text-neutral-400 border-t border-white/5 pt-3">
+                    <span class="text-emerald-400 font-bold">Buell, HBS:</span> The mechanism that turns "doing less with less" into "doing more with less."
+                </p>
             </div>
         </div>
+    </div>
 
-          <div class="mb-10 md:mb-14 reveal bg-gray-950/80 border border-gray-800 rounded-xl p-6 md:p-8 text-center">
-            <p class="text-xl md:text-2xl font-black text-white mb-3">You already know.</p>
-            <p class="text-sm text-gray-400 mb-4 max-w-xl mx-auto">
-                Start with a live deal diagnostic. What it finds goes further than the deal.
-            </p>
-            <p class="text-xs text-gray-500 mb-6">Three engagements per quarter. Pipeline is not unlimited.</p>
-            <a href="newengage.html" class="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/50 px-6 py-3 text-yellow-400 font-bold text-sm rounded-lg shadow-lg hover:bg-yellow-500/20 hover:border-yellow-400 transition-all duration-300">
-                Engage →
+    <div class="glass-panel rounded-2xl p-10 md:p-12 text-center mb-12 max-w-4xl mx-auto">
+        <p class="text-2xl md:text-3xl font-black text-white mb-6">You already know.</p>
+        <p class="text-lg text-neutral-300 mb-6 max-w-xl mx-auto">
+            Start with a live deal diagnostic. What it finds goes further than the deal.
+        </p>
+        <p class="text-sm text-neutral-500 mb-8">Three engagements per quarter. Pipeline is not unlimited.</p>
+        <a href="newengage.html" class="inline-flex items-center gap-3 bg-amber-500/10 border border-amber-500/50 px-10 py-5 text-amber-400 font-black text-lg rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] transition-all duration-300 hover:-translate-y-1">
+            Engage &rarr;
+        </a>
+    </div>
+
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-        </div>
-
-    </main>
-
-    <footer class="border-t border-gray-800 pt-6 pb-10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <a href="newindex.html" class="text-xs font-extrabold tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        <div class="flex flex-col md:flex-row items-center gap-4">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-gray-400 hover:text-blue-400 transition-colors">AI Is Not Your Cheerleader →</a>
-            <span class="text-[9px] text-gray-600 uppercase tracking-wider">No hype. Just results. &copy; 2026</span>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
+            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
         </div>
     </footer>
 
@@ -340,19 +374,26 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
 
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Close radial on outside click
+    document.addEventListener('click', (e) => {
+        const toggle = document.getElementById('gain-radial');
+        if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
+            toggle.checked = false;
+        }
+    });
 });
 </script>
+
 </body>
 </html>
