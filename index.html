@@ -62,6 +62,7 @@
         main p { font-size: 1rem; line-height: 1.5; margin-bottom: 1rem; color: #d1d5db; }
         main .text-xs, main .text-[10px] { font-size: 0.875rem; }
 
+        /* Radial menu shared styles */
         .radial-item {
             --tx: 0px;
             position: absolute; 
@@ -87,6 +88,7 @@
             transform: translate(var(--tx), 0) scale(0);
             transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-decoration: none;
         }
         .radial-item:hover { 
             transform: translate(var(--tx), 0) scale(1.12) !important; 
@@ -96,89 +98,123 @@
             opacity: 1; 
             transform: translate(var(--tx), 0) scale(1); 
         }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-neutral-950 text-neutral-100 antialiased">
 
+<!-- ═══════════════════════════════════════════════════════ NAV ═══════════════════════════════════════════════════════ -->
 <nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
 
     <a href="index.html" class="hover:text-white transition-colors">Home</a>
-    <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
-    <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
+    <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
+    <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
+    <!-- GAIN Radial -->
     <div class="relative pb-1 radial-menu">
         <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
         <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
             GAIN <span class="text-xs opacity-70">▾</span>
         </label>
-
         <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="newknow.html" class="radial-item" style="--tx: -150px;">
+            <a href="know.html" class="radial-item" style="--tx: -150px;">
                 <span class="text-3xl font-black text-blue-400">G</span>
-                <span class="text-xs text-blue-300 mt-1 font-medium">Gather</span>
+                <span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span>
             </a>
-            <a href="newmap.html" class="radial-item" style="--tx: -50px;">
+            <a href="map.html" class="radial-item" style="--tx: -50px;">
                 <span class="text-3xl font-black text-violet-400">A</span>
-                <span class="text-xs text-violet-300 mt-1 font-medium">Assess</span>
+                <span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span>
             </a>
-            <a href="newwin.html" class="radial-item" style="--tx: 50px;">
+            <a href="win.html" class="radial-item" style="--tx: 50px;">
                 <span class="text-3xl font-black text-amber-400">I</span>
-                <span class="text-xs text-amber-300 mt-1 font-medium">Influence</span>
+                <span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span>
             </a>
-            <a href="newgrow.html" class="radial-item" style="--tx: 150px;">
+            <a href="grow.html" class="radial-item" style="--tx: 150px;">
                 <span class="text-3xl font-black text-emerald-400">N</span>
-                <span class="text-xs text-emerald-300 mt-1 font-medium">Nurture</span>
+                <span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span>
             </a>
         </div>
     </div>
 
-    <div class="relative group cursor-pointer pb-1 h-full flex items-center">
-        <span class="hover:text-white transition-colors flex items-center gap-1">System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-72 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-150">
-            <a href="newedge.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">How It's Built</a>
-            <a href="newstory.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm border-b border-white/5">The Story</a>
-            <a href="newdashboards.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm font-medium">Dashboards</a>
+    <!-- System Radial (matching GAIN style) -->
+    <div class="relative pb-1 radial-menu">
+        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
+        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
+            System <span class="text-xs opacity-70">▾</span>
+        </label>
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="edge.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-lg font-black text-cyan-400">⚡</span>
+                <span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span>
+            </a>
+            <a href="architecture.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-lg font-black text-teal-400">◈</span>
+                <span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span>
+            </a>
+            <a href="story.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-lg font-black text-sky-400">◉</span>
+                <span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span>
+            </a>
+            <a href="dashboards.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-lg font-black text-indigo-400">▣</span>
+                <span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span>
+            </a>
         </div>
     </div>
 
-    <a href="newengage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
+    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
+
+<!-- ═══════════════════════════════════════════════════════ HERO ═══════════════════════════════════════════════════════ -->
 <div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <header class="mb-8 md:mb-10 text-center md:text-left">
-        <div class="max-w-7xl mx-auto">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-4 md:mb-6">
-                YOUR DEALS ARE DYING IN ROOMS YOU'RE NOT IN.
+    <header class="relative rounded-[2rem] overflow-hidden mb-8 md:mb-10 glass-panel border-t-4 border-t-blue-500/30 hover:-translate-y-1 transition-all duration-500">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+        
+        <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent">
+            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
+                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> Commercial Operating System</span>
+                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
+                    50+ conditional prompts. Deep research. One operating system.
+                </div>
+            </div>
+
+            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-lg">
+                Most enterprise deals are decided<br class="hidden md:block"> before the first meeting.
             </h1>
-            <a href="#account-pack" class="inline-flex items-center justify-center md:justify-start gap-3 text-base md:text-lg lg:text-xl text-blue-400 hover:text-blue-300 font-bold tracking-wide transition-colors">
-                <span class="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse"></span>
-                See how a Multi-Million £ deal gets won before the room opens ↓
+            
+            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium mb-6">
+                <strong class="text-blue-400">GAIN is the intelligence layer that gets you into the room prepared.</strong> Behavioural science. Tailored value propositions. 50+ conditional prompts — not a linear chain, a chessboard.
+            </p>
+
+            <a href="#account-pack" class="reveal inline-flex items-center gap-3 text-base text-blue-400 hover:text-blue-300 font-bold tracking-wide transition-colors w-fit">
+                View redacted Account Pack — live bid example ↓
             </a>
         </div>
     </header>
 
+    <!-- ═══════════════════════════════════════════════════════ ACCOUNT PACK ═══════════════════════════════════════════════════════ -->
     <section id="account-pack" class="mb-8 md:mb-10">
-        <div class="mb-6 max-w-3xl mx-auto md:mx-0">
-            <p class="text-xs md:text-sm font-bold tracking-[0.2em] text-blue-500 uppercase mb-2">GAIN Account Pack · Live Bid Example · Redacted</p>
-            <p class="text-base md:text-lg text-neutral-300 font-medium mb-2">13 intelligence prompts. 3 hours of research. Every section below was generated from the output. Your team is still building PowerPoints.</p>
-            <p class="text-sm md:text-base text-neutral-500">Methodology: G-01 through N-01. 8 stakeholders profiled. 3 competitors mapped. 9 scoring criteria weighted. 5 failure scenarios modelled. Click any section to expand.</p>
+        <div class="mb-4 max-w-3xl mx-auto md:mx-0">
+            <p class="text-xs md:text-sm font-bold tracking-[0.2em] text-blue-500 uppercase mb-2">GAIN Account Pack · Live Bid · Redacted</p>
+            <p class="text-sm md:text-base text-neutral-500">180 minutes. 8 stakeholders. 3 competitors. 5 failure scenarios. Click any section to expand.</p>
         </div>
 
         <div id="account-pack-root" class="glass-panel rounded-2xl min-h-[400px] flex items-center justify-center">
-            <p class="text-neutral-500 font-mono text-sm animate-pulse">Initializing Dashboard Engine...</p>
+            <p class="text-neutral-500 font-mono text-sm">Initializing Dashboard Engine...</p>
         </div>
 
         <div class="max-w-7xl mx-auto py-5 text-center">
-            <a href="newdashboards.html" class="inline-flex items-center gap-2 text-sm md:text-base text-blue-400 hover:text-blue-300 font-bold transition-colors">
+            <a href="dashboards.html" class="inline-flex items-center gap-2 text-sm md:text-base text-blue-400 hover:text-blue-300 font-bold transition-colors">
                 Open full Account Pack on dedicated page →
             </a>
             <p class="text-xs md:text-sm text-neutral-600 mt-2">Same dashboard. Bookmarkable. Shareable with your team.</p>
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════ PROOF METRICS ═══════════════════════════════════════════════════════ -->
     <div class="max-w-7xl mx-auto mb-8 md:mb-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
             <div class="glass-panel rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:border-blue-500/50">
@@ -209,11 +245,12 @@
     </div>
 
     <main>
+        <!-- ═══════════════════════════════════════════════════════ THREE PRINCIPLES ═══════════════════════════════════════════════════════ -->
         <div class="mb-8 md:mb-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="reveal slide-left dur-600 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
                     <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">01.</span> Don't Become a Commodity</h3>
-                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralize incumbent advantages instantly.</p>
+                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralise incumbent advantages from the first conversation.</p>
                 </div>
                 <div class="reveal slide-left dur-800 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
                     <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">02.</span> Close the Execution Gap</h3>
@@ -221,11 +258,12 @@
                 </div>
                 <div class="reveal slide-left dur-1000 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
                     <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">03.</span> The EQ Override</h3>
-                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">AI identifies the friction. Human EQ maps the detractor. Transform your narrative from 'innovative disruption' to 'de-risked operational safety'.</p>
+                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">AI identifies the friction. Human EQ maps the detractor. The narrative shifts from 'innovative disruption' to 'de-risked operational safety.'</p>
                 </div>
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ GAIN PHASES ═══════════════════════════════════════════════════════ -->
         <div class="mb-8 md:mb-10">
             <div class="flex items-center gap-4 mb-6 md:mb-8">
                 <div class="h-px bg-white/10 flex-1"></div>
@@ -234,36 +272,37 @@
             </div>
 
             <div class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-                <a href="newknow.html" class="glass-panel border-l-2 border-l-blue-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                <a href="know.html" class="glass-panel border-l-2 border-l-blue-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
                     <span class="font-mono text-blue-400 font-bold text-xs md:text-sm tracking-widest mb-2">[G] GATHER</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">KNOW THEM</h3>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Strategic Context</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
                     <div class="text-xs text-blue-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
                 </a>
 
-                <a href="newmap.html" class="glass-panel border-l-2 border-l-violet-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                <a href="map.html" class="glass-panel border-l-2 border-l-violet-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
                     <span class="font-mono text-violet-400 font-bold text-xs md:text-sm tracking-widest mb-2">[A] ASSESS</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">MAP THEM</h3>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Influence Mapping</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
                     <div class="text-xs text-violet-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
                 </a>
 
-                <a href="newwin.html" class="glass-panel border-l-2 border-l-amber-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                <a href="win.html" class="glass-panel border-l-2 border-l-amber-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
                     <span class="font-mono text-amber-400 font-bold text-xs md:text-sm tracking-widest mb-2">[I] INFLUENCE</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">WIN THEM</h3>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Narrative Architecture</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
                     <div class="text-xs text-amber-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
                 </a>
 
-                <a href="newgrow.html" class="glass-panel border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                <a href="grow.html" class="glass-panel border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
                     <span class="font-mono text-emerald-400 font-bold text-xs md:text-sm tracking-widest mb-2">[N] NURTURE</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">GROW THEM</h3>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Account Expansion</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
                     <div class="text-xs text-emerald-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
                 </a>
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ FAILURE MODES ═══════════════════════════════════════════════════════ -->
         <div class="mb-8 md:mb-10">
             <div class="flex items-center gap-4 mb-6 md:mb-8">
                 <div class="h-px bg-white/5 flex-1"></div>
@@ -273,73 +312,78 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
                 <div class="reveal dur-700 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Invisible Stakeholders</h3>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Undetected Decision Influence</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
-                    <div class="text-xs text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-3 py-1.5 rounded">RULE: Ask "Who else?"</div>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Always ask "who else touches this decision?"</p>
                 </div>
 
                 <div class="reveal dur-900 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Stale Intelligence</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI is static. Politics are fluid. Mapped in Jan, submitted in March. The CIO was sidelined in Feb. Strategy built on a ghost.</p>
-                    <div class="text-xs text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-3 py-1.5 rounded">RULE: Refresh in 14 days.</div>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Intelligence Decay</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI is static. Politics are fluid. Mapped in January, submitted in March. The CIO was sidelined in February. Strategy built on a ghost.</p>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Refresh stakeholder map every 14 days.</p>
                 </div>
 
                 <div class="reveal dur-1100 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Over-Engineering</h3>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Resource Misallocation</h3>
                     <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
-                    <div class="text-xs text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-3 py-1.5 rounded">RULE: Match prep to deal.</div>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Match preparation depth to deal complexity.</p>
                 </div>
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ UNIFIED SYSTEM ═══════════════════════════════════════════════════════ -->
         <div class="mb-8 md:mb-10 reveal glass-panel rounded-xl p-6 md:p-8 text-center max-w-4xl mx-auto">
             <p class="text-base md:text-lg text-neutral-300 leading-relaxed font-medium">
                 Many operating partners rely on generic frameworks. <span class="text-white font-bold">GAIN provides a unified operating system that wins deals, builds propositions, and prepares businesses for exit.</span>
             </p>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ COST OF DELAY ═══════════════════════════════════════════════════════ -->
         <div class="mb-8 md:mb-10 reveal bg-neutral-900/60 backdrop-blur-xl border border-red-900/30 rounded-2xl p-6 md:p-8 shadow-inner-xl">
-            <h2 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">What Happens in 12 Months If Nothing Changes</h2>
-            <p class="text-sm md:text-base text-neutral-400 mb-6 border-b border-white/5 pb-5">This isn't a pitch. It's a projection based on what we see in every portfolio that delays.</p>
+            <h2 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">What Happens in 12 Months Without Systematic Intelligence</h2>
+            <p class="text-sm md:text-base text-neutral-400 mb-6 border-b border-white/5 pb-5">Continued reliance on traditional preparation exposes the organisation to three structural risks:</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-8">
                 <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Unwon opportunities continue to divert top talent and resources.</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">By the time you realise it's unwinnable, you've burned a quarter and your top seller's momentum. The opportunity cost is everything they didn't pursue.</p>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Talent & Resource Diversion</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Unwinnable pursuits consume top sellers and pre-sales resources. By the time the loss is recognised, a full quarter and significant opportunity cost have been absorbed.</p>
                 </div>
                 <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Win rates remain stagnant as competitors advance their capabilities.</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">The firms investing in judgment architecture are pulling away. Your pricing pressure gets worse, not better. The board asks the same QBR questions.</p>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Competitive Exposure</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Firms investing in structured intelligence architecture are compounding their advantage. Pricing pressure intensifies. The same QBR questions recur without resolution.</p>
                 </div>
                 <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Acquisitions risk fragmenting the operating model.</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Different sales tactics, different platforms, no common architecture. The businesses you're integrating don't compound — they collide.</p>
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Integration Fragmentation</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Acquisitions without a common commercial architecture don't compound — they collide. Different sales tactics, different platforms, no shared operating model.</p>
                 </div>
             </div>
             
-            <div class="bg-red-950/30 p-4 md:p-5 rounded-lg border border-red-900/40 text-center">
-                <p class="text-sm md:text-base text-red-400 font-bold uppercase tracking-widest">Every quarter you delay, the diagnostic gets worse.</p>
+            <div class="bg-red-950/20 p-4 md:p-5 rounded-lg border border-red-900/30 text-center">
+                <p class="text-sm md:text-base text-red-400/80 font-semibold">Each quarter of delay compounds the diagnostic gap.</p>
             </div>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ REVENUE LINK ═══════════════════════════════════════════════════════ -->
         <div class="mb-10 md:mb-12 reveal text-center">
             <p class="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed mb-4">
                 The deal engine is the entry point. What it repositions is the business.
             </p>
-            <a href="newrevenue-case.html" class="inline-flex items-center justify-center gap-2 text-base md:text-lg text-blue-400 hover:text-blue-300 font-bold transition-colors">
+            <a href="revenue-case.html" class="inline-flex items-center justify-center gap-2 text-base md:text-lg text-blue-400 hover:text-blue-300 font-bold transition-colors">
                 See the Revenue Case →
             </a>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════ CTA ═══════════════════════════════════════════════════════ -->
         <div class="mb-12 reveal glass-panel bg-neutral-900/80 rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto">
             <p class="text-3xl md:text-4xl font-black text-white tracking-tight mb-8">The opportunity is clear.</p>
-            <a href="newengage.html" class="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/50 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] transition-all duration-300 hover:-translate-y-1">
-                Engage &rarr;
+            <a href="engage.html" class="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/40 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all duration-300">
+                Request a Live Deal Diagnostic &rarr;
             </a>
-            <p class="text-base text-neutral-400 font-medium mt-6">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
+            <p class="text-base text-neutral-400 font-medium mt-6">Start with one deal. What it finds goes further than the deal.</p>
         </div>
     </main>
 
+    <!-- ═══════════════════════════════════════════════════════ FOOTER ═══════════════════════════════════════════════════════ -->
     <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
         <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
         <div class="flex flex-col md:flex-row items-center gap-6">
@@ -353,413 +397,420 @@
 
 </div>
 
+<!-- ═══════════════════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════════════════ -->
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-
 <script>
-// Close radial on outside click
+// Close ALL radial menus on outside click
 document.addEventListener('click', (e) => {
-    const toggle = document.getElementById('gain-radial');
-    if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
-        toggle.checked = false;
-    }
+    document.querySelectorAll('.radial-toggle').forEach(toggle => {
+        if (toggle.checked && !e.target.closest('.radial-menu')) {
+            toggle.checked = false;
+        }
+    });
+});
+// Close radials on scroll
+document.addEventListener('scroll', () => {
+    document.querySelectorAll('.radial-toggle').forEach(toggle => {
+        if (toggle.checked) toggle.checked = false;
+    });
+});
+// Only one radial open at a time
+document.querySelectorAll('.radial-toggle').forEach(toggle => {
+    toggle.addEventListener('change', function() {
+        if (this.checked) {
+            document.querySelectorAll('.radial-toggle').forEach(other => {
+                if (other !== this) other.checked = false;
+            });
+        }
+    });
 });
 </script>
 
-
 <script>
 (function() {
-    const e = React.createElement;
-    const { useState, useEffect } = React;
+    const e = React.createElement;
+    const { useState, useEffect } = React;
 
-    // ─── MERIDIAN DATA ───
-    const ACCOUNT = {
-        name: "Meridian Financial Services",
-        sector: "Financial Services & Insurance",
-        seller: "Helios Technology Group",
-        dealValue: "£95-110M",
-        acv: "£13.6-15.7M",
-        term: "7 Years",
-        tcv7yr: "£95-110M TCV (7yr)",
-        status: "LIVE BID",
-        submissionDate: "28 March 2026",
-        lastUpdated: "26 Feb 2026",
-        winProbability: 68,
-        serviceDescription: "Full-scope IT Managed Services including infrastructure management, cloud hosting & migration, service desk, end-user computing support, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff from incumbent provider.",
-        nonStandard: [
-            "Integrated Operational Resilience capability (aligned to ISO 22301 certification journey)",
-            "AIOps predictive incident management embedded from Day 1",
-            "60/40 Gain-Share mechanism on automation savings above agreed baselines",
-            "2% ring-fenced Innovation Fund (£106K/yr) with joint governance",
-            "10% Risk Pot (£530K) held back against SLA performance — released at M6/M12"
-        ],
-        dealType: "Competitive outsource — full IT infrastructure managed services renewal. Incumbent displaced.",
-        clientSummary: "Meridian Financial Services is a £2.1B revenue UK-based financial services and insurance group. ~8,400 employees across 12 UK offices. Regulated by PRA/FCA. Midmarket FS — large enough for complex infrastructure, small enough that relationships matter.",
-        clientHistory: "Founded 1987 as specialist commercial insurance underwriter. Expanded into retail financial services (2004) and wealth management (2012). Listed on LSE since 1998. Survived 2008 via conservative risk culture. Current CEO Whitfield appointed 2019 from Aviva.",
-        clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Reinsurance",
-        bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026."
-    };
+    // ─── MERIDIAN DATA ───
+    const ACCOUNT = {
+        name: "Meridian Financial Services",
+        sector: "Financial Services & Insurance",
+        seller: "Helios Technology Group",
+        dealValue: "£95-110M",
+        acv: "£13.6-15.7M",
+        term: "7 Years",
+        tcv7yr: "£95-110M TCV (7yr)",
+        status: "LIVE BID",
+        submissionDate: "28 March 2026",
+        lastUpdated: "26 Feb 2026",
+        winProbability: 68,
+        serviceDescription: "Full-scope IT Managed Services including infrastructure management, cloud hosting & migration, service desk, end-user computing support, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff from incumbent provider.",
+        nonStandard: [
+            "Integrated Operational Resilience capability (aligned to ISO 22301 certification journey)",
+            "AIOps predictive incident management embedded from Day 1",
+            "60/40 Gain-Share mechanism on automation savings above agreed baselines",
+            "2% ring-fenced Innovation Fund (£106K/yr) with joint governance",
+            "10% Risk Pot (£530K) held back against SLA performance — released at M6/M12"
+        ],
+        dealType: "Competitive outsource — full IT infrastructure managed services renewal. Incumbent displaced.",
+        clientSummary: "Meridian Financial Services is a £2.1B revenue UK-based financial services and insurance group. ~8,400 employees across 12 UK offices. Regulated by PRA/FCA. Midmarket FS — large enough for complex infrastructure, small enough that relationships matter.",
+        clientHistory: "Founded 1987 as specialist commercial insurance underwriter. Expanded into retail financial services (2004) and wealth management (2012). Listed on LSE since 1998. Survived 2008 via conservative risk culture. Current CEO Whitfield appointed 2019 from Aviva.",
+        clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Reinsurance",
+        bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026."
+    };
 
-    const G02_FINANCIALS = {
-        costOfInaction: "£8.3M/yr",
-        wasteIdentified: "£33-37M",
-        microOutages: "£2.8M annual hard cost",
-        falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
-        consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
-        praVendors: "+52 vendors by Q2 2026 → +2,000 FTE hours",
-        heliosValue: "£12-15M cumulative 5yr savings"
-    };
+    const G02_FINANCIALS = {
+        costOfInaction: "£8.3M/yr",
+        wasteIdentified: "£33-37M",
+        microOutages: "£2.8M annual hard cost",
+        falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
+        consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
+        praVendors: "+52 vendors by Q2 2026 → +2,000 FTE hours",
+        heliosValue: "£12-15M cumulative 5yr savings"
+    };
 
-    const STAKEHOLDERS = [
-        { id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite", status: "unknown", authority: 95, influence: 90, gainDriver: "Power", kegan: "Stage 4 (Self-Authoring)", summary: "25yr FS veteran. Board-facing. Burned by £67M 'Operation Meridian' failure. Won't tolerate another Big Bang.", trigger: "Board confidence, brand protection, regulatory clean sheet", avoid: "Vendor hype, over-promising, anything resembling Operation Meridian", modality: "Visual — executive summaries, dashboards, one-page briefs" },
-        { id: "hale", name: "Richard Hale", role: "CIO", level: "C-Suite", status: "established", authority: 85, influence: 80, gainDriver: "Achievement", kegan: "Stage 4→5 (Self-Transforming)", summary: "Technical architect turned CIO. Intellectually curious. Wants AI as baseline, not differentiator. Frustrated by 'last 28%' legacy apps.", trigger: "Architectural thinking, production evidence, intellectual depth", avoid: "Feature lists, vendor hype, demo-ware without production proof", modality: "Read/Write — technical papers, architecture diagrams, data" },
-        { id: "thompson", name: "Mark Thompson", role: "CFO", level: "C-Suite", status: "targeted", authority: 88, influence: 30, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Zenith Insurance alumnus. Burned by a managed services deal that over-promised savings. Demands 'show me the workings.'", trigger: "Named-process cost methodology, first-number rigour, audit trail", avoid: "Directional numbers, unattributed savings, missing baselines", modality: "Read/Write — spreadsheets, financial models, named attribution" },
-        { id: "osei", name: "Daniel Osei", role: "CRO", level: "C-Suite", status: "targeted", authority: 82, influence: 70, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Board-level risk officer. Dual governance model (formal + informal). Kill phrase: 'checkbox compliance.' Veto power over any vendor.", trigger: "Genuine risk culture, forward-looking intelligence, tested frameworks", avoid: "Checkbox compliance, theoretical frameworks, untested DR plans", modality: "Auditory/Kinesthetic → Data Visual when presenting to Board" },
-        { id: "morris", name: "Jennifer Morris", role: "Dir, Operational Resilience", level: "Senior", status: "champion", authority: 60, influence: 85, gainDriver: "Achievement", kegan: "Stage 3→4", summary: "14+ yrs resilience/risk. Chairs Resilience Steering Committee. Our identified champion. Reduced incident response 47%. Leads ISO 22301.", trigger: "Peer credibility (Rachel), resilience depth, practical frameworks", avoid: "Talking down, theoretical-only approaches, ignoring her expertise", modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Osei" },
-        { id: "chen", name: "Andrew Chen", role: "Head of IT Infrastructure", level: "Operational", status: "targeted", authority: 20, influence: 75, gainDriver: "Safety", kegan: "Stage 3 (Socialised Mind)", summary: "15yr Meridian veteran. His team IS the TUPE cohort. Protective. BS detector is extreme — vendor corporate language triggers shutdown.", trigger: "People-first language, honest gaps, retention data, respect for his team", avoid: "Corporate language, dismissing his team's expertise, AI-replaces-people framing", modality: "Kinesthetic — site visits, meeting his team, showing not telling" },
-        { id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior", status: "established", authority: 50, influence: 20, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Process guardian. Controls access to Whitfield. Fair but firm. Values structured compliance, transparent pricing, no procurement theatre.", trigger: "Clean documentation, transparent pricing, structured process", avoid: "End-running procurement, pricing games, last-minute surprises", modality: "Read/Write — structured documents, compliance matrices" },
-        { id: "harrison", name: "Neil Harrison", role: "Head of IT Service Management", level: "Operational", status: "established", authority: 30, influence: 50, gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)", summary: "ITIL practitioner. Wants 'three examples' for everything. Scored highest on evidence density. Will ask about TUPE transfer volume.", trigger: "Operational specificity, maintained KPIs, three examples minimum", avoid: "High-level phases without cases, vague transition plans", modality: "Read/Write — case studies, operational metrics, process maps" }
-    ];
+    const STAKEHOLDERS = [
+        { id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite", status: "unknown", authority: 95, influence: 90, gainDriver: "Power", kegan: "Stage 4 (Self-Authoring)", summary: "25yr FS veteran. Board-facing. Burned by £67M 'Operation Meridian' failure. Won't tolerate another Big Bang.", trigger: "Board confidence, brand protection, regulatory clean sheet", avoid: "Vendor hype, over-promising, anything resembling Operation Meridian", modality: "Visual — executive summaries, dashboards, one-page briefs" },
+        { id: "hale", name: "Richard Hale", role: "CIO", level: "C-Suite", status: "established", authority: 85, influence: 80, gainDriver: "Achievement", kegan: "Stage 4→5 (Self-Transforming)", summary: "Technical architect turned CIO. Intellectually curious. Wants AI as baseline, not differentiator. Frustrated by 'last 28%' legacy apps.", trigger: "Architectural thinking, production evidence, intellectual depth", avoid: "Feature lists, vendor hype, demo-ware without production proof", modality: "Read/Write — technical papers, architecture diagrams, data" },
+        { id: "thompson", name: "Mark Thompson", role: "CFO", level: "C-Suite", status: "targeted", authority: 88, influence: 30, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Zenith Insurance alumnus. Burned by a managed services deal that over-promised savings. Demands 'show me the workings.'", trigger: "Named-process cost methodology, first-number rigour, audit trail", avoid: "Directional numbers, unattributed savings, missing baselines", modality: "Read/Write — spreadsheets, financial models, named attribution" },
+        { id: "osei", name: "Daniel Osei", role: "CRO", level: "C-Suite", status: "targeted", authority: 82, influence: 70, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Board-level risk officer. Dual governance model (formal + informal). Kill phrase: 'checkbox compliance.' Veto power over any vendor.", trigger: "Genuine risk culture, forward-looking intelligence, tested frameworks", avoid: "Checkbox compliance, theoretical frameworks, untested DR plans", modality: "Auditory/Kinesthetic → Data Visual when presenting to Board" },
+        { id: "morris", name: "Jennifer Morris", role: "Dir, Operational Resilience", level: "Senior", status: "champion", authority: 60, influence: 85, gainDriver: "Achievement", kegan: "Stage 3→4", summary: "14+ yrs resilience/risk. Chairs Resilience Steering Committee. Our identified champion. Reduced incident response 47%. Leads ISO 22301.", trigger: "Peer credibility (Rachel), resilience depth, practical frameworks", avoid: "Talking down, theoretical-only approaches, ignoring her expertise", modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Osei" },
+        { id: "chen", name: "Andrew Chen", role: "Head of IT Infrastructure", level: "Operational", status: "targeted", authority: 20, influence: 75, gainDriver: "Safety", kegan: "Stage 3 (Socialised Mind)", summary: "15yr Meridian veteran. His team IS the TUPE cohort. Protective. BS detector is extreme — vendor corporate language triggers shutdown.", trigger: "People-first language, honest gaps, retention data, respect for his team", avoid: "Corporate language, dismissing his team's expertise, AI-replaces-people framing", modality: "Kinesthetic — site visits, meeting his team, showing not telling" },
+        { id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior", status: "established", authority: 50, influence: 20, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Process guardian. Controls access to Whitfield. Fair but firm. Values structured compliance, transparent pricing, no procurement theatre.", trigger: "Clean documentation, transparent pricing, structured process", avoid: "End-running procurement, pricing games, last-minute surprises", modality: "Read/Write — structured documents, compliance matrices" },
+        { id: "harrison", name: "Neil Harrison", role: "Head of IT Service Management", level: "Operational", status: "established", authority: 30, influence: 50, gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)", summary: "ITIL practitioner. Wants 'three examples' for everything. Scored highest on evidence density. Will ask about TUPE transfer volume.", trigger: "Operational specificity, maintained KPIs, three examples minimum", avoid: "High-level phases without cases, vague transition plans", modality: "Read/Write — case studies, operational metrics, process maps" }
+    ];
 
-    const COMPETITORS = [
-        { name: "Fortis Global Services", label: "Scale-first global delivery model", revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+", dangerRating: "HIGH", dangerWith: ["Whitfield", "Harrison"], weakness: "78% post-TUPE retention, 18-24mo leadership rotation", killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?" },
-        { name: "Saraswati Digital", label: "Offshore-leveraged automation platform", revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS", dangerRating: "MEDIUM", dangerWith: ["Hale", "Thompson"], weakness: "Cultural fit gap, limited UK FS regulatory depth", killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, outcome." },
-        { name: "Nexus Technology Partners", label: "Technology-first reseller model", revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal", dangerRating: "LOW", dangerWith: ["Hale"], weakness: "No managed services pedigree", killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services." }
-    ];
+    const COMPETITORS = [
+        { name: "Fortis Global Services", label: "Scale-first global delivery model", revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+", dangerRating: "HIGH", dangerWith: ["Whitfield", "Harrison"], weakness: "78% post-TUPE retention, 18-24mo leadership rotation", killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?" },
+        { name: "Saraswati Digital", label: "Offshore-leveraged automation platform", revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS", dangerRating: "MEDIUM", dangerWith: ["Hale", "Thompson"], weakness: "Cultural fit gap, limited UK FS regulatory depth", killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, outcome." },
+        { name: "Nexus Technology Partners", label: "Technology-first reseller model", revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal", dangerRating: "LOW", dangerWith: ["Hale"], weakness: "No managed services pedigree", killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services." }
+    ];
 
-    const SCORING = {
-        helios: 3.85, target: 4.65, fortis: 3.55, saraswati: 3.40,
-        criteria: [
-            { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
-            { code: "TC-02", label: "Automation & AI", weight: 5.4, helios: 3, fortis: 3, saraswati: 5, strategy: "DEFEND" },
-            { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
-            { code: "TC-04", label: "Resilience & DR", weight: 5.4, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
-            { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-            { code: "CC-01", label: "Cost Glide Path", weight: 9.6, helios: 2, fortis: 3, saraswati: 4, strategy: "CRITICAL" },
-            { code: "CC-02", label: "Pricing Model", weight: 7.2, helios: 4, fortis: 3, saraswati: 3, strategy: "PUSH" },
-            { code: "CC-04", label: "Compliance", weight: 2.4, helios: 5, fortis: 4, saraswati: 3, strategy: "LOCK" },
-            { code: "IF-01", label: "Informal Session", weight: 15, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" }
-        ]
-    };
+    const SCORING = {
+        helios: 3.85, target: 4.65, fortis: 3.55, saraswati: 3.40,
+        criteria: [
+            { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
+            { code: "TC-02", label: "Automation & AI", weight: 5.4, helios: 3, fortis: 3, saraswati: 5, strategy: "DEFEND" },
+            { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
+            { code: "TC-04", label: "Resilience & DR", weight: 5.4, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
+            { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
+            { code: "CC-01", label: "Cost Glide Path", weight: 9.6, helios: 2, fortis: 3, saraswati: 4, strategy: "CRITICAL" },
+            { code: "CC-02", label: "Pricing Model", weight: 7.2, helios: 4, fortis: 3, saraswati: 3, strategy: "PUSH" },
+            { code: "CC-04", label: "Compliance", weight: 2.4, helios: 5, fortis: 4, saraswati: 3, strategy: "LOCK" },
+            { code: "IF-01", label: "Informal Session", weight: 15, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" }
+        ]
+    };
 
-    const FAILURE_SCENARIOS = [
-        { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
-        { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
-        { id: 3, label: "Competitive Displacement", probability: "20%", trigger: "Fortis delivers 'show me three' to Harrison before we plant retention question" },
-        { id: 4, label: "Champion Isolation", probability: "15%", trigger: "Jennifer's advocacy neutralised by Osei's risk veto" },
-        { id: 5, label: "Silent No", probability: "20%", trigger: "Whitfield never engages, Board defaults to safe brand (Fortis)" }
-    ];
+    const FAILURE_SCENARIOS = [
+        { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
+        { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
+        { id: 3, label: "Competitive Displacement", probability: "20%", trigger: "Fortis delivers 'show me three' to Harrison before we plant retention question" },
+        { id: 4, label: "Champion Isolation", probability: "15%", trigger: "Jennifer's advocacy neutralised by Osei's risk veto" },
+        { id: 5, label: "Silent No", probability: "20%", trigger: "Whitfield never engages, Board defaults to safe brand (Fortis)" }
+    ];
 
-    // ─── INJECT GLOBAL ANIMATION STYLES ───
-    const InjectStyles = () => e("style", { 
-        dangerouslySetInnerHTML: { 
-            __html: `
-                @keyframes dash-fill { from { stroke-dashoffset: 94.2; } to { stroke-dashoffset: 0; } }
-                @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(12px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-                .glow-emerald { box-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
-                .glow-amber { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
-                .animate-dash { animation: dash-fill 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-                .animate-bento { animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            ` 
-        } 
-    });
+    // ─── INJECT GLOBAL ANIMATION STYLES ───
+    const InjectStyles = () => e("style", { 
+        dangerouslySetInnerHTML: { 
+            __html: `
+                @keyframes dash-fill { from { stroke-dashoffset: 94.2; } to { stroke-dashoffset: 0; } }
+                @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(12px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+                .glow-emerald { box-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
+                .glow-amber { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+                .animate-dash { animation: dash-fill 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+                .animate-bento { animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+            ` 
+        } 
+    });
 
-    // ─── UTILITY COMPONENTS ───
-    const StatusDot = ({ status }) => {
-        const colors = {
-            champion: "bg-emerald-400 glow-emerald",
-            established: "bg-emerald-600",
-            targeted: "bg-amber-400 glow-amber",
-            unknown: "bg-neutral-500"
-        };
-        return e("span", { className: `inline-block w-2 h-2 rounded-full shadow-inner ${colors[status] || colors.unknown}` });
-    };
+    // ─── UTILITY COMPONENTS ───
+    const StatusDot = ({ status }) => {
+        const colors = {
+            champion: "bg-emerald-400 glow-emerald",
+            established: "bg-emerald-600",
+            targeted: "bg-amber-400 glow-amber",
+            unknown: "bg-neutral-500"
+        };
+        return e("span", { className: `inline-block w-2 h-2 rounded-full shadow-inner ${colors[status] || colors.unknown}` });
+    };
 
-    const Badge = ({ children, color = "blue" }) => {
-        const styles = {
-            blue: "bg-blue-950/50 border-blue-500/30 text-blue-300",
-            red: "bg-red-950/50 border-red-500/30 text-red-300",
-            green: "bg-emerald-950/50 border-emerald-500/30 text-emerald-300",
-            amber: "bg-amber-950/50 border-amber-500/30 text-amber-300",
-            purple: "bg-purple-950/50 border-purple-500/30 text-purple-300",
-            gray: "bg-neutral-800/60 border-neutral-600/40 text-neutral-300"
-        };
-        return e("span", { className: `inline-block px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border rounded backdrop-blur-sm shadow-sm ${styles[color]}` }, children);
-    };
+    const Badge = ({ children, color = "blue" }) => {
+        const styles = {
+            blue: "bg-blue-950/50 border-blue-500/30 text-blue-300",
+            red: "bg-red-950/50 border-red-500/30 text-red-300",
+            green: "bg-emerald-950/50 border-emerald-500/30 text-emerald-300",
+            amber: "bg-amber-950/50 border-amber-500/30 text-amber-300",
+            purple: "bg-purple-950/50 border-purple-500/30 text-purple-300",
+            gray: "bg-neutral-800/60 border-neutral-600/40 text-neutral-300"
+        };
+        return e("span", { className: `inline-block px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border rounded backdrop-blur-sm shadow-sm ${styles[color]}` }, children);
+    };
 
-    const Section = ({ id, title, subtitle, children, defaultOpen = false, className = "" }) => {
-        const [open, setOpen] = useState(defaultOpen);
-        return e("div", { className: `glass-panel rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-0.5 hover:shadow-2xl hover:border-white/10 flex flex-col h-full ${className}` },
-            e("button", { 
-                onClick: () => setOpen(!open), 
-                className: "w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-3.5 bg-gradient-to-r from-neutral-900/50 to-transparent hover:bg-neutral-800/30 transition-colors text-left outline-none cursor-pointer" 
-            },
-                e("div", null,
-                    e("span", { className: "text-[10px] font-extrabold text-blue-500 uppercase tracking-widest block mb-0.5 opacity-80" }, id),
-                    e("span", { className: "text-sm md:text-base font-black text-white tracking-tight" }, title),
-                    subtitle && e("span", { className: "text-[11px] md:text-xs text-neutral-400 ml-3 font-medium hidden sm:inline" }, subtitle)
-                ),
-                e("span", { className: `text-neutral-500 transform transition-transform duration-300 ${open ? "rotate-180" : ""}` }, "▼")
-            ),
-            open && e("div", { className: "p-3 md:p-4 border-t border-white/5 flex-grow" }, children)
-        );
-    };
+    const Section = ({ id, title, subtitle, children, defaultOpen = false, className = "" }) => {
+        const [open, setOpen] = useState(defaultOpen);
+        return e("div", { className: `glass-panel rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-0.5 hover:shadow-2xl hover:border-white/10 flex flex-col h-full ${className}` },
+            e("button", { 
+                onClick: () => setOpen(!open), 
+                className: "w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-3.5 bg-gradient-to-r from-neutral-900/50 to-transparent hover:bg-neutral-800/30 transition-colors text-left outline-none cursor-pointer" 
+            },
+                e("div", null,
+                    e("span", { className: "text-[10px] font-extrabold text-blue-500 uppercase tracking-widest block mb-0.5 opacity-80" }, id),
+                    e("span", { className: "text-sm md:text-base font-black text-white tracking-tight" }, title),
+                    subtitle && e("span", { className: "text-[11px] md:text-xs text-neutral-400 ml-3 font-medium hidden sm:inline" }, subtitle)
+                ),
+                e("span", { className: `text-neutral-500 transform transition-transform duration-300 ${open ? "rotate-180" : ""}` }, "▼")
+            ),
+            open && e("div", { className: "p-3 md:p-4 border-t border-white/5 flex-grow" }, children)
+        );
+    };
 
-    // ─── MAIN DASHBOARD COMPONENT ───
-    const GAINAccountPack = () => {
-        const [activeTab, setActiveTab] = useState("exec");
-        const [selectedPerson, setSelectedPerson] = useState(null);
+    // ─── MAIN DASHBOARD COMPONENT ───
+    const GAINAccountPack = () => {
+        const [activeTab, setActiveTab] = useState("exec");
+        const [selectedPerson, setSelectedPerson] = useState(null);
 
-        const tabs = [
-            { id: "exec", label: "Exec Summary", desc: "Bento intelligence view" },
-            { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
-            { id: "assess", label: "A | Map", desc: "RFP decode & bid mapping" },
-            { id: "influence", label: "I | Win", desc: "Strategy, scoring & edge" },
-            { id: "nurture", label: "N | Grow", desc: "Post-win expansion" }
-        ];
+        const tabs = [
+            { id: "exec", label: "Exec Summary", desc: "Bento intelligence view" },
+            { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
+            { id: "assess", label: "A | Map", desc: "RFP decode & bid mapping" },
+            { id: "influence", label: "I | Win", desc: "Strategy, scoring & edge" },
+            { id: "nurture", label: "N | Grow", desc: "Post-win expansion" }
+        ];
 
-        // --- Content Renderers ---
-        const renderFinancials = () => e("div", { className: "grid grid-cols-2 md:grid-cols-6 gap-3" },
-            [
-                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
-                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
-                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
-                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
-                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" }
-            ].map((v, i) => e("div", { key: i, className: "glass-panel bg-neutral-950/40 rounded-xl p-3 transition-all hover:bg-neutral-900/60" },
-                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold mb-1" }, v.label),
-                e("div", { className: `text-base md:text-lg font-black tracking-tight ${v.color}` }, v.value),
-                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-medium" }, v.sub)
-            ))
-        );
+        const renderFinancials = () => e("div", { className: "grid grid-cols-2 md:grid-cols-6 gap-3" },
+            [
+                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
+                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
+                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
+                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
+                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
+                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" }
+            ].map((v, i) => e("div", { key: i, className: "glass-panel bg-neutral-950/40 rounded-xl p-3 transition-all hover:bg-neutral-900/60" },
+                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold mb-1" }, v.label),
+                e("div", { className: `text-base md:text-lg font-black tracking-tight ${v.color}` }, v.value),
+                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-medium" }, v.sub)
+            ))
+        );
 
-        const renderClientAndOpportunity = () => e(Section, { id: "BRIEF", title: "The Opportunity", subtitle: ACCOUNT.dealType, defaultOpen: true },
-            e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5" },
-                e("div", null,
-                    e("h4", { className: "text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest mb-2" }, "The Client"),
-                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" }, ACCOUNT.clientSummary),
-                    e("div", { className: "flex flex-wrap gap-2" }, ACCOUNT.clientDomains.split(", ").map((d, i) => e(Badge, { key: i, color: "gray" }, d)))
-                ),
-                e("div", null,
-                    e("h4", { className: "text-[10px] font-extrabold text-blue-400 uppercase tracking-widest mb-2" }, "Non-Standard / Edge"),
-                    e("div", { className: "space-y-2" }, ACCOUNT.nonStandard.map((n, i) => e("div", { key: i, className: "flex items-start gap-2 text-[11px] md:text-xs bg-neutral-950/30 p-2 rounded-lg border border-white/5" },
-                        e("span", { className: "text-amber-400 text-[10px] mt-0.5 shrink-0" }, "◆"),
-                        e("span", { className: "text-neutral-300 font-medium" }, n)
-                    )))
-                )
-            )
-        );
+        const renderClientAndOpportunity = () => e(Section, { id: "BRIEF", title: "The Opportunity", subtitle: ACCOUNT.dealType, defaultOpen: true },
+            e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5" },
+                e("div", null,
+                    e("h4", { className: "text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest mb-2" }, "The Client"),
+                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" }, ACCOUNT.clientSummary),
+                    e("div", { className: "flex flex-wrap gap-2" }, ACCOUNT.clientDomains.split(", ").map((d, i) => e(Badge, { key: i, color: "gray" }, d)))
+                ),
+                e("div", null,
+                    e("h4", { className: "text-[10px] font-extrabold text-blue-400 uppercase tracking-widest mb-2" }, "Non-Standard / Edge"),
+                    e("div", { className: "space-y-2" }, ACCOUNT.nonStandard.map((n, i) => e("div", { key: i, className: "flex items-start gap-2 text-[11px] md:text-xs bg-neutral-950/30 p-2 rounded-lg border border-white/5" },
+                        e("span", { className: "text-amber-400 text-[10px] mt-0.5 shrink-0" }, "◆"),
+                        e("span", { className: "text-neutral-300 font-medium" }, n)
+                    )))
+                )
+            )
+        );
 
-        const renderStakeholders = () => e(Section, { id: "PEOPLE", title: "Boardroom Intelligence", subtitle: `${STAKEHOLDERS.length} decision makers profiled`, defaultOpen: true },
-            e("div", { className: "flex flex-wrap gap-2 mb-4" }, STAKEHOLDERS.map(s => e("button", {
-                key: s.id,
-                onClick: () => setSelectedPerson(selectedPerson === s.id ? null : s.id),
-                className: `group relative flex items-center gap-2 pr-3 md:pr-4 pl-1.5 py-1.5 rounded-full border transition-all duration-300 hover:scale-[1.02] cursor-pointer 
-                    ${selectedPerson === s.id ? "bg-blue-950/50 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" : 
-                      "glass-panel hover:bg-neutral-800/50"}`
-            }, 
-               e("div", { className: "w-6 h-6 md:w-7 md:h-7 rounded-full bg-neutral-800 flex items-center justify-center font-black text-[10px] text-white border border-white/10 shrink-0" }, 
-    `${s.name.split(" ")[0][0]}${s.name.split(" ")[1][0]}`
+        const renderStakeholders = () => e(Section, { id: "PEOPLE", title: "Boardroom Intelligence", subtitle: `${STAKEHOLDERS.length} decision makers profiled`, defaultOpen: true },
+            e("div", { className: "flex flex-wrap gap-2 mb-4" }, STAKEHOLDERS.map(s => e("button", {
+                key: s.id,
+                onClick: () => setSelectedPerson(selectedPerson === s.id ? null : s.id),
+                className: `group relative flex items-center gap-2 pr-3 md:pr-4 pl-1.5 py-1.5 rounded-full border transition-all duration-300 hover:scale-[1.02] cursor-pointer 
+                    ${selectedPerson === s.id ? "bg-blue-950/50 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" : 
+                      "glass-panel hover:bg-neutral-800/50"}`
+            }, 
+               e("div", { className: "w-6 h-6 md:w-7 md:h-7 rounded-full bg-neutral-800 flex items-center justify-center font-black text-[10px] text-white border border-white/10 shrink-0" }, 
+    `${s.name.split(" ")[0][0]}${s.name.split(" ")[1][0]}`
 ),
-                e("div", { className: "text-left leading-tight" },
-                    e("div", { className: "flex items-center gap-1.5" },
-                        e(StatusDot, { status: s.status }),
-                        e("span", { className: "text-[11px] md:text-xs font-bold text-white tracking-wide" }, s.name)
-                    ),
-                    e("div", { className: "text-[8px] md:text-[9px] text-neutral-500 uppercase tracking-wider font-semibold mt-0.5" }, s.role)
-                )
-            ))),
-            selectedPerson && (() => {
-                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
-                if (!p) return null;
-                return e("div", { className: "bg-gradient-to-br from-neutral-900 to-neutral-950 border border-blue-500/30 rounded-xl p-4 md:p-5 shadow-inner-xl animate-bento" },
-                    e("div", { className: "flex flex-wrap items-center gap-2 md:gap-3 mb-4 border-b border-white/5 pb-4" },
-                        e("span", { className: "text-lg md:text-xl font-black text-white tracking-tight" }, p.name),
-                        e("span", { className: "text-[11px] md:text-xs text-neutral-400" }, p.role),
-                        e(Badge, { color: p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue" }, p.status),
-                        e(Badge, { color: "purple" }, `Drive: ${p.gainDriver}`),
-                        e(Badge, { color: "gray" }, p.kegan)
-                    ),
-                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-4 font-medium" }, p.summary),
-                    e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" },
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-emerald-900/30" },
-                            e("div", { className: "text-[9px] text-emerald-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Winning Triggers"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.trigger)
-                        ),
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-red-900/30" },
-                            e("div", { className: "text-[9px] text-red-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Fatal Landmines"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.avoid)
-                        ),
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-blue-900/30" },
-                            e("div", { className: "text-[9px] text-blue-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Communication Modality"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.modality)
-                        )
-                    )
-                );
-            })()
-        );
+                e("div", { className: "text-left leading-tight" },
+                    e("div", { className: "flex items-center gap-1.5" },
+                        e(StatusDot, { status: s.status }),
+                        e("span", { className: "text-[11px] md:text-xs font-bold text-white tracking-wide" }, s.name)
+                    ),
+                    e("div", { className: "text-[8px] md:text-[9px] text-neutral-500 uppercase tracking-wider font-semibold mt-0.5" }, s.role)
+                )
+            ))),
+            selectedPerson && (() => {
+                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
+                if (!p) return null;
+                return e("div", { className: "bg-gradient-to-br from-neutral-900 to-neutral-950 border border-blue-500/30 rounded-xl p-4 md:p-5 shadow-inner-xl animate-bento" },
+                    e("div", { className: "flex flex-wrap items-center gap-2 md:gap-3 mb-4 border-b border-white/5 pb-4" },
+                        e("span", { className: "text-lg md:text-xl font-black text-white tracking-tight" }, p.name),
+                        e("span", { className: "text-[11px] md:text-xs text-neutral-400" }, p.role),
+                        e(Badge, { color: p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue" }, p.status),
+                        e(Badge, { color: "purple" }, `Drive: ${p.gainDriver}`),
+                        e(Badge, { color: "gray" }, p.kegan)
+                    ),
+                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-4 font-medium" }, p.summary),
+                    e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" },
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-emerald-900/30" },
+                            e("div", { className: "text-[9px] text-emerald-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Winning Triggers"),
+                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.trigger)
+                        ),
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-red-900/30" },
+                            e("div", { className: "text-[9px] text-red-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Fatal Landmines"),
+                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.avoid)
+                        ),
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-blue-900/30" },
+                            e("div", { className: "text-[9px] text-blue-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Communication Modality"),
+                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.modality)
+                        )
+                    )
+                );
+            })()
+        );
 
-        const renderCompetition = () => e(Section, { id: "COMP", title: "Competitive Map", defaultOpen: false },
-            e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" }, COMPETITORS.map((c, i) => e("div", { key: i, className: "bg-neutral-950/40 rounded-xl p-3 border border-white/5 transition-all hover:bg-neutral-900/60 flex flex-col h-full" },
-                e("div", { className: "flex justify-between items-start mb-2" },
-                    e("div", null,
-                        e("span", { className: "text-xs md:text-sm font-bold text-white mr-2 block mb-1" }, c.name),
-                        e(Badge, { color: c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green" }, c.dangerRating)
-                    ),
-                    e("span", { className: "text-[9px] text-neutral-500 font-mono" }, c.revenue)
-                ),
-                e("p", { className: "text-[10px] text-neutral-400 italic mb-3 flex-grow" }, `"${c.label}"`),
-                e("div", { className: "bg-red-950/20 rounded p-2 border border-red-900/20 text-[10px] md:text-[11px] text-neutral-300" },
-                    e("span", { className: "text-red-400 font-bold mr-1" }, "Kill Q:"), c.killQuestion
-                )
-            )))
-        );
+        const renderCompetition = () => e(Section, { id: "COMP", title: "Competitive Map", defaultOpen: false },
+            e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" }, COMPETITORS.map((c, i) => e("div", { key: i, className: "bg-neutral-950/40 rounded-xl p-3 border border-white/5 transition-all hover:bg-neutral-900/60 flex flex-col h-full" },
+                e("div", { className: "flex justify-between items-start mb-2" },
+                    e("div", null,
+                        e("span", { className: "text-xs md:text-sm font-bold text-white mr-2 block mb-1" }, c.name),
+                        e(Badge, { color: c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green" }, c.dangerRating)
+                    ),
+                    e("span", { className: "text-[9px] text-neutral-500 font-mono" }, c.revenue)
+                ),
+                e("p", { className: "text-[10px] text-neutral-400 italic mb-3 flex-grow" }, `"${c.label}"`),
+                e("div", { className: "bg-red-950/20 rounded p-2 border border-red-900/20 text-[10px] md:text-[11px] text-neutral-300" },
+                    e("span", { className: "text-red-400 font-bold mr-1" }, "Kill Q:"), c.killQuestion
+                )
+            )))
+        );
 
-        const renderWedge = () => e(Section, { id: "WEDGE", title: "The Narrative Wedge", defaultOpen: false },
-            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" },
-                "Meridian has been burned by £67M \"Operation Meridian\" promises. ", e("span", { className: "text-white font-bold" }, "Do not sell a Big Bang.")
-            ),
-            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed" },
-                "Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that ",
-                e("span", { className: "text-white font-bold border-b border-blue-500 pb-0.5" }, "their CIO gets our UK MD's mobile number.")
-            )
-        );
+        const renderWedge = () => e(Section, { id: "WEDGE", title: "The Narrative Wedge", defaultOpen: false },
+            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" },
+                "Meridian has been burned by £67M \"Operation Meridian\" promises. ", e("span", { className: "text-white font-bold" }, "Do not sell a Big Bang.")
+            ),
+            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed" },
+                "Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that ",
+                e("span", { className: "text-white font-bold border-b border-blue-500 pb-0.5" }, "their CIO gets our UK MD's mobile number.")
+            )
+        );
 
-        const renderTimeline = () => e(Section, { id: "TIME", title: "Execution Window", defaultOpen: false },
-            e("div", { className: "space-y-2 md:space-y-3" }, [
-                { phase: "RFP Received", date: "Jan 2026", done: true },
-                { phase: "Clarification Window", date: "1-14 Mar", active: true },
-                { phase: "Submission Deadline", date: "28 Mar", hard: true },
-                { phase: "Evaluation & Orals", date: "Apr-May" }
-            ].map((m, i) => e("div", { key: i, className: "flex items-center gap-3 bg-neutral-950/30 p-2 md:p-2.5 rounded-lg border border-white/5" },
-                e("div", { className: `w-1.5 h-1.5 md:w-2 md:h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse glow-emerald" : m.hard ? "bg-red-500 glow-amber" : "bg-neutral-600"}` }),
-                e("span", { className: `text-[10px] md:text-[11px] font-semibold flex-1 ${m.done ? "text-neutral-500" : m.active ? "text-blue-300" : "text-white"}` }, m.phase),
-                e("span", { className: `text-[9px] uppercase tracking-widest font-bold ${m.hard ? "text-red-400" : "text-neutral-500"}` }, m.date)
-            )))
-        );
+        const renderTimeline = () => e(Section, { id: "TIME", title: "Execution Window", defaultOpen: false },
+            e("div", { className: "space-y-2 md:space-y-3" }, [
+                { phase: "RFP Received", date: "Jan 2026", done: true },
+                { phase: "Clarification Window", date: "1-14 Mar", active: true },
+                { phase: "Submission Deadline", date: "28 Mar", hard: true },
+                { phase: "Evaluation & Orals", date: "Apr-May" }
+            ].map((m, i) => e("div", { key: i, className: "flex items-center gap-3 bg-neutral-950/30 p-2 md:p-2.5 rounded-lg border border-white/5" },
+                e("div", { className: `w-1.5 h-1.5 md:w-2 md:h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500" : m.hard ? "bg-red-500" : "bg-neutral-600"}` }),
+                e("span", { className: `text-[10px] md:text-[11px] font-semibold flex-1 ${m.done ? "text-neutral-500" : m.active ? "text-blue-300" : "text-white"}` }, m.phase),
+                e("span", { className: `text-[9px] uppercase tracking-widest font-bold ${m.hard ? "text-red-400" : "text-neutral-500"}` }, m.date)
+            )))
+        );
 
-        const renderActions = () => e(Section, { id: "ACTIONS", title: "Urgent Actions", subtitle: "+0.47 points at risk", defaultOpen: false },
-            e("div", { className: "space-y-2 md:space-y-3" }, [
-                { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.29 pts)", status: "NOT STARTED" },
-                { action: "Build Infrastructure Transition Blueprint", impact: "TC-03 protection (+0.13 pts)", status: "NOT STARTED" },
-                { action: "Rehearse live scenario with Chen", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" }
-            ].map((a, i) => e("div", { key: i, className: "flex items-start gap-2.5 bg-red-950/10 p-2.5 md:p-3 rounded-xl border border-red-900/30 hover:bg-red-950/20 transition-colors" },
-                e("div", { className: "w-3 h-3 rounded-full border-2 border-red-500/50 flex items-center justify-center shrink-0 mt-0.5" }),
-                e("div", null,
-                    e("div", { className: "text-xs md:text-sm font-bold text-neutral-200" }, a.action),
-                    e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-mono" }, a.impact)
-                )
-            )))
-        );
+        const renderActions = () => e(Section, { id: "ACTIONS", title: "Urgent Actions", subtitle: "+0.47 points at risk", defaultOpen: false },
+            e("div", { className: "space-y-2 md:space-y-3" }, [
+                { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.29 pts)", status: "NOT STARTED" },
+                { action: "Build Infrastructure Transition Blueprint", impact: "TC-03 protection (+0.13 pts)", status: "NOT STARTED" },
+                { action: "Rehearse live scenario with Chen", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" }
+            ].map((a, i) => e("div", { key: i, className: "flex items-start gap-2.5 bg-red-950/10 p-2.5 md:p-3 rounded-xl border border-red-900/30 hover:bg-red-950/20 transition-colors" },
+                e("div", { className: "w-3 h-3 rounded-full border-2 border-red-500/50 flex items-center justify-center shrink-0 mt-0.5" }),
+                e("div", null,
+                    e("div", { className: "text-xs md:text-sm font-bold text-neutral-200" }, a.action),
+                    e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-mono" }, a.impact)
+                )
+            )))
+        );
 
-        // --- Render Structure ---
-        return e("div", { className: "bg-neutral-950 text-neutral-200 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative" },
-            e(InjectStyles),
-            
-            // Header / Hero Section
-            e("div", { className: "relative border-b border-white/5 bg-gradient-to-br from-neutral-900/80 to-neutral-950 px-4 sm:px-6 lg:px-8 py-4 lg:py-6 overflow-hidden" },
-                e("div", { className: "absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none" }),
-                e("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 relative z-10" },
-                    e("div", null,
-                        e("div", { className: "flex items-center gap-2 md:gap-3 mb-2 animate-bento" },
-                            e("span", { className: "text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] font-mono" }, "GAIN Deal Engine"),
-                            e("span", { className: "inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-400 uppercase tracking-widest backdrop-blur-sm" },
-                                e("span", { className: "w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" }),
-                                ACCOUNT.status
-                            )
-                        ),
-                        e("h1", { className: "text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-2 animate-bento", style: { animationDelay: '0.1s' } }, ACCOUNT.name),
-                        e("p", { className: "text-[10px] md:text-xs lg:text-sm text-neutral-400 font-medium animate-bento", style: { animationDelay: '0.2s' } }, 
-                            `Targeting ${ACCOUNT.sector} · Expected ACV: `, e("span", { className:"text-white font-bold"}, ACCOUNT.acv)
-                        )
-                    ),
-                    e("div", { className: "flex items-center gap-4 bg-neutral-950/50 p-3 md:p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner animate-bento", style: { animationDelay: '0.3s' } },
-                        e("div", { className: "text-right" },
-                            e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold" }, "Win Probability"),
-                            e("div", { className: "text-2xl md:text-3xl font-black text-white mt-0.5" }, `${ACCOUNT.winProbability}%`)
-                        ),
-                        e("div", { className: "relative w-14 h-14 md:w-16 md:h-16 shrink-0" },
-                            e("svg", { viewBox: "0 0 36 36", className: "w-14 h-14 md:w-16 md:h-16 transform -rotate-90" },
-                                e("defs", null, 
-                                    e("linearGradient", { id: "winGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
-                                        e("stop", { offset: "0%", stopColor: "oklch(0.78 0.13 150)" }), // Emerald-ish
-                                        e("stop", { offset: "100%", stopColor: "oklch(0.72 0.14 240)" })  // Blue-ish
-                                    )
-                                ),
-                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "rgba(255,255,255,0.05)", strokeWidth: "3" }),
-                                e("circle", { 
-                                    cx: "18", cy: "18", r: "15", fill: "none", 
-                                    stroke: "url(#winGrad)", strokeWidth: "3", 
-                                    strokeDasharray: "94.2 100", 
-                                    strokeLinecap: "round",
-                                    className: "animate-dash" 
-                                })
-                            )
-                        )
-                    )
-                )
-            ),
+        return e("div", { className: "bg-neutral-950 text-neutral-200 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative" },
+            e(InjectStyles),
+            
+            e("div", { className: "relative border-b border-white/5 bg-gradient-to-br from-neutral-900/80 to-neutral-950 px-4 sm:px-6 lg:px-8 py-4 lg:py-6 overflow-hidden" },
+                e("div", { className: "absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none" }),
+                e("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 relative z-10" },
+                    e("div", null,
+                        e("div", { className: "flex items-center gap-2 md:gap-3 mb-2 animate-bento" },
+                            e("span", { className: "text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] font-mono" }, "GAIN Deal Engine"),
+                            e("span", { className: "inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-400 uppercase tracking-widest backdrop-blur-sm" },
+                                e("span", { className: "w-1.5 h-1.5 bg-red-500 rounded-full" }),
+                                ACCOUNT.status
+                            )
+                        ),
+                        e("h1", { className: "text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-2 animate-bento", style: { animationDelay: '0.1s' } }, ACCOUNT.name),
+                        e("p", { className: "text-[10px] md:text-xs lg:text-sm text-neutral-400 font-medium animate-bento", style: { animationDelay: '0.2s' } }, 
+                            `Targeting ${ACCOUNT.sector} · Expected ACV: `, e("span", { className:"text-white font-bold"}, ACCOUNT.acv)
+                        )
+                    ),
+                    e("div", { className: "flex items-center gap-4 bg-neutral-950/50 p-3 md:p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner animate-bento", style: { animationDelay: '0.3s' } },
+                        e("div", { className: "text-right" },
+                            e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold" }, "Win Probability"),
+                            e("div", { className: "text-2xl md:text-3xl font-black text-white mt-0.5" }, `${ACCOUNT.winProbability}%`)
+                        ),
+                        e("div", { className: "relative w-14 h-14 md:w-16 md:h-16 shrink-0" },
+                            e("svg", { viewBox: "0 0 36 36", className: "w-14 h-14 md:w-16 md:h-16 transform -rotate-90" },
+                                e("defs", null, 
+                                    e("linearGradient", { id: "winGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
+                                        e("stop", { offset: "0%", stopColor: "oklch(0.78 0.13 150)" }),
+                                        e("stop", { offset: "100%", stopColor: "oklch(0.72 0.14 240)" })
+                                    )
+                                ),
+                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "rgba(255,255,255,0.05)", strokeWidth: "3" }),
+                                e("circle", { 
+                                    cx: "18", cy: "18", r: "15", fill: "none", 
+                                    stroke: "url(#winGrad)", strokeWidth: "3", 
+                                    strokeDasharray: "64.1 94.2", 
+                                    strokeLinecap: "round",
+                                    className: "animate-dash" 
+                                })
+                            )
+                        )
+                    )
+                )
+            ),
 
-            // Tabs
-            e("div", { className: "border-b border-white/5 bg-neutral-950/80 px-4 sm:px-6 lg:px-8 overflow-x-auto no-scrollbar" },
-                e("div", { className: "max-w-7xl mx-auto flex gap-2 pt-2" },
-                    tabs.map(t => e("button", {
-                        key: t.id,
-                        onClick: () => setActiveTab(t.id),
-                        className: `px-4 md:px-5 py-2.5 rounded-t-xl text-left transition-all duration-300 shrink-0 border border-b-0 cursor-pointer ${activeTab === t.id ? "border-white/10 bg-neutral-900/50 backdrop-blur-md" : "border-transparent text-neutral-500 hover:text-neutral-300 hover:bg-neutral-900/30"}`
-                    },
-                        e("span", { className: `text-xs md:text-sm font-bold block mb-0.5 tracking-wide ${activeTab === t.id ? "text-blue-400" : ""}` }, t.label),
-                        e("span", { className: `text-[9px] md:text-[10px] ${activeTab === t.id ? "text-neutral-400" : "text-neutral-600"}` }, t.desc)
-                    ))
-                )
-            ),
+            e("div", { className: "border-b border-white/5 bg-neutral-950/80 px-4 sm:px-6 lg:px-8 overflow-x-auto no-scrollbar" },
+                e("div", { className: "max-w-7xl mx-auto flex gap-2 pt-2" },
+                    tabs.map(t => e("button", {
+                        key: t.id,
+                        onClick: () => setActiveTab(t.id),
+                        className: `px-4 md:px-5 py-2.5 rounded-t-xl text-left transition-all duration-300 shrink-0 border border-b-0 cursor-pointer ${activeTab === t.id ? "border-white/10 bg-neutral-900/50 backdrop-blur-md" : "border-transparent text-neutral-500 hover:text-neutral-300 hover:bg-neutral-900/30"}`
+                    },
+                        e("span", { className: `text-xs md:text-sm font-bold block mb-0.5 tracking-wide ${activeTab === t.id ? "text-blue-400" : ""}` }, t.label),
+                        e("span", { className: `text-[9px] md:text-[10px] ${activeTab === t.id ? "text-neutral-400" : "text-neutral-600"}` }, t.desc)
+                    ))
+                )
+            ),
 
-            // Content - Bento Grid for Exec Summary
-            e("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6 bg-neutral-950" }, 
-                activeTab === "exec" ? e("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-5 animate-bento" },
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.1s' } }, renderFinancials()),
-                    e("div", { className: "lg:col-span-8", style: { animationDelay: '0.2s' } }, renderClientAndOpportunity()),
-                    e("div", { className: "lg:col-span-4", style: { animationDelay: '0.3s' } }, renderWedge()),
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.4s' } }, renderStakeholders()),
-                    // FIX: Placed Execution Window and Urgent Actions side-by-side to reduce vertical space
-                    e("div", { className: "lg:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 lg:gap-5" },
-                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.5s' } }, renderTimeline()),
-                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.55s' } }, renderActions())
-                    ),
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.6s' } }, renderCompetition())
-                ) : e("div", { className: "text-center py-20 animate-bento" },
-                    e("p", { className: "text-sm text-neutral-400 font-medium mb-6" }, `Full structured intelligence for the [${activeTab.toUpperCase()}] phase is maintained in the complete workspace.`),
-                    e("a", { href: "newdashboards.html", className: "inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 text-xs md:text-sm font-black rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-white/20" },
-                        "Access Complete Deal Workspace",
-                        e("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 3 },
-                            e("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M13 7l5 5m0 0l-5 5m5-5H6" })
-                        )
-                    )
-                )
-            ),
+            e("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6 bg-neutral-950" }, 
+                activeTab === "exec" ? e("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-5 animate-bento" },
+                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.1s' } }, renderFinancials()),
+                    e("div", { className: "lg:col-span-8", style: { animationDelay: '0.2s' } }, renderClientAndOpportunity()),
+                    e("div", { className: "lg:col-span-4", style: { animationDelay: '0.3s' } }, renderWedge()),
+                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.4s' } }, renderStakeholders()),
+                    e("div", { className: "lg:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 lg:gap-5" },
+                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.5s' } }, renderTimeline()),
+                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.55s' } }, renderActions())
+                    ),
+                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.6s' } }, renderCompetition())
+                ) : e("div", { className: "text-center py-20 animate-bento" },
+                    e("p", { className: "text-sm text-neutral-400 font-medium mb-6" }, `Full structured intelligence for the [${activeTab.toUpperCase()}] phase is maintained in the complete workspace.`),
+                    e("a", { href: "dashboards.html", className: "inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 text-xs md:text-sm font-black rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-white/20" },
+                        "Access Complete Deal Workspace",
+                        e("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 3 },
+                            e("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M13 7l5 5m0 0l-5 5m5-5H6" })
+                        )
+                    )
+                )
+            ),
 
-            // Footer
-            e("div", { className: "border-t border-white/5 bg-neutral-950 px-4 sm:px-6 py-4 text-center" },
-                e("span", { className: "text-[9px] text-neutral-600 font-mono tracking-widest uppercase font-bold" }, 
-                    `Account Pack · Compiled ${ACCOUNT.lastUpdated} · GAIN Protocol © 2026`
-                )
-            )
-        );
-    };
+            e("div", { className: "border-t border-white/5 bg-neutral-950 px-4 sm:px-6 py-4 text-center" },
+                e("span", { className: "text-[9px] text-neutral-600 font-mono tracking-widest uppercase font-bold" }, 
+                    `Account Pack · Compiled ${ACCOUNT.lastUpdated} · GAIN Protocol © 2026`
+                )
+            )
+        );
+    };
 
-    // ─── MOUNT TO DOM ───
-    const container = document.getElementById('account-pack-root');
-    if (container) {
-        const root = ReactDOM.createRoot(container);
-        root.render(e(GAINAccountPack));
-    }
+    const container = document.getElementById('account-pack-root');
+    if (container) {
+        const root = ReactDOM.createRoot(container);
+        root.render(e(GAINAccountPack));
+    }
 })();
 </script>
 
 <script>
-    // Reveal Observer
     document.addEventListener('DOMContentLoaded', () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -772,7 +823,6 @@ document.addEventListener('click', (e) => {
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Active Nav Link
         const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         document.querySelectorAll('nav a').forEach(link => {
             if (link.getAttribute('href') === currentPath) {
@@ -781,7 +831,6 @@ document.addEventListener('click', (e) => {
             }
         });
 
-        // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -789,36 +838,15 @@ document.addEventListener('click', (e) => {
                 if (targetId === '#') return;
                 const target = document.querySelector(targetId);
                 if (target) {
-                    const offset = 100; // Account for fixed nav
+                    const offset = 100;
                     const bodyRect = document.body.getBoundingClientRect().top;
                     const elementRect = target.getBoundingClientRect().top;
                     const elementPosition = elementRect - bodyRect;
                     const offsetPosition = elementPosition - offset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
             });
         });
-    });
-</script>
-<script>
-    // Close radial on outside click or scroll past nav
-    document.addEventListener('click', (e) => {
-        const toggle = document.getElementById('gain-radial');
-        // If it's checked, and we didn't click inside the radial menu wrapper, uncheck it
-        if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
-            toggle.checked = false;
-        }
-    });
-
-    document.addEventListener('scroll', () => {
-        const toggle = document.getElementById('gain-radial');
-        if (toggle && toggle.checked) {
-            toggle.checked = false;
-        }
     });
 </script>
 
