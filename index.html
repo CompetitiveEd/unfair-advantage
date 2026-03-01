@@ -142,9 +142,10 @@
         </div>
     </div>
 
+    <!-- System dropdown - no disappear on hover gap -->
     <div class="relative group cursor-pointer pb-1">
         <span class="hover:text-white transition-colors flex items-center gap-1">System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-72 mt-2 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-150">
+        <div class="dropdown-menu absolute left-0 top-full w-72 mt-2 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200">
             <a href="newedge.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">Why It Works</a>
             <a href="newarchitecture.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">How It's Built</a>
             <a href="newstory.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm border-b border-white/5">The Story</a>
@@ -812,6 +813,21 @@ document.addEventListener('click', (e) => {
             });
         });
     });
+</script>
+<script>
+// Close radial on outside click or scroll past nav
+document.addEventListener('click', (e) => {
+    const toggle = document.getElementById('gain-radial');
+    if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
+        toggle.checked = false;
+    }
+});
+document.addEventListener('scroll', () => {
+    const toggle = document.getElementById('gain-radial');
+    if (toggle && toggle.checked) {
+        toggle.checked = false;
+    }
+});
 </script>
 
 </body>
