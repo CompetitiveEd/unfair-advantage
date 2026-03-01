@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="David Matthews | The Edge. Why GAIN works when other AI systems plateau — five disciplines, behavioural drivers, and the human layer that makes the difference.">
+    <title>The Edge | GAIN Methodology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'oklch(0.72 0.14 240)',
+                        success: 'oklch(0.78 0.13 150)',
+                        warning: 'oklch(0.75 0.15 80)',
+                        danger: 'oklch(0.68 0.16 30)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: rgb(59 130 246 / 0.5); color: white; }
+
+        .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
+        .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+        .reveal.slide-left.active { transform: translateX(0) scale(1); }
+        .dur-600 { transition-duration: 600ms; }
+        .dur-700 { transition-duration: 700ms; }
+        .dur-800 { transition-duration: 800ms; }
+        .dur-900 { transition-duration: 900ms; }
+        .dur-1000 { transition-duration: 1000ms; }
+        .dur-1100 { transition-duration: 1100ms; }
+
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.4); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
+            border-radius: 1rem;
+        }
+
+        main h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; margin-bottom: 1rem; }
+        main h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 700; margin-bottom: 0.75rem; }
+        main p { font-size: 1rem; line-height: 1.5; margin-bottom: 1rem; color: #d1d5db; }
+
+        .radial-item {
+            --tx: 0px;
+            position: absolute; top: 50%; left: 50%; 
+            width: 70px; height: 70px;
+            margin-left: -35px; margin-top: -35px;
+            background: rgba(23, 23, 23, 0.92); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 9999px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; font-weight: 600; text-align: center; padding: 6px;
+            opacity: 0; transform: translate(var(--tx), 0) scale(0);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-decoration: none;
+        }
+        .radial-item:hover { transform: translate(var(--tx), 0) scale(1.12) !important; box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+        .radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: translate(var(--tx), 0) scale(1); }
+
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+
+<!-- ═══════════════════════════════════════════════════════ NAV ═══════════════════════════════════════════════════════ -->
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+    <a href="index.html" class="hover:text-white transition-colors">Home</a>
+    <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
+    <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
+
+    <div class="relative pb-1 radial-menu">
+        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
+        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
+            GAIN <span class="text-xs opacity-70">▾</span>
+        </label>
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="know.html" class="radial-item" style="--tx: -150px;"><span class="text-3xl font-black text-blue-400">G</span><span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span></a>
+            <a href="map.html" class="radial-item" style="--tx: -50px;"><span class="text-3xl font-black text-violet-400">A</span><span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span></a>
+            <a href="win.html" class="radial-item" style="--tx: 50px;"><span class="text-3xl font-black text-amber-400">I</span><span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span></a>
+            <a href="grow.html" class="radial-item" style="--tx: 150px;"><span class="text-3xl font-black text-emerald-400">N</span><span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span></a>
+        </div>
+    </div>
+
+    <div class="relative pb-1 radial-menu">
+        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
+        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
+            System <span class="text-xs opacity-70">▾</span>
+        </label>
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="edge.html" class="radial-item" style="--tx: -150px;"><span class="text-lg font-black text-cyan-400">⚡</span><span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span></a>
+            <a href="architecture.html" class="radial-item" style="--tx: -50px;"><span class="text-lg font-black text-teal-400">◈</span><span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span></a>
+            <a href="story.html" class="radial-item" style="--tx: 50px;"><span class="text-lg font-black text-sky-400">◉</span><span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span></a>
+            <a href="dashboards.html" class="radial-item" style="--tx: 150px;"><span class="text-lg font-black text-indigo-400">▣</span><span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span></a>
+        </div>
+    </div>
+
+    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ HERO ═══════════════════════════════════════════════════════ -->
+<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+
+    <header class="relative rounded-[2rem] overflow-hidden mb-8 md:mb-10 glass-panel border-t-4 border-t-cyan-500/30 hover:-translate-y-1 transition-all duration-500">
+        <img src="assets/images/architecture.webp" alt="The Edge" class="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply z-0">
+        
+        <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent">
+            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
+                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> The Edge</span>
+            </div>
+
+            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-lg">
+                When every pitch is AI-perfect,<br class="hidden md:block">
+                <span class="text-cyan-400">perfect is table stakes.</span>
+            </h1>
+            
+            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium">
+                The buyer's AI writes the RFP. The vendor's AI writes the response. Every submission converges. The only remaining edge is human judgment — five disciplines that took 25 years to converge into one system.
+            </p>
+        </div>
+    </header>
+
+    <main>
+
+    <!-- ═══════════════════════════════════════════════════════ 5 MARKET SHIFTS ═══════════════════════════════════════════════════════ -->
+    <section class="mb-10 reveal">
+        <div class="flex items-center gap-5 mb-6">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">Five Market Shifts</div>
+            <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-4">
+            <div class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="text-xs font-mono text-blue-400 font-bold block mb-2">01</span>
+                <h3 class="text-sm font-black text-white uppercase tracking-wide mb-2">Intelligence Compression</h3>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-0">Deep account insight used to take weeks. Now it takes 180 minutes. The research phase is over. Synthesis and judgment win.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="text-xs font-mono text-blue-400 font-bold block mb-2">02</span>
+                <h3 class="text-sm font-black text-white uppercase tracking-wide mb-2">Synthetic Noise</h3>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-0">Buyers are drowning in AI-generated outreach. To cut through, you must abandon cadence and inject extreme relevance.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="text-xs font-mono text-blue-400 font-bold block mb-2">03</span>
+                <h3 class="text-sm font-black text-white uppercase tracking-wide mb-2">End of Discovery</h3>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-0">Asking "what keeps you up at night?" signals you haven't done the work. You need to know their financial friction before you say hello.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="text-xs font-mono text-blue-400 font-bold block mb-2">04</span>
+                <h3 class="text-sm font-black text-white uppercase tracking-wide mb-2">The Content Trap</h3>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-0">Sellers confuse creating perfectly formatted decks with advancing the deal. Boards don't read decks. They read risk summaries.</p>
+            </div>
+            <div class="glass-panel rounded-2xl p-5 border-t-2 border-t-neutral-500/30 hover:-translate-y-0.5 transition-all duration-300">
+                <span class="text-xs font-mono text-neutral-400 font-bold block mb-2">05</span>
+                <h3 class="text-sm font-black text-white uppercase tracking-wide mb-2">The Buyer Has AI Too</h3>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-0">Procurement uses LLMs to strip emotion and force commoditisation. If you pitch features, the AI will commoditise you instantly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ BRIDGE ═══════════════════════════════════════════════════════ -->
+    <div class="mb-10 reveal text-center">
+        <div class="h-px bg-white/5 max-w-md mx-auto mb-8"></div>
+        <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed max-w-2xl mx-auto">
+            The methodology took decades. The execution takes minutes. These are the five disciplines that make the difference.
+        </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ 5 DISCIPLINES ═══════════════════════════════════════════════════════ -->
+    <section class="mb-10">
+        <div class="flex items-center gap-5 mb-6">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">Five Disciplines</div>
+            <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+            <div class="reveal dur-600 glass-panel rounded-2xl p-6 border-t-4 border-t-blue-500/30">
+                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-1">Mission Command</h3>
+                <p class="text-xs text-blue-400 font-mono font-bold mb-4">ADAPTIVE EXECUTION</p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-3">
+                    <span class="text-neutral-500 font-bold block mb-1">The common failure:</span> Sellers freeze when the procurement plan breaks. They wait for manager permission to pivot.
+                </p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-0">
+                    <span class="text-white font-bold block mb-1">The discipline:</span> Commander's intent embedded. The team knows the strategic outcome. Autonomy to adapt dynamically when the friction changes. No waiting for permission. No freezing when the plan breaks.
+                </p>
+            </div>
+
+            <div class="reveal dur-700 glass-panel rounded-2xl p-6 border-t-4 border-t-violet-500/30">
+                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-1">Applied Behavioural Science</h3>
+                <p class="text-xs text-violet-400 font-mono font-bold mb-4">BELIEF ALIGNMENT</p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-3">
+                    <span class="text-neutral-500 font-bold block mb-1">The common failure:</span> They pitch logic (ROI, features) to a buyer who is quietly terrified of operational failure or losing their position.
+                </p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-0">
+                    <span class="text-white font-bold block mb-1">The discipline:</span> Map the behavioural drivers — Safety, Power, Order, Achievement. Don't change their mind. Align the solution to their existing decision heuristics. The buyer feels understood, not sold to.
+                </p>
+            </div>
+
+            <div class="reveal dur-800 glass-panel rounded-2xl p-6 border-t-4 border-t-emerald-500/30">
+                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-1">Structural Negotiation</h3>
+                <p class="text-xs text-emerald-400 font-mono font-bold mb-4">HARVARD & LBS FRAMEWORKS</p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-3">
+                    <span class="text-neutral-500 font-bold block mb-1">The common failure:</span> They give away margin at the end of the quarter because they confuse haggling with negotiating.
+                </p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-0">
+                    <span class="text-white font-bold block mb-1">The discipline:</span> Engineer the deal architecture early. Trade items of low cost for items of high perceived value. Lock multi-year terms before procurement engages. Margin protected, not surrendered.
+                </p>
+            </div>
+
+            <div class="reveal dur-900 glass-panel rounded-2xl p-6 border-t-4 border-t-amber-500/30 md:col-span-2 lg:col-span-1">
+                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-1">Champion Development</h3>
+                <p class="text-xs text-amber-400 font-mono font-bold mb-4">INFLUENCE ARCHITECTURE</p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-3">
+                    <span class="text-neutral-500 font-bold block mb-1">The common failure:</span> They map standard org charts and assume the CIO makes the decision. They get blindsided by a stakeholder they never identified.
+                </p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-0">
+                    <span class="text-white font-bold block mb-1">The discipline:</span> Identify internal champions. Arm them with the exact narrative to defend the solution when you're not in the room. The deal advances because someone inside is making the case.
+                </p>
+            </div>
+
+            <div class="reveal dur-1000 glass-panel rounded-2xl p-6 border-t-4 border-t-neutral-500/30 md:col-span-2 lg:col-span-2">
+                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-1">Enterprise Execution Layer</h3>
+                <p class="text-xs text-neutral-400 font-mono font-bold mb-4">THE HUMAN LAYER</p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-3">
+                    <span class="text-neutral-500 font-bold block mb-1">The common failure:</span> They mistake AI-generated data for a closing strategy. They have the intelligence but fail the execution.
+                </p>
+                <p class="text-sm text-neutral-300 leading-relaxed mb-0">
+                    <span class="text-white font-bold block mb-1">The discipline:</span> Data is not a differentiator. Translating structured intelligence into a political, multi-threaded boardroom strategy is the only skill that commands a premium. This cannot be bought or faked — it must be built through repetition across hundreds of live deals.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ BEHAVIOURAL DRIVERS ═══════════════════════════════════════════════════════ -->
+    <section class="mb-10 reveal dur-600">
+        <div class="flex items-center gap-5 mb-6">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-violet-400 uppercase">How Buyers Actually Decide</div>
+            <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <div class="glass-panel rounded-2xl p-6 md:p-8 border-t-4 border-t-violet-500/30">
+            <p class="text-base text-neutral-300 mb-6 leading-relaxed text-center max-w-2xl mx-auto">
+                AI maps the corporate risk. But corporate entities don't sign contracts — stressed, politically-motivated humans do. The system aligns intelligence to these six behavioural drivers.
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 text-center">
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Safety</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will I lose my position?"</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Order</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will this cause disruption?"</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Power</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will I gain control?"</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Achievement</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will I hit my targets?"</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Affiliation</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will I be seen well?"</div>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-t-2 border-t-violet-500/20">
+                    <div class="text-white font-bold text-sm uppercase tracking-widest">Sustainability</div>
+                    <div class="text-xs text-neutral-500 mt-1">"Will this last?"</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ FRAMEWORKS ═══════════════════════════════════════════════════════ -->
+    <section class="mb-10 reveal">
+        <div class="flex items-center gap-5 mb-6">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">Knowledge Base</div>
+            <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <details class="glass-panel rounded-2xl group overflow-hidden mb-4">
+            <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-white/[0.02] transition-colors">
+                <span class="text-base font-bold text-white">Foundation Frameworks (01–06)</span>
+                <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+            </summary>
+            <div class="p-5 md:p-6 pt-0 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-blue-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">1. The "So What?" Filter</h3>
+                        <span class="text-xs font-mono text-blue-400 glass-panel px-2 py-1 rounded-lg border-t border-t-blue-400/20">[G]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Discard anything that doesn't alter deal strategy.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-violet-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">2. The Influence Map</h3>
+                        <span class="text-xs font-mono text-violet-400 glass-panel px-2 py-1 rounded-lg border-t border-t-violet-400/20">[A]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Plot stakeholders by political capital and friction alignment, not title.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-amber-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">3. Strategic Reframing</h3>
+                        <span class="text-xs font-mono text-amber-400 glass-panel px-2 py-1 rounded-lg border-t border-t-amber-400/20">[I]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Shift the narrative from feature-benefit to risk-mitigation.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-emerald-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">4. The Annuity Lock</h3>
+                        <span class="text-xs font-mono text-emerald-400 glass-panel px-2 py-1 rounded-lg border-t border-t-emerald-400/20">[N]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Engineer defensive positions 18 months pre-renewal. Become infrastructure, not vendor.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-neutral-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">5. Asymmetric Information</h3>
+                        <span class="text-xs font-mono text-neutral-400 glass-panel px-2 py-1 rounded-lg border-t border-t-white/5">CORE</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Deploy intelligence the competitor doesn't have. Exploit their blind spots.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-red-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">6. Friction Identification</h3>
+                        <span class="text-xs font-mono text-red-400 glass-panel px-2 py-1 rounded-lg border-t border-t-red-400/20">RISK</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Find the real pain driving the buy, regardless of the stated RFP objective.</p>
+                </div>
+            </div>
+        </details>
+
+        <details class="glass-panel rounded-2xl group overflow-hidden">
+            <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-white/[0.02] transition-colors">
+                <span class="text-base font-bold text-white">Advanced Frameworks (07–12)</span>
+                <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+            </summary>
+            <div class="p-5 md:p-6 pt-0 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-amber-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">7. The Economic Proxy</h3>
+                        <span class="text-xs font-mono text-amber-400 glass-panel px-2 py-1 rounded-lg border-t border-t-amber-400/20">[I]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">When the decision-maker is unreachable, equip an internal proxy to make your case.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-violet-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">8. Modality Matching</h3>
+                        <span class="text-xs font-mono text-violet-400 glass-panel px-2 py-1 rounded-lg border-t border-t-violet-400/20">[A]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Adjust presentation style to match the executive's behavioural profile.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-neutral-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">9. The Commodity Bypass</h3>
+                        <span class="text-xs font-mono text-neutral-400 glass-panel px-2 py-1 rounded-lg border-t border-t-white/5">CORE</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Refuse feature comparisons. Elevate to board-level risk.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-red-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">10. The Negative Space</h3>
+                        <span class="text-xs font-mono text-red-400 glass-panel px-2 py-1 rounded-lg border-t border-t-red-400/20">RISK</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Analyse what the client isn't saying. Omissions reveal unstated priorities.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-blue-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">11. Capital Flow Tracking</h3>
+                        <span class="text-xs font-mono text-blue-400 glass-panel px-2 py-1 rounded-lg border-t border-t-blue-400/20">[G]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Track OPEX/CAPEX shifts. Structure proposals to match the CFO's current mandate.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-l-4 border-l-emerald-500/50">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-white">12. Intelligence Decay</h3>
+                        <span class="text-xs font-mono text-emerald-400 glass-panel px-2 py-1 rounded-lg border-t border-t-emerald-400/20">[N]</span>
+                    </div>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Account knowledge has a half-life. Refresh systematically or go blind.</p>
+                </div>
+            </div>
+        </details>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ CONSTRAINT ═══════════════════════════════════════════════════════ -->
+    <section class="mb-10 reveal dur-600">
+        <div class="glass-panel rounded-2xl p-6 md:p-8 border-t-4 border-t-neutral-500/30 text-center">
+            <h2 class="text-base md:text-lg font-black text-neutral-300 uppercase tracking-widest mb-4">The Final Constraint: Tools ≠ Talent</h2>
+            
+            <p class="text-base text-neutral-300 leading-relaxed max-w-3xl mx-auto mb-6">
+                You can give a bad golfer an expensive set of clubs — they'll just hit the ball into the woods much further. Giving an average sales team an AI prompt engine without teaching them the behavioural science to interpret the output is identical. <strong class="text-white">The edge is not the prompt. The edge is the judgment of what to do with the output.</strong>
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left max-w-4xl mx-auto">
+                <div class="glass-panel rounded-xl p-5 border-t border-t-white/5">
+                    <p class="text-sm text-neutral-400 italic mb-2 leading-relaxed">"Models commoditise. Workflows commoditise. The only durable moat is how your people interpret in the spaces AI can't reach."</p>
+                    <p class="text-xs text-neutral-600 uppercase font-bold text-right">— Sol Rashidi</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 border-t border-t-white/5">
+                    <p class="text-sm text-neutral-400 italic mb-2 leading-relaxed">"When everyone has the same information at the same time, alpha comes from the speed and quality of human interpretation."</p>
+                    <p class="text-xs text-neutral-600 uppercase font-bold text-right">— Nate Jones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════ BRIDGE ═══════════════════════════════════════════════════════ -->
+    <div class="mb-8 reveal text-center">
+        <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed">
+            The same architecture that wins individual deals repositions entire businesses for exit.
+        </p>
+        <a href="revenue-case.html" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors mt-3">
+            Revenue Case →
+        </a>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ CTA ═══════════════════════════════════════════════════════ -->
+    <div class="glass-panel rounded-2xl p-8 md:p-12 text-center mb-12 max-w-4xl mx-auto reveal">
+        <p class="text-2xl md:text-3xl font-black text-white mb-6">You already know.</p>
+        <div class="flex flex-col md:flex-row justify-center gap-6 mb-6">
+            <a href="proof.html" class="inline-flex items-center justify-center gap-3 glass-panel border-t border-t-white/10 px-8 py-4 text-white font-bold rounded-xl hover:bg-white/[0.03] transition-all">
+                See what this produces → <span class="text-blue-400">Proof</span>
+            </a>
+            <a href="engage.html" class="inline-flex items-center gap-3 bg-amber-500/10 border border-amber-500/40 px-8 py-4 text-amber-400 font-black rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all">
+                Request a Live Deal Diagnostic →
+            </a>
+        </div>
+        <p class="text-base text-neutral-500 font-medium">Judgment is the only £m skill left.</p>
+    </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════ FOOTER ═══════════════════════════════════════════════════════ -->
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader →</a>
+            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
+        </div>
+    </footer>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════════════════ -->
+<script>
+document.addEventListener('click', (e) => {
+    document.querySelectorAll('.radial-toggle').forEach(toggle => {
+        if (toggle.checked && !e.target.closest('.radial-menu')) toggle.checked = false;
+    });
+});
+document.addEventListener('scroll', () => {
+    document.querySelectorAll('.radial-toggle').forEach(toggle => { if (toggle.checked) toggle.checked = false; });
+});
+document.querySelectorAll('.radial-toggle').forEach(toggle => {
+    toggle.addEventListener('change', function() {
+        if (this.checked) document.querySelectorAll('.radial-toggle').forEach(other => { if (other !== this) other.checked = false; });
+    });
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+</script>
+
+</body>
+</html>
