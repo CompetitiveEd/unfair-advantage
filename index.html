@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-gray-950 text-gray-100 font-sans">
+<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 font-sans antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="David Matthews | GAIN Methodology. Enterprise deal intelligence built from 13 AI prompts. Stakeholder psychology, competitive scoring, financial forensics — one operating system.">
     <title>David Matthews | GAIN Methodology</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    }
-                }
-            }
+    
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <style type="text/tailwindcss">
+        @theme {
+            --color-primary: oklch(0.72 0.14 240);
+            --color-success: oklch(0.78 0.13 150);
+            --color-warning: oklch(0.75 0.15 80);
+            --color-danger: oklch(0.68 0.16 30);
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace';
         }
-    </script>
+    </style>
+
     <style>
+        /* Scroll & Selection */
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: oklch(0.72 0.14 240); color: white; }
+
+        /* Reveal Animations */
         .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
         .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
@@ -33,32 +39,55 @@
         .dur-900 { transition-duration: 900ms; }
         .dur-1000 { transition-duration: 1000ms; }
         .dur-1100 { transition-duration: 1100ms; }
+
+        /* Nav Dropdown */
         .dropdown-menu { display: none; }
         .group:hover .dropdown-menu { display: block; }
-        html { scroll-behavior: smooth; }
+        
+        /* Glassmorphism & Dashboard UI Elements */
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.4); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
+        }
+        .glow-emerald { box-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
+        .glow-amber { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+        
+        /* Dashboard Animations */
+        @keyframes dash-fill { from { stroke-dashoffset: 94.2; } to { stroke-dashoffset: 0; } }
+        @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(12px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .animate-dash { animation: dash-fill 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-bento { animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        
+        /* Hide scrollbar for tabs */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 antialiased selection:bg-blue-500 selection:text-white">
-<nav class="bg-gray-800 text-green-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-lg text-sm md:text-base font-medium">
-    <a href="newindex.html" class="hover:text-white transition-colors">Home</a>
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-2xl text-sm md:text-base font-medium">
+    <a href="index.html" class="hover:text-white transition-colors">Home</a>
     <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
     <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
     <div class="relative group cursor-pointer pb-1">
         <span class="hover:text-white transition-colors flex items-center gap-1">The System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-52 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            <a href="newedge.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">How It's Built</a>
-            <a href="newstory.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors border-b border-gray-700/50">The Story</a>
-            <a href="newknow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Gather [Know]</a>
-            <a href="newmap.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Assess [Map]</a>
-            <a href="newwin.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Influence [Win]</a>
-            <a href="newgrow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400 border-b border-gray-700/50">Nurture [Grow]</a>
-            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Dashboards</a>
+        <div class="dropdown-menu absolute left-0 top-full w-52 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden">
+            <a href="newedge.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors">Why It Works</a>
+            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors">How It's Built</a>
+            <a href="newstory.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors border-b border-white/5">The Story</a>
+            <a href="newknow.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors text-neutral-400">Gather [Know]</a>
+            <a href="newmap.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors text-neutral-400">Assess [Map]</a>
+            <a href="newwin.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors text-neutral-400">Influence [Win]</a>
+            <a href="newgrow.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors text-neutral-400 border-b border-white/5">Nurture [Grow]</a>
+            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-neutral-800 hover:text-white transition-colors text-neutral-400">Dashboards</a>
         </div>
     </div>
 
-    <a href="newengage.html" class="hover:text-yellow-300 transition-colors font-bold text-yellow-400">Engage</a>
+    <a href="newengage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
 
 <div class="pt-24 md:pt-32 px-4 md:px-8 max-w-7xl mx-auto">
@@ -78,250 +107,204 @@
     <section id="account-pack" class="mb-12">
         <div class="mb-6">
             <p class="text-[10px] font-bold tracking-[0.2em] text-blue-500 uppercase mb-1">GAIN Account Pack · Live Bid Example · Redacted</p>
-            <p class="text-sm md:text-base text-gray-300 font-medium mb-1">13 intelligence prompts. 3 hours of research. Every section below was generated from the output. Your team is still building PowerPoints.</p>
-            <p class="text-xs text-gray-500">Methodology: G-01 through N-01. 8 stakeholders profiled. 3 competitors mapped. 9 scoring criteria weighted. 5 failure scenarios modelled. Click any section to expand.</p>
+            <p class="text-sm md:text-base text-neutral-300 font-medium mb-1">13 intelligence prompts. 3 hours of research. Every section below was generated from the output. Your team is still building PowerPoints.</p>
+            <p class="text-xs text-neutral-500">Methodology: G-01 through N-01. 8 stakeholders profiled. 3 competitors mapped. 9 scoring criteria weighted. 5 failure scenarios modelled. Click any section to expand.</p>
         </div>
 
-        <div id="account-pack-root" class="bg-gray-900 border border-gray-800 rounded-xl min-h-[400px] flex items-center justify-center">
-            <p class="text-gray-600 font-mono text-xs">React Dashboard Component Loads Here</p>
+        <div id="account-pack-root" class="glass-panel rounded-2xl min-h-[400px] flex items-center justify-center">
+            <p class="text-neutral-500 font-mono text-xs animate-pulse">Initializing Dashboard Engine...</p>
         </div>
 
         <div class="max-w-7xl mx-auto py-6 text-center">
             <a href="newdashboards.html" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors">
                 Open full Account Pack on dedicated page →
             </a>
-            <p class="text-xs text-gray-600 mt-1">Same dashboard. Bookmarkable. Shareable with your team.</p>
+            <p class="text-xs text-neutral-600 mt-1">Same dashboard. Bookmarkable. Shareable with your team.</p>
         </div>
     </section>
 
     <div class="max-w-7xl mx-auto mb-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-gray-800/95 border border-gray-700 rounded-lg p-5 shadow-xl hover:border-blue-500/50 transition-colors">
-                <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2 block">Enterprise Portfolio Repositioned</span>
-                <div class="text-3xl md:text-4xl font-black text-white leading-none mb-1 flex items-start gap-1">
-                    £183M <span class="text-blue-500 text-xl md:text-2xl mt-1">&uarr;</span>
+            <div class="glass-panel rounded-2xl p-6 transition-all duration-500 hover:-translate-y-1 hover:border-blue-500/50">
+                <span class="text-[10px] font-extrabold text-neutral-400 uppercase tracking-widest mb-2 block">Enterprise Portfolio Repositioned</span>
+                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-1 flex items-start gap-1">
+                    £183M <span class="text-blue-500 text-2xl mt-1">&uarr;</span>
                 </div>
-                <span class="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-wide block mb-3">Scaled from £35M P.A.</span>
-                <div class="border-t border-gray-700 pt-2 flex justify-between items-center">
-                    <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">CAGR:</span>
-                    <span class="text-blue-500 text-sm font-black">51.3%</span>
+                <span class="text-[10px] md:text-xs text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £35M P.A.</span>
+                <div class="border-t border-white/5 pt-3 flex justify-between items-center">
+                    <span class="text-[10px] text-neutral-500 uppercase tracking-widest font-bold">CAGR:</span>
+                    <span class="text-blue-400 text-sm font-black">51.3%</span>
                 </div>
             </div>
 
-            <div class="bg-gray-800/95 border border-gray-700 rounded-lg p-5 shadow-xl hover:border-emerald-500/50 transition-colors">
-                <span class="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest mb-2 block">Professional Services Repositioned</span>
-                <div class="text-3xl md:text-4xl font-black text-white leading-none mb-1 flex items-start gap-1">
-                    £53M+ <span class="text-emerald-500 text-xl md:text-2xl mt-1">&uarr;</span>
+            <div class="glass-panel rounded-2xl p-6 transition-all duration-500 hover:-translate-y-1 hover:border-emerald-500/50">
+                <span class="text-[10px] font-extrabold text-neutral-400 uppercase tracking-widest mb-2 block">Professional Services Repositioned</span>
+                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-1 flex items-start gap-1">
+                    £53M+ <span class="text-emerald-500 text-2xl mt-1">&uarr;</span>
                 </div>
-                <span class="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-wide block mb-3">Scaled from £18.5M P.A.</span>
-                <div class="border-t border-gray-700 pt-2 flex justify-between items-center">
-                    <span class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">GROWTH:</span>
-                    <span class="text-emerald-500 text-sm font-black">+170%</span>
+                <span class="text-[10px] md:text-xs text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £18.5M P.A.</span>
+                <div class="border-t border-white/5 pt-3 flex justify-between items-center">
+                    <span class="text-[10px] text-neutral-500 uppercase tracking-widest font-bold">GROWTH:</span>
+                    <span class="text-emerald-400 text-sm font-black">+170%</span>
                 </div>
             </div>
         </div>
-        <p class="text-xs text-gray-600 mt-4 text-center">The methodology behind the dashboard above. Applied across a career. £183M in verified revenue.</p>
+        <p class="text-xs text-neutral-500 mt-4 text-center font-medium">The methodology behind the dashboard above. Applied across a career. £183M in verified revenue.</p>
     </div>
 
     <main>
         <div class="mb-12">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                <div class="reveal slide-left dur-600 border-t-2 border-blue-500 pt-3 bg-gray-900/30 p-4 rounded-lg">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-2"><span class="text-blue-500">01.</span> Don't Become a Commodity</h3>
-                    <p class="text-xs text-gray-300 leading-relaxed">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralize incumbent advantages instantly.</p>
+                <div class="reveal slide-left dur-600 border-t-2 border-blue-500 bg-neutral-900/40 backdrop-blur-md p-5 rounded-xl shadow-inner border border-x-white/5 border-b-white/5">
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">01.</span> Don't Become a Commodity</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed font-medium">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralize incumbent advantages instantly.</p>
                 </div>
-                <div class="reveal slide-left dur-800 border-t-2 border-blue-500 pt-3 bg-gray-900/30 p-4 rounded-lg">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-2"><span class="text-blue-500">02.</span> Close the Gap Between Sales and Delivery</h3>
-                    <p class="text-xs text-gray-300 leading-relaxed">Data doesn't close deals; navigating boardroom politics does. But the execution gap isn't just sales — it's the distance between what your sellers promise and what your operations can deliver.</p>
+                <div class="reveal slide-left dur-800 border-t-2 border-blue-500 bg-neutral-900/40 backdrop-blur-md p-5 rounded-xl shadow-inner border border-x-white/5 border-b-white/5">
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">02.</span> Close the Execution Gap</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed font-medium">Data doesn't close deals; navigating boardroom politics does. The execution gap is the distance between what sellers promise and operations deliver.</p>
                 </div>
-                <div class="reveal slide-left dur-1000 border-t-2 border-blue-500 pt-3 bg-gray-900/30 p-4 rounded-lg">
-                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-2"><span class="text-blue-500">03.</span> The EQ Override</h3>
-                    <p class="text-xs text-gray-300 leading-relaxed">AI identifies the friction. Human EQ maps the detractor. Transform your narrative from 'innovative disruption' to 'de-risked operational safety'.</p>
+                <div class="reveal slide-left dur-1000 border-t-2 border-blue-500 bg-neutral-900/40 backdrop-blur-md p-5 rounded-xl shadow-inner border border-x-white/5 border-b-white/5">
+                    <h3 class="text-xs font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">03.</span> The EQ Override</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed font-medium">AI identifies the friction. Human EQ maps the detractor. Transform your narrative from 'innovative disruption' to 'de-risked operational safety'.</p>
                 </div>
             </div>
         </div>
 
         <div class="mb-12">
             <div class="flex items-center gap-4 mb-8">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-[10px] font-extrabold tracking-widest text-gray-500 uppercase">The Commercial Operating System</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-[10px] font-extrabold tracking-widest text-neutral-500 uppercase">The Commercial Operating System</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
             <div class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="newknow.html" class="bg-gray-900/80 border border-gray-800 border-l-2 border-l-blue-500 rounded-lg p-5 hover:bg-gray-800 hover:border-blue-500/50 transition-all flex flex-col group">
-                    <span class="font-mono text-blue-500 font-bold text-xs mb-1">[G] GATHER</span>
-                    <h3 class="text-base font-black text-white uppercase mb-2">KNOW THEM</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed flex-grow mb-4">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
-                    <div class="text-[10px] text-blue-500 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
+                <a href="newknow.html" class="glass-panel border-l-2 border-l-blue-500 rounded-xl p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-blue-400 font-bold text-[10px] tracking-widest mb-2">[G] GATHER</span>
+                    <h3 class="text-base font-black text-white uppercase mb-2 tracking-tight">KNOW THEM</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
+                    <div class="text-[10px] text-blue-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
                 </a>
 
-                <a href="newmap.html" class="bg-gray-900/80 border border-gray-800 border-l-2 border-l-violet-500 rounded-lg p-5 hover:bg-gray-800 hover:border-violet-500/50 transition-all flex flex-col group">
-                    <span class="font-mono text-violet-500 font-bold text-xs mb-1">[A] ASSESS</span>
-                    <h3 class="text-base font-black text-white uppercase mb-2">MAP THEM</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed flex-grow mb-4">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
-                    <div class="text-[10px] text-violet-500 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
+                <a href="newmap.html" class="glass-panel border-l-2 border-l-violet-500 rounded-xl p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-violet-400 font-bold text-[10px] tracking-widest mb-2">[A] ASSESS</span>
+                    <h3 class="text-base font-black text-white uppercase mb-2 tracking-tight">MAP THEM</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
+                    <div class="text-[10px] text-violet-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
                 </a>
 
-                <a href="newwin.html" class="bg-gray-900/80 border border-gray-800 border-l-2 border-l-amber-500 rounded-lg p-5 hover:bg-gray-800 hover:border-amber-500/50 transition-all flex flex-col group">
-                    <span class="font-mono text-amber-500 font-bold text-xs mb-1">[I] INFLUENCE</span>
-                    <h3 class="text-base font-black text-white uppercase mb-2">WIN THEM</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed flex-grow mb-4">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
-                    <div class="text-[10px] text-amber-500 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
+                <a href="newwin.html" class="glass-panel border-l-2 border-l-amber-500 rounded-xl p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-amber-400 font-bold text-[10px] tracking-widest mb-2">[I] INFLUENCE</span>
+                    <h3 class="text-base font-black text-white uppercase mb-2 tracking-tight">WIN THEM</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
+                    <div class="text-[10px] text-amber-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
                 </a>
 
-                <a href="newgrow.html" class="bg-gray-900/80 border border-gray-800 border-l-2 border-l-emerald-500 rounded-lg p-5 hover:bg-gray-800 hover:border-emerald-500/50 transition-all flex flex-col group">
-                    <span class="font-mono text-emerald-500 font-bold text-xs mb-1">[N] NURTURE</span>
-                    <h3 class="text-base font-black text-white uppercase mb-2">GROW THEM</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed flex-grow mb-4">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
-                    <div class="text-[10px] text-emerald-500 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
+                <a href="newgrow.html" class="glass-panel border-l-2 border-l-emerald-500 rounded-xl p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-emerald-400 font-bold text-[10px] tracking-widest mb-2">[N] NURTURE</span>
+                    <h3 class="text-base font-black text-white uppercase mb-2 tracking-tight">GROW THEM</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
+                    <div class="text-[10px] text-emerald-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore &rarr;</div>
                 </a>
             </div>
         </div>
 
         <div class="mb-12">
             <div class="flex items-center gap-4 mb-6">
-                <div class="h-px bg-gray-800 flex-1"></div>
+                <div class="h-px bg-white/5 flex-1"></div>
                 <div class="text-[10px] font-extrabold tracking-widest text-red-500 uppercase">Where Most Teams Still Fail</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+                <div class="h-px bg-white/5 flex-1"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="reveal dur-700 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4">
-                    <h3 class="text-xs text-white font-bold mb-2">The Invisible Stakeholder</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-3">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
-                    <div class="text-[9px] text-red-500 font-extrabold uppercase tracking-widest">RULE: Ask "Who else?"</div>
+                <div class="reveal dur-700 bg-red-950/10 border border-red-900/30 rounded-xl p-5 backdrop-blur-sm">
+                    <h3 class="text-sm text-white font-bold mb-2">The Invisible Stakeholder</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed mb-4">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
+                    <div class="text-[9px] text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-2 py-1 rounded">RULE: Ask "Who else?"</div>
                 </div>
 
-                <div class="reveal dur-900 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4">
-                    <h3 class="text-xs text-white font-bold mb-2">The Stale Map</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-3">AI is static. Politics are fluid. Mapped in Jan, submitted in March. The CIO was sidelined in Feb. Strategy built on a ghost.</p>
-                    <div class="text-[9px] text-red-500 font-extrabold uppercase tracking-widest">RULE: Refresh within 14 days.</div>
+                <div class="reveal dur-900 bg-red-950/10 border border-red-900/30 rounded-xl p-5 backdrop-blur-sm">
+                    <h3 class="text-sm text-white font-bold mb-2">The Stale Map</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed mb-4">AI is static. Politics are fluid. Mapped in Jan, submitted in March. The CIO was sidelined in Feb. Strategy built on a ghost.</p>
+                    <div class="text-[9px] text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-2 py-1 rounded">RULE: Refresh in 14 days.</div>
                 </div>
 
-                <div class="reveal dur-1100 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4">
-                    <h3 class="text-xs text-white font-bold mb-2">Over-Engineering</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-3">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
-                    <div class="text-[9px] text-red-500 font-extrabold uppercase tracking-widest">RULE: Match prep to complexity.</div>
+                <div class="reveal dur-1100 bg-red-950/10 border border-red-900/30 rounded-xl p-5 backdrop-blur-sm">
+                    <h3 class="text-sm text-white font-bold mb-2">Over-Engineering</h3>
+                    <p class="text-xs text-neutral-400 leading-relaxed mb-4">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
+                    <div class="text-[9px] text-red-400 font-extrabold uppercase tracking-widest bg-red-950/30 inline-block px-2 py-1 rounded">RULE: Match prep to deal.</div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-12 reveal bg-gray-950/60 border border-gray-800 rounded-lg p-5 shadow-inner text-center">
-            <p class="text-sm md:text-base text-gray-300 leading-relaxed font-medium">
+        <div class="mb-12 reveal glass-panel rounded-xl p-6 text-center">
+            <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">
                 Most operating partners apply generic playbooks. <span class="text-white font-bold">GAIN is one operating system. It wins deals, builds propositions, and makes businesses exit-ready.</span>
             </p>
         </div>
 
-        <div class="mb-12 reveal border border-red-900/30 bg-gray-900/40 rounded-xl p-6 md:p-8 shadow-lg">
+        <div class="mb-12 reveal bg-neutral-900/60 backdrop-blur-xl border border-red-900/30 rounded-2xl p-6 md:p-8 shadow-inner-xl">
             <h2 class="text-lg md:text-xl font-black text-white mb-2 uppercase tracking-tight">What Happens in 12 Months If Nothing Changes</h2>
-            <p class="text-sm md:text-base text-gray-500 mb-5 border-b border-gray-800 pb-4">This isn't a pitch. It's a projection based on what we see in every portfolio that delays.</p>
+            <p class="text-sm md:text-base text-neutral-500 mb-6 border-b border-white/5 pb-4">This isn't a pitch. It's a projection based on what we see in every portfolio that delays.</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
-                <div class="border-l-2 border-red-500 pl-4">
-                    <h3 class="text-sm md:text-base text-white font-bold mb-2">Dead deals keep consuming your best people for months.</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">By the time you realise it's unwinnable, you've burned a quarter and your top seller's momentum. The opportunity cost is everything they didn't pursue.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-6">
+                <div class="border-l-2 border-red-500/50 pl-4">
+                    <h3 class="text-sm md:text-base text-white font-bold mb-2">Dead deals keep consuming your best people.</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed">By the time you realise it's unwinnable, you've burned a quarter and your top seller's momentum. The opportunity cost is everything they didn't pursue.</p>
                 </div>
-                <div class="border-l-2 border-red-500 pl-4">
+                <div class="border-l-2 border-red-500/50 pl-4">
                     <h3 class="text-sm md:text-base text-white font-bold mb-2">Win rate stays flat while competitors sharpen.</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">The firms investing in judgment architecture are pulling away. Your pricing pressure gets worse, not better. The board asks the same question next QBR.</p>
+                    <p class="text-sm text-neutral-400 leading-relaxed">The firms investing in judgment architecture are pulling away. Your pricing pressure gets worse, not better. The board asks the same question next QBR.</p>
                 </div>
-                <div class="border-l-2 border-red-500 pl-4">
-                    <h3 class="text-sm md:text-base text-white font-bold mb-2">Every acquisition adds revenue and destroys the operating model.</h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">Different sales tactics, different platforms, no common architecture. The businesses you're integrating don't compound — they collide. And nobody has a single operating system to fix it.</p>
+                <div class="border-l-2 border-red-500/50 pl-4">
+                    <h3 class="text-sm md:text-base text-white font-bold mb-2">Every acquisition destroys the operating model.</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed">Different sales tactics, different platforms, no common architecture. The businesses you're integrating don't compound — they collide.</p>
                 </div>
             </div>
             
-            <div class="bg-gray-950/80 p-4 rounded border border-red-900/30 text-center">
-                <p class="text-base text-red-400 font-bold">Every quarter you delay, the diagnostic gets worse.</p>
+            <div class="bg-red-950/20 p-4 rounded-lg border border-red-900/20 text-center">
+                <p class="text-sm text-red-400 font-bold uppercase tracking-widest">Every quarter you delay, the diagnostic gets worse.</p>
             </div>
         </div>
 
         <div class="mb-12 reveal text-center">
-            <p class="text-base md:text-lg text-gray-300 font-medium leading-relaxed">
+            <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed">
                 The deal engine is the entry point. What it repositions is the business.
             </p>
             <a href="newrevenue-case.html" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors mt-3">
-                Revenue Case →
+                See the Revenue Case →
             </a>
         </div>
 
-        <div class="mb-12 reveal bg-gray-950/80 border border-gray-800 rounded-xl p-6 md:p-8 text-center">
-            <p class="text-xl md:text-2xl font-black text-white mb-6">You already know.</p>
-            <a href="newengage.html" class="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/50 px-6 py-3 text-yellow-400 font-bold text-sm rounded-lg shadow-lg hover:bg-yellow-500/20 hover:border-yellow-400 transition-all duration-300">
+        <div class="mb-12 reveal glass-panel bg-neutral-900/80 rounded-2xl p-8 md:p-12 text-center">
+            <p class="text-2xl md:text-3xl font-black text-white tracking-tight mb-6">You already know.</p>
+            <a href="newengage.html" class="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/50 px-8 py-4 text-amber-400 font-black text-sm rounded-xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:bg-amber-500/20 hover:border-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] transition-all duration-300 hover:-translate-y-1">
                 Engage &rarr;
             </a>
-            <p class="text-sm text-gray-600 mt-4">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
+            <p class="text-sm text-neutral-500 font-medium mt-6">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
         </div>
 
     </main>
 
-    <footer class="border-t border-gray-800 pt-6 pb-10 flex flex-col md:flex-row justify-between items-center gap-4">
-        <a href="newindex.html" class="text-xs font-extrabold tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        <div class="flex flex-col md:flex-row items-center gap-4">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-4">
+        <a href="index.html" class="text-xs font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-5">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-gray-400 hover:text-blue-400 transition-colors">AI Is Not Your Cheerleader &rarr;</a>
-            <span class="text-[9px] text-gray-600 uppercase tracking-wider">No hype. Just results. &copy; 2026</span>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
+            <span class="text-[9px] text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. &copy; 2026</span>
         </div>
     </footer>
 
 </div>
 
-<script>
-    // Reveal Observer
-    document.addEventListener('DOMContentLoaded', () => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Active Nav Link
-        const currentPath = window.location.pathname.split('/').pop() || 'newindex.html';
-        document.querySelectorAll('nav a').forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('text-white', 'font-bold');
-                link.classList.remove('hover:text-white');
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const offset = 100; // Account for fixed nav
-                    const bodyRect = document.body.getBoundingClientRect().top;
-                    const elementRect = target.getBoundingClientRect().top;
-                    const elementPosition = elementRect - bodyRect;
-                    const offsetPosition = elementPosition - offset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    });
-</script>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
 <script>
 (function() {
     const e = React.createElement;
-    const { useState } = React;
+    const { useState, useEffect } = React;
 
     // ─── MERIDIAN DATA ───
     const ACCOUNT = {
@@ -351,28 +334,9 @@
         bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026."
     };
 
-    const G01_MACRO = {
-        revenue: "£2.1B (FY2025)",
-        employees: "8,400",
-        techSpend: "£82.5M transformation programme",
-        targetSavings: "£28M annual by Year 5",
-        serverEOL: "62% estate end-of-life",
-        microOutageCost: "£2.8M/yr",
-        alertNoise: "14,000 alerts/mo (<3% actionable)",
-        fcr: "58% first-call resolution",
-        commsBlackout: "47-min in Alpha stress test",
-        strategicPriorities: [
-            { label: "100% DC Exit", deadline: "2026", severity: "critical" },
-            { label: "ISO 22301 Certification", deadline: "Q4 2026", severity: "critical" },
-            { label: "4-Hour RTO (Lloyd's)", deadline: "Mandated", severity: "high" },
-            { label: "PRA Compliance Gaps", deadline: "Dec 2025", severity: "critical" },
-            { label: "Consumer Duty MI", deadline: "Ongoing", severity: "medium" }
-        ]
-    };
-
     const G02_FINANCIALS = {
         costOfInaction: "£8.3M/yr",
-        wasteIdentified: "£33-37M over contract",
+        wasteIdentified: "£33-37M",
         microOutages: "£2.8M annual hard cost",
         falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
         consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
@@ -392,17 +356,9 @@
     ];
 
     const COMPETITORS = [
-        { name: "Fortis Global Services", label: "Scale-first global delivery model", revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+", dangerRating: "HIGH", dangerWith: ["Whitfield (brand)", "Harrison (TUPE volume)"], weakness: "78% post-TUPE retention (vs Helios 92%), 18-24mo leadership rotation", killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?" },
-        { name: "Saraswati Digital", label: "Offshore-leveraged automation platform", revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS", dangerRating: "MEDIUM", dangerWith: ["Hale (automation depth)", "Thompson (lowest price)"], weakness: "72% post-TUPE retention, cultural fit gap, limited UK FS regulatory depth", killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, capability, outcome." },
-        { name: "Nexus Technology Partners", label: "Technology-first reseller model", revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal", dangerRating: "LOW", dangerWith: ["Hale (tech partnerships)"], weakness: "No managed services pedigree, product-led not service-led", killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services." }
-    ];
-
-    const WIN_THEMES = [
-        { id: 1, label: "Operational Resilience as Competitive Advantage", strength: "fortress", owner: "Jennifer/Osei" },
-        { id: 2, label: "People-First Transition (Anti-TUPE Horror)", strength: "fortress", owner: "Chen/Harrison" },
-        { id: 3, label: "AI in Production, Not Presentation", strength: "strong", owner: "Hale" },
-        { id: 4, label: "Named-Process Cost Glide Path", strength: "critical_gap", owner: "Thompson" },
-        { id: 5, label: "Proximity Creates Accountability", strength: "strong", owner: "Whitfield" }
+        { name: "Fortis Global Services", label: "Scale-first global delivery model", revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+", dangerRating: "HIGH", dangerWith: ["Whitfield", "Harrison"], weakness: "78% post-TUPE retention, 18-24mo leadership rotation", killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?" },
+        { name: "Saraswati Digital", label: "Offshore-leveraged automation platform", revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS", dangerRating: "MEDIUM", dangerWith: ["Hale", "Thompson"], weakness: "Cultural fit gap, limited UK FS regulatory depth", killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, outcome." },
+        { name: "Nexus Technology Partners", label: "Technology-first reseller model", revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal", dangerRating: "LOW", dangerWith: ["Hale"], weakness: "No managed services pedigree", killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services." }
     ];
 
     const SCORING = {
@@ -420,15 +376,6 @@
         ]
     };
 
-    const EXPANSION = [
-        { signal: "ISO 22301 → Resilience Expansion", timing: "Mo 6-9", revenue: "£800K-1.2M/yr", champion: "Jennifer", gate: "green" },
-        { signal: "DEFENSIVE: Application Discovery", timing: "Mo 6-9", revenue: "£50-80K → £2-4M/yr", champion: "Hale", gate: "green" },
-        { signal: "FinOps Advisory", timing: "Mo 9-12", revenue: "£200-400K/yr", champion: "Thompson", gate: "green" },
-        { signal: "Managed SOC / MDR", timing: "Mo 12-18", revenue: "£1.5-2.5M/yr", champion: "Jennifer→Osei", gate: "amber" },
-        { signal: "Process Automation (beyond IT)", timing: "Mo 18-24", revenue: "£500K-1M/yr", champion: "Harrison", gate: "amber" },
-        { signal: "Renewal + Portfolio Bundle", timing: "Mo 24-30", revenue: "Protect base + expand to £140-160M", champion: "Thompson", gate: "future" }
-    ];
-
     const FAILURE_SCENARIOS = [
         { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
         { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
@@ -440,52 +387,41 @@
     // ─── UTILITY COMPONENTS ───
     const StatusDot = ({ status }) => {
         const colors = {
-            champion: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]",
-            established: "bg-emerald-500",
-            targeted: "bg-amber-400",
-            unknown: "bg-blue-400"
+            champion: "bg-emerald-400 glow-emerald",
+            established: "bg-emerald-600",
+            targeted: "bg-amber-400 glow-amber",
+            unknown: "bg-neutral-500"
         };
-        return e("span", { className: `inline-block w-2.5 h-2.5 rounded-full ${colors[status] || colors.unknown}` });
+        return e("span", { className: `inline-block w-2.5 h-2.5 rounded-full shadow-inner ${colors[status] || colors.unknown}` });
     };
 
     const Badge = ({ children, color = "blue" }) => {
         const styles = {
-            blue: "bg-blue-950/60 border-blue-600/40 text-blue-300",
-            red: "bg-red-950/60 border-red-600/40 text-red-300",
-            green: "bg-emerald-950/60 border-emerald-600/40 text-emerald-300",
-            amber: "bg-amber-950/60 border-amber-600/40 text-amber-300",
-            purple: "bg-purple-950/60 border-purple-600/40 text-purple-300",
-            gray: "bg-gray-800/60 border-gray-600/40 text-gray-400"
+            blue: "bg-blue-950/50 border-blue-500/30 text-blue-300",
+            red: "bg-red-950/50 border-red-500/30 text-red-300",
+            green: "bg-emerald-950/50 border-emerald-500/30 text-emerald-300",
+            amber: "bg-amber-950/50 border-amber-500/30 text-amber-300",
+            purple: "bg-purple-950/50 border-purple-500/30 text-purple-300",
+            gray: "bg-neutral-800/60 border-neutral-600/40 text-neutral-300"
         };
-        return e("span", { className: `inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border rounded ${styles[color]}` }, children);
+        return e("span", { className: `inline-block px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest border rounded backdrop-blur-sm shadow-sm ${styles[color]}` }, children);
     };
 
-    const ScoreBar = ({ score, max = 5 }) => {
-        const pct = (score / max) * 100;
-        const color = score >= 4 ? "bg-emerald-500" : score >= 3 ? "bg-amber-400" : "bg-red-500";
-        return e("div", { className: "flex items-center gap-2" },
-            e("div", { className: "w-20 h-2 bg-gray-800 rounded-full overflow-hidden" },
-                e("div", { className: `h-full rounded-full ${color}`, style: { width: `${pct}%` } })
-            ),
-            e("span", { className: "text-xs font-bold text-white" }, score)
-        );
-    };
-
-    const Section = ({ id, title, subtitle, children, defaultOpen = false }) => {
+    const Section = ({ id, title, subtitle, children, defaultOpen = true, className = "" }) => {
         const [open, setOpen] = useState(defaultOpen);
-        return e("div", { className: "mb-4 border border-gray-800 rounded-lg overflow-hidden" },
+        return e("div", { className: `glass-panel rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-0.5 hover:shadow-2xl hover:border-white/10 flex flex-col h-full ${className}` },
             e("button", { 
                 onClick: () => setOpen(!open), 
-                className: "w-full flex items-center justify-between px-5 py-4 bg-gray-900/80 hover:bg-gray-900 transition-colors text-left" 
+                className: "w-full flex items-center justify-between px-6 py-5 bg-gradient-to-r from-neutral-900/50 to-transparent hover:bg-neutral-800/30 transition-colors text-left outline-none cursor-pointer" 
             },
                 e("div", null,
-                    e("span", { className: "text-[10px] font-bold text-blue-400 uppercase tracking-widest block" }, id),
-                    e("span", { className: "text-base font-extrabold text-white" }, title),
-                    subtitle && e("span", { className: "text-xs text-gray-500 ml-3" }, subtitle)
+                    e("span", { className: "text-[10px] font-extrabold text-blue-500 uppercase tracking-widest block mb-1 opacity-80" }, id),
+                    e("span", { className: "text-lg font-black text-white tracking-tight" }, title),
+                    subtitle && e("span", { className: "text-xs text-neutral-400 ml-3 font-medium hidden sm:inline" }, subtitle)
                 ),
-                e("span", { className: `text-gray-500 transform transition-transform duration-200 ${open ? "rotate-180" : ""}` }, "▼")
+                e("span", { className: `text-neutral-500 transform transition-transform duration-300 ${open ? "rotate-180" : ""}` }, "▼")
             ),
-            open && e("div", { className: "p-5 bg-gray-950/50 border-t border-gray-800" }, children)
+            open && e("div", { className: "p-6 border-t border-white/5 flex-grow" }, children)
         );
     };
 
@@ -495,253 +431,189 @@
         const [selectedPerson, setSelectedPerson] = useState(null);
 
         const tabs = [
-            { id: "exec", label: "Exec Summary", desc: "5-min steering board view" },
+            { id: "exec", label: "Exec Summary", desc: "Bento intelligence view" },
             { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
-            { id: "assess", label: "A | Map", desc: "RFP decode & bid intelligence" },
-            { id: "influence", label: "I | Win", desc: "Strategy, scoring & competition" },
-            { id: "nurture", label: "N | Grow", desc: "Post-win expansion & health" }
+            { id: "assess", label: "A | Map", desc: "RFP decode & bid mapping" },
+            { id: "influence", label: "I | Win", desc: "Strategy, scoring & edge" },
+            { id: "nurture", label: "N | Grow", desc: "Post-win expansion" }
         ];
 
         // --- Content Renderers ---
-        const renderClientAndOpportunity = () => e(Section, { id: "BRIEF", title: "The Client & Opportunity", subtitle: ACCOUNT.dealType, defaultOpen: false },
-            e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4" },
+        const renderFinancials = () => e("div", { className: "grid grid-cols-2 md:grid-cols-6 gap-4" },
+            [
+                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
+                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
+                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
+                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
+                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
+                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" }
+            ].map((v, i) => e("div", { key: i, className: "bg-neutral-950/40 rounded-xl p-5 border border-white/5 shadow-inner transition-all hover:bg-neutral-900/60" },
+                e("div", { className: "text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold mb-2" }, v.label),
+                e("div", { className: `text-2xl font-black tracking-tight ${v.color}` }, v.value),
+                e("div", { className: "text-[10px] text-neutral-500 mt-1 font-medium" }, v.sub)
+            ))
+        );
+
+        const renderClientAndOpportunity = () => e(Section, { id: "BRIEF", title: "The Opportunity", subtitle: ACCOUNT.dealType, defaultOpen: true },
+            e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6" },
                 e("div", null,
-                    e("h4", { className: "text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2" }, "The Client"),
-                    e("p", { className: "text-sm text-gray-300 leading-relaxed mb-2" }, ACCOUNT.clientSummary),
-                    e("p", { className: "text-xs text-gray-500 leading-relaxed mb-3" }, ACCOUNT.clientHistory),
-                    e("div", { className: "flex flex-wrap gap-2" }, ACCOUNT.clientDomains.split(", ").map((d, i) => e(Badge, { key: i, color: "blue" }, d)))
+                    e("h4", { className: "text-[11px] font-extrabold text-emerald-400 uppercase tracking-widest mb-3" }, "The Client"),
+                    e("p", { className: "text-sm text-neutral-300 leading-relaxed mb-3" }, ACCOUNT.clientSummary),
+                    e("div", { className: "flex flex-wrap gap-2" }, ACCOUNT.clientDomains.split(", ").map((d, i) => e(Badge, { key: i, color: "gray" }, d)))
                 ),
                 e("div", null,
-                    e("h4", { className: "text-xs font-bold text-blue-400 uppercase tracking-widest mb-2" }, "Service Description"),
-                    e("p", { className: "text-sm text-gray-300 leading-relaxed mb-3" }, ACCOUNT.serviceDescription),
-                    e("h4", { className: "text-xs font-bold text-amber-400 uppercase tracking-widest mb-2 mt-4" }, "Non-Standard / Differentiators"),
-                    e("div", { className: "space-y-1.5" }, ACCOUNT.nonStandard.map((n, i) => e("div", { key: i, className: "flex items-start gap-2 text-sm" },
-                        e("span", { className: "text-amber-400 mt-0.5 shrink-0" }, "◆"),
-                        e("span", { className: "text-gray-300" }, n)
+                    e("h4", { className: "text-[11px] font-extrabold text-blue-400 uppercase tracking-widest mb-3" }, "Non-Standard / Edge"),
+                    e("div", { className: "space-y-2.5" }, ACCOUNT.nonStandard.map((n, i) => e("div", { key: i, className: "flex items-start gap-3 text-sm bg-neutral-950/30 p-2.5 rounded-lg border border-white/5" },
+                        e("span", { className: "text-amber-400 text-[10px] mt-1 shrink-0" }, "◆"),
+                        e("span", { className: "text-neutral-300 font-medium" }, n)
                     )))
                 )
             )
         );
 
-        const renderStakeholders = () => e(Section, { id: "PEOPLE", title: "Stakeholder Intelligence", subtitle: `${STAKEHOLDERS.length} profiles mapped` },
-            e("div", { className: "flex flex-wrap gap-2 mb-4" }, STAKEHOLDERS.map(s => e("button", {
+        const renderStakeholders = () => e(Section, { id: "PEOPLE", title: "Boardroom Intelligence", subtitle: `${STAKEHOLDERS.length} decision makers profiled`, defaultOpen: true },
+            e("div", { className: "flex flex-wrap gap-3 mb-6" }, STAKEHOLDERS.map(s => e("button", {
                 key: s.id,
                 onClick: () => setSelectedPerson(selectedPerson === s.id ? null : s.id),
-                className: `border rounded-lg px-3 py-2 text-center transition-all cursor-pointer ${selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" : s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" : "bg-gray-900 border-gray-800 hover:border-gray-600"}`
-            }, e("div", { className: "flex items-center gap-1.5" },
-                e(StatusDot, { status: s.status }),
-                e("span", { className: "text-xs font-bold text-white" }, `${s.name.split(" ")[0][0]}. ${s.name.split(" ")[1]}`),
-                e("span", { className: "text-[9px] text-gray-500 uppercase" }, s.role),
-                s.status === "champion" && e(Badge, { color: "green" }, "★")
-            )))),
+                className: `group relative flex items-center gap-3 pr-5 pl-2 py-2 rounded-full border transition-all duration-300 hover:scale-[1.02] cursor-pointer 
+                    ${selectedPerson === s.id ? "bg-blue-950/50 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" : 
+                      "glass-panel hover:bg-neutral-800/50"}`
+            }, 
+                e("div", { className: "w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center font-black text-xs text-white border border-white/10 shrink-0" }, 
+                    `${s.name.split(" ")[0][0]}${s.name.split(" ")[1][0]}`
+                ),
+                e("div", { className: "text-left leading-tight" },
+                    e("div", { className: "flex items-center gap-1.5" },
+                        e(StatusDot, { status: s.status }),
+                        e("span", { className: "text-xs font-bold text-white tracking-wide" }, s.name)
+                    ),
+                    e("div", { className: "text-[9px] text-neutral-500 uppercase tracking-wider font-semibold mt-0.5" }, s.role)
+                )
+            ))),
             selectedPerson && (() => {
                 const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
                 if (!p) return null;
-                return e("div", { className: "bg-gray-900 border border-blue-800/40 rounded-lg p-4" },
-                    e("div", { className: "flex flex-wrap items-center gap-2 mb-3" },
-                        e(StatusDot, { status: p.status }),
-                        e("span", { className: "text-base font-bold text-white" }, p.name),
-                        e("span", { className: "text-xs text-gray-500" }, p.role),
+                return e("div", { className: "bg-gradient-to-br from-neutral-900 to-neutral-950 border border-blue-500/30 rounded-xl p-6 shadow-inner-xl animate-bento" },
+                    e("div", { className: "flex flex-wrap items-center gap-3 mb-4 border-b border-white/5 pb-4" },
+                        e("span", { className: "text-xl font-black text-white tracking-tight" }, p.name),
+                        e("span", { className: "text-sm text-neutral-400" }, p.role),
                         e(Badge, { color: p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue" }, p.status),
-                        e(Badge, { color: "purple" }, p.gainDriver),
+                        e(Badge, { color: "purple" }, `Drive: ${p.gainDriver}`),
                         e(Badge, { color: "gray" }, p.kegan)
                     ),
-                    e("p", { className: "text-sm text-gray-300 leading-relaxed mb-3" }, p.summary),
-                    e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-2" },
-                        e("div", { className: "bg-gray-950/50 border border-gray-800 rounded p-3" },
-                            e("div", { className: "text-[10px] text-emerald-400 uppercase font-bold mb-1" }, "Triggers"),
-                            e("div", { className: "text-xs text-gray-300" }, p.trigger)
+                    e("p", { className: "text-sm text-neutral-300 leading-relaxed mb-5 font-medium" }, p.summary),
+                    e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4" },
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-4 border border-emerald-900/30" },
+                            e("div", { className: "text-[10px] text-emerald-400 uppercase tracking-widest font-extrabold mb-2" }, "Winning Triggers"),
+                            e("div", { className: "text-xs text-neutral-300 leading-relaxed" }, p.trigger)
                         ),
-                        e("div", { className: "bg-gray-950/50 border border-gray-800 rounded p-3" },
-                            e("div", { className: "text-[10px] text-red-400 uppercase font-bold mb-1" }, "Avoid"),
-                            e("div", { className: "text-xs text-gray-300" }, p.avoid)
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-4 border border-red-900/30" },
+                            e("div", { className: "text-[10px] text-red-400 uppercase tracking-widest font-extrabold mb-2" }, "Fatal Landmines"),
+                            e("div", { className: "text-xs text-neutral-300 leading-relaxed" }, p.avoid)
                         ),
-                        e("div", { className: "bg-gray-950/50 border border-gray-800 rounded p-3" },
-                            e("div", { className: "text-[10px] text-blue-400 uppercase font-bold mb-1" }, "Modality"),
-                            e("div", { className: "text-xs text-gray-300" }, p.modality)
+                        e("div", { className: "bg-neutral-950/60 rounded-lg p-4 border border-blue-900/30" },
+                            e("div", { className: "text-[10px] text-blue-400 uppercase tracking-widest font-extrabold mb-2" }, "Communication Modality"),
+                            e("div", { className: "text-xs text-neutral-300 leading-relaxed" }, p.modality)
                         )
-                    ),
-                    e("div", { className: "flex gap-4 mt-3 text-[11px] font-mono text-gray-500" },
-                        e("span", null, `Authority: ${p.authority}/100`),
-                        e("span", null, `Influence: ${p.influence}/100`)
                     )
                 );
-            })(),
-            e("div", { className: "flex items-center gap-3 mt-3 text-[9px] font-mono text-gray-600" },
-                e("span", { className: "flex items-center gap-1" }, e(StatusDot, { status: "champion" }), " Champion"),
-                e("span", { className: "flex items-center gap-1" }, e(StatusDot, { status: "established" }), " Established"),
-                e("span", { className: "flex items-center gap-1" }, e(StatusDot, { status: "targeted" }), " Targeted"),
-                e("span", { className: "flex items-center gap-1" }, e(StatusDot, { status: "unknown" }), " Unknown")
-            )
+            })()
         );
 
-        const renderFinancials = () => e(Section, { id: "FINANCIALS", title: "Financials", subtitle: "Deal value, savings & waste" },
-            e("div", { className: "grid grid-cols-2 md:grid-cols-6 gap-3" },
-                [
-                    { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
-                    { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
-                    { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                    { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
-                    { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
-                    { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" }
-                ].map((v, i) => e("div", { key: i, className: "bg-gray-900/60 border border-gray-800 rounded-lg p-4" },
-                    e("div", { className: "text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1" }, v.label),
-                    e("div", { className: `text-xl font-black ${v.color}` }, v.value),
-                    e("div", { className: "text-[10px] text-gray-600 mt-0.5" }, v.sub)
-                ))
-            )
-        );
-
-        const renderCompetition = () => e(Section, { id: "COMP", title: "Competition", subtitle: "3 competitors profiled" },
-            e("div", { className: "bg-gray-900/60 border border-gray-800 rounded-lg p-5" },
-                e("h3", { className: "text-sm font-bold text-red-400 uppercase tracking-widest mb-3" }, "Competition"),
-                e("div", { className: "space-y-2" }, COMPETITORS.map((c, i) => e("div", { key: i, className: "flex items-center gap-3 py-2 border-b border-gray-800/30 last:border-0" },
-                    e(Badge, { color: c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green" }, c.dangerRating),
-                    e("div", { className: "flex-1" },
-                        e("span", { className: "text-sm font-bold text-white" }, c.name),
-                        e("span", { className: "text-[11px] text-gray-500 ml-2" }, c.revenue)
-                    ),
-                    e("span", { className: "text-[10px] text-gray-500 italic hidden md:block" }, `"${c.label}"`)
-                ))),
-                e("div", { className: "mt-3 text-[11px] text-gray-500" },
-                    "Primary threat: ", e("span", { className: "text-red-300 font-bold" }, "Fortis"), " on TUPE volume + brand confidence · Secondary: ", e("span", { className: "text-amber-300 font-bold" }, "Saraswati"), " on automation + price"
-                )
-            )
-        );
-
-        const renderTimeline = () => e(Section, { id: "TIMELINE", title: "Where We Are", subtitle: ACCOUNT.bidPhase },
-            e("div", { className: "bg-gray-900/60 border border-gray-800 rounded-lg p-5" },
-                e("h3", { className: "text-sm font-bold text-blue-400 uppercase tracking-widest mb-3" }, "Where We Are"),
-                e("p", { className: "text-sm text-gray-400 mb-3" }, ACCOUNT.bidPhase),
-                e("div", { className: "space-y-2" }, [
-                    { phase: "RFP Received", date: "Jan 2026", done: true },
-                    { phase: "Clarification Window", date: "1-14 Mar", active: true },
-                    { phase: "Submission Deadline", date: "28 Mar", hard: true },
-                    { phase: "Evaluation & Orals", date: "Apr-May" },
-                    { phase: "Preferred Bidder", date: "Jun 2026" },
-                    { phase: "Go-Live / TUPE Day 1", date: "Sep 2026" }
-                ].map((m, i) => e("div", { key: i, className: "flex items-center gap-3" },
-                    e("div", { className: `w-2 h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse" : m.hard ? "bg-red-500" : "bg-gray-600"}` }),
-                    e("span", { className: `text-sm flex-1 ${m.done ? "text-gray-500" : m.active ? "text-blue-300 font-bold" : "text-white"}` }, m.phase),
-                    e("span", { className: `text-xs ${m.hard ? "text-red-400 font-bold" : "text-gray-500"}` }, m.date),
-                    m.hard && e(Badge, { color: "red" }, "Hard"),
-                    m.active && e(Badge, { color: "blue" }, "Now"),
-                    m.done && e(Badge, { color: "gray" }, "Done")
-                )))
-            )
-        );
-
-        const renderWedge = () => e(Section, { id: "WEDGE", title: "Positioning Wedge", subtitle: "How we position against competition" },
-            e("div", { className: "bg-gray-900/60 border border-blue-900/30 rounded-lg p-5" },
-                e("h3", { className: "text-sm font-bold text-blue-400 uppercase tracking-widest mb-3" }, "The Positioning Wedge"),
-                e("p", { className: "text-sm text-gray-300 leading-relaxed mb-3" },
-                    "Meridian has been burned by £67M \"Operation Meridian\" promises. ", e("span", { className: "text-white font-bold" }, "Do not sell a Big Bang.")
-                ),
-                e("p", { className: "text-sm text-gray-300 leading-relaxed" },
-                    "Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that ",
-                    e("span", { className: "text-white font-bold" }, "their CIO gets our UK MD's mobile number.")
-                ),
-                e("div", { className: "flex gap-3 mt-4 text-[11px] font-mono text-gray-500" },
-                    e("span", null, "UK Headcount: 1,800"), e("span", null, "·"), e("span", null, "FS Contracts: 6 Active")
-                )
-            )
-        );
-
-        const renderActions = () => e(Section, { id: "ACTIONS", title: "Critical Actions Before Submission", subtitle: "3 actions, +0.47 weighted points" },
-            e("div", { className: "bg-gray-900/60 border border-red-900/30 rounded-lg p-5" },
-                e("h3", { className: "text-sm font-bold text-red-400 uppercase tracking-widest mb-3" }, "Critical Actions Before Submission"),
-                e("div", { className: "space-y-3" }, [
-                    { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.19-0.29 pts)", status: "NOT STARTED" },
-                    { action: "Build Meridian Infrastructure Transition Blueprint", impact: "TC-03/TC-01 protection (+0.05-0.13 pts)", status: "NOT STARTED" },
-                    { action: "Rehearse live scenario (Chen's alert methodology)", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" }
-                ].map((a, i) => e("div", { key: i, className: "flex items-start gap-2" },
-                    e("span", { className: "text-red-500 mt-0.5 shrink-0" }, "✕"),
+        const renderCompetition = () => e(Section, { id: "COMP", title: "Competitive Map", defaultOpen: true },
+            e("div", { className: "space-y-3" }, COMPETITORS.map((c, i) => e("div", { key: i, className: "bg-neutral-950/40 rounded-xl p-4 border border-white/5 transition-all hover:bg-neutral-900/60" },
+                e("div", { className: "flex justify-between items-start mb-2" },
                     e("div", null,
-                        e("div", { className: "text-sm font-bold text-white" }, a.action),
-                        e("div", { className: "text-[11px] text-gray-500" }, a.impact)
-                    )
-                ))),
-                e("div", { className: "mt-4 p-2 bg-red-950/30 border border-red-800/30 rounded text-[11px] text-red-300 font-bold text-center" },
-                    "Combined impact: +0.29 to +0.47 weighted points → moves score from 3.85 to 4.14-4.32"
-                )
-            )
-        );
-
-        const renderScoring = () => e(Section, { id: "SCORING", title: "Competitive Scoring Position", subtitle: "Helios 3.85 vs Target 4.65" },
-            e("div", { className: "bg-gray-900/60 border border-gray-800 rounded-lg p-5" },
-                e("div", { className: "flex flex-wrap items-baseline gap-6 mb-4" }, [
-                    { name: "Helios (Us)", score: SCORING.helios, color: "text-emerald-400" },
-                    { name: "Target", score: SCORING.target, color: "text-blue-400" },
-                    { name: "Fortis Global", score: SCORING.fortis, color: "text-red-400" },
-                    { name: "Saraswati Digital", score: SCORING.saraswati, color: "text-amber-400" }
-                ].map((s, i) => e("div", { key: i, className: "flex items-baseline gap-2" },
-                    e("span", { className: `text-2xl font-black ${s.color}` }, s.score.toFixed(2)),
-                    e("span", { className: "text-[10px] text-gray-500 uppercase font-bold" }, s.name)
-                ))),
-                e("div", { className: "overflow-x-auto mt-4" },
-                    e("table", { className: "w-full text-xs" },
-                        e("thead", null, e("tr", { className: "border-b border-gray-800" },
-                            e("th", { className: "text-left py-1.5 text-gray-500 font-bold uppercase" }, "Criterion"),
-                            e("th", { className: "text-center py-1.5 text-gray-500 font-bold uppercase w-16" }, "Wt%"),
-                            e("th", { className: "text-center py-1.5 text-emerald-500 font-bold uppercase w-14" }, "Us"),
-                            e("th", { className: "text-center py-1.5 text-red-400 font-bold uppercase w-14" }, "Fortis"),
-                            e("th", { className: "text-center py-1.5 text-amber-400 font-bold uppercase w-14" }, "Sara."),
-                            e("th", { className: "text-center py-1.5 text-gray-500 font-bold uppercase w-20" }, "Play")
-                        )),
-                        e("tbody", null, SCORING.criteria.map(c => e("tr", { key: c.code, className: "border-b border-gray-800/20" },
-                            e("td", { className: "py-1.5 text-gray-300" }, c.label),
-                            e("td", { className: "py-1.5 text-center text-gray-400" }, `${c.weight}%`),
-                            e("td", { className: `py-1.5 text-center font-bold ${c.helios >= 4 ? "text-emerald-400" : c.helios >= 3 ? "text-amber-300" : "text-red-400"}` }, c.helios),
-                            e("td", { className: `py-1.5 text-center font-bold ${c.fortis >= 4 ? "text-emerald-400" : c.fortis >= 3 ? "text-amber-300" : "text-red-400"}` }, c.fortis),
-                            e("td", { className: `py-1.5 text-center font-bold ${c.saraswati >= 4 ? "text-emerald-400" : c.saraswati >= 3 ? "text-amber-300" : "text-red-400"}` }, c.saraswati),
-                            e("td", { className: "py-1.5 text-center" }, e("span", { className: `text-[10px] font-bold uppercase ${c.strategy === "LOCK" ? "text-emerald-400" : c.strategy === "PUSH" ? "text-blue-400" : c.strategy === "CRITICAL" ? "text-red-400" : "text-amber-400"}` }, c.strategy))
-                        )))
-                    )
+                        e("span", { className: "text-sm font-bold text-white mr-2" }, c.name),
+                        e(Badge, { color: c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green" }, c.dangerRating)
+                    ),
+                    e("span", { className: "text-[10px] text-neutral-500 font-mono" }, c.revenue)
                 ),
-                e("div", { className: "text-xs text-gray-500 text-center mt-3" },
-                    `Lead: +${(SCORING.helios - SCORING.fortis).toFixed(2)} over Fortis (~12%) · +${(SCORING.helios - SCORING.saraswati).toFixed(2)} over Saraswati (~15%) · Healthy but not decisive`
+                e("p", { className: "text-[11px] text-neutral-400 italic mb-2" }, `"${c.label}"`),
+                e("div", { className: "bg-red-950/20 rounded p-2 border border-red-900/20 text-xs text-neutral-300" },
+                    e("span", { className: "text-red-400 font-bold mr-1" }, "Kill Q:"), c.killQuestion
                 )
+            )))
+        );
+
+        const renderWedge = () => e(Section, { id: "WEDGE", title: "The Narrative Wedge", defaultOpen: true },
+            e("p", { className: "text-sm text-neutral-300 leading-relaxed mb-4" },
+                "Meridian has been burned by £67M \"Operation Meridian\" promises. ", e("span", { className: "text-white font-bold" }, "Do not sell a Big Bang.")
+            ),
+            e("p", { className: "text-sm text-neutral-300 leading-relaxed" },
+                "Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that ",
+                e("span", { className: "text-white font-bold border-b border-blue-500 pb-0.5" }, "their CIO gets our UK MD's mobile number.")
             )
         );
 
-        const renderPreMortem = () => e(Section, { id: "PREMORTEM", title: "Pre-Mortem: How We Lose", subtitle: "5 failure scenarios identified" },
-            e("div", { className: "bg-gray-900/60 border border-gray-800 rounded-lg p-5" },
-                e("h3", { className: "text-sm font-bold text-amber-400 uppercase tracking-widest mb-3" }, "Pre-Mortem: How We Lose"),
-                e("div", { className: "space-y-2" }, FAILURE_SCENARIOS.map(f => e("div", { key: f.id, className: "flex items-center gap-3 py-2 border-b border-gray-800/50 last:border-0" },
-                    e("span", { className: "text-xs font-bold text-gray-500 w-8 shrink-0" }, `#${f.id}`),
-                    e("span", { className: "text-sm font-bold text-white flex-1" }, f.label),
-                    e(Badge, { color: parseInt(f.probability) >= 25 ? "red" : "amber" }, f.probability),
-                    e("span", { className: "text-[11px] text-gray-500 hidden md:block max-w-xs truncate" }, f.trigger)
-                )))
-            )
+        const renderTimeline = () => e(Section, { id: "TIME", title: "Execution Window", defaultOpen: true },
+            e("div", { className: "space-y-3" }, [
+                { phase: "RFP Received", date: "Jan 2026", done: true },
+                { phase: "Clarification Window", date: "1-14 Mar", active: true },
+                { phase: "Submission Deadline", date: "28 Mar", hard: true },
+                { phase: "Evaluation & Orals", date: "Apr-May" }
+            ].map((m, i) => e("div", { key: i, className: "flex items-center gap-3 bg-neutral-950/30 p-2.5 rounded-lg border border-white/5" },
+                e("div", { className: `w-2 h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse glow-emerald" : m.hard ? "bg-red-500 glow-amber" : "bg-neutral-600"}` }),
+                e("span", { className: `text-xs font-semibold flex-1 ${m.done ? "text-neutral-500" : m.active ? "text-blue-300" : "text-white"}` }, m.phase),
+                e("span", { className: `text-[10px] uppercase tracking-widest font-bold ${m.hard ? "text-red-400" : "text-neutral-500"}` }, m.date)
+            )))
+        );
+
+        const renderActions = () => e(Section, { id: "ACTIONS", title: "Urgent Actions", subtitle: "+0.47 points at risk", defaultOpen: true },
+            e("div", { className: "space-y-3" }, [
+                { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.29 pts)", status: "NOT STARTED" },
+                { action: "Build Infrastructure Transition Blueprint", impact: "TC-03 protection (+0.13 pts)", status: "NOT STARTED" },
+                { action: "Rehearse live scenario with Chen", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" }
+            ].map((a, i) => e("div", { key: i, className: "flex items-start gap-3 bg-red-950/10 p-3 rounded-xl border border-red-900/30 hover:bg-red-950/20 transition-colors" },
+                e("div", { className: "w-4 h-4 rounded-full border-2 border-red-500/50 flex items-center justify-center shrink-0 mt-0.5" }),
+                e("div", null,
+                    e("div", { className: "text-sm font-bold text-neutral-200" }, a.action),
+                    e("div", { className: "text-[11px] text-neutral-500 mt-1 font-mono" }, a.impact)
+                )
+            )))
         );
 
         // --- Render Structure ---
-        return e("div", { id: "account-pack", className: "bg-gray-950 text-gray-200 border border-gray-800 rounded-xl overflow-hidden shadow-2xl", style: { fontFamily: "'Segoe UI', system-ui, sans-serif" } },
+        return e("div", { className: "bg-neutral-950 text-neutral-200 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative", style: { fontFamily: "var(--font-sans)" } },
             
-            // Header
-            e("div", { className: "border-b border-gray-800 bg-gray-900/50 px-6 py-4" },
-                e("div", { className: "max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3" },
+            // Header / Hero Section
+            e("div", { className: "relative border-b border-white/5 bg-gradient-to-br from-neutral-900/80 to-neutral-950 px-6 md:px-10 py-8 overflow-hidden" },
+                e("div", { className: "absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none" }),
+                e("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10" },
                     e("div", null,
-                        e("div", { className: "flex items-center gap-3 mb-1" },
-                            e("span", { className: "text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono" }, "GAIN Account Pack"),
-                            e("span", { className: "inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-950/40 border border-red-600/30 rounded text-[10px] font-bold text-red-300 uppercase tracking-wider" },
+                        e("div", { className: "flex items-center gap-3 mb-2 animate-bento" },
+                            e("span", { className: "text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] font-mono" }, "GAIN Deal Engine"),
+                            e("span", { className: "inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-400 uppercase tracking-widest backdrop-blur-sm" },
                                 e("span", { className: "w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" }),
                                 ACCOUNT.status
                             )
                         ),
-                        e("h1", { className: "text-2xl font-black text-white tracking-tight" }, ACCOUNT.name),
-                        e("p", { className: "text-xs text-gray-500 mt-0.5" }, `Seller: ${ACCOUNT.seller} · ${ACCOUNT.sector} · ${ACCOUNT.term} term · ACV: ${ACCOUNT.acv} · TCV: ${ACCOUNT.tcv7yr}`)
+                        e("h1", { className: "text-3xl md:text-4xl font-black text-white tracking-tight mb-2 animate-bento", style: { animationDelay: '0.1s' } }, ACCOUNT.name),
+                        e("p", { className: "text-xs md:text-sm text-neutral-400 font-medium animate-bento", style: { animationDelay: '0.2s' } }, 
+                            `Targeting ${ACCOUNT.sector} · Expected ACV: `, e("span", { className:"text-white font-bold"}, ACCOUNT.acv)
+                        )
                     ),
-                    e("div", { className: "flex items-center gap-4" },
+                    e("div", { className: "flex items-center gap-5 bg-neutral-950/50 p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner animate-bento", style: { animationDelay: '0.3s' } },
                         e("div", { className: "text-right" },
-                            e("div", { className: "text-[10px] text-gray-500 uppercase tracking-widest font-bold" }, "Win Probability"),
+                            e("div", { className: "text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold" }, "Win Probability"),
                             e("div", { className: "text-3xl font-black text-white" }, `${ACCOUNT.winProbability}%`)
                         ),
-                        e("div", { className: "w-16 h-16 relative" },
+                        e("div", { className: "relative w-16 h-16 shrink-0" },
                             e("svg", { viewBox: "0 0 36 36", className: "w-16 h-16 transform -rotate-90" },
-                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "#1e293b", strokeWidth: "3" }),
-                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "#10b981", strokeWidth: "3", strokeDasharray: `${ACCOUNT.winProbability * 0.942} 100`, strokeLinecap: "round" })
+                                e("defs", null, 
+                                    e("linearGradient", { id: "winGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
+                                        e("stop", { offset: "0%", stopColor: "oklch(0.78 0.13 150)" }), // Emerald-ish
+                                        e("stop", { offset: "100%", stopColor: "oklch(0.72 0.14 240)" })  // Blue-ish
+                                    )
+                                ),
+                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "rgba(255,255,255,0.05)", strokeWidth: "3" }),
+                                e("circle", { 
+                                    cx: "18", cy: "18", r: "15", fill: "none", 
+                                    stroke: "url(#winGrad)", strokeWidth: "3", 
+                                    strokeDasharray: "94.2 100", 
+                                    strokeLinecap: "round",
+                                    className: "animate-dash" 
+                                })
                             )
                         )
                     )
@@ -749,36 +621,36 @@
             ),
 
             // Tabs
-            e("div", { className: "border-b border-gray-800 bg-gray-900/30 px-6 overflow-x-auto no-scrollbar" },
-                e("div", { className: "max-w-7xl mx-auto flex gap-0" },
+            e("div", { className: "border-b border-white/5 bg-neutral-950/80 px-6 md:px-10 overflow-x-auto no-scrollbar" },
+                e("div", { className: "max-w-7xl mx-auto flex gap-2 pt-4" },
                     tabs.map(t => e("button", {
                         key: t.id,
                         onClick: () => setActiveTab(t.id),
-                        className: `px-5 py-3 text-left border-b-2 transition-all shrink-0 ${activeTab === t.id ? "border-blue-500 bg-blue-950/20" : "border-transparent hover:bg-gray-900/50 hover:border-gray-700"}`
+                        className: `px-5 py-3 rounded-t-xl text-left transition-all duration-300 shrink-0 border border-b-0 cursor-pointer ${activeTab === t.id ? "border-white/10 bg-neutral-900/50 backdrop-blur-md" : "border-transparent text-neutral-500 hover:text-neutral-300 hover:bg-neutral-900/30"}`
                     },
-                        e("span", { className: `text-xs font-bold block ${activeTab === t.id ? "text-blue-400" : "text-gray-500"}` }, t.label),
-                        e("span", { className: "text-[10px] text-gray-600" }, t.desc)
+                        e("span", { className: `text-xs font-bold block mb-0.5 tracking-wide ${activeTab === t.id ? "text-blue-400" : ""}` }, t.label),
+                        e("span", { className: `text-[10px] ${activeTab === t.id ? "text-neutral-400" : "text-neutral-600"}` }, t.desc)
                     ))
                 )
             ),
 
-            // Content
-            e("div", { className: "max-w-7xl mx-auto px-6 py-6" },
-                activeTab === "exec" ? e("div", null,
-                    renderClientAndOpportunity(),
-                    renderStakeholders(),
-                    renderFinancials(),
-                    renderCompetition(),
-                    renderTimeline(),
-                    renderWedge(),
-                    renderActions(),
-                    renderScoring(),
-                    renderPreMortem()
-                ) : e("div", { className: "text-center py-12" },
-                    e("p", { className: "text-sm text-gray-500 mb-4" }, `Full ${activeTab === "gather" ? "Gather" : activeTab === "assess" ? "Assess" : activeTab === "influence" ? "Influence" : "Nurture"} intelligence available in the complete Account Pack.`),
-                    e("a", { href: "newdashboards.html", className: "inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-lg transition-colors" },
-                        "Open full Account Pack",
-                        e("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 2.5 },
+            // Content - Bento Grid for Exec Summary
+            e("div", { className: "max-w-7xl mx-auto p-6 md:p-10 bg-neutral-950" },
+                activeTab === "exec" ? e("div", { className: "grid grid-cols-1 md:grid-cols-12 gap-6 animate-bento" },
+                    e("div", { className: "md:col-span-12", style: { animationDelay: '0.1s' } }, renderFinancials()),
+                    e("div", { className: "md:col-span-8", style: { animationDelay: '0.2s' } }, renderClientAndOpportunity()),
+                    e("div", { className: "md:col-span-4", style: { animationDelay: '0.3s' } }, renderWedge()),
+                    e("div", { className: "md:col-span-12", style: { animationDelay: '0.4s' } }, renderStakeholders()),
+                    e("div", { className: "md:col-span-4 flex flex-col gap-6", style: { animationDelay: '0.5s' } }, 
+                        renderTimeline(),
+                        renderCompetition()
+                    ),
+                    e("div", { className: "md:col-span-8", style: { animationDelay: '0.6s' } }, renderActions())
+                ) : e("div", { className: "text-center py-20 animate-bento" },
+                    e("p", { className: "text-sm text-neutral-400 font-medium mb-6" }, `Full structured intelligence for the [${activeTab.toUpperCase()}] phase is maintained in the complete workspace.`),
+                    e("a", { href: "newdashboards.html", className: "inline-flex items-center gap-3 px-8 py-4 bg-white hover:bg-neutral-200 text-neutral-950 text-sm font-black rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-white/20" },
+                        "Access Complete Deal Workspace",
+                        e("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 3 },
                             e("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M13 7l5 5m0 0l-5 5m5-5H6" })
                         )
                     )
@@ -786,8 +658,10 @@
             ),
 
             // Footer
-            e("div", { className: "border-t border-gray-800 px-6 py-3 text-center" },
-                e("span", { className: "text-[10px] text-gray-600 font-mono" }, `GAIN Account Pack · Generated from G-01→N-01 intelligence chain · Last compiled: ${ACCOUNT.lastUpdated} · GAIN Protocol © David Matthews 2026`)
+            e("div", { className: "border-t border-white/5 bg-neutral-950 px-6 py-4 text-center" },
+                e("span", { className: "text-[10px] text-neutral-600 font-mono tracking-widest uppercase font-bold" }, 
+                    `Account Pack · Compiled ${ACCOUNT.lastUpdated} · GAIN Protocol © 2026`
+                )
             )
         );
     };
@@ -801,6 +675,53 @@
         console.error("Mount point 'account-pack-root' not found.");
     }
 })();
+</script>
+
+<script>
+    // Reveal Observer
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Active Nav Link
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('text-white', 'font-bold');
+                link.classList.remove('hover:text-white');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    const offset = 100; // Account for fixed nav
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = target.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
 </script>
 
 </body>
