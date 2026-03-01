@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-gray-950 text-gray-100 font-sans">
+<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="David Matthews | The GAIN Methodology. [A] Assess Phase. Shadow hierarchy and political mapping.">
     <title>David Matthews | MAP THEM (Assess)</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    colors: {
+                        primary: 'oklch(0.72 0.14 240)',
+                        success: 'oklch(0.78 0.13 150)',
+                        warning: 'oklch(0.75 0.15 80)',
+                        danger: 'oklch(0.68 0.16 30)',
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
@@ -22,75 +30,162 @@
             }
         }
     </script>
+
     <style>
+        /* Global Typography & Core */
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: rgba(59, 130, 246, 0.5); color: white; }
+
+        /* Typography Clamps */
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; }
+        h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; }
+        h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 800; }
+        p { font-size: clamp(0.875rem, 1.5vw, 1rem); }
+
+        /* Reveal Animations */
         .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
         .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
         .reveal.slide-left.active { transform: translateX(0) scale(1); }
-        
         .dur-600 { transition-duration: 600ms; }
         .dur-700 { transition-duration: 700ms; }
         .dur-800 { transition-duration: 800ms; }
         .dur-900 { transition-duration: 900ms; }
         .dur-1000 { transition-duration: 1000ms; }
         .dur-1100 { transition-duration: 1100ms; }
+        
+        /* Premium Glassmorphism */
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.4); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
+        }
+        
+        /* Pure CSS Radial Menu */
+        .radial-menu { position: relative; z-index: 100; display: flex; justify-content: center; }
+        .radial-toggle { display: none; }
+        .radial-btn { cursor: pointer; transition: color 0.3s; }
+        .radial-items { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 0; height: 0; pointer-events: none; }
+        
+        .radial-item {
+            --tx: 0px;
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 72px; 
+            height: 72px;
+            margin-left: -36px;
+            margin-top: -36px;
+            background: rgba(23, 23, 23, 0.95); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 50%;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            text-decoration: none; 
+            color: #a3a3a3; 
+            font-weight: 700;
+            opacity: 0; 
+            transform: translate(var(--tx), 0) scale(0); 
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        .radial-toggle:checked ~ .radial-items { pointer-events: auto; }
+        .radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: translate(var(--tx), 0) scale(1); }
 
+        /* Hover States */
+        .radial-item:nth-child(1):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.72 0.14 240); box-shadow: 0 0 25px rgba(59,130,246,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(2):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.55 0.2 300); box-shadow: 0 0 25px rgba(139,92,246,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(3):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.75 0.15 80); box-shadow: 0 0 25px rgba(245,158,11,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(4):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.78 0.13 150); box-shadow: 0 0 25px rgba(16,185,129,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+
+        /* Dropdown Menu */
         .dropdown-menu { display: none; }
         .group:hover .dropdown-menu { display: block; }
-        
+
+        /* Accordion Details */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
+
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-neutral-950 text-neutral-100 antialiased">
 
-<nav class="bg-gray-800 text-green-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-lg text-sm md:text-base font-medium">
-    <a href="newindex.html" class="hover:text-white transition-colors">Home</a>
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+    <a href="index.html" class="hover:text-white transition-colors">Home</a>
     <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
     <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
-    <div class="relative group cursor-pointer pb-1">
-        <span class="hover:text-white transition-colors flex items-center gap-1">The System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-52 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            <a href="newedge.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">How It's Built</a>
-            <a href="newstory.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors border-b border-gray-700/50">The Story</a>
-            <a href="newknow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Gather [Know]</a>
-            <a href="newmap.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Assess [Map]</a>
-            <a href="newwin.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Influence [Win]</a>
-            <a href="newgrow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400 border-b border-gray-700/50">Nurture [Grow]</a>
-            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Dashboards</a>
+    <div class="radial-menu relative pb-1">
+        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
+        <label for="gain-radial" class="radial-btn text-white flex items-center gap-1.5 cursor-pointer select-none font-bold">
+            GAIN <span class="text-[10px] opacity-70">▾</span>
+        </label>
+
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="newknow.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-3xl font-black text-blue-400 mb-0.5">G</span>
+                <span class="text-[10px] text-blue-300 opacity-80 uppercase tracking-widest font-medium">Gather</span>
+            </a>
+            <a href="newmap.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-3xl font-black text-violet-400 mb-0.5">A</span>
+                <span class="text-[10px] text-violet-300 opacity-80 uppercase tracking-widest font-medium">Assess</span>
+            </a>
+            <a href="newwin.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-3xl font-black text-amber-400 mb-0.5">I</span>
+                <span class="text-[10px] text-amber-300 opacity-80 uppercase tracking-widest font-medium">Influence</span>
+            </a>
+            <a href="newgrow.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-3xl font-black text-emerald-400 mb-0.5">N</span>
+                <span class="text-[10px] text-emerald-300 opacity-80 uppercase tracking-widest font-medium">Nurture</span>
+            </a>
         </div>
     </div>
 
-    <a href="newengage.html" class="hover:text-yellow-300 transition-colors font-bold text-yellow-400">Engage</a>
+    <div class="relative group cursor-pointer pb-1 h-full flex items-center">
+        <span class="hover:text-white transition-colors flex items-center gap-1">System ▾</span>
+        <div class="dropdown-menu absolute left-0 top-full w-72 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-150">
+            <a href="newedge.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">Why It Works</a>
+            <a href="newarchitecture.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">How It's Built</a>
+            <a href="newstory.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm border-b border-white/5">The Story</a>
+            <a href="newdata-room.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm font-medium">Data Room</a>
+        </div>
+    </div>
+
+    <a href="newengage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
 
-<div class="pt-16 md:pt-20 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <header class="relative rounded-xl overflow-hidden mb-8 md:mb-10 border border-gray-800 shadow-2xl bg-gray-900 flex flex-col lg:flex-row">
+    <header class="relative rounded-[2rem] overflow-hidden mb-6 md:mb-8 glass-panel border-t-4 border-t-violet-500/30 flex flex-col lg:flex-row hover:-translate-y-1 transition-all duration-500">
         <picture>
             <source srcset="assets/images/architecture.avif" type="image/avif">
-            <source srcset="assets/images/architecture.jpg" type="image/jpeg">
-            <img src="assets/images/architecture.webp" alt="Map Phase" class="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-multiply z-0">
+            <img src="assets/images/architecture.webp" alt="Map Phase" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply z-0">
         </picture>
         
-        <div class="relative z-10 p-6 md:p-8 lg:w-full flex flex-col justify-center bg-gradient-to-r from-gray-900/80 to-transparent">
-            
-            <div class="text-xs text-gray-400 font-mono tracking-widest uppercase mb-4 flex flex-col sm:flex-row sm:items-center gap-2 md:gap-3 reveal">
-                <span class="text-violet-500 font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-gray-600 font-normal">|</span> [A] ASSESS</span>
-                <div class="text-red-400 font-bold flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-red-500 flex-shrink-0"></span> 
-                    Engineered from £183M live execution. Not theory.
+        <div class="relative z-10 p-8 md:p-12 lg:w-full flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent">
+            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
+                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> [A] ASSESS</span>
+                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
+                    Core chain: 4 full v3 prompts. Advanced (5-16): gated.
                 </div>
             </div>
 
-            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-3">
-                <span class="text-white block">THE ORG CHART IS A LIE.</span>
-                <span class="text-violet-500 block mt-1">MAP THE INFLUENCE.</span>
+            <h1 class="reveal font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
+                <span class="block">THE ORG CHART IS A LIE.</span>
+                <span class="text-violet-400 block mt-1">MAP THE INFLUENCE.</span>
             </h1>
             
-            <p class="reveal text-sm md:text-base text-gray-300 max-w-2xl mb-5 leading-relaxed font-medium">
+            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium">
                 Complex deals are won by coalitions, not champions. Your CRMs map who reports to whom. The GAIN architecture maps who actually controls the budget and who will silently veto your proposal.
             </p>
         </div>
@@ -98,454 +193,423 @@
 
     <main>
 
-        <div class="flex flex-wrap items-center gap-2 md:gap-4 mb-8 md:mb-10 reveal">
-            <div class="px-4 py-2 bg-gray-900 rounded-full text-[10px] md:text-xs font-bold font-mono text-gray-400 border border-gray-700 shadow-inner text-center">RAW CRM DATA</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-gray-900 rounded-full text-[10px] md:text-xs font-bold font-mono text-gray-400 border border-gray-700 shadow-inner text-center">COMMUNICATION LOGS</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-violet-900/30 rounded-full text-[10px] md:text-xs font-bold font-mono text-violet-400 border border-violet-800 shadow-[0_0_10px_rgba(139,92,246,0.2)] text-center">CORE CHAIN A-01 &rarr; A-04 (v3)</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-green-900/30 rounded-full text-[10px] md:text-xs font-bold font-mono text-green-400 border border-green-800 shadow-[0_0_10px_rgba(34,197,94,0.2)] text-center">SHADOW HIERARCHY MAPPED</div>
+        <div class="flex flex-wrap items-center gap-3 md:gap-5 mb-8 md:mb-12 reveal">
+            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">RAW CRM DATA</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">COMMUNICATION LOGS</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel border-t-2 border-t-violet-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-violet-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">CORE CHAIN A-01 → A-04</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel border-t-2 border-t-emerald-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-emerald-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">SHADOW HIERARCHY MAPPED</div>
         </div>
 
-        <div class="mb-8 md:mb-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div class="reveal dur-600 bg-gray-900/60 border border-gray-800 border-l-2 border-l-violet-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">The Objective</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">Stop selling to job titles. A VP of IT might have the mandate to evaluate, but the CFO holds the pen, and the COO holds the veto. The Assess phase identifies the true Economic Buyer and isolates hidden detractors before they kill your deal from the shadows.</p>
-            </div>
-            
-            <div class="reveal dur-700 bg-gray-900/60 border border-gray-800 border-l-2 border-l-purple-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">The Psychology</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">People buy to protect themselves. Mapping influence means mapping fear, ambition, and internal rivalries. When you understand what a stakeholder stands to lose if you win, you can pre-empt their objections before they ever voice them to the board.</p>
-            </div>
-            
-            <div class="reveal dur-800 bg-gray-900/60 border border-gray-800 border-l-2 border-l-red-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">Governance</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">Hallucinating relationships destroys deals. AI must only map documented connections, overriding assumptions with explicit evidence. If the prompt engine cannot verify political capital from the provided data, it must return 'UNKNOWN'. No guessing.</p>
-            </div>
-            
-            <div class="reveal dur-900 bg-gray-900/60 border border-gray-800 border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">Execution Checklist</h3>
-                <ul class="text-sm md:text-base text-gray-300 space-y-2 list-disc pl-4">
-                    <li>Export historical email/call transcripts for the account.</li>
-                    <li>Aggregate LinkedIn/bio data for top 5 stakeholders.</li>
-                    <li>Upload qualitative data to secure LLM session.</li>
-                    <li>Run prompts A-01 through A-04 sequentially.</li>
-                    <li>Cross-reference the shadow map with your internal sponsor.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="mb-8 md:mb-10 reveal">
-            <div class="bg-violet-950/20 border border-violet-900/50 rounded-xl p-5 md:p-6 flex flex-col md:flex-row gap-5 items-center">
-                <div class="flex-shrink-0 w-14 h-14 bg-violet-900/50 rounded-full flex items-center justify-center border border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-                    <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        <div class="mb-8 md:mb-12 reveal">
+            <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center transition-all hover:-translate-y-1 hover:shadow-2xl">
+                <div class="flex-shrink-0 w-16 h-16 glass-panel rounded-full flex items-center justify-center border-t border-violet-400/50">
+                    <svg class="w-8 h-8 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
                 <div>
-                    <h3 class="text-sm md:text-base font-black text-violet-400 uppercase tracking-widest mb-2 text-center md:text-left">Human Checkpoint: Context Override</h3>
-                    <p class="text-sm md:text-base text-gray-300 leading-relaxed text-center md:text-left">Do not trust the algorithm's empathy. AI maps the data perfectly, but it cannot hear the hesitation in a VP's voice on a zoom call. AI provides the map; human intuition validates the territory.</p>
+                    <h3 class="text-violet-300 uppercase tracking-widest mb-3 text-center md:text-left">Human Checkpoint: Context Override</h3>
+                    <p class="text-neutral-300 leading-relaxed text-center md:text-left font-medium">Do not trust the algorithm's empathy. AI maps the data perfectly, but it cannot hear the hesitation in a VP's voice on a zoom call. AI provides the map; human intuition validates the territory.</p>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-4 mb-6">
-            <div class="h-px bg-gray-800 flex-1"></div>
-            <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-gray-500 uppercase">Core Prompts: A-01 &rarr; A-04 (Fully Accessible)</div>
-            <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="flex items-center gap-4 mb-8 md:mb-10">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Core Prompts: A-01 → A-04 (Fully Accessible)</div>
+            <div class="h-px bg-white/10 flex-1"></div>
         </div>
 
-        <div id="prompts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-            
-            <div class="bg-gray-900/80 border border-gray-800 rounded-xl overflow-hidden group hover:border-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300 reveal dur-600">
-                <details class="w-full">
-                    <summary class="p-6 flex flex-col cursor-pointer outline-none">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-blue-500 font-mono font-bold text-sm bg-blue-950/60 px-3 py-1 rounded">A-01</span>
-                            <span class="text-gray-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+        <div id="prompts-container" class="mb-8 md:mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+
+            <div class="reveal dur-600 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <details class="group h-full">
+                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-01</span>
+                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                         </div>
-                        <h3 class="text-lg font-black text-white mb-2">RFP Strategic Decoder</h3>
-                        <p class="text-sm text-gray-400 flex-grow">Decodes the subtext of an RFP to find hidden pain points and trigger events.</p>
+                        <h3 class="text-white uppercase tracking-tight mb-0">RFP Strategic Decoder</h3>
+                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Decodes the subtext of an RFP to find hidden pain points and trigger events.</p>
                     </summary>
-                    <div class="p-6 pt-0 border-t border-gray-800 bg-gray-950/50 space-y-6">
-                        <div class="grid grid-cols-1 gap-5">
+                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
+                        <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-xs text-blue-400">
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[RFP_TEXT]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[SELLER_SOLUTION]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-01_MACRO_INTEL]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-03_PROFILES]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[BID_TEAM_BRIEFING]</span>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
+                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_TEXT]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[SELLER_SOLUTION]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_MACRO_INTEL]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_PROFILES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[BID_TEAM_BRIEFING]</span>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Architecture</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">Strategic Translation. Decodes the subtext of an RFP to find hidden pain points and trigger events behind formal language. Every RFP tells two stories — official requirements and hidden pain.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Strategic Translation. Decodes the subtext of an RFP to find hidden pain points and trigger events behind formal language. Every RFP tells two stories — official requirements and hidden pain.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Reads implicit signals behind formal text. Maps trigger events to buyer mindset (Schwartz). Identifies the department that actually wrote each section. Cross-references G-01 macro priorities with RFP language.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
+                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">Seller = None → decode objectively, identify trigger event. G-01/G-03 = None → no compound context.</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-5 border-t border-gray-800 pt-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Engine Logic</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">Reads implicit signals behind formal text. Maps trigger events to buyer mindset (Schwartz). Identifies the department that actually wrote each section. Cross-references G-01 macro priorities with RFP language.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">PATH A: Seller Mapping (decode + wedge hooks) · PATH B: Objective Decode (trigger event only)</p>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Power of "NONE"</h4>
-                                <p class="text-sm text-red-400 border-l-2 border-red-500 pl-3 leading-relaxed">Seller = None → decode objectively, identify trigger event. G-01/G-03 = None → no compound context.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Safety · Power · Order</p>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 border-t border-gray-800 pt-5">
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-sm text-gray-400">PATH A: Seller Mapping (decode + wedge hooks) · PATH B: Objective Decode (trigger event only)</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
-                                <p class="text-sm text-gray-400">Safety · Power · Order</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-sm text-gray-400">Schwartz · Minto · Shipley · Blue Ocean · Kahneman</p>
+                            <div class="md:col-span-2">
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Schwartz · Minto · Shipley · Blue Ocean · Kahneman</p>
                             </div>
                         </div>
-                        <div class="border-t border-gray-800 pt-5">
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Sample Output Structure</h4>
-                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-xs text-gray-400 space-y-1">
+                        <div class="border-t border-white/5 pt-6">
+                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
+                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
                                 <div class="text-blue-400 font-bold">PHASE 1: THE TWO STORIES</div>
-                                <div class="pl-4">Official narrative vs hidden pain</div>
-                                <div class="text-red-400 font-bold mt-2">PHASE 2: TRIGGER EVENT ANALYSIS</div>
-                                <div class="pl-4">What caused this RFP NOW?</div>
-                                <div class="text-amber-400 font-bold mt-2">PHASE 3: SECTION-BY-SECTION AUTHORSHIP</div>
-                                <div class="pl-4">Who actually wrote each section?</div>
-                                <div class="text-emerald-400 font-bold mt-2">PHASE 4: TRAUMA INDICATORS</div>
-                                <div class="pl-4">Which requirements were written in blood?</div>
-                                <div class="text-purple-400 font-bold mt-2">PHASE 5: CATEGORY ASSESSMENT</div>
-                                <div class="pl-4">What category will they evaluate you in?</div>
+                                <div class="pl-4 opacity-80">Official narrative vs hidden pain</div>
+                                <div class="text-red-400 font-bold mt-3">PHASE 2: TRIGGER EVENT ANALYSIS</div>
+                                <div class="pl-4 opacity-80">What caused this RFP NOW?</div>
+                                <div class="text-amber-400 font-bold mt-3">PHASE 3: SECTION-BY-SECTION AUTHORSHIP</div>
+                                <div class="pl-4 opacity-80">Who actually wrote each section?</div>
+                                <div class="text-emerald-400 font-bold mt-3">PHASE 4: TRAUMA INDICATORS</div>
+                                <div class="pl-4 opacity-80">Which requirements were written in blood?</div>
+                                <div class="text-purple-400 font-bold mt-3">PHASE 5: CATEGORY ASSESSMENT</div>
+                                <div class="pl-4 opacity-80">What category will they evaluate you in?</div>
                             </div>
                         </div>
-                        <button onclick="copyPrompt(this, 'lib-a01')" class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-gray-800 px-4 py-3 rounded border border-gray-700 hover:bg-gray-700 hover:border-blue-500 w-full transition-colors">Copy Full Code</button>
+                        <button onclick="copyPrompt(this, 'lib-a01')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
                     </div>
                 </details>
             </div>
 
-            <div class="bg-gray-900/80 border border-gray-800 rounded-xl overflow-hidden group hover:border-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300 reveal dur-700">
-                <details class="w-full">
-                    <summary class="p-6 flex flex-col cursor-pointer outline-none">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-blue-500 font-mono font-bold text-sm bg-blue-950/60 px-3 py-1 rounded">A-02</span>
-                            <span class="text-gray-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+            <div class="reveal dur-700 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <details class="group h-full">
+                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-02</span>
+                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                         </div>
-                        <h3 class="text-lg font-black text-white mb-2">Requirements Trauma Decoder</h3>
-                        <p class="text-sm text-gray-400 flex-grow">Maps WHO carries each trauma and quantifies scar costs.</p>
+                        <h3 class="text-white uppercase tracking-tight mb-0">Requirements Trauma Decoder</h3>
+                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Maps WHO carries each trauma and quantifies scar costs.</p>
                     </summary>
-                    <div class="p-6 pt-0 border-t border-gray-800 bg-gray-950/50 space-y-6">
-                        <div class="grid grid-cols-1 gap-5">
+                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
+                        <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-xs text-blue-400">
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[RFP_REQUIREMENTS]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[A-01_DECODE]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[SELLER_CAPABILITIES]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-03_PROFILES]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-01_INTEL]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-02_FORENSICS]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[I-02_WIN_THEMES]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[KNOWN_INCIDENTS]</span>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
+                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_REQUIREMENTS]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_DECODE]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[SELLER_CAPABILITIES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_PROFILES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_INTEL]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-02_FORENSICS]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[I-02_WIN_THEMES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[KNOWN_INCIDENTS]</span>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Architecture</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">Forensic Proposal Psychology + Stakeholder-to-Trauma Mapping + Eval Psychology per Assessor + Trauma Healing Strategy. Maps WHO carries each trauma, Kegan processing, GAIN resolution. Quantifies scar costs via G-02.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Forensic Proposal Psychology + Stakeholder-to-Trauma Mapping + Eval Psychology per Assessor + Trauma Healing Strategy. Maps WHO carries each trauma, Kegan processing, GAIN resolution. Quantifies scar costs via G-02.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">IF G-03 → stakeholder-to-trauma mapping. IF G-02 → trauma-to-cost quantification. IF I-02 → win theme alignment to trauma weights. System 1/2 classification per evaluator.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
+                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">Seller = None → pure forensic. G-03 = None → generic trauma map. G-02 = None → qualitative only.</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-5 border-t border-gray-800 pt-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Engine Logic</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">IF G-03 → stakeholder-to-trauma mapping. IF G-02 → trauma-to-cost quantification. IF I-02 → win theme alignment to trauma weights. System 1/2 classification per evaluator.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">PATH A: Seller Mapping · PATH B: Pure Forensic · PATH C: Full Chain (G-03+G-02+I-02)</p>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Power of "NONE"</h4>
-                                <p class="text-sm text-red-400 border-l-2 border-red-500 pl-3 leading-relaxed">Seller = None → pure forensic. G-03 = None → generic trauma map. G-02 = None → qualitative only.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Safety · Power · Order</p>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 border-t border-gray-800 pt-5">
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-sm text-gray-400">PATH A: Seller Mapping · PATH B: Pure Forensic · PATH C: Full Chain (G-03+G-02+I-02)</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
-                                <p class="text-sm text-gray-400">Safety · Power · Order</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-sm text-gray-400">Kahneman · Voss · Shipley · Case Method · Kegan · Heskett · Gawande</p>
+                            <div class="md:col-span-2">
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Kahneman · Voss · Shipley · Case Method · Kegan · Heskett · Gawande</p>
                             </div>
                         </div>
-                        <div class="border-t border-gray-800 pt-5">
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Sample Output Structure</h4>
-                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-xs text-gray-400 space-y-1">
+                        <div class="border-t border-white/5 pt-6">
+                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
+                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
                                 <div class="text-blue-400 font-bold">PHASE 1: REQUIREMENT-BY-REQUIREMENT FORENSICS</div>
-                                <div class="pl-4">What happened to them?</div>
-                                <div class="text-red-400 font-bold mt-2">PHASE 2: TRAUMA SEVERITY SCORING</div>
-                                <div class="pl-4">Critical/High/Medium/Low per requirement</div>
-                                <div class="text-amber-400 font-bold mt-2">PHASE 3: STAKEHOLDER-TO-TRAUMA MAPPING</div>
-                                <div class="pl-4">WHO carries this scar?</div>
-                                <div class="text-emerald-400 font-bold mt-2">PHASE 4: SYSTEM 1/2 CLASSIFICATION</div>
-                                <div class="pl-4">Emotional vs rational per evaluator</div>
-                                <div class="text-purple-400 font-bold mt-2">PHASE 5: TRAUMA HEALING STRATEGY</div>
-                                <div class="pl-4">How to address each scar in the response</div>
+                                <div class="pl-4 opacity-80">What happened to them?</div>
+                                <div class="text-red-400 font-bold mt-3">PHASE 2: TRAUMA SEVERITY SCORING</div>
+                                <div class="pl-4 opacity-80">Critical/High/Medium/Low per requirement</div>
+                                <div class="text-amber-400 font-bold mt-3">PHASE 3: STAKEHOLDER-TO-TRAUMA MAPPING</div>
+                                <div class="pl-4 opacity-80">WHO carries this scar?</div>
+                                <div class="text-emerald-400 font-bold mt-3">PHASE 4: SYSTEM 1/2 CLASSIFICATION</div>
+                                <div class="pl-4 opacity-80">Emotional vs rational per evaluator</div>
+                                <div class="text-purple-400 font-bold mt-3">PHASE 5: TRAUMA HEALING STRATEGY</div>
+                                <div class="pl-4 opacity-80">How to address each scar in the response</div>
                             </div>
                         </div>
-                        <button onclick="copyPrompt(this, 'lib-a02')" class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-gray-800 px-4 py-3 rounded border border-gray-700 hover:bg-gray-700 hover:border-blue-500 w-full transition-colors">Copy Full Code</button>
+                        <button onclick="copyPrompt(this, 'lib-a02')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
                     </div>
                 </details>
             </div>
 
-            <div class="bg-gray-900/80 border border-gray-800 rounded-xl overflow-hidden group hover:border-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300 reveal dur-800">
-                <details class="w-full">
-                    <summary class="p-6 flex flex-col cursor-pointer outline-none">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-blue-500 font-mono font-bold text-sm bg-blue-950/60 px-3 py-1 rounded">A-03</span>
-                            <span class="text-gray-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+            <div class="reveal dur-800 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <details class="group h-full">
+                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-03</span>
+                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                         </div>
-                        <h3 class="text-lg font-black text-white mb-2">Stakeholder Discovery</h3>
-                        <p class="text-sm text-gray-400 flex-grow">Extracts and ranks every stakeholder from RFP and meeting notes.</p>
+                        <h3 class="text-white uppercase tracking-tight mb-0">Stakeholder Discovery</h3>
+                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Extracts and ranks every stakeholder from RFP and meeting notes.</p>
                     </summary>
-                    <div class="p-6 pt-0 border-t border-gray-800 bg-gray-950/50 space-y-6">
-                        <div class="grid grid-cols-1 gap-5">
+                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
+                        <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-xs text-blue-400">
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[RFP_TEXT]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[A-01_DECODE]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-01_MACRO_INTEL]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[MEETING_NOTES_CRM]</span>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
+                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_TEXT]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_DECODE]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_MACRO_INTEL]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[MEETING_NOTES_CRM]</span>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Architecture</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">Entity Extraction. Scans RFP, meeting notes, and macro intel to identify every stakeholder mentioned or implied. Outputs target list for G-03 profiling with role classification and priority ranking.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Entity Extraction. Scans RFP, meeting notes, and macro intel to identify every stakeholder mentioned or implied. Outputs target list for G-03 profiling with role classification and priority ranking.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">NLP entity extraction across all inputs. Classifies: Decision Maker / Influencer / Evaluator / Gatekeeper / Champion / Blocker. Prioritises by authority × influence score.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
+                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">A-01 = None → scans raw RFP only. G-01 = None → no macro context overlay.</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-5 border-t border-gray-800 pt-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Engine Logic</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">NLP entity extraction across all inputs. Classifies: Decision Maker / Influencer / Evaluator / Gatekeeper / Champion / Blocker. Prioritises by authority × influence score.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Single path — extraction and classification.</p>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Power of "NONE"</h4>
-                                <p class="text-sm text-red-400 border-l-2 border-red-500 pl-3 leading-relaxed">A-01 = None → scans raw RFP only. G-01 = None → no macro context overlay.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Power · Order</p>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 border-t border-gray-800 pt-5">
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-sm text-gray-400">Single path — extraction and classification.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
-                                <p class="text-sm text-gray-400">Power · Order</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-sm text-gray-400">MEDDIC · Sphere of Influence · Gawande</p>
+                            <div class="md:col-span-2">
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">MEDDIC · Sphere of Influence · Gawande</p>
                             </div>
                         </div>
-                        <div class="border-t border-gray-800 pt-5">
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Sample Output Structure</h4>
-                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-xs text-gray-400 space-y-1">
+                        <div class="border-t border-white/5 pt-6">
+                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
+                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
                                 <div class="text-blue-400 font-bold">STAKEHOLDER MAP:</div>
-                                <div class="pl-4">| Name/Role | Classification | Authority (0-100) | Influence (0-100) | Priority | Evidence |</div>
-                                <div class="text-red-400 font-bold mt-2">PROFILING QUEUE:</div>
-                                <div class="pl-4">→ Run G-03 on these people in this order</div>
-                                <div class="text-amber-400 font-bold mt-2">UNKNOWN STAKEHOLDERS:</div>
-                                <div class="pl-4">Roles implied but not named — HUMAN ACTION REQUIRED</div>
+                                <div class="pl-4 opacity-80">| Name/Role | Classification | Authority (0-100) | Influence (0-100) | Priority | Evidence |</div>
+                                <div class="text-red-400 font-bold mt-3">PROFILING QUEUE:</div>
+                                <div class="pl-4 opacity-80">→ Run G-03 on these people in this order</div>
+                                <div class="text-amber-400 font-bold mt-3">UNKNOWN STAKEHOLDERS:</div>
+                                <div class="pl-4 opacity-80">Roles implied but not named — HUMAN ACTION REQUIRED</div>
                             </div>
                         </div>
-                        <button onclick="copyPrompt(this, 'lib-a03')" class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-gray-800 px-4 py-3 rounded border border-gray-700 hover:bg-gray-700 hover:border-blue-500 w-full transition-colors">Copy Full Code</button>
+                        <button onclick="copyPrompt(this, 'lib-a03')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
                     </div>
                 </details>
             </div>
 
-            <div class="bg-gray-900/80 border border-gray-800 rounded-xl overflow-hidden group hover:border-blue-600 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:-translate-y-1 transition-all duration-300 reveal dur-900">
-                <details class="w-full">
-                    <summary class="p-6 flex flex-col cursor-pointer outline-none">
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-blue-500 font-mono font-bold text-sm bg-blue-950/60 px-3 py-1 rounded">A-04</span>
-                            <span class="text-gray-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+            <div class="reveal dur-900 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <details class="group h-full">
+                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-04</span>
+                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                         </div>
-                        <h3 class="text-lg font-black text-white mb-2">Motivation Map</h3>
-                        <p class="text-sm text-gray-400 flex-grow">Produces motivation heat map showing who wants what and why.</p>
+                        <h3 class="text-white uppercase tracking-tight mb-0">Motivation Map</h3>
+                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Produces motivation heat map showing who wants what and why.</p>
                     </summary>
-                    <div class="p-6 pt-0 border-t border-gray-800 bg-gray-950/50 space-y-6">
-                        <div class="grid grid-cols-1 gap-5">
+                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
+                        <div class="grid grid-cols-1 gap-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-xs text-blue-400">
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-03_ALL_PROFILES]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[A-01_RFP_DECODE]</span>
-                                    <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[DEAL_CONTEXT]</span>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
+                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_ALL_PROFILES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_RFP_DECODE]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[DEAL_CONTEXT]</span>
                                 </div>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Architecture</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">Psychological Alignment Matrix. Maps every stakeholder's GAIN drivers, Kegan stage, and personal motivations against the deal structure. Produces motivation heat map showing who wants what and why.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Psychological Alignment Matrix. Maps every stakeholder's GAIN drivers, Kegan stage, and personal motivations against the deal structure. Produces motivation heat map showing who wants what and why.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">IF G-03 profiles → deep motivation mapping per person. Cross-references personal drivers against deal outcomes to predict support/resistance.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
+                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">G-03 = None → generic role-based motivation assumptions (with warning).</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-5 border-t border-gray-800 pt-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Engine Logic</h4>
-                                <p class="text-sm text-gray-300 leading-relaxed">IF G-03 profiles → deep motivation mapping per person. Cross-references personal drivers against deal outcomes to predict support/resistance.</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Single path — motivation matrix generation.</p>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Power of "NONE"</h4>
-                                <p class="text-sm text-red-400 border-l-2 border-red-500 pl-3 leading-relaxed">G-03 = None → generic role-based motivation assumptions (with warning).</p>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">ALL 6</p>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 gap-4 border-t border-gray-800 pt-5">
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-sm text-gray-400">Single path — motivation matrix generation.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
-                                <p class="text-sm text-gray-400">ALL 6</p>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-sm text-gray-400">Kegan · MEDDIC · Cialdini · Voss · Gawande</p>
+                            <div class="md:col-span-2">
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Kegan · MEDDIC · Cialdini · Voss · Gawande</p>
                             </div>
                         </div>
-                        <div class="border-t border-gray-800 pt-5">
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Sample Output Structure</h4>
-                            <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-xs text-gray-400 space-y-1">
+                        <div class="border-t border-white/5 pt-6">
+                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
+                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
                                 <div class="text-blue-400 font-bold">MOTIVATION HEAT MAP:</div>
-                                <div class="pl-4">| Stakeholder | GAIN Driver | Kegan Stage | Supports Deal? | Why/Why Not | Risk If Ignored |</div>
-                                <div class="text-red-400 font-bold mt-2">COALITION ANALYSIS:</div>
-                                <div class="pl-4">Who forms the winning voting bloc?</div>
-                                <div class="text-amber-400 font-bold mt-2">IMMUNITY MAP:</div>
-                                <div class="pl-4">What unconscious commitment blocks each resistor?</div>
-                                <div class="text-emerald-400 font-bold mt-2">NEUTRALISATION:</div>
-                                <div class="pl-4">Specific language that makes the fear feel like wisdom</div>
+                                <div class="pl-4 opacity-80">| Stakeholder | GAIN Driver | Kegan Stage | Supports Deal? | Why/Why Not | Risk If Ignored |</div>
+                                <div class="text-red-400 font-bold mt-3">COALITION ANALYSIS:</div>
+                                <div class="pl-4 opacity-80">Who forms the winning voting bloc?</div>
+                                <div class="text-amber-400 font-bold mt-3">IMMUNITY MAP:</div>
+                                <div class="pl-4 opacity-80">What unconscious commitment blocks each resistor?</div>
+                                <div class="text-emerald-400 font-bold mt-3">NEUTRALISATION:</div>
+                                <div class="pl-4 opacity-80">Specific language that makes the fear feel like wisdom</div>
                             </div>
                         </div>
-                        <button onclick="copyPrompt(this, 'lib-a04')" class="text-xs font-bold uppercase tracking-widest text-blue-400 bg-gray-800 px-4 py-3 rounded border border-gray-700 hover:bg-gray-700 hover:border-blue-500 w-full transition-colors">Copy Full Code</button>
+                        <button onclick="copyPrompt(this, 'lib-a04')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
                     </div>
                 </details>
             </div>
 
         </div>
 
-        <div class="flex items-center gap-4 mb-6">
-            <div class="h-px bg-gray-800 flex-1"></div>
-            <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-gray-500 uppercase">Advanced Prompts: A-05 &rarr; A-16 (Restricted)</div>
-            <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="flex items-center gap-4 mb-8 md:mb-10">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Advanced Prompts: A-05 → A-16 (Restricted)</div>
+            <div class="h-px bg-white/10 flex-1"></div>
         </div>
 
-        <div class="mb-10 space-y-4">
+        <div class="mb-8 md:mb-12 space-y-5 md:space-y-6">
             
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">A-05 &rarr; A-06</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Authority & Deal Strategy</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-05 → A-06</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Authority & Deal Strategy</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">2 prompts: Multi-stakeholder authority mapping (formal vs informal power, shadow decision-makers, veto holders) and deal strategy synthesis (master execution plan with timeline, milestones, and risk mitigations).</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-violet-300 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">2 prompts: Multi-stakeholder authority mapping (formal vs informal power, shadow decision-makers, veto holders) and deal strategy synthesis (master execution plan with timeline, milestones, and risk mitigations).</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">A-07 &rarr; A-09</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Engineering & Commercial</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-07 → A-09</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Engineering & Commercial</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">3 prompts: Executive placemat visualiser (single-page visual metaphor for decision-makers), complexity scoping engine (requirement-by-requirement capability matching), and commercial shield (margin protection with defensive pricing strategies and negotiation red lines).</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-violet-300 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">3 prompts: Executive placemat visualiser (single-page visual metaphor for decision-makers), complexity scoping engine (requirement-by-requirement capability matching), and commercial shield (margin protection with defensive pricing strategies and negotiation red lines).</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">A-10 &rarr; A-11</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Levers & Engagement</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-10 → A-11</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Levers & Engagement</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">2 prompts: Commercial lever engine (gain-share, risk pots, outcome-based pricing) and personalised engagement plans (per-stakeholder contact calendar with channel, timing, and message calibration).</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-violet-300 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">2 prompts: Commercial lever engine (gain-share, risk pots, outcome-based pricing) and personalised engagement plans (per-stakeholder contact calendar with channel, timing, and message calibration).</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">A-12 &rarr; A-16</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Psychology, Culture & Human Risk</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-12 → A-16</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Psychology, Culture & Human Risk</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">5 prompts: Psychological driver decoder, HUMINT elicitation scripts, cross-stakeholder dynamics mapping, culture and values alignment, and TUPE risk mapping for outsourcing/transition deals.</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-[10px] font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-violet-300 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">5 prompts: Psychological driver decoder, HUMINT elicitation scripts, cross-stakeholder dynamics mapping, culture and values alignment, and TUPE risk mapping for outsourcing/transition deals.</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
         </div>
 
-        <div class="mb-10">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-white uppercase">Prompt Library — Copy Full Code</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="mb-12">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-white uppercase">Prompt Library — Copy Full Code</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
-            <p class="text-sm md:text-base text-gray-400 mb-6 text-center">Full v3 prompt engines. Copy the code, paste into any LLM, feed the variables.</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-violet-500 font-mono font-bold text-sm block mb-1">A-01</span>
-                    <p class="text-xs text-gray-400 mb-3">RFP Decoder</p>
-                    <button onclick="copyPrompt(this, 'lib-a01')" class="text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors w-full">Copy Full Code</button>
+
+            <p class="text-sm md:text-base text-neutral-400 mb-8 text-center font-medium">Each prompt is a multi-phase engine. Copy the full v3 code, paste into any LLM, feed the variables.</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-6 md:mb-8">
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
+                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-01</span>
+                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">RFP Decoder</p>
+                    <button onclick="copyPrompt(this, 'lib-a01')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
                 </div>
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-violet-500 font-mono font-bold text-sm block mb-1">A-02</span>
-                    <p class="text-xs text-gray-400 mb-3">Trauma Decoder</p>
-                    <button onclick="copyPrompt(this, 'lib-a02')" class="text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors w-full">Copy Full Code</button>
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
+                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-02</span>
+                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Trauma Decoder</p>
+                    <button onclick="copyPrompt(this, 'lib-a02')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
                 </div>
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-violet-500 font-mono font-bold text-sm block mb-1">A-03</span>
-                    <p class="text-xs text-gray-400 mb-3">Stakeholder Discovery</p>
-                    <button onclick="copyPrompt(this, 'lib-a03')" class="text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors w-full">Copy Full Code</button>
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
+                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-03</span>
+                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Stakeholder Discovery</p>
+                    <button onclick="copyPrompt(this, 'lib-a03')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
                 </div>
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-violet-500 font-mono font-bold text-sm block mb-1">A-04</span>
-                    <p class="text-xs text-gray-400 mb-3">Motivation Map</p>
-                    <button onclick="copyPrompt(this, 'lib-a04')" class="text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors w-full">Copy Full Code</button>
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
+                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-04</span>
+                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Motivation Map</p>
+                    <button onclick="copyPrompt(this, 'lib-a04')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
                 </div>
             </div>
-            <div class="bg-gray-900 border border-gray-800/50 rounded-lg p-4 text-center">
-                <span class="text-xs md:text-sm text-gray-600">16 Assess prompts total · A-01→A-04 full access · A-05→A-16 restricted — <a href="newengage.html" class="text-violet-400 hover:text-violet-300">Engage for access</a></span>
+
+            <div class="glass-panel rounded-3xl p-6 md:p-8 text-center">
+                <span class="text-neutral-500 font-mono font-bold text-sm md:text-base">G-07 → G-19 · A-01 → A-16 · I-01 → I-10 · N-00 → N-11</span>
+                <span class="text-sm md:text-base text-neutral-400 block mt-3 font-medium">55 prompts total · Advanced chain restricted — <a href="newengage.html" class="text-amber-400 hover:text-amber-300 transition-colors font-bold">Engage for access</a></span>
             </div>
+
             <div style="position:absolute;left:-9999px;top:-9999px">
                 <pre><code id="lib-a01">A-01 — RFP STRATEGIC DECODER v3.0 — The Hidden Pain
 ========================================
@@ -824,145 +888,151 @@ Ask: "Review the 'Winning Bloc'. Do we currently have strong, multi-threaded acc
             </div>
         </div>
 
-        <div class="mb-8 md:mb-10 reveal">
-            <div class="flex items-center gap-4 mb-5">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-gray-500 uppercase">Common Plays</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="mb-8 md:mb-12 reveal">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Common Plays</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-tight mb-2">Decode an RFP</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-3">Strip the corporate language. Find the trigger event, the hidden pain, and who actually wrote each section. Then map the traumas behind the requirements.</p>
-                    <div class="flex gap-2">
-                        <button onclick="copyPrompt(this, 'lib-a01')" class="text-xs font-bold text-violet-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors">Copy A-01</button>
-                        <button onclick="copyPrompt(this, 'lib-a02')" class="text-xs font-bold text-violet-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors">Copy A-02</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-violet-400 transition-all duration-300 hover:shadow-2xl">
+                    <h3 class="text-white uppercase tracking-tight mb-3">Decode an RFP</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-6 font-medium">Strip the corporate language. Find the trigger event, the hidden pain, and who actually wrote each section. Then map the traumas behind the requirements.</p>
+                    <div class="flex gap-4">
+                        <button onclick="copyPrompt(this, 'lib-a01')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-01</button>
+                        <button onclick="copyPrompt(this, 'lib-a02')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-02</button>
                     </div>
                 </div>
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                    <h3 class="text-sm font-black text-white uppercase tracking-tight mb-2">Map the Buying Committee</h3>
-                    <p class="text-xs text-gray-400 leading-relaxed mb-3">Extract every stakeholder, classify their role, then map their motivations and Kegan immunities against the deal structure.</p>
-                    <div class="flex gap-2">
-                        <button onclick="copyPrompt(this, 'lib-a03')" class="text-xs font-bold text-violet-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors">Copy A-03</button>
-                        <button onclick="copyPrompt(this, 'lib-a04')" class="text-xs font-bold text-violet-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-violet-500 transition-colors">Copy A-04</button>
+                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-violet-400 transition-all duration-300 hover:shadow-2xl">
+                    <h3 class="text-white uppercase tracking-tight mb-3">Map the Buying Committee</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-6 font-medium">Extract every stakeholder, classify their role, then map their motivations and Kegan immunities against the deal structure.</p>
+                    <div class="flex gap-4">
+                        <button onclick="copyPrompt(this, 'lib-a03')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-03</button>
+                        <button onclick="copyPrompt(this, 'lib-a04')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-04</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mb-8 md:mb-10">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-red-500 uppercase">Where This Breaks (Failure Modes)</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="mb-8 md:mb-12">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-red-500 uppercase">Where This Breaks (Failure Modes)</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-                <div class="reveal dur-700 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-xs md:text-sm text-white font-bold mb-2">The Title Trap</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Believing the C-suite title equals decision-making power. Titles signify authority; mapping shadow hierarchies reveals actual political capital.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                <div class="reveal dur-700 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
+                    <h3 class="text-white mb-3">The Title Trap</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Believing the C-suite title equals decision-making power. Titles signify authority; mapping shadow hierarchies reveals actual political capital.</p>
                 </div>
 
-                <div class="reveal dur-800 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-xs md:text-sm text-white font-bold mb-2">The Fake Champion</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Mistaking an enthusiastic mid-level user for a political heavyweight. If they can't arrange a meeting with the Economic Buyer, they are a coach, not a champion.</p>
+                <div class="reveal dur-800 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
+                    <h3 class="text-white mb-3">The Fake Champion</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Mistaking an enthusiastic mid-level user for a political heavyweight. If they can't arrange a meeting with the Economic Buyer, they are a coach, not a champion.</p>
                 </div>
 
-                <div class="reveal dur-1000 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-xs md:text-sm text-white font-bold mb-2">The Ghost Detractor</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Ignoring the quiet stakeholder who silently vetos the deal via email after you leave the room. Mapping must uncover what happens when you aren't present.</p>
+                <div class="reveal dur-1000 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
+                    <h3 class="text-white mb-3">The Ghost Detractor</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Ignoring the quiet stakeholder who silently vetos the deal via email after you leave the room. Mapping must uncover what happens when you aren't present.</p>
                 </div>
 
-                <div class="reveal dur-1100 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-xs md:text-sm text-white font-bold mb-2">Stale Maps</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Assuming political capital is static. Re-orgs happen, priorities pivot, and influence shifts weekly. A map from Q1 is a liability in Q3.</p>
+                <div class="reveal dur-1100 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
+                    <h3 class="text-white mb-3">Stale Maps</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Assuming political capital is static. Re-orgs happen, priorities pivot, and influence shifts weekly. A map from Q1 is a liability in Q3.</p>
                 </div>
             </div>
         </div>
 
-        <div class="mb-8 md:mb-10 reveal text-center">
-            <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
+        <div class="mb-8 md:mb-12 reveal glass-panel rounded-3xl p-8 md:p-10 text-center max-w-4xl mx-auto shadow-xl">
+            <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed">
                 That's the political map. The same methodology wins the deal, builds the proposition, and makes the business exit-ready.
             </p>
-            <a href="newrevenue-case.html" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors mt-3">
-                Revenue Case →
+            <a href="newrevenue-case.html" class="inline-flex items-center gap-2 text-base md:text-lg text-violet-400 hover:text-violet-300 font-bold transition-colors mt-4">
+                See the Revenue Case →
             </a>
         </div>
 
-        <div class="mb-8 md:mb-10 reveal bg-gray-950/80 border border-gray-800 rounded-xl p-6 md:p-8 text-center">
-            <p class="text-xl md:text-2xl font-black text-white mb-6">You already know.</p>
-            <a href="newengage.html" class="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/50 px-6 py-3 text-yellow-400 font-bold text-sm rounded-lg hover:bg-yellow-500/20 hover:border-yellow-400 transition-all">
-                Engage →
+        <div class="mb-12 reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl p-10 md:p-16 text-center max-w-4xl mx-auto hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-8">You already know.</h2>
+            <a href="newengage.html" class="inline-flex items-center justify-center gap-3 glass-panel border-t border-t-amber-500/50 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-2xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:border-t-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] hover:text-white transition-all duration-300 hover:scale-105">
+                Engage &rarr;
             </a>
-            <p class="text-sm text-gray-600 mt-4">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
+            <p class="text-base text-neutral-400 font-medium mt-6">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
         </div>
 
     </main>
 
-    <footer class="border-t border-gray-800 pt-6 pb-10 flex flex-col md:flex-row justify-between items-center gap-4 mt-8">
-        <a href="newindex.html" class="text-xs font-extrabold tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        
-        <div class="flex flex-col md:flex-row items-center gap-4">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-gray-400 hover:text-blue-400 transition-colors">
-                AI Is Not Your Cheerleader &rarr;
-            </a>
-            <span class="text-[9px] text-gray-600 uppercase tracking-wider">No hype. Just results. &copy; 2026</span>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
+            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
         </div>
     </footer>
 
 </div>
 
 <script>
-function copyPrompt(button, textId) {
-    const text = document.getElementById(textId).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = button.innerText;
-        button.innerText = "COPIED!";
-        button.classList.add('text-green-400', 'border-green-400');
-        button.classList.remove('text-gray-400', 'border-gray-700', 'hover:border-gray-500', 'text-violet-400', 'hover:text-white');
-        setTimeout(() => {
-            button.innerText = originalText;
-            button.classList.remove('text-green-400', 'border-green-400');
-            // Check if it was a coloured button (from common plays/library) or a grey one (old library)
-            if (originalText.includes("Copy Full") || originalText.includes("Copy A")) {
-                 button.classList.add('text-violet-400', 'hover:text-white', 'border-gray-700', 'hover:border-violet-500');
-            } else {
-                 button.classList.add('text-gray-400', 'border-gray-700', 'hover:border-gray-500');
-            }
-        }, 2000);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const currentPath = window.location.pathname;
-  document.querySelectorAll('nav a').forEach(link => {
-    if (link.getAttribute('href') === currentPath || link.getAttribute('href') === currentPath.split('/').pop()) {
-      link.classList.add('text-white', 'font-bold');
-      link.classList.remove('hover:text-white');
+    // Copy Prompt Function
+    function copyPrompt(button, textId) {
+        const text = document.getElementById(textId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = button.innerText;
+            button.innerText = "COPIED!";
+            
+            button.classList.add('text-emerald-400', 'border-t-emerald-400', 'bg-white/10');
+            button.classList.remove('text-violet-400', 'hover:text-white', 'hover:border-t-violet-500');
+            
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.classList.remove('text-emerald-400', 'border-t-emerald-400', 'bg-white/10');
+                button.classList.add('text-violet-400', 'hover:text-white', 'hover:border-t-violet-500');
+            }, 2000);
+        });
     }
-  });
-});
+
+    // Scroll Observer
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // Active Nav Link mapping
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('text-white', 'font-bold');
+                link.classList.remove('hover:text-white');
+            }
+        });
+    });
+
+    // Close radial on outside click or scroll past nav
+    document.addEventListener('click', (e) => {
+        const toggle = document.getElementById('gain-radial');
+        if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
+            toggle.checked = false;
+        }
+    });
+
+    document.addEventListener('scroll', () => {
+        const toggle = document.getElementById('gain-radial');
+        if (toggle && toggle.checked) {
+            toggle.checked = false;
+        }
+    });
 </script>
+
 </body>
 </html>

@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-gray-950 text-gray-100 font-sans">
+<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="David Matthews | The GAIN Methodology. [N] Nurture Phase. Defending the annuity and compounding revenue.">
     <title>David Matthews | GROW THEM (Nurture)</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    colors: {
+                        primary: 'oklch(0.72 0.14 240)',
+                        success: 'oklch(0.78 0.13 150)',
+                        warning: 'oklch(0.75 0.15 80)',
+                        danger: 'oklch(0.68 0.16 30)',
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
@@ -22,74 +30,161 @@
             }
         }
     </script>
+
     <style>
+        /* Global Typography & Core */
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
+        html { scroll-behavior: smooth; }
+        ::selection { background-color: rgba(59, 130, 246, 0.5); color: white; }
+
+        /* Typography Clamps */
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; }
+        h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; }
+        h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 800; }
+        p { font-size: clamp(0.875rem, 1.5vw, 1rem); }
+
+        /* Reveal Animations */
         .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
         .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
         .reveal.slide-left.active { transform: translateX(0) scale(1); }
-        
         .dur-600 { transition-duration: 600ms; }
         .dur-700 { transition-duration: 700ms; }
         .dur-800 { transition-duration: 800ms; }
         .dur-900 { transition-duration: 900ms; }
         .dur-1000 { transition-duration: 1000ms; }
         .dur-1100 { transition-duration: 1100ms; }
+        
+        /* Premium Glassmorphism */
+        .glass-panel { 
+            background: rgba(23, 23, 23, 0.4); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
+        }
+        
+        /* Pure CSS Radial Menu */
+        .radial-menu { position: relative; z-index: 100; display: flex; justify-content: center; }
+        .radial-toggle { display: none; }
+        .radial-btn { cursor: pointer; transition: color 0.3s; }
+        .radial-items { position: absolute; top: 40px; left: 50%; transform: translateX(-50%); width: 0; height: 0; pointer-events: none; }
+        
+        .radial-item {
+            --tx: 0px;
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 72px; 
+            height: 72px;
+            margin-left: -36px;
+            margin-top: -36px;
+            background: rgba(23, 23, 23, 0.95); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 50%;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            text-decoration: none; 
+            color: #a3a3a3; 
+            font-weight: 700;
+            opacity: 0; 
+            transform: translate(var(--tx), 0) scale(0); 
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        
+        .radial-toggle:checked ~ .radial-items { pointer-events: auto; }
+        .radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: translate(var(--tx), 0) scale(1); }
 
+        /* Hover States */
+        .radial-item:nth-child(1):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.72 0.14 240); box-shadow: 0 0 25px rgba(59,130,246,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(2):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.55 0.2 300); box-shadow: 0 0 25px rgba(139,92,246,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(3):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.75 0.15 80); box-shadow: 0 0 25px rgba(245,158,11,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+        .radial-item:nth-child(4):hover { transform: translate(var(--tx), 0) scale(1.15) !important; border-color: oklch(0.78 0.13 150); box-shadow: 0 0 25px rgba(16,185,129,0.4); background: rgba(30, 30, 30, 1); color: white; z-index: 10; }
+
+        /* Dropdown Menu */
         .dropdown-menu { display: none; }
         .group:hover .dropdown-menu { display: block; }
-        
+
+        /* Accordion Details */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
+
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-neutral-950 text-neutral-100 antialiased">
 
-<nav class="bg-gray-800 text-green-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-lg text-sm md:text-base font-medium">
-    <a href="newindex.html" class="hover:text-white transition-colors">Home</a>
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+    <a href="index.html" class="hover:text-white transition-colors">Home</a>
     <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
     <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
-    <div class="relative group cursor-pointer pb-1">
-        <span class="hover:text-white transition-colors flex items-center gap-1">The System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-52 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            <a href="newedge.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">How It's Built</a>
-            <a href="newstory.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors border-b border-gray-700/50">The Story</a>
-            <a href="newknow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Gather [Know]</a>
-            <a href="newmap.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Assess [Map]</a>
-            <a href="newwin.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Influence [Win]</a>
-            <a href="newgrow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400 border-b border-gray-700/50">Nurture [Grow]</a>
-            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Dashboards</a>
+    <div class="radial-menu relative pb-1">
+        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
+        <label for="gain-radial" class="radial-btn text-white flex items-center gap-1.5 cursor-pointer select-none font-bold">
+            GAIN <span class="text-[10px] opacity-70">▾</span>
+        </label>
+
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="newknow.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-3xl font-black text-blue-400 mb-0.5">G</span>
+                <span class="text-[10px] text-blue-300 opacity-80 uppercase tracking-widest font-medium">Gather</span>
+            </a>
+            <a href="newmap.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-3xl font-black text-violet-400 mb-0.5">A</span>
+                <span class="text-[10px] text-violet-300 opacity-80 uppercase tracking-widest font-medium">Assess</span>
+            </a>
+            <a href="newwin.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-3xl font-black text-amber-400 mb-0.5">I</span>
+                <span class="text-[10px] text-amber-300 opacity-80 uppercase tracking-widest font-medium">Influence</span>
+            </a>
+            <a href="newgrow.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-3xl font-black text-emerald-400 mb-0.5">N</span>
+                <span class="text-[10px] text-emerald-300 opacity-80 uppercase tracking-widest font-medium">Nurture</span>
+            </a>
         </div>
     </div>
 
-    <a href="newengage.html" class="hover:text-yellow-300 transition-colors font-bold text-yellow-400">Engage</a>
+    <div class="relative group cursor-pointer pb-1 h-full flex items-center">
+        <span class="hover:text-white transition-colors flex items-center gap-1">System ▾</span>
+        <div class="dropdown-menu absolute left-0 top-full w-72 bg-neutral-900/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-150">
+            <a href="newedge.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">Why It Works</a>
+            <a href="newarchitecture.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm">How It's Built</a>
+            <a href="newstory.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm border-b border-white/5">The Story</a>
+            <a href="newdata-room.html" class="block px-5 py-3.5 hover:bg-neutral-800/70 hover:text-white transition-colors text-sm font-medium">Data Room</a>
+        </div>
+    </div>
+
+    <a href="newengage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
 
-<div class="pt-16 md:pt-20 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <header class="relative rounded-xl overflow-hidden mb-6 md:mb-8 border border-gray-800 shadow-2xl bg-gray-900 flex flex-col lg:flex-row">
+    <header class="relative rounded-[2rem] overflow-hidden mb-6 md:mb-8 glass-panel border-t-4 border-t-emerald-500/30 flex flex-col lg:flex-row hover:-translate-y-1 transition-all duration-500">
         <picture>
             <source srcset="assets/images/architecture.avif" type="image/avif">
-            <source srcset="assets/images/architecture.jpg" type="image/jpeg">
-            <img src="assets/images/architecture.webp" alt="Nurture Phase" class="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-multiply z-0">
+            <img src="assets/images/architecture.webp" alt="Nurture Phase" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-multiply z-0">
         </picture>
         
-        <div class="relative z-10 p-6 md:p-8 lg:w-full flex flex-col justify-center bg-gradient-to-r from-gray-900/80 to-transparent">
-            
-            <div class="text-xs text-gray-400 font-mono tracking-widest uppercase mb-4 flex flex-col sm:flex-row sm:items-center gap-2 md:gap-3 reveal">
-                <span class="text-emerald-500 font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-gray-600 font-normal">|</span> [N] NURTURE</span>
-                <div class="text-emerald-400 font-bold flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span> 
-                    Core prompt: N-01 full v3. Advanced chain (N-00, N-02→N-11): gated — engage for access.
+        <div class="relative z-10 p-8 md:p-12 lg:w-full flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent">
+            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
+                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> [N] NURTURE</span>
+                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
+                    Core prompt: N-01 full v3. Advanced (N-00, N-02→N-11): gated.
                 </div>
             </div>
 
-            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-3">
-                <span class="text-white block">GROW THEM.</span>
+            <h1 class="reveal font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
+                <span class="block">GROW THEM.</span>
             </h1>
             
-            <p class="reveal text-sm md:text-base text-gray-300 max-w-2xl mb-5 leading-relaxed font-medium">
+            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium">
                 <strong class="text-emerald-400">Pre-empt threats 18 months before renewal.</strong> Monitor decay, expand the footprint, and lock in the annuity. If you wait until month 9 to defend your revenue, you are already losing.
             </p>
         </div>
@@ -97,259 +192,232 @@
 
     <main>
 
-        <div class="flex flex-wrap items-center gap-2 md:gap-4 mb-6 md:mb-8 reveal">
-            <div class="px-4 py-2 bg-gray-900 rounded-full text-[10px] md:text-xs font-bold font-mono text-gray-400 border border-gray-700 shadow-inner text-center">POST-SALE DATA</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-gray-900 rounded-full text-[10px] md:text-xs font-bold font-mono text-gray-400 border border-gray-700 shadow-inner text-center">QBR TRANSCRIPTS</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-emerald-900/30 rounded-full text-[10px] md:text-xs font-bold font-mono text-emerald-400 border border-emerald-800 shadow-[0_0_10px_rgba(16,185,129,0.2)] text-center">CORE CHAIN N-01 (v3)</div>
-            <span class="text-gray-600 font-bold">&rarr;</span>
-            <div class="px-4 py-2 bg-green-900/30 rounded-full text-[10px] md:text-xs font-bold font-mono text-green-400 border border-green-800 shadow-[0_0_10px_rgba(34,197,94,0.2)] text-center">DEFENSIBLE ANNUITY</div>
+        <div class="flex flex-wrap items-center gap-3 md:gap-5 mb-8 md:mb-12 reveal">
+            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">POST-SALE DATA</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">QBR TRANSCRIPTS</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel border-t-2 border-t-emerald-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-emerald-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">CORE CHAIN N-01 (v3)</div>
+            <span class="text-neutral-600 font-bold">→</span>
+            <div class="px-5 py-3 glass-panel border-t-2 border-t-green-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-green-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">DEFENSIBLE ANNUITY</div>
         </div>
 
-        <div class="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            <div class="reveal dur-600 bg-gray-900/60 border border-gray-800 border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">The Objective</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">Stop acting like a vendor who only calls at renewal time. The Nurture phase identifies silent friction, maps post-sale executive changes, and engineers a defensive moat 18 months in advance so renewals become unarguable non-events.</p>
-            </div>
-            
-            <div class="reveal dur-700 bg-gray-900/60 border border-gray-800 border-l-2 border-l-purple-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">The Psychology</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">Buyers experience cognitive dissonance post-purchase. The incumbent is always at a disadvantage if they rest on their laurels. You must constantly re-align your deployed value to the board's evolving, moving risk mandates.</p>
-            </div>
-            
-            <div class="reveal dur-800 bg-gray-900/60 border border-gray-800 border-l-2 border-l-red-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">Data Governance Legend</h3>
-                <p class="text-sm md:text-base text-gray-300 leading-relaxed">Never feed internal client usage data, PII, or proprietary telemetry into public LLMs. Use aggregated, anonymised Service Delivery notes and updated public filings to track macro shifts securely.</p>
-            </div>
-            
-            <div class="reveal dur-900 bg-gray-900/60 border border-gray-800 border-l-2 border-l-blue-500 rounded-xl p-5 md:p-6 backdrop-blur-sm">
-                <h3 class="text-sm md:text-base font-black text-white uppercase tracking-widest mb-3">Execution Ingredients</h3>
-                <ul class="text-sm md:text-base text-gray-300 space-y-2 list-disc pl-4">
-                    <li>Original [G] Gather phase macro-radar.</li>
-                    <li>Latest quarterly earnings transcripts.</li>
-                    <li>Anonymised QBR/Service delivery summaries.</li>
-                    <li>Updated executive movement alerts.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 reveal">
-            <div class="bg-red-950/20 border border-red-900/50 rounded-xl p-5 flex flex-col md:flex-row gap-4 items-center">
-                <div class="flex-shrink-0 w-12 h-12 bg-red-900/50 rounded-full flex items-center justify-center border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.3)]">
-                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        <div class="mb-8 md:mb-12 space-y-5 md:space-y-6">
+            <div class="reveal glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center transition-all hover:-translate-y-1 hover:shadow-2xl">
+                <div class="flex-shrink-0 w-16 h-16 glass-panel rounded-full flex items-center justify-center border-t border-red-400/50">
+                    <svg class="w-8 h-8 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 </div>
                 <div>
-                    <h3 class="text-sm md:text-base font-black text-red-400 uppercase tracking-widest mb-1 text-center md:text-left">Human Checkpoint: OPSEC</h3>
-                    <p class="text-xs md:text-sm text-gray-300 leading-relaxed text-center md:text-left">Sanitise inputs. Internal account health scores and specific platform usage telemetry must remain zero-trust and out of public LLMs.</p>
+                    <h3 class="text-red-300 uppercase tracking-widest mb-3 text-center md:text-left">Human Checkpoint: OPSEC</h3>
+                    <p class="text-neutral-300 leading-relaxed text-center md:text-left font-medium">Sanitise inputs. Internal account health scores and specific platform usage telemetry must remain zero-trust and out of public LLMs.</p>
                 </div>
             </div>
-            
-            <div class="bg-violet-950/20 border border-violet-900/50 rounded-xl p-5 flex flex-col md:flex-row gap-4 items-center">
-                <div class="flex-shrink-0 w-12 h-12 bg-violet-900/50 rounded-full flex items-center justify-center border border-violet-500/50 shadow-[0_0_15px_rgba(139,92,246,0.3)]">
-                    <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+
+            <div class="reveal glass-panel border-t-4 border-t-emerald-500/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center transition-all hover:-translate-y-1 hover:shadow-2xl">
+                <div class="flex-shrink-0 w-16 h-16 glass-panel rounded-full flex items-center justify-center border-t border-emerald-400/50">
+                    <svg class="w-8 h-8 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </div>
                 <div>
-                    <h3 class="text-sm md:text-base font-black text-violet-400 uppercase tracking-widest mb-1 text-center md:text-left">Human Checkpoint: Context Override</h3>
-                    <p class="text-xs md:text-sm text-gray-300 leading-relaxed text-center md:text-left">AI reads the public transcript; you read the room. If your internal champion contradicts the AI's macro-read, trust the human on the ground.</p>
+                    <h3 class="text-emerald-300 uppercase tracking-widest mb-3 text-center md:text-left">Human Checkpoint: Context Override</h3>
+                    <p class="text-neutral-300 leading-relaxed text-center md:text-left font-medium">AI reads the public transcript; you read the room. If your internal champion contradicts the AI's macro-read, trust the human on the ground.</p>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center gap-4 mb-6">
-            <div class="h-px bg-gray-800 flex-1"></div>
-            <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-gray-500 uppercase">Core Prompt: N-01 (Fully Accessible)</div>
-            <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="flex items-center gap-4 mb-8 md:mb-10">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Core Prompt: N-01 (Fully Accessible)</div>
+            <div class="h-px bg-white/10 flex-1"></div>
         </div>
 
-        <div id="prompts-container" class="mb-10 space-y-4">
-            
-            <details class="reveal dur-600 bg-gray-900/80 border border-gray-800 rounded-xl group overflow-hidden" open>
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/50 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-emerald-500 font-mono font-bold text-xs md:text-sm bg-emerald-950/50 px-2 py-1 rounded">N-01</span>
-                        <h3 class="text-sm md:text-base font-black text-white uppercase tracking-tight">Expansion Signal Scan — Post-Win Growth Intelligence</h3>
-                    </div>
-                    <span class="text-gray-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800 bg-gray-950/50 space-y-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Variables</h4>
-                            <div class="flex flex-wrap gap-2 font-mono text-xs text-emerald-400">
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[ACCOUNT_NAME]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[CURRENT_CONTRACT]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[ACCOUNT_INTEL]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[G-03_PROFILES]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[BID_INTELLIGENCE]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[SELLER_CAPABILITIES]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[COMPETITIVE_LANDSCAPE]</span>
-                                <span class="bg-gray-900 px-2 py-1 rounded border border-gray-800">[CONTRACT_LIFECYCLE]</span>
+        <div id="prompts-container" class="mb-8 md:mb-12 space-y-6">
+            <div class="reveal dur-600 glass-panel border-t-4 border-t-emerald-500/30 rounded-3xl overflow-hidden group hover:border-t-emerald-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <details class="group" open>
+                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span class="text-emerald-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-emerald-400/30">N-01</span>
+                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                        </div>
+                        <h3 class="text-white uppercase tracking-tight mb-0">Expansion Signal Scan — Post-Win Growth Intelligence</h3>
+                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Recycles bid intelligence for post-win growth. Maps whitespace against stakeholder relationships. Identifies expansion signals from delivery data.</p>
+                    </summary>
+                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
+                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-emerald-300">
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[ACCOUNT_NAME]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[CURRENT_CONTRACT]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[ACCOUNT_INTEL]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_PROFILES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[BID_INTELLIGENCE]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[SELLER_CAPABILITIES]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[COMPETITIVE_LANDSCAPE]</span>
+                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[CONTRACT_LIFECYCLE]</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Expansion Signal Scan v3. Recycles bid intelligence for post-win growth. Maps whitespace against stakeholder relationships. Identifies expansion signals from delivery data, stakeholder behaviour, and market shifts. Relationship health assessment per stakeholder. Earn-the-Right sequencing — trust-gated expansion.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
+                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">IF I-04 → recycles bid scoring intel for expansion targeting. IF G-03 → relationship health assessment per stakeholder. IF Delivery Data → maps performance to expansion readiness. Earn-the-Right gate: expansion only where trust is earned. Red accounts get remediation, not upsell.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
+                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">G-01 = None → limited context. G-03 = None → no relationship assessment. I-04 = None → no bid intel recycling. Account health RED → expansion blocked. The system refuses to recommend growth on a troubled account.</p>
                             </div>
                         </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Architecture</h4>
-                            <p class="text-sm md:text-base text-gray-300 leading-relaxed">Expansion Signal Scan v3. Recycles bid intelligence for post-win growth. Maps whitespace against stakeholder relationships. Identifies expansion signals from delivery data, stakeholder behaviour, and market shifts. Relationship health assessment per stakeholder. Earn-the-Right sequencing — trust-gated expansion.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 border-t border-white/5 pt-6">
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">PATH A: Full intelligence base (G-03 + bid intel + QBR data) · PATH B: Account intel only · PATH C: Minimal data (contract + capabilities)</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Achievement · Power · Sustainability · Affiliation</p>
+                            </div>
+                            <div>
+                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
+                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Schwartz · MEDDIC · Timme · Ferrazzi · Kegan · Taleb · Heskett · Buell · Gawande</p>
+                            </div>
                         </div>
+                        <div class="border-t border-white/5 pt-6">
+                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
+                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
+                                <div class="text-emerald-400 font-bold">PHASE 0: RELATIONSHIP HEALTH ASSESSMENT</div>
+                                <div class="pl-4 opacity-80">Delivery · Relationship · Team Stability · Commercial · Strategic Alignment · Champion Health → Earn-the-Right Gate (🟢🟡🔴)</div>
+                                <div class="text-blue-400 font-bold mt-3">PHASE 1: SERVICE-PROFIT CHAIN HEALTH CHECK</div>
+                                <div class="pl-4 opacity-80">Internal quality → Employee satisfaction → External value → Customer loyalty → Chain break assessment</div>
+                                <div class="text-purple-400 font-bold mt-3">PHASE 2: BID INTELLIGENCE RECYCLING</div>
+                                <div class="pl-4 opacity-80">Unmet needs from A-01/A-02 · Stakeholder evolution from G-03 · Competitive refresh from I-03</div>
+                                <div class="text-amber-400 font-bold mt-3">PHASE 3: 8 SIGNAL CATEGORIES</div>
+                                <div class="pl-4 opacity-80">Organisational · Performance · Strategic · Technology · Regulatory · Competitive · Contract Lifecycle · Relationship Depth</div>
+                                <div class="text-red-400 font-bold mt-3">PHASE 6: COMPETITIVE DEFENCE</div>
+                                <div class="pl-4 opacity-80">Threat map · Defensive expansion priorities · Land-and-expand map</div>
+                                <div class="text-cyan-400 font-bold mt-3">PHASE 8: EXPANSION ROADMAP</div>
+                                <div class="pl-4 opacity-80">NOW (0-90 days) · NEXT (3-6 months) · LATER (6-12 months) · HORIZON (12+) → Antifragile frame</div>
+                            </div>
+                        </div>
+                        <button onclick="copyPrompt(this, 'lib-n01')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-emerald-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-emerald-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-gray-800 pt-5">
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Engine Logic</h4>
-                            <p class="text-sm md:text-base text-gray-300 leading-relaxed">IF I-04 → recycles bid scoring intel for expansion targeting. IF G-03 → relationship health assessment per stakeholder. IF Delivery Data → maps performance to expansion readiness. Earn-the-Right gate: expansion only where trust is earned. Red accounts get remediation, not upsell.</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Power of "NONE"</h4>
-                            <p class="text-sm md:text-base text-red-400 border-l-2 border-red-500 pl-3 leading-relaxed">G-01 = None → limited context. G-03 = None → no relationship assessment. I-04 = None → no bid intel recycling. Account health RED → expansion blocked. The system refuses to recommend growth on a troubled account.</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-800 pt-5">
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Routing</h4>
-                            <p class="text-xs md:text-sm text-gray-400">PATH A: Full intelligence base (G-03 + bid intel + QBR data) · PATH B: Account intel only · PATH C: Minimal data (contract + capabilities)</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">GAIN Drivers</h4>
-                            <p class="text-xs md:text-sm text-gray-400">Achievement · Power · Sustainability · Affiliation</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                            <p class="text-xs md:text-sm text-gray-400">Schwartz · MEDDIC · Timme · Ferrazzi · Kegan · Taleb · Heskett · Buell · Gawande</p>
-                        </div>
-                    </div>
-                    <div class="border-t border-gray-800 pt-5">
-                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Sample Output Structure</h4>
-                        <div class="bg-gray-900 rounded-lg p-4 border border-gray-800 font-mono text-xs md:text-sm text-gray-400 space-y-1">
-                            <div class="text-emerald-400 font-bold">PHASE 0: RELATIONSHIP HEALTH ASSESSMENT</div>
-                            <div class="pl-4">Delivery · Relationship · Team Stability · Commercial · Strategic Alignment · Champion Health → Earn-the-Right Gate (🟢🟡🔴)</div>
-                            <div class="text-blue-400 font-bold mt-2">PHASE 1: SERVICE-PROFIT CHAIN HEALTH CHECK</div>
-                            <div class="pl-4">Internal quality → Employee satisfaction → External value → Customer loyalty → Chain break assessment</div>
-                            <div class="text-purple-400 font-bold mt-2">PHASE 2: BID INTELLIGENCE RECYCLING</div>
-                            <div class="pl-4">Unmet needs from A-01/A-02 · Stakeholder evolution from G-03 · Competitive refresh from I-03</div>
-                            <div class="text-amber-400 font-bold mt-2">PHASE 3: 8 SIGNAL CATEGORIES</div>
-                            <div class="pl-4">Organisational · Performance · Strategic · Technology · Regulatory · Competitive · Contract Lifecycle · Relationship Depth</div>
-                            <div class="text-red-400 font-bold mt-2">PHASE 6: COMPETITIVE DEFENCE</div>
-                            <div class="pl-4">Threat map · Defensive expansion priorities · Land-and-expand map</div>
-                            <div class="text-cyan-400 font-bold mt-2">PHASE 8: EXPANSION ROADMAP</div>
-                            <div class="pl-4">NOW (0-90 days) · NEXT (3-6 months) · LATER (6-12 months) · HORIZON (12+) → Antifragile frame</div>
-                        </div>
-                    </div>
-                </div>
-            </details>
-
+                </details>
+            </div>
         </div>
 
-        <div class="flex items-center gap-4 mb-6">
-            <div class="h-px bg-gray-800 flex-1"></div>
-            <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-gray-500 uppercase">Advanced Prompts: N-00, N-02 &rarr; N-11 (Restricted)</div>
-            <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="flex items-center gap-4 mb-8 md:mb-10">
+            <div class="h-px bg-white/10 flex-1"></div>
+            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Advanced Prompts: N-00, N-02 → N-11 (Restricted)</div>
+            <div class="h-px bg-white/10 flex-1"></div>
         </div>
 
-        <div class="mb-10 space-y-4">
+        <div class="mb-8 md:mb-12 space-y-5 md:space-y-6">
             
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">N-00</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Commercial Warning Brief</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">N-00</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Commercial Warning Brief</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">Sales-to-delivery handover. Flags every promise, risk, and sensitivity from the bid. Prevents the "sales promised WHAT?" moment. Scans bid outputs for commitments and SLAs, cross-references I-01 risks.</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-xs font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-xs font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">Sales-to-delivery handover. Flags every promise, risk, and sensitivity from the bid. Prevents the "sales promised WHAT?" moment. Scans bid outputs for commitments and SLAs, cross-references I-01 risks.</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">N-02 &rarr; N-04</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Referral, Campaign & Expansion Qualifier</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">N-02 → N-04</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Referral, Campaign & Expansion Qualifier</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">3 prompts: Stakeholder referral mapping (who introduces you to new opps), 90-day expansion campaign assembly, and MEDDIC-based expansion qualification (Pursue/Develop/Park/Walk).</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-xs font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-xs font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">3 prompts: Stakeholder referral mapping (who introduces you to new opps), 90-day expansion campaign assembly, and MEDDIC-based expansion qualification (Pursue/Develop/Park/Walk).</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">N-05 &rarr; N-08</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Account Health & Threat Detection</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">N-05 → N-08</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Account Health & Threat Detection</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">4 prompts: Account health dashboarding (composite score with early warnings), renewal risk audit (18-month out), new leader advisory protocol (when your champion leaves), and threat detection scanning (competitor approaches, disengagement signals, budget shifts).</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-xs font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-xs font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">4 prompts: Account health dashboarding (composite score with early warnings), renewal risk audit (18-month out), new leader advisory protocol (when your champion leaves), and threat detection scanning (competitor approaches, disengagement signals, budget shifts).</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
-            <details class="reveal bg-gray-900/30 border border-gray-800/50 rounded-xl group overflow-hidden">
-                <summary class="p-5 md:p-6 cursor-pointer flex items-center justify-between outline-none hover:bg-gray-800/30 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <span class="text-gray-500 font-mono font-bold text-xs md:text-sm bg-gray-900 px-2 py-1 rounded">N-09 &rarr; N-11</span>
-                        <h3 class="text-sm md:text-base font-bold text-gray-400 uppercase tracking-wide">Value Reporting & Business Case</h3>
+            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
+                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-5">
+                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">N-09 → N-11</span>
+                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Value Reporting & Business Case</h3>
                     </div>
-                    <span class="text-gray-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
+                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
                 </summary>
-                <div class="p-5 md:p-6 border-t border-gray-800/50 bg-gray-950/80">
-                    <p class="text-sm md:text-base text-gray-400 mb-4 leading-relaxed">3 prompts: Board-level value report (quantified ROI vs baseline), continuous intelligence monitor (periodic G-01 re-run detecting shifts), and internal business case — the honest Pursue/Walk document for your own leadership.</p>
-                    <div class="flex flex-wrap items-center gap-3">
-                        <button disabled class="text-xs font-bold uppercase tracking-widest text-gray-500 bg-gray-800/50 px-3 py-1.5 rounded border border-gray-700 opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="newengage.html" class="text-xs font-bold uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors">Engage for Complete Access &rarr;</a>
+                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
+                    <p class="mb-6">3 prompts: Board-level value report (quantified ROI vs baseline), continuous intelligence monitor (periodic G-01 re-run detecting shifts), and internal business case — the honest Pursue/Walk document for your own leadership.</p>
+                    <div class="flex flex-wrap items-center gap-5">
+                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
+                        <a href="newengage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
                     </div>
                 </div>
             </details>
 
         </div>
 
-        <div class="mb-10">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-white uppercase">Prompt Library — Copy Full Code</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+        <div class="mb-12">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-white uppercase">Prompt Library — Copy Full Code</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
-            <p class="text-sm md:text-base text-gray-400 mb-6 text-center">Full v3 prompt engine. Copy the code, paste into any LLM, feed the variables.</p>
+            <p class="text-sm md:text-base text-neutral-400 mb-8 text-center font-medium">Each prompt is a multi-phase engine. Copy the full v3 code, paste into any LLM, feed the variables.</p>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-4 text-center">
-                    <span class="text-emerald-500 font-mono font-bold text-sm block mb-1">N-01</span>
-                    <p class="text-xs md:text-sm text-gray-400 mb-3">Expansion Signal Scan</p>
-                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-xs font-bold uppercase tracking-widest text-emerald-400 hover:text-white bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-emerald-500 transition-colors w-full">Copy Full Code</button>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-6 md:mb-8">
+                <div class="glass-panel border-t-4 border-t-emerald-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-emerald-400 transition-all">
+                    <span class="text-emerald-400 font-mono font-bold text-sm md:text-base block mb-2">N-01</span>
+                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Expansion Signal Scan</p>
+                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-emerald-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-emerald-500 hover:bg-white/10 transition-all w-full">Copy</button>
                 </div>
-                <div class="bg-gray-900/30 border border-gray-800/50 rounded-lg p-4 text-center opacity-60">
-                    <span class="text-gray-500 font-mono font-bold text-sm block mb-1">N-00</span>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Warning Brief</p>
-                    <span class="text-xs md:text-sm text-gray-600 uppercase tracking-widest">Gated</span>
+                <div class="glass-panel rounded-3xl p-5 text-center opacity-60">
+                    <span class="text-neutral-500 font-mono font-bold text-sm md:text-base block mb-2">N-00</span>
+                    <p class="text-[11px] md:text-xs text-neutral-600 mb-4 font-medium">Warning Brief</p>
+                    <span class="text-[10px] md:text-xs text-neutral-600 uppercase tracking-widest font-bold">Gated</span>
                 </div>
-                <div class="bg-gray-900/30 border border-gray-800/50 rounded-lg p-4 text-center opacity-60">
-                    <span class="text-gray-500 font-mono font-bold text-sm block mb-1">N-02 → N-08</span>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Growth & Defence</p>
-                    <span class="text-xs md:text-sm text-gray-600 uppercase tracking-widest">Gated</span>
+                <div class="glass-panel rounded-3xl p-5 text-center opacity-60">
+                    <span class="text-neutral-500 font-mono font-bold text-sm md:text-base block mb-2">N-02 → N-08</span>
+                    <p class="text-[11px] md:text-xs text-neutral-600 mb-4 font-medium">Growth & Defence</p>
+                    <span class="text-[10px] md:text-xs text-neutral-600 uppercase tracking-widest font-bold">Gated</span>
                 </div>
-                <div class="bg-gray-900/30 border border-gray-800/50 rounded-lg p-4 text-center opacity-60">
-                    <span class="text-gray-500 font-mono font-bold text-sm block mb-1">N-09 → N-11</span>
-                    <p class="text-xs md:text-sm text-gray-600 mb-3">Value & Intelligence</p>
-                    <span class="text-xs md:text-sm text-gray-600 uppercase tracking-widest">Gated</span>
+                <div class="glass-panel rounded-3xl p-5 text-center opacity-60">
+                    <span class="text-neutral-500 font-mono font-bold text-sm md:text-base block mb-2">N-09 → N-11</span>
+                    <p class="text-[11px] md:text-xs text-neutral-600 mb-4 font-medium">Value & Intelligence</p>
+                    <span class="text-[10px] md:text-xs text-neutral-600 uppercase tracking-widest font-bold">Gated</span>
                 </div>
             </div>
 
-            <div class="bg-gray-900 border border-gray-800/50 rounded-lg p-4 text-center">
-                <span class="text-xs md:text-sm text-gray-600">12 Nurture prompts total · N-01 full access · N-00, N-02→N-11 restricted — <a href="newengage.html" class="text-emerald-400 hover:text-emerald-300">Engage for access</a></span>
+            <div class="glass-panel rounded-2xl p-5 text-center mb-8 md:mb-12">
+                <span class="text-xs md:text-sm text-neutral-500 font-medium">12 Nurture prompts total · N-01 full access · N-00, N-02→N-11 restricted — <a href="newengage.html" class="text-amber-400 hover:text-amber-300 transition-colors font-bold">Engage for access</a></span>
             </div>
 
             <div style="position:absolute;left:-9999px;top:-9999px">
@@ -357,26 +425,26 @@
 ========================================
 
 PROMPT CODE
-ACCOUNT NAME: [Insert Account Name]
-CURRENT CONTRACT: [Summarise what is currently deployed/sold, or type "None"]
-ACCOUNT INTEL: [Paste recent news, earnings transcripts, or major strategic announcements, or type "None"]
-G-03 PROFILES: [Paste updated G-03 profiles for key stakeholders, or type "None"]
-BID INTELLIGENCE: [Paste original A-01/A-02/I-04 outputs from the initial win, or type "None"]
-SELLER CAPABILITIES: [List your solutions/products NOT currently sold to this account, or type "None"]
-COMPETITIVE LANDSCAPE: [Who else is in there? Paste I-03 output or known incumbents, or type "None"]
-CONTRACT LIFECYCLE: [Months since signing / Months until renewal]
+ACCOUNT NAME: [Insert Target Company]
+CURRENT CONTRACT: [Paste details of what they currently buy from you]
+ACCOUNT INTEL: [Paste G-01 Macro Intel or latest strategic overview, or type "None"]
+G-03 PROFILES: [Paste known G-03 executive profiles, or type "None"]
+BID INTELLIGENCE: [Paste A-01, A-02, or I-04 outputs from original win, or type "None"]
+SELLER CAPABILITIES: [List your relevant capabilities beyond what they currently buy, or type "None"]
+COMPETITIVE LANDSCAPE: [Who else is in there?, or type "None"]
+CONTRACT LIFECYCLE: [e.g., Year 1 of 3, Year 3 renewal approaching]
 
 OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
 CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:
 Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a .md file. Follow these rules exactly:
 
-FILENAME: The output file MUST be named:N-01_Expansion_Scan_[Account_Name].md
+FILENAME: The output file MUST be named:N-01_Expansion_Signal_[Account_Name].md
 (Replace [Account_Name] with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
-DESTINATION FOLDER: 06_Nurture_Growth/
+DESTINATION FOLDER: 05_Nurture_Retention/
 FORMAT RULES:
 Begin your output with the line below EXACTLY (with the correct filename substituted):
 
-⚠️ SYSTEM SAVE PROTOCOL: Save as: N-01_Expansion_Scan_[Account_Name].md → 06_Nurture_Growth/
+⚠️ SYSTEM SAVE PROTOCOL: Save as: N-01_Expansion_Signal_[Account_Name].md → 05_Nurture_Retention/
 Everything that follows is the intelligence output in clean Markdown.
 Use proper Markdown headers (##, ###), tables, bold, and bullet points.
 Do NOT wrap your response in a code fence or markdown block — output raw Markdown directly.
@@ -384,219 +452,212 @@ Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document
 The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
 COPY-PASTE READY: The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
 ROLE & OBJECTIVE
-Act as a Tier-1 Strategic Account Director and Expansion Architect. The objective is to proactively identify expansion opportunities (whitespace) and retention risks (decay) before they become active threats. You will synthesise current account reality with original bid intelligence to engineer a land-and-expand roadmap.EARN THE RIGHT PROTOCOL: You must assess if the Seller has "earned the right" to expand based on delivery performance and relationship health. If health is poor, expansion recommendations MUST be replaced with remediation actions.
+Act as a Strategic Account Director and Expansion Architect. Your objective is to recycle pre-sales intelligence for post-sales growth, mapping current whitespace against established stakeholder relationships. You are looking for expansion signals: where does our delivery data, their corporate evolution, and individual executive psychology intersect to create a new revenue opportunity?EARN-THE-RIGHT GATE (CRITICAL): Expansion is trust-gated. If the relationship health assessment indicates poor delivery or unstable relationships, you must explicitly refuse to recommend expansion and instead recommend a remediation path. You cannot sell more to a troubled account.
 
 EXECUTION ROUTING
-PATH A (Full Context Provided): Comprehensive signal scan, bid intelligence recycling, and 12-month expansion roadmap.
-PATH B (Account Intel Only): Macro-driven expansion identification based on external shifts.
-PATH C (Minimal Context): Baseline capability mapping against typical industry pain points.
-PHASE 0: RELATIONSHIP HEALTH ASSESSMENT & EARN-THE-RIGHT GATE
-Assess the current state of the relationship based on provided inputs (especially G-03 profiles and Account Intel).
+PATH A: FULL INTELLIGENCE BASE (G-03 + Bid Intel provided) → Map expansion against verified psychology and unmet bid needs.
+PATH B: ACCOUNT INTEL ONLY (G-01 provided) → Map expansion against corporate strategy.
+PATH C: MINIMAL DATA (Contract + Capabilities only) → Generate standard whitespace logic.
+PHASE 0: RELATIONSHIP HEALTH ASSESSMENT
+Based on the inputs provided, assess the current state of the account across 6 dimensions (Score High/Med/Low/Unknown):
+- Delivery Quality
+- Relationship Depth
+- Team Stability (Theirs and Ours)
+- Commercial Value Realized
+- Strategic Alignment
+- Champion Health (Is our original champion still there and still powerful?)EARN-THE-RIGHT GATE RESULT:
+🟢 CLEAR: Proceed with expansion strategy.
+🟡 CAUTION: Specific relationships need shoring up before expansion.
+🔴 BLOCKED: Serious delivery/relationship issues. Remediation required. Do not propose expansion.
 
-DELIVERY METRIC: Is the core solution delivering the promised value? (If unknown, state "Requires Validation").
-RELATIONSHIP TRAJECTORY: Are stakeholder relationships deepening, static, or decaying?
-TEAM STABILITY: Have key champions left or changed roles? Have new detractors entered?
-COMMERCIAL POSTURE: Are they asking for discounts, or are they investing more?
-STRATEGIC ALIGNMENT: Is the solution still aligned to their current top corporate priority?
-CHAMPION HEALTH: Is the original champion still in power and still advocating?
-THE EARN-THE-RIGHT GATE: Assign a status:
-🟢 GREEN (Earned): Delivery is strong, relationships are deep. Proceed to aggressive expansion.
-🟡 YELLOW (Caution): Value is delivered but relationships are shallow, or vice versa. Focus on defensive expansion and relationship deepening.
-🔴 RED (Deficient): Delivery issues, champion loss, or misaligned value. STOP EXPANSION. Focus 100% on remediation and retention.
 PHASE 1: SERVICE-PROFIT CHAIN HEALTH CHECK (Heskett)
-Apply the Service-Profit Chain model to the current deployment:
-Internal quality (tools/training) → Employee satisfaction/productivity → External service value → Customer satisfaction → Customer loyalty/revenue.
+Analyze the customer's Service-Profit Chain. How is our current delivery affecting their internal capability, which affects their external value, which affects their growth? Where is our solution succeeding, and where is it creating friction?
 
-Where in this chain is our CURRENT solution operating?
-Has it successfully strengthened that link?
-What is the NEXT weakest link in the chain that we can fix? (This is the primary expansion target).
-PHASE 2: BID INTELLIGENCE RECYCLING (Execute only if Bid Intelligence provided)
-Review the original bid data (A-01, A-02, I-04) to find opportunities that were parked or descoped during the initial sale:
+PHASE 2: BID INTELLIGENCE RECYCLING (Execute if Bid Intel provided)
+Analyze the original bid intelligence (A-01, A-02, I-04):
+- UNMET NEEDS: What was scoped out of the original deal for budget/time reasons that is now relevant?
+- STAKEHOLDER EVOLUTION: How have the original stakeholders (from G-03) evolved? Have their priorities shifted?
+- COMPETITIVE REFRESH: Did a competitor win a piece of the original pie? Is it time to displace them?
 
-THE DESCROPED VALUE: What did they want initially but cut for budget/time? Is it relevant again?
-THE UNMET SCORING CRITERIA: Where did we score lowest in the original bid? Have we closed that capability gap? Can we sell it now?
-THE TRAUMA MAP (A-02): Did the initial deployment trigger any of their historical vendor traumas? If so, how do we correct the narrative?
-THE COMPETITIVE REFRESH (I-03): Which competitor lost the initial bid, and where are they likely trying to wedge back in now?
-PHASE 3: THE 8 EXPANSION SIGNAL CATEGORIES
-Scan the inputs for indicators of expansion readiness across these 8 categories. For each category, state the signal (if found) and the resulting expansion angle. If no signal exists, output "NONE".
+PHASE 3: 8 SIGNAL CATEGORIES
+Scan the inputs for specific expansion signals across 8 categories:
+1. Organisational (M&A, leadership changes, restructuring)
+2. Performance (Missed targets, rapid growth)
+3. Strategic (New mandates, pivots)
+4. Technology (Legacy end-of-life, new platform adoption)
+5. Regulatory (New compliance burdens)
+6. Competitive (Their competitors making moves)
+7. Contract Lifecycle (Renewal approaching, true-up window)
+8. Relationship Depth (New executive access gained)
 
-ORGANISATIONAL SIGNALS: M&A activity, new executive hires (especially CxO), departmental restructuring, office expansions/closures.
-PERFORMANCE SIGNALS: Missed earnings targets, stated cost-cutting mandates, aggressive growth goals in specific business units.
-STRATEGIC SIGNALS: Pivot to new markets, digital transformation initiatives, ESG mandates, changes in core business model.
-TECHNOLOGY SIGNALS: Legacy system end-of-life, cloud migration phases, cybersecurity incidents, AI adoption mandates.
-REGULATORY SIGNALS: New compliance requirements, upcoming audit cycles, industry standard changes.
-COMPETITIVE SIGNALS: Competitor product launches, aggressive pricing pressure in their market, loss of market share.
-CONTRACT LIFECYCLE SIGNALS: Approaching renewal (12-18 months out), budget planning cycles, exhaustion of current licenses/capacity.
-RELATIONSHIP DEPTH SIGNALS: Multi-threading success (are we talking to more than just our original buyer?), executive sponsorship engagement.
-PHASE 4: CAPABILITY MAPPING (Execute only if Seller Capabilities provided)
-Map the Seller's unused capabilities against the signals identified in Phase 3.
+PHASE 4: WHITESPACE MAPPING
+Map the identified signals against [SELLER_CAPABILITIES]. Where is the overlap? Output as a matrix:
+| Signal | Relevant Capability | Potential Value | Entry Point (Stakeholder) |
 
-| CAPABILITY | RELEVANT SIGNAL (from Phase 3) | BUSINESS VALUE (EBITDA/Risk) | TARGET STAKEHOLDER |
+PHASE 5: THE EXPANSION WEDGE
+Select the highest-value whitespace opportunity from Phase 4. Build the positioning wedge:
+- The specific business problem we can solve now because we have the incumbent advantage.
+- The cost of inaction (G-01 style methodology) if they don't address it.
+- The specific "Earned Right" statement (e.g., "Because we successfully delivered X, we are uniquely positioned to solve Y").
 
-PHASE 5: STAKEHOLDER EVOLUTION (Execute only if G-03 Profiles provided)
-How have the key players changed since the initial deal?
+PHASE 6: COMPETITIVE DEFENCE
+Analyze the [COMPETITIVE_LANDSCAPE]. Where are competitors trying to encroach? What is our defensive strategy? How can we use an expansion play to actively block a competitor?
 
-THE CHAMPION'S NEXT MOUNTAIN: Our champion got a win by bringing us in. What is their next career goal, and how can our expansion help them achieve it?
-THE FORMER DETRACTOR: The person who opposed us initially — have we proven them wrong, or are they still a threat? How do we convert them using deployed value?
-THE NEW ARRIVAL: Who has joined the decision-making circle since the win? What is their agenda, and how do we align to it?
-PHASE 6: COMPETITIVE DEFENCE (The Moat)
-(Execute only if Competitive Landscape provided)
+PHASE 7: STAKEHOLDER ENGAGEMENT PLAN (Execute if G-03 provided)
+For the selected Expansion Wedge, how do we engage the specific executives from G-03? Map the message to their GAIN driver and Kegan stage.
 
-THREAT MAP: Where is the incumbent or secondary vendor strongest? Where are they vulnerable?
-DEFENSIVE EXPANSION: Which of our capabilities, if deployed, would permanently lock out the competitor?
-LAND-AND-EXPAND VULNERABILITY: If the competitor is using a land-and-expand strategy, where is their next logical beachhead, and how do we block it?
-PHASE 7: THE NARRATIVE SHIFT (Dunford/Raskin)
-How must the story change?
-Original Pitch: "We solve [Problem X]."
-New Reality: "We solved [Problem X]. Now, the macro environment has shifted to [Undeniable Shift]. Our expanded footprint secures you against [New Risk Y]."
-Draft the specific "Undeniable Shift" statement for the expansion conversation.
-
-PHASE 8: EXPANSION ROADMAP (Horizon Planning)
-Based on the Earn-the-Right Gate status, build the tactical roadmap:
-
-NOW (0-90 Days): Immediate actions (Remediation if RED, easy cross-sells if GREEN).
-NEXT (3-6 Months): Strategic plays aligning to upcoming budget cycles or regulatory deadlines.
-LATER (6-12 Months): Complex expansions requiring significant stakeholder alignment or budget reallocation.
-HORIZON (12+ Months): Long-term vision for total account dominance.
-ANTIFRAGILE FRAME (Taleb): How does this roadmap make the client's business more resilient to external shocks?
+PHASE 8: EXPANSION ROADMAP
+Create a chronological plan for executing the expansion strategy:
+- NOW (0-90 days): Immediate actions, relationship building, low-hanging fruit.
+- NEXT (3-6 months): Targeted campaigns, proof-of-value, business case development.
+- LATER (6-12 months): Major expansion proposals, strategic renewals.
+- HORIZON (12+ months): Long-term partnership vision.Frame this roadmap using an Antifragile lens (Taleb) — how does this path make the customer stronger under stress?
 
 PHASE 9: FORENSIC CHECKLIST (Gawande)
-□ Earn-the-Right Gate is explicitly assessed and dictates the tone of the roadmap.
-□ Every expansion opportunity is linked to a specific signal or recycled bid data point.
-□ Financial language (EBITDA, OPEX, Margin) is used instead of product features.
-□ The Narrative Shift acknowledges the deployed value before introducing the new threat.
-□ The roadmap is time-bound and logically sequenced based on relationship capital.
-□ Service-Profit Chain identifies the specific link being targeted.
+□ The Earn-The-Right Gate explicitly states whether expansion is permissible.
+□ Expansion wedges rely on our incumbent advantage, not just generic pitches.
+□ Bid intelligence (if provided) is actively repurposed.
+□ Stakeholder engagement respects individual psychology (if G-03 provided).
+□ The roadmap has distinct chronological phases.
 
 PHASE 10: THE OPERATOR LOOP
-Ask: "Which of the 8 expansion signals feels most urgent to the client right now? And do we have the political capital with [Key Stakeholder] to pitch the 'Next' phase of the roadmap, or do we need to focus on the 'Now' remediation?"NEXT MOVES: → N-02 (Referral Mapping — to find the specific entry point for the expansion) | → N-05 (Account Health Dashboard — if the relationship needs remediation) | → G-05 (Meeting Script — to open the expansion conversation)</code></pre>
+Ask: "Review the Earn-The-Right Gate assessment. Do you agree with the health score? If there are hidden delivery issues not mentioned in the prompt, we must pause expansion and run remediation."NEXT MOVES: → N-03 (Expansion Campaign) | → N-05 (Account Health Dashboard) | → G-01 (Re-run Macro Intel if account data is stale)</code></pre>
             </div>
         </div>
 
         <div class="mb-8 md:mb-10">
-            <div class="flex items-center gap-4 mb-5 reveal">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-xs font-extrabold tracking-widest text-gray-500 uppercase">Common Plays</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+            <div class="flex items-center gap-4 mb-6 reveal">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Common Plays</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                    <h3 class="text-sm md:text-base font-black text-white uppercase tracking-tight mb-2">Renewal Defence (18 Months Out)</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed mb-3">Run N-01 against current contract and latest QBR data. The relationship health assessment tells you whether to expand or remediate first.</p>
-                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-xs font-bold text-emerald-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-emerald-500 transition-colors">Copy N-01</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                <div class="glass-panel border-t-4 border-t-emerald-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-emerald-400 transition-all duration-300 hover:shadow-2xl">
+                    <h3 class="text-white uppercase tracking-tight mb-3">Renewal Defence (18 Months Out)</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-5 font-medium">Run N-01 against current contract and latest QBR data. The relationship health assessment tells you whether to expand or remediate first.</p>
+                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-xs font-bold uppercase tracking-widest text-emerald-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-emerald-500 hover:bg-white/10 transition-all">Copy N-01</button>
                 </div>
-                <div class="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                    <h3 class="text-sm md:text-base font-black text-white uppercase tracking-tight mb-2">Post-Win Growth Scan</h3>
-                    <p class="text-xs md:text-sm text-gray-400 leading-relaxed mb-3">Feed in original bid intelligence (G-01, G-03, A-01, I-03). N-01 recycles it to find unmet needs, stakeholder evolution, and competitive encroachment.</p>
-                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-xs font-bold text-emerald-400 bg-gray-800 px-3 py-1.5 rounded border border-gray-700 hover:border-emerald-500 transition-colors">Copy N-01</button>
+                <div class="glass-panel border-t-4 border-t-emerald-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-emerald-400 transition-all duration-300 hover:shadow-2xl">
+                    <h3 class="text-white uppercase tracking-tight mb-3">Post-Win Growth Scan</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-5 font-medium">Feed in original bid intelligence (G-01, G-03, A-01, I-03). N-01 recycles it to find unmet needs, stakeholder evolution, and competitive encroachment.</p>
+                    <button onclick="copyPrompt(this, 'lib-n01')" class="text-xs font-bold uppercase tracking-widest text-emerald-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-emerald-500 hover:bg-white/10 transition-all">Copy N-01</button>
                 </div>
             </div>
         </div>
 
         <div class="mb-8 md:mb-10">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="h-px bg-gray-800 flex-1"></div>
-                <div class="text-[10px] md:text-xs font-extrabold tracking-widest text-red-500 uppercase">Where This Breaks (Failure Modes)</div>
-                <div class="h-px bg-gray-800 flex-1"></div>
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-red-500 uppercase">Where This Breaks (Failure Modes)</div>
+                <div class="h-px bg-white/10 flex-1"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-                <div class="reveal dur-700 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-sm md:text-base text-white font-bold mb-2">The 'Business As Usual' Trap</h3>
-                    <p class="text-sm md:text-base text-gray-400 leading-relaxed">Assuming the reason they bought you in Year 1 is the reason they will renew in Year 3. Board mandates shift; if your narrative doesn't shift with it, you become legacy debt.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                <div class="reveal dur-700 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-white mb-3">The 'Business As Usual' Trap</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Assuming the reason they bought you in Year 1 is the reason they will renew in Year 3. Board mandates shift; if your narrative doesn't shift with it, you become legacy debt.</p>
                 </div>
-
-                <div class="reveal dur-800 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-sm md:text-base text-white font-bold mb-2">The QBR Delusion</h3>
-                    <p class="text-sm md:text-base text-gray-400 leading-relaxed">Using quarterly business reviews to present vanity SLA metrics and user-logins, instead of actively re-aligning your deployed solution to their new macro-risks.</p>
+                <div class="reveal dur-800 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-white mb-3">The QBR Delusion</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Using quarterly business reviews to present vanity SLA metrics and user-logins, instead of actively re-aligning your deployed solution to their new macro-risks.</p>
                 </div>
-
-                <div class="reveal dur-1000 bg-gray-900/50 border border-gray-800 border-t-2 border-t-red-500 rounded-lg p-4 md:p-5">
-                    <h3 class="text-sm md:text-base text-white font-bold mb-2">Siloed Telemetry</h3>
-                    <p class="text-sm md:text-base text-gray-400 leading-relaxed">Relying purely on software telemetry to judge account health, while ignoring the fact that the Economic Buyer who signed your original deal just left for a competitor.</p>
+                <div class="reveal dur-1000 glass-panel border-t-4 border-t-red-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 transition-all duration-300">
+                    <h3 class="text-white mb-3">Siloed Telemetry</h3>
+                    <p class="text-sm text-neutral-400 leading-relaxed font-medium">Relying purely on software telemetry to judge account health, while ignoring the fact that the Economic Buyer who signed your original deal just left for a competitor.</p>
                 </div>
             </div>
         </div>
 
-        <div class="mb-8 md:mb-10 reveal text-center">
-            <p class="text-sm md:text-base text-gray-300 font-medium leading-relaxed">
+        <div class="mb-8 md:mb-12 reveal text-center">
+            <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed">
                 That's the annuity engine. The same methodology wins the deal and builds the business underneath it.
             </p>
-            <a href="newrevenue-case.html" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors mt-3">
-                Revenue Case →
+            <a href="newrevenue-case.html" class="inline-flex items-center gap-2 text-base md:text-lg text-emerald-400 hover:text-emerald-300 font-bold transition-colors mt-4">
+                See the Revenue Case →
             </a>
         </div>
 
-<div class="mb-8 md:mb-10 reveal bg-gray-950/80 border border-gray-800 rounded-xl p-6 md:p-8 text-center">
-    <p class="text-xl md:text-2xl font-black text-white mb-6">You already know.</p>
-    <a href="newengage.html" class="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/50 px-6 py-3 text-yellow-400 font-bold text-sm rounded-lg hover:bg-yellow-500/20 hover:border-yellow-400 transition-all">
-        Engage →
-    </a>
-    <p class="text-sm text-gray-600 mt-4">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
-</div>
+        <div class="mb-12 reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl p-10 md:p-16 text-center max-w-4xl mx-auto hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-8">You already know.</h2>
+            <a href="newengage.html" class="inline-flex items-center justify-center gap-3 glass-panel border-t border-t-amber-500/50 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-2xl shadow-[0_0_20px_rgba(251,191,36,0.1)] hover:border-t-amber-400 hover:shadow-[0_0_30px_rgba(251,191,36,0.2)] hover:text-white transition-all duration-300 hover:scale-105">
+                Engage &rarr;
+            </a>
+            <p class="text-base text-neutral-400 font-medium mt-6">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
+        </div>
 
     </main>
 
-    <footer class="border-t border-gray-800 pt-6 pb-10 flex flex-col md:flex-row justify-between items-center gap-4 mt-8">
-        <a href="newindex.html" class="text-xs font-extrabold tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        
-        <div class="flex flex-col md:flex-row items-center gap-4">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-[10px] font-semibold text-gray-400 hover:text-blue-400 transition-colors">
-                AI Is Not Your Cheerleader &rarr;
-            </a>
-            <span class="text-[9px] text-gray-600 uppercase tracking-wider">No hype. Just results. &copy; 2026</span>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
+            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
         </div>
     </footer>
 
 </div>
 
 <script>
-function copyPrompt(button, textId) {
-    const text = document.getElementById(textId).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = button.innerText;
-        button.innerText = "COPIED!";
-        button.classList.add('text-green-400', 'border-green-400');
-        button.classList.remove('text-emerald-400', 'border-gray-700', 'hover:border-emerald-500', 'hover:text-white');
-        setTimeout(() => {
-            button.innerText = originalText;
-            button.classList.remove('text-green-400', 'border-green-400');
-            button.classList.add('text-emerald-400', 'border-gray-700', 'hover:border-emerald-500', 'hover:text-white');
-        }, 2000);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const currentPath = window.location.pathname;
-  document.querySelectorAll('nav a').forEach(link => {
-    if (link.getAttribute('href') === currentPath || link.getAttribute('href') === currentPath.split('/').pop()) {
-      link.classList.add('text-white', 'font-bold');
-      link.classList.remove('hover:text-white');
+    // Copy Prompt Function
+    function copyPrompt(button, textId) {
+        const text = document.getElementById(textId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalText = button.innerText;
+            button.innerText = "COPIED!";
+            
+            button.classList.add('text-emerald-400', 'border-t-emerald-400', 'bg-white/10');
+            button.classList.remove('text-emerald-400', 'hover:text-white', 'hover:border-t-emerald-500');
+            
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.classList.remove('border-t-emerald-400', 'bg-white/10');
+                button.classList.add('hover:text-white', 'hover:border-t-emerald-500');
+            }, 2000);
+        });
     }
-  });
-});
+
+    // Scroll Observer
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        
+        // Active Nav Link mapping
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('text-white', 'font-bold');
+                link.classList.remove('hover:text-white');
+            }
+        });
+    });
+
+    // Close radial on outside click or scroll past nav
+    document.addEventListener('click', (e) => {
+        const toggle = document.getElementById('gain-radial');
+        if (toggle && toggle.checked && !e.target.closest('.radial-menu')) {
+            toggle.checked = false;
+        }
+    });
+
+    document.addEventListener('scroll', () => {
+        const toggle = document.getElementById('gain-radial');
+        if (toggle && toggle.checked) {
+            toggle.checked = false;
+        }
+    });
 </script>
+
 </body>
 </html>
