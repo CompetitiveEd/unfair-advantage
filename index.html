@@ -14,7 +14,6 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            content: ["./**/*.{html,js}"],
             theme: {
                 extend: {
                     colors: {
@@ -22,186 +21,356 @@
                         success: 'oklch(0.78 0.13 150)',
                         warning: 'oklch(0.75 0.15 80)',
                         danger: 'oklch(0.68 0.16 30)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="styles.css">
-</head>
 
+    <style>
+    
+        /* Radial menu shared styles */
+        .radial-item {
+            --tx: 0px;
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            width: 70px; 
+            height: 70px;
+            margin-left: -35px;
+            margin-top: -35px;
+            background: rgba(23, 23, 23, 0.92); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 9999px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            color: white; 
+            font-weight: 600; 
+            text-align: center; 
+            padding: 6px;
+            opacity: 0; 
+            transform: translate(var(--tx), 0) scale(0);
+            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-decoration: none;
+        }
+        .radial-item:hover { 
+            transform: translate(var(--tx), 0) scale(1.12) !important; 
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6); 
+        }
+        .radial-toggle:checked ~ .radial-items .radial-item { 
+            opacity: 1; 
+            transform: translate(var(--tx), 0) scale(1); 
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
 <body class="bg-neutral-950 text-neutral-100 antialiased">
 
-<!-- NAV WITH RADIAL -->
-<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 fixed top-0 left-0 right-0 z-50 p-4 flex flex-wrap justify-center items-center gap-6 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+<!-- ═══════════════════════════════════════════════════════ NAV ═══════════════════════════════════════════════════════ -->
+<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
+
     <a href="index.html" class="hover:text-white transition-colors">Home</a>
     <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
     <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
 
+    <!-- GAIN Radial -->
     <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="gain-radial" class="hidden peer">
-        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer font-medium">
+        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
+        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
             GAIN <span class="text-xs opacity-70">▾</span>
         </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 peer-checked:opacity-100 transition-all pointer-events-none peer-checked:pointer-events-auto flex gap-6">
-            <a href="know.html" class="flex flex-col items-center"><span class="text-4xl font-black text-blue-400">G</span><span class="text-[10px] text-blue-300">Gather</span></a>
-            <a href="map.html" class="flex flex-col items-center"><span class="text-4xl font-black text-violet-400">A</span><span class="text-[10px] text-violet-300">Assess</span></a>
-            <a href="win.html" class="flex flex-col items-center"><span class="text-4xl font-black text-amber-400">I</span><span class="text-[10px] text-amber-300">Influence</span></a>
-            <a href="grow.html" class="flex flex-col items-center"><span class="text-4xl font-black text-emerald-400">N</span><span class="text-[10px] text-emerald-300">Nurture</span></a>
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="know.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-3xl font-black text-blue-400">G</span>
+                <span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span>
+            </a>
+            <a href="map.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-3xl font-black text-violet-400">A</span>
+                <span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span>
+            </a>
+            <a href="win.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-3xl font-black text-amber-400">I</span>
+                <span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span>
+            </a>
+            <a href="grow.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-3xl font-black text-emerald-400">N</span>
+                <span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span>
+            </a>
         </div>
     </div>
 
+    <!-- System Radial (matching GAIN style) -->
     <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="system-radial" class="hidden peer">
-        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer font-medium">
+        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
+        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
             System <span class="text-xs opacity-70">▾</span>
         </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 peer-checked:opacity-100 transition-all pointer-events-none peer-checked:pointer-events-auto flex gap-6">
-            <a href="edge.html" class="flex flex-col items-center"><span class="text-2xl">⚡</span><span class="text-[10px]">Why It Works</span></a>
-            <a href="architecture.html" class="flex flex-col items-center"><span class="text-2xl">◈</span><span class="text-[10px]">How It's Built</span></a>
-            <a href="dashboards.html" class="flex flex-col items-center"><span class="text-2xl">▣</span><span class="text-[10px]">Dashboards</span></a>
+        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
+            <a href="edge.html" class="radial-item" style="--tx: -150px;">
+                <span class="text-lg font-black text-cyan-400">⚡</span>
+                <span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span>
+            </a>
+            <a href="architecture.html" class="radial-item" style="--tx: -50px;">
+                <span class="text-lg font-black text-teal-400">◈</span>
+                <span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span>
+            </a>
+            <a href="story.html" class="radial-item" style="--tx: 50px;">
+                <span class="text-lg font-black text-sky-400">◉</span>
+                <span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span>
+            </a>
+            <a href="dashboards.html" class="radial-item" style="--tx: 150px;">
+                <span class="text-lg font-black text-indigo-400">▣</span>
+                <span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span>
+            </a>
         </div>
     </div>
 
-    <a href="engage.html" class="font-bold text-amber-400 hover:text-amber-300 transition-colors">Engage</a>
+    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
 </nav>
 
+<!-- ═══════════════════════════════════════════════════════ HERO ═══════════════════════════════════════════════════════ -->
 <div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <!-- HERO + METRICS + PRINCIPLES (your original) -->
-    <!-- [keep your original hero, metrics, and three principles blocks here exactly] -->
-
-    <!-- THE COMMERCIAL OPERATING SYSTEM -->
-    <div class="mb-12">
-        <div class="text-center mb-8">
-            <div class="text-xs font-extrabold tracking-[0.2em] text-neutral-400 uppercase">The Commercial Operating System</div>
-        </div>
+    <header class="relative rounded-[2rem] overflow-hidden mb-8 md:mb-10 glass-panel border-t-4 border-t-blue-500/30 hover:-translate-y-1 transition-all duration-500">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
         
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <a href="know.html" class="glass-panel border-l-4 border-blue-500 p-6 hover:-translate-y-1 transition-all group">
-                <span class="font-mono text-blue-400 text-xl font-black">G</span>
-                <h3 class="text-xl font-black mt-4">GATHER — KNOW THEM</h3>
-                <p class="text-neutral-300 mt-3 text-sm">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
-                <div class="text-blue-400 text-xs font-bold tracking-widest mt-6 group-hover:translate-x-1 transition">Explore →</div>
-            </a>
+        <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent">
+            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
+                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> Commercial Operating System</span>
+                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
+                    50+ conditional prompts. Deep research. One operating system.
+                </div>
+            </div>
+
+            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-lg">
+                Most enterprise deals are decided<br class="hidden md:block"> before the first meeting.
+            </h1>
             
-            <a href="map.html" class="glass-panel border-l-4 border-violet-500 p-6 hover:-translate-y-1 transition-all group">
-                <span class="font-mono text-violet-400 text-xl font-black">A</span>
-                <h3 class="text-xl font-black mt-4">ASSESS — MAP THEM</h3>
-                <p class="text-neutral-300 mt-3 text-sm">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
-                <div class="text-violet-400 text-xs font-bold tracking-widest mt-6 group-hover:translate-x-1 transition">Explore →</div>
-            </a>
-            
-            <a href="win.html" class="glass-panel border-l-4 border-amber-500 p-6 hover:-translate-y-1 transition-all group">
-                <span class="font-mono text-amber-400 text-xl font-black">I</span>
-                <h3 class="text-xl font-black mt-4">INFLUENCE — WIN THEM</h3>
-                <p class="text-neutral-300 mt-3 text-sm">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
-                <div class="text-amber-400 text-xs font-bold tracking-widest mt-6 group-hover:translate-x-1 transition">Explore →</div>
-            </a>
-            
-            <a href="grow.html" class="glass-panel border-l-4 border-emerald-500 p-6 hover:-translate-y-1 transition-all group">
-                <span class="font-mono text-emerald-400 text-xl font-black">N</span>
-                <h3 class="text-xl font-black mt-4">NURTURE — GROW THEM</h3>
-                <p class="text-neutral-300 mt-3 text-sm">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
-                <div class="text-emerald-400 text-xs font-bold tracking-widest mt-6 group-hover:translate-x-1 transition">Explore →</div>
+            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium mb-6">
+                <strong class="text-blue-400">GAIN is the intelligence layer that gets you into the room prepared.</strong> Behavioural science. Tailored value propositions. 50+ conditional prompts — not a linear chain, a chessboard.
+            </p>
+
+            <a href="#account-pack" class="reveal inline-flex items-center gap-3 text-base text-blue-400 hover:text-blue-300 font-bold tracking-wide transition-colors w-fit">
+                View redacted Account Pack — live bid example ↓
             </a>
         </div>
-    </div>
+    </header>
 
-    <!-- COMMON FAILURE MODES -->
-    <div class="mb-12">
-        <div class="text-center mb-8">
-            <div class="text-xs font-extrabold tracking-[0.2em] text-neutral-400 uppercase">Common Failure Modes in High-Stakes Engagements</div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-panel p-6">
-                <h3 class="font-bold text-white">Invisible Stakeholders</h3>
-                <p class="text-neutral-300 text-sm mt-3">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
-                <p class="text-xs text-neutral-400 mt-6 font-bold">RULE: Ask "Who else?"</p>
-            </div>
-            <div class="glass-panel p-6">
-                <h3 class="font-bold text-white">Stale Intelligence</h3>
-                <p class="text-neutral-300 text-sm mt-3">AI is static. Politics are fluid. Mapped in Jan, submitted in March. The CIO was sidelined in Feb. Strategy built on a ghost.</p>
-                <p class="text-xs text-neutral-400 mt-6 font-bold">RULE: Refresh in 14 days.</p>
-            </div>
-            <div class="glass-panel p-6">
-                <h3 class="font-bold text-white">Over-Engineering</h3>
-                <p class="text-neutral-300 text-sm mt-3">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
-                <p class="text-xs text-neutral-400 mt-6 font-bold">RULE: Match prep to deal.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- UNIFIED SYSTEM PARAGRAPH -->
-    <div class="max-w-3xl mx-auto text-center mb-12 text-neutral-300 text-lg leading-relaxed">
-        Many operating partners rely on generic frameworks. <span class="text-white font-bold">GAIN provides a unified operating system that wins deals, builds propositions, and prepares businesses for exit.</span>
-    </div>
-
-    <!-- WHAT HAPPENS IN 12 MONTHS -->
-    <div class="mb-12 bg-neutral-900/60 border border-red-900/30 rounded-3xl p-8 md:p-12">
-        <h2 class="text-2xl font-black text-white mb-6">What Happens in 12 Months If Nothing Changes</h2>
-        <p class="text-neutral-400 mb-8">This isn't a pitch. It's a projection based on what we see in every portfolio that delays.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-panel p-6">
-                <h3 class="font-bold">Talent & Resource Diversion</h3>
-                <p class="text-sm text-neutral-300 mt-3">Unwinnable pursuits consume top sellers and pre-sales resources. By the time the loss is recognised, a full quarter and significant opportunity cost have been absorbed.</p>
-            </div>
-            <div class="glass-panel p-6">
-                <h3 class="font-bold">Competitive Exposure</h3>
-                <p class="text-sm text-neutral-300 mt-3">The firms investing in judgment architecture are pulling away. Your pricing pressure gets worse. The board asks the same QBR questions.</p>
-            </div>
-            <div class="glass-panel p-6">
-                <h3 class="font-bold">Integration Fragmentation</h3>
-                <p class="text-sm text-neutral-300 mt-3">Acquisitions without a common commercial architecture don't compound — they collide. Different sales tactics, different platforms, no shared operating model.</p>
-            </div>
-        </div>
-        
-        <p class="text-red-400 text-center mt-8 text-sm font-bold">Every quarter you delay, the diagnostic gets worse.</p>
-    </div>
-
-    <!-- DEAL ENGINE LINE -->
-    <div class="text-center mb-12 text-xl text-neutral-300">
-        The deal engine is the entry point. <span class="text-white font-bold">What it repositions is the business.</span>
-    </div>
-
-    <a href="revenue-case.html" class="block text-center text-blue-400 text-lg font-bold tracking-widest mb-12">See the Revenue Case →</a>
-
-    <!-- TONED-DOWN VERDICT BOX -->
-    <div class="my-12 bg-neutral-900/80 border border-amber-500/30 rounded-3xl p-8 md:p-12 text-center max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full mb-4">THE DIAGNOSTIC ENGINE</div>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight mb-4">One word verdict: <span class="text-amber-400">WALK AWAY</span>, FIX or ACCELERATE</h2>
-        <p class="text-neutral-400 max-w-xl mx-auto">29 commercial failure patterns. Human gates between every step. Evidence audit that flags risk early. The only system honest enough to tell you to walk away when the data says so.</p>
-        <a href="dashboards.html" class="mt-8 inline-block text-amber-400 hover:text-amber-300 font-bold text-sm tracking-widest">See the full operator flow →</a>
-    </div>
-
-    <!-- INTERACTIVE MERIDIAN DASHBOARD -->
-    <section id="account-pack" class="mb-16">
+    <!-- ═══════════════════════════════════════════════════════ ACCOUNT PACK ═══════════════════════════════════════════════════════ -->
+    <section id="account-pack" class="mb-8 md:mb-10">
         <div class="mb-4 max-w-3xl mx-auto md:mx-0">
             <p class="text-xs md:text-sm font-bold tracking-[0.2em] text-blue-500 uppercase mb-2">GAIN Account Pack · Live Bid · Redacted</p>
             <p class="text-sm md:text-base text-neutral-500">180 minutes. 8 stakeholders. 3 competitors. 5 failure scenarios. Click any section to expand.</p>
         </div>
+
         <div id="account-pack-root" class="glass-panel rounded-2xl min-h-[400px] flex items-center justify-center">
             <p class="text-neutral-500 font-mono text-sm">Initializing Dashboard Engine...</p>
         </div>
+
+        <div class="max-w-7xl mx-auto py-5 text-center">
+            <a href="dashboards.html" class="inline-flex items-center gap-2 text-sm md:text-base text-blue-400 hover:text-blue-300 font-bold transition-colors">
+                Open full Account Pack on dedicated page →
+            </a>
+            <p class="text-xs md:text-sm text-neutral-600 mt-2">Same dashboard. Bookmarkable. Shareable with your team.</p>
+        </div>
     </section>
 
-    <!-- FINAL CTA -->
-    <div class="mb-12 text-center">
-        <a href="engage.html" class="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/40 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all duration-300">
-            Request a Live Deal Diagnostic &rarr;
-        </a>
+    <!-- ═══════════════════════════════════════════════════════ PROOF METRICS ═══════════════════════════════════════════════════════ -->
+    <div class="max-w-7xl mx-auto mb-8 md:mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+            <div class="glass-panel rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:border-blue-500/50">
+                <span class="text-xs font-extrabold text-neutral-400 uppercase tracking-widest mb-3 block">Enterprise Portfolio Repositioned</span>
+                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-2 flex items-start gap-1">
+                    £183M <span class="text-blue-500 text-2xl mt-1">&uarr;</span>
+                </div>
+                <span class="text-xs md:text-sm text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £35M P.A.</span>
+                <div class="border-t border-white/5 pt-4 flex justify-between items-center">
+                    <span class="text-xs text-neutral-500 uppercase tracking-widest font-bold">CAGR:</span>
+                    <span class="text-blue-400 text-base font-black">51.3%</span>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:border-emerald-500/50">
+                <span class="text-xs font-extrabold text-neutral-400 uppercase tracking-widest mb-3 block">Professional Services Repositioned</span>
+                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-2 flex items-start gap-1">
+                    £53M+ <span class="text-emerald-500 text-2xl mt-1">&uarr;</span>
+                </div>
+                <span class="text-xs md:text-sm text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £18.5M P.A.</span>
+                <div class="border-t border-white/5 pt-4 flex justify-between items-center">
+                    <span class="text-xs text-neutral-500 uppercase tracking-widest font-bold">GROWTH:</span>
+                    <span class="text-emerald-400 text-base font-black">+170%</span>
+                </div>
+            </div>
+        </div>
+        <p class="text-sm text-neutral-500 mt-5 text-center font-medium">The methodology behind the dashboard above. Applied across a career. £183M in verified revenue.</p>
     </div>
+
+    <main>
+        <!-- ═══════════════════════════════════════════════════════ THREE PRINCIPLES ═══════════════════════════════════════════════════════ -->
+        <div class="mb-8 md:mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                <div class="reveal slide-left dur-600 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
+                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">01.</span> Don't Become a Commodity</h3>
+                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralise incumbent advantages from the first conversation.</p>
+                </div>
+                <div class="reveal slide-left dur-800 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
+                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">02.</span> Close the Execution Gap</h3>
+                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Data doesn't close deals; navigating boardroom politics does. The execution gap is the distance between what sellers promise and operations deliver.</p>
+                </div>
+                <div class="reveal slide-left dur-1000 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
+                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">03.</span> The EQ Override</h3>
+                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">AI identifies the friction. Human EQ maps the detractor. The narrative shifts from 'innovative disruption' to 'de-risked operational safety.'</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ GAIN PHASES ═══════════════════════════════════════════════════════ -->
+        <div class="mb-8 md:mb-10">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/10 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">The Commercial Operating System</div>
+                <div class="h-px bg-white/10 flex-1"></div>
+            </div>
+
+            <div class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                <a href="know.html" class="glass-panel border-l-2 border-l-blue-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-blue-400 font-bold text-xs md:text-sm tracking-widest mb-2">[G] GATHER</span>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Strategic Context</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
+                    <div class="text-xs text-blue-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
+                </a>
+
+                <a href="map.html" class="glass-panel border-l-2 border-l-violet-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-violet-400 font-bold text-xs md:text-sm tracking-widest mb-2">[A] ASSESS</span>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Influence Mapping</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
+                    <div class="text-xs text-violet-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
+                </a>
+
+                <a href="win.html" class="glass-panel border-l-2 border-l-amber-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-amber-400 font-bold text-xs md:text-sm tracking-widest mb-2">[I] INFLUENCE</span>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Narrative Architecture</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
+                    <div class="text-xs text-amber-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
+                </a>
+
+                <a href="grow.html" class="glass-panel border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
+                    <span class="font-mono text-emerald-400 font-bold text-xs md:text-sm tracking-widest mb-2">[N] NURTURE</span>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Account Expansion</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
+                    <div class="text-xs text-emerald-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ FAILURE MODES ═══════════════════════════════════════════════════════ -->
+        <div class="mb-8 md:mb-10">
+            <div class="flex items-center gap-4 mb-6 md:mb-8">
+                <div class="h-px bg-white/5 flex-1"></div>
+                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Common Failure Modes in High-Stakes Engagements</div>
+                <div class="h-px bg-white/5 flex-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+                <div class="reveal dur-700 glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Undetected Decision Influence</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Always ask "who else touches this decision?"</p>
+                </div>
+
+                <div class="reveal dur-900 glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Intelligence Decay</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI is static. Politics are fluid. Mapped in January, submitted in March. The CIO was sidelined in February. Strategy built on a ghost.</p>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Refresh stakeholder map every 14 days.</p>
+                </div>
+
+                <div class="reveal dur-1100 glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Resource Misallocation</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
+                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Match preparation depth to deal complexity.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ UNIFIED SYSTEM ═══════════════════════════════════════════════════════ -->
+        <div class="mb-8 md:mb-10 reveal glass-panel rounded-xl p-6 md:p-8 text-center max-w-4xl mx-auto">
+            <p class="text-base md:text-lg text-neutral-300 leading-relaxed font-medium">
+                Many operating partners rely on generic frameworks. <span class="text-white font-bold">GAIN provides a unified operating system that wins deals, builds propositions, and prepares businesses for exit.</span>
+            </p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ COST OF DELAY ═══════════════════════════════════════════════════════ -->
+        <div class="mb-8 md:mb-10 reveal bg-neutral-900/60 backdrop-blur-xl border border-red-900/30 rounded-2xl p-6 md:p-8 shadow-inner-xl">
+            <h2 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">What Happens in 12 Months Without Systematic Intelligence</h2>
+            <p class="text-sm md:text-base text-neutral-400 mb-6 border-b border-white/5 pb-5">Continued reliance on traditional preparation exposes the organisation to three structural risks:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-8">
+                <div class="glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Talent & Resource Diversion</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Unwinnable pursuits consume top sellers and pre-sales resources. By the time the loss is recognised, a full quarter and significant opportunity cost have been absorbed.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Competitive Exposure</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Firms investing in structured intelligence architecture are compounding their advantage. Pricing pressure intensifies. The same QBR questions recur without resolution.</p>
+                </div>
+                <div class="glass-panel rounded-xl p-5 md:p-6">
+                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Integration Fragmentation</h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Acquisitions without a common commercial architecture don't compound — they collide. Different sales tactics, different platforms, no shared operating model.</p>
+                </div>
+            </div>
+            
+            <div class="bg-red-950/20 p-4 md:p-5 rounded-lg border border-red-900/30 text-center">
+                <p class="text-sm md:text-base text-red-400/80 font-semibold">Each quarter of delay compounds the diagnostic gap.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ REVENUE LINK ═══════════════════════════════════════════════════════ -->
+        <div class="mb-10 md:mb-12 reveal text-center">
+            <p class="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed mb-4">
+                The deal engine is the entry point. What it repositions is the business.
+            </p>
+            <a href="revenue-case.html" class="inline-flex items-center justify-center gap-2 text-base md:text-lg text-blue-400 hover:text-blue-300 font-bold transition-colors">
+                See the Revenue Case →
+            </a>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ CTA ═══════════════════════════════════════════════════════ -->
+        <div class="mb-12 reveal glass-panel bg-neutral-900/80 rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto">
+            <p class="text-3xl md:text-4xl font-black text-white tracking-tight mb-8">The opportunity is clear.</p>
+            <a href="engage.html" class="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/40 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all duration-300">
+                Request a Live Deal Diagnostic &rarr;
+            </a>
+            <p class="text-base text-neutral-400 font-medium mt-6">Start with one deal. What it finds goes further than the deal.</p>
+        </div>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════ FOOTER ═══════════════════════════════════════════════════════ -->
+    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
+        <div class="flex flex-col md:flex-row items-center gap-6">
+            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
+            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
+        </div>
+    </footer>
 
 </div>
 
-<!-- YOUR ORIGINAL REACT DASHBOARD SCRIPT (paste the entire big script block from your previous message here — the GAINAccountPack component) -->
+<!-- ═══════════════════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════════════════ -->
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<!-- [your full React script goes here] -->
-
-
 
 <script>
 // Close ALL radial menus on outside click
