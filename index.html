@@ -1551,6 +1551,134 @@ body {
   }
 }
 
+
+/* ═══════════════════════════════════════════════
+   LINEAR WHEEL — Phase bar + cluster grid
+   ═══════════════════════════════════════════════ */
+
+.lw-hub {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+.lw-hub-dot {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  background: radial-gradient(circle at 35% 35%, #1f1f23, #0a0a0c);
+  border: 1.5px solid rgba(239,68,68,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600;
+  color: white; letter-spacing: 1px;
+}
+.lw-hub-text { font-size: 12px; color: var(--text-dim); }
+
+.lw-phase-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  position: relative;
+}
+.lw-phase-bar::before {
+  content: '';
+  position: absolute; top: 50%; left: 5%; right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--amber), var(--green));
+  opacity: 0.1; z-index: 0;
+}
+
+.lw-phase {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.25rem 0.5rem;
+  cursor: pointer; border-radius: 12px;
+  border: 1px solid transparent;
+  background: var(--bg);
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.lw-phase:hover, .lw-phase.active {
+  border-color: var(--border-h);
+  background: var(--s1);
+}
+.lw-phase[data-phase="g"].active { border-color: rgba(59,130,246,0.2); box-shadow: 0 0 30px rgba(59,130,246,0.06); }
+.lw-phase[data-phase="a"].active { border-color: rgba(168,85,247,0.2); box-shadow: 0 0 30px rgba(168,85,247,0.06); }
+.lw-phase[data-phase="i"].active { border-color: rgba(245,158,11,0.2); box-shadow: 0 0 30px rgba(245,158,11,0.06); }
+.lw-phase[data-phase="n"].active { border-color: rgba(16,185,129,0.2); box-shadow: 0 0 30px rgba(16,185,129,0.06); }
+
+.lw-letter { font-family:'Fraunces',serif; font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
+.lw-name { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:2px; }
+.lw-sub { font-size:10px; color:var(--text-dim); }
+.lw-count { font-family:'DM Mono',monospace; font-size:9px; opacity:0.4; margin-top:4px; }
+
+.lw-cluster-tray { min-height: 0; overflow: hidden; }
+
+.lw-cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+  padding: 12px 0 0;
+  opacity: 0; transform: translateY(-8px);
+  transition: all 0.3s ease;
+}
+.lw-cluster-grid.show { opacity: 1; transform: translateY(0); }
+
+.lw-cluster-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+.lw-cluster-card:hover {
+  border-color: var(--border-h);
+  background: var(--s2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+}
+.lw-cluster-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; border-radius: 10px 10px 0 0;
+  opacity: 0; transition: opacity 0.25s;
+}
+.lw-cluster-card:hover::before { opacity: 1; }
+.lw-cluster-card[data-phase="g"]::before { background: var(--blue); }
+.lw-cluster-card[data-phase="a"]::before { background: var(--purple); }
+.lw-cluster-card[data-phase="i"]::before { background: var(--amber); }
+.lw-cluster-card[data-phase="n"]::before { background: var(--green); }
+
+.lw-cl-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.lw-cl-head svg { opacity: 0.5; flex-shrink: 0; }
+.lw-cl-name { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+.lw-cl-count { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); }
+
+.lw-engine-panel {
+  position: fixed; z-index: 600;
+  opacity: 0; transform: scale(0.95) translateY(4px);
+  pointer-events: none;
+  transition: all 0.2s;
+  min-width: 260px; max-width: 320px;
+  padding: 14px 16px; border-radius: 12px;
+  background: rgba(10,10,14,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 60px rgba(0,0,0,0.8);
+}
+.lw-engine-panel.show {
+  opacity: 1; transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+@media (max-width: 640px) {
+  .lw-phase-bar { gap: 2px; }
+  .lw-letter { font-size: 24px; }
+  .lw-name { font-size: 8px; }
+  .lw-sub { display: none; }
+  .lw-cluster-grid { grid-template-columns: 1fr 1fr; }
+}
+
 /* ═══════════════════════════════════════════════
    MODAL OVERLAY — Centered panel, backdrop blur
    ═══════════════════════════════════════════════ */
@@ -2909,58 +3037,46 @@ body {
 
 <!-- ═══════════════ THE WHEEL ═══════════════ -->
 <section class="wheel-section reveal inline-hidden" id="sect-wheel">
-  <div class="wheel-header">
-    <div class="section-label">The Architecture</div>
-    <h2>78 engines. The diagnostic tells you where to start.<br>You decide where to go next.</h2>
-    <p>Hover any phase to explore. Each cluster contains specialist engines — compound, conditional, human-gated. The AI processes. You think.</p>
-  </div>
+  <div style="padding:1.5rem 2rem 2rem;max-width:920px;margin:0 auto;">
 
-  <div class="wheel-container">
-    <div class="wrap" id="wrap">
-      <div class="orbit o1"></div>
-      <div class="orbit o2"></div>
-      <div class="hub-pulse"></div>
-
-      <svg class="flow-svg" viewBox="0 0 960 960">
-        <defs>
-          <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#3b82f6"/><stop offset="25%" stop-color="#a855f7"/>
-            <stop offset="50%" stop-color="#f59e0b"/><stop offset="75%" stop-color="#10b981"/>
-            <stop offset="100%" stop-color="#3b82f6"/>
-          </linearGradient>
-        </defs>
-        <circle class="flow-ghost" cx="480" cy="480" r="205" stroke="url(#fg)"/>
-        <circle class="flow-path" cx="480" cy="480" r="205" stroke="url(#fg)" opacity="0.35"/>
-        <text class="flow-arrow" x="480" y="262" text-anchor="middle">&rarr;</text>
-        <text class="flow-arrow" x="698" y="484" text-anchor="middle">&darr;</text>
-        <text class="flow-arrow" x="480" y="700" text-anchor="middle">&larr;</text>
-        <text class="flow-arrow" x="262" y="484" text-anchor="middle">&uarr;</text>
-        <path d="M 370 660 Q 240 640 230 520" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.12"/>
-        <text x="240" y="595" style="font-size:8px;fill:#10b981;opacity:0.2;font-weight:700">&#x21BA; new intel</text>
-      </svg>
-
-      <div class="loop-label" style="top:37%;left:35%">G &rarr; A</div>
-      <div class="loop-label" style="top:37%;left:57%">A &rarr; I</div>
-      <div class="loop-label" style="top:60%;left:57%">I &rarr; N</div>
-      <div class="loop-label" style="top:60%;left:28%">N &rarr; G</div>
-
-      <div class="hub" id="hub">
-        <div class="h00">00</div>
-        <div class="ht">Diagnostic</div>
-        <div class="hsub">Start Here</div>
-      </div>
-
-      <div class="phase g" data-phase="g"><div class="pl" style="color:var(--blue)">G</div><div class="pn" style="color:#93c5fd">Gather</div><div class="psub">Know Them</div><div class="pc" style="color:var(--blue)">21 engines</div></div>
-      <div class="phase a" data-phase="a"><div class="pl" style="color:var(--purple)">A</div><div class="pn" style="color:#d8b4fe">Assess</div><div class="psub">Map Them</div><div class="pc" style="color:var(--purple)">16 engines</div></div>
-      <div class="phase i" data-phase="i"><div class="pl" style="color:var(--amber)">I</div><div class="pn" style="color:#fcd34d">Influence</div><div class="psub">Win Them</div><div class="pc" style="color:var(--amber)">11 engines</div></div>
-      <div class="phase n" data-phase="n"><div class="pl" style="color:var(--green)">N</div><div class="pn" style="color:#6ee7b7">Nurture</div><div class="psub">Grow Them</div><div class="pc" style="color:var(--green)">13 engines</div></div>
-
-      <svg id="linesSvg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:14;overflow:visible"></svg>
-      <div id="clusterLayer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;overflow:visible"></div>
+    <div class="lw-hub">
+      <div class="lw-hub-dot">00</div>
+      <div class="lw-hub-text">Diagnostic reads your situation → prescribes where to start across <strong style="color:var(--amber)">78 engines</strong></div>
     </div>
 
-    <!-- Mobile: tap-to-expand accordion (generated by JS from same DATA) -->
-    <div class="mobile-wheel" id="mobileWheel"></div>
+    <div class="lw-phase-bar" id="lwPhaseBar">
+      <div class="lw-phase" data-phase="g">
+        <div class="lw-letter" style="color:var(--blue)">G</div>
+        <div class="lw-name" style="color:#93c5fd">Gather</div>
+        <div class="lw-sub">Know Them</div>
+        <div class="lw-count">21 engines</div>
+      </div>
+      <div class="lw-phase" data-phase="a">
+        <div class="lw-letter" style="color:var(--purple)">A</div>
+        <div class="lw-name" style="color:#d8b4fe">Assess</div>
+        <div class="lw-sub">Map Them</div>
+        <div class="lw-count">16 engines</div>
+      </div>
+      <div class="lw-phase" data-phase="i">
+        <div class="lw-letter" style="color:var(--amber)">I</div>
+        <div class="lw-name" style="color:#fcd34d">Influence</div>
+        <div class="lw-sub">Win Them</div>
+        <div class="lw-count">11 engines</div>
+      </div>
+      <div class="lw-phase" data-phase="n">
+        <div class="lw-letter" style="color:var(--green)">N</div>
+        <div class="lw-name" style="color:#6ee7b7">Nurture</div>
+        <div class="lw-sub">Grow Them</div>
+        <div class="lw-count">13 engines</div>
+      </div>
+    </div>
+
+    <div class="lw-cluster-tray" id="lwClusterTray">
+      <div class="lw-cluster-grid" id="lwClusterGrid"></div>
+    </div>
+
+    <div class="lw-engine-panel" id="lwEnginePanel"></div>
+
   </div>
 </section>
 
@@ -2996,7 +3112,7 @@ body {
 
 <div class="modal-panel" id="modal-wheel">
   <div class="modal-close">
-    <span class="modal-close-label">The Architecture — 78 Engines</span>
+    <span class="modal-close-label">The Architecture — 78 Engines across 4 Phases</span>
     <button class="modal-close-btn" onclick="closeModal()">&times;</button>
   </div>
   <div class="modal-body" id="modal-body-wheel"></div>
@@ -3119,178 +3235,97 @@ const DATA = {
 };
 
 // ── Phase positions and cluster angles ──
-const POS = {g:{x:28,y:50},a:{x:50,y:28},i:{x:72,y:50},n:{x:50,y:72}};
+// Linear wheel interaction — no POS/OFFSETS needed
 
-// Pixel offsets from phase node centre — hand-placed to avoid overlap
-const OFFSETS = {
-  g: [
-    { x: -150, y: -110 },  // Company Intel
-    { x: -165, y: -30  },  // Stakeholder Psych
-    { x: -150, y: 40   },  // Competitive Intel
-    { x: -155, y: 105  },  // Meeting Prep
-    { x: -130, y: 170  },  // Quality & Evidence
-  ],
-  a: [
-    { x: -190, y: -110 },  // RFP & Complexity
-    { x: -60,  y: -125 },  // Power & Influence
-    { x: 60,   y: -110 },  // Psychology & Motive
-    { x: 155,  y: -95  },  // Commercial
-  ],
-  i: [
-    { x: 70,   y: -110 },  // Win Strategy
-    { x: 80,   y: -30  },  // Narrative & Proposal
-    { x: 70,   y: 40   },  // Scoring & Audit
-    { x: 75,   y: 105  },  // Performance
-  ],
-  n: [
-    { x: -190, y: 15   },  // Growth & Expansion
-    { x: -60,  y: 70   },  // Defence & Risk
-    { x: 70,   y: 70   },  // Campaign & Orchestration
-    { x: 165,  y: 15   },  // Value & Reporting
-  ]
-};
+// ── Linear Wheel Interaction ──
+var lwGrid = document.getElementById('lwClusterGrid');
+var lwEngPanel = document.getElementById('lwEnginePanel');
+var lwActivePhase = null;
+var lwClearTimer = null;
 
-const clusterLayer = document.getElementById('clusterLayer');
-const engPanel = document.getElementById('engPanel');
-const hubPanel = document.getElementById('hubPanel');
-const hub = document.getElementById('hub');
-let activePhase = null;
-let clearTimer = null;
-
-// ── Hub interaction ──
-hub.addEventListener('mouseenter', e => {
-  clearPhase();
-  const r = hub.getBoundingClientRect();
-  hubPanel.style.left = (r.right + 12) + 'px';
-  hubPanel.style.top = Math.max(10, r.top - 40) + 'px';
-  if (r.right + 360 > window.innerWidth) {
-    hubPanel.style.left = (r.left - 360) + 'px';
-  }
-  hubPanel.classList.add('show');
-});
-hub.addEventListener('mouseleave', () => {
-  clearTimer = setTimeout(() => {
-    if (!hubPanel.matches(':hover')) hubPanel.classList.remove('show');
-  }, 200);
-});
-hubPanel.addEventListener('mouseenter', () => clearTimeout(clearTimer));
-hubPanel.addEventListener('mouseleave', () => hubPanel.classList.remove('show'));
-
-// ── Phase interaction ──
-document.querySelectorAll('.phase').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    const p = el.dataset.phase;
-    if (activePhase === p) return;
-    hubPanel.classList.remove('show');
-    engPanel.classList.remove('show');
-    clearPhase();
-    activePhase = p;
-    el.classList.add('active');
-    showClusters(p);
+document.querySelectorAll('.lw-phase').forEach(function(node) {
+  node.addEventListener('mouseenter', function() {
+    var p = node.dataset.phase;
+    if (lwActivePhase === p) return;
+    lwSetActive(p);
+  });
+  node.addEventListener('click', function() {
+    var p = node.dataset.phase;
+    if (lwActivePhase === p) { lwClearActive(); } else { lwSetActive(p); }
   });
 });
 
-function clearPhase() {
-  activePhase = null;
-  clusterLayer.innerHTML = '';
-  var ls = document.getElementById('linesSvg');
-  if (ls) ls.innerHTML = '';
-  engPanel.classList.remove('show');
-  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
-}
+function lwSetActive(phase) {
+  lwActivePhase = phase;
+  if (lwEngPanel) lwEngPanel.classList.remove('show');
+  document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
+  var el = document.querySelector('.lw-phase[data-phase="' + phase + '"]');
+  if (el) el.classList.add('active');
 
-function showClusters(phase) {
-  const d = DATA[phase];
-  const p = POS[phase];
-  const offsets = OFFSETS[phase];
-  const wrap = document.getElementById('wrap');
-  const wrapW = wrap.offsetWidth;
-  const wrapH = wrap.offsetHeight;
-  const linesSvg = document.getElementById('linesSvg');
-  linesSvg.innerHTML = '';
+  var d = DATA[phase];
+  if (!lwGrid) return;
+  lwGrid.classList.remove('show');
 
-  // Phase node centre in pixels
-  const nodeCx = (p.x / 100) * wrapW;
-  const nodeCy = (p.y / 100) * wrapH;
+  setTimeout(function() {
+    lwGrid.innerHTML = '';
+    d.clusters.forEach(function(cl, idx) {
+      var card = document.createElement('div');
+      card.className = 'lw-cluster-card';
+      card.dataset.phase = phase;
+      card.innerHTML =
+        '<div class="lw-cl-head"><span style="color:' + d.color + '">' + cl.icon + '</span>' +
+        '<span class="lw-cl-name" style="color:' + d.color + '">' + cl.name + '</span></div>' +
+        '<div class="lw-cl-count">' + cl.count + ' engines</div>';
 
-  d.clusters.forEach((cl, idx) => {
-    const off = offsets[idx];
-    const el = document.createElement('div');
-    el.className = 'cluster';
-    el.style.borderColor = d.color.replace(')', ',0.15)').replace('rgb', 'rgba');
-    el.innerHTML = `<span class="cl-icon">${cl.icon}</span><span class="cl-name" style="color:${d.color}">${cl.name}</span><div class="cl-count">${cl.count} engines</div>`;
-
-    // Position: absolute pixels from top-left of .wrap
-    const cx = nodeCx + off.x;
-    const cy = nodeCy + off.y;
-    el.style.left = cx + 'px';
-    el.style.top = cy + 'px';
-
-    // Draw subtle connecting line
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', nodeCx);
-    line.setAttribute('y1', nodeCy);
-    line.setAttribute('x2', cx);
-    line.setAttribute('y2', cy);
-    line.setAttribute('stroke', d.color);
-    line.setAttribute('stroke-width', '1');
-    line.setAttribute('stroke-opacity', '0.1');
-    line.setAttribute('stroke-dasharray', '4 4');
-    linesSvg.appendChild(line);
-
-    el.addEventListener('mouseenter', () => showEngines(cl, d.color, el));
-    el.addEventListener('mouseleave', () => {
-      clearTimer = setTimeout(() => {
-        if (!engPanel.matches(':hover')) engPanel.classList.remove('show');
-      }, 150);
+      card.addEventListener('mouseenter', function() { lwShowEngines(cl, d.color, card); });
+      card.addEventListener('mouseleave', function() {
+        lwClearTimer = setTimeout(function() {
+          if (lwEngPanel && !lwEngPanel.matches(':hover')) lwEngPanel.classList.remove('show');
+        }, 120);
+      });
+      lwGrid.appendChild(card);
     });
-
-    clusterLayer.appendChild(el);
-    requestAnimationFrame(() => setTimeout(() => el.classList.add('show'), idx * 80));
-  });
+    requestAnimationFrame(function() { lwGrid.classList.add('show'); });
+  }, 80);
 }
 
-function showEngines(cl, color, fromEl) {
-  clearTimeout(clearTimer);
-  const r = fromEl.getBoundingClientRect();
-  const panelW = 300;
-  const panelH = Math.min(380, cl.engines.length * 58 + 50);
-  const gap = 12;
-
-  // Decide left vs right based on cluster position relative to viewport center
-  let left, top;
-  const clCenterX = r.left + r.width / 2;
-  const clCenterY = r.top + r.height / 2;
-
-  if (clCenterX < window.innerWidth / 2) {
-    // Cluster is on left side — open panel to the RIGHT of it
-    left = r.right + gap;
-    if (left + panelW > window.innerWidth - 10) left = r.left - panelW - gap;
-  } else {
-    // Cluster is on right side — open panel to the LEFT of it
-    left = r.left - panelW - gap;
-    if (left < 10) left = r.right + gap;
-  }
-
-  // Vertical: align top of panel to cluster, clamp to viewport
-  top = clCenterY - 30;
-  top = Math.max(10, Math.min(top, window.innerHeight - panelH - 10));
-
-  engPanel.style.left = left + 'px';
-  engPanel.style.top = top + 'px';
-  engPanel.innerHTML = `<div class="eng-title" style="color:${color}">${cl.icon} ${cl.name} &mdash; ${cl.count} Engines</div>` +
-    cl.engines.map(e => `<div class="eng-item"><strong>${e.c}</strong> ${e.t}<div class="desc">${e.d}</div></div>`).join('');
-  engPanel.classList.add('show');
+function lwClearActive() {
+  lwActivePhase = null;
+  document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
+  if (lwGrid) lwGrid.classList.remove('show');
+  if (lwEngPanel) lwEngPanel.classList.remove('show');
+  setTimeout(function() { if (lwGrid) lwGrid.innerHTML = ''; }, 300);
 }
 
-engPanel.addEventListener('mouseenter', () => clearTimeout(clearTimer));
-engPanel.addEventListener('mouseleave', () => engPanel.classList.remove('show'));
+function lwShowEngines(cl, color, fromEl) {
+  clearTimeout(lwClearTimer);
+  var r = fromEl.getBoundingClientRect();
+  var panelW = 300, gap = 10;
 
-// ── Click outside to close wheel panels ──
-document.addEventListener('click', e => {
-  if (!e.target.closest('.wrap') && !e.target.closest('.eng-panel') && !e.target.closest('.hub-panel')) {
-    clearPhase();
-    hubPanel.classList.remove('show');
+  lwEngPanel.innerHTML =
+    '<div class="eng-title" style="color:' + color + '">' + cl.icon + ' ' + cl.name + ' \u2014 ' + cl.count + ' Engines</div>' +
+    cl.engines.map(function(e) { return '<div class="eng-item"><strong>' + e.c + '</strong> ' + e.t + '<span class="desc">' + e.d + '</span></div>'; }).join('');
+
+  var left = r.left + (r.width / 2) - (panelW / 2);
+  var top = r.bottom + gap;
+  if (left < 10) left = 10;
+  if (left + panelW > window.innerWidth - 10) left = window.innerWidth - panelW - 10;
+  if (top + 300 > window.innerHeight) { top = r.top - gap - 300; if (top < 10) top = r.bottom + gap; }
+
+  lwEngPanel.style.left = left + 'px';
+  lwEngPanel.style.top = top + 'px';
+  lwEngPanel.classList.add('show');
+}
+
+if (lwEngPanel) {
+  lwEngPanel.addEventListener('mouseenter', function() { clearTimeout(lwClearTimer); });
+  lwEngPanel.addEventListener('mouseleave', function() { lwEngPanel.classList.remove('show'); });
+}
+
+// ── Click outside to close ──
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lw-phase-bar') && !e.target.closest('.lw-cluster-tray') && !e.target.closest('.lw-engine-panel')) {
+    lwClearActive();
   }
 });
 
