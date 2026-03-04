@@ -1488,6 +1488,29 @@ body {
 }
 
 
+
+.dock-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 0.5rem;
+  transition: gap 0.2s;
+}
+.dock-card:hover .dock-cta { gap: 8px; }
+
+.dock-card[data-modal="discovery"] .dock-cta { color: #ef4444; }
+.dock-card[data-modal="wheel"] .dock-cta { color: #3b82f6; }
+.dock-card[data-modal="dashboard"] .dock-cta { color: #f59e0b; }
+
+.hero-right .dock-cta {
+  grid-column: 2;
+  margin-top: 0.25rem;
+}
+
 /* Dock cards inside hero-right — compact version */
 .hero-right .dock-card {
   padding: 1.25rem 1.25rem;
@@ -1503,7 +1526,7 @@ body {
   height: 44px;
   border-radius: 10px;
   margin: 0;
-  grid-row: 1 / 3;
+  grid-row: 1 / 4;
 }
 .hero-right .dock-title {
   font-size: 15px;
@@ -1619,11 +1642,33 @@ body {
   padding: 0;
 }
 
-/* Hide the original inline sections — they live inside modals now */
+/* Hide the original inline sections — they live inside modals now
+   Use visibility+height instead of display:none so scripts still init */
 .discovery-section.inline-hidden,
 .wheel-section.inline-hidden,
 .dashboard-section.inline-hidden {
-  display: none !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: -1px !important;
+}
+/* When moved into modal, restore */
+.modal-body .discovery-section,
+.modal-body .wheel-section,
+.modal-body .dashboard-section {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+  margin: 0 !important;
+  padding: 2rem !important;
 }
 
 </style>
@@ -1852,7 +1897,8 @@ body {
     </div>
 
     <p class="hero-body">
-      Everything you used to do manually — pulling filings, cross-referencing stakeholders, decoding RFPs, mapping who actually decides — <strong>78 specialist engines</strong> do it in minutes. But the engines don't give you answers. They give you better questions. <strong>Then you drive.</strong>
+      <strong>Commercial intelligence. 25 years in the room. 78 engines. One system.</strong><br>
+      GAIN reads deals the way a £2,000/day operator would — pulling filings, decoding politics, stress-testing your pipeline — then hands you the verdict in 70 minutes. <strong>Kill it. Fix it. Accelerate it.</strong>
     </p>
 
     <a href="/engage.html" class="hero-cta">Let's Look at Your Deal</a>
@@ -1866,22 +1912,25 @@ body {
       <div class="dock-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
       </div>
-      <div class="dock-title">Discovery Session</div>
-      <div class="dock-desc">Paste a rant, a transcript, or a war story. The system maps it to failure patterns and tells you where to start.</div>
+      <div class="dock-title">Paste a Problem</div>
+      <div class="dock-desc">Drop a deal situation. Get a verdict: kill it, fix it, or accelerate it.</div>
+      <div class="dock-cta">Try it &rarr;</div>
     </div>
     <div class="dock-card" data-modal="wheel" onclick="openModal('wheel')">
       <div class="dock-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
       </div>
-      <div class="dock-title">The Architecture</div>
-      <div class="dock-desc">78 engines across 4 phases. Hover to explore the clusters. The diagnostic tells you where to start.</div>
+      <div class="dock-title">78 Engines. 4 Phases.</div>
+      <div class="dock-desc">See what's under the hood. The full commercial intelligence architecture.</div>
+      <div class="dock-cta">Explore &rarr;</div>
     </div>
     <div class="dock-card" data-modal="dashboard" onclick="openModal('dashboard')">
       <div class="dock-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
       </div>
-      <div class="dock-title">Account Pack</div>
-      <div class="dock-desc">A redacted pack from a real engagement. Stakeholders, financials, competitors, win themes — the full output.</div>
+      <div class="dock-title">See the Output</div>
+      <div class="dock-desc">Real Account Pack. Real engagement. Redacted but complete.</div>
+      <div class="dock-cta">Open &rarr;</div>
     </div>
   </div>
 
@@ -3461,6 +3510,7 @@ buildMobileWheel();
 
 <script>
 // ── Launcher Dock — Modal open/close ──
+// Uses DOM MOVE (not clone) so event listeners, React state, and scripts survive
 (function(){
   let currentModal = null;
   let contentMoved = {};
@@ -3473,15 +3523,23 @@ buildMobileWheel();
 
     if (!panel || !section) return;
 
-    // Move section content into modal body (first time only)
+    // Move the actual DOM node into the modal body (first time only)
     if (!contentMoved[name]) {
-      // Clone the inner content
-      const inner = section.cloneNode(true);
-      inner.classList.remove('inline-hidden');
-      inner.style.display = '';
-      inner.removeAttribute('id');
-      body.appendChild(inner);
+      section.classList.remove('inline-hidden');
+      section.style.display = '';
+      section.style.borderTop = 'none';
+      body.appendChild(section);
       contentMoved[name] = true;
+
+      // For dashboard: if React hasn't mounted yet, trigger it
+      if (name === 'dashboard') {
+        var root = document.getElementById('gain-dashboard-root');
+        if (root && root.children.length === 0 && typeof React !== 'undefined') {
+          // Re-trigger the React render script
+          var evt = new Event('gain-dashboard-mount');
+          document.dispatchEvent(evt);
+        }
+      }
     }
 
     // Open
