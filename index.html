@@ -553,8 +553,8 @@ body {
   max-width: 720px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
-  padding: 10px;
+  overflow: visible;
+  padding: 60px 80px;
 }
 
 /* The wheel itself — full interactive system */
@@ -620,10 +620,10 @@ body {
 .pc { font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:0.4;margin-top:3px }
 
 /* Phase positions */
-.phase.g { top:50%;left:22% }
-.phase.a { top:22%;left:50% }
-.phase.i { top:50%;left:78% }
-.phase.n { top:78%;left:50% }
+.phase.g { top:50%;left:16% }
+.phase.a { top:16%;left:50% }
+.phase.i { top:50%;left:84% }
+.phase.n { top:84%;left:50% }
 
 .phase.g { background:radial-gradient(circle,#0c1a2e,#060e1a);border-color:rgba(59,130,246,0.25);box-shadow:var(--glow-blue) }
 .phase.g:hover,.phase.g.active { box-shadow:0 0 60px rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.5) }
@@ -1591,6 +1591,7 @@ body {
           <span style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.15em;text-transform:uppercase;">RAPID TEST MODE</span>
           <span style="font-size:11px;color:var(--text-dim);margin-left:8px;">Paste anything. Hit Run. See the diagnostic.</span>
         </div>
+        <button onclick="switchToFullSession()" style="font-size:10px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-family:inherit;">Full Session &#x2192;</button>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
         <div>
@@ -1619,6 +1620,14 @@ body {
     </div>
 
     <!-- Output panel -->
+    <!-- FULL SESSION WRAPPER -->
+    <div id="fullSessionWrapper" style="display:none;margin-bottom:20px;">
+      <div style="margin:0 0 8px;">
+        <button onclick="backToQuickTest()" style="font-size:11px;font-weight:600;padding:7px 16px;border-radius:7px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#a1a1aa;cursor:pointer;font-family:inherit;">&#8592; Back to Quick Test</button>
+      </div>
+      <iframe id="fullSessionFrame" src="about:blank" style="width:100%;height:80vh;border:1px solid var(--border);border-radius:12px;background:var(--bg);" frameborder="0"></iframe>
+    </div>
+
     <div id="discOutput" style="display:none;border:2px solid rgba(16,185,129,0.3);border-radius:12px;background:var(--s1);overflow:hidden;">
       <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
         <div>
@@ -1817,12 +1826,12 @@ const DATA = {
 // ── Phase positions and cluster angles ──
 const POS = {g:{x:22,y:50},a:{x:50,y:22},i:{x:78,y:50},n:{x:50,y:78}};
 const ANGLES = {
-  g:[-120,-145,-170,170,145],
-  a:[-40,-65,-100,-125],
-  i:[40,15,-5,-30],
-  n:[140,115,80,55]
+  g: [-80, -110, -145, 155, 125],
+  a: [-20,  -55,  -90, -120],
+  i: [ 20,   55,   90,  115],
+  n: [160,  125,   85,   50]
 };
-const DIST = 22;
+const DIST = 17;
 
 const clusterLayer = document.getElementById('clusterLayer');
 const engPanel = document.getElementById('engPanel');
@@ -2280,6 +2289,19 @@ buildMobileWheel();
     document.getElementById('discOutput').style.display = 'block';
     document.getElementById('discStatus').textContent = r.found.length + ' patterns. Output ready.';
     document.getElementById('discOutput').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+
+  window.switchToFullSession = function(){
+    document.getElementById('discoveryDemo').style.display = 'none';
+    document.getElementById('discOutput').style.display = 'none';
+    document.getElementById('fullSessionWrapper').style.display = 'block';
+    var frame = document.getElementById('fullSessionFrame');
+    if(frame.src === 'about:blank') frame.src = '/discovery.html';
+  };
+
+  window.backToQuickTest = function(){
+    document.getElementById('fullSessionWrapper').style.display = 'none';
+    document.getElementById('discoveryDemo').style.display = 'block';
   };
 
   window.clearDiscovery = function(){
