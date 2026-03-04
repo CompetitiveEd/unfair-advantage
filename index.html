@@ -1,821 +1,2209 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="David Matthews | GAIN Methodology. Enterprise deal intelligence built from 60 AI prompts. Stakeholder psychology, competitive scoring, financial forensics — one operating system.">
-    <meta property="og:title" content="David Matthews | GAIN Methodology">
-    <meta property="og:description" content="David Matthews | GAIN Methodology. Enterprise deal intelligence built from 60 AI prompts. Stakeholder psychology, competitive scoring, financial forensics — one operating system.">
-    <meta property="og:image" content="site-image.jpg">
-    <meta property="og:url" content="https://hownottogain.co.uk">
-    <title>David Matthews | GAIN Methodology</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: 'oklch(0.72 0.14 240)',
-                        success: 'oklch(0.78 0.13 150)',
-                        warning: 'oklch(0.75 0.15 80)',
-                        danger: 'oklch(0.68 0.16 30)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAIN Protocol — Commercial Intelligence Operating System</title>
+<meta name="description" content="67 specialist engines built on 22 behavioural science frameworks. Paste a stalled deal. Get a verdict: Kill it. Fix it. Accelerate it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   GAIN PROTOCOL — HOMEPAGE 2026
+   Design: Dark intelligence terminal aesthetic
+   Font: DM Sans (body) + Fraunces (display) + DM Mono (data)
+   Palette: Near-black base, phase colours as accents
+   CSS: 2026 features — scroll-driven animations, @starting-style,
+        anchor positioning concepts, container queries
+   ═══════════════════════════════════════════════ */
 
-    <style>
-    
-        /* Radial menu shared styles */
-        .radial-item {
-            --tx: 0px;
-            position: absolute; 
-            top: 50%; 
-            left: 50%; 
-            width: 70px; 
-            height: 70px;
-            margin-left: -35px;
-            margin-top: -35px;
-            background: rgba(23, 23, 23, 0.92); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 9999px;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            color: white; 
-            font-weight: 600; 
-            text-align: center; 
-            padding: 6px;
-            opacity: 0; 
-            transform: translate(var(--tx), 0) scale(0);
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            text-decoration: none;
-        }
-        .radial-item:hover { 
-            transform: translate(var(--tx), 0) scale(1.12) !important; 
-            box-shadow: 0 8px 30px rgba(0,0,0,0.6); 
-        }
-        .radial-toggle:checked ~ .radial-items .radial-item { 
-            opacity: 1; 
-            transform: translate(var(--tx), 0) scale(1); 
-        }
+:root {
+  --bg: #07070a;
+  --s1: #0e0e13;
+  --s2: #141419;
+  --s3: #1a1a21;
+  --border: rgba(255,255,255,0.04);
+  --border-h: rgba(255,255,255,0.08);
+  --text: #d4d4d8;
+  --text-dim: #a1a1aa;
+  --text-bright: #fafafa;
+  --blue: #3b82f6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --purple: #a855f7;
+  --purple-dim: rgba(168,85,247,0.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.12);
+  --green: #10b981;
+  --green-dim: rgba(16,185,129,0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --glass: rgba(14,14,19,0.85);
+  --glow-blue: 0 0 40px rgba(59,130,246,0.08);
+  --glow-purple: 0 0 40px rgba(168,85,247,0.08);
+  --glow-amber: 0 0 40px rgba(245,158,11,0.08);
+  --glow-green: 0 0 40px rgba(16,185,129,0.08);
+}
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { 
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #27272a var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── UTILITY ─── */
+.mono { font-family: 'DM Mono', monospace; }
+.serif { font-family: 'Fraunces', serif; }
+
+/* ─── SCROLL-DRIVEN REVEAL (2026 CSS) ─── */
+@supports (animation-timeline: view()) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: revealUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  @keyframes revealUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+/* Fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: view()) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(7,7,10,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--text-bright);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-logo span { color: var(--amber); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+  text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--text-bright); }
+
+.nav-cta {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--bg) !important;
+  background: var(--amber);
+  padding: 8px 18px;
+  border-radius: 6px;
+  letter-spacing: 1px !important;
+  transition: all 0.2s;
+}
+.nav-cta:hover { 
+  background: #fbbf24 !important; 
+  color: var(--bg) !important;
+  transform: translateY(-1px);
+}
+
+/* Mobile nav */
+.nav-toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-toggle-btn { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(7,7,10,0.98);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    gap: 1.25rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   TICKER TAPES — Three layers of emotional impact
+   Tape 1: The wound (Street Versions) — amber/red, slow
+   Tape 2: The problems (category labels) — white, medium
+   Tape 3: The proof (numbers) — blue/green, fast
+   ═══════════════════════════════════════════════ */
+
+.tickers {
+  margin-top: 56px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  position: relative;
+}
+
+.ticker::before,
+.ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.ticker::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.ticker::after { right: 0; background: linear-gradient(-90deg, var(--bg), transparent); }
+
+.ticker-track {
+  display: inline-flex;
+  animation: tickerScroll var(--speed, 80s) linear infinite;
+}
+
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Tape 1: The wound */
+.ticker-wound { 
+  background: rgba(239,68,68,0.03);
+  --speed: 100s;
+}
+.ticker-wound .ticker-item {
+  padding: 10px 3rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fca5a5;
+  letter-spacing: 0.2px;
+  font-style: italic;
+}
+
+/* Tape 2: The problems */
+.ticker-problems {
+  background: rgba(255,255,255,0.01);
+  --speed: 60s;
+}
+.ticker-problems .ticker-item {
+  padding: 8px 2.5rem;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Tape 3: The proof */
+.ticker-proof {
+  background: rgba(16,185,129,0.02);
+  --speed: 45s;
+}
+.ticker-proof .ticker-item {
+  padding: 8px 2.5rem;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  color: rgba(16,185,129,0.4);
+  letter-spacing: 0.5px;
+}
+
+.ticker-sep {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.25;
+  vertical-align: middle;
+  margin: 0 0.5rem;
+}
+
+/* ═══════════════════════════════════════════════
+   HERO — Nemo structure: death → shift → resolution
+   ═══════════════════════════════════════════════ */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4.5rem 2rem 2.5rem;
+  position: relative;
+}
+
+/* Scroll indicator */
+.scroll-cue {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.3;
+  animation: scrollPulse 2.5s ease-in-out infinite;
+}
+.scroll-cue span {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.scroll-cue-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 1.5px solid var(--text-dim);
+  border-bottom: 1.5px solid var(--text-dim);
+  transform: rotate(45deg);
+  margin-top: -4px;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.2; transform: translateY(0); }
+  50% { opacity: 0.5; transform: translateY(6px); }
+}
+
+/* Subtle radial glow behind hero */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-hook {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 800;
+  color: var(--text-bright);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+  max-width: 700px;
+}
+
+.hero-death {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 500;
+  color: #fca5a5;
+  letter-spacing: 0.3px;
+  max-width: 640px;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+  position: relative;
+  opacity: 0.8;
+}
+
+.hero-anchor {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.hero-anchor span {
+  font-family: 'Fraunces', serif;
+  font-weight: 900;
+  font-size: clamp(42px, 8vw, 80px);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.hero-anchor .eq { color: var(--blue); }
+.hero-anchor .iq { color: var(--purple); }
+.hero-anchor .ai { color: var(--amber); }
+.hero-anchor .dot {
+  font-size: clamp(32px, 6vw, 60px);
+  color: var(--text-dim);
+  opacity: 0.3;
+}
+
+.hero-body {
+  max-width: 680px;
+  font-size: clamp(15px, 1.8vw, 17px);
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+.hero-body strong {
+  color: var(--text-bright);
+  font-weight: 600;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--amber);
+  color: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+.hero-cta:hover {
+  background: #fbbf24;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245,158,11,0.2);
+}
+
+.hero-sub {
+  margin-top: 1rem;
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION: What Is GAIN — micro-block
+   ═══════════════════════════════════════════════ */
+
+.what-section {
+  padding: 5rem 2rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+.what-inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.section-label::before,
+.section-label::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--border-h);
+}
+
+.what-text {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 2rem;
+}
+
+.what-text em {
+  color: var(--amber);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.what-frameworks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2rem;
+}
+
+.fw-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-dim);
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.fw-tag:hover {
+  border-color: var(--border-h);
+  color: var(--text);
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION: The Wheel
+   ═══════════════════════════════════════════════ */
+
+.wheel-section {
+  padding: 4rem 2rem 6rem;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+.wheel-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.wheel-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+}
+
+.wheel-header p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.wheel-container {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* The wheel itself — full interactive system */
+.wrap {
+  position: relative;
+  width: min(900px, 86vw);
+  height: min(900px, 86vw);
+  margin: 0 auto;
+  overflow: visible;
+}
+
+/* Flow ring SVG */
+.flow-svg { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2 }
+@keyframes dashFlow { to { stroke-dashoffset:-60 } }
+.flow-path { fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:8 12;animation:dashFlow 2s linear infinite }
+.flow-ghost { fill:none;stroke-width:2.5;opacity:0.04 }
+.flow-arrow { font-size:11px;font-weight:900;fill:#3f3f46 }
+
+/* Orbit rings */
+.orbit { position:absolute;top:50%;left:50%;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none }
+.o1 { width:32%;height:32%;border:1px solid rgba(255,255,255,0.015) }
+.o2 { width:56%;height:56%;border:1px dashed rgba(255,255,255,0.015) }
+
+/* Hub */
+.hub {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#1f1f23,#0a0a0c);
+  border:2px solid rgba(239,68,68,0.15);
+  box-shadow:0 0 50px rgba(239,68,68,0.04);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:30;cursor:pointer;transition:all 0.4s
+}
+.hub:hover { border-color:rgba(239,68,68,0.4);box-shadow:0 0 80px rgba(239,68,68,0.1) }
+
+.hub-pulse {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:140px;height:140px;border-radius:50%;
+  border:2px solid rgba(239,68,68,0.08);
+  animation:hPulse 3s ease-in-out infinite;pointer-events:none;z-index:29
+}
+@keyframes hPulse {
+  0%,100% { transform:translate(-50%,-50%) scale(1);opacity:.3 }
+  50% { transform:translate(-50%,-50%) scale(1.25);opacity:0 }
+}
+
+.h00 { font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:white;letter-spacing:3px }
+.ht { font-size:9px;font-weight:700;color:#d4d4d8;letter-spacing:2.5px;text-transform:uppercase;margin-top:2px }
+.hsub { font-size:9px;color:var(--amber);font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px }
+
+/* Phase nodes */
+.phase {
+  position:absolute;transform:translate(-50%,-50%);width:100px;height:100px;border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;z-index:20;border:2.5px solid;transition:all 0.35s
+}
+.phase:hover { transform:translate(-50%,-50%) scale(1.12) }
+.phase.active { transform:translate(-50%,-50%) scale(1.12) }
+
+.pl { font-family:'Fraunces',serif;font-size:28px;font-weight:900 }
+.pn { font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase }
+.psub { font-size:9px;color:var(--text-dim);font-weight:500;margin-top:1px }
+.pc { font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:0.4;margin-top:3px }
+
+/* Phase positions */
+.phase.g { top:50%;left:22% }
+.phase.a { top:22%;left:50% }
+.phase.i { top:50%;left:78% }
+.phase.n { top:78%;left:50% }
+
+.phase.g { background:radial-gradient(circle,#0c1a2e,#060e1a);border-color:rgba(59,130,246,0.25);box-shadow:var(--glow-blue) }
+.phase.g:hover,.phase.g.active { box-shadow:0 0 60px rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.5) }
+
+.phase.a { background:radial-gradient(circle,#1a0f2e,#0e071a);border-color:rgba(168,85,247,0.25);box-shadow:var(--glow-purple) }
+.phase.a:hover,.phase.a.active { box-shadow:0 0 60px rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.5) }
+
+.phase.i { background:radial-gradient(circle,#2e1a0a,#1a0e04);border-color:rgba(245,158,11,0.25);box-shadow:var(--glow-amber) }
+.phase.i:hover,.phase.i.active { box-shadow:0 0 60px rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.5) }
+
+.phase.n { background:radial-gradient(circle,#0a2018,#04120c);border-color:rgba(16,185,129,0.25);box-shadow:var(--glow-green) }
+.phase.n:hover,.phase.n.active { box-shadow:0 0 60px rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.5) }
+
+/* Cluster nodes */
+.cluster {
+  position:absolute;transform:translate(-50%,-50%) scale(0);opacity:0;
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events:none;padding:9px 14px;border-radius:10px;white-space:nowrap;
+  background:rgba(14,14,19,0.96);border:1px solid var(--border);
+  backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  cursor:pointer;z-index:16
+}
+.cluster.show { transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto }
+.cluster:hover { border-color:var(--border-h);z-index:25;transform:translate(-50%,-50%) scale(1.06) }
+
+.cl-icon { font-size:13px;margin-right:5px }
+.cl-name { font-size:10px;font-weight:800;letter-spacing:0.8px;text-transform:uppercase }
+.cl-count { font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);font-weight:500;margin-top:2px }
+
+/* Engine detail panel — fixed position */
+.eng-panel {
+  position:fixed;z-index:200;opacity:0;transform:scale(0.95);pointer-events:none;
+  transition:all 0.2s;min-width:250px;max-width:310px;padding:14px 16px;border-radius:12px;
+  background:rgba(10,10,14,0.98);border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);box-shadow:0 16px 60px rgba(0,0,0,0.8)
+}
+.eng-panel.show { opacity:1;transform:scale(1);pointer-events:auto }
+
+.eng-title {
+  font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)
+}
+.eng-item {
+  font-size:9px;color:var(--text-dim);padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.02);line-height:1.6
+}
+.eng-item:last-child { border:none }
+.eng-item strong { font-family:'DM Mono',monospace;color:var(--text-bright);font-weight:500;font-size:10px }
+.eng-item .desc { color:#8a8a93;font-size:9px;margin-top:2px;display:block }
+
+/* Hub panel */
+.hub-panel {
+  position:fixed;z-index:200;opacity:0;transform:scale(0.95);pointer-events:none;
+  transition:all 0.2s;width:340px;padding:18px 20px;border-radius:14px;
+  background:rgba(10,10,14,0.98);border:1px solid rgba(239,68,68,0.12);
+  backdrop-filter:blur(20px);box-shadow:0 16px 60px rgba(0,0,0,0.8)
+}
+.hub-panel.show { opacity:1;transform:scale(1);pointer-events:auto }
+
+.hub-panel h3 {
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--red);
+  letter-spacing:2px;margin-bottom:10px
+}
+.hub-panel p { font-size:10px;color:var(--text-dim);line-height:1.7;margin-bottom:6px }
+.hub-verdict {
+  margin-top:10px;font-family:'DM Mono',monospace;font-size:9px;color:var(--amber);
+  font-weight:500;letter-spacing:1.5px;text-transform:uppercase;
+  padding-top:10px;border-top:1px solid var(--border)
+}
+
+/* Loop labels */
+.loop-label {
+  position:absolute;font-family:'DM Mono',monospace;font-size:8px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;color:#3f3f46;pointer-events:none;z-index:3
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION: Dashboard — Interactive Diagnostic Output
+   ═══════════════════════════════════════════════ */
+
+.dashboard-section {
+  padding: 5rem 2rem 6rem;
+  border-top: 1px solid var(--border);
+}
+
+.dashboard-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.dashboard-header h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 800;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+}
+
+.dashboard-header p {
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.db {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--s1);
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Top chrome bar */
+.db-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(0,0,0,0.5);
+  border-bottom: 1px solid var(--border);
+}
+.db-dots { display: flex; gap: 6px; }
+.db-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.db-chrome-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.db-chrome-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #71717a;
+}
+
+/* Verdict strip */
+.db-verdict {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 22px;
+  background: rgba(245,158,11,0.04);
+  border-bottom: 1px solid var(--border);
+}
+.db-verdict-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  background: rgba(245,158,11,0.12);
+  color: var(--amber);
+  border: 1.5px solid rgba(245,158,11,0.2);
+}
+.db-verdict-info { flex: 1; }
+.db-verdict-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.db-verdict-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+}
+.db-verdict-stats {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+.db-vstat {
+  text-align: center;
+}
+.db-vstat-num {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+}
+.db-vstat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin-top: 3px;
+}
+
+@media (max-width: 768px) {
+  .db-verdict { flex-direction: column; gap: 14px; }
+  .db-verdict-stats { justify-content: center; }
+}
+
+/* Tabs */
+.db-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.db-tab {
+  padding: 12px 22px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.db-tab:hover { color: var(--text); }
+.db-tab.active {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+  background: rgba(245,158,11,0.03);
+}
+
+/* Tab panels */
+.db-panel {
+  display: none;
+  padding: 20px 22px;
+  animation: dbFadeIn 0.3s ease;
+}
+.db-panel.active { display: block; }
+
+@keyframes dbFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Stakeholder cards */
+.db-stake {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+}
+.db-person {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+.db-person:hover { border-color: var(--border-h); }
+.db-person-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.db-person-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-bright);
+}
+.db-person-role {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+.db-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.db-badge-g { background: rgba(16,185,129,0.12); color: var(--green); }
+.db-badge-r { background: rgba(239,68,68,0.12); color: var(--red); }
+.db-badge-a { background: rgba(245,158,11,0.12); color: var(--amber); }
+.db-badge-b { background: rgba(59,130,246,0.12); color: var(--blue); }
+
+.db-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 6px 0;
+  font-size: 12px;
+}
+.db-row-k {
+  color: var(--text-dim);
+  font-size: 11px;
+  flex-shrink: 0;
+  width: 110px;
+}
+.db-row-v {
+  color: var(--text);
+  text-align: right;
+  flex: 1;
+}
+.db-row-v.warn { color: var(--amber); }
+.db-row-v.danger { color: #fca5a5; }
+.db-row-v.good { color: var(--green); }
+
+/* Findings */
+.db-findings { }
+.db-f-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 14px;
+}
+.db-f-row:last-child { border: none; }
+.db-f-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  width: 40px;
+  flex-shrink: 0;
+}
+.db-f-info { flex: 1; }
+.db-f-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+.db-f-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.db-f-sev {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.db-f-high { background: rgba(239,68,68,0.12); color: var(--red); }
+.db-f-med { background: rgba(245,158,11,0.12); color: var(--amber); }
+.db-f-low { background: rgba(59,130,246,0.08); color: var(--blue); }
+
+/* Prescription chain */
+.db-chain { }
+.db-chain-step {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.db-chain-step:last-child { border: none; }
+.db-chain-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--amber);
+  flex-shrink: 0;
+}
+.db-chain-info { flex: 1; }
+.db-chain-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--amber);
+}
+.db-chain-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-left: 8px;
+}
+.db-chain-why {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  line-height: 1.6;
+}
+.db-chain-connector {
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+  color: rgba(245,158,11,0.25);
+  font-size: 16px;
+}
+
+/* Evidence bar */
+.db-evidence {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.db-ev-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+.db-ev-num {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.db-ev-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+.db-ev-detail {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION: Numbers — credibility anchors
+   ═══════════════════════════════════════════════ */
+
+.numbers-section {
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.numbers-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.number-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.number-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-2px);
+}
+
+.number-card .big {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(36px, 6vw, 52px);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.number-card:nth-child(1) .big { color: var(--blue); }
+.number-card:nth-child(2) .big { color: var(--green); }
+.number-card:nth-child(3) .big { color: var(--amber); }
+
+.number-card .metric {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.number-card .detail {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════
+   SECTION: Final CTA
+   ═══════════════════════════════════════════════ */
+
+.cta-section {
+  padding: 6rem 2rem 8rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-section h2 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  color: var(--text-bright);
+  margin-bottom: 1.5rem;
+}
+
+.cta-section .cta-sub {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.cta-section .hero-cta {
+  font-size: 15px;
+  padding: 18px 44px;
+}
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════ */
+
+.footer {
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #52525b;
+  letter-spacing: 1px;
+}
+.footer-text a {
+  color: #71717a;
+  text-decoration: none;
+}
+.footer-text a:hover { color: var(--text-dim); }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero { padding: 3rem 1.5rem 2rem; }
+  .hero-anchor { gap: 0.75rem; }
+  .wrap { display: none; }
+  .ticker-wound .ticker-item { font-size: 11px; padding: 8px 1.5rem; }
+  .ticker-problems .ticker-item { font-size: 10px; padding: 6px 1.5rem; }
+  .ticker-proof .ticker-item { font-size: 10px; padding: 6px 1.5rem; }
+}
+
+/* ─── Mobile Wheel Accordion ─── */
+.mobile-wheel {
+  display: none;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .mobile-wheel { display: block; }
+}
+
+.mw-phase {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.mw-phase.open { border-color: var(--border-h); }
+
+.mw-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  background: var(--s1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background 0.1s;
+}
+.mw-phase-header:active { background: rgba(255,255,255,0.03); transform: scale(0.99); }
+
+.mw-letter {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 900;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid;
+  flex-shrink: 0;
+}
+
+.mw-phase-info { flex: 1; }
+.mw-phase-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.mw-phase-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.mw-phase-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+.mw-chevron {
+  font-size: 16px;
+  color: var(--text-dim);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1.0);
+  flex-shrink: 0;
+}
+.mw-phase.open .mw-chevron { transform: rotate(180deg); }
+
+.mw-clusters {
+  height: 0;
+  overflow: hidden;
+  background: var(--bg);
+  will-change: height;
+}
+
+.mw-clusters-inner {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease 0.08s, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.02) 0.05s;
+}
+.mw-phase.open .mw-clusters-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mw-cluster {
+  border-top: 1px solid var(--border);
+}
+
+.mw-cluster-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px 14px 28px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: background 0.15s;
+}
+.mw-cluster-header:active { background: rgba(255,255,255,0.02); }
+
+.mw-cl-icon { font-size: 15px; }
+.mw-cl-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.mw-cl-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+.mw-cl-chevron {
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.02);
+}
+.mw-cluster.open .mw-cl-chevron { transform: rotate(180deg); }
+
+.mw-engines {
+  height: 0;
+  overflow: hidden;
+  will-change: height;
+}
+
+.mw-engines-inner {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease 0.06s, transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.02) 0.04s;
+}
+.mw-cluster.open .mw-engines-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mw-engine {
+  padding: 12px 18px 12px 46px;
+  border-top: 1px solid rgba(255,255,255,0.02);
+}
+.mw-engine-code {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-bright);
+}
+.mw-engine-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: 6px;
+}
+.mw-engine-desc {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+</style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 antialiased">
+<body>
 
-<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
-
-    <a href="index.html" class="hover:text-white transition-colors">Home</a>
-    <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
-    <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
-
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
-        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            GAIN <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="know.html" class="radial-item" style="--tx: -150px;">
-                <span class="text-3xl font-black text-blue-400">G</span>
-                <span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span>
-            </a>
-            <a href="map.html" class="radial-item" style="--tx: -50px;">
-                <span class="text-3xl font-black text-violet-400">A</span>
-                <span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span>
-            </a>
-            <a href="win.html" class="radial-item" style="--tx: 50px;">
-                <span class="text-3xl font-black text-amber-400">I</span>
-                <span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span>
-            </a>
-            <a href="grow.html" class="radial-item" style="--tx: 150px;">
-                <span class="text-3xl font-black text-emerald-400">N</span>
-                <span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
-        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            System <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="edge.html" class="radial-item" style="--tx: -150px;">
-                <span class="text-lg font-black text-cyan-400">⚡</span>
-                <span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span>
-            </a>
-            <a href="architecture.html" class="radial-item" style="--tx: -50px;">
-                <span class="text-lg font-black text-teal-400">◈</span>
-                <span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span>
-            </a>
-            <a href="story.html" class="radial-item" style="--tx: 50px;">
-                <span class="text-lg font-black text-sky-400">◉</span>
-                <span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span>
-            </a>
-            <a href="dashboards.html" class="radial-item" style="--tx: 150px;">
-                <span class="text-lg font-black text-indigo-400">▣</span>
-                <span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span>
-            </a>
-        </div>
-    </div>
-
-    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <ul class="nav-links">
+    <li><a href="/architecture.html">Architecture</a></li>
+    <li><a href="/proof.html">Proof</a></li>
+    <li><a href="/edge.html">Edge</a></li>
+    <li><a href="/story.html">Story</a></li>
+    <li><a href="/know.html">Prompts</a></li>
+    <li><a href="/engage.html" class="nav-cta">Engage</a></li>
+  </ul>
 </nav>
 
-<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- ═══════════════ THREE TICKER TAPES ═══════════════ -->
+<div class="tickers">
 
-    <header class="relative rounded-[2rem] overflow-hidden mb-8 md:mb-10 glass-panel border-t-4 border-t-blue-500/30 hover:-translate-y-1 transition-all duration-500">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        
-        <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent">
-            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
-                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> Commercial Operating System</span>
-                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
-                    61 structured compound prompts — chained, conditional, human-gated workflows that turn messy intel into honest commercial diagnostics One operating system.
-                </div>
-            </div>
-
-            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-lg">
-                Most deals are lost before the first meeting. GAIN changes that
-            </h1>
-            
-           <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium mb-6">
-    <strong class="text-blue-400">GAIN gets you prepared — and tells you honestly when to walk away.</strong> Behavioural science. Tailored value propositions. conditional prompts. One verdict: WALK AWAY, FIX or ACCELERATE.
-</p>
-
-            <a href="#account-pack" class="reveal inline-flex items-center gap-3 text-base text-blue-400 hover:text-blue-300 font-bold tracking-wide transition-colors w-fit">
-                View redacted Account Pack — live bid example ↓
-            </a>
-        </div>
-    </header>
-
-    <div class="mb-8 md:mb-10 p-6 glass-panel rounded-2xl reveal">
-        <h2 class="text-2xl font-black text-white mb-4">How GAIN Actually Works</h2>
-        <p class="text-neutral-300 mb-4 font-medium leading-relaxed">
-            ....the why here...
-        </p>
-        <img src="operator-flow-screenshot.jpg" alt="GAIN Operator Flow Screenshot" class="w-full rounded-xl border border-white/10 shadow-lg">
+  <!-- TAPE 1: THE WOUND — Street Versions from the 30-problem taxonomy -->
+  <div class="ticker ticker-wound">
+    <div class="ticker-track">
+      <span class="ticker-item">"40% of your pipeline hasn't had buyer activity in 45 days. That's not pipeline. That's a graveyard you've been calling a garden."</span>
+      <span class="ticker-item">"'Verbal commit' is sales for 'I had a good meeting and now I'm delusional.'"</span>
+      <span class="ticker-item">"Your champion is a Director who's never sponsored a deal this size. That's not a champion. That's a fan. Fans don't sign contracts."</span>
+      <span class="ticker-item">"We didn't lose to Competitor X. We lost to 'do nothing.' They just couldn't get the paper process over the line."</span>
+      <span class="ticker-item">"3x coverage is a spreadsheet with false confidence inside it."</span>
+      <span class="ticker-item">"The CIO loved it. Then procurement took over. Six weeks later: 14 redlines, a 40% discount demand, and two new vendors to 'keep us honest.'"</span>
+      <span class="ticker-item">"We found out after we lost that the CEO's old CTO told him not to touch us. We never knew that guy existed."</span>
+      <span class="ticker-item">"If Sarah leaves, we lose the West Coast. She's the only one who knows how to multi-thread into those enterprise accounts."</span>
+      <!-- Duplicate for seamless loop -->
+      <span class="ticker-item">"40% of your pipeline hasn't had buyer activity in 45 days. That's not pipeline. That's a graveyard you've been calling a garden."</span>
+      <span class="ticker-item">"'Verbal commit' is sales for 'I had a good meeting and now I'm delusional.'"</span>
+      <span class="ticker-item">"Your champion is a Director who's never sponsored a deal this size. That's not a champion. That's a fan. Fans don't sign contracts."</span>
+      <span class="ticker-item">"We didn't lose to Competitor X. We lost to 'do nothing.' They just couldn't get the paper process over the line."</span>
+      <span class="ticker-item">"3x coverage is a spreadsheet with false confidence inside it."</span>
+      <span class="ticker-item">"The CIO loved it. Then procurement took over. Six weeks later: 14 redlines, a 40% discount demand, and two new vendors to 'keep us honest.'"</span>
+      <span class="ticker-item">"We found out after we lost that the CEO's old CTO told him not to touch us. We never knew that guy existed."</span>
+      <span class="ticker-item">"If Sarah leaves, we lose the West Coast. She's the only one who knows how to multi-thread into those enterprise accounts."</span>
     </div>
+  </div>
 
-    <section id="account-pack" class="mb-8 md:mb-10">
-        <div class="mb-4 max-w-3xl mx-auto md:mx-0">
-            <p class="text-xs md:text-sm font-bold tracking-[0.2em] text-blue-500 uppercase mb-2">GAIN Account Pack · Live Bid · Redacted</p>
-            <p class="text-sm md:text-base text-neutral-500">180 minutes. 8 stakeholders. 3 competitors. 5 failure scenarios. Click any section to expand.</p>
-        </div>
-
-        <div id="account-pack-root" class="glass-panel rounded-2xl min-h-[400px] flex items-center justify-center">
-            <p class="text-neutral-500 font-mono text-sm">Initializing Dashboard Engine...</p>
-        </div>
-
-        <div class="max-w-7xl mx-auto py-5 text-center">
-            <a href="dashboards.html" class="inline-flex items-center gap-2 text-sm md:text-base text-blue-400 hover:text-blue-300 font-bold transition-colors">
-                Open full Account Pack on dedicated page →
-            </a>
-            <p class="text-xs md:text-sm text-neutral-600 mt-2">Same dashboard. Bookmarkable. Shareable with your team.</p>
-        </div>
-    </section>
-
-    <div class="max-w-7xl mx-auto mb-8 md:mb-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-            <div class="glass-panel rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:border-blue-500/50">
-                <span class="text-xs font-extrabold text-neutral-400 uppercase tracking-widest mb-3 block">Enterprise Portfolio Repositioned</span>
-                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-2 flex items-start gap-1">
-                    £183M <span class="text-blue-500 text-2xl mt-1">&uarr;</span>
-                </div>
-                <span class="text-xs md:text-sm text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £35M P.A.</span>
-                <div class="border-t border-white/5 pt-4 flex justify-between items-center">
-                    <span class="text-xs text-neutral-500 uppercase tracking-widest font-bold">CAGR:</span>
-                    <span class="text-blue-400 text-base font-black">51.3%</span>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-6 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:border-emerald-500/50">
-                <span class="text-xs font-extrabold text-neutral-400 uppercase tracking-widest mb-3 block">Professional Services Repositioned</span>
-                <div class="text-4xl md:text-5xl font-black text-white tracking-tight leading-none mb-2 flex items-start gap-1">
-                    £53M+ <span class="text-emerald-500 text-2xl mt-1">&uarr;</span>
-                </div>
-                <span class="text-xs md:text-sm text-neutral-400 font-bold uppercase tracking-wide block mb-4">Scaled from £18.5M P.A.</span>
-                <div class="border-t border-white/5 pt-4 flex justify-between items-center">
-                    <span class="text-xs text-neutral-500 uppercase tracking-widest font-bold">GROWTH:</span>
-                    <span class="text-emerald-400 text-base font-black">+170%</span>
-                </div>
-            </div>
-        </div>
-        <p class="text-sm text-neutral-500 mt-5 text-center font-medium">The methodology behind the dashboard above. Applied across a career. £183M in verified revenue.</p>
+  <!-- TAPE 2: THE PROBLEMS — category labels from taxonomy -->
+  <div class="ticker ticker-problems">
+    <div class="ticker-track">
+      <span class="ticker-item">Margin Compression</span>
+      <span class="ticker-item">Pipeline Inflation</span>
+      <span class="ticker-item">Hero-Dependency</span>
+      <span class="ticker-item">Discovery Failure</span>
+      <span class="ticker-item">No-Decision Epidemic</span>
+      <span class="ticker-item">Stakeholder Blindness</span>
+      <span class="ticker-item">Phantom Champion</span>
+      <span class="ticker-item">Dead Deal Denial</span>
+      <span class="ticker-item">Procurement Black Box</span>
+      <span class="ticker-item">Competitive Displacement</span>
+      <span class="ticker-item">Accountability Vacuum</span>
+      <span class="ticker-item">Fear-Driven Selling</span>
+      <span class="ticker-item">M&amp;A Value Leakage</span>
+      <span class="ticker-item">Capability Gap</span>
+      <span class="ticker-item">ICP Drift</span>
+      <!-- Duplicate -->
+      <span class="ticker-item">Margin Compression</span>
+      <span class="ticker-item">Pipeline Inflation</span>
+      <span class="ticker-item">Hero-Dependency</span>
+      <span class="ticker-item">Discovery Failure</span>
+      <span class="ticker-item">No-Decision Epidemic</span>
+      <span class="ticker-item">Stakeholder Blindness</span>
+      <span class="ticker-item">Phantom Champion</span>
+      <span class="ticker-item">Dead Deal Denial</span>
+      <span class="ticker-item">Procurement Black Box</span>
+      <span class="ticker-item">Competitive Displacement</span>
+      <span class="ticker-item">Accountability Vacuum</span>
+      <span class="ticker-item">Fear-Driven Selling</span>
+      <span class="ticker-item">M&amp;A Value Leakage</span>
+      <span class="ticker-item">Capability Gap</span>
+      <span class="ticker-item">ICP Drift</span>
     </div>
+  </div>
 
-    <main>
-        <div class="mb-8 md:mb-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-                <div class="reveal slide-left dur-600 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
-                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">01.</span> Don't Become a Commodity</h3>
-                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Pitching features guarantees price erosion. Shift to board-level outcomes and neutralise incumbent advantages from the first conversation.</p>
-                </div>
-                <div class="reveal slide-left dur-800 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
-                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">02.</span> Close the Execution Gap</h3>
-                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">Data doesn't close deals; navigating boardroom politics does. The execution gap is the distance between what sellers promise and operations deliver.</p>
-                </div>
-                <div class="reveal slide-left dur-1000 glass-panel p-5 md:p-6 rounded-xl shadow-inner">
-                    <h3 class="text-base md:text-lg font-extrabold uppercase tracking-widest mb-3"><span class="text-blue-500">03.</span> The EQ Override</h3>
-                    <p class="text-sm md:text-base text-neutral-300 leading-relaxed font-medium">AI identifies the friction. Human EQ maps the detractor. The narrative shifts from 'innovative disruption' to 'de-risked operational safety.'</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-8 md:mb-10">
-            <div class="flex items-center gap-4 mb-6 md:mb-8">
-                <div class="h-px bg-white/10 flex-1"></div>
-                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">The Commercial Operating System</div>
-                <div class="h-px bg-white/10 flex-1"></div>
-            </div>
-
-            <div class="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-                <a href="know.html" class="glass-panel border-l-2 border-l-blue-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
-                    <span class="font-mono text-blue-400 font-bold text-xs md:text-sm tracking-widest mb-2">[G] GATHER</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Strategic Context</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Extract budget signals from public filings before you speak. Prove you aren't a risk.</p>
-                    <div class="text-xs text-blue-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
-                </a>
-
-                <a href="map.html" class="glass-panel border-l-2 border-l-violet-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
-                    <span class="font-mono text-violet-400 font-bold text-xs md:text-sm tracking-widest mb-2">[A] ASSESS</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Influence Mapping</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Plot the shadow hierarchy, locate the detractor, and secure the true Economic Buyer.</p>
-                    <div class="text-xs text-violet-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
-                </a>
-
-                <a href="win.html" class="glass-panel border-l-2 border-l-amber-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
-                    <span class="font-mono text-amber-400 font-bold text-xs md:text-sm tracking-widest mb-2">[I] INFLUENCE</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Narrative Architecture</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Reframe the narrative. Write summaries that win the board vote in absentia.</p>
-                    <div class="text-xs text-amber-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
-                </a>
-
-                <a href="grow.html" class="glass-panel border-l-2 border-l-emerald-500 rounded-xl p-5 md:p-6 hover:bg-neutral-800/40 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1">
-                    <span class="font-mono text-emerald-400 font-bold text-xs md:text-sm tracking-widest mb-2">[N] NURTURE</span>
-                    <h3 class="text-lg md:text-xl font-black text-white uppercase mb-3 tracking-tight">Account Expansion</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed flex-grow mb-4 font-medium">Pre-empt threats 18 months before renewal. Monitor decay and lock in the annuity.</p>
-                    <div class="text-xs text-emerald-400 font-bold tracking-widest uppercase group-hover:translate-x-1 transition-transform">Explore →</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="mb-8 md:mb-10">
-            <div class="flex items-center gap-4 mb-6 md:mb-8">
-                <div class="h-px bg-white/5 flex-1"></div>
-                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Common Failure Modes in High-Stakes Engagements</div>
-                <div class="h-px bg-white/5 flex-1"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-                <div class="reveal dur-700 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Undetected Decision Influence</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI reads the org chart. EQ reads the room. You won the submission but lost at orals because the CEO's EA preferred the competitor.</p>
-                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Always ask "who else touches this decision?"</p>
-                </div>
-
-                <div class="reveal dur-900 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Intelligence Decay</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI is static. Politics are fluid. Mapped in January, submitted in March. The CIO was sidelined in February. Strategy built on a ghost.</p>
-                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Refresh stakeholder map every 14 days.</p>
-                </div>
-
-                <div class="reveal dur-1100 glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Resource Misallocation</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">AI loves to boil the ocean. You spent 6 hours mapping a deal with a single decision-maker. The CEO had already decided.</p>
-                    <p class="text-xs text-neutral-500 font-semibold uppercase tracking-widest border-t border-white/5 pt-3">Countermeasure: Match preparation depth to deal complexity.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-8 md:mb-10 reveal glass-panel rounded-xl p-6 md:p-8 text-center max-w-4xl mx-auto">
-            <p class="text-base md:text-lg text-neutral-300 leading-relaxed font-medium">
-                Many operating partners rely on generic frameworks. <span class="text-white font-bold">GAIN provides a unified operating system that wins deals, builds propositions, and prepares businesses for exit.</span>
-            </p>
-        </div>
-
-        <div class="mb-8 md:mb-10 reveal bg-neutral-900/60 backdrop-blur-xl border border-red-900/30 rounded-2xl p-6 md:p-8 shadow-inner-xl">
-            <h2 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">What Happens in 12 Months Without Systematic Intelligence</h2>
-            <p class="text-sm md:text-base text-neutral-400 mb-6 border-b border-white/5 pb-5">Continued reliance on traditional preparation exposes the organisation to three structural risks:</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-8">
-                <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Talent & Resource Diversion</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Unwinnable pursuits consume top sellers and pre-sales resources. By the time the loss is recognised, a full quarter and significant opportunity cost have been absorbed.</p>
-                </div>
-                <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Competitive Exposure</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Firms investing in structured intelligence architecture are compounding their advantage. Pricing pressure intensifies. The same QBR questions recur without resolution.</p>
-                </div>
-                <div class="glass-panel rounded-xl p-5 md:p-6">
-                    <h3 class="text-base md:text-lg text-white font-bold mb-3">Integration Fragmentation</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed">Acquisitions without a common commercial architecture don't compound — they collide. Different sales tactics, different platforms, no shared operating model.</p>
-                </div>
-            </div>
-            
-            <div class="bg-red-950/20 p-4 md:p-5 rounded-lg border border-red-900/30 text-center">
-                <p class="text-sm md:text-base text-red-400/80 font-semibold">Each quarter of delay compounds the diagnostic gap.</p>
-            </div>
-        </div>
-
-        <div class="mb-10 md:mb-12 reveal text-center">
-            <p class="text-lg md:text-xl text-neutral-300 font-medium leading-relaxed mb-4">
-                The deal engine is the entry point. What it repositions is the business.
-            </p>
-            <a href="revenue-case.html" class="inline-flex items-center justify-center gap-2 text-base md:text-lg text-blue-400 hover:text-blue-300 font-bold transition-colors">
-                See the Revenue Case →
-            </a>
-        </div>
-
-        <div class="mb-12 reveal glass-panel bg-neutral-900/80 rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto">
-            <p class="text-3xl md:text-4xl font-black text-white tracking-tight mb-8">The opportunity is clear.</p>
-            <a href="engage.html" class="inline-flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/40 px-10 py-5 text-amber-400 font-black text-base md:text-lg rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all duration-300">
-                Request a Live Deal Diagnostic &rarr;
-            </a>
-            <p class="text-base text-neutral-400 font-medium mt-6">Start with one deal. What it finds goes further than the deal.</p>
-        </div>
-    </main>
-
-    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
-        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        <div class="flex flex-col md:flex-row items-center gap-6">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader &rarr;</a>
-            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
-        </div>
-    </footer>
+  <!-- TAPE 3: THE PROOF — numbers and facts -->
+  <div class="ticker ticker-proof">
+    <div class="ticker-track">
+      <span class="ticker-item">£35M → £183M &middot; 51.3% CAGR</span>
+      <span class="ticker-item">£20M → £55M professional services &middot; +170%</span>
+      <span class="ticker-item">67 engines &middot; 22 frameworks &middot; 30 failure patterns</span>
+      <span class="ticker-item">40 hours → 180 minutes &middot; deal intelligence</span>
+      <span class="ticker-item">Kill it. Fix it. Accelerate it.</span>
+      <span class="ticker-item">Model-agnostic &middot; Claude &middot; GPT &middot; Gemini &middot; DeepSeek</span>
+      <span class="ticker-item">9 case studies built from zero &middot; white-labelled by Tier 1 SI</span>
+      <span class="ticker-item">300-line compound engines &middot; not 5-line prompts</span>
+      <!-- Duplicate -->
+      <span class="ticker-item">£35M → £183M &middot; 51.3% CAGR</span>
+      <span class="ticker-item">£20M → £55M professional services &middot; +170%</span>
+      <span class="ticker-item">67 engines &middot; 22 frameworks &middot; 30 failure patterns</span>
+      <span class="ticker-item">40 hours → 180 minutes &middot; deal intelligence</span>
+      <span class="ticker-item">Kill it. Fix it. Accelerate it.</span>
+      <span class="ticker-item">Model-agnostic &middot; Claude &middot; GPT &middot; Gemini &middot; DeepSeek</span>
+      <span class="ticker-item">9 case studies built from zero &middot; white-labelled by Tier 1 SI</span>
+      <span class="ticker-item">300-line compound engines &middot; not 5-line prompts</span>
+    </div>
+  </div>
 
 </div>
 
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<!-- Visual break: tickers → hero -->
+<div style="height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.08) 30%,rgba(245,158,11,0.12) 50%,rgba(245,158,11,0.08) 70%,transparent);"></div>
 
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+
+  <!-- THE HOOK — one line that stops the scroll -->
+  <h1 class="hero-hook">Most deals are lost before the first meeting.</h1>
+
+  <!-- THE DEATH (supporting evidence — Nemo stakes) -->
+  <p class="hero-death">
+    Your pipeline is a fiction agreed upon by people too invested to admit it.
+    Your forecast is a spreadsheet full of hope.
+    Your best deal just went dark and nobody can tell you why.
+  </p>
+
+  <!-- THE RESOLUTION (EQ. IQ. AI.) -->
+  <div class="hero-anchor">
+    <span class="eq">EQ</span><span class="dot">.</span>
+    <span class="iq">IQ</span><span class="dot">.</span>
+    <span class="ai">AI</span><span class="dot">.</span>
+  </div>
+
+  <!-- THE IMPLICATION — now names the Account Pack -->
+  <p class="hero-body">
+    <strong>Sixty-seven specialist engines</strong> — not prompts, not templates — each built on 22 behavioural science, HUMINT, and commercial frameworks. Paste a stalled deal and get a complete <strong>Account Pack</strong>: stakeholder intelligence, failure patterns, prescribed interventions, and a verdict — <em>kill it, fix it, or accelerate it.</em> <strong>You don't need to know which engine to run.</strong> The diagnostic reads your situation and prescribes the three or four that matter.
+  </p>
+
+  <a href="/engage.html" class="hero-cta">Get Your Account Pack</a>
+  <p class="hero-sub">One deal. 180 minutes. A verdict your board can act on.</p>
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-cue-arrow"></div>
+  </div>
+
+</section>
+
+<!-- ═══════════════ NUMBERS — moved up for instant credibility ═══════════════ -->
+<section class="numbers-section reveal">
+  <div class="numbers-grid">
+    <div class="number-card">
+      <div class="big">£183M</div>
+      <div class="metric">Portfolio Revenue</div>
+      <div class="detail">Scaled from £35M across enterprise portfolio. 51.3% CAGR. Not just sales — rebuilt delivery, vendors, governance, and compensation architecture.</div>
+    </div>
+    <div class="number-card">
+      <div class="big">£55M</div>
+      <div class="metric">Professional Services</div>
+      <div class="detail">Grew from £20M. Created unified proposition from fragmented service lines. Win rate 2 in 3. +170% revenue growth.</div>
+    </div>
+    <div class="number-card">
+      <div class="big">70 min</div>
+      <div class="metric">Mess to Account Pack</div>
+      <div class="detail">Raw intake to complete Account Pack: stakeholder intel, failure patterns, prescribed engines, evidence audit, and a board-ready verdict.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ WHAT IS GAIN — micro-block ═══════════════ -->
+<section class="what-section reveal">
+  <div class="what-inner">
+    <div class="section-label">The Shift</div>
+    <p class="what-text">
+      AI made every pitch perfect. <em>Perfect is now table stakes.</em> The only edge left is judgment — reading the room, decoding the politics, knowing when to walk away. GAIN is the operating system that turns that judgment into a repeatable, scalable architecture. It doesn't replace your instinct. It arms it with intelligence that used to take weeks and compresses it to minutes.
+    </p>
+    <p class="what-text">
+      Not a chatbot. Not a copilot. An <em>engine room</em> — 30 diagnostic failure patterns, 4 levels of commercial forensics, and a verdict system that tells you the thing your team won't: <em>kill it, fix it, or accelerate it.</em> The output is an <em>Account Pack</em> — a complete intelligence briefing your board can act on. No six-month integration. No junior consultants learning on your budget. One deal. <em>180 minutes.</em>
+    </p>
+    <div class="what-frameworks">
+      <span class="fw-tag">Kahneman</span>
+      <span class="fw-tag">Cialdini</span>
+      <span class="fw-tag">Voss</span>
+      <span class="fw-tag">Kegan</span>
+      <span class="fw-tag">Minto</span>
+      <span class="fw-tag">Schwartz</span>
+      <span class="fw-tag">Taleb</span>
+      <span class="fw-tag">Raskin</span>
+      <span class="fw-tag">MEDDIC</span>
+      <span class="fw-tag">Ferrazzi</span>
+      <span class="fw-tag">Camp</span>
+      <span class="fw-tag">Maister</span>
+      <span class="fw-tag">Shipley</span>
+      <span class="fw-tag">Dunford</span>
+      <span class="fw-tag">Blue Ocean</span>
+      <span class="fw-tag">Gawande</span>
+      <span class="fw-tag">Heath</span>
+      <span class="fw-tag">Timme</span>
+      <span class="fw-tag">NLP Meta</span>
+      <span class="fw-tag">Sphere of Influence</span>
+      <span class="fw-tag">Case Method</span>
+      <span class="fw-tag">Human Amplification</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ THE WHEEL ═══════════════ -->
+<section class="wheel-section reveal">
+  <div class="wheel-header">
+    <div class="section-label">The Architecture</div>
+    <h2>You don't run 67.<br>The diagnostic prescribes the 3–5 that matter.</h2>
+    <p>Hover any phase to explore. Each cluster contains specialist engines — compound, conditional, human-gated. Not templates. Architecture.</p>
+  </div>
+
+  <div class="wheel-container">
+    <div class="wrap" id="wrap">
+      <div class="orbit o1"></div>
+      <div class="orbit o2"></div>
+      <div class="hub-pulse"></div>
+
+      <svg class="flow-svg" viewBox="0 0 960 960">
+        <defs>
+          <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#3b82f6"/><stop offset="25%" stop-color="#a855f7"/>
+            <stop offset="50%" stop-color="#f59e0b"/><stop offset="75%" stop-color="#10b981"/>
+            <stop offset="100%" stop-color="#3b82f6"/>
+          </linearGradient>
+        </defs>
+        <circle class="flow-ghost" cx="480" cy="480" r="205" stroke="url(#fg)"/>
+        <circle class="flow-path" cx="480" cy="480" r="205" stroke="url(#fg)" opacity="0.35"/>
+        <text class="flow-arrow" x="480" y="262" text-anchor="middle">&rarr;</text>
+        <text class="flow-arrow" x="698" y="484" text-anchor="middle">&darr;</text>
+        <text class="flow-arrow" x="480" y="700" text-anchor="middle">&larr;</text>
+        <text class="flow-arrow" x="262" y="484" text-anchor="middle">&uarr;</text>
+        <path d="M 370 660 Q 240 640 230 520" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.12"/>
+        <text x="240" y="595" style="font-size:8px;fill:#10b981;opacity:0.2;font-weight:700">&#x21BA; new intel</text>
+      </svg>
+
+      <div class="loop-label" style="top:26%;left:31%">G &rarr; A</div>
+      <div class="loop-label" style="top:26%;left:65%">A &rarr; I</div>
+      <div class="loop-label" style="top:70%;left:65%">I &rarr; N</div>
+      <div class="loop-label" style="top:70%;left:24%">N &rarr; G</div>
+
+      <div class="hub" id="hub">
+        <div class="h00">00</div>
+        <div class="ht">Diagnostic</div>
+        <div class="hsub">Start Here</div>
+      </div>
+
+      <div class="phase g" data-phase="g"><div class="pl" style="color:var(--blue)">G</div><div class="pn" style="color:#93c5fd">Gather</div><div class="psub">Know Them</div><div class="pc" style="color:var(--blue)">21 engines</div></div>
+      <div class="phase a" data-phase="a"><div class="pl" style="color:var(--purple)">A</div><div class="pn" style="color:#d8b4fe">Assess</div><div class="psub">Map Them</div><div class="pc" style="color:var(--purple)">16 engines</div></div>
+      <div class="phase i" data-phase="i"><div class="pl" style="color:var(--amber)">I</div><div class="pn" style="color:#fcd34d">Influence</div><div class="psub">Win Them</div><div class="pc" style="color:var(--amber)">11 engines</div></div>
+      <div class="phase n" data-phase="n"><div class="pl" style="color:var(--green)">N</div><div class="pn" style="color:#6ee7b7">Nurture</div><div class="psub">Grow Them</div><div class="pc" style="color:var(--green)">13 engines</div></div>
+
+      <div id="clusterLayer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;overflow:visible"></div>
+    </div>
+
+    <!-- Mobile: tap-to-expand accordion (generated by JS from same DATA) -->
+    <div class="mobile-wheel" id="mobileWheel"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ DASHBOARD — Interactive ═══════════════ -->
+<section class="dashboard-section reveal">
+  <div class="dashboard-header">
+    <div class="section-label">The Account Pack</div>
+    <h2>This is what you walk away with.</h2>
+    <p>A redacted Account Pack from a real engagement. Stakeholder intelligence, failure patterns, prescribed engines, and a verdict — generated from raw data in 67 minutes. Tap each tab to explore.</p>
+  </div>
+
+  <div class="db">
+    <!-- Chrome bar -->
+    <div class="db-chrome">
+      <div class="db-dots">
+        <span style="background:#ef4444;opacity:0.7"></span>
+        <span style="background:#f59e0b;opacity:0.7"></span>
+        <span style="background:#10b981;opacity:0.7"></span>
+      </div>
+      <span class="db-chrome-title">GAIN Account Pack &mdash; Diagnostic Verdict</span>
+      <span class="db-chrome-meta">Meridian Financial Services &middot; Redacted</span>
+    </div>
+
+    <!-- Verdict strip -->
+    <div class="db-verdict">
+      <div class="db-verdict-badge">FIX</div>
+      <div class="db-verdict-info">
+        <div class="db-verdict-label">Diagnostic Verdict</div>
+        <div class="db-verdict-text">Recoverable deal with structural blockers. Champion is under-powered, procurement timeline is compressed, and the CFO has undisclosed concerns about implementation risk. Three intervention engines prescribed.</div>
+      </div>
+      <div class="db-verdict-stats">
+        <div class="db-vstat"><div class="db-vstat-num" style="color:var(--amber)">72%</div><div class="db-vstat-label">Confidence</div></div>
+        <div class="db-vstat"><div class="db-vstat-num" style="color:var(--green)">67m</div><div class="db-vstat-label">Time</div></div>
+        <div class="db-vstat"><div class="db-vstat-num" style="color:var(--red)">5</div><div class="db-vstat-label">Patterns</div></div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="db-tabs">
+      <button class="db-tab active" onclick="switchTab('stakeholders')">Stakeholders</button>
+      <button class="db-tab" onclick="switchTab('findings')">Failure Patterns</button>
+      <button class="db-tab" onclick="switchTab('prescription')">Prescription</button>
+      <button class="db-tab" onclick="switchTab('evidence')">Evidence</button>
+    </div>
+
+    <!-- Panel: Stakeholders -->
+    <div class="db-panel active" id="panel-stakeholders">
+      <div class="db-stake">
+        <div class="db-person">
+          <div class="db-person-top">
+            <div><div class="db-person-name">Sarah Chen</div><div class="db-person-role">Chief Information Officer</div></div>
+            <span class="db-badge db-badge-g">Champion</span>
+          </div>
+          <div class="db-row"><span class="db-row-k">Kegan Stage</span><span class="db-row-v">4 — Self-Authoring</span></div>
+          <div class="db-row"><span class="db-row-k">GAIN Driver</span><span class="db-row-v">Legacy / Transformation</span></div>
+          <div class="db-row"><span class="db-row-k">Modality</span><span class="db-row-v">Visual-Kinesthetic</span></div>
+          <div class="db-row"><span class="db-row-k">Decision Style</span><span class="db-row-v">Consensus-seeking, needs board cover</span></div>
+          <div class="db-row"><span class="db-row-k">Risk</span><span class="db-row-v warn">Never sponsored &gt;£2M. Fan, not champion.</span></div>
+          <div class="db-row"><span class="db-row-k">Action</span><span class="db-row-v good">Coach to build internal business case. A-07 Placemat.</span></div>
+        </div>
+        <div class="db-person">
+          <div class="db-person-top">
+            <div><div class="db-person-name">James Whitfield</div><div class="db-person-role">Chief Financial Officer</div></div>
+            <span class="db-badge db-badge-r">Blocker</span>
+          </div>
+          <div class="db-row"><span class="db-row-k">Kegan Stage</span><span class="db-row-v">3 — Socialised Mind</span></div>
+          <div class="db-row"><span class="db-row-k">GAIN Driver</span><span class="db-row-v">Risk Aversion / Control</span></div>
+          <div class="db-row"><span class="db-row-k">Modality</span><span class="db-row-v">Auditory-Digital</span></div>
+          <div class="db-row"><span class="db-row-k">Decision Style</span><span class="db-row-v">Data-driven. Will veto without numbers.</span></div>
+          <div class="db-row"><span class="db-row-k">Hidden Concern</span><span class="db-row-v danger">Previous vendor overrun. Trust deficit with external tech.</span></div>
+          <div class="db-row"><span class="db-row-k">Action</span><span class="db-row-v good">Cost-of-inaction model. G-02 Financial Forensics.</span></div>
+        </div>
+        <div class="db-person">
+          <div class="db-person-top">
+            <div><div class="db-person-name">Marcus Webb</div><div class="db-person-role">Chief Procurement Officer</div></div>
+            <span class="db-badge db-badge-a">Unknown</span>
+          </div>
+          <div class="db-row"><span class="db-row-k">Kegan Stage</span><span class="db-row-v warn">Insufficient data</span></div>
+          <div class="db-row"><span class="db-row-k">GAIN Driver</span><span class="db-row-v warn">Suspected: Autonomy</span></div>
+          <div class="db-row"><span class="db-row-k">Modality</span><span class="db-row-v warn">Unknown — HUMINT required</span></div>
+          <div class="db-row"><span class="db-row-k">Risk</span><span class="db-row-v danger">Gatekeeper with no prior relationship. Likely to commoditise.</span></div>
+          <div class="db-row"><span class="db-row-k">Action</span><span class="db-row-v good">A-13 HUMINT Elicitation before next meeting.</span></div>
+        </div>
+        <div class="db-person">
+          <div class="db-person-top">
+            <div><div class="db-person-name">Rachel Torres</div><div class="db-person-role">VP Engineering</div></div>
+            <span class="db-badge db-badge-b">Influencer</span>
+          </div>
+          <div class="db-row"><span class="db-row-k">Kegan Stage</span><span class="db-row-v">4 — Self-Authoring</span></div>
+          <div class="db-row"><span class="db-row-k">GAIN Driver</span><span class="db-row-v">Technical Mastery / Autonomy</span></div>
+          <div class="db-row"><span class="db-row-k">Decision Style</span><span class="db-row-v">Evidence-first. Respects competence, not hierarchy.</span></div>
+          <div class="db-row"><span class="db-row-k">Opportunity</span><span class="db-row-v good">Potential ally. Reports to CIO. Could co-champion.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Failure Patterns -->
+    <div class="db-panel" id="panel-findings">
+      <div class="db-findings">
+        <div class="db-f-row">
+          <span class="db-f-code">2.03</span>
+          <div class="db-f-info"><div class="db-f-name">Phantom Champion</div><div class="db-f-desc">CIO is enthusiastic but has never sponsored a deal above £2M. No evidence of board-level sponsorship or budget authority. Risk of champion collapse at procurement stage.</div></div>
+          <span class="db-f-sev db-f-high">HIGH</span>
+        </div>
+        <div class="db-f-row">
+          <span class="db-f-code">2.07</span>
+          <div class="db-f-info"><div class="db-f-name">Stakeholder Blindness</div><div class="db-f-desc">CPO has no relationship history. No prior engagement data. Unknown decision criteria. Three-stakeholder deal being run as a two-stakeholder pursuit.</div></div>
+          <span class="db-f-sev db-f-high">HIGH</span>
+        </div>
+        <div class="db-f-row">
+          <span class="db-f-code">2.11</span>
+          <div class="db-f-info"><div class="db-f-name">Procurement Black Box</div><div class="db-f-desc">Procurement entered at week 6 with no pre-conditioning. Expect 14+ redlines, discount demand, and competitive benchmarking exercise.</div></div>
+          <span class="db-f-sev db-f-med">MED</span>
+        </div>
+        <div class="db-f-row">
+          <span class="db-f-code">3.02</span>
+          <div class="db-f-info"><div class="db-f-name">Fear-Driven Selling</div><div class="db-f-desc">Account team showing avoidance behaviour around CFO engagement. Two meeting requests declined. Risk of bypassing the actual decision-maker.</div></div>
+          <span class="db-f-sev db-f-med">MED</span>
+        </div>
+        <div class="db-f-row">
+          <span class="db-f-code">1.04</span>
+          <div class="db-f-info"><div class="db-f-name">Margin Compression Risk</div><div class="db-f-desc">Pricing not anchored to value methodology. Current proposal uses cost-plus. Vulnerable to procurement squeeze. No cost-of-inaction model built.</div></div>
+          <span class="db-f-sev db-f-low">LOW</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Prescription -->
+    <div class="db-panel" id="panel-prescription">
+      <div class="db-chain">
+        <div class="db-chain-step">
+          <div class="db-chain-num">1</div>
+          <div class="db-chain-info">
+            <div><span class="db-chain-code">A-05</span><span class="db-chain-name">Authority Map</span></div>
+            <div class="db-chain-why">Map real power structure. CIO thinks she has authority — CFO actually controls budget and has veto. Build the coalition map before the next meeting, not after.</div>
+          </div>
+        </div>
+        <div class="db-chain-connector">&darr;</div>
+        <div class="db-chain-step">
+          <div class="db-chain-num">2</div>
+          <div class="db-chain-info">
+            <div><span class="db-chain-code">I-01</span><span class="db-chain-name">Pre-Mortem</span></div>
+            <div class="db-chain-why">Model the CFO veto scenario in detail. What does he say to the board? What evidence does he use? Build the inoculation strategy — give the CIO the language to defend the investment in his terms.</div>
+          </div>
+        </div>
+        <div class="db-chain-connector">&darr;</div>
+        <div class="db-chain-step">
+          <div class="db-chain-num">3</div>
+          <div class="db-chain-info">
+            <div><span class="db-chain-code">A-13</span><span class="db-chain-name">HUMINT Elicitation</span></div>
+            <div class="db-chain-why">CPO is the unknown variable. Before any commercial conversation, get intel. Use calibrated questions, not direct asks. Map his procurement philosophy — is he a gatekeeper or a facilitator?</div>
+          </div>
+        </div>
+        <div class="db-chain-connector">&darr;</div>
+        <div class="db-chain-step">
+          <div class="db-chain-num">4</div>
+          <div class="db-chain-info">
+            <div><span class="db-chain-code">G-05</span><span class="db-chain-name">First 15 Minutes</span></div>
+            <div class="db-chain-why">Recalibrated meeting script. Open with the CFO's implementation fear — acknowledge the previous vendor failure before he raises it. Lead with risk mitigation, not capability.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel: Evidence -->
+    <div class="db-panel" id="panel-evidence">
+      <div class="db-evidence">
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--green)">14</div>
+          <div class="db-ev-label">Verified Claims</div>
+          <div class="db-ev-detail">Cross-referenced against public filings, LinkedIn, company website, and two meeting transcripts.</div>
+        </div>
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--amber)">3</div>
+          <div class="db-ev-label">Claimed / Unverified</div>
+          <div class="db-ev-detail">Account team assertions without corroborating evidence. Treated as hypotheses, not facts.</div>
+        </div>
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--red)">2</div>
+          <div class="db-ev-label">Contradicted</div>
+          <div class="db-ev-detail">Team claimed "strong CFO relationship." Evidence shows two declined meetings and no direct communication in 90 days.</div>
+        </div>
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--blue)">72%</div>
+          <div class="db-ev-label">Confidence Score</div>
+          <div class="db-ev-detail">CPO data gap is the primary reducer. With HUMINT elicitation complete, expect 85-90%.</div>
+        </div>
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--purple)">67m</div>
+          <div class="db-ev-label">Time to Verdict</div>
+          <div class="db-ev-detail">From raw intake (CRM export + 2 call transcripts + pitch deck) to CEO-ready diagnostic.</div>
+        </div>
+        <div class="db-ev-card">
+          <div class="db-ev-num" style="color:var(--text-bright)">6</div>
+          <div class="db-ev-label">Sources Ingested</div>
+          <div class="db-ev-detail">CRM export, two call transcripts, pitch deck, LinkedIn profiles (4), company 10-K filing.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ FINAL CTA ═══════════════ -->
+<section class="cta-section reveal">
+  <h2>Get Your Account Pack</h2>
+  <p class="cta-sub">David Matthews runs the diagnostic on your deal. One stalled deal. 180 minutes. A complete intelligence briefing — not a slide deck.</p>
+  <a href="/engage.html" class="hero-cta">Start the Diagnostic</a>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <p class="footer-text">
+    &copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk" target="_blank">LinkedIn</a> &middot; GAIN Protocol
+  </p>
+</footer>
+
+<!-- Engine & Hub detail panels (positioned fixed, outside flow) -->
+<div class="eng-panel" id="engPanel"></div>
+<div class="hub-panel" id="hubPanel">
+  <h3>00 &mdash; Diagnostic Engine</h3>
+  <p>Six-prompt chain: Intake &rarr; Taxonomy Scan &rarr; Evidence Audit &rarr; Prescription &rarr; Dashboard &rarr; Verdict.</p>
+  <p>Scans against 30 commercial failure patterns and 9 CRM verification signals. Accepts any data: CRM exports, call transcripts, pitch decks, even voice rants.</p>
+  <div class="hub-verdict">Verdict: Kill it. Fix it. Accelerate it.</div>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
 <script>
-// Close ALL radial menus on outside click
-document.addEventListener('click', (e) => {
-    document.querySelectorAll('.radial-toggle').forEach(toggle => {
-        if (toggle.checked && !e.target.closest('.radial-menu')) {
-            toggle.checked = false;
-        }
-    });
+// ── Wheel Data: 67 engines across 17 clusters ──
+const DATA = {
+  g:{color:'#93c5fd',bg:'rgba(59,130,246,0.08)',clusters:[
+    {icon:'&#x1F4CA;',name:'Company Intel',count:5,engines:[
+      {c:'G-01',t:'Macro Intel',d:'10-K signals, board mandates, bleeding necks, competitive landscape'},
+      {c:'G-02',t:'Financial Forensics',d:'Named-process cost methodology, P&L language, cost of inaction'},
+      {c:'G-08',t:'Budget Cycle Predictor',d:'Maps FYE to budget phases, timing windows, urgency triggers'},
+      {c:'G-15',t:'Cross-Reference Engine',d:'Narrative gaps between website, financials, individuals'},
+      {c:'G-17',t:'Source Scraping Protocol',d:'Operator checklist for gathering all source material'}]},
+    {icon:'&#x1F9E0;',name:'Stakeholder Psych',count:4,engines:[
+      {c:'G-03',t:'Executive Intelligence',d:'Kegan stage, GAIN driver, decision architecture, modality'},
+      {c:'G-09',t:'Compact Profile',d:'Quick cheat sheet — one question, one landmine per person'},
+      {c:'G-18',t:'Belief System Decoder',d:'Core conviction, decision triggers, trust architecture'},
+      {c:'G-16',t:'NED Governance Map',d:'Board committees, NED influence scoring, warm intro network'}]},
+    {icon:'&#x2694;',name:'Competitive Intel',count:3,engines:[
+      {c:'G-04',t:'Battle Card',d:'Status Quo Disruptor questions, stakeholder-specific intelligence'},
+      {c:'G-10',t:'Hiring Signal Decoder',d:'Hidden mandate and headcount cost from job descriptions'},
+      {c:'G-19',t:'Narrative Gap Finder',d:'Contradictions between strategy and execution'}]},
+    {icon:'&#x1F399;',name:'Meeting Prep',count:5,engines:[
+      {c:'G-05',t:'First 15 Minutes',d:'Meeting scripts calibrated to stakeholder psychology'},
+      {c:'G-06',t:'Narrative Lock',d:'Single controlling narrative tested against all stakeholders'},
+      {c:'G-07',t:'9-Pillar Compact',d:'Rapid 3-minute pre-meeting brief across 9 intelligence pillars'},
+      {c:'G-11',t:'Slide Relevancy Audit',d:'KEEP / CUT / MODIFY / REORDER / CREATE on your deck'},
+      {c:'G-21',t:'Call Planner',d:'Objective hierarchy, stakeholder prep, gap-mapped discovery'}]},
+    {icon:'&#x1F6E1;',name:'Quality & Evidence',count:4,engines:[
+      {c:'G-12',t:'Pre-Mortem',d:'5 failure scenarios with pre-emptive actions and accusation audits'},
+      {c:'G-13',t:'Objection Prep',d:'Per-stakeholder objections with accusation audits, pivots'},
+      {c:'G-14',t:'Hallucination Check',d:'Fact-verification of any GAIN output against source material'},
+      {c:'G-20',t:'Customer Evidence Builder',d:'7-module proof factory: corridor points, champion scripts'}]}
+  ]},
+  a:{color:'#d8b4fe',bg:'rgba(168,85,247,0.08)',clusters:[
+    {icon:'&#x1F4DC;',name:'RFP & Complexity',count:4,engines:[
+      {c:'A-01',t:'RFP Strategic Decoder',d:'Authorship analysis, trauma archaeology, criteria weighting'},
+      {c:'A-02',t:'Trauma Decoder',d:'Organisational wounds — past failures shaping requirements'},
+      {c:'A-08',t:'Logic Engine',d:'Complexity scoping, silent killer detection, decision trees'},
+      {c:'A-16',t:'TUPE Mapper',d:'People transfer risk, fear factors, institutional DNA'}]},
+    {icon:'&#x1F451;',name:'Power & Influence',count:4,engines:[
+      {c:'A-03',t:'Stakeholder Discovery',d:'Entity extraction from all sources, missing person gap analysis'},
+      {c:'A-05',t:'Authority Map',d:'Formal vs informal power, winning coalition, blocker neutralisation'},
+      {c:'A-14',t:'Cross-Stakeholder Dynamics',d:'Alliance/tension mapping, coalition modelling'},
+      {c:'A-15',t:'Culture & Values',d:'Stated vs real culture, working style compatibility'}]},
+    {icon:'&#x1F3AF;',name:'Psychology & Motive',count:4,engines:[
+      {c:'A-04',t:'Motivation Map',d:'Per-stakeholder Black Swan, hidden drivers, Kegan immunity'},
+      {c:'A-12',t:'Psych Driver Decoder',d:'6 Human Drivers + GAIN Driver cross-reference'},
+      {c:'A-13',t:'HUMINT Elicitation',d:'Conversational intel questions — modality-calibrated'},
+      {c:'A-11',t:'Engagement Plans',d:'Per-stakeholder cards: hook, value drop, calibrated ask'}]},
+    {icon:'&#x1F4B0;',name:'Commercial',count:4,engines:[
+      {c:'A-06',t:'Deal Strategy Synthesis',d:'Master execution plan — timeline, milestones, risk register'},
+      {c:'A-07',t:'Placemat Visualiser',d:'Single-page FROM / TO / BRIDGE with client language'},
+      {c:'A-09',t:'Commercial Shield',d:'Margin protection — black hole risks, defensive definitions'},
+      {c:'A-10',t:'Lever Engine',d:'Commercial variables, trade-off matrix, stakeholder-matched levers'}]}
+  ]},
+  i:{color:'#fcd34d',bg:'rgba(245,158,11,0.08)',clusters:[
+    {icon:'&#x1F3C6;',name:'Win Strategy',count:4,engines:[
+      {c:'I-01',t:'Pre-Mortem',d:'Deep failure forensics with stakeholder cascade modelling'},
+      {c:'I-01B',t:'Lose Theme Architect',d:'Reverse-engineer why you LOSE — inoculation targets'},
+      {c:'I-02',t:'Win Theme Architect',d:'Zigzag: Lose → Win → Evidence → Verification Question'},
+      {c:'I-03',t:'Competitor Kill-Shot',d:'Ghost objections, verification questions as displacement weapons'}]},
+    {icon:'&#x1F4DD;',name:'Narrative & Proposal',count:3,engines:[
+      {c:'I-05',t:'4-Act Executive Summary',d:'Context → Complication → Resolution → Proof'},
+      {c:'I-06',t:'Response Section Drafter',d:'Scoring-aware, trauma-aware, evaluator-calibrated'},
+      {c:'I-08',t:'Commercial Narrative',d:'Pricing story, cost-of-inaction reframe, the CFO sentence'}]},
+    {icon:'&#x1F9EE;',name:'Scoring & Audit',count:2,engines:[
+      {c:'I-04',t:'Evaluation Scoring',d:'LOCK / PUSH / CRITICAL / DEFEND per criterion'},
+      {c:'I-07',t:"Devil's Advocate",d:'Self-scoring, evidence audit, competitor shadow-scoring'}]},
+    {icon:'&#x1F3AD;',name:'Performance',count:2,engines:[
+      {c:'I-09',t:'Orals Choreography',d:'Speaker allocation, evaluator attention map, Q&A prep'},
+      {c:'I-10',t:'Pursuit Storyboard',d:'Full timeline, backward-pass, GAIN chain status, gates'}]}
+  ]},
+  n:{color:'#6ee7b7',bg:'rgba(16,185,129,0.08)',clusters:[
+    {icon:'&#x1F4C8;',name:'Growth & Expansion',count:4,engines:[
+      {c:'N-01',t:'Expansion Signal Scan',d:'Whitespace analysis, expansion signals from delivery data'},
+      {c:'N-02',t:'Referral Mapper',d:'Stakeholder referral willingness, cross-sell bridges'},
+      {c:'N-03',t:'90-Day Campaign',d:'Week-by-week expansion plan with qualification checkpoints'},
+      {c:'N-04',t:'Expansion Qualifier',d:'Per-letter MEDDIC scoring, Go/No-Go, pursuit cost vs return'}]},
+    {icon:'&#x1F6E1;',name:'Defence & Risk',count:4,engines:[
+      {c:'N-05',t:'Account Health Dashboard',d:'4-dimension score, early warnings, churn prediction'},
+      {c:'N-06',t:'Renewal Risk Audit',d:'18-month assessment — value delivered vs promised'},
+      {c:'N-07',t:'New Leader Protocol',d:'New stakeholder profile, competitor bias check, 30-day plan'},
+      {c:'N-08',t:'Threat Detection Scan',d:'Competitive, political, commercial, delivery dimensions'}]},
+    {icon:'&#x1F3BC;',name:'Campaign & Orchestration',count:2,engines:[
+      {c:'N-12',t:'Campaign Choreography',d:'Multi-touch multi-stakeholder engagement, milestone gates'},
+      {c:'N-11',t:'Internal Business Case',d:'Honest pursue / park / walk recommendation with ROI'}]},
+    {icon:'&#x1F4CA;',name:'Value & Reporting',count:3,engines:[
+      {c:'N-00',t:'Warning Brief',d:'Sales-to-delivery handover — promises, exclusions, landmines'},
+      {c:'N-09',t:'Board-Level Value Report',d:'Quantified value using named-process methodology'},
+      {c:'N-10',t:'Continuous Intel Monitor',d:'Delta analysis against G-01 baseline — change-only flagging'}]}
+  ]}
+};
+
+// ── Phase positions and cluster angles ──
+const POS = {g:{x:22,y:50},a:{x:50,y:22},i:{x:78,y:50},n:{x:50,y:78}};
+const ANGLES = {
+  g:[-120,-145,-170,170,145],
+  a:[-40,-65,-100,-125],
+  i:[40,15,-5,-30],
+  n:[140,115,80,55]
+};
+const DIST = 22;
+
+const clusterLayer = document.getElementById('clusterLayer');
+const engPanel = document.getElementById('engPanel');
+const hubPanel = document.getElementById('hubPanel');
+const hub = document.getElementById('hub');
+let activePhase = null;
+let clearTimer = null;
+
+// ── Hub interaction ──
+hub.addEventListener('mouseenter', e => {
+  clearPhase();
+  const r = hub.getBoundingClientRect();
+  hubPanel.style.left = (r.right + 12) + 'px';
+  hubPanel.style.top = Math.max(10, r.top - 40) + 'px';
+  if (r.right + 360 > window.innerWidth) {
+    hubPanel.style.left = (r.left - 360) + 'px';
+  }
+  hubPanel.classList.add('show');
 });
-// Close radials on scroll
-document.addEventListener('scroll', () => {
-    document.querySelectorAll('.radial-toggle').forEach(toggle => {
-        if (toggle.checked) toggle.checked = false;
-    });
+hub.addEventListener('mouseleave', () => {
+  clearTimer = setTimeout(() => {
+    if (!hubPanel.matches(':hover')) hubPanel.classList.remove('show');
+  }, 200);
 });
-// Only one radial open at a time
-document.querySelectorAll('.radial-toggle').forEach(toggle => {
-    toggle.addEventListener('change', function() {
-        if (this.checked) {
-            document.querySelectorAll('.radial-toggle').forEach(other => {
-                if (other !== this) other.checked = false;
-            });
-        }
-    });
+hubPanel.addEventListener('mouseenter', () => clearTimeout(clearTimer));
+hubPanel.addEventListener('mouseleave', () => hubPanel.classList.remove('show'));
+
+// ── Phase interaction ──
+document.querySelectorAll('.phase').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const p = el.dataset.phase;
+    if (activePhase === p) return;
+    hubPanel.classList.remove('show');
+    engPanel.classList.remove('show');
+    clearPhase();
+    activePhase = p;
+    el.classList.add('active');
+    showClusters(p);
+  });
 });
-</script>
 
-<script>
-(function() {
-    const e = React.createElement;
-    const { useState, useEffect } = React;
+function clearPhase() {
+  activePhase = null;
+  clusterLayer.innerHTML = '';
+  engPanel.classList.remove('show');
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+}
 
-    // ─── MERIDIAN DATA ───
-    const ACCOUNT = {
-        name: "Meridian Financial Services",
-        sector: "Financial Services & Insurance",
-        seller: "Helios Technology Group",
-        dealValue: "£95-110M",
-        acv: "£13.6-15.7M",
-        term: "7 Years",
-        tcv7yr: "£95-110M TCV (7yr)",
-        status: "LIVE BID",
-        submissionDate: "28 March 2026",
-        lastUpdated: "26 Feb 2026",
-        winProbability: 68,
-        serviceDescription: "Full-scope IT Managed Services including infrastructure management, cloud hosting & migration, service desk, end-user computing support, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff from incumbent provider.",
-        nonStandard: [
-            "Integrated Operational Resilience capability (aligned to ISO 22301 certification journey)",
-            "AIOps predictive incident management embedded from Day 1",
-            "60/40 Gain-Share mechanism on automation savings above agreed baselines",
-            "2% ring-fenced Innovation Fund (£106K/yr) with joint governance",
-            "10% Risk Pot (£530K) held back against SLA performance — released at M6/M12"
-        ],
-        dealType: "Competitive outsource — full IT infrastructure managed services renewal. Incumbent displaced.",
-        clientSummary: "Meridian Financial Services is a £2.1B revenue UK-based financial services and insurance group. ~8,400 employees across 12 UK offices. Regulated by PRA/FCA. Midmarket FS — large enough for complex infrastructure, small enough that relationships matter.",
-        clientHistory: "Founded 1987 as specialist commercial insurance underwriter. Expanded into retail financial services (2004) and wealth management (2012). Listed on LSE since 1998. Survived 2008 via conservative risk culture. Current CEO Whitfield appointed 2019 from Aviva.",
-        clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Reinsurance",
-        bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026."
-    };
+function showClusters(phase) {
+  const d = DATA[phase];
+  const p = POS[phase];
+  const angles = ANGLES[phase];
 
-    const G02_FINANCIALS = {
-        costOfInaction: "£8.3M/yr",
-        wasteIdentified: "£33-37M",
-        microOutages: "£2.8M annual hard cost",
-        falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
-        consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
-        praVendors: "+52 vendors by Q2 2026 → +2,000 FTE hours",
-        heliosValue: "£12-15M cumulative 5yr savings"
-    };
+  d.clusters.forEach((cl, idx) => {
+    const el = document.createElement('div');
+    el.className = 'cluster';
+    el.style.borderColor = d.color.replace(')', ',0.12)').replace('rgb', 'rgba');
+    el.innerHTML = `<span class="cl-icon">${cl.icon}</span><span class="cl-name" style="color:${d.color}">${cl.name}</span><div class="cl-count">${cl.count} engines</div>`;
 
-    const STAKEHOLDERS = [
-        { id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite", status: "unknown", authority: 95, influence: 90, gainDriver: "Power", kegan: "Stage 4 (Self-Authoring)", summary: "25yr FS veteran. Board-facing. Burned by £67M 'Operation Meridian' failure. Won't tolerate another Big Bang.", trigger: "Board confidence, brand protection, regulatory clean sheet", avoid: "Vendor hype, over-promising, anything resembling Operation Meridian", modality: "Visual — executive summaries, dashboards, one-page briefs" },
-        { id: "hale", name: "Richard Hale", role: "CIO", level: "C-Suite", status: "established", authority: 85, influence: 80, gainDriver: "Achievement", kegan: "Stage 4→5 (Self-Transforming)", summary: "Technical architect turned CIO. Intellectually curious. Wants AI as baseline, not differentiator. Frustrated by 'last 28%' legacy apps.", trigger: "Architectural thinking, production evidence, intellectual depth", avoid: "Feature lists, vendor hype, demo-ware without production proof", modality: "Read/Write — technical papers, architecture diagrams, data" },
-        { id: "thompson", name: "Mark Thompson", role: "CFO", level: "C-Suite", status: "targeted", authority: 88, influence: 30, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Zenith Insurance alumnus. Burned by a managed services deal that over-promised savings. Demands 'show me the workings.'", trigger: "Named-process cost methodology, first-number rigour, audit trail", avoid: "Directional numbers, unattributed savings, missing baselines", modality: "Read/Write — spreadsheets, financial models, named attribution" },
-        { id: "osei", name: "Daniel Osei", role: "CRO", level: "C-Suite", status: "targeted", authority: 82, influence: 70, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Board-level risk officer. Dual governance model (formal + informal). Kill phrase: 'checkbox compliance.' Veto power over any vendor.", trigger: "Genuine risk culture, forward-looking intelligence, tested frameworks", avoid: "Checkbox compliance, theoretical frameworks, untested DR plans", modality: "Auditory/Kinesthetic → Data Visual when presenting to Board" },
-        { id: "morris", name: "Jennifer Morris", role: "Dir, Operational Resilience", level: "Senior", status: "champion", authority: 60, influence: 85, gainDriver: "Achievement", kegan: "Stage 3→4", summary: "14+ yrs resilience/risk. Chairs Resilience Steering Committee. Our identified champion. Reduced incident response 47%. Leads ISO 22301.", trigger: "Peer credibility (Rachel), resilience depth, practical frameworks", avoid: "Talking down, theoretical-only approaches, ignoring her expertise", modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Osei" },
-        { id: "chen", name: "Andrew Chen", role: "Head of IT Infrastructure", level: "Operational", status: "targeted", authority: 20, influence: 75, gainDriver: "Safety", kegan: "Stage 3 (Socialised Mind)", summary: "15yr Meridian veteran. His team IS the TUPE cohort. Protective. BS detector is extreme — vendor corporate language triggers shutdown.", trigger: "People-first language, honest gaps, retention data, respect for his team", avoid: "Corporate language, dismissing his team's expertise, AI-replaces-people framing", modality: "Kinesthetic — site visits, meeting his team, showing not telling" },
-        { id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior", status: "established", authority: 50, influence: 20, gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)", summary: "Process guardian. Controls access to Whitfield. Fair but firm. Values structured compliance, transparent pricing, no procurement theatre.", trigger: "Clean documentation, transparent pricing, structured process", avoid: "End-running procurement, pricing games, last-minute surprises", modality: "Read/Write — structured documents, compliance matrices" },
-        { id: "harrison", name: "Neil Harrison", role: "Head of IT Service Management", level: "Operational", status: "established", authority: 30, influence: 50, gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)", summary: "ITIL practitioner. Wants 'three examples' for everything. Scored highest on evidence density. Will ask about TUPE transfer volume.", trigger: "Operational specificity, maintained KPIs, three examples minimum", avoid: "High-level phases without cases, vague transition plans", modality: "Read/Write — case studies, operational metrics, process maps" }
-    ];
+    const rad = angles[idx] * Math.PI / 180;
+    const x = Math.max(4, Math.min(96, p.x + Math.cos(rad) * DIST));
+    const y = Math.max(4, Math.min(96, p.y + Math.sin(rad) * DIST));
+    el.style.left = x + '%';
+    el.style.top = y + '%';
 
-    const COMPETITORS = [
-        { name: "Fortis Global Services", label: "Scale-first global delivery model", revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+", dangerRating: "HIGH", dangerWith: ["Whitfield", "Harrison"], weakness: "78% post-TUPE retention, 18-24mo leadership rotation", killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?" },
-        { name: "Saraswati Digital", label: "Offshore-leveraged automation platform", revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS", dangerRating: "MEDIUM", dangerWith: ["Hale", "Thompson"], weakness: "Cultural fit gap, limited UK FS regulatory depth", killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, outcome." },
-        { name: "Nexus Technology Partners", label: "Technology-first reseller model", revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal", dangerRating: "LOW", dangerWith: ["Hale"], weakness: "No managed services pedigree", killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services." }
-    ];
-
-    const SCORING = {
-        helios: 3.85, target: 4.65, fortis: 3.55, saraswati: 3.40,
-        criteria: [
-            { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
-            { code: "TC-02", label: "Automation & AI", weight: 5.4, helios: 3, fortis: 3, saraswati: 5, strategy: "DEFEND" },
-            { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
-            { code: "TC-04", label: "Resilience & DR", weight: 5.4, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
-            { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-            { code: "CC-01", label: "Cost Glide Path", weight: 9.6, helios: 2, fortis: 3, saraswati: 4, strategy: "CRITICAL" },
-            { code: "CC-02", label: "Pricing Model", weight: 7.2, helios: 4, fortis: 3, saraswati: 3, strategy: "PUSH" },
-            { code: "CC-04", label: "Compliance", weight: 2.4, helios: 5, fortis: 4, saraswati: 3, strategy: "LOCK" },
-            { code: "IF-01", label: "Informal Session", weight: 15, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" }
-        ]
-    };
-
-    const FAILURE_SCENARIOS = [
-        { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
-        { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
-        { id: 3, label: "Competitive Displacement", probability: "20%", trigger: "Fortis delivers 'show me three' to Harrison before we plant retention question" },
-        { id: 4, label: "Champion Isolation", probability: "15%", trigger: "Jennifer's advocacy neutralised by Osei's risk veto" },
-        { id: 5, label: "Silent No", probability: "20%", trigger: "Whitfield never engages, Board defaults to safe brand (Fortis)" }
-    ];
-
-    // ─── INJECT GLOBAL ANIMATION STYLES ───
-    const InjectStyles = () => e("style", { 
-        dangerouslySetInnerHTML: { 
-            __html: `
-                @keyframes dash-fill { from { stroke-dashoffset: 94.2; } to { stroke-dashoffset: 0; } }
-                @keyframes fade-in-up { 0% { opacity: 0; transform: translateY(12px) scale(0.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-                .glow-emerald { box-shadow: 0 0 12px rgba(52, 211, 153, 0.4); }
-                .glow-amber { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
-                .animate-dash { animation: dash-fill 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-                .animate-bento { animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-            ` 
-        } 
+    el.addEventListener('mouseenter', () => showEngines(cl, d.color, el));
+    el.addEventListener('mouseleave', () => {
+      clearTimer = setTimeout(() => {
+        if (!engPanel.matches(':hover')) engPanel.classList.remove('show');
+      }, 150);
     });
 
-    // ─── UTILITY COMPONENTS ───
-    const StatusDot = ({ status }) => {
-        const colors = {
-            champion: "bg-emerald-400 glow-emerald",
-            established: "bg-emerald-600",
-            targeted: "bg-amber-400 glow-amber",
-            unknown: "bg-neutral-500"
-        };
-        return e("span", { className: `inline-block w-2 h-2 rounded-full shadow-inner ${colors[status] || colors.unknown}` });
-    };
+    clusterLayer.appendChild(el);
+    requestAnimationFrame(() => setTimeout(() => el.classList.add('show'), idx * 80));
+  });
+}
 
-    const Badge = ({ children, color = "blue" }) => {
-        const styles = {
-            blue: "bg-blue-950/50 border-blue-500/30 text-blue-300",
-            red: "bg-red-950/50 border-red-500/30 text-red-300",
-            green: "bg-emerald-950/50 border-emerald-500/30 text-emerald-300",
-            amber: "bg-amber-950/50 border-amber-500/30 text-amber-300",
-            purple: "bg-purple-950/50 border-purple-500/30 text-purple-300",
-            gray: "bg-neutral-800/60 border-neutral-600/40 text-neutral-300"
-        };
-        return e("span", { className: `inline-block px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest border rounded backdrop-blur-sm shadow-sm ${styles[color]}` }, children);
-    };
+function showEngines(cl, color, fromEl) {
+  clearTimeout(clearTimer);
+  const r = fromEl.getBoundingClientRect();
+  let left = r.right + 10;
+  let top = r.top - 10;
 
-    const Section = ({ id, title, subtitle, children, defaultOpen = false, className = "" }) => {
-        const [open, setOpen] = useState(defaultOpen);
-        return e("div", { className: `glass-panel rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-0.5 hover:shadow-2xl hover:border-white/10 flex flex-col h-full ${className}` },
-            e("button", { 
-                onClick: () => setOpen(!open), 
-                className: "w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-3.5 bg-gradient-to-r from-neutral-900/50 to-transparent hover:bg-neutral-800/30 transition-colors text-left outline-none cursor-pointer" 
-            },
-                e("div", null,
-                    e("span", { className: "text-[10px] font-extrabold text-blue-500 uppercase tracking-widest block mb-0.5 opacity-80" }, id),
-                    e("span", { className: "text-sm md:text-base font-black text-white tracking-tight" }, title),
-                    subtitle && e("span", { className: "text-[11px] md:text-xs text-neutral-400 ml-3 font-medium hidden sm:inline" }, subtitle)
-                ),
-                e("span", { className: `text-neutral-500 transform transition-transform duration-300 ${open ? "rotate-180" : ""}` }, "▼")
-            ),
-            open && e("div", { className: "p-3 md:p-4 border-t border-white/5 flex-grow" }, children)
-        );
-    };
+  // Keep panel within viewport
+  if (left + 320 > window.innerWidth) left = Math.max(10, r.left - 320);
+  if (left < 10) left = 10;
+  if (top + 350 > window.innerHeight) top = Math.max(10, window.innerHeight - 360);
+  if (top < 10) top = 10;
 
-    // ─── MAIN DASHBOARD COMPONENT ───
-    const GAINAccountPack = () => {
-        const [activeTab, setActiveTab] = useState("exec");
-        const [selectedPerson, setSelectedPerson] = useState(null);
+  engPanel.style.left = left + 'px';
+  engPanel.style.top = top + 'px';
+  engPanel.innerHTML = `<div class="eng-title" style="color:${color}">${cl.icon} ${cl.name} &mdash; ${cl.count} Engines</div>` +
+    cl.engines.map(e => `<div class="eng-item"><strong>${e.c}</strong> ${e.t}<div class="desc">${e.d}</div></div>`).join('');
+  engPanel.classList.add('show');
+}
 
-        const tabs = [
-            { id: "exec", label: "Exec Summary", desc: "Bento intelligence view" },
-            { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
-            { id: "assess", label: "A | Map", desc: "RFP decode & bid mapping" },
-            { id: "influence", label: "I | Win", desc: "Strategy, scoring & edge" },
-            { id: "nurture", label: "N | Grow", desc: "Post-win expansion" }
-        ];
+engPanel.addEventListener('mouseenter', () => clearTimeout(clearTimer));
+engPanel.addEventListener('mouseleave', () => engPanel.classList.remove('show'));
 
-        const renderFinancials = () => e("div", { className: "grid grid-cols-2 md:grid-cols-6 gap-3" },
-            [
-                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
-                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
-                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
-                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
-                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" }
-            ].map((v, i) => e("div", { key: i, className: "glass-panel bg-neutral-950/40 rounded-xl p-3 transition-all hover:bg-neutral-900/60" },
-                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold mb-1" }, v.label),
-                e("div", { className: `text-base md:text-lg font-black tracking-tight ${v.color}` }, v.value),
-                e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-medium" }, v.sub)
-            ))
-        );
+// ── Click outside to close wheel panels ──
+document.addEventListener('click', e => {
+  if (!e.target.closest('.wrap') && !e.target.closest('.eng-panel') && !e.target.closest('.hub-panel')) {
+    clearPhase();
+    hubPanel.classList.remove('show');
+  }
+});
 
-        const renderClientAndOpportunity = () => e(Section, { id: "BRIEF", title: "The Opportunity", subtitle: ACCOUNT.dealType, defaultOpen: true },
-            e("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5" },
-                e("div", null,
-                    e("h4", { className: "text-[10px] font-extrabold text-emerald-400 uppercase tracking-widest mb-2" }, "The Client"),
-                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" }, ACCOUNT.clientSummary),
-                    e("div", { className: "flex flex-wrap gap-2" }, ACCOUNT.clientDomains.split(", ").map((d, i) => e(Badge, { key: i, color: "gray" }, d)))
-                ),
-                e("div", null,
-                    e("h4", { className: "text-[10px] font-extrabold text-blue-400 uppercase tracking-widest mb-2" }, "Non-Standard / Edge"),
-                    e("div", { className: "space-y-2" }, ACCOUNT.nonStandard.map((n, i) => e("div", { key: i, className: "flex items-start gap-2 text-[11px] md:text-xs bg-neutral-950/30 p-2 rounded-lg border border-white/5" },
-                        e("span", { className: "text-amber-400 text-[10px] mt-0.5 shrink-0" }, "◆"),
-                        e("span", { className: "text-neutral-300 font-medium" }, n)
-                    )))
-                )
-            )
-        );
+// ── Scroll reveal fallback for browsers without scroll-driven animations ──
+if (!CSS.supports('animation-timeline', 'view()')) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
 
-        const renderStakeholders = () => e(Section, { id: "PEOPLE", title: "Boardroom Intelligence", subtitle: `${STAKEHOLDERS.length} profiled · Click any name to expand dossier`, defaultOpen: true },
-            e("div", { className: "flex flex-wrap gap-2 mb-4" }, STAKEHOLDERS.map(s => e("button", {
-                key: s.id,
-                onClick: () => setSelectedPerson(selectedPerson === s.id ? null : s.id),
-                className: `group relative flex items-center gap-2 pr-3 md:pr-4 pl-1.5 py-1.5 rounded-full border transition-all duration-300 hover:scale-[1.02] cursor-pointer 
-                    ${selectedPerson === s.id ? "bg-blue-950/50 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]" : 
-                      "glass-panel hover:bg-neutral-800/50"}`
-            }, 
-               e("div", { className: "w-6 h-6 md:w-7 md:h-7 rounded-full bg-neutral-800 flex items-center justify-center font-black text-[10px] text-white border border-white/10 shrink-0" }, 
-    `${s.name.split(" ")[0][0]}${s.name.split(" ")[1][0]}`
-),
-                e("div", { className: "text-left leading-tight" },
-                    e("div", { className: "flex items-center gap-1.5" },
-                        e(StatusDot, { status: s.status }),
-                        e("span", { className: "text-[11px] md:text-xs font-bold text-white tracking-wide" }, s.name)
-                    ),
-                    e("div", { className: "text-[8px] md:text-[9px] text-neutral-500 uppercase tracking-wider font-semibold mt-0.5" }, s.role)
-                )
-            ))),
-            selectedPerson && (() => {
-                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
-                if (!p) return null;
-                return e("div", { className: "bg-gradient-to-br from-neutral-900 to-neutral-950 border border-blue-500/30 rounded-xl p-4 md:p-5 shadow-inner-xl animate-bento" },
-                    e("div", { className: "flex flex-wrap items-center gap-2 md:gap-3 mb-4 border-b border-white/5 pb-4" },
-                        e("span", { className: "text-lg md:text-xl font-black text-white tracking-tight" }, p.name),
-                        e("span", { className: "text-[11px] md:text-xs text-neutral-400" }, p.role),
-                        e(Badge, { color: p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue" }, p.status),
-                        e(Badge, { color: "purple" }, `Drive: ${p.gainDriver}`),
-                        e(Badge, { color: "gray" }, p.kegan)
-                    ),
-                    e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-4 font-medium" }, p.summary),
-                    e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" },
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-emerald-900/30" },
-                            e("div", { className: "text-[9px] text-emerald-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Winning Triggers"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.trigger)
-                        ),
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-red-900/30" },
-                            e("div", { className: "text-[9px] text-red-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Fatal Landmines"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.avoid)
-                        ),
-                        e("div", { className: "bg-neutral-950/60 rounded-lg p-3 border border-blue-900/30" },
-                            e("div", { className: "text-[9px] text-blue-400 uppercase tracking-widest font-extrabold mb-1.5" }, "Communication Modality"),
-                            e("div", { className: "text-[10px] md:text-xs text-neutral-300 leading-relaxed" }, p.modality)
-                        )
-                    )
-                );
-            })()
-        );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
 
-        const renderCompetition = () => e(Section, { id: "COMP", title: "Competitive Map", defaultOpen: false },
-            e("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-3" }, COMPETITORS.map((c, i) => e("div", { key: i, className: "bg-neutral-950/40 rounded-xl p-3 border border-white/5 transition-all hover:bg-neutral-900/60 flex flex-col h-full" },
-                e("div", { className: "flex justify-between items-start mb-2" },
-                    e("div", null,
-                        e("span", { className: "text-xs md:text-sm font-bold text-white mr-2 block mb-1" }, c.name),
-                        e(Badge, { color: c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green" }, c.dangerRating)
-                    ),
-                    e("span", { className: "text-[9px] text-neutral-500 font-mono" }, c.revenue)
-                ),
-                e("p", { className: "text-[10px] text-neutral-400 italic mb-3 flex-grow" }, `"${c.label}"`),
-                e("div", { className: "bg-red-950/20 rounded p-2 border border-red-900/20 text-[10px] md:text-[11px] text-neutral-300" },
-                    e("span", { className: "text-red-400 font-bold mr-1" }, "Kill Q:"), c.killQuestion
-                )
-            )))
-        );
+// ── Mobile Wheel Accordion (built from same DATA object) ──
+const PHASE_META = {
+  g: { letter: 'G', name: 'Gather', sub: 'Know Them', count: 21, color: '#3b82f6', light: '#93c5fd' },
+  a: { letter: 'A', name: 'Assess', sub: 'Map Them', count: 16, color: '#a855f7', light: '#d8b4fe' },
+  i: { letter: 'I', name: 'Influence', sub: 'Win Them', count: 11, color: '#f59e0b', light: '#fcd34d' },
+  n: { letter: 'N', name: 'Nurture', sub: 'Grow Them', count: 13, color: '#10b981', light: '#6ee7b7' }
+};
 
-        const renderWedge = () => e(Section, { id: "WEDGE", title: "The Narrative Wedge", defaultOpen: false },
-            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed mb-3" },
-                "Meridian has been burned by £67M \"Operation Meridian\" promises. ", e("span", { className: "text-white font-bold" }, "Do not sell a Big Bang.")
-            ),
-            e("p", { className: "text-xs md:text-sm text-neutral-300 leading-relaxed" },
-                "Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that ",
-                e("span", { className: "text-white font-bold border-b border-blue-500 pb-0.5" }, "their CIO gets our UK MD's mobile number.")
-            )
-        );
+function buildMobileWheel() {
+  const container = document.getElementById('mobileWheel');
+  if (!container) return;
 
-        const renderTimeline = () => e(Section, { id: "TIME", title: "Execution Window", defaultOpen: false },
-            e("div", { className: "space-y-2 md:space-y-3" }, [
-                { phase: "RFP Received", date: "Jan 2026", done: true },
-                { phase: "Clarification Window", date: "1-14 Mar", active: true },
-                { phase: "Submission Deadline", date: "28 Mar", hard: true },
-                { phase: "Evaluation & Orals", date: "Apr-May" }
-            ].map((m, i) => e("div", { key: i, className: "flex items-center gap-3 bg-neutral-950/30 p-2 md:p-2.5 rounded-lg border border-white/5" },
-                e("div", { className: `w-1.5 h-1.5 md:w-2 md:h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500" : m.hard ? "bg-red-500" : "bg-neutral-600"}` }),
-                e("span", { className: `text-[10px] md:text-[11px] font-semibold flex-1 ${m.done ? "text-neutral-500" : m.active ? "text-blue-300" : "text-white"}` }, m.phase),
-                e("span", { className: `text-[9px] uppercase tracking-widest font-bold ${m.hard ? "text-red-400" : "text-neutral-500"}` }, m.date)
-            )))
-        );
+  let html = '';
+  for (const [key, phase] of Object.entries(DATA)) {
+    const meta = PHASE_META[key];
+    html += `<div class="mw-phase" data-mw-phase="${key}">
+      <div class="mw-phase-header" onclick="toggleMWPhase(this)">
+        <div class="mw-letter" style="color:${meta.light};border-color:${meta.color}30;background:radial-gradient(circle,${meta.color}15,${meta.color}05)">${meta.letter}</div>
+        <div class="mw-phase-info">
+          <div class="mw-phase-name" style="color:${meta.light}">${meta.name}</div>
+          <div class="mw-phase-sub">${meta.sub}</div>
+        </div>
+        <div class="mw-phase-count">${meta.count} engines</div>
+        <div class="mw-chevron">&#x25BE;</div>
+      </div>
+      <div class="mw-clusters"><div class="mw-clusters-inner">`;
 
-        const renderActions = () => e(Section, { id: "ACTIONS", title: "Urgent Actions", subtitle: "+0.47 points at risk", defaultOpen: false },
-            e("div", { className: "space-y-2 md:space-y-3" }, [
-                { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.29 pts)", status: "NOT STARTED" },
-                { action: "Build Infrastructure Transition Blueprint", impact: "TC-03 protection (+0.13 pts)", status: "NOT STARTED" },
-                { action: "Rehearse live scenario with Chen", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" }
-            ].map((a, i) => e("div", { key: i, className: "flex items-start gap-2.5 bg-red-950/10 p-2.5 md:p-3 rounded-xl border border-red-900/30 hover:bg-red-950/20 transition-colors" },
-                e("div", { className: "w-3 h-3 rounded-full border-2 border-red-500/50 flex items-center justify-center shrink-0 mt-0.5" }),
-                e("div", null,
-                    e("div", { className: "text-xs md:text-sm font-bold text-neutral-200" }, a.action),
-                    e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 mt-1 font-mono" }, a.impact)
-                )
-            )))
-        );
+    for (const cl of phase.clusters) {
+      html += `<div class="mw-cluster">
+        <div class="mw-cluster-header" onclick="toggleMWCluster(this)">
+          <span class="mw-cl-icon">${cl.icon}</span>
+          <span class="mw-cl-name" style="color:${meta.light}">${cl.name}</span>
+          <span class="mw-cl-count">${cl.count}</span>
+          <span class="mw-cl-chevron">&#x25BE;</span>
+        </div>
+        <div class="mw-engines"><div class="mw-engines-inner">`;
 
-        return e("div", { className: "bg-neutral-950 text-neutral-200 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative" },
-            e(InjectStyles),
-            
-            e("div", { className: "relative border-b border-white/5 bg-gradient-to-br from-neutral-900/80 to-neutral-950 px-4 sm:px-6 lg:px-8 py-4 lg:py-6 overflow-hidden" },
-                e("div", { className: "absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none" }),
-                e("div", { className: "max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 relative z-10" },
-                    e("div", null,
-                        e("div", { className: "flex items-center gap-2 md:gap-3 mb-2 animate-bento" },
-                            e("span", { className: "text-[9px] md:text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em] font-mono" }, "GAIN Deal Engine"),
-                            e("span", { className: "inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-500/10 border border-red-500/20 rounded text-[9px] font-bold text-red-400 uppercase tracking-widest backdrop-blur-sm" },
-                                e("span", { className: "w-1.5 h-1.5 bg-red-500 rounded-full" }),
-                                ACCOUNT.status
-                            )
-                        ),
-                        e("h1", { className: "text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight mb-2 animate-bento", style: { animationDelay: '0.1s' } }, ACCOUNT.name),
-                        e("p", { className: "text-[10px] md:text-xs lg:text-sm text-neutral-400 font-medium animate-bento", style: { animationDelay: '0.2s' } }, 
-                            `Targeting ${ACCOUNT.sector} · Expected ACV: `, e("span", { className:"text-white font-bold"}, ACCOUNT.acv)
-                        )
-                    ),
-                    e("div", { className: "flex items-center gap-4 bg-neutral-950/50 p-3 md:p-4 rounded-2xl border border-white/5 backdrop-blur-md shadow-inner animate-bento", style: { animationDelay: '0.3s' } },
-                        e("div", { className: "text-right" },
-                            e("div", { className: "text-[9px] md:text-[10px] text-neutral-500 uppercase tracking-widest font-extrabold" }, "Win Probability"),
-                            e("div", { className: "text-2xl md:text-3xl font-black text-white mt-0.5" }, `${ACCOUNT.winProbability}%`)
-                        ),
-                        e("div", { className: "relative w-14 h-14 md:w-16 md:h-16 shrink-0" },
-                            e("svg", { viewBox: "0 0 36 36", className: "w-14 h-14 md:w-16 md:h-16 transform -rotate-90" },
-                                e("defs", null, 
-                                    e("linearGradient", { id: "winGrad", x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
-                                        e("stop", { offset: "0%", stopColor: "oklch(0.78 0.13 150)" }),
-                                        e("stop", { offset: "100%", stopColor: "oklch(0.72 0.14 240)" })
-                                    )
-                                ),
-                                e("circle", { cx: "18", cy: "18", r: "15", fill: "none", stroke: "rgba(255,255,255,0.05)", strokeWidth: "3" }),
-                                e("circle", { 
-                                    cx: "18", cy: "18", r: "15", fill: "none", 
-                                    stroke: "url(#winGrad)", strokeWidth: "3", 
-                                    strokeDasharray: "64.1 94.2", 
-                                    strokeLinecap: "round",
-                                    className: "animate-dash" 
-                                })
-                            )
-                        )
-                    )
-                )
-            ),
+      for (const eng of cl.engines) {
+        html += `<div class="mw-engine">
+          <span class="mw-engine-code" style="color:${meta.light}">${eng.c}</span>
+          <span class="mw-engine-title">${eng.t}</span>
+          <div class="mw-engine-desc">${eng.d}</div>
+        </div>`;
+      }
 
-            e("div", { className: "border-b border-white/5 bg-neutral-950/80 px-4 sm:px-6 lg:px-8 overflow-x-auto no-scrollbar" },
-                e("div", { className: "max-w-7xl mx-auto flex gap-2 pt-2" },
-                    tabs.map(t => e("button", {
-                        key: t.id,
-                        onClick: () => setActiveTab(t.id),
-                        className: `px-4 md:px-5 py-2.5 rounded-t-xl text-left transition-all duration-300 shrink-0 border border-b-0 cursor-pointer ${activeTab === t.id ? "border-white/10 bg-neutral-900/50 backdrop-blur-md" : "border-transparent text-neutral-500 hover:text-neutral-300 hover:bg-neutral-900/30"}`
-                    },
-                        e("span", { className: `text-xs md:text-sm font-bold block mb-0.5 tracking-wide ${activeTab === t.id ? "text-blue-400" : ""}` }, t.label),
-                        e("span", { className: `text-[9px] md:text-[10px] ${activeTab === t.id ? "text-neutral-400" : "text-neutral-600"}` }, t.desc)
-                    ))
-                )
-            ),
-
-            e("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-6 bg-neutral-950" }, 
-                activeTab === "exec" ? e("div", { className: "grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4 lg:gap-5 animate-bento" },
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.1s' } }, renderFinancials()),
-                    e("div", { className: "lg:col-span-8", style: { animationDelay: '0.2s' } }, renderClientAndOpportunity()),
-                    e("div", { className: "lg:col-span-4", style: { animationDelay: '0.3s' } }, renderWedge()),
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.4s' } }, renderStakeholders()),
-                    e("div", { className: "lg:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 lg:gap-5" },
-                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.5s' } }, renderTimeline()),
-                        e("div", { className: "flex flex-col md:col-span-6 lg:col-span-6", style: { animationDelay: '0.55s' } }, renderActions())
-                    ),
-                    e("div", { className: "lg:col-span-12", style: { animationDelay: '0.6s' } }, renderCompetition())
-                ) : e("div", { className: "text-center py-20 animate-bento" },
-                    e("p", { className: "text-sm text-neutral-400 font-medium mb-6" }, `Full structured intelligence for the [${activeTab.toUpperCase()}] phase is maintained in the complete workspace.`),
-                    e("a", { href: "dashboards.html", className: "inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 text-xs md:text-sm font-black rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-white/20" },
-                        "Access Complete Deal Workspace",
-                        e("svg", { className: "w-4 h-4", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", strokeWidth: 3 },
-                            e("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M13 7l5 5m0 0l-5 5m5-5H6" })
-                        )
-                    )
-                )
-            ),
-
-            e("div", { className: "border-t border-white/5 bg-neutral-950 px-4 sm:px-6 py-4 text-center" },
-                e("span", { className: "text-[9px] text-neutral-600 font-mono tracking-widest uppercase font-bold" }, 
-                    `Account Pack · Compiled ${ACCOUNT.lastUpdated} · GAIN Protocol © 2026`
-                )
-            )
-        );
-    };
-
-    const container = document.getElementById('account-pack-root');
-    if (container) {
-        const root = ReactDOM.createRoot(container);
-        root.render(e(GAINAccountPack));
+      html += `</div></div></div>`;
     }
-})();
-</script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+    html += `</div></div></div>`;
+  }
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  container.innerHTML = html;
+}
 
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('nav a').forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('text-white', 'font-bold');
-                link.classList.remove('hover:text-white');
-            }
-        });
+// ── Spring-like height animation using Web Animations API ──
+// Easing: cubic-bezier(0.32, 0.72, 0, 1.0) — slight overshoot, fast decel (Apple-like)
+const SPRING_EASE = 'cubic-bezier(0.32, 0.72, 0, 1.0)';
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const offset = 100;
-                    const bodyRect = document.body.getBoundingClientRect().top;
-                    const elementRect = target.getBoundingClientRect().top;
-                    const elementPosition = elementRect - bodyRect;
-                    const offsetPosition = elementPosition - offset;
-                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-            });
-        });
+function animateHeight(el, from, to, duration, onDone) {
+  const anim = el.animate(
+    [{ height: from + 'px' }, { height: to + 'px' }],
+    { duration, easing: SPRING_EASE, fill: 'forwards' }
+  );
+  anim.onfinish = () => {
+    el.style.height = to === 0 ? '0px' : 'auto';
+    anim.cancel();
+    if (onDone) onDone();
+  };
+}
+
+function toggleMWPhase(header) {
+  const phase = header.parentElement;
+  const wasOpen = phase.classList.contains('open');
+  const clusters = phase.querySelector('.mw-clusters');
+
+  // Close all other phases
+  document.querySelectorAll('.mw-phase.open').forEach(p => {
+    if (p === phase) return;
+    const c = p.querySelector('.mw-clusters');
+    const h = c.scrollHeight;
+    p.classList.remove('open');
+    // Close any open clusters inside
+    p.querySelectorAll('.mw-cluster.open').forEach(cl => {
+      cl.classList.remove('open');
+      cl.querySelector('.mw-engines').style.height = '0px';
     });
+    animateHeight(c, h, 0, 280);
+  });
+
+  if (wasOpen) {
+    // Closing this phase
+    const h = clusters.scrollHeight;
+    phase.classList.remove('open');
+    // Close nested clusters
+    phase.querySelectorAll('.mw-cluster.open').forEach(cl => {
+      cl.classList.remove('open');
+      cl.querySelector('.mw-engines').style.height = '0px';
+    });
+    animateHeight(clusters, h, 0, 250);
+  } else {
+    // Opening this phase
+    phase.classList.add('open');
+    clusters.style.height = 'auto';
+    const targetH = clusters.scrollHeight;
+    clusters.style.height = '0px';
+    requestAnimationFrame(() => {
+      animateHeight(clusters, 0, targetH, 350);
+    });
+  }
+}
+
+function toggleMWCluster(header) {
+  const cluster = header.parentElement;
+  const engines = cluster.querySelector('.mw-engines');
+  const wasOpen = cluster.classList.contains('open');
+
+  if (wasOpen) {
+    const h = engines.scrollHeight;
+    cluster.classList.remove('open');
+    animateHeight(engines, h, 0, 220);
+  } else {
+    cluster.classList.add('open');
+    engines.style.height = 'auto';
+    const targetH = engines.scrollHeight;
+    engines.style.height = '0px';
+    requestAnimationFrame(() => {
+      animateHeight(engines, 0, targetH, 300);
+    });
+
+    // Also update parent .mw-clusters height to accommodate
+    const parentClusters = cluster.closest('.mw-clusters');
+    if (parentClusters && parentClusters.style.height !== 'auto') {
+      parentClusters.style.height = 'auto';
+    }
+  }
+}
+
+buildMobileWheel();
+
+// ── Dashboard tab switching ──
+function switchTab(tabName) {
+  document.querySelectorAll('.db-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.db-panel').forEach(p => p.classList.remove('active'));
+  
+  const panel = document.getElementById('panel-' + tabName);
+  if (panel) {
+    panel.classList.add('active');
+    // Find and activate the matching tab button
+    document.querySelectorAll('.db-tab').forEach(t => {
+      if (t.getAttribute('onclick').includes(tabName)) t.classList.add('active');
+    });
+  }
+}
 </script>
 
 </body>
