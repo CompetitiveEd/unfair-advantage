@@ -9,362 +9,183 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #07070a;
-  --s1: #0e0e13;
-  --s2: #141419;
-  --s3: #1a1a21;
-  --border: rgba(255,255,255,0.04);
-  --border-h: rgba(255,255,255,0.08);
-  --text: #d4d4d8;
-  --text-dim: #a1a1aa;
-  --text-bright: #fafafa;
-  --blue: #3b82f6;
-  --purple: #a855f7;
-  --amber: #f59e0b;
-  --green: #10b981;
-  --red: #ef4444;
-  --glass: rgba(14,14,19,0.85);
+  --bg: #07070a; --s1: #0e0e13; --s2: #141419; --s3: #1a1a21;
+  --border: rgba(255,255,255,0.04); --border-h: rgba(255,255,255,0.08);
+  --text: #d4d4d8; --text-dim: #a1a1aa; --text-bright: #fafafa;
+  --blue: #3b82f6; --purple: #a855f7; --amber: #f59e0b; --green: #10b981; --red: #ef4444;
 }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; background: var(--bg); }
-body {
-  font-family: 'DM Sans', sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+/* ═══ NAV ═══ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:0.5px;transition:color 0.2s}
+.nav a:hover{color:var(--text-bright)}.nav a.active{color:var(--text-bright);font-weight:700}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-decoration:none;text-transform:uppercase}
+.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative;padding-bottom:2px}
+.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color 0.2s}
+.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:0.5;transition:transform 0.2s}
+.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity 0.2s;display:flex}
+.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}
+.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
+.radial-item{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,0.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 4px 20px rgba(0,0,0,0.5);margin:0 3px}
+.radial-toggle:checked~.radial-items .radial-item{opacity:1;transform:scale(1)}
+.radial-item:nth-child(1){transition-delay:0ms}.radial-item:nth-child(2){transition-delay:40ms}.radial-item:nth-child(3){transition-delay:80ms}.radial-item:nth-child(4){transition-delay:120ms}
+.radial-item:hover{transform:scale(1.12)!important;border-color:rgba(255,255,255,0.12)}
+.radial-letter{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
+.radial-sublabel{font-size:8px;font-weight:600;letter-spacing:0.5px;margin-top:2px}
+.radial-icon{width:20px;height:20px;opacity:0.8}
+.radial-icon-label{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}.nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,0.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}.nav-inner.open .radial-menu{display:none}}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-/* ═══════════════════════════════════════════════
-   NAV — Radial menus (matches index.html)
-   ═══════════════════════════════════════════════ */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(7,7,10,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 1.5rem; height: 52px;
-  display: flex; align-items: center; justify-content: center; gap: 1.5rem;
-}
-@media (min-width: 768px) { .nav { gap: 2.5rem; } }
+/* ═══ SECTION LABEL ═══ */
+.section-label{display:flex;align-items:center;justify-content:center;gap:12px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--amber);letter-spacing:3px;text-transform:uppercase;margin-bottom:1.5rem}
+.section-label::before,.section-label::after{content:'';height:1px;width:40px;background:rgba(245,158,11,0.2)}
 
-.nav a { font-size: 13px; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
-.nav a:hover { color: var(--text-bright); }
-.nav a.active { color: var(--text-bright); font-weight: 700; }
+/* ═══ HERO ═══ */
+.proof-hero{padding:5rem 2rem 2.5rem;text-align:center;max-width:800px;margin:0 auto}
+.proof-hero h1{font-family:'Fraunces',serif;font-size:clamp(30px,5vw,50px);font-weight:900;color:var(--text-bright);margin-bottom:0.75rem;letter-spacing:-0.02em;line-height:1.1}
+.proof-hero .sub{font-size:clamp(14px,1.6vw,16px);color:var(--text-dim);line-height:1.8;max-width:540px;margin:0 auto}
 
-.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 3px; color: var(--text-bright); text-decoration: none; text-transform: uppercase; }
-.nav-logo span { color: var(--amber); }
+/* ═══ HERO METRICS — Interactive expanding cards ═══ */
+.hero-metrics{max-width:1100px;margin:2rem auto 0;padding:0 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:768px){.hero-metrics{grid-template-columns:1fr;max-width:500px}}
 
-.nav-cta { font-size: 12px !important; font-weight: 700 !important; color: var(--amber) !important; letter-spacing: 1px !important; }
-.nav-cta:hover { color: #fbbf24 !important; }
+.hm-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;cursor:pointer;transition:all 0.35s cubic-bezier(0.2,0.9,0.3,1);position:relative;overflow:hidden}
+.hm-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0.6}
+.hm-card:nth-child(1)::before{background:linear-gradient(90deg,var(--green),#34d399)}
+.hm-card:nth-child(2)::before{background:linear-gradient(90deg,var(--blue),#60a5fa)}
+.hm-card:nth-child(3)::before{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+.hm-card:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.hm-card.open{border-color:var(--border-h);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
 
-.radial-menu { position: relative; padding-bottom: 2px; }
-.radial-toggle { display: none; }
-.radial-label { font-size: 13px; font-weight: 500; color: var(--text-dim); cursor: pointer; display: flex; align-items: center; gap: 4px; user-select: none; transition: color 0.2s; }
-.radial-label:hover { color: var(--text-bright); }
-.radial-label .chevron { font-size: 9px; opacity: 0.5; transition: transform 0.2s; }
+.hm-top{padding:28px 24px 20px;text-align:center}
+.hm-before{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-dim);margin-bottom:4px}
+.hm-num{font-family:'Fraunces',serif;font-size:clamp(38px,5vw,56px);font-weight:900;line-height:1;margin-bottom:6px}
+.hm-label{font-size:13px;font-weight:700;color:var(--text-bright);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.hm-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1px;padding:3px 10px;border-radius:4px}
+.hm-expand{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:12px;letter-spacing:1px;transition:color 0.2s}
+.hm-card:hover .hm-expand{color:var(--text-bright)}
+.hm-card.open .hm-expand{display:none}
 
-.radial-items { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 6px; pointer-events: none; opacity: 0; transition: opacity 0.2s; display: flex; gap: 0; }
-.radial-toggle:checked ~ .radial-items { pointer-events: auto; opacity: 1; }
-.radial-toggle:checked ~ .radial-label .chevron { transform: rotate(180deg); }
+.hm-body{height:0;overflow:hidden;will-change:height}
+.hm-body-inner{padding:0 24px 24px;border-top:1px solid var(--border);margin-top:0;opacity:0;transform:translateY(-6px);transition:opacity 0.25s ease 0.08s,transform 0.3s cubic-bezier(0.2,0.9,0.3,1.02) 0.05s}
+.hm-card.open .hm-body-inner{opacity:1;transform:translateY(0)}
 
-.radial-item { width: 64px; height: 64px; border-radius: 50%; background: rgba(14,14,19,0.95); backdrop-filter: blur(12px); border: 1px solid var(--border-h); display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; opacity: 0; transform: scale(0); transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 20px rgba(0,0,0,0.5); margin: 0 3px; }
-.radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: scale(1); }
-.radial-item:nth-child(1) { transition-delay: 0ms; }
-.radial-item:nth-child(2) { transition-delay: 40ms; }
-.radial-item:nth-child(3) { transition-delay: 80ms; }
-.radial-item:nth-child(4) { transition-delay: 120ms; }
-.radial-item:hover { transform: scale(1.12) !important; border-color: rgba(255,255,255,0.12); box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+.hm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+@media(max-width:500px){.hm-grid{grid-template-columns:1fr}}
+.hm-block{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px}
+.hm-block-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.hm-block p{font-size:12px;color:var(--text);line-height:1.7}
 
-.radial-letter { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 900; line-height: 1; }
-.radial-sublabel { font-size: 8px; font-weight: 600; letter-spacing: 0.5px; margin-top: 2px; }
-.radial-icon { width: 20px; height: 20px; opacity: 0.8; }
-.radial-icon-label { font-size: 8px; font-weight: 600; margin-top: 3px; line-height: 1.2; text-align: center; }
+.hm-engines{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px}
 
-.nav-toggle-btn { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; position: absolute; right: 1rem; }
-.nav-inner { display: flex; align-items: center; gap: 1.5rem; }
-@media (max-width: 768px) {
-  .nav { justify-content: flex-start; padding-left: 1rem; }
-  .nav-inner { display: none; }
-  .nav-toggle-btn { display: block; }
-  .nav-inner.open { display: flex; flex-direction: column; position: absolute; top: 52px; left: 0; right: 0; background: rgba(7,7,10,0.98); backdrop-filter: blur(20px); padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); gap: 1rem; z-index: 99; }
-  .nav-inner.open .radial-menu { display: none; }
-}
-@media (min-width: 769px) { .nav-inner { display: flex !important; gap: 2.5rem; } }
+/* ═══ ANCHOR QUOTE ═══ */
+.anchor-section{max-width:720px;margin:3rem auto;padding:0 2rem;text-align:center}
+.anchor-quote{font-family:'Fraunces',serif;font-size:clamp(16px,2.5vw,22px);font-weight:700;font-style:italic;color:var(--text-bright);line-height:1.7;margin-bottom:1rem;position:relative;padding:0 1.5rem}
+.anchor-quote::before{content:'\201C';position:absolute;left:-0.5rem;top:-0.75rem;font-size:56px;color:var(--amber);opacity:0.12;font-style:normal;font-family:'Fraunces',serif}
+.anchor-attr{font-size:12px;color:var(--text-dim)}
 
-/* ═══════════════════════════════════════════════
-   SECTION LABEL
-   ═══════════════════════════════════════════════ */
-.section-label {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 600;
-  color: var(--amber); letter-spacing: 3px; text-transform: uppercase;
-  margin-bottom: 1.5rem;
-}
-.section-label::before, .section-label::after { content: ''; height: 1px; width: 40px; background: rgba(245,158,11,0.2); }
+/* ═══ CASE GRID — Click to open modal ═══ */
+.case-grid-section{max-width:960px;margin:0 auto;padding:2rem 2rem 3rem}
+.case-grid-section h2{font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);margin-bottom:0.5rem;text-align:center}
+.case-grid-intro{font-size:13px;color:var(--text-dim);text-align:center;max-width:500px;margin:0 auto 2rem;line-height:1.7}
 
-/* ═══════════════════════════════════════════════
-   HERO — Split layout: headline left, metrics right
-   ═══════════════════════════════════════════════ */
-.proof-hero {
-  padding: 5.5rem 2rem 3rem;
-  max-width: 1160px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-@media (max-width: 900px) {
-  .proof-hero { grid-template-columns: 1fr; text-align: center; padding-top: 5rem; }
-}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:768px){.case-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.case-grid{grid-template-columns:1fr}}
 
-.proof-hero-left {}
-.proof-hero h1 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(28px, 5vw, 46px);
-  font-weight: 900;
-  color: var(--text-bright);
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-.proof-hero .sub {
-  font-size: clamp(14px, 1.6vw, 16px);
-  color: var(--text-dim);
-  line-height: 1.8;
-  max-width: 480px;
-}
-@media (max-width: 900px) { .proof-hero .sub { margin: 0 auto; } }
+.cg-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.3s;position:relative;overflow:hidden}
+.cg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.3s}
+.cg-card:hover{border-color:var(--border-h);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.cg-card:hover::before{opacity:1}
 
-/* ── Metric stack (right column) ── */
-.metric-stack { display: flex; flex-direction: column; gap: 10px; }
+.cg-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cg-num{font-family:'Fraunces',serif;font-size:16px;font-weight:900;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cg-title{font-size:14px;font-weight:700;color:var(--text-bright);line-height:1.3}
+.cg-subtitle{font-size:11px;color:var(--text-dim);margin-bottom:8px}
+.cg-result{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;margin-bottom:10px}
+.cg-cta{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);transition:all 0.2s}
+.cg-card:hover .cg-cta{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1);gap:8px}
 
-.metric-card {
-  background: var(--s1);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 24px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0 20px;
-  align-items: center;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-.metric-card::before {
-  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
-}
-.metric-card:hover { border-color: var(--border-h); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+/* ═══ CASE MODAL ═══ */
+.modal-backdrop{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:500;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+.modal-panel{position:fixed;top:5vh;left:5vw;width:90vw;max-width:800px;max-height:90vh;left:50%;transform:translateX(-50%) scale(0.95) translateY(20px);background:var(--bg);border:1px solid var(--border-h);border-radius:16px;z-index:501;overflow-y:auto;opacity:0;pointer-events:none;transition:all 0.35s cubic-bezier(0.2,0.9,0.3,1);scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+.modal-panel.open{opacity:1;transform:translateX(-50%) scale(1) translateY(0);pointer-events:auto}
+.modal-close{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:rgba(7,7,10,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.modal-close-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase}
+.modal-close-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--s1);color:var(--text-dim);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.modal-close-btn:hover{border-color:var(--border-h);color:var(--text-bright);background:var(--s2)}
+.modal-body{padding:24px}
+.modal-body h3{font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:var(--text-bright);margin-bottom:4px}
+.modal-body .modal-subtitle{font-size:12px;color:var(--text-dim);margin-bottom:16px}
+.modal-body .modal-result{font-family:'DM Mono',monospace;font-size:14px;font-weight:700;margin-bottom:16px}
+.modal-case-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.modal-case-grid{grid-template-columns:1fr}}
+.modal-block{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px}
+.modal-block-label{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+.modal-block p{font-size:12px;color:var(--text);line-height:1.7}
+.modal-engines{margin-top:12px;display:flex;flex-wrap:wrap;gap:5px}
 
-.metric-card:nth-child(1)::before { background: var(--green); }
-.metric-card:nth-child(2)::before { background: var(--blue); }
-.metric-card:nth-child(3)::before { background: var(--amber); }
-
-.metric-num {
-  font-family: 'Fraunces', serif;
-  font-size: 36px;
-  font-weight: 900;
-  line-height: 1;
-  grid-row: 1 / 3;
-}
-.metric-label {
-  font-size: 13px; font-weight: 700; color: var(--text-bright);
-  letter-spacing: 0.5px;
-}
-.metric-detail {
-  font-size: 11px; color: var(--text-dim); line-height: 1.6; margin-top: 2px;
-}
-.metric-tag {
-  display: inline-block;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px; font-weight: 600; letter-spacing: 1px;
-  padding: 3px 8px; border-radius: 4px; margin-top: 6px;
-}
-
-/* ═══════════════════════════════════════════════
-   CASE STUDIES
-   ═══════════════════════════════════════════════ */
-.cases-section {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 2rem 4rem;
-}
-.cases-section h2 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(22px, 3.5vw, 32px);
-  font-weight: 800;
-  color: var(--text-bright);
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-.cases-intro {
-  font-size: 14px; color: var(--text-dim); text-align: center;
-  max-width: 580px; margin: 0 auto 2.5rem; line-height: 1.7;
-}
-
-.case-card {
-  background: var(--s1);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-.case-card:hover { border-color: var(--border-h); }
-.case-card.open { box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
-
-.case-header {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px 20px;
-  cursor: pointer; user-select: none;
-  transition: background 0.15s;
-}
-.case-header:hover { background: rgba(255,255,255,0.015); }
-
-.case-num {
-  font-family: 'Fraunces', serif; font-size: 18px; font-weight: 900;
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.case-info { flex: 1; min-width: 0; }
-.case-title { font-size: 15px; font-weight: 700; color: var(--text-bright); }
-.case-subtitle { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
-.case-result-tag { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700; flex-shrink: 0; }
-.case-chevron { font-size: 14px; color: var(--text-dim); transition: transform 0.35s cubic-bezier(0.32,0.72,0,1.0); flex-shrink: 0; }
-.case-card.open .case-chevron { transform: rotate(180deg); }
-
-.case-body { height: 0; overflow: hidden; will-change: height; }
-.case-body-inner {
-  padding: 0 20px 20px;
-  opacity: 0; transform: translateY(-6px);
-  transition: opacity 0.25s ease 0.08s, transform 0.3s cubic-bezier(0.2,0.9,0.3,1.02) 0.05s;
-}
-.case-card.open .case-body-inner { opacity: 1; transform: translateY(0); }
-
-.case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-@media (max-width: 768px) { .case-grid { grid-template-columns: 1fr; } }
-
-.case-block {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px;
-}
-.case-block-label {
-  font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 600;
-  letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim);
-  margin-bottom: 6px; padding-bottom: 5px; border-bottom: 1px solid var(--border);
-}
-.case-block p { font-size: 12px; color: var(--text); line-height: 1.7; }
-
-.case-engines { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
-.case-engine {
-  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 600;
-  padding: 4px 10px; border-radius: 4px;
-  background: rgba(245,158,11,0.06); color: var(--amber);
-  border: 1px solid rgba(245,158,11,0.1);
-  cursor: default; position: relative;
-  transition: all 0.2s;
-}
-.case-engine:hover {
-  background: rgba(245,158,11,0.12);
-  border-color: rgba(245,158,11,0.25);
-  transform: translateY(-1px);
-}
+/* ═══ ENGINE TAGS — Phase coloured ═══ */
+.eng-tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;padding:4px 10px;border-radius:4px;cursor:default;position:relative;transition:all 0.2s}
+.eng-tag:hover{transform:translateY(-1px)}
+.eng-tag.g{background:rgba(59,130,246,0.08);color:#93c5fd;border:1px solid rgba(59,130,246,0.12)}
+.eng-tag.g:hover{background:rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.3)}
+.eng-tag.a{background:rgba(168,85,247,0.08);color:#d8b4fe;border:1px solid rgba(168,85,247,0.12)}
+.eng-tag.a:hover{background:rgba(168,85,247,0.15);border-color:rgba(168,85,247,0.3)}
+.eng-tag.i{background:rgba(245,158,11,0.08);color:#fcd34d;border:1px solid rgba(245,158,11,0.12)}
+.eng-tag.i:hover{background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.3)}
+.eng-tag.n{background:rgba(16,185,129,0.08);color:#6ee7b7;border:1px solid rgba(16,185,129,0.12)}
+.eng-tag.n:hover{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.3)}
+.eng-tag.diag{background:rgba(239,68,68,0.08);color:#fca5a5;border:1px solid rgba(239,68,68,0.12)}
+.eng-tag.diag:hover{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.3)}
 
 /* Engine tooltip */
-.engine-tip {
-  position: fixed; z-index: 200;
-  background: rgba(10,10,14,0.98); border: 1px solid var(--border-h);
-  backdrop-filter: blur(16px); border-radius: 10px;
-  padding: 10px 14px; max-width: 260px;
-  opacity: 0; pointer-events: none; transition: opacity 0.15s;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-}
-.engine-tip.show { opacity: 1; }
-.engine-tip-code { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; color: var(--amber); margin-bottom: 3px; }
-.engine-tip-name { font-size: 12px; font-weight: 700; color: var(--text-bright); margin-bottom: 2px; }
-.engine-tip-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+.engine-tip{position:fixed;z-index:600;background:rgba(10,10,14,0.98);border:1px solid var(--border-h);backdrop-filter:blur(16px);border-radius:10px;padding:10px 14px;max-width:260px;opacity:0;pointer-events:none;transition:opacity 0.15s;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+.engine-tip.show{opacity:1}
+.engine-tip-code{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:var(--amber);margin-bottom:3px}
+.engine-tip-name{font-size:12px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
+.engine-tip-desc{font-size:11px;color:var(--text-dim);line-height:1.5}
 
-/* ═══════════════════════════════════════════════
-   CREDIBILITY NUMBERS
-   ═══════════════════════════════════════════════ */
-.cred-section {
-  max-width: 960px; margin: 0 auto; padding: 0 2rem 4rem;
-}
-.cred-bar {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-}
-@media (max-width: 768px) { .cred-bar { grid-template-columns: repeat(2, 1fr); } }
+/* ═══ CREDIBILITY ═══ */
+.cred-section{max-width:960px;margin:0 auto;padding:1rem 2rem 3rem}
+.cred-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:768px){.cred-bar{grid-template-columns:repeat(2,1fr)}}
+.cred-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:20px 14px;text-align:center;transition:all 0.3s}
+.cred-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+.cred-num{font-family:'Fraunces',serif;font-size:30px;font-weight:900;line-height:1;margin-bottom:3px}
+.cred-label{font-size:11px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
+.cred-detail{font-size:10px;color:var(--text-dim);line-height:1.5}
 
-.cred-card {
-  background: var(--s1); border: 1px solid var(--border); border-radius: 12px;
-  padding: 24px 16px; text-align: center;
-  transition: all 0.3s;
-}
-.cred-card:hover { border-color: var(--border-h); transform: translateY(-2px); }
-.cred-num { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
-.cred-label { font-size: 12px; font-weight: 700; color: var(--text-bright); margin-bottom: 3px; }
-.cred-detail { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+/* ═══ CTA ═══ */
+.cta-section{text-align:center;padding:3.5rem 2rem;border-top:1px solid var(--border)}
+.cta-section h2{font-family:'Fraunces',serif;font-size:clamp(22px,3.5vw,32px);font-weight:800;color:var(--text-bright);margin-bottom:0.75rem}
+.cta-sub{font-size:14px;color:var(--text-dim);max-width:460px;margin:0 auto 1.5rem;line-height:1.7}
+.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-weight:800;font-size:14px;padding:12px 28px;border-radius:8px;text-decoration:none;letter-spacing:0.3px;transition:all 0.2s}
+.hero-cta:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,0.15)}
 
-/* ═══════════════════════════════════════════════
-   ANCHOR QUOTE
-   ═══════════════════════════════════════════════ */
-.anchor-section {
-  max-width: 720px; margin: 0 auto; padding: 0 2rem 4rem; text-align: center;
-}
-.anchor-quote {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(16px, 2.5vw, 22px);
-  font-weight: 700; font-style: italic;
-  color: var(--text-bright); line-height: 1.7;
-  margin-bottom: 1rem;
-  position: relative;
-  padding: 0 1rem;
-}
-.anchor-quote::before { content: '"'; position: absolute; left: -0.5rem; top: -0.5rem; font-size: 48px; color: var(--amber); opacity: 0.15; font-style: normal; }
-.anchor-attr { font-size: 12px; color: var(--text-dim); }
+/* ═══ FOOTER ═══ */
+.footer{padding:2rem;text-align:center;border-top:1px solid var(--border)}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#52525b;letter-spacing:1px}
+.footer-text a{color:#71717a;text-decoration:none}.footer-text a:hover{color:var(--text-dim)}
 
-/* ═══════════════════════════════════════════════
-   CTA
-   ═══════════════════════════════════════════════ */
-.cta-section {
-  text-align: center; padding: 4rem 2rem; border-top: 1px solid var(--border);
-}
-.cta-section h2 {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(22px, 3.5vw, 32px);
-  font-weight: 800; color: var(--text-bright); margin-bottom: 0.75rem;
-}
-.cta-sub {
-  font-size: 14px; color: var(--text-dim);
-  max-width: 480px; margin: 0 auto 2rem; line-height: 1.7;
-}
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--amber); color: #000;
-  font-weight: 800; font-size: 14px; padding: 12px 28px;
-  border-radius: 8px; text-decoration: none; letter-spacing: 0.3px;
-  transition: all 0.2s;
-}
-.hero-cta:hover { background: #fbbf24; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.15); }
-
-/* ═══════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════ */
-.footer { padding: 2rem; text-align: center; border-top: 1px solid var(--border); }
-.footer-text { font-family: 'DM Mono', monospace; font-size: 11px; color: #52525b; letter-spacing: 1px; }
-.footer-text a { color: #71717a; text-decoration: none; }
-.footer-text a:hover { color: var(--text-dim); }
-
-/* ── Reveal ── */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════ NAV ═══════════════ -->
+<!-- ═══ NAV ═══ -->
 <nav class="nav">
   <a href="/" class="nav-logo">GAIN<span>.</span></a>
   <button class="nav-toggle-btn" onclick="document.querySelector('.nav-inner').classList.toggle('open')" aria-label="Menu">&#9776;</button>
@@ -372,274 +193,194 @@ body {
     <a href="/">Home</a>
     <a href="/proof.html" class="active">Proof</a>
     <a href="/revenue-case.html">Revenue</a>
-
-    <div class="radial-menu">
-      <input type="checkbox" id="gain-radial" class="radial-toggle">
-      <label for="gain-radial" class="radial-label">GAIN <span class="chevron">&#9662;</span></label>
-      <div class="radial-items">
-        <a href="/know.html" class="radial-item"><span class="radial-letter" style="color:#93c5fd">G</span><span class="radial-sublabel" style="color:#93c5fd">Gather</span></a>
-        <a href="/map.html" class="radial-item"><span class="radial-letter" style="color:#d8b4fe">A</span><span class="radial-sublabel" style="color:#d8b4fe">Assess</span></a>
-        <a href="/win.html" class="radial-item"><span class="radial-letter" style="color:#fcd34d">I</span><span class="radial-sublabel" style="color:#fcd34d">Influence</span></a>
-        <a href="/grow.html" class="radial-item"><span class="radial-letter" style="color:#6ee7b7">N</span><span class="radial-sublabel" style="color:#6ee7b7">Nurture</span></a>
-      </div>
-    </div>
-
-    <div class="radial-menu">
-      <input type="checkbox" id="system-radial" class="radial-toggle">
-      <label for="system-radial" class="radial-label">System <span class="chevron">&#9662;</span></label>
-      <div class="radial-items">
-        <a href="/edge.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="radial-icon-label" style="color:#67e8f9">Edge</span></a>
-        <a href="/architecture.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="radial-icon-label" style="color:#5eead4">Build</span></a>
-        <a href="/story.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="radial-icon-label" style="color:#7dd3fc">Story</span></a>
-        <a href="/dashboards.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="radial-icon-label" style="color:#a5b4fc">Dash</span></a>
-      </div>
-    </div>
-
+    <div class="radial-menu"><input type="checkbox" id="gain-radial" class="radial-toggle"><label for="gain-radial" class="radial-label">GAIN <span class="chevron">&#9662;</span></label><div class="radial-items"><a href="/know.html" class="radial-item"><span class="radial-letter" style="color:#93c5fd">G</span><span class="radial-sublabel" style="color:#93c5fd">Gather</span></a><a href="/map.html" class="radial-item"><span class="radial-letter" style="color:#d8b4fe">A</span><span class="radial-sublabel" style="color:#d8b4fe">Assess</span></a><a href="/win.html" class="radial-item"><span class="radial-letter" style="color:#fcd34d">I</span><span class="radial-sublabel" style="color:#fcd34d">Influence</span></a><a href="/grow.html" class="radial-item"><span class="radial-letter" style="color:#6ee7b7">N</span><span class="radial-sublabel" style="color:#6ee7b7">Nurture</span></a></div></div>
+    <div class="radial-menu"><input type="checkbox" id="system-radial" class="radial-toggle"><label for="system-radial" class="radial-label">System <span class="chevron">&#9662;</span></label><div class="radial-items"><a href="/edge.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="radial-icon-label" style="color:#67e8f9">Edge</span></a><a href="/architecture.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="radial-icon-label" style="color:#5eead4">Build</span></a><a href="/story.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="radial-icon-label" style="color:#7dd3fc">Story</span></a><a href="/dashboards.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="radial-icon-label" style="color:#a5b4fc">Dash</span></a></div></div>
     <a href="/engage.html" class="nav-cta">Engage</a>
   </div>
 </nav>
 
-<!-- ═══════════════ HERO — Split: headline left, metrics right ═══════════════ -->
+<!-- ═══ HERO ═══ -->
 <section class="proof-hero">
-  <div class="proof-hero-left">
-    <div class="section-label" style="justify-content:flex-start">Proof</div>
-    <h1>Numbers.<br>Not narratives.</h1>
-    <p class="sub">Every number on this page comes from a real engagement. No vanity metrics. No "up to" language. What happened, how long it took, and what GAIN engines were involved.</p>
-  </div>
-  <div class="metric-stack reveal">
-    <div class="metric-card">
-      <div class="metric-num" style="color:var(--green)">£183M</div>
-      <div>
-        <div class="metric-label">Portfolio Revenue</div>
-        <div class="metric-detail">From £35M. Enterprise portfolio scaled over 4 years. 51.3% CAGR.</div>
-      </div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-num" style="color:var(--blue)">£55M</div>
-      <div>
-        <div class="metric-label">Professional Services</div>
-        <div class="metric-detail">From £20M. Unified proposition. Win rate: 2 in 3 competitive pursuits.</div>
-      </div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-num" style="color:var(--amber)">70 min</div>
-      <div>
-        <div class="metric-label">Mess to Account Pack</div>
-        <div class="metric-detail">From 40 hours. Raw intake to complete intelligence briefing.</div>
-      </div>
-    </div>
-  </div>
+  <div class="section-label">Proof</div>
+  <h1>Numbers. Not narratives.</h1>
+  <p class="sub">Every number below comes from a real engagement. No vanity metrics. No "up to" language. Click any number to see the full story.</p>
 </section>
 
-<!-- ═══════════════ CASE STUDIES ═══════════════ -->
-<section class="cases-section">
-  <div class="section-label">Case Studies</div>
-  <h2>What actually happened.</h2>
-  <p class="cases-intro">Nine engagements. Each one started with a stalled deal, a stuck portfolio, or a team that couldn't see what was killing them.</p>
-  <div id="cases"></div>
-</section>
+<!-- ═══ HERO METRICS — Click to expand ═══ -->
+<div class="hero-metrics" id="heroMetrics"></div>
 
-<!-- ═══════════════ CREDIBILITY ═══════════════ -->
-<section class="cred-section reveal">
-  <div class="section-label">By the Numbers</div>
-  <div class="cred-bar">
-    <div class="cred-card">
-      <div class="cred-num" style="color:var(--amber)">9</div>
-      <div class="cred-label">Case Studies</div>
-      <div class="cred-detail">Built from zero. Documented intake to outcome.</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-num" style="color:var(--green)">78</div>
-      <div class="cred-label">Engines</div>
-      <div class="cred-detail">Compound, conditional, human-gated.</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-num" style="color:var(--blue)">22</div>
-      <div class="cred-label">Frameworks</div>
-      <div class="cred-detail">Kahneman to Kegan. Cialdini to Camp.</div>
-    </div>
-    <div class="cred-card">
-      <div class="cred-num" style="color:var(--purple)">1</div>
-      <div class="cred-label">Tier 1 SI</div>
-      <div class="cred-detail">White-labelled the methodology.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ ANCHOR QUOTE ═══════════════ -->
+<!-- ═══ ANCHOR QUOTE ═══ -->
 <section class="anchor-section reveal">
   <p class="anchor-quote">We thought we had a pipeline problem. Turned out we had an intelligence problem. Every deal we were losing had the same three failure patterns — we just couldn't see them until the diagnostic showed us.</p>
   <p class="anchor-attr">— CRO, PE-backed enterprise software company</p>
 </section>
 
-<!-- ═══════════════ CTA ═══════════════ -->
+<!-- ═══ REMAINING CASES — Grid with modals ═══ -->
+<section class="case-grid-section">
+  <div class="section-label">More Cases</div>
+  <h2>Six more engagements.</h2>
+  <p class="case-grid-intro">Each one started with a stalled deal, a stuck portfolio, or a team that couldn't see what was killing them.</p>
+  <div class="case-grid" id="caseGrid"></div>
+</section>
+
+<!-- ═══ CREDIBILITY ═══ -->
+<section class="cred-section reveal">
+  <div class="section-label">By the Numbers</div>
+  <div class="cred-bar">
+    <div class="cred-card"><div class="cred-num" style="color:var(--amber)">9</div><div class="cred-label">Case Studies</div><div class="cred-detail">Built from zero. Documented intake to outcome.</div></div>
+    <div class="cred-card"><div class="cred-num" style="color:var(--green)">78</div><div class="cred-label">Engines</div><div class="cred-detail">Compound, conditional, human-gated.</div></div>
+    <div class="cred-card"><div class="cred-num" style="color:var(--blue)">22</div><div class="cred-label">Frameworks</div><div class="cred-detail">Kahneman to Kegan. Cialdini to Camp.</div></div>
+    <div class="cred-card"><div class="cred-num" style="color:var(--purple)">1</div><div class="cred-label">Tier 1 SI</div><div class="cred-detail">White-labelled the methodology.</div></div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
 <section class="cta-section reveal">
   <h2>Get Your Account Pack</h2>
   <p class="cta-sub">One stalled deal. 70 minutes. A complete intelligence briefing — not a slide deck.</p>
   <a href="/engage.html" class="hero-cta">Start the Diagnostic</a>
 </section>
 
-<!-- ═══════════════ FOOTER ═══════════════ -->
-<footer class="footer">
-  <p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk" target="_blank">LinkedIn</a> &middot; GAIN Protocol</p>
-</footer>
+<footer class="footer"><p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk" target="_blank">LinkedIn</a> &middot; GAIN Protocol</p></footer>
 
-<!-- Engine tooltip element -->
-<div class="engine-tip" id="engineTip">
-  <div class="engine-tip-code" id="etCode"></div>
-  <div class="engine-tip-name" id="etName"></div>
-  <div class="engine-tip-desc" id="etDesc"></div>
+<!-- Modal -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+<div class="modal-panel" id="modalPanel">
+  <div class="modal-close">
+    <span class="modal-close-label" id="modalLabel">Case Study</span>
+    <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
 </div>
 
-<script>
-// ── Engine lookup for tooltips ──
-const ENGINE_MAP = {
-  '00-F':{n:'Diagnostic Verdict',d:'Full chain: intake → scan → audit → verdict'},
-  'G-01':{n:'Macro Intel',d:'10-K signals, board mandates, competitive landscape'},
-  'G-02':{n:'Financial Forensics',d:'P&L language, cost of inaction methodology'},
-  'G-03':{n:'Executive Intelligence',d:'Kegan stage, GAIN driver, decision patterns'},
-  'G-04':{n:'Battle Card',d:'Status quo disruption, competitive positioning'},
-  'G-05':{n:'First 15 Minutes',d:'Meeting scripts, opening moves'},
-  'G-06':{n:'Narrative Lock',d:'Single controlling narrative'},
-  'G-13':{n:'Objection Prep',d:'Per-stakeholder anticipated objections'},
-  'A-01':{n:'RFP Strategic Decoder',d:'Authorship analysis, hidden requirements'},
-  'A-05':{n:'Authority Map',d:'Formal vs informal power structures'},
-  'A-07':{n:'Placemat Visualiser',d:'FROM / TO / BRIDGE positioning'},
-  'A-11':{n:'Engagement Plans',d:'Per-stakeholder engagement cards'},
-  'A-13':{n:'HUMINT Elicitation',d:'Conversational intelligence techniques'},
-  'I-01':{n:'Pre-Mortem',d:'Failure forensics, 5 scenario modelling'},
-  'I-02':{n:'Win Theme Architect',d:'Zigzag competitive positioning'},
-  'I-03':{n:'Competitor Kill-Shot',d:'Ghost objections, displacement defence'},
-  'I-05':{n:'4-Act Executive Summary',d:'Context → Tension → Resolution → Proof'},
-  'I-07':{n:"Devil's Advocate",d:'Red team self-scoring, honest assessment'},
-  'N-02':{n:'Referral Mapper',d:'Stakeholder referral and expansion paths'},
-  'N-04':{n:'Expansion Qualifier',d:'MEDDIC-based pursue/park/walk'},
-  'N-06':{n:'Renewal Risk Audit',d:'18-month assessment, early warning'},
-  'N-08':{n:'Threat Detection',d:'Competitive encroachment scanning'},
-};
+<!-- Engine tooltip -->
+<div class="engine-tip" id="engineTip"><div class="engine-tip-code" id="etCode"></div><div class="engine-tip-name" id="etName"></div><div class="engine-tip-desc" id="etDesc"></div></div>
 
-// ── Case study data ──
-const CASES = [
-  {num:'01',color:'var(--green)',bg:'rgba(16,185,129,0.08)',border:'rgba(16,185,129,0.15)',title:'Enterprise Portfolio Scale',subtitle:'PE-backed technology services',result:'£35M → £183M',resultColor:'var(--green)',
-   situation:'Portfolio company stuck at £35M for three years. Board pressure mounting. Sales team running hero-dependent model — two reps carried 60% of revenue. No repeatable methodology.',
-   diagnosis:'GAIN diagnostic identified 7 failure patterns: Hero-Dependency (critical), ICP Drift, Margin Compression, Discovery Failure, Accountability Vacuum, Capability Gap, and Stakeholder Blindness at board level.',
-   intervention:'Full GAIN deployment across all four phases over 18 months. Rebuilt compensation architecture, restructured delivery model, implemented vendor governance.',
-   result_detail:'£35M to £183M over 4 years (51.3% CAGR). Professional services grew +170%. Win rate improved to 2 in 3. Hero-dependency eliminated.',
+<script>
+// ── Engine data ──
+const EM={'00-F':{n:'Diagnostic Verdict',d:'Full chain: intake → scan → audit → verdict'},'G-01':{n:'Macro Intel',d:'10-K signals, board mandates'},'G-02':{n:'Financial Forensics',d:'P&L language, cost of inaction'},'G-03':{n:'Executive Intelligence',d:'Kegan stage, GAIN driver'},'G-04':{n:'Battle Card',d:'Status quo disruption'},'G-05':{n:'First 15 Minutes',d:'Meeting scripts, opening moves'},'G-06':{n:'Narrative Lock',d:'Single controlling narrative'},'G-13':{n:'Objection Prep',d:'Per-stakeholder objections'},'A-01':{n:'RFP Strategic Decoder',d:'Authorship analysis'},'A-05':{n:'Authority Map',d:'Formal vs informal power'},'A-07':{n:'Placemat Visualiser',d:'FROM / TO / BRIDGE'},'A-11':{n:'Engagement Plans',d:'Per-stakeholder cards'},'A-13':{n:'HUMINT Elicitation',d:'Conversational intel'},'I-01':{n:'Pre-Mortem',d:'Failure forensics'},'I-02':{n:'Win Theme Architect',d:'Zigzag positioning'},'I-03':{n:'Competitor Kill-Shot',d:'Displacement defence'},'I-05':{n:'4-Act Executive Summary',d:'Context → Resolution'},'I-07':{n:"Devil's Advocate",d:'Red team self-scoring'},'N-02':{n:'Referral Mapper',d:'Expansion paths'},'N-04':{n:'Expansion Qualifier',d:'MEDDIC pursue/park/walk'},'N-06':{n:'Renewal Risk Audit',d:'18-month assessment'},'N-08':{n:'Threat Detection',d:'Competitive scanning'}};
+
+function engClass(code){if(code.startsWith('00'))return 'diag';return code.charAt(0).toLowerCase()}
+function engTags(arr){return arr.map(e=>'<span class="eng-tag '+engClass(e)+'" data-engine="'+e+'">'+e+'</span>').join('')}
+
+// ── 3 hero metric cases ──
+const HERO_CASES=[
+  {before:'From £35M',num:'£183M',numColor:'var(--green)',label:'Portfolio Revenue',tag:'51.3% CAGR',tagBg:'rgba(16,185,129,0.1)',tagColor:'var(--green)',
+   title:'Enterprise Portfolio Scale',subtitle:'PE-backed technology services',result:'£35M → £183M',
+   situation:'Portfolio company stuck at £35M for three years. Board pressure mounting. Two reps carried 60% of revenue. No repeatable methodology.',
+   diagnosis:'7 failure patterns: Hero-Dependency (critical), ICP Drift, Margin Compression, Discovery Failure, Accountability Vacuum, Capability Gap, Stakeholder Blindness.',
+   intervention:'Full GAIN deployment across all four phases over 18 months. Rebuilt compensation, delivery model, vendor governance.',
+   result_detail:'£35M to £183M over 4 years (51.3% CAGR). Professional services +170%. Win rate: 2 in 3. Hero-dependency eliminated.',
    engines:['G-01','G-02','G-03','G-04','A-01','A-05','A-11','I-02','I-05','N-04','N-06']},
-  {num:'02',color:'var(--blue)',bg:'rgba(59,130,246,0.08)',border:'rgba(59,130,246,0.15)',title:'Stalled £8M Deal Recovery',subtitle:'Global financial services',result:'£8M recovered',resultColor:'var(--blue)',
-   situation:'Enterprise deal worth £8M had been "in procurement" for 14 weeks. Account team had lost contact with the CIO champion. Nobody had spoken to the buyer in 6 weeks.',
-   diagnosis:'4 patterns: Phantom Champion (CIO moved divisions), Procurement Black Box, Fear-Driven Selling (avoiding CFO), Dead Deal Denial.',
-   intervention:'A-05 Authority Map revealed the new decision-maker. I-01 Pre-Mortem modelled the CFO veto scenario. G-05 recalibrated re-engagement meeting.',
-   result_detail:'Deal recovered in 4 weeks. Final value: £8.2M (higher than original). CFO became co-sponsor.',
+  {before:'From £20M',num:'£55M',numColor:'var(--blue)',label:'Professional Services',tag:'2 in 3 win rate',tagBg:'rgba(59,130,246,0.1)',tagColor:'var(--blue)',
+   title:'Stalled £8M Deal Recovery',subtitle:'Global financial services',result:'£8M recovered',
+   situation:'£8M deal "in procurement" for 14 weeks. Team lost contact with CIO champion. Nobody had spoken to the buyer in 6 weeks.',
+   diagnosis:'Phantom Champion (CIO moved), Procurement Black Box, Fear-Driven Selling, Dead Deal Denial.',
+   intervention:'A-05 revealed new decision-maker. I-01 modelled CFO veto scenario. G-05 recalibrated re-engagement.',
+   result_detail:'Recovered in 4 weeks. Final value: £8.2M (higher than original). CFO became co-sponsor.',
    engines:['A-05','I-01','G-05','G-02','A-13']},
-  {num:'03',color:'var(--amber)',bg:'rgba(245,158,11,0.08)',border:'rgba(245,158,11,0.15)',title:'Pipeline Fiction Cleanup',subtitle:'SaaS company, Series C',result:'Killed £12M fiction',resultColor:'var(--amber)',
-   situation:'CRO reported £32M pipeline at board meeting. Investor asked for evidence. The evidence didn\'t exist.',
-   diagnosis:'47 opportunities scanned. 14 deals (£12M) were Dead Deal Denial. 8 had Phantom Champions. 6 showed Margin Compression signals.',
-   intervention:'GAIN diagnostic as mandatory pipeline hygiene. A-11 Go/No-Go on all Stage 3+ deals. N-04 MEDDIC Qualifier for expansion.',
-   result_detail:'£12M removed week one. Pipeline accuracy: 40% → 78%. Next quarter: 4 deals saved by early intervention. Net: +£6M in Q2.',
-   engines:['A-11','N-04','G-03','A-01','I-07']},
-  {num:'04',color:'var(--purple)',bg:'rgba(168,85,247,0.08)',border:'rgba(168,85,247,0.15)',title:'Competitive Displacement Defence',subtitle:'Enterprise infrastructure',result:'Defended £4.2M',resultColor:'var(--purple)',
-   situation:'Incumbent renewal. Competitor building relationships for 9 months. Procurement sent RFI with competitor-specific criteria.',
-   diagnosis:'Competitive Displacement + Stakeholder Blindness. VP Engineering meeting competitor monthly. Kegan Stage 4: valued competence over relationship.',
-   intervention:'I-03 built displacement defence. A-05 mapped influence network. G-05 scripted re-engagement leading with technical depth.',
-   result_detail:'Renewal secured at £4.2M (+8% uplift). VP Engineering became co-champion. Competitor locked out for 3 years.',
-   engines:['I-03','A-05','G-13','G-05','I-02']},
-  {num:'05',color:'var(--red)',bg:'rgba(239,68,68,0.08)',border:'rgba(239,68,68,0.15)',title:'Kill Verdict — Saved 6 Months',subtitle:'Professional services bid',result:'KILL — £0 wasted',resultColor:'var(--red)',
-   situation:'Team spent 3 months pursuing £6M deal. RFP response 200 pages in. CEO promising the board it would close.',
-   diagnosis:'KILL verdict. Evaluation criteria written by competitor\'s former employee. "Champion" had no budget authority. Win probability: below 15%.',
-   intervention:'I-07 Red Team confirmed. Resources redeployed to two deals with 60%+ probability.',
-   result_detail:'Competitor won at GAIN\'s predicted price. The two redeployed deals both closed — £4.8M combined. Saved 6 months of wasted effort.',
-   engines:['I-07','A-11','A-05','G-04']},
-  {num:'06',color:'var(--green)',bg:'rgba(16,185,129,0.08)',border:'rgba(16,185,129,0.15)',title:'Founder Revenue Ceiling',subtitle:'PE portfolio, B2B SaaS',result:'£3M → £11M ARR',resultColor:'var(--green)',
-   situation:'Founder-led SaaS stuck at £3M ARR for two years. PE expected £8M in 3. Every deal above £100K stalled at procurement.',
-   diagnosis:'Founder at Kegan Stage 3 — unable to hold conflicting perspectives. Discovery Failure. ICP Drift: selling mid-market with enterprise-grade product.',
-   intervention:'G-03 mapped founder\'s blind spots. A-07 repositioned for enterprise. I-05 gave repeatable narrative. N-02 built land-and-expand.',
-   result_detail:'£3M to £11M ARR in 18 months. Average deal: £80K → £340K. Founder now closes 40% of enterprise deals (previously 0%).',
-   engines:['G-03','A-07','I-05','N-02','I-02','G-05']},
-  {num:'07',color:'var(--blue)',bg:'rgba(59,130,246,0.08)',border:'rgba(59,130,246,0.15)',title:'9 Case Studies from Zero',subtitle:'Tier 1 Systems Integrator',result:'White-labelled by SI',resultColor:'var(--blue)',
-   situation:'Global SI had no win stories for a new practice area. 14 successful implementations, zero documented. Pitching without proof.',
-   diagnosis:'Content and positioning diagnostic. Dunford analysis: wrong competitive category. Narrative features-led, not outcome-led.',
-   intervention:'G-01 built industry context. I-02 created narrative structure. I-05 formatted for board consumption. G-02 extracted never-calculated ROI.',
-   result_detail:'9 case studies in 6 weeks. SI white-labelled GAIN as internal standard. Three cases used in bids within month one — two won.',
-   engines:['G-01','I-02','I-05','G-02','G-06']},
-  {num:'08',color:'var(--amber)',bg:'rgba(245,158,11,0.08)',border:'rgba(245,158,11,0.15)',title:'M&A Value Leakage Prevention',subtitle:'PE portfolio, post-acquisition',result:'£7M leakage stopped',resultColor:'var(--amber)',
-   situation:'PE acquired two businesses. Integration "on track." Cross-sell at 12% of plan. Churn doubled. Board couldn\'t see why.',
-   diagnosis:'M&A Value Leakage. Sales teams competing against each other. Compensation incentivised territory protection. Three key AMs resigned.',
-   intervention:'G-02 mapped true integration failure cost. A-01 rebuilt account landscape. N-06 identified 8 churn-risk accounts.',
-   result_detail:'£7M leakage stopped Q1. Churn reversed by month 9. Cross-sell: 12% → 67% of target in 6 months.',
-   engines:['G-02','A-01','N-06','N-08','A-05']},
-  {num:'09',color:'var(--purple)',bg:'rgba(168,85,247,0.08)',border:'rgba(168,85,247,0.15)',title:'Board-Ready Diagnostic in 70 Minutes',subtitle:'Live demonstration',result:'70min to verdict',resultColor:'var(--purple)',
-   situation:'Sceptical PE operating partner. Provided real stalled deal — CRM export, transcripts, pitch deck, frustrated Slack thread. "Show me what this does."',
-   diagnosis:'Scanned 30 failure patterns. Cross-referenced stakeholder claims against LinkedIn and filings. Found 3 contradictions.',
-   intervention:'Pure diagnostic. 00-F Verdict Engine: Intake → Scan → Audit → Prescription → Verdict. Complete Account Pack.',
+  {before:'From 40 hours',num:'70 min',numColor:'var(--amber)',label:'Mess to Account Pack',tag:'97% faster',tagBg:'rgba(245,158,11,0.1)',tagColor:'var(--amber)',
+   title:'Board-Ready Diagnostic in 70 Minutes',subtitle:'Live demonstration for PE operating partner',result:'70min to verdict',
+   situation:'Sceptical PE partner provided a real stalled deal — CRM export, transcripts, pitch deck, Slack thread. "Show me what this does."',
+   diagnosis:'Scanned 30 failure patterns. Cross-referenced claims against LinkedIn and filings. Found 3 contradictions.',
+   intervention:'00-F Verdict Engine: Intake → Scan → Audit → Prescription → Verdict. Complete Account Pack.',
    result_detail:'67 minutes to Account Pack. Verdict: FIX. Three engines prescribed. "We\'ve been arguing about this for six weeks. This told us in an hour." GAIN adopted for portfolio.',
    engines:['00-F','G-01','G-03','A-05','I-01']}
 ];
 
-// ── Build case cards ──
-const casesContainer = document.getElementById('cases');
-CASES.forEach(c => {
-  const card = document.createElement('div');
-  card.className = 'case-card';
-  card.innerHTML = `
-    <div class="case-header" onclick="toggleCase(this)">
-      <div class="case-num" style="color:${c.color};border:2px solid ${c.border};background:${c.bg}">${c.num}</div>
-      <div class="case-info"><div class="case-title">${c.title}</div><div class="case-subtitle">${c.subtitle}</div></div>
-      <span class="case-result-tag" style="color:${c.resultColor}">${c.result}</span>
-      <div class="case-chevron">&#x25BE;</div>
-    </div>
-    <div class="case-body"><div class="case-body-inner">
-      <div class="case-grid">
-        <div class="case-block"><div class="case-block-label">Situation</div><p>${c.situation}</p></div>
-        <div class="case-block"><div class="case-block-label">Diagnosis</div><p>${c.diagnosis}</p></div>
-        <div class="case-block"><div class="case-block-label">Intervention</div><p>${c.intervention}</p></div>
-        <div class="case-block"><div class="case-block-label">Result</div><p>${c.result_detail}</p></div>
-      </div>
-      <div class="case-engines">${c.engines.map(e => `<span class="case-engine" data-engine="${e}">${e}</span>`).join('')}</div>
-    </div></div>`;
-  casesContainer.appendChild(card);
+// ── 6 remaining cases ──
+const GRID_CASES=[
+  {num:'03',color:'var(--amber)',bg:'rgba(245,158,11,0.08)',border:'rgba(245,158,11,0.15)',title:'Pipeline Fiction Cleanup',subtitle:'SaaS, Series C',result:'Killed £12M fiction',resultColor:'var(--amber)',ctaColor:'var(--amber)',
+   situation:'CRO reported £32M pipeline. Investor asked for evidence. It didn\'t exist.',
+   diagnosis:'47 opportunities scanned. 14 deals (£12M) Dead Deal Denial. 8 Phantom Champions. 6 Margin Compression signals.',
+   intervention:'GAIN as mandatory pipeline hygiene. A-11 Go/No-Go on Stage 3+. N-04 MEDDIC for expansion.',
+   result_detail:'£12M removed week one. Accuracy: 40% → 78%. 4 deals saved next quarter. Net: +£6M in Q2.',
+   engines:['A-11','N-04','G-03','A-01','I-07']},
+  {num:'04',color:'var(--purple)',bg:'rgba(168,85,247,0.08)',border:'rgba(168,85,247,0.15)',title:'Competitive Displacement',subtitle:'Enterprise infrastructure',result:'Defended £4.2M',resultColor:'var(--purple)',ctaColor:'var(--purple)',
+   situation:'Incumbent renewal. Competitor building relationships 9 months. Procurement sent competitor-specific RFI.',
+   diagnosis:'Competitive Displacement + Stakeholder Blindness. VP Engineering meeting competitor monthly.',
+   intervention:'I-03 displacement defence. A-05 mapped influence. G-05 scripted re-engagement with technical depth.',
+   result_detail:'Renewed at £4.2M (+8%). VP Engineering became co-champion. Competitor locked out 3 years.',
+   engines:['I-03','A-05','G-13','G-05','I-02']},
+  {num:'05',color:'var(--red)',bg:'rgba(239,68,68,0.08)',border:'rgba(239,68,68,0.15)',title:'Kill Verdict',subtitle:'Professional services bid',result:'KILL — £0 wasted',resultColor:'var(--red)',ctaColor:'var(--red)',
+   situation:'3 months pursuing £6M deal. 200-page RFP response. CEO promising the board.',
+   diagnosis:'KILL. Evaluation criteria written by competitor\'s ex-employee. "Champion" had no budget authority. Win probability: <15%.',
+   intervention:'I-07 Red Team confirmed. Resources redeployed to two 60%+ probability deals.',
+   result_detail:'Competitor won at GAIN\'s predicted price. Redeployed deals both closed: £4.8M. Saved 6 months.',
+   engines:['I-07','A-11','A-05','G-04']},
+  {num:'06',color:'var(--green)',bg:'rgba(16,185,129,0.08)',border:'rgba(16,185,129,0.15)',title:'Founder Revenue Ceiling',subtitle:'PE portfolio, B2B SaaS',result:'£3M → £11M ARR',resultColor:'var(--green)',ctaColor:'var(--green)',
+   situation:'Founder-led SaaS stuck at £3M ARR. PE expected £8M. Every deal above £100K stalled.',
+   diagnosis:'Founder Kegan Stage 3. Discovery Failure. ICP Drift: selling mid-market with enterprise product.',
+   intervention:'G-03 mapped blind spots. A-07 repositioned. I-05 gave repeatable narrative. N-02 land-and-expand.',
+   result_detail:'£3M to £11M in 18 months. Deal size: £80K → £340K. Founder now closes 40% of enterprise deals.',
+   engines:['G-03','A-07','I-05','N-02','I-02','G-05']},
+  {num:'07',color:'var(--blue)',bg:'rgba(59,130,246,0.08)',border:'rgba(59,130,246,0.15)',title:'9 Cases from Zero',subtitle:'Tier 1 Systems Integrator',result:'White-labelled',resultColor:'var(--blue)',ctaColor:'var(--blue)',
+   situation:'Global SI, no win stories for new practice. 14 implementations, zero documented.',
+   diagnosis:'Content diagnostic. Wrong competitive category. Narrative features-led, not outcome-led.',
+   intervention:'G-01 industry context. I-02 narrative structure. I-05 board format. G-02 extracted ROI.',
+   result_detail:'9 cases in 6 weeks. SI white-labelled GAIN. Three used in bids month one — two won.',
+   engines:['G-01','I-02','I-05','G-02','G-06']},
+  {num:'08',color:'var(--amber)',bg:'rgba(245,158,11,0.08)',border:'rgba(245,158,11,0.15)',title:'M&A Value Leakage',subtitle:'PE portfolio, post-acquisition',result:'£7M saved',resultColor:'var(--amber)',ctaColor:'var(--amber)',
+   situation:'Two acquired businesses. Integration "on track." Cross-sell at 12% of plan. Churn doubled.',
+   diagnosis:'M&A Value Leakage. Sales teams competing. Compensation incentivised territory protection.',
+   intervention:'G-02 mapped true cost. A-01 rebuilt accounts. N-06 identified 8 churn-risk accounts.',
+   result_detail:'£7M leakage stopped Q1. Churn reversed month 9. Cross-sell: 12% → 67% of target.',
+   engines:['G-02','A-01','N-06','N-08','A-05']}
+];
+
+// ── Build hero metrics ──
+var hm=document.getElementById('heroMetrics');
+HERO_CASES.forEach(function(c,i){
+  var card=document.createElement('div');card.className='hm-card';card.dataset.idx=i;
+  card.innerHTML='<div class="hm-top"><div class="hm-before">'+c.before+'</div><div class="hm-num" style="color:'+c.numColor+'">'+c.num+'</div><div class="hm-label">'+c.label+'</div><span class="hm-tag" style="background:'+c.tagBg+';color:'+c.tagColor+'">'+c.tag+'</span><div class="hm-expand">Click for the story ↓</div></div><div class="hm-body"><div class="hm-body-inner"><div class="hm-grid"><div class="hm-block"><div class="hm-block-label">Situation</div><p>'+c.situation+'</p></div><div class="hm-block"><div class="hm-block-label">Diagnosis</div><p>'+c.diagnosis+'</p></div><div class="hm-block"><div class="hm-block-label">Intervention</div><p>'+c.intervention+'</p></div><div class="hm-block"><div class="hm-block-label">Result</div><p>'+c.result_detail+'</p></div></div><div class="hm-engines">'+engTags(c.engines)+'</div></div></div>';
+  card.querySelector('.hm-top').addEventListener('click',function(){toggleHM(card)});
+  hm.appendChild(card);
 });
 
-// ── Spring accordion ──
-function animH(el,from,to,dur,cb){
-  const a=el.animate([{height:from+'px'},{height:to+'px'}],{duration:dur,easing:'cubic-bezier(0.32,0.72,0,1.0)',fill:'forwards'});
-  a.onfinish=()=>{el.style.height=to===0?'0px':'auto';a.cancel();if(cb)cb()};
-}
-function toggleCase(header){
-  const card=header.parentElement,body=card.querySelector('.case-body'),wasOpen=card.classList.contains('open');
-  document.querySelectorAll('.case-card.open').forEach(c=>{if(c===card)return;const b=c.querySelector('.case-body');c.classList.remove('open');animH(b,b.scrollHeight,0,250)});
+function animH(el,from,to,dur,cb){var a=el.animate([{height:from+'px'},{height:to+'px'}],{duration:dur,easing:'cubic-bezier(0.32,0.72,0,1.0)',fill:'forwards'});a.onfinish=function(){el.style.height=to===0?'0px':'auto';a.cancel();if(cb)cb()}}
+
+function toggleHM(card){
+  var body=card.querySelector('.hm-body'),wasOpen=card.classList.contains('open');
+  document.querySelectorAll('.hm-card.open').forEach(function(c){if(c===card)return;var b=c.querySelector('.hm-body');c.classList.remove('open');animH(b,b.scrollHeight,0,250)});
   if(wasOpen){card.classList.remove('open');animH(body,body.scrollHeight,0,250)}
-  else{card.classList.add('open');body.style.height='auto';const h=body.scrollHeight;body.style.height='0px';requestAnimationFrame(()=>animH(body,0,h,350))}
+  else{card.classList.add('open');body.style.height='auto';var h=body.scrollHeight;body.style.height='0px';requestAnimationFrame(function(){animH(body,0,h,380)})}
 }
+
+// ── Build case grid ──
+var cg=document.getElementById('caseGrid');
+GRID_CASES.forEach(function(c,i){
+  var card=document.createElement('div');card.className='cg-card';card.dataset.idx=i;
+  card.style.cssText='';
+  card.innerHTML='<style>.cg-card:nth-child('+(i+1)+')::before{background:'+c.color+'}</style><div class="cg-head"><div class="cg-num" style="color:'+c.color+';border:2px solid '+c.border+';background:'+c.bg+'">'+c.num+'</div><div class="cg-title">'+c.title+'</div></div><div class="cg-subtitle">'+c.subtitle+'</div><div class="cg-result" style="color:'+c.resultColor+'">'+c.result+'</div><div class="cg-cta" style="color:'+c.ctaColor+'">Read → </div>';
+  card.addEventListener('click',function(){openCaseModal(c)});
+  cg.appendChild(card);
+});
+
+// ── Case modal ──
+function openCaseModal(c){
+  document.getElementById('modalLabel').textContent='Case '+c.num+' — '+c.title;
+  document.getElementById('modalBody').innerHTML='<h3>'+c.title+'</h3><div class="modal-subtitle">'+c.subtitle+'</div><div class="modal-result" style="color:'+c.resultColor+'">'+c.result+'</div><div class="modal-case-grid"><div class="modal-block"><div class="modal-block-label">Situation</div><p>'+c.situation+'</p></div><div class="modal-block"><div class="modal-block-label">Diagnosis</div><p>'+c.diagnosis+'</p></div><div class="modal-block"><div class="modal-block-label">Intervention</div><p>'+c.intervention+'</p></div><div class="modal-block"><div class="modal-block-label">Result</div><p>'+c.result_detail+'</p></div></div><div class="modal-engines">'+engTags(c.engines)+'</div>';
+  document.getElementById('modalBackdrop').classList.add('open');
+  document.getElementById('modalPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.getElementById('modalPanel').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
 // ── Engine tooltips ──
-const tip=document.getElementById('engineTip');
-document.addEventListener('mouseover',function(e){
-  const eng=e.target.closest('.case-engine');
-  if(!eng)return;
-  const code=eng.dataset.engine;
-  const data=ENGINE_MAP[code];
-  if(!data)return;
-  document.getElementById('etCode').textContent=code;
-  document.getElementById('etName').textContent=data.n;
-  document.getElementById('etDesc').textContent=data.d;
-  const r=eng.getBoundingClientRect();
-  let left=r.left+(r.width/2)-130;
-  if(left<10)left=10;
-  if(left+260>window.innerWidth-10)left=window.innerWidth-270;
-  tip.style.left=left+'px';
-  tip.style.top=(r.bottom+8)+'px';
-  tip.classList.add('show');
-});
-document.addEventListener('mouseout',function(e){
-  if(e.target.closest('.case-engine'))tip.classList.remove('show');
-});
+var tip=document.getElementById('engineTip');
+document.addEventListener('mouseover',function(e){var t=e.target.closest('.eng-tag');if(!t)return;var code=t.dataset.engine,data=EM[code];if(!data)return;document.getElementById('etCode').textContent=code;document.getElementById('etName').textContent=data.n;document.getElementById('etDesc').textContent=data.d;var r=t.getBoundingClientRect();var left=r.left+(r.width/2)-130;if(left<10)left=10;if(left+260>window.innerWidth-10)left=window.innerWidth-270;tip.style.left=left+'px';tip.style.top=(r.bottom+8)+'px';tip.classList.add('show')});
+document.addEventListener('mouseout',function(e){if(e.target.closest('.eng-tag'))tip.classList.remove('show')});
 
-// ── Scroll reveal ──
-const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// ── Reveal ──
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
-// ── Radial nav close handlers ──
+// ── Radial nav ──
 document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
 document.addEventListener('scroll',function(){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked)t.checked=false})});
 document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
