@@ -620,10 +620,10 @@ body {
 .pc { font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:0.4;margin-top:3px }
 
 /* Phase positions */
-.phase.g { top:50%;left:30% }
-.phase.a { top:30%;left:50% }
-.phase.i { top:50%;left:70% }
-.phase.n { top:70%;left:50% }
+.phase.g { top:50%;left:28% }
+.phase.a { top:28%;left:50% }
+.phase.i { top:50%;left:72% }
+.phase.n { top:72%;left:50% }
 
 .phase.g { background:radial-gradient(circle,#0c1a2e,#060e1a);border-color:rgba(59,130,246,0.25);box-shadow:var(--glow-blue) }
 .phase.g:hover,.phase.g.active { box-shadow:0 0 60px rgba(59,130,246,0.15);border-color:rgba(59,130,246,0.5) }
@@ -639,15 +639,15 @@ body {
 
 /* Cluster nodes */
 .cluster {
-  position:absolute;transform:translate(-50%,-50%) scale(0);opacity:0;
+  position:absolute;transform:scale(0);opacity:0;
   transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
   pointer-events:none;padding:9px 14px;border-radius:10px;white-space:nowrap;
   background:rgba(14,14,19,0.96);border:1px solid var(--border);
   backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,0.5);
   cursor:pointer;z-index:16
 }
-.cluster.show { transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto }
-.cluster:hover { border-color:var(--border-h);z-index:25;transform:translate(-50%,-50%) scale(1.06) }
+.cluster.show { transform:scale(1);opacity:1;pointer-events:auto }
+.cluster:hover { border-color:var(--border-h);z-index:25;transform:scale(1.06) }
 
 .cl-icon { display:inline-flex;align-items:center;margin-right:5px;opacity:0.7 }
 .cl-icon svg { width:14px;height:14px }
@@ -2618,6 +2618,7 @@ body {
       <div class="phase i" data-phase="i"><div class="pl" style="color:var(--amber)">I</div><div class="pn" style="color:#fcd34d">Influence</div><div class="psub">Win Them</div><div class="pc" style="color:var(--amber)">11 engines</div></div>
       <div class="phase n" data-phase="n"><div class="pl" style="color:var(--green)">N</div><div class="pn" style="color:#6ee7b7">Nurture</div><div class="psub">Grow Them</div><div class="pc" style="color:var(--green)">13 engines</div></div>
 
+      <svg id="linesSvg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:14;overflow:visible"></svg>
       <div id="clusterLayer" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:15;overflow:visible"></div>
     </div>
 
@@ -2753,14 +2754,36 @@ const DATA = {
 };
 
 // ── Phase positions and cluster angles ──
-const POS = {g:{x:30,y:50},a:{x:50,y:30},i:{x:70,y:50},n:{x:50,y:70}};
-const ANGLES = {
-  g: [-80, -110, -145, 155, 125],
-  a: [-20,  -55,  -90, -120],
-  i: [ 20,   55,   90,  115],
-  n: [160,  125,   85,   50]
+const POS = {g:{x:28,y:50},a:{x:50,y:28},i:{x:72,y:50},n:{x:50,y:72}};
+
+// Pixel offsets from phase node centre — hand-placed to avoid overlap
+const OFFSETS = {
+  g: [
+    { x: -150, y: -110 },  // Company Intel
+    { x: -165, y: -30  },  // Stakeholder Psych
+    { x: -150, y: 40   },  // Competitive Intel
+    { x: -155, y: 105  },  // Meeting Prep
+    { x: -130, y: 170  },  // Quality & Evidence
+  ],
+  a: [
+    { x: -190, y: -110 },  // RFP & Complexity
+    { x: -60,  y: -125 },  // Power & Influence
+    { x: 60,   y: -110 },  // Psychology & Motive
+    { x: 155,  y: -95  },  // Commercial
+  ],
+  i: [
+    { x: 70,   y: -110 },  // Win Strategy
+    { x: 80,   y: -30  },  // Narrative & Proposal
+    { x: 70,   y: 40   },  // Scoring & Audit
+    { x: 75,   y: 105  },  // Performance
+  ],
+  n: [
+    { x: -190, y: 15   },  // Growth & Expansion
+    { x: -60,  y: 70   },  // Defence & Risk
+    { x: 70,   y: 70   },  // Campaign & Orchestration
+    { x: 165,  y: 15   },  // Value & Reporting
+  ]
 };
-const DIST = 17;
 
 const clusterLayer = document.getElementById('clusterLayer');
 const engPanel = document.getElementById('engPanel');
@@ -2805,6 +2828,8 @@ document.querySelectorAll('.phase').forEach(el => {
 function clearPhase() {
   activePhase = null;
   clusterLayer.innerHTML = '';
+  var ls = document.getElementById('linesSvg');
+  if (ls) ls.innerHTML = '';
   engPanel.classList.remove('show');
   document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
 }
@@ -2812,19 +2837,41 @@ function clearPhase() {
 function showClusters(phase) {
   const d = DATA[phase];
   const p = POS[phase];
-  const angles = ANGLES[phase];
+  const offsets = OFFSETS[phase];
+  const wrap = document.getElementById('wrap');
+  const wrapW = wrap.offsetWidth;
+  const wrapH = wrap.offsetHeight;
+  const linesSvg = document.getElementById('linesSvg');
+  linesSvg.innerHTML = '';
+
+  // Phase node centre in pixels
+  const nodeCx = (p.x / 100) * wrapW;
+  const nodeCy = (p.y / 100) * wrapH;
 
   d.clusters.forEach((cl, idx) => {
+    const off = offsets[idx];
     const el = document.createElement('div');
     el.className = 'cluster';
-    el.style.borderColor = d.color.replace(')', ',0.12)').replace('rgb', 'rgba');
+    el.style.borderColor = d.color.replace(')', ',0.15)').replace('rgb', 'rgba');
     el.innerHTML = `<span class="cl-icon">${cl.icon}</span><span class="cl-name" style="color:${d.color}">${cl.name}</span><div class="cl-count">${cl.count} engines</div>`;
 
-    const rad = angles[idx] * Math.PI / 180;
-    const x = Math.max(4, Math.min(96, p.x + Math.cos(rad) * DIST));
-    const y = Math.max(4, Math.min(96, p.y + Math.sin(rad) * DIST));
-    el.style.left = x + '%';
-    el.style.top = y + '%';
+    // Position: absolute pixels from top-left of .wrap
+    const cx = nodeCx + off.x;
+    const cy = nodeCy + off.y;
+    el.style.left = cx + 'px';
+    el.style.top = cy + 'px';
+
+    // Draw subtle connecting line
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', nodeCx);
+    line.setAttribute('y1', nodeCy);
+    line.setAttribute('x2', cx);
+    line.setAttribute('y2', cy);
+    line.setAttribute('stroke', d.color);
+    line.setAttribute('stroke-width', '1');
+    line.setAttribute('stroke-opacity', '0.1');
+    line.setAttribute('stroke-dasharray', '4 4');
+    linesSvg.appendChild(line);
 
     el.addEventListener('mouseenter', () => showEngines(cl, d.color, el));
     el.addEventListener('mouseleave', () => {
