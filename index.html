@@ -287,25 +287,49 @@ body {
    ═══════════════════════════════════════════════ */
 
 .hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  padding: 4rem 2rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-left {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 4.5rem 2rem 2.5rem;
-  position: relative;
+  align-items: flex-start;
+  text-align: left;
+  padding-top: 1rem;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-left { align-items: center; text-align: center; }
+  .hero-right { max-width: 440px; margin: 0 auto; }
 }
 
 /* Subtle radial glow behind hero */
 .hero::before {
   content: '';
   position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
+  top: 10%;
+  left: 25%;
+  width: 500px;
   height: 400px;
-  background: radial-gradient(ellipse, rgba(245,158,11,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(245,158,11,0.03) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -325,9 +349,13 @@ body {
   opacity: 0;
   transform: translateY(8px);
   transition: opacity 0.6s ease, transform 0.6s ease;
-  text-align: center;
-  padding: 0 1rem;
+  text-align: left;
+  padding: 0;
   visibility: hidden;
+}
+@media (max-width: 900px) {
+  .hero-slide { text-align: center; }
+  .hero-slide p { margin: 0 auto; }
 }
 .hero-slide.active {
   opacity: 1;
@@ -337,28 +365,27 @@ body {
 
 .hero-slide h1 {
   font-family: 'Fraunces', serif;
-  font-size: clamp(22px, 3.5vw, 34px);
+  font-size: clamp(20px, 2.8vw, 30px);
   font-weight: 800;
   color: var(--text-bright);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
 }
 
 .hero-slide p {
   font-family: 'DM Sans', sans-serif;
-  font-size: clamp(14px, 1.8vw, 16px);
+  font-size: clamp(13px, 1.5vw, 15px);
   font-weight: 500;
   color: var(--text-dim);
   letter-spacing: 0.3px;
   line-height: 1.8;
-  max-width: 640px;
-  margin: 0 auto;
+  max-width: 540px;
 }
 
 .hero-pips {
   display: flex;
   gap: 8px;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 .hero-pip {
   width: 6px;
@@ -380,15 +407,14 @@ body {
 .hero-anchor {
   display: flex;
   align-items: baseline;
-  justify-content: center;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  margin-bottom: 1.5rem;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-bottom: 1.25rem;
 }
 
 .hero-anchor span {
   font-family: 'Fraunces', serif;
   font-weight: 900;
-  font-size: clamp(42px, 8vw, 80px);
+  font-size: clamp(36px, 5vw, 56px);
   letter-spacing: 0.02em;
   line-height: 1;
 }
@@ -402,11 +428,11 @@ body {
 }
 
 .hero-body {
-  max-width: 680px;
-  font-size: clamp(15px, 1.8vw, 17px);
+  max-width: 580px;
+  font-size: clamp(14px, 1.6vw, 16px);
   color: var(--text);
   line-height: 1.8;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .hero-body strong {
@@ -439,8 +465,8 @@ body {
 }
 
 .hero-sub {
-  margin-top: 1rem;
-  font-size: 12px;
+  margin-top: 0.5rem;
+  font-size: 11px;
   color: var(--text-dim);
   letter-spacing: 0.5px;
 }
@@ -1366,6 +1392,240 @@ body {
   margin-top: 3px;
   line-height: 1.5;
 }
+
+/* ═══════════════════════════════════════════════
+   LAUNCHER DOCK — Three cards, click to expand
+   ═══════════════════════════════════════════════ */
+
+.dock-section {
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.dock-grid {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .dock-grid { grid-template-columns: 1fr; max-width: 400px; }
+}
+
+.dock-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.dock-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.dock-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.dock-card:hover::before { opacity: 1; }
+
+.dock-card[data-modal="discovery"]::before { background: linear-gradient(90deg, var(--red), var(--amber)); }
+.dock-card[data-modal="wheel"]::before { background: linear-gradient(90deg, var(--blue), var(--purple)); }
+.dock-card[data-modal="dashboard"]::before { background: linear-gradient(90deg, var(--amber), var(--green)); }
+
+.dock-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 24px;
+}
+.dock-card[data-modal="discovery"] .dock-icon {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.15);
+}
+.dock-card[data-modal="wheel"] .dock-icon {
+  background: var(--blue-dim);
+  border: 1px solid rgba(59,130,246,0.15);
+}
+.dock-card[data-modal="dashboard"] .dock-icon {
+  background: var(--amber-dim);
+  border: 1px solid rgba(245,158,11,0.15);
+}
+
+.dock-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+.dock-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.dock-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 0.75rem;
+  opacity: 0.5;
+}
+
+
+/* Dock cards inside hero-right — compact version */
+.hero-right .dock-card {
+  padding: 1.25rem 1.25rem;
+  border-radius: 12px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0 1rem;
+  align-items: start;
+}
+.hero-right .dock-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  margin: 0;
+  grid-row: 1 / 3;
+}
+.hero-right .dock-title {
+  font-size: 15px;
+  margin-bottom: 0.2rem;
+  align-self: end;
+}
+.hero-right .dock-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hero-right .dock-meta {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hero-right .dock-card {
+    grid-template-columns: 40px 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   MODAL OVERLAY — Centered panel, backdrop blur
+   ═══════════════════════════════════════════════ */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-panel {
+  position: fixed;
+  top: 5vh; left: 5vw;
+  width: 90vw; height: 90vh;
+  background: var(--bg);
+  border: 1px solid var(--border-h);
+  border-radius: 16px;
+  z-index: 501;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+  scrollbar-width: thin;
+  scrollbar-color: #27272a var(--bg);
+}
+.modal-panel.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+@media (min-width: 1200px) {
+  .modal-panel { top: 5vh; left: 10vw; width: 80vw; }
+}
+
+.modal-close {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: rgba(7,7,10,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.modal-close-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.modal-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--s1);
+  color: var(--text-dim);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close-btn:hover {
+  border-color: var(--border-h);
+  color: var(--text-bright);
+  background: var(--s2);
+}
+
+.modal-body {
+  padding: 0;
+}
+
+/* Hide the original inline sections — they live inside modals now */
+.discovery-section.inline-hidden,
+.wheel-section.inline-hidden,
+.dashboard-section.inline-hidden {
+  display: none !important;
+}
+
 </style>
 <style id="disc-full-styles">
 /* ═══ DISCOVERY FULL SESSION — scoped styles ═══ */
@@ -1549,54 +1809,81 @@ body {
 <!-- ═══════════════ HERO — Rotating headlines ═══════════════ -->
 <section class="hero">
 
-  <!-- Rotating headline + subtext pairs -->
-  <div class="hero-rotator" id="heroRotator">
-    <div class="hero-slide active" data-slide="0">
-      <h1>Most deals are lost before the first meeting.</h1>
-      <p>Your pipeline is a fiction agreed upon by people too invested to admit it. Your forecast is a spreadsheet full of hope. Your best deal just went dark and nobody can tell you why.</p>
-    </div>
-    <div class="hero-slide" data-slide="1">
-      <h1>40 hours of account planning. Compressed to 70 minutes.</h1>
-      <p>Most account plans die at the first political hurdle because they're built on org charts, not influence maps. GAIN surfaces the stakeholders who are actually deciding — not the ones on the invite list.</p>
-    </div>
-    <div class="hero-slide" data-slide="2">
-      <h1>When every pitch is AI-perfect, perfect is table stakes.</h1>
-      <p>The buyer's AI writes the RFP. The vendor's AI writes the response. Every submission converges. The only remaining edge is human judgment — five disciplines that took 25 years to converge into one system.</p>
-    </div>
-    <div class="hero-slide" data-slide="3">
-      <h1>The org chart is a starting point. Map the influence.</h1>
-      <p>Complex deals are won by coalitions, not champions. Your CRM maps who reports to whom. GAIN maps who controls the budget and who will quietly redirect your proposal.</p>
-    </div>
-    <div class="hero-slide" data-slide="4">
-      <h1>Don't transform. Just win one deal.</h1>
-      <p>Tools don't close deals. Trained sellers don't close deals. Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.</p>
-    </div>
-    <div class="hero-slide" data-slide="5">
-      <h1>Numbers. Not narratives.</h1>
-      <p>Every number on this page comes from a real engagement. Redacted where necessary, verified where possible. No vanity metrics. No "up to" language.</p>
-    </div>
-    <div class="hero-slide" data-slide="6">
-      <h1>GAIN didn't start with AI. It started in workshop rooms.</h1>
-      <p>We watched talented teams lose to inferior products because they couldn't read the political landscape. The methodology came first. The AI came twenty years later.</p>
+  <!-- LEFT COLUMN: pitch -->
+  <div class="hero-left">
+
+    <div class="hero-rotator" id="heroRotator">
+      <div class="hero-slide active" data-slide="0">
+        <h1>Most deals are lost before the first meeting.</h1>
+        <p>Your pipeline is a fiction agreed upon by people too invested to admit it. Your forecast is a spreadsheet full of hope. Your best deal just went dark and nobody can tell you why.</p>
+      </div>
+      <div class="hero-slide" data-slide="1">
+        <h1>40 hours of account planning. Compressed to 70 minutes.</h1>
+        <p>Most account plans die at the first political hurdle because they're built on org charts, not influence maps. GAIN surfaces the stakeholders who are actually deciding — not the ones on the invite list.</p>
+      </div>
+      <div class="hero-slide" data-slide="2">
+        <h1>When every pitch is AI-perfect, perfect is table stakes.</h1>
+        <p>The buyer's AI writes the RFP. The vendor's AI writes the response. Every submission converges. The only remaining edge is human judgment — five disciplines that took 25 years to converge into one system.</p>
+      </div>
+      <div class="hero-slide" data-slide="3">
+        <h1>The org chart is a starting point. Map the influence.</h1>
+        <p>Complex deals are won by coalitions, not champions. Your CRM maps who reports to whom. GAIN maps who controls the budget and who will quietly redirect your proposal.</p>
+      </div>
+      <div class="hero-slide" data-slide="4">
+        <h1>Don't transform. Just win one deal.</h1>
+        <p>Tools don't close deals. Trained sellers don't close deals. Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.</p>
+      </div>
+      <div class="hero-slide" data-slide="5">
+        <h1>Numbers. Not narratives.</h1>
+        <p>Every number on this page comes from a real engagement. Redacted where necessary, verified where possible. No vanity metrics. No "up to" language.</p>
+      </div>
+      <div class="hero-slide" data-slide="6">
+        <h1>GAIN didn't start with AI. It started in workshop rooms.</h1>
+        <p>We watched talented teams lose to inferior products because they couldn't read the political landscape. The methodology came first. The AI came twenty years later.</p>
+      </div>
+
+      <div class="hero-pips" id="heroPips"></div>
     </div>
 
-    <div class="hero-pips" id="heroPips"></div>
+    <div class="hero-anchor">
+      <span class="eq">EQ</span><span class="dot">.</span>
+      <span class="iq">IQ</span><span class="dot">.</span>
+      <span class="ai">AI</span><span class="dot">.</span>
+    </div>
+
+    <p class="hero-body">
+      Everything you used to do manually — pulling filings, cross-referencing stakeholders, decoding RFPs, mapping who actually decides — <strong>78 specialist engines</strong> do it in minutes. But the engines don't give you answers. They give you better questions. <strong>Then you drive.</strong>
+    </p>
+
+    <a href="/engage.html" class="hero-cta">Let's Look at Your Deal</a>
+    <p class="hero-sub">One deal. One conversation. You'll know in 70 minutes what nobody else can see.</p>
+
   </div>
 
-  <!-- THE RESOLUTION (EQ. IQ. AI.) — stays static -->
-  <div class="hero-anchor">
-    <span class="eq">EQ</span><span class="dot">.</span>
-    <span class="iq">IQ</span><span class="dot">.</span>
-    <span class="ai">AI</span><span class="dot">.</span>
+  <!-- RIGHT COLUMN: launcher dock -->
+  <div class="hero-right">
+    <div class="dock-card" data-modal="discovery" onclick="openModal('discovery')">
+      <div class="dock-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+      </div>
+      <div class="dock-title">Discovery Session</div>
+      <div class="dock-desc">Paste a rant, a transcript, or a war story. The system maps it to failure patterns and tells you where to start.</div>
+    </div>
+    <div class="dock-card" data-modal="wheel" onclick="openModal('wheel')">
+      <div class="dock-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+      </div>
+      <div class="dock-title">The Architecture</div>
+      <div class="dock-desc">78 engines across 4 phases. Hover to explore the clusters. The diagnostic tells you where to start.</div>
+    </div>
+    <div class="dock-card" data-modal="dashboard" onclick="openModal('dashboard')">
+      <div class="dock-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+      </div>
+      <div class="dock-title">Account Pack</div>
+      <div class="dock-desc">A redacted pack from a real engagement. Stakeholders, financials, competitors, win themes — the full output.</div>
+    </div>
   </div>
-
-  <!-- THE IMPLICATION — operator-driven system -->
-  <p class="hero-body">
-    Everything you used to do manually — pulling filings, cross-referencing stakeholders, decoding RFPs, mapping who actually decides — <strong>78 specialist engines</strong> do it in minutes. But the engines don't give you answers. They give you better questions. The diagnostic reads your situation, surfaces what you'd miss, and prescribes where to dig. <strong>Then you drive.</strong> Your experience, your network, your instinct — layered on top of intelligence that used to take weeks to assemble.
-  </p>
-
-  <a href="/engage.html" class="hero-cta">Let's Look at Your Deal</a>
-  <p class="hero-sub">One deal. One conversation. You'll know in 70 minutes what nobody else can see.</p>
 
 </section>
 
@@ -1648,8 +1935,9 @@ body {
   </div>
 </section>
 
+
 <!-- ═══════════════ DISCOVERY SESSION — Embedded from GAIN-00 ═══════════════ -->
-<section class="discovery-section reveal" style="padding:3rem 2rem;border-top:1px solid var(--border);">
+<section class="discovery-section reveal inline-hidden" id="sect-discovery" style="padding:3rem 2rem;border-top:1px solid var(--border);">
   <div style="max-width:860px;margin:0 auto;">
     <div class="section-label">Try It</div>
     <h2 style="font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);text-align:center;margin-bottom:0.5rem;">Tell Me What's Going On</h2>
@@ -2571,7 +2859,7 @@ body {
 </section>
 
 <!-- ═══════════════ THE WHEEL ═══════════════ -->
-<section class="wheel-section reveal">
+<section class="wheel-section reveal inline-hidden" id="sect-wheel">
   <div class="wheel-header">
     <div class="section-label">The Architecture</div>
     <h2>78 engines. The diagnostic tells you where to start.<br>You decide where to go next.</h2>
@@ -2628,7 +2916,7 @@ body {
 </section>
 
 <!-- ═══════════════ DASHBOARD — React Account Pack ═══════════════ -->
-<section class="dashboard-section reveal">
+<section class="dashboard-section reveal inline-hidden" id="sect-dashboard">
   <div class="dashboard-header">
     <div class="section-label">The Account Pack</div>
     <h2>This is what the process produces.</h2>
@@ -2644,6 +2932,34 @@ body {
   <p class="cta-sub">Bring a stalled deal, a stuck portfolio, or a team that can't see what's killing them. David Matthews runs the diagnostic with you — not for you. What it finds goes further than the deal.</p>
   <a href="/engage.html" class="hero-cta">Start the Conversation</a>
 </section>
+
+
+<!-- ═══════════════ MODAL OVERLAYS ═══════════════ -->
+<div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
+
+<div class="modal-panel" id="modal-discovery">
+  <div class="modal-close">
+    <span class="modal-close-label">Discovery Session</span>
+    <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+  </div>
+  <div class="modal-body" id="modal-body-discovery"></div>
+</div>
+
+<div class="modal-panel" id="modal-wheel">
+  <div class="modal-close">
+    <span class="modal-close-label">The Architecture — 78 Engines</span>
+    <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+  </div>
+  <div class="modal-body" id="modal-body-wheel"></div>
+</div>
+
+<div class="modal-panel" id="modal-dashboard">
+  <div class="modal-close">
+    <span class="modal-close-label">Account Pack — Meridian Financial Services</span>
+    <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+  </div>
+  <div class="modal-body" id="modal-body-dashboard"></div>
+</div>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
@@ -3139,6 +3455,60 @@ buildMobileWheel();
   // Pause on hover
   rotator.addEventListener('mouseenter', () => clearInterval(timer));
   rotator.addEventListener('mouseleave', () => { timer = setInterval(next, 5000); });
+})();
+
+</script>
+
+<script>
+// ── Launcher Dock — Modal open/close ──
+(function(){
+  let currentModal = null;
+  let contentMoved = {};
+
+  window.openModal = function(name) {
+    const backdrop = document.getElementById('modalBackdrop');
+    const panel = document.getElementById('modal-' + name);
+    const body = document.getElementById('modal-body-' + name);
+    const section = document.getElementById('sect-' + name);
+
+    if (!panel || !section) return;
+
+    // Move section content into modal body (first time only)
+    if (!contentMoved[name]) {
+      // Clone the inner content
+      const inner = section.cloneNode(true);
+      inner.classList.remove('inline-hidden');
+      inner.style.display = '';
+      inner.removeAttribute('id');
+      body.appendChild(inner);
+      contentMoved[name] = true;
+    }
+
+    // Open
+    backdrop.classList.add('open');
+    panel.classList.add('open');
+    panel.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    currentModal = name;
+
+    // ESC to close
+    document.addEventListener('keydown', escHandler);
+  };
+
+  window.closeModal = function() {
+    const backdrop = document.getElementById('modalBackdrop');
+    if (currentModal) {
+      document.getElementById('modal-' + currentModal).classList.remove('open');
+    }
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    currentModal = null;
+    document.removeEventListener('keydown', escHandler);
+  };
+
+  function escHandler(e) {
+    if (e.key === 'Escape') closeModal();
+  }
 })();
 
 </script>
