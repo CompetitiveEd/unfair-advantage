@@ -8,273 +8,193 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #07070a;
-  --s1: #0e0e13;
-  --s2: #141419;
-  --border: rgba(255,255,255,0.04);
-  --border-h: rgba(255,255,255,0.08);
-  --text: #d4d4d8;
-  --text-dim: #a1a1aa;
-  --text-bright: #fafafa;
-  --blue: #3b82f6;
-  --purple: #a855f7;
-  --amber: #f59e0b;
-  --green: #10b981;
-  --red: #ef4444;
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;
 }
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html {
-  scroll-snap-type: y mandatory;
-  scrollbar-width: thin; scrollbar-color: #27272a var(--bg);
-}
-body {
-  background: var(--bg); color: var(--text);
-  font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 16px; line-height: 1.6;
-  -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
-
-/* ═══ SNAP SECTIONS ═══ */
-.snap {
-  scroll-snap-align: start;
-  min-height: 100vh; min-height: 100dvh;
-  padding-top: 52px;
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-}
-.snap-inner {
-  width: 100%; max-width: 900px;
-  padding: 1.5rem 2rem; margin: 0 auto;
-}
-
-/* ═══ FADE-IN ON SNAP ═══ */
-.snap .fi { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.snap.seen .fi { opacity: 1; transform: translateY(0); }
-.snap.seen .fi:nth-child(2) { transition-delay: 70ms; }
-.snap.seen .fi:nth-child(3) { transition-delay: 140ms; }
-.snap.seen .fi:nth-child(4) { transition-delay: 210ms; }
-.snap.seen .fi:nth-child(5) { transition-delay: 280ms; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
 /* ═══ NAV ═══ */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(7,7,10,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 1.5rem; height: 52px;
-  display: flex; align-items: center; justify-content: center; gap: 1.5rem;
-}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
 @media(min-width:768px){.nav{gap:2.5rem}}
-.nav a { font-size:13px; font-weight:500; color:var(--text-dim); text-decoration:none; letter-spacing:0.5px; transition:color .2s; }
-.nav a:hover { color:var(--text-bright); }
-.nav-logo { font-family:'DM Mono',monospace; font-size:13px; font-weight:500; letter-spacing:3px; color:var(--text-bright); text-transform:uppercase; }
-.nav-logo span { color:var(--amber); }
-.nav-cta { font-size:12px!important; font-weight:700!important; color:var(--amber)!important; letter-spacing:1px!important; }
-.nav-cta:hover { color:#fbbf24!important; }
-.radial-menu { position:relative; padding-bottom:2px; }
-.radial-toggle { display:none; }
-.radial-label { font-size:13px; font-weight:500; color:var(--text-dim); cursor:pointer; display:flex; align-items:center; gap:4px; user-select:none; transition:color .2s; }
-.radial-label:hover { color:var(--text-bright); }
-.radial-label .chev { font-size:9px; opacity:.5; transition:transform .2s; }
-.radial-items { position:absolute; top:100%; left:50%; transform:translateX(-50%); margin-top:6px; pointer-events:none; opacity:0; transition:opacity .2s; display:flex; }
-.radial-toggle:checked~.radial-items { pointer-events:auto; opacity:1; }
-.radial-toggle:checked~.radial-label .chev { transform:rotate(180deg); }
-.ri { width:64px; height:64px; border-radius:50%; background:rgba(14,14,19,0.95); backdrop-filter:blur(12px); border:1px solid var(--border-h); display:flex; flex-direction:column; align-items:center; justify-content:center; text-decoration:none; opacity:0; transform:scale(0); transition:all .35s cubic-bezier(.34,1.56,.64,1); box-shadow:0 4px 20px rgba(0,0,0,.5); margin:0 3px; }
-.radial-toggle:checked~.radial-items .ri { opacity:1; transform:scale(1); }
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}
+.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
+.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative;padding-bottom:2px}
+.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}
+.radial-label:hover{color:var(--text-bright)}
+.radial-label .chev{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity .2s;display:flex}
+.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}
+.radial-toggle:checked~.radial-label .chev{transform:rotate(180deg)}
+.ri{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
+.radial-toggle:checked~.radial-items .ri{opacity:1;transform:scale(1)}
 .ri:nth-child(1){transition-delay:0ms}.ri:nth-child(2){transition-delay:40ms}.ri:nth-child(3){transition-delay:80ms}.ri:nth-child(4){transition-delay:120ms}
-.ri:hover { transform:scale(1.12)!important; border-color:rgba(255,255,255,.12); }
-.rl { font-family:'Fraunces',serif; font-size:22px; font-weight:900; line-height:1; }
-.rs { font-size:8px; font-weight:600; letter-spacing:.5px; margin-top:2px; }
-.rio { width:20px; height:20px; opacity:.8; }
-.ril { font-size:8px; font-weight:600; margin-top:3px; line-height:1.2; text-align:center; }
-.nav-toggle-btn { display:none; background:none; border:none; color:var(--text); font-size:22px; cursor:pointer; position:absolute; right:1rem; }
-.nav-inner { display:flex; align-items:center; gap:1.5rem; }
+.ri:hover{transform:scale(1.12)!important}
+.rl{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
+.rs{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
+.rio{width:20px;height:20px;opacity:.8}
+.ril{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
 @media(max-width:768px){
   .nav{justify-content:flex-start;padding-left:1rem}
   .nav-inner{display:none}
   .nav-toggle-btn{display:block}
   .nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}
   .nav-inner.open .radial-menu{display:none}
-  .nav-inner.open a{font-size:14px}
 }
 @media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-/* ═══ PROGRESS DOTS ═══ */
-.dots { position:fixed; right:1.25rem; top:50%; transform:translateY(-50%); z-index:90; display:flex; flex-direction:column; gap:12px; }
-@media(max-width:768px){.dots{right:.65rem;gap:10px}}
-.dot {
-  width:8px; height:8px; border-radius:50%;
-  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.06);
-  cursor:pointer; transition:all .3s; position:relative;
-}
-.dot:hover { background:rgba(255,255,255,.15); }
-.dot.on { background:var(--amber); border-color:var(--amber); box-shadow:0 0 8px rgba(245,158,11,.3); }
-.dot::before {
-  content:attr(data-label); position:absolute; right:18px; top:50%; transform:translateY(-50%);
-  font-family:'DM Mono',monospace; font-size:10px; font-weight:500; color:var(--text-dim);
-  white-space:nowrap; opacity:0; transition:opacity .2s; pointer-events:none;
-  background:var(--s1); padding:3px 7px; border-radius:4px; border:1px solid var(--border);
-}
-.dot:hover::before { opacity:1; }
+/* ═══ MAIN ═══ */
+.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:2.5rem}
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-/* ═══ SECTION LABEL ═══ */
-.sl {
-  font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--amber);
-  margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; gap:1rem;
-}
-.sl::before,.sl::after { content:''; width:30px; height:1px; background:var(--border-h); }
+/* ═══ HERO ═══ */
+.hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(239,68,68,.04) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,50px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{color:var(--red);font-style:normal}
+.hero-p{font-size:15px;color:var(--text-dim);max-width:540px;margin:0 auto 2rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
+.hero-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.hs{text-align:center}
+.hs .num{font-family:'Fraunces',serif;font-size:clamp(30px,5vw,46px);font-weight:900;line-height:1}
+.hs .lbl{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.5px;margin-top:6px}
 
 /* ═══════════════════════════════════════
-   HERO
+   CASE EXPAND CARDS
    ═══════════════════════════════════════ */
-.hero-ct { text-align:center; }
-.hero-ct::before {
-  content:''; position:absolute; top:30%; left:50%; transform:translateX(-50%);
-  width:600px; height:300px;
-  background:radial-gradient(ellipse,rgba(239,68,68,.04) 0%,transparent 70%);
-  pointer-events:none;
+.case-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+.casecard{
+  background:var(--s1);border:1px solid var(--border);border-radius:12px;
+  padding:1rem 1.15rem;cursor:pointer;
+  transition:all .4s cubic-bezier(.32,.72,0,1);
+  flex:1;min-width:180px;max-width:280px;position:relative;overflow:hidden;
 }
-.hero-ct h1 {
-  font-family:'Fraunces',serif; font-size:clamp(28px,5.5vw,52px);
-  font-weight:900; color:var(--text-bright); margin-bottom:.75rem; line-height:1.15;
+.casecard:hover,.casecard.open{
+  border-color:var(--border-h);flex:3;max-width:100%;background:var(--s2);
 }
-.hero-ct h1 em { color:var(--red); font-style:normal; }
-.hero-sub { font-size:15px; color:var(--text-dim); max-width:520px; margin:0 auto 2.5rem; line-height:1.7; }
-.hero-sub strong { color:var(--text-bright); font-weight:600; }
-.hero-stats { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; }
-.hs { text-align:center; }
-.hs .num { font-family:'Fraunces',serif; font-size:clamp(30px,5vw,46px); font-weight:900; line-height:1; }
-.hs .lbl { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); letter-spacing:.5px; margin-top:6px; }
-.scroll-hint {
-  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-  opacity:.3; animation:hp 2s ease infinite;
+
+/* Compact state: visible always */
+.cc-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:2px}
+.cc-title{font-family:'Fraunces',serif;font-size:14px;font-weight:800;color:var(--text-bright);line-height:1.3;margin-bottom:.5rem}
+.cc-metrics{display:flex;gap:6px;flex-wrap:wrap}
+.cc-met{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  padding:4px 8px;text-align:center;
 }
-.scroll-hint span { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); letter-spacing:1px; }
-.sh-arrow { width:14px; height:14px; border-right:1.5px solid var(--text-dim); border-bottom:1.5px solid var(--text-dim); transform:rotate(45deg); }
-@keyframes hp { 0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)} 50%{opacity:.5;transform:translateX(-50%) translateY(4px)} }
+.cc-met .mv{font-family:'Fraunces',serif;font-size:14px;font-weight:900;line-height:1}
+.cc-met .ml{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-dim);letter-spacing:.3px;margin-top:1px}
 
-/* ═══════════════════════════════════════
-   CASE CARDS
-   ═══════════════════════════════════════ */
-.cc {
-  background:var(--s1); border:1px solid var(--border); border-radius:16px;
-  overflow:hidden; transition:border-color .3s; max-width:860px; margin:0 auto;
+/* Expanded state: hidden until hover/tap */
+.cc-body{
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height .45s cubic-bezier(.32,.72,0,1),opacity .35s ease,margin .35s ease;
+  margin-top:0;
 }
-.cc:hover { border-color:var(--border-h); }
-.cc[data-a="b"] { border-top:2px solid rgba(59,130,246,.3); }
-.cc[data-a="p"] { border-top:2px solid rgba(168,85,247,.3); }
-.cc[data-a="g"] { border-top:2px solid rgba(16,185,129,.3); }
-
-.ch { padding:1.5rem 2rem 0; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
-.cn { font-family:'DM Mono',monospace; font-size:11px; font-weight:500; letter-spacing:1.5px; text-transform:uppercase; opacity:.4; }
-.ct { font-family:'Fraunces',serif; font-size:clamp(18px,2.5vw,24px); font-weight:800; color:var(--text-bright); }
-
-.cm { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:1.25rem 2rem; }
-@media(max-width:600px){.cm{grid-template-columns:1fr}}
-.cmi { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:.85rem 1rem; text-align:center; }
-.cmi .v { font-family:'Fraunces',serif; font-size:clamp(18px,2.5vw,26px); font-weight:900; line-height:1; margin-bottom:3px; }
-.cmi .l { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); letter-spacing:.5px; text-transform:uppercase; }
-
-.cs { padding:1.25rem 2rem 1.5rem; border-top:1px solid var(--border); }
-.cs h3 { font-size:13px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.4rem; }
-.cs p { font-size:14px; color:var(--text); line-height:1.7; margin-bottom:.4rem; }
-.cs p:last-child { margin-bottom:0; }
-.cr { font-size:13px; font-weight:700; margin-top:.75rem; padding:.6rem .9rem; border-radius:8px; }
-
-/* Accent colors */
-.cc[data-a="b"] .cs h3 { color:var(--blue); }
-.cc[data-a="b"] .cmi .v { color:var(--blue); }
-.cc[data-a="b"] .cr { color:var(--blue); background:rgba(59,130,246,.06); border:1px solid rgba(59,130,246,.1); }
-
-.cc[data-a="p"] .cs h3 { color:var(--purple); }
-.cc[data-a="p"] .cmi .v { color:var(--purple); }
-.cc[data-a="p"] .cr { color:var(--purple); background:rgba(168,85,247,.06); border:1px solid rgba(168,85,247,.1); }
-
-.cc[data-a="g"] .cs h3 { color:var(--green); }
-.cc[data-a="g"] .cmi .v { color:var(--green); }
-.cc[data-a="g"] .cr { color:var(--green); background:rgba(16,185,129,.06); border:1px solid rgba(16,185,129,.1); }
-
-/* People Multiplier (inline, Case 02) */
-.pm { padding:0 2rem 1.5rem; }
-.pm-h {
-  font-family:'DM Mono',monospace; font-size:11px; font-weight:500; letter-spacing:1px;
-  color:var(--text-dim); text-transform:uppercase; margin-bottom:.5rem;
-  border-top:1px solid var(--border); padding-top:1rem;
+.casecard:hover .cc-body,.casecard.open .cc-body{
+  max-height:800px;opacity:1;margin-top:.75rem;
 }
-.pm-g { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-@media(max-width:600px){.pm-g{grid-template-columns:1fr}}
-.pm-s { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:.65rem .75rem; text-align:center; }
-.pm-v { font-family:'Fraunces',serif; font-size:22px; font-weight:900; line-height:1; }
-.pm-l { font-family:'DM Mono',monospace; font-size:9px; color:var(--text-dim); letter-spacing:.5px; margin-top:3px; }
 
-/* Diagnosis grid (inline, Case 03) */
-.dg { padding:0 2rem 1.5rem; }
-.dg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; border-top:1px solid var(--border); padding-top:1rem; }
-@media(max-width:700px){.dg-grid{grid-template-columns:1fr}}
-.db { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1rem; }
-.db h4 { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--green); margin-bottom:.35rem; }
-.db p { font-size:12px; color:var(--text); line-height:1.65; }
+.cc-body .story-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.3rem}
+.cc-body .story-text{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:.3rem}
+.cc-body .story-result{font-size:12px;font-weight:700;padding:.5rem .75rem;border-radius:7px;margin-top:.5rem}
 
-/* ═══ FAILURES (hover tooltips) ═══ */
-.fg { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; max-width:800px; margin:0 auto; }
-@media(max-width:640px){.fg{grid-template-columns:1fr}}
-.fc {
-  background:var(--s1); border:1px solid var(--border); border-radius:12px;
-  padding:1.5rem; transition:border-color .3s; position:relative;
+/* Sub-details (People Multiplier, Diagnosis) */
+.cc-sub{margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--border)}
+.cc-sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem}
+.cc-sub-grid{display:grid;gap:6px}
+.cc-sub-grid.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){.cc-sub-grid.g3{grid-template-columns:1fr}}
+.cc-sub-box{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:.55rem .65rem;text-align:center}
+.cc-sub-val{font-family:'Fraunces',serif;font-size:18px;font-weight:900;line-height:1}
+.cc-sub-lbl{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-dim);letter-spacing:.5px;margin-top:2px}
+
+/* Diagnosis blocks */
+.diag-box{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:.65rem}
+.diag-box h4{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.2rem}
+.diag-box p{font-size:11px;color:var(--text);line-height:1.6}
+
+/* Accent colours */
+.casecard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.3)}
+.casecard[data-c="blue"]:hover,.casecard[data-c="blue"].open{border-top-color:var(--blue)}
+.casecard[data-c="blue"] .cc-num{color:var(--blue)}
+.casecard[data-c="blue"] .cc-met .mv{color:var(--blue)}
+.casecard[data-c="blue"] .story-label{color:var(--blue)}
+.casecard[data-c="blue"] .story-result{color:var(--blue);background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.1)}
+
+.casecard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.3)}
+.casecard[data-c="purple"]:hover,.casecard[data-c="purple"].open{border-top-color:var(--purple)}
+.casecard[data-c="purple"] .cc-num{color:var(--purple)}
+.casecard[data-c="purple"] .cc-met .mv{color:var(--purple)}
+.casecard[data-c="purple"] .story-label{color:var(--purple)}
+.casecard[data-c="purple"] .story-result{color:var(--purple);background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.1)}
+.casecard[data-c="purple"] .cc-sub-val{color:var(--purple)}
+
+.casecard[data-c="green"]{border-top:2px solid rgba(16,185,129,.3)}
+.casecard[data-c="green"]:hover,.casecard[data-c="green"].open{border-top-color:var(--green)}
+.casecard[data-c="green"] .cc-num{color:var(--green)}
+.casecard[data-c="green"] .cc-met .mv{color:var(--green)}
+.casecard[data-c="green"] .story-label{color:var(--green)}
+.casecard[data-c="green"] .story-result{color:var(--green);background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.1)}
+.casecard[data-c="green"] .diag-box h4{color:var(--green)}
+
+@media(max-width:700px){
+  .case-row{flex-direction:column}
+  .casecard{max-width:100%;min-width:0}
+  .casecard:hover,.casecard.open{flex:unset}
 }
-.fc:hover { border-color:var(--border-h); }
-.fc h3 { font-size:15px; font-weight:700; color:var(--text-bright); margin-bottom:.5rem; }
-.fc p { font-size:13px; color:var(--text); line-height:1.7; }
-.fc strong { color:var(--text-bright); font-weight:600; }
 
-.tt {
-  position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%) translateY(4px);
-  background:var(--s2); border:1px solid var(--border-h); border-radius:8px;
-  padding:10px 14px; width:max-content; max-width:280px;
-  font-family:'DM Mono',monospace; font-size:11px; color:var(--amber); line-height:1.5;
-  opacity:0; pointer-events:none; transition:opacity .25s,transform .25s;
-  box-shadow:0 8px 24px rgba(0,0,0,.4); z-index:10;
+/* ═══ FAILURE EXPAND CARDS ═══ */
+.card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.xcard{
+  background:var(--s1);border:1px solid var(--border);border-radius:10px;
+  padding:.85rem 1rem;cursor:pointer;
+  transition:all .35s cubic-bezier(.32,.72,0,1);
+  flex:1;min-width:160px;max-width:260px;position:relative;overflow:hidden;
 }
-.tt::after { content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--s2); }
-.fc:hover .tt { opacity:1; transform:translateX(-50%) translateY(0); }
+.xcard:hover,.xcard.open{border-color:var(--border-h);flex:2.5;max-width:100%;background:var(--s2)}
+.xcard-title{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:var(--text-bright);line-height:1.3}
+.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
+.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:300px;opacity:1;margin-top:.5rem}
+.xcard-body p{font-size:13px;color:var(--text);line-height:1.65;margin:0}
+.xcard-body strong{color:var(--text-bright);font-weight:600}
+.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}
+.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--text-dim)}
+@media(max-width:700px){
+  .card-row{flex-direction:column}
+  .xcard{max-width:100%;min-width:0}
+  .xcard:hover,.xcard.open{flex:unset}
+}
 
-/* ═══ BREADCRUMB ═══ */
-.bc { text-align:center; margin-top:2rem; }
-.bc a {
-  font-size:14px; font-weight:600; color:var(--blue); text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px; transition:color .2s,gap .2s;
-}
-.bc a:hover { color:#60a5fa; gap:12px; }
+.bc{text-align:center;margin-top:1.25rem}
+.bc a{font-size:14px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s,gap .2s}
+.bc a:hover{color:#60a5fa;gap:12px}
 
 /* ═══ CTA ═══ */
-.cta-ct { text-align:center; position:relative; }
-.cta-ct::before {
-  content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:500px; height:300px;
-  background:radial-gradient(ellipse,rgba(245,158,11,.04) 0%,transparent 70%);
-  pointer-events:none;
-}
-.cta-ct h2 { font-family:'Fraunces',serif; font-size:clamp(28px,5vw,44px); font-weight:900; color:var(--text-bright); margin-bottom:.5rem; }
-.cta-s { font-size:14px; color:var(--text-dim); max-width:400px; margin:0 auto 2rem; line-height:1.7; }
-.cta-b {
-  display:inline-flex; align-items:center; gap:10px;
-  background:var(--amber); color:var(--bg);
-  font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700;
-  letter-spacing:1.5px; text-transform:uppercase;
-  padding:16px 36px; border-radius:8px; text-decoration:none;
-  transition:all .3s; border:none; cursor:pointer;
-}
-.cta-b:hover { background:#fbbf24; transform:translateY(-2px); box-shadow:0 8px 30px rgba(245,158,11,.2); }
+.cta{text-align:center;padding:2.5rem 0 4rem;border-top:1px solid var(--border)}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.cta-s{font-size:14px;color:var(--text-dim);max-width:400px;margin:0 auto 2rem;line-height:1.7}
+.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
+.cta-b:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
 
-/* Footer line */
-.fl {
-  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  font-family:'DM Mono',monospace; font-size:11px; color:#3f3f46;
-  letter-spacing:1px; text-align:center; white-space:nowrap;
-}
-.fl a { color:#52525b; text-decoration:none; }
-.fl a:hover { color:var(--text-dim); }
+.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+.footer-text a:hover{color:var(--text-dim)}
 </style>
 </head>
 <body>
@@ -311,188 +231,137 @@ body {
   </div>
 </nav>
 
-<!-- PROGRESS DOTS -->
-<div class="dots" id="dots">
-  <div class="dot on" data-i="0" data-label="Proof"></div>
-  <div class="dot" data-i="1" data-label="Case 01"></div>
-  <div class="dot" data-i="2" data-label="Case 02"></div>
-  <div class="dot" data-i="3" data-label="Case 03"></div>
-  <div class="dot" data-i="4" data-label="Honesty"></div>
-  <div class="dot" data-i="5" data-label="Engage"></div>
-</div>
+<div class="main">
 
-<!-- ══════════ SECTION 1: HERO ══════════ -->
-<section class="snap seen" data-s="0">
-  <div class="snap-inner hero-ct">
-    <div class="sl fi">Proof of Execution</div>
-    <h1 class="fi">Strong propositions. Talented people.<br><em>Weak execution.</em></h1>
-    <p class="hero-sub fi"><strong>Judgment is the last million-pound skill.</strong> Every case below started with a deal problem. None of them ended there. 3 portfolios. Same fractures. Same methodology.</p>
-    <div class="hero-stats fi">
+  <!-- ═══ HERO ═══ -->
+  <section class="hero reveal">
+    <h1>Strong propositions. Talented people.<br><em>Weak execution.</em></h1>
+    <p class="hero-p"><strong>Judgment is the last million-pound skill.</strong> Every case below started with a deal problem. None of them ended there. 3 portfolios. Same fractures. Same methodology.</p>
+    <div class="hero-stats">
       <div class="hs"><div class="num" style="color:var(--blue)">£55M</div><div class="lbl">From £19.5M</div></div>
       <div class="hs"><div class="num" style="color:var(--purple)">£183M</div><div class="lbl">From £35M</div></div>
       <div class="hs"><div class="num" style="color:var(--green)">3-Yr</div><div class="lbl">Exit runway</div></div>
     </div>
-  </div>
-  <div class="scroll-hint"><span>Scroll</span><div class="sh-arrow"></div></div>
-</section>
+  </section>
 
-<!-- ══════════ SECTION 2: CASE 01 ══════════ -->
-<section class="snap" data-s="1">
-  <div class="snap-inner">
-    <div class="cc fi" data-a="b">
-      <div class="ch"><span class="cn">Case 01</span><span class="ct">Professional Services Repositioned</span></div>
-      <div class="cm">
-        <div class="cmi"><div class="v">£19.5M → £55M</div><div class="l">Revenue</div></div>
-        <div class="cmi"><div class="v">+170%</div><div class="l">Growth</div></div>
-        <div class="cmi"><div class="v">2-in-3</div><div class="l">Win Rate</div></div>
-      </div>
-      <div class="cs">
-        <h3>A Proposition Built From Nothing</h3>
-        <p>No common offering. No standard cost model. Sellers avoiding the conversation. Delivery losing money on every project. One methodology gathered what existed, assessed the gaps, assembled 12 components into one proposition. Sellers lined up behind it.</p>
-        <div class="cr">Profit exploded. Annuity grew. Pipeline grew. Became the core proposition of a FTSE 250. 4.2M users. 70 countries.</div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- ═══ THREE CASES AS EXPAND CARDS ═══ -->
+  <section class="section reveal">
+    <div class="sl">Proof of Execution</div>
+    <div class="case-row">
 
-<!-- ══════════ SECTION 3: CASE 02 ══════════ -->
-<section class="snap" data-s="2">
-  <div class="snap-inner">
-    <div class="cc fi" data-a="p">
-      <div class="ch"><span class="cn">Case 02</span><span class="ct">Enterprise Portfolio Repositioned</span></div>
-      <div class="cm">
-        <div class="cmi"><div class="v">£35M → £183M</div><div class="l">Portfolio Scale</div></div>
-        <div class="cmi"><div class="v">51.3%</div><div class="l">CAGR</div></div>
-        <div class="cmi"><div class="v">Doubled</div><div class="l">Margin Impact</div></div>
-      </div>
-      <div class="cs">
-        <h3>A Business That Couldn't Deliver What It Sold</h3>
-        <p>Every project different. Every deal reactive. Delivery going wrong because nothing was standardised. One methodology rebuilt every function — sales, pre-sales, finance, governance, vendors, cost models — as one chain.</p>
-        <div class="cr">£35M → £183M. Profit doubled. 51.3% CAGR. Pipeline tripled. Annuity locked in.</div>
-      </div>
-      <div class="pm">
-        <div class="pm-h">The People Multiplier — revenue per head wasn't about hiring more</div>
-        <div class="pm-g">
-          <div class="pm-s"><div class="pm-v" style="color:var(--purple)">£26M</div><div class="pm-l">Peak Per Head</div></div>
-          <div class="pm-s"><div class="pm-v" style="color:var(--text-bright)">£16.6M</div><div class="pm-l">Average Per Head</div></div>
-          <div class="pm-s"><div class="pm-v" style="color:var(--text-dim)">£13M</div><div class="pm-l">Adjusted Base</div></div>
+      <!-- Case 01 -->
+      <div class="casecard" data-c="blue">
+        <div class="cc-num">Case 01</div>
+        <div class="cc-title">Professional Services Repositioned</div>
+        <div class="cc-metrics">
+          <div class="cc-met"><div class="mv">£19.5M → £55M</div><div class="ml">Revenue</div></div>
+          <div class="cc-met"><div class="mv">+170%</div><div class="ml">Growth</div></div>
+          <div class="cc-met"><div class="mv">2-in-3</div><div class="ml">Win Rate</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="story-label">A Proposition Built From Nothing</div>
+          <div class="story-text">No common offering. No standard cost model. Sellers avoiding the conversation. Delivery losing money on every project. One methodology gathered what existed, assessed the gaps, assembled 12 components into one proposition. Sellers lined up behind it.</div>
+          <div class="story-result">Profit exploded. Annuity grew. Pipeline grew. Became the core proposition of a FTSE 250. 4.2M users. 70 countries.</div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════ SECTION 4: CASE 03 ══════════ -->
-<section class="snap" data-s="3">
-  <div class="snap-inner">
-    <div class="cc fi" data-a="g">
-      <div class="ch"><span class="cn">Case 03</span><span class="ct">The Founder Trap</span></div>
-      <div class="cm">
-        <div class="cmi"><div class="v">75<span style="font-size:14px;color:var(--text-dim)">/76</span></div><div class="l">Event Attendance</div></div>
-        <div class="cmi"><div class="v">3 → 6</div><div class="l">Sales Team</div></div>
-        <div class="cmi"><div class="v">3-Yr</div><div class="l">Exit Runway</div></div>
-      </div>
-      <div class="cs">
-        <h3>A Founder Who Couldn't Leave</h3>
-        <p>Boutique technology firm. £9M revenue. One person winning every deal. Sellers maintaining accounts, not growing them. The business was the founder. The founder was the business.</p>
-        <div class="cr">3-year exit plan. Business self-sustaining. The multiple changes even if revenue doesn't.</div>
-      </div>
-      <div class="dg">
-        <div class="dg-grid">
-          <div class="db"><h4>The Diagnosis</h4><p>Sellers without licence to act. No capability infrastructure — no account intelligence, no whitespace mapping. Motivation driven by fear of the founder, not shared purpose.</p></div>
-          <div class="db"><h4>The Fix</h4><p>Structural, not training. New sales leadership. Restructured finance for decision-quality data. Deliberate pivot to the market where customer intimacy ran deepest.</p></div>
-          <div class="db"><h4>The Result</h4><p>Founder makes judgment calls with time to think. Sales team doubled. 75/76 attendance at quarterly customer events. Founder on 3-year exit. Business runs without him.</p></div>
+      <!-- Case 02 -->
+      <div class="casecard" data-c="purple">
+        <div class="cc-num">Case 02</div>
+        <div class="cc-title">Enterprise Portfolio Repositioned</div>
+        <div class="cc-metrics">
+          <div class="cc-met"><div class="mv">£35M → £183M</div><div class="ml">Portfolio</div></div>
+          <div class="cc-met"><div class="mv">51.3%</div><div class="ml">CAGR</div></div>
+          <div class="cc-met"><div class="mv">Doubled</div><div class="ml">Margin</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="story-label">A Business That Couldn't Deliver What It Sold</div>
+          <div class="story-text">Every project different. Every deal reactive. Delivery going wrong because nothing was standardised. One methodology rebuilt every function — sales, pre-sales, finance, governance, vendors, cost models — as one chain.</div>
+          <div class="story-result">£35M → £183M. Profit doubled. 51.3% CAGR. Pipeline tripled. Annuity locked in.</div>
+          <div class="cc-sub">
+            <div class="cc-sub-label">The People Multiplier</div>
+            <div class="cc-sub-grid g3">
+              <div class="cc-sub-box"><div class="cc-sub-val">£26M</div><div class="cc-sub-lbl">Peak Per Head</div></div>
+              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-bright)">£16.6M</div><div class="cc-sub-lbl">Average Per Head</div></div>
+              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-dim)">£13M</div><div class="cc-sub-lbl">Adjusted Base</div></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ══════════ SECTION 5: FAILURES + BREADCRUMB ══════════ -->
-<section class="snap" data-s="4">
-  <div class="snap-inner">
-    <div class="sl fi">Where This Breaks</div>
-    <div class="fg fi">
-      <div class="fc">
-        <div class="tt">Your VP of Sales won't call the CFO. Your reps pitch features to procurement. That's this problem.</div>
-        <h3>The Middle Management Gap</h3>
-        <p>The methodology relies on aligning with C-Suite financial mandates. If your team is too terrified to bypass the VP of IT or the Procurement Lead, the strategy will fail. Middle managers buy features; boards buy risk mitigation.</p>
+      <!-- Case 03 -->
+      <div class="casecard" data-c="green">
+        <div class="cc-num">Case 03</div>
+        <div class="cc-title">The Founder Trap</div>
+        <div class="cc-metrics">
+          <div class="cc-met"><div class="mv">75<span style="font-size:11px;color:var(--text-dim)">/76</span></div><div class="ml">Events</div></div>
+          <div class="cc-met"><div class="mv">3 → 6</div><div class="ml">Team</div></div>
+          <div class="cc-met"><div class="mv">3-Yr</div><div class="ml">Exit</div></div>
+        </div>
+        <div class="cc-body">
+          <div class="story-label">A Founder Who Couldn't Leave</div>
+          <div class="story-text">Boutique technology firm. £9M revenue. One person winning every deal. Sellers maintaining accounts, not growing them. The business was the founder. The founder was the business.</div>
+          <div class="story-result">3-year exit plan. Business self-sustaining. The multiple changes even if revenue doesn't.</div>
+          <div class="cc-sub">
+            <div class="cc-sub-grid g3">
+              <div class="diag-box"><h4>The Diagnosis</h4><p>Sellers without licence to act. No capability infrastructure — no account intelligence, no whitespace mapping. Motivation driven by fear, not purpose.</p></div>
+              <div class="diag-box"><h4>The Fix</h4><p>Structural, not training. New sales leadership. Restructured finance for decision-quality data. Pivot to customer intimacy.</p></div>
+              <div class="diag-box"><h4>The Result</h4><p>Founder makes judgment calls with time to think. Sales team doubled. 75/76 event attendance. Founder on 3-year exit. Business runs without him.</p></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="fc">
-        <div class="tt">Perfect dossier. Perfect strategy. Rep freezes in the boardroom. Data is useless without presence.</div>
-        <h3>The Confidence Problem</h3>
-        <p>You can give a team the perfect AI-generated executive dossier. But if they lack the presence to walk into a boardroom and challenge a CFO's worldview, the data is useless. <strong>Tools do not equal talent.</strong></p>
+
+    </div>
+  </section>
+
+  <!-- ═══ WHERE THIS BREAKS ═══ -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--text-dim)">Where This Breaks</div>
+    <div class="card-row">
+      <div class="xcard" data-c="dim">
+        <div class="xcard-title">The Middle Management Gap</div>
+        <div class="xcard-body"><p>The methodology relies on aligning with C-Suite financial mandates. If your team is too terrified to bypass the VP of IT or the Procurement Lead, the strategy will fail. Middle managers buy features; boards buy risk mitigation.</p></div>
+      </div>
+      <div class="xcard" data-c="dim">
+        <div class="xcard-title">The Confidence Problem</div>
+        <div class="xcard-body"><p>You can give a team the perfect AI-generated executive dossier. But if they lack the presence to walk into a boardroom and challenge a CFO's worldview, the data is useless. <strong>Tools do not equal talent.</strong></p></div>
       </div>
     </div>
-    <div class="bc fi"><a href="/revenue-case.html">Same methodology across all three — full revenue case &rarr;</a></div>
-  </div>
-</section>
+    <div class="bc"><a href="/revenue-case.html">Same methodology across all three — full revenue case &rarr;</a></div>
+  </section>
 
-<!-- ══════════ SECTION 6: CTA ══════════ -->
-<section class="snap" data-s="5">
-  <div class="snap-inner cta-ct">
-    <h2 class="fi">You already know.</h2>
-    <p class="cta-s fi">No pitch deck. No discovery call. A live deal diagnostic.</p>
-    <a href="/engage.html" class="cta-b fi">Request a Live Diagnostic</a>
-  </div>
-  <div class="fl">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</div>
-</section>
+  <!-- ═══ CTA ═══ -->
+  <section class="cta reveal">
+    <h2>You already know.</h2>
+    <p class="cta-s">No pitch deck. No discovery call. A live deal diagnostic.</p>
+    <a href="/engage.html" class="cta-b">Request a Live Diagnostic</a>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</p>
+  </footer>
+
+</div>
 
 <script>
 (function(){
-  var S=document.querySelectorAll('.snap'),
-      D=document.querySelectorAll('.dot');
-
-  // Track which section is visible — low threshold + generous rootMargin
+  var reveals=document.querySelectorAll('.reveal');
   var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var i=+e.target.getAttribute('data-s');
-        e.target.classList.add('seen');
-        D.forEach(function(d){d.classList.remove('on')});
-        if(D[i])D[i].classList.add('on');
-      }
-    });
-  },{threshold:0.05, rootMargin:'50px 0px 50px 0px'});
-  S.forEach(function(s){obs.observe(s)});
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
 
-  // SAFETY NET: on any scroll, check all sections and force-reveal visible ones
-  // This catches edge cases where snap moves too fast for observer
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(!ticking){
-      ticking=true;
-      requestAnimationFrame(function(){
-        var vh=window.innerHeight;
-        S.forEach(function(s,i){
-          var r=s.getBoundingClientRect();
-          // If section is mostly in viewport (top half visible)
-          if(r.top<vh*0.7 && r.bottom>vh*0.2){
-            if(!s.classList.contains('seen')){
-              s.classList.add('seen');
-            }
-            D.forEach(function(d){d.classList.remove('on')});
-            if(D[i])D[i].classList.add('on');
-          }
-        });
-        ticking=false;
+  if('ontouchstart' in window){
+    document.querySelectorAll('.casecard,.xcard').forEach(function(card){
+      card.addEventListener('click',function(){
+        var wasOpen=this.classList.contains('open');
+        this.parentElement.querySelectorAll('.casecard,.xcard').forEach(function(c){c.classList.remove('open')});
+        if(!wasOpen)this.classList.add('open');
       });
-    }
-  },{passive:true});
-
-  // Click dots to navigate
-  D.forEach(function(d){
-    d.addEventListener('click',function(){
-      var i=+this.getAttribute('data-i');
-      if(S[i])S[i].scrollIntoView({behavior:'smooth'});
     });
-  });
+  }
 
-  // Fade scroll hint
-  var h=document.querySelector('.scroll-hint');
-  if(h){var done=false;window.addEventListener('scroll',function(){if(!done){done=true;h.style.transition='opacity .5s';h.style.opacity='0'}},{passive:true})}
-
-  // Radial nav close on outside click/scroll
   document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
   document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
 })();

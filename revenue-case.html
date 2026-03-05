@@ -8,36 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #07070a;
-  --s1: #0e0e13;
-  --s2: #141419;
-  --border: rgba(255,255,255,0.04);
-  --border-h: rgba(255,255,255,0.08);
-  --text: #d4d4d8;
-  --text-dim: #a1a1aa;
-  --text-bright: #fafafa;
-  --blue: #3b82f6;
-  --purple: #a855f7;
-  --amber: #f59e0b;
-  --green: #10b981;
-  --red: #ef4444;
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-snap-type:y mandatory;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-/* ═══ SNAP ═══ */
-.snap{scroll-snap-align:start;min-height:100vh;min-height:100dvh;padding-top:52px;display:flex;align-items:center;justify-content:center;position:relative}
-.snap-inner{width:100%;max-width:900px;padding:1.5rem 2rem;margin:0 auto}
-
-/* ═══ FADE-IN ═══ */
-.snap .fi{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.snap.seen .fi{opacity:1;transform:translateY(0)}
-.snap.seen .fi:nth-child(2){transition-delay:70ms}
-.snap.seen .fi:nth-child(3){transition-delay:140ms}
-.snap.seen .fi:nth-child(4){transition-delay:210ms}
-.snap.seen .fi:nth-child(5){transition-delay:280ms}
 
 /* ═══ NAV ═══ */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
@@ -47,7 +26,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
 .nav-logo span{color:var(--amber)}
 .nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
-.nav-cta:hover{color:#fbbf24!important}
 .radial-menu{position:relative;padding-bottom:2px}
 .radial-toggle{display:none}
 .radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}
@@ -59,7 +37,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .ri{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
 .radial-toggle:checked~.radial-items .ri{opacity:1;transform:scale(1)}
 .ri:nth-child(1){transition-delay:0ms}.ri:nth-child(2){transition-delay:40ms}.ri:nth-child(3){transition-delay:80ms}.ri:nth-child(4){transition-delay:120ms}
-.ri:hover{transform:scale(1.12)!important;border-color:rgba(255,255,255,.12)}
+.ri:hover{transform:scale(1.12)!important}
 .rl{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
 .rs{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
 .rio{width:20px;height:20px;opacity:.8}
@@ -72,124 +50,105 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   .nav-toggle-btn{display:block}
   .nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}
   .nav-inner.open .radial-menu{display:none}
-  .nav-inner.open a{font-size:14px}
 }
 @media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-/* ═══ DOTS ═══ */
-.dots{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:12px}
-@media(max-width:768px){.dots{right:.65rem;gap:10px}}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .3s;position:relative}
-.dot:hover{background:rgba(255,255,255,.15)}
-.dot.on{background:var(--amber);border-color:var(--amber);box-shadow:0 0 8px rgba(245,158,11,.3)}
-.dot::before{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translateY(-50%);font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;background:var(--s1);padding:3px 7px;border-radius:4px;border:1px solid var(--border)}
-.dot:hover::before{opacity:1}
+/* ═══ MAIN ═══ */
+.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:2.5rem}
 
-/* ═══ SECTION LABEL ═══ */
-.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:1rem}
-.sl::before,.sl::after{content:'';width:30px;height:1px;background:var(--border-h)}
+/* ═══ LABELS ═══ */
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase;margin:1.25rem 0 .5rem;text-align:center}
 
-/* ═══════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════ */
-.hero-ct{text-align:center}
-.hero-ct::before{content:'';position:absolute;top:30%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.04) 0%,transparent 70%);pointer-events:none}
-.hero-ct h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,52px);font-weight:900;color:var(--text-bright);margin-bottom:.75rem;line-height:1.15}
-.hero-ct h1 em{color:var(--blue);font-style:normal}
-.hero-sub{font-size:15px;color:var(--text-dim);max-width:540px;margin:0 auto 2.5rem;line-height:1.7}
-.hero-sub strong{color:var(--text-bright);font-weight:600}
+/* ═══ REVEAL ═══ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-/* Hero stat cards */
+/* ═══ HERO ═══ */
+.hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(59,130,246,.04) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,50px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{color:var(--blue);font-style:normal}
+.hero-p{font-size:15px;color:var(--text-dim);max-width:540px;margin:0 auto 2rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
 .hero-stats{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;max-width:720px;margin:0 auto}
-.hero-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;text-align:center;flex:1;min-width:180px;transition:border-color .3s}
+.hero-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;text-align:center;flex:1;min-width:160px;transition:border-color .3s}
 .hero-card:hover{border-color:var(--border-h)}
-.hero-card .hc-val{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,38px);font-weight:900;line-height:1}
-.hero-card .hc-word{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;margin-left:6px}
-.hero-card .hc-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.5px;margin-top:6px;text-transform:uppercase}
+.hc-val{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,38px);font-weight:900;line-height:1}
+.hc-word{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;margin-left:6px}
+.hc-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.5px;margin-top:6px;text-transform:uppercase}
 
-/* Scroll hint */
-.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.3;animation:hp 2s ease infinite}
-.scroll-hint span{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px}
-.sh-arrow{width:14px;height:14px;border-right:1.5px solid var(--text-dim);border-bottom:1.5px solid var(--text-dim);transform:rotate(45deg)}
-@keyframes hp{0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}50%{opacity:.5;transform:translateX(-50%) translateY(4px)}}
-
-/* ═══════════════════════════════════════
-   COST OF INACTION (red card)
-   ═══════════════════════════════════════ */
-.cost-card{background:var(--s1);border:1px solid var(--border);border-top:2px solid rgba(239,68,68,.3);border-radius:16px;padding:2rem;max-width:800px;margin:0 auto}
-.cost-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+/* ═══ COST OF INACTION ═══ */
+.cost-card{background:var(--s1);border:1px solid var(--border);border-top:2px solid rgba(239,68,68,.3);border-radius:14px;padding:1.75rem;max-width:800px;margin:0 auto}
+.cost-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem}
 @media(max-width:640px){.cost-grid{grid-template-columns:repeat(2,1fr)}}
 .cost-item{border-left:2px solid rgba(239,68,68,.3);padding-left:.75rem}
-.cost-item h3{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:var(--text-bright)}
-.cost-kicker{font-size:13px;color:var(--red);font-weight:600;padding-top:1rem;border-top:1px solid var(--border)}
+.cost-item h3{font-size:14px;font-weight:700;color:var(--text-bright)}
+.cost-kicker{font-size:13px;color:var(--red);font-weight:600;padding-top:.75rem;border-top:1px solid var(--border)}
 
-/* ═══════════════════════════════════════
-   IMPLEMENTATION ARC + SPRINT
-   ═══════════════════════════════════════ */
-/* Arc cards */
-.arc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
-@media(max-width:640px){.arc-grid{grid-template-columns:1fr}}
-.arc-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;transition:border-color .3s}
-.arc-card:hover{border-color:var(--border-h)}
-.arc-card h3{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-bright);margin-bottom:.25rem}
-.arc-card .arc-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:.5px;margin-bottom:.5rem}
-.arc-card p{font-size:13px;color:var(--text);line-height:1.65}
+/* ═══ EXPAND CARDS ═══ */
+.card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.xcard{
+  background:var(--s1);border:1px solid var(--border);border-radius:10px;
+  padding:.85rem 1rem;cursor:pointer;
+  transition:all .35s cubic-bezier(.32,.72,0,1);
+  flex:1;min-width:120px;max-width:220px;position:relative;overflow:hidden;
+}
+.xcard:hover,.xcard.open{border-color:var(--border-h);flex:2.5;max-width:100%;background:var(--s2)}
+.xcard-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:3px}
+.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3}
+.xcard-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:2px}
+.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
+.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:400px;opacity:1;margin-top:.6rem}
+.xcard-body p{font-size:13px;color:var(--text);line-height:1.65;margin:0 0 .4rem}
+.xcard-body p:last-child{margin:0}
+.xcard-body .cite{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);line-height:1.5;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.xcard-body .cite strong{font-weight:600}
+.xcard-body .outcome{font-family:'DM Mono',monospace;font-size:11px;margin-top:.5rem;padding:5px 10px;border-radius:6px;border:1px solid var(--border);display:inline-block}
 
-/* Sprint timeline bar */
+/* Accents */
+.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blue)}.xcard[data-c="blue"] .xcard-num{color:var(--blue)}
+.xcard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.25)}.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-top-color:var(--purple)}.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
+.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--green)}.xcard[data-c="green"] .xcard-num{color:var(--green)}
+.xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
+.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--text-dim)}.xcard[data-c="dim"] .xcard-num{color:var(--text-dim)}
+
+@media(max-width:700px){
+  .card-row{flex-direction:column}
+  .xcard{max-width:100%;min-width:0}
+  .xcard:hover,.xcard.open{flex:unset}
+}
+
+/* ═══ SPRINT TIMELINE ═══ */
 .sprint-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
 @media(max-width:640px){.sprint-bar{grid-template-columns:repeat(2,1fr)}}
-.sprint-step{background:var(--s1);padding:1rem;border-right:1px solid var(--border);transition:background .2s}
+.sprint-step{background:var(--s1);padding:.85rem;border-right:1px solid var(--border);transition:background .2s}
 .sprint-step:last-child{border-right:none}
 .sprint-step:hover{background:var(--s2)}
-.sprint-step .ss-day{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;margin-bottom:4px}
-.sprint-step .ss-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);margin-bottom:3px}
-.sprint-step .ss-detail{font-size:11px;color:var(--text-dim);line-height:1.5}
-.sprint-step.sprint-win{background:rgba(59,130,246,.04);border-top:2px solid rgba(59,130,246,.3)}
-.sprint-step.sprint-win .ss-day{color:var(--blue)}
+.ss-day{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:1px;margin-bottom:3px}
+.ss-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
+.ss-detail{font-size:11px;color:var(--text-dim);line-height:1.5}
+.sprint-win{background:rgba(59,130,246,.04);border-top:2px solid rgba(59,130,246,.3)}
+.sprint-win .ss-day{color:var(--blue)}
 
-/* ═══════════════════════════════════════
-   WHAT ONE DEAL BUILDS (3 portfolio cards)
-   ═══════════════════════════════════════ */
-.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:860px;margin:0 auto}
-@media(max-width:700px){.build-grid{grid-template-columns:1fr}}
-.build-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color .3s;display:flex;flex-direction:column}
-.build-card:hover{border-color:var(--border-h)}
-.build-card h3{font-family:'Fraunces',serif;font-size:17px;font-weight:800;color:var(--text-bright);margin-bottom:.5rem}
-.build-card p{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:.75rem}
-.build-cite{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);line-height:1.5;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border)}
-.build-cite strong{font-weight:600}
-
-/* ═══════════════════════════════════════
-   WHERE THIS FAILS (hover tooltips)
-   ═══════════════════════════════════════ */
-.fail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:860px;margin:0 auto}
-@media(max-width:700px){.fail-grid{grid-template-columns:1fr}}
-.fail-card{background:var(--s1);border:1px solid var(--border);border-top:2px solid rgba(239,68,68,.2);border-radius:12px;padding:1.25rem;transition:border-color .3s;position:relative}
-.fail-card:hover{border-color:var(--border-h)}
-.fail-card h3{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:.4rem}
-.fail-card p{font-size:12px;color:var(--text);line-height:1.65}
-.tt{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--s2);border:1px solid var(--border-h);border-radius:8px;padding:10px 14px;width:max-content;max-width:260px;font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);line-height:1.5;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:10}
-.tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--s2)}
-.fail-card:hover .tt{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* Breadcrumb */
-.bc{text-align:center;margin-top:1.5rem}
+/* ═══ CTA ═══ */
+.cta{text-align:center;padding:2.5rem 0 4rem;border-top:1px solid var(--border)}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.cta-s{font-size:14px;color:var(--text-dim);max-width:420px;margin:0 auto 2rem;line-height:1.7}
+.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
+.cta-b:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
+.cta-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:1.25rem}
+.bc{text-align:center;margin-top:1.25rem}
 .bc a{font-size:14px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s,gap .2s}
 .bc a:hover{color:#60a5fa;gap:12px}
 
-/* ═══ CTA ═══ */
-.cta-ct{text-align:center;position:relative}
-.cta-ct::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:300px;background:radial-gradient(ellipse,rgba(245,158,11,.04) 0%,transparent 70%);pointer-events:none}
-.cta-ct h2{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
-.cta-s{font-size:14px;color:var(--text-dim);max-width:420px;margin:0 auto 2rem;line-height:1.7}
-.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
-.cta-b:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
-.cta-scarcity{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:1.25rem;letter-spacing:.5px}
-
-/* Footer */
-.fl{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px;text-align:center;white-space:nowrap}
-.fl a{color:#52525b;text-decoration:none}
-.fl a:hover{color:var(--text-dim)}
+/* ═══ FOOTER ═══ */
+.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+.footer-text a:hover{color:var(--text-dim)}
 </style>
 </head>
 <body>
@@ -226,23 +185,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   </div>
 </nav>
 
-<!-- DOTS -->
-<div class="dots" id="dots">
-  <div class="dot on" data-i="0" data-label="The Case"></div>
-  <div class="dot" data-i="1" data-label="Cost"></div>
-  <div class="dot" data-i="2" data-label="The Arc"></div>
-  <div class="dot" data-i="3" data-label="What It Builds"></div>
-  <div class="dot" data-i="4" data-label="Where It Fails"></div>
-  <div class="dot" data-i="5" data-label="Engage"></div>
-</div>
+<div class="main">
 
-<!-- ══════════ SECTION 1: HERO ══════════ -->
-<section class="snap seen" data-s="0">
-  <div class="snap-inner hero-ct">
-    <div class="sl fi">The Revenue Case</div>
-    <h1 class="fi">Don't transform.<br><em>Just win one deal.</em></h1>
-    <p class="hero-sub fi"><strong>Tools don't close deals. Trained sellers don't close deals.</strong> Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.</p>
-    <div class="hero-stats fi">
+  <!-- ═══ HERO ═══ -->
+  <section class="hero reveal">
+    <h1>Don't transform.<br><em>Just win one deal.</em></h1>
+    <p class="hero-p"><strong>Tools don't close deals. Trained sellers don't close deals.</strong> Sellers with licence, intelligence, and intent close deals. Most of yours have one out of three.</p>
+    <div class="hero-stats">
       <div class="hero-card" style="border-top:2px solid rgba(59,130,246,.3)">
         <div class="hc-val" style="color:var(--blue)">3x<span class="hc-word" style="color:var(--blue)">Speed</span></div>
         <div class="hc-label">Pipeline Velocity</div>
@@ -256,15 +205,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
         <div class="hc-label">Cost of Sale</div>
       </div>
     </div>
-  </div>
-  <div class="scroll-hint"><span>Scroll</span><div class="sh-arrow"></div></div>
-</section>
+  </section>
 
-<!-- ══════════ SECTION 2: COST OF INACTION ══════════ -->
-<section class="snap" data-s="1">
-  <div class="snap-inner">
-    <div class="sl fi">The Cost of Inaction</div>
-    <div class="cost-card fi">
+  <!-- ═══ COST OF INACTION ═══ -->
+  <section class="section reveal">
+    <div class="sl">The Cost of Inaction</div>
+    <div class="cost-card">
       <div class="cost-grid">
         <div class="cost-item"><h3>Stagnated portfolios.</h3></div>
         <div class="cost-item"><h3>Sellers commoditised.</h3></div>
@@ -273,35 +219,37 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
       </div>
       <div class="cost-kicker">Each quarter the execution gap widens, your best people burn on dead deals.</div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════ SECTION 3: IMPLEMENTATION ARC + SPRINT ══════════ -->
-<section class="snap" data-s="2">
-  <div class="snap-inner">
-    <div class="sl fi">The Implementation Arc</div>
+  <!-- ═══ IMPLEMENTATION ARC ═══ -->
+  <section class="section reveal">
+    <div class="sl">The Implementation Arc</div>
 
-    <!-- 3 arc cards -->
-    <div class="arc-grid fi">
-      <div class="arc-card" style="border-top:2px solid rgba(59,130,246,.3)">
-        <h3>01. Prove It</h3>
-        <div class="arc-time">Day 1–30</div>
-        <p>One live deal. High stakes, stalling or at risk. Map the hidden stakeholders. Rewrite the executive narrative. Close it.</p>
+    <!-- Prove / Codify / Scale -->
+    <div class="card-row">
+      <div class="xcard" data-c="blue">
+        <div class="xcard-num">01</div>
+        <div class="xcard-title">Prove It</div>
+        <div class="xcard-sub">Day 1–30</div>
+        <div class="xcard-body"><p>One live deal. High stakes, stalling or at risk. Map the hidden stakeholders. Rewrite the executive narrative. Close it.</p></div>
       </div>
-      <div class="arc-card" style="border-top:2px solid rgba(168,85,247,.3)">
-        <h3>02. Codify It</h3>
-        <div class="arc-time">Day 30–60</div>
-        <p>The win becomes the playbook. AI-assisted intelligence, stakeholder mapping, narrative architecture — built for your proposition. A pilot pod runs the next deal independently.</p>
+      <div class="xcard" data-c="purple">
+        <div class="xcard-num">02</div>
+        <div class="xcard-title">Codify It</div>
+        <div class="xcard-sub">Day 30–60</div>
+        <div class="xcard-body"><p>The win becomes the playbook. AI-assisted intelligence, stakeholder mapping, narrative architecture — built for your proposition. A pilot pod runs the next deal independently.</p></div>
       </div>
-      <div class="arc-card" style="border-top:2px solid rgba(16,185,129,.3)">
-        <h3>03. Scale It</h3>
-        <div class="arc-time">Day 60–90+</div>
-        <p>Intelligence gathering drops from weeks to 20 minutes. Dead bids killed in week one, not quarter three. Cost of sale falls. Deal size rises.</p>
+      <div class="xcard" data-c="green">
+        <div class="xcard-num">03</div>
+        <div class="xcard-title">Scale It</div>
+        <div class="xcard-sub">Day 60–90+</div>
+        <div class="xcard-body"><p>Intelligence gathering drops from weeks to 20 minutes. Dead bids killed in week one, not quarter three. Cost of sale falls. Deal size rises.</p></div>
       </div>
     </div>
 
     <!-- Sprint timeline -->
-    <div class="sprint-bar fi">
+    <div class="sub-label">Worked Example — The 35-Day Sprint</div>
+    <div class="sprint-bar">
       <div class="sprint-step">
         <div class="ss-day" style="color:var(--blue)">DAY 01</div>
         <div class="ss-title">Target Selection</div>
@@ -323,116 +271,116 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
         <div class="ss-detail">£2M retention + £1.2M expansion. Bypassed procurement.</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════ SECTION 4: WHAT ONE DEAL BUILDS ══════════ -->
-<section class="snap" data-s="3">
-  <div class="snap-inner">
-    <div class="sl fi">What One Deal Builds</div>
-    <div class="build-grid fi">
-      <div class="build-card" style="border-top:2px solid rgba(59,130,246,.3)">
-        <h3>The Profit Chain</h3>
-        <p>Pipeline without delivery infrastructure is a liability. One operating system aligned sales, pre-sales, delivery, finance, and governance into a single chain. £35M to £183M. Not a sales result — an architectural one.</p>
-        <div class="build-cite"><strong style="color:var(--blue)">Heskett &amp; Narayandas, HBS:</strong> Internal service quality drives employee capability, drives customer value, drives growth.</div>
+    <!-- Three-tier deployment -->
+    <div class="sub-label">Who Runs It — Three-Tier Deployment</div>
+    <div class="card-row">
+      <div class="xcard" data-c="blue">
+        <div class="xcard-num">Tier 1</div>
+        <div class="xcard-title">SDRs &amp; Juniors</div>
+        <div class="xcard-body">
+          <p>Automated trigger generation and macro-research abstraction.</p>
+          <div class="outcome" style="color:var(--blue);border-color:rgba(59,130,246,.2)">Relevant outreach at scale without manual 10-K reading.</div>
+        </div>
       </div>
-      <div class="build-card" style="border-top:2px solid rgba(168,85,247,.3)">
-        <h3>The Operating System</h3>
-        <p>Five inherited businesses. No common proposition. No standard cost model. One operating system built a 12-component framework from nothing. Gartner-validated. 4.2M users. 70 countries.</p>
-        <div class="build-cite"><strong style="color:var(--purple)">Moon, HBS:</strong> Winning is deliberate trade-offs and internal architecture to deliver them.</div>
+      <div class="xcard" data-c="purple">
+        <div class="xcard-num">Tier 2</div>
+        <div class="xcard-title">Account Executives</div>
+        <div class="xcard-body">
+          <p>Dynamic stakeholder mapping and friction identification.</p>
+          <div class="outcome" style="color:var(--purple);border-color:rgba(168,85,247,.2)">Continuous political risk analysis. AEs control the narrative.</div>
+        </div>
       </div>
-      <div class="build-card" style="border-top:2px solid rgba(16,185,129,.3)">
-        <h3>Licence &middot; Capability</h3>
-        <p>£9M business. One founder. Nobody else could run it. One operating system diagnosed what was missing and built the architecture so the business runs without its founder. Exit plan in progress.</p>
-        <div class="build-cite"><strong style="color:var(--green)">Buell, HBS:</strong> The mechanism that turns "doing less with less" into "doing more with less."</div>
+      <div class="xcard" data-c="green">
+        <div class="xcard-num">Tier 3</div>
+        <div class="xcard-title">Bid &amp; Pursuit Teams</div>
+        <div class="xcard-body">
+          <p>Full compute deployment for deep data synthesis and counter-positioning.</p>
+          <div class="outcome" style="color:var(--green);border-color:rgba(16,185,129,.2)">Board-level documents that win without endless meetings.</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════ SECTION 5: WHERE THIS FAILS ══════════ -->
-<section class="snap" data-s="4">
-  <div class="snap-inner">
-    <div class="sl fi">Where This Fails</div>
-    <div class="fail-grid fi">
-      <div class="fail-card">
-        <div class="tt">The deal was dead before you started. Competitor software physically integrated. No strategy saves that.</div>
-        <h3>Wrong Deal Selected</h3>
-        <p>Trying to rescue a mathematically dead deal. If the competitor's software is physically integrated, strategy won't save you.</p>
+  <!-- ═══ WHAT ONE DEAL BUILDS ═══ -->
+  <section class="section reveal">
+    <div class="sl">What One Deal Builds</div>
+    <div class="card-row">
+      <div class="xcard" data-c="blue">
+        <div class="xcard-title">The Profit Chain</div>
+        <div class="xcard-body">
+          <p>Pipeline without delivery infrastructure is a liability. One operating system aligned sales, pre-sales, delivery, finance, and governance into a single chain. £35M to £183M. Not a sales result — an architectural one.</p>
+          <div class="cite"><strong style="color:var(--blue)">Heskett &amp; Narayandas, HBS:</strong> Internal service quality drives employee capability, drives customer value, drives growth.</div>
+        </div>
       </div>
-      <div class="fail-card">
-        <div class="tt">Deployed at mid-management. VP of IT blocks C-Suite access. Methodology dies in committee.</div>
-        <h3>No Sponsor Authority</h3>
-        <p>Deploying at mid-management level. GAIN requires C-Suite engagement. Middle management rejects risk-based narratives.</p>
+      <div class="xcard" data-c="purple">
+        <div class="xcard-title">The Operating System</div>
+        <div class="xcard-body">
+          <p>Five inherited businesses. No common proposition. No standard cost model. One operating system built a 12-component framework from nothing. Gartner-validated. 4.2M users. 70 countries.</p>
+          <div class="cite"><strong style="color:var(--purple)">Moon, HBS:</strong> Winning is deliberate trade-offs and internal architecture to deliver them.</div>
+        </div>
       </div>
-      <div class="fail-card">
-        <div class="tt">Team can't define what a good quarter looks like beyond a revenue number. Nothing to anchor to.</div>
-        <h3>Success Isn't Defined</h3>
-        <p>If the team can't articulate what a good quarter looks like beyond a revenue number, the methodology has nothing to anchor to.</p>
+      <div class="xcard" data-c="green">
+        <div class="xcard-title">Licence &middot; Capability</div>
+        <div class="xcard-body">
+          <p>£9M business. One founder. Nobody else could run it. One operating system diagnosed what was missing and built the architecture so the business runs without its founder. Exit plan in progress.</p>
+          <div class="cite"><strong style="color:var(--green)">Buell, HBS:</strong> The mechanism that turns "doing less with less" into "doing more with less."</div>
+        </div>
       </div>
     </div>
-    <div class="bc fi"><a href="/proof.html">See the three cases that prove it &rarr;</a></div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════ SECTION 6: CTA ══════════ -->
-<section class="snap" data-s="5">
-  <div class="snap-inner cta-ct">
-    <h2 class="fi">You already know.</h2>
-    <p class="cta-s fi">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
-    <a href="/engage.html" class="cta-b fi">Request a Live Diagnostic</a>
-    <div class="cta-scarcity fi">Three engagements per quarter. Pipeline is not unlimited.</div>
-  </div>
-  <div class="fl">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</div>
-</section>
+  <!-- ═══ WHERE THIS FAILS ═══ -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--text-dim)">Where This Fails</div>
+    <div class="card-row">
+      <div class="xcard" data-c="red">
+        <div class="xcard-title">Wrong Deal Selected</div>
+        <div class="xcard-body"><p>Trying to rescue a mathematically dead deal. If the competitor's software is physically integrated, strategy won't save you.</p></div>
+      </div>
+      <div class="xcard" data-c="red">
+        <div class="xcard-title">No Sponsor Authority</div>
+        <div class="xcard-body"><p>Deploying at mid-management level. GAIN requires C-Suite engagement. Middle management rejects risk-based narratives.</p></div>
+      </div>
+      <div class="xcard" data-c="red">
+        <div class="xcard-title">Success Isn't Defined</div>
+        <div class="xcard-body"><p>If the team can't articulate what a good quarter looks like beyond a revenue number, the methodology has nothing to anchor to.</p></div>
+      </div>
+    </div>
+    <div class="bc"><a href="/proof.html">See the three cases that prove it &rarr;</a></div>
+  </section>
 
-<!-- JS — identical pattern to proof.html -->
+  <!-- ═══ CTA ═══ -->
+  <section class="cta reveal">
+    <h2>You already know.</h2>
+    <p class="cta-s">Start with a live deal diagnostic. What it finds goes further than the deal.</p>
+    <a href="/engage.html" class="cta-b">Request a Live Diagnostic</a>
+    <div class="cta-note">Three engagements per quarter. Pipeline is not unlimited.</div>
+  </section>
+
+  <footer class="footer">
+    <p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</p>
+  </footer>
+
+</div>
+
 <script>
 (function(){
-  var S=document.querySelectorAll('.snap'),
-      D=document.querySelectorAll('.dot');
-
+  var reveals=document.querySelectorAll('.reveal');
   var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        var i=+e.target.getAttribute('data-s');
-        e.target.classList.add('seen');
-        D.forEach(function(d){d.classList.remove('on')});
-        if(D[i])D[i].classList.add('on');
-      }
-    });
-  },{threshold:0.05,rootMargin:'50px 0px 50px 0px'});
-  S.forEach(function(s){obs.observe(s)});
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
 
-  // Safety net — catch fast snaps
-  var ticking=false;
-  window.addEventListener('scroll',function(){
-    if(!ticking){
-      ticking=true;
-      requestAnimationFrame(function(){
-        var vh=window.innerHeight;
-        S.forEach(function(s,i){
-          var r=s.getBoundingClientRect();
-          if(r.top<vh*0.7&&r.bottom>vh*0.2){
-            if(!s.classList.contains('seen'))s.classList.add('seen');
-            D.forEach(function(d){d.classList.remove('on')});
-            if(D[i])D[i].classList.add('on');
-          }
-        });
-        ticking=false;
+  if('ontouchstart' in window){
+    document.querySelectorAll('.xcard').forEach(function(card){
+      card.addEventListener('click',function(){
+        var wasOpen=this.classList.contains('open');
+        this.parentElement.querySelectorAll('.xcard').forEach(function(c){c.classList.remove('open')});
+        if(!wasOpen)this.classList.add('open');
       });
-    }
-  },{passive:true});
-
-  D.forEach(function(d){
-    d.addEventListener('click',function(){
-      var i=+this.getAttribute('data-i');
-      if(S[i])S[i].scrollIntoView({behavior:'smooth'});
     });
-  });
-
-  var h=document.querySelector('.scroll-hint');
-  if(h){var done=false;window.addEventListener('scroll',function(){if(!done){done=true;h.style.transition='opacity .5s';h.style.opacity='0'}},{passive:true})}
+  }
 
   document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
   document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
