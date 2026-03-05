@@ -53,16 +53,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 }
 @media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-/* ═══ MAIN CONTENT ═══ */
 .main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
-
-/* ═══ SECTION LABEL ═══ */
+.layer{margin-bottom:2.5rem}
 .sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
 .sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.layer-intro{font-size:13px;color:var(--text-dim);max-width:600px;margin:0 auto 1.25rem;text-align:center;line-height:1.6}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-/* ═══════════════════════════════════════
-   HERO
-   ═══════════════════════════════════════ */
+/* ═══ HERO ═══ */
 .hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
 .hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(6,182,212,.04) 0%,transparent 70%);pointer-events:none}
 .hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,50px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:1rem}
@@ -75,98 +74,62 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .iq-on{color:var(--blue);border-color:rgba(59,130,246,.3)!important;background:rgba(59,130,246,.06)}
 .ai-on{color:var(--cyan);border-color:rgba(6,182,212,.3)!important;background:rgba(6,182,212,.06)}
 
-/* ═══════════════════════════════════════
-   LAYER PANELS
-   ═══════════════════════════════════════ */
-.layer{margin-bottom:2.5rem}
-.layer-intro{font-size:13px;color:var(--text-dim);max-width:600px;margin:0 auto 1.25rem;text-align:center;line-height:1.6}
-
 /* ═══ EXPAND CARDS ═══ */
 .card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-
-.xcard{
-  background:var(--s1);border:1px solid var(--border);border-radius:10px;
-  padding:.85rem 1rem;cursor:pointer;
-  transition:all .35s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:140px;max-width:200px;
-  position:relative;overflow:hidden;
-}
-.xcard:hover,.xcard.open{
-  border-color:var(--border-h);
-  flex:2.5;max-width:100%;
-  background:var(--s2);
-}
+.xcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .35s cubic-bezier(.32,.72,0,1);flex:1;min-width:140px;max-width:200px;position:relative;overflow:hidden}
+.xcard:hover,.xcard.open{border-color:var(--border-h);flex:2.5;max-width:100%;background:var(--s2)}
 .xcard-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:3px}
-.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:0}
-.xcard-body{
-  max-height:0;opacity:0;overflow:hidden;
-  transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;
-  margin-top:0;
-}
-.xcard:hover .xcard-body,.xcard.open .xcard-body{
-  max-height:300px;opacity:1;margin-top:.6rem;
-}
+.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3}
+.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
+.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:300px;opacity:1;margin-top:.6rem}
 .xcard-body p{font-size:13px;color:var(--text);line-height:1.65;margin:0}
-
-/* Accent top borders */
-.xcard[data-c="cyan"]{border-top:2px solid rgba(6,182,212,.25)}
-.xcard[data-c="cyan"]:hover,.xcard[data-c="cyan"].open{border-top-color:var(--cyan)}
-.xcard[data-c="cyan"] .xcard-num{color:var(--cyan)}
-.xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}
-.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}
-.xcard[data-c="red"] .xcard-num{color:var(--red)}
-.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}
-.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blue)}
-.xcard[data-c="blue"] .xcard-num{color:var(--blue)}
-.xcard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.25)}
-.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-top-color:var(--purple)}
-.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
-.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}
-.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--green)}
-.xcard[data-c="green"] .xcard-num{color:var(--green)}
-.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}
-.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amber)}
-.xcard[data-c="amber"] .xcard-num{color:var(--amber)}
-.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}
-.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--text-dim)}
-.xcard[data-c="dim"] .xcard-num{color:var(--text-dim)}
-
-/* Discipline cards — failure/discipline split inside */
+.xcard[data-c="cyan"]{border-top:2px solid rgba(6,182,212,.25)}.xcard[data-c="cyan"]:hover,.xcard[data-c="cyan"].open{border-top-color:var(--cyan)}.xcard[data-c="cyan"] .xcard-num{color:var(--cyan)}
+.xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
+.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blue)}.xcard[data-c="blue"] .xcard-num{color:var(--blue)}
+.xcard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.25)}.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-top-color:var(--purple)}.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
+.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--green)}.xcard[data-c="green"] .xcard-num{color:var(--green)}
+.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amber)}.xcard[data-c="amber"] .xcard-num{color:var(--amber)}
+.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--text-dim)}.xcard[data-c="dim"] .xcard-num{color:var(--text-dim)}
 .fd-row{display:flex;gap:10px;margin-top:.5rem}
 .fd-box{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.75rem}
 .fd-box h4{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.3rem}
-.fd-fail h4{color:var(--red)}
-.fd-disc h4{color:var(--green)}
+.fd-fail h4{color:var(--red)}.fd-disc h4{color:var(--green)}
 .fd-box p{font-size:12px;color:var(--text);line-height:1.6;margin:0}
 @media(max-width:600px){.fd-row{flex-direction:column}}
 
-/* ═══ DRIVER CARDS (Layer 3) ═══ */
-.driver-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
-@media(max-width:700px){.driver-row{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:400px){.driver-row{grid-template-columns:repeat(2,1fr)}}
+/* ═══ DRIVER CARDS — upgraded with descriptions ═══ */
+.driver-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:700px){.driver-row{grid-template-columns:1fr}}
 .dcard{
   background:var(--s1);border:1px solid var(--border);border-radius:10px;
-  padding:.75rem;text-align:center;cursor:default;
-  border-top:2px solid rgba(168,85,247,.2);
-  transition:all .3s;
+  padding:.85rem;cursor:pointer;border-top:2px solid rgba(168,85,247,.2);
+  transition:all .35s cubic-bezier(.32,.72,0,1);overflow:hidden;
 }
-.dcard:hover{border-color:var(--border-h);background:var(--s2)}
-.dcard-name{font-size:12px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
-.dcard-q{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);line-height:1.4}
+.dcard:hover,.dcard.open{border-color:var(--border-h);background:var(--s2)}
+.dcard-header{display:flex;justify-content:space-between;align-items:baseline}
+.dcard-name{font-size:13px;font-weight:700;color:var(--text-bright)}
+.dcard-impact{font-family:'DM Mono',monospace;font-size:9px;color:var(--purple);max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s ease,margin .3s ease;margin-top:0}
+.dcard:hover .dcard-impact,.dcard.open .dcard-impact{max-height:100px;opacity:1;margin-top:.4rem}
+.dcard-q{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-top:3px}
+.dcard-desc{font-size:12px;color:var(--text);line-height:1.6;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .3s ease,margin .3s ease;margin-top:0}
+.dcard:hover .dcard-desc,.dcard.open .dcard-desc{max-height:200px;opacity:1;margin-top:.4rem}
 
-/* Driver highlight when discipline hovered */
-.dcard.glow{border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.06)}
-
-/* ═══ TOOLS ≠ TALENT ═══ */
-.constraint{
-  background:var(--s1);border:1px solid var(--border);border-radius:14px;
-  padding:2rem;margin-bottom:2.5rem;text-align:center;
-}
-.constraint h3{font-family:'Fraunces',serif;font-size:clamp(18px,3vw,24px);font-weight:900;color:var(--text-bright);margin-bottom:.75rem}
-.constraint-body{font-size:14px;color:var(--text);line-height:1.75;max-width:650px;margin:0 auto 1.5rem}
-.constraint-body strong{color:var(--text-bright);font-weight:700}
-.quotes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:650px;margin:0 auto}
-@media(max-width:600px){.quotes{grid-template-columns:1fr}}
+/* ═══ PHILOSOPHY ═══ */
+.philosophy{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:2.5rem}
+.phil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+@media(max-width:640px){.phil-grid{grid-template-columns:1fr}}
+.phil-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem;transition:border-color .3s}
+.phil-card:hover{border-color:var(--border-h)}
+.phil-card h4{font-family:'Fraunces',serif;font-size:14px;font-weight:800;color:var(--text-bright);margin-bottom:.35rem}
+.phil-card p{font-size:12px;color:var(--text);line-height:1.65;margin:0}
+.phil-reality{border-top:1px solid var(--border);padding-top:1.25rem}
+.phil-reality h4{font-family:'Fraunces',serif;font-size:16px;font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.phil-reality p{font-size:13px;color:var(--text);line-height:1.75;margin-bottom:.5rem}
+.phil-reality p:last-child{margin:0}
+.phil-reality strong{color:var(--text-bright);font-weight:700}
+.phil-closer{font-size:13px;font-weight:700;color:var(--amber);margin-top:.75rem}
+.phil-quotes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)}
+@media(max-width:600px){.phil-quotes{grid-template-columns:1fr}}
 .quote-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem}
 .quote-card p{font-size:12px;color:var(--text-dim);font-style:italic;line-height:1.6;margin:0 0 .4rem}
 .quote-card cite{font-size:10px;color:#52525b;font-style:normal;font-weight:700;letter-spacing:1px;text-transform:uppercase}
@@ -176,29 +139,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .cta h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
 .cta-s{font-size:14px;color:var(--text-dim);margin-bottom:2rem}
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
-.cta-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:14px 28px;border-radius:8px;text-decoration:none;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
-  letter-spacing:1px;text-transform:uppercase;transition:all .3s;
-}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .3s}
 .cta-primary{background:var(--amber);color:var(--bg)}
 .cta-primary:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
 .cta-secondary{background:var(--s1);color:var(--text-bright);border:1px solid var(--border)}
 .cta-secondary:hover{border-color:var(--border-h);background:var(--s2)}
 .cta-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim)}
-
-/* ═══ FOOTER ═══ */
+.cta-note a{text-decoration:none}
 .footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
 .footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
 .footer-text a{color:#52525b;text-decoration:none}
 .footer-text a:hover{color:var(--text-dim)}
 
-/* ═══ REVEAL ═══ */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
-
-/* ═══ MOBILE CARD ROW ═══ */
 @media(max-width:700px){
   .card-row{flex-direction:column}
   .xcard{max-width:100%;min-width:0}
@@ -253,7 +205,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ LAYER 1: FIVE MARKET SHIFTS ═══ -->
+  <!-- ═══ FIVE MARKET SHIFTS ═══ -->
   <section class="layer reveal">
     <div class="sl">Five Market Shifts</div>
     <p class="layer-intro">The landscape changed. These five shifts explain why the old playbook stopped working.</p>
@@ -266,7 +218,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ LAYER 2: FIVE DISCIPLINES ═══ -->
+  <!-- ═══ FIVE DISCIPLINES ═══ -->
   <section class="layer reveal">
     <div class="sl">Five Disciplines</div>
     <p class="layer-intro">GAIN's response. The human capabilities that still command a premium.</p>
@@ -289,29 +241,78 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ LAYER 3: BEHAVIOURAL DRIVERS ═══ -->
+  <!-- ═══ BEHAVIOURAL DRIVERS — upgraded ═══ -->
   <section class="layer reveal">
     <div class="sl">Behavioural Drivers</div>
     <p class="layer-intro">Corporate entities don't sign contracts — stressed, politically-motivated humans do. The disciplines above align to these six drivers.</p>
     <div class="driver-row" id="driverRow">
-      <div class="dcard" data-driver="safety"><div class="dcard-name">Safety</div><div class="dcard-q">"Will I lose my position?"</div></div>
-      <div class="dcard" data-driver="order"><div class="dcard-name">Order</div><div class="dcard-q">"Will this cause disruption?"</div></div>
-      <div class="dcard" data-driver="power"><div class="dcard-name">Power</div><div class="dcard-q">"Will I gain control?"</div></div>
-      <div class="dcard" data-driver="achievement"><div class="dcard-name">Achievement</div><div class="dcard-q">"Will I hit my targets?"</div></div>
-      <div class="dcard" data-driver="affiliation"><div class="dcard-name">Affiliation</div><div class="dcard-q">"Will I be seen well?"</div></div>
-      <div class="dcard" data-driver="sustainability"><div class="dcard-name">Sustainability</div><div class="dcard-q">"Will this last?"</div></div>
+      <div class="dcard" data-driver="safety">
+        <div class="dcard-header"><span class="dcard-name">Safety</span></div>
+        <div class="dcard-q">"Will I lose my position?"</div>
+        <div class="dcard-desc">Buyers are biologically wired to fear vendor failure. Naming the specific risk clears the amygdala response.</div>
+        <div class="dcard-impact">Impact: Removes "No Decision" stalemate.</div>
+      </div>
+      <div class="dcard" data-driver="order">
+        <div class="dcard-header"><span class="dcard-name">Order</span></div>
+        <div class="dcard-q">"Will this cause disruption?"</div>
+        <div class="dcard-desc">Executives equate noise with incompetence. Reducing cognitive load via "Answer First" logic builds trust.</div>
+        <div class="dcard-impact">Impact: Secures immediate C-Suite sponsorship.</div>
+      </div>
+      <div class="dcard" data-driver="power">
+        <div class="dcard-header"><span class="dcard-name">Power</span></div>
+        <div class="dcard-q">"Will I gain control?"</div>
+        <div class="dcard-desc">The org chart is a map of titles; GAIN maps informal influence to find the real decision-makers.</div>
+        <div class="dcard-impact">Impact: Prevents late-stage deal collapse.</div>
+      </div>
+      <div class="dcard" data-driver="achievement">
+        <div class="dcard-header"><span class="dcard-name">Achievement</span></div>
+        <div class="dcard-q">"Will I hit my targets?"</div>
+        <div class="dcard-desc">Stakeholders want to be heroes. Shift the narrative from a price comparison to a strategic career leap.</div>
+        <div class="dcard-impact">Impact: Defends premium margins.</div>
+      </div>
+      <div class="dcard" data-driver="affiliation">
+        <div class="dcard-header"><span class="dcard-name">Affiliation</span></div>
+        <div class="dcard-q">"Will I be seen well?"</div>
+        <div class="dcard-desc">Deals are won by internal coalitions. Arm champions with "sticky" narratives they can sell without you in the room.</div>
+        <div class="dcard-impact">Impact: Multiplies your presence in the room.</div>
+      </div>
+      <div class="dcard" data-driver="sustainability">
+        <div class="dcard-header"><span class="dcard-name">Sustainability</span></div>
+        <div class="dcard-q">"Will this last?"</div>
+        <div class="dcard-desc">Intelligence decay drives churn. Monitor for competitive threats 18 months before the renewal.</div>
+        <div class="dcard-impact">Impact: Protects annuity and CLV.</div>
+      </div>
     </div>
   </section>
 
-  <!-- ═══ TOOLS ≠ TALENT ═══ -->
-  <section class="constraint reveal">
-    <h3>Tools ≠ Talent</h3>
-    <div class="constraint-body">
-      <p>You can give a bad golfer an expensive set of clubs — they'll just hit the ball into the woods much further. Giving an average sales team an AI prompt engine without teaching them the behavioural science to interpret the output is identical. <strong>The edge is not the prompt. The edge is the judgment of what to do with the output.</strong></p>
-    </div>
-    <div class="quotes">
-      <div class="quote-card"><p>"Models commoditise. Workflows commoditise. The only durable moat is how your people interpret in the spaces AI can't reach."</p><cite>— Sol Rashidi</cite></div>
-      <div class="quote-card"><p>"When everyone has the same information at the same time, alpha comes from the speed and quality of human interpretation."</p><cite>— Nate Jones</cite></div>
+  <!-- ═══ TOOLS ≠ TALENT — Wiegman/Buffett/Semler ═══ -->
+  <section class="layer reveal">
+    <div class="sl" style="color:var(--amber)">Tools ≠ Talent</div>
+    <div class="philosophy">
+      <div class="phil-grid">
+        <div class="phil-card">
+          <h4>The Tactical Blueprint</h4>
+          <p>I can hand you Sarina Wiegman's exact tactical playbook for a European final, but without her real-time ability to read the pitch and shift a formation under pressure, you are not her.</p>
+        </div>
+        <div class="phil-card">
+          <h4>The Investment Checklist</h4>
+          <p>I can give you Warren Buffett's precise investment checklists, but without his fifty years of market scars and the emotional discipline to hold when others panic, those lists are just paper.</p>
+        </div>
+        <div class="phil-card">
+          <h4>The Organisational Model</h4>
+          <p>I can hand you Ricardo Semler's radical organisational blueprint, but without his absolute conviction in relinquishing control, those policies will just create chaos.</p>
+        </div>
+      </div>
+      <div class="phil-reality">
+        <h4>The Reality of GAIN</h4>
+        <p>The exact same reality applies here. I can give you every prompt required to Gather intelligence, Assess authority, Influence a board, and Nurture an enterprise account. I can give you the question lists, the frameworks, and the precise AI inputs.</p>
+        <p>But without the commercial scars to know when to execute a play, the intuition to read the invisible politics in the room, and the empathy to build a true champion, those prompts are just useless noise.</p>
+        <div class="phil-closer">You get the tools, but you don't get the transformation. AI handles the data. The judgment handles the human. And the judgment is hard-earned.</div>
+      </div>
+      <div class="phil-quotes">
+        <div class="quote-card"><p>"Models commoditise. Workflows commoditise. The only durable moat is how your people interpret in the spaces AI can't reach."</p><cite>— Sol Rashidi</cite></div>
+        <div class="quote-card"><p>"When everyone has the same information at the same time, alpha comes from the speed and quality of human interpretation."</p><cite>— Nate Jones</cite></div>
+      </div>
     </div>
   </section>
 
@@ -321,36 +322,30 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     <p class="cta-s">Judgment is the only £m skill left.</p>
     <div class="cta-btns">
       <a href="/engage.html" class="cta-btn cta-primary">Request a Live Diagnostic</a>
-      <a href="/proof.html" class="cta-btn cta-secondary">See the Proof &rarr;</a>
+      <a href="/proof.html" class="cta-btn cta-secondary">See the Proof →</a>
     </div>
-    <div class="cta-note">Revenue Case &rarr; <a href="/revenue-case.html" style="color:var(--blue);text-decoration:none">How one deal scales</a></div>
+    <div class="cta-note"><a href="/revenue-case.html" style="color:var(--blue)">Revenue Case</a> · <a href="/architecture.html" style="color:#14b8a6">Architecture</a> · <a href="/story.html" style="color:#0ea5e9">The Story</a></div>
   </section>
 
-  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
-    <p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</p>
+    <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
   </footer>
 
 </div>
 
-<!-- JS -->
 <script>
 (function(){
-  // Scroll reveal
   var reveals=document.querySelectorAll('.reveal');
   var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
   },{threshold:0.1});
   reveals.forEach(function(r){obs.observe(r)});
 
-  // Mobile: tap to toggle expand (hover handles desktop)
-  var isTouchDevice='ontouchstart' in window;
-  if(isTouchDevice){
-    document.querySelectorAll('.xcard').forEach(function(card){
+  if('ontouchstart' in window){
+    document.querySelectorAll('.xcard,.dcard').forEach(function(card){
       card.addEventListener('click',function(){
         var wasOpen=this.classList.contains('open');
-        // Close siblings
-        this.parentElement.querySelectorAll('.xcard').forEach(function(c){c.classList.remove('open')});
+        this.parentElement.querySelectorAll('.xcard,.dcard').forEach(function(c){c.classList.remove('open')});
         if(!wasOpen)this.classList.add('open');
       });
     });
@@ -359,10 +354,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   // Discipline hover → highlight matching drivers
   var discCards=document.querySelectorAll('#discRow .xcard');
   var driverCards=document.querySelectorAll('#driverRow .dcard');
-  var colorMap={
-    blue:'rgba(59,130,246,',purple:'rgba(168,85,247,',green:'rgba(16,185,129,',
-    amber:'rgba(245,158,11,',dim:'rgba(161,161,170,'
-  };
+  var colorMap={blue:'rgba(59,130,246,',purple:'rgba(168,85,247,',green:'rgba(16,185,129,',amber:'rgba(245,158,11,',dim:'rgba(161,161,170,'};
 
   function glowDrivers(card){
     var drivers=(card.getAttribute('data-drivers')||'').split(',');
@@ -370,29 +362,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     var rgba=colorMap[col]||colorMap.purple;
     driverCards.forEach(function(d){
       if(drivers.indexOf(d.getAttribute('data-driver'))!==-1){
-        d.style.borderColor=rgba+'0.5)';
-        d.style.background=rgba+'0.06)';
-        d.classList.add('glow');
+        d.style.borderColor=rgba+'0.5)';d.style.background=rgba+'0.06)';d.classList.add('glow');
       }
     });
   }
-  function clearDrivers(){
-    driverCards.forEach(function(d){
-      d.style.borderColor='';d.style.background='';d.classList.remove('glow');
-    });
-  }
+  function clearDrivers(){driverCards.forEach(function(d){d.style.borderColor='';d.style.background='';d.classList.remove('glow')})}
 
   discCards.forEach(function(card){
     card.addEventListener('mouseenter',function(){glowDrivers(this)});
     card.addEventListener('mouseleave',clearDrivers);
-    // Also on touch open
-    card.addEventListener('click',function(){
-      clearDrivers();
-      if(this.classList.contains('open'))glowDrivers(this);
-    });
+    card.addEventListener('click',function(){clearDrivers();if(this.classList.contains('open'))glowDrivers(this)});
   });
 
-  // Radial nav
   document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
   document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
 })();
