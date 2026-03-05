@@ -91,34 +91,20 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 /* ═══ MODAL ═══ */
 .modal-overlay{
   display:none;position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,.8);backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;padding:1.5rem;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:.75rem;
 }
 .modal-overlay.open{display:flex}
 .modal{
   background:var(--bg);border:1px solid var(--border-h);border-radius:16px;
-  max-width:800px;width:100%;max-height:85vh;overflow-y:auto;
-  padding:2rem;position:relative;scrollbar-width:thin;scrollbar-color:#27272a var(--bg);
-  animation:modalIn .3s ease;
+  width:100%;max-width:1100px;height:90vh;position:relative;
+  overflow:hidden;animation:modalIn .3s ease;
 }
 @keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.modal::-webkit-scrollbar{width:6px}.modal::-webkit-scrollbar-thumb{background:#27272a;border-radius:3px}
-.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;transition:color .2s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px}
-.modal-close:hover{color:var(--text-bright);background:rgba(255,255,255,.05)}
-.modal-type{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
-.modal-title{font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:var(--text-bright);margin-bottom:6px}
-.modal-sub{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:1.5rem;max-width:600px}
-
-/* Terminal in modal */
-.term{font-family:'DM Mono',monospace;font-size:11px;line-height:1.8;background:rgba(10,14,23,.85);border:1px solid rgba(30,41,59,.5);border-radius:8px;padding:14px 18px;color:#94a3b8;margin-bottom:12px;overflow-x:auto}
-.term .g{color:var(--green)}.term .r{color:var(--red)}.term .a{color:var(--amber)}.term .b{color:var(--blue)}.term .p{color:var(--purple)}.term .w{color:#e2e8f0;font-weight:600}.term .d{color:#64748b}
-
-.modal-link{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
-  padding:12px 24px;border-radius:8px;text-decoration:none;
-  transition:all .3s;margin-top:.5rem;
-}
+.modal-close{position:absolute;top:.75rem;right:.75rem;z-index:10;background:rgba(7,7,10,.8);border:1px solid var(--border-h);color:var(--text-dim);font-size:20px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;backdrop-filter:blur(8px)}
+.modal-close:hover{color:var(--text-bright);background:rgba(7,7,10,.95)}
+.modal iframe{width:100%;height:100%;border:none;border-radius:0 0 16px 16px}
+.modal-loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px}
 
 /* ═══ CTA ═══ */
 .cta{text-align:center;padding:2.5rem 0 4rem;border-top:1px solid var(--border)}
@@ -182,46 +168,46 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   <section class="section reveal">
     <div class="sub-label">Deal-Level Intelligence</div>
     <div class="dash-grid">
-      <div class="dash-card" style="border-top:2px solid rgba(16,185,129,.3)" onclick="openModal('modal-operational')">
+      <div class="dash-card" style="border-top:2px solid rgba(16,185,129,.3)" onclick="openDash('dashboard/dash-operational.html')">
         <div class="dash-type" style="color:var(--green)">Operational Dashboard</div>
         <div class="dash-name">Meridian Financial Services</div>
         <div class="dash-desc">Know · Map · Win · Grow — stakeholder dossiers, influence map, disruption questions, competitive landscape.</div>
         <div class="dash-meta">4 tabs · 7 stakeholders</div>
-        <div class="dash-open" style="color:var(--green)">View preview →</div>
+        <div class="dash-open" style="color:var(--green)">View →</div>
       </div>
-      <div class="dash-card" style="border-top:2px solid rgba(239,68,68,.3)" onclick="openModal('modal-diagnostic')">
+      <div class="dash-card" style="border-top:2px solid rgba(239,68,68,.3)" onclick="openDash('dashboard/gain-deal-diagnostic.html')">
         <div class="dash-type" style="color:var(--red)">Deal Diagnostic</div>
         <div class="dash-name">Project Atlas — Meridian</div>
         <div class="dash-desc">Pre-mortem analysis. Five ways this deal dies, with countermeasures and go/no-go verdict.</div>
         <div class="dash-meta">Pre-mortem + verdict</div>
-        <div class="dash-open" style="color:var(--red)">View preview →</div>
+        <div class="dash-open" style="color:var(--red)">View →</div>
       </div>
-      <div class="dash-card" style="border-top:2px solid rgba(59,130,246,.3)" onclick="openModal('modal-accountpack')">
+      <div class="dash-card" style="border-top:2px solid rgba(59,130,246,.3)" onclick="openDash('dashboard/dash-account-pack.html')">
         <div class="dash-type" style="color:var(--blue)">Account Pack</div>
         <div class="dash-name">Meridian — Full Plan</div>
         <div class="dash-desc">Consolidated intelligence. Company macro, stakeholders, win strategy, cards to play. Replaces 40-hour account plan.</div>
         <div class="dash-meta">All phases consolidated</div>
-        <div class="dash-open" style="color:var(--blue)">View preview →</div>
+        <div class="dash-open" style="color:var(--blue)">View →</div>
       </div>
     </div>
 
     <div class="sub-label" style="margin-top:1.5rem">Portfolio &amp; Transformation</div>
     <div class="dash-grid">
-      <div class="dash-card" style="border-top:2px solid rgba(168,85,247,.3)" onclick="openModal('modal-cmofmo')">
+      <div class="dash-card" style="border-top:2px solid rgba(168,85,247,.3)" onclick="openDash('dashboard/gain-cmo-fmo-comparison.html')">
         <div class="dash-type" style="color:var(--purple)">CMO → FMO</div>
         <div class="dash-name">Meridian — Operating Model</div>
         <div class="dash-desc">Current-state to future-state gap analysis. Per-domain scoring with transformation milestones.</div>
         <div class="dash-meta">5 domains scored</div>
-        <div class="dash-open" style="color:var(--purple)">View preview →</div>
+        <div class="dash-open" style="color:var(--purple)">View →</div>
       </div>
-      <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.3)" onclick="openModal('modal-portfolio')">
+      <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.3)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
         <div class="dash-type" style="color:var(--amber)">Portfolio Triage</div>
         <div class="dash-name">Albion Capital Partners</div>
         <div class="dash-desc">Fund-level commercial health. 12 companies scored on pipeline, concentration, capability, process maturity.</div>
         <div class="dash-meta">12 companies · PE view</div>
-        <div class="dash-open" style="color:var(--amber)">View preview →</div>
+        <div class="dash-open" style="color:var(--amber)">View →</div>
       </div>
-      <div class="dash-card" style="border-top:2px solid rgba(99,102,241,.3)" onclick="window.open('diagnostic.html','_blank')">
+      <div class="dash-card" style="border-top:2px solid rgba(99,102,241,.3)" onclick="openDash('dashboard/diagnostic.html')">
         <div class="dash-type" style="color:var(--indigo)">Try It</div>
         <div class="dash-name">Diagnostic Scorecard</div>
         <div class="dash-desc">Score your commercial execution in 2 minutes. 10 questions. Honest results.</div>
@@ -251,111 +237,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   </footer>
 </div>
 
-<!-- ═══ MODALS ═══ -->
-
-<!-- Operational -->
-<div class="modal-overlay" id="modal-operational">
+<!-- ═══ IFRAME MODAL ═══ -->
+<div class="modal-overlay" id="dashModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-type" style="color:var(--green)">Operational Dashboard</div>
-    <div class="modal-title">Meridian Financial Services</div>
-    <div class="modal-sub">Four-tab operational dashboard. Know (stakeholder dossiers), Map (power map with structural tensions), Win (disruption questions), Grow (compelled events). The surface the sales team works from.</div>
-    <div class="term">
-<span class="d">▶ EXECUTIVE DOSSIER</span>
-<span class="w">Jennifer Morris</span> — Director, Operational Resilience
-<span class="d">GAIN Driver:</span>    <span class="g">ACHIEVEMENT — legacy through capability</span>
-<span class="d">BS Detector:</span>   <span class="r">HIGH — evaluates quietly in silences</span>
-<span class="d">Core belief:</span>   <span class="w">Resilience ≠ technology. It's organisational capability.</span>
-    </div>
-    <div class="term">
-<span class="d">⚡ THE INVISIBLE BLOCKER</span>
-<span class="w">Not a person — a structural tension.</span> CIO and Morris own overlapping territory.
-<span class="g">Solution: Dual governance. No other bidder will propose this.</span>
-    </div>
-    <a href="dash-operational.html" target="_blank" class="modal-link" style="color:var(--green);border:1px solid rgba(16,185,129,.3);background:rgba(16,185,129,.06)">Open Full Dashboard →</a>
-  </div>
-</div>
-
-<!-- Deal Diagnostic -->
-<div class="modal-overlay" id="modal-diagnostic">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-type" style="color:var(--red)">Deal Diagnostic</div>
-    <div class="modal-title">Project Atlas — Meridian</div>
-    <div class="modal-sub">Pre-mortem analysis. Five ways this deal dies, with probability weightings, early warning indicators, and countermeasures. Go/no-go verdict before committing bid resources.</div>
-    <div class="term">
-<span class="d">DEAL VERDICT</span>
-<span class="a">PROCEED WITH CONDITIONS</span> — Win probability: <span class="a">62%</span>
-<span class="d">Condition 1:</span> <span class="r">Run G-03 on Richard Hale (CIO) before engagement.</span>
-<span class="d">Condition 2:</span> <span class="r">Identify Blackwell's procurement philosophy.</span>
-    </div>
-    <div class="term">
-<span class="d">FAILURE MODE 1:</span> <span class="r">CIO Alignment Collapse (35% probability)</span>
-Hale vetoes on technical credibility gap.
-<span class="d">Countermeasure:</span> Lead with Excalibur metrics. Position Sandhu as peer.
-    </div>
-    <a href="gain-deal-diagnostic.html" target="_blank" class="modal-link" style="color:var(--red);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.06)">Open Full Diagnostic →</a>
-  </div>
-</div>
-
-<!-- Account Pack -->
-<div class="modal-overlay" id="modal-accountpack">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-type" style="color:var(--blue)">Account Pack — Full</div>
-    <div class="modal-title">Meridian Financial Services</div>
-    <div class="modal-sub">Everything the GAIN prompt chain produces for a single account. Company macro, stakeholders, win strategy, competitive positioning, next actions. Replaces the 40-hour account plan.</div>
-    <div class="term">
-<span class="w">Meridian Financial Services</span>
-Insurance-led multi-line FS · <span class="b">£847M revenue</span>
-<span class="d">Servers EOL:</span> <span class="r">62%</span>  <span class="d">Outage Cost:</span> <span class="r">£2.8M/yr (+12%)</span>
-<span class="d">Narrative Gap:</span> <span class="r">Transformation is rescue reframed as vision.</span>
-    </div>
-    <div class="term">
-<span class="d">▶ CARDS TO PLAY</span>
-<span class="w">Right Size:</span>   "Your CIO gets our UK MD's mobile number."
-<span class="w">Dual Gov:</span>     "Resilience → Steering Committee. Delivery → CIO."
-<span class="w">Realloc:</span>      "Redirect £2.8M from failure. OPEX neutral Year 2."
-    </div>
-    <a href="dash-account-pack.html" target="_blank" class="modal-link" style="color:var(--blue);border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.06)">Open Full Account Pack →</a>
-  </div>
-</div>
-
-<!-- CMO → FMO -->
-<div class="modal-overlay" id="modal-cmofmo">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-type" style="color:var(--purple)">CMO → FMO Comparison</div>
-    <div class="modal-title">Meridian Technology Group</div>
-    <div class="modal-sub">Current-state to future-state operating model gap analysis. Per-domain maturity scoring with transformation milestones.</div>
-    <div class="term" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div><span class="r">CMO — Current</span><br><span class="d">Service Desk:</span> <span class="r">42%</span><br><span class="d">Infrastructure:</span> <span class="r">38%</span><br><span class="d">Security:</span> <span class="a">55%</span><br><span class="d">Monitoring:</span> <span class="r">31%</span></div>
-      <div><span class="g">FMO — Target (M18)</span><br><span class="d">Service Desk:</span> <span class="g">78%</span><br><span class="d">Infrastructure:</span> <span class="g">82%</span><br><span class="d">Security:</span> <span class="g">85%</span><br><span class="d">Monitoring:</span> <span class="g">76%</span></div>
-    </div>
-    <a href="gain-cmo-fmo-comparison.html" target="_blank" class="modal-link" style="color:var(--purple);border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.06)">Open Full Comparison →</a>
-  </div>
-</div>
-
-<!-- Portfolio Triage -->
-<div class="modal-overlay" id="modal-portfolio">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-type" style="color:var(--amber)">Portfolio Triage</div>
-    <div class="modal-title">Albion Capital Partners — 12 Companies</div>
-    <div class="modal-sub">Fund-level commercial health assessment. Pipeline quality, concentration risk, team capability, process maturity. The dashboard an operating partner opens on Monday morning.</div>
-    <div class="term">
-<span class="g">■■■</span> Strong (3)     <span class="a">■■■■</span> Watch (4)     <span class="r">■■■■■</span> Critical (5)
-
-<span class="r">→ 67% have pipeline concentration &gt;40% in top 3 accounts</span>
-<span class="r">→ Average win rate: 22% (benchmark: 35%)</span>
-<span class="g">→ Top 3 share one trait: behavioural stakeholder profiling</span>
-    </div>
-    <div class="term">
-<span class="w">Highest-Value Intervention: Meridian Financial Services</span>
-£47M pipeline at risk. Win rate: 18%.
-<span class="g">Projected revenue impact: £8-12M with GAIN deployment.</span>
-    </div>
-    <a href="gain-portfolio-triage.html" target="_blank" class="modal-link" style="color:var(--amber);border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.06)">Open Full Portfolio Triage →</a>
+    <button class="modal-close" onclick="closeDash()">&times;</button>
+    <div class="modal-loading" id="dashLoading">Loading dashboard...</div>
+    <iframe id="dashFrame" style="display:none" onload="document.getElementById('dashLoading').style.display='none';this.style.display='block'"></iframe>
   </div>
 </div>
 
@@ -371,22 +258,27 @@ Insurance-led multi-line FS · <span class="b">£847M revenue</span>
   document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
 })();
 
-function openModal(id){
-  document.getElementById(id).classList.add('open');
+function openDash(url){
+  var modal=document.getElementById('dashModal');
+  var frame=document.getElementById('dashFrame');
+  var loading=document.getElementById('dashLoading');
+  loading.style.display='flex';
+  frame.style.display='none';
+  frame.src=url;
+  modal.classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeModal(){
-  document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('open')});
+function closeDash(){
+  var modal=document.getElementById('dashModal');
+  var frame=document.getElementById('dashFrame');
+  frame.src='';
+  modal.classList.remove('open');
   document.body.style.overflow='';
 }
-// Close on overlay click
-document.querySelectorAll('.modal-overlay').forEach(function(overlay){
-  overlay.addEventListener('click',function(e){
-    if(e.target===this)closeModal();
-  });
+document.getElementById('dashModal').addEventListener('click',function(e){
+  if(e.target===this)closeDash();
 });
-// Close on Escape
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
 </script>
 </body>
 </html>
