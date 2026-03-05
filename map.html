@@ -1,988 +1,235 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GAIN Methodology — [A] Assess Phase. Political mapping, RFP decoding, and stakeholder motivation analysis.">
-    <title>[A] Assess — Map Them | GAIN Methodology</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: 'oklch(0.72 0.14 240)',
-                        success: 'oklch(0.78 0.13 150)',
-                        warning: 'oklch(0.75 0.15 80)',
-                        danger: 'oklch(0.68 0.16 30)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[A] Assess — Map Them | GAIN Protocol</title>
+<meta name="description" content="GAIN Assess Phase. 16 engines. Political mapping, RFP decoding, stakeholder motivation analysis, and deal strategy synthesis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative;padding-bottom:2px}.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chev{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity .2s;display:flex}
+.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}.radial-toggle:checked~.radial-label .chev{transform:rotate(180deg)}
+.ri{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
+.radial-toggle:checked~.radial-items .ri{opacity:1;transform:scale(1)}
+.ri:nth-child(1){transition-delay:0ms}.ri:nth-child(2){transition-delay:40ms}.ri:nth-child(3){transition-delay:80ms}.ri:nth-child(4){transition-delay:120ms}
+.ri:hover{transform:scale(1.12)!important}
+.rl{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}.rs{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
+.rio{width:20px;height:20px;opacity:.8}.ril{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}.nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}.nav-inner.open .radial-menu{display:none}}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-    <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
-        html { scroll-behavior: smooth; }
-        ::selection { background-color: rgb(59 130 246 / 0.5); color: white; }
+.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:2rem}
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-        .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
-        .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
-        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
-        .reveal.slide-left.active { transform: translateX(0) scale(1); }
-        .dur-600 { transition-duration: 600ms; }
-        .dur-700 { transition-duration: 700ms; }
-        .dur-800 { transition-duration: 800ms; }
-        .dur-900 { transition-duration: 900ms; }
-        .dur-1000 { transition-duration: 1000ms; }
-        .dur-1100 { transition-duration: 1100ms; }
-        
-        .glass-panel { 
-            background: rgba(23, 23, 23, 0.4); 
-            backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
-        }
+.hero{text-align:center;padding:3rem 0 2rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(168,85,247,.05) 0%,transparent 70%);pointer-events:none}
+.hero .phase-letter{font-family:'Fraunces',serif;font-size:72px;font-weight:900;color:var(--purple);opacity:.15;line-height:1;margin-bottom:-10px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,44px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:.5rem}
+.hero h1 em{color:var(--purple);font-style:normal}
+.hero-p{font-size:14px;color:var(--text-dim);max-width:540px;margin:0 auto .75rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:1rem}
+.hero-stat{text-align:center}
+.hero-stat .val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--purple);line-height:1}
+.hero-stat .lbl{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:.5px;margin-top:4px}
 
-        .radial-item {
-            --tx: 0px;
-            position: absolute; top: 50%; left: 50%; 
-            width: 70px; height: 70px;
-            margin-left: -35px; margin-top: -35px;
-            background: rgba(23, 23, 23, 0.92); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 9999px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; font-weight: 600; text-align: center; padding: 6px;
-            opacity: 0; transform: translate(var(--tx), 0) scale(0);
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            text-decoration: none;
-        }
-        .radial-item:hover { transform: translate(var(--tx), 0) scale(1.12) !important; box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-        .radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: translate(var(--tx), 0) scale(1); }
+.prompt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.pcard{background:var(--s1);border:1px solid var(--border);border-top:2px solid rgba(168,85,247,.2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .3s}
+.pcard:hover{border-color:var(--border-h);background:var(--s2);transform:translateY(-2px)}
+.pcard-id{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--purple);margin-bottom:2px}
+.pcard-title{font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:3px}
+.pcard-cat{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);margin-bottom:6px}
+.pcard-badge{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px}
+.pcard-badge.open{color:var(--green);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+.pcard-badge.restricted{color:var(--amber);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)}
 
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-    </style>
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border-h);border-radius:16px;max-width:750px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative;animation:modalIn .3s ease;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal::-webkit-scrollbar{width:6px}.modal::-webkit-scrollbar-thumb{background:#27272a;border-radius:3px}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s}
+.modal-close:hover{color:var(--text-bright);background:rgba(255,255,255,.05)}
+.modal-loading{text-align:center;padding:3rem;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px}
+
+.prompt-header{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
+.prompt-id{font-family:'DM Mono',monospace;font-size:14px;font-weight:700}
+.prompt-badge{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:5px;letter-spacing:.5px}
+.prompt-badge.open{color:var(--green);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+.prompt-badge.restricted{color:var(--amber);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)}
+.prompt-code-section{margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem}
+.prompt-code-wrap{display:none}
+.copy-code-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--green);color:var(--bg);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px;border:none;border-radius:8px;cursor:pointer;transition:all .3s}
+.copy-code-btn:hover{background:#34d399;transform:translateY(-1px)}
+.prompt-code{width:100%;min-height:200px;background:rgba(10,14,23,.85);border:1px solid rgba(30,41,59,.5);border-radius:8px;padding:16px;font-family:"DM Mono",monospace;font-size:11px;line-height:1.7;color:#94a3b8;resize:vertical;outline:none}
+.prompt-title{font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:var(--text-bright);margin-bottom:.25rem}
+.prompt-cat{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:.75rem}
+.pm-block{margin-bottom:.75rem}
+.pm-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:.35rem}
+.pm-text{font-size:13px;color:var(--text);line-height:1.65;margin:0}
+.pm-none{color:var(--red);font-size:12px;border-left:2px solid rgba(239,68,68,.3);padding-left:10px}
+.pm-tags{display:flex;flex-wrap:wrap;gap:4px}
+.pm-tag{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:5px;background:var(--s1);border:1px solid var(--border);color:var(--text-dim)}
+.pm-tag.chain{color:var(--purple);border-color:rgba(168,85,247,.2)}
+.pm-pill{font-family:'DM Mono',monospace;font-size:9px;padding:3px 8px;border-radius:4px;background:var(--s1);border:1px solid var(--border);color:var(--text-dim)}
+.pm-pill.driver{color:var(--purple);border-color:rgba(168,85,247,.2)}
+.pm-pill.fw{color:var(--cyan);border-color:rgba(6,182,212,.15)}
+.pm-row{display:flex;gap:1rem;margin-bottom:.75rem}
+.pm-half{flex:1}
+@media(max-width:600px){.pm-row{flex-direction:column}}
+.prompt-restricted-section{margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem}
+.restricted-code-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#27272a;color:#71717a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;cursor:pointer;transition:all .3s}
+.restricted-code-btn:hover{background:#3f3f46;color:var(--amber);border-color:rgba(245,158,11,.2)}
+
+.cta{text-align:center;padding:2rem 0 4rem;border-top:1px solid var(--border)}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,34px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.cta-s{font-size:14px;color:var(--text-dim);margin-bottom:1.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .3s}
+.cta-primary{background:var(--amber);color:var(--bg)}.cta-primary:hover{background:#fbbf24;transform:translateY(-2px)}
+
+.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+</style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 antialiased">
+<body>
 
-<!-- NAV -->
-<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
-    <a href="index.html" class="hover:text-white transition-colors">Home</a>
-    <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
-    <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
-
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
-        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            GAIN <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="know.html" class="radial-item" style="--tx: -150px;"><span class="text-3xl font-black text-blue-400">G</span><span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span></a>
-            <a href="map.html" class="radial-item" style="--tx: -50px;"><span class="text-3xl font-black text-violet-400">A</span><span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span></a>
-            <a href="win.html" class="radial-item" style="--tx: 50px;"><span class="text-3xl font-black text-amber-400">I</span><span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span></a>
-            <a href="grow.html" class="radial-item" style="--tx: 150px;"><span class="text-3xl font-black text-emerald-400">N</span><span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span></a>
-        </div>
-    </div>
-
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
-        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            System <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="edge.html" class="radial-item" style="--tx: -150px;"><span class="text-lg font-black text-cyan-400">⚡</span><span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span></a>
-            <a href="architecture.html" class="radial-item" style="--tx: -50px;"><span class="text-lg font-black text-teal-400">◈</span><span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span></a>
-            <a href="story.html" class="radial-item" style="--tx: 50px;"><span class="text-lg font-black text-sky-400">◉</span><span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span></a>
-            <a href="dashboards.html" class="radial-item" style="--tx: 150px;"><span class="text-lg font-black text-indigo-400">▣</span><span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span></a>
-        </div>
-    </div>
-
-    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.querySelector('.nav-inner').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner">
+    <a href="/">Home</a><a href="/proof.html">Proof</a><a href="/revenue-case.html">Revenue</a>
+    <div class="radial-menu"><input type="checkbox" id="gain-radial" class="radial-toggle"><label for="gain-radial" class="radial-label">GAIN <span class="chev">&#9662;</span></label><div class="radial-items"><a href="/know.html" class="ri"><span class="rl" style="color:#93c5fd">G</span><span class="rs" style="color:#93c5fd">Gather</span></a><a href="/map.html" class="ri"><span class="rl" style="color:#d8b4fe">A</span><span class="rs" style="color:#d8b4fe">Assess</span></a><a href="/win.html" class="ri"><span class="rl" style="color:#fcd34d">I</span><span class="rs" style="color:#fcd34d">Influence</span></a><a href="/grow.html" class="ri"><span class="rl" style="color:#6ee7b7">N</span><span class="rs" style="color:#6ee7b7">Nurture</span></a></div></div>
+    <div class="radial-menu"><input type="checkbox" id="system-radial" class="radial-toggle"><label for="system-radial" class="radial-label">System <span class="chev">&#9662;</span></label><div class="radial-items"><a href="/edge.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="ril" style="color:#67e8f9">Edge</span></a><a href="/architecture.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="ril" style="color:#5eead4">Build</span></a><a href="/story.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="ril" style="color:#7dd3fc">Story</span></a><a href="/dashboards.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="ril" style="color:#a5b4fc">Dash</span></a></div></div>
+    <a href="/engage.html" class="nav-cta">Engage</a>
+  </div>
 </nav>
 
-<!-- HERO -->
-<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
-
-    <header class="relative rounded-[2rem] overflow-hidden mb-6 md:mb-8 glass-panel border-t-4 border-t-violet-500/30 flex flex-col lg:flex-row hover:-translate-y-1 transition-all duration-500">
-        <img src="assets/images/architecture.webp" alt="Assess Phase" class="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply z-0">
-        
-        <div class="relative z-10 p-8 md:p-12 lg:w-full flex flex-col justify-center bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent">
-            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
-                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> [A] Assess</span>
-                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
-                    Core chain: 4 prompts. Advanced (A-05→A-16): gated.
-                </div>
-            </div>
-
-            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6 text-white drop-shadow-lg">
-                <span class="block">The org chart is a starting point.</span>
-                <span class="text-violet-400 block mt-1">Map the influence.</span>
-            </h1>
-            
-            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium">
-                Complex deals are won by coalitions, not champions. Your CRM maps who reports to whom. The GAIN architecture maps who controls the budget and who will quietly redirect your proposal.
-            </p>
-        </div>
-    </header>
-
-    <main>
-
-        <!-- PIPELINE -->
-        <div class="flex flex-wrap items-center gap-3 md:gap-5 mb-8 md:mb-12 reveal">
-            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">RAW CRM DATA</div>
-            <span class="text-neutral-600 font-bold">→</span>
-            <div class="px-5 py-3 glass-panel rounded-full text-[10px] md:text-xs font-bold font-mono text-neutral-300 text-center tracking-wide hover:-translate-y-0.5 transition-all">COMMUNICATION LOGS</div>
-            <span class="text-neutral-600 font-bold">→</span>
-            <div class="px-5 py-3 glass-panel border-t-2 border-t-violet-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-violet-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">CORE CHAIN A-01 → A-04</div>
-            <span class="text-neutral-600 font-bold">→</span>
-            <div class="px-5 py-3 glass-panel border-t-2 border-t-emerald-500/50 rounded-full text-[10px] md:text-xs font-bold font-mono text-emerald-400 text-center tracking-wide hover:-translate-y-0.5 transition-all">INFLUENCE MAP</div>
-        </div>
-
-        <!-- CHECKPOINT -->
-        <div class="mb-8 md:mb-12 reveal">
-            <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center transition-all hover:-translate-y-1 hover:shadow-2xl">
-                <div class="flex-shrink-0 w-16 h-16 glass-panel rounded-full flex items-center justify-center border-t border-violet-400/50">
-                    <svg class="w-8 h-8 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                </div>
-                <div>
-                    <h3 class="text-violet-300 uppercase tracking-widest mb-3 text-center md:text-left">Human Checkpoint: Context Override</h3>
-                    <p class="text-neutral-300 leading-relaxed text-center md:text-left font-medium">AI maps the data; it cannot hear the hesitation in a VP's voice on a call. AI provides the map — human intuition validates the territory.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CORE PROMPTS HEADER -->
-        <div class="flex items-center gap-4 mb-8 md:mb-10">
-            <div class="h-px bg-white/10 flex-1"></div>
-            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-400 uppercase">Core Prompts: A-01 → A-04</div>
-            <div class="h-px bg-white/10 flex-1"></div>
-        </div>
-
-        <!-- 4 PROMPT CARDS -->
-        <div id="prompts-container" class="mb-8 md:mb-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-
-            <!-- A-01 -->
-            <div class="reveal dur-600 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                <details class="group h-full">
-                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
-                        <div class="flex items-center justify-between">
-                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-01</span>
-                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                        </div>
-                        <h3 class="text-white uppercase tracking-tight mb-0">RFP Strategic Decoder</h3>
-                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Decodes the subtext of an RFP to find hidden pain points and trigger events.</p>
-                    </summary>
-                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_TEXT]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[SELLER_SOLUTION]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_MACRO_INTEL]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_PROFILES]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[BID_TEAM_BRIEFING]</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Strategic Translation. Decodes the subtext of an RFP to find hidden pain points and trigger events behind formal language. Every RFP tells two stories — official requirements and hidden pain.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Reads implicit signals behind formal text. Maps trigger events to buyer mindset (Schwartz). Identifies the department that actually wrote each section. Cross-references G-01 macro priorities with RFP language.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
-                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">Seller = None → decode objectively, identify trigger event. G-01/G-03 = None → no compound context.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">PATH A: Seller Mapping (decode + wedge hooks) · PATH B: Objective Decode (trigger event only)</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Schwartz · Minto · Shipley · Blue Ocean · Kahneman</p>
-                            </div>
-                        </div>
-                        <div class="border-t border-white/5 pt-6">
-                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
-                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
-                                <div class="text-blue-400 font-bold">PHASE 1: THE TWO STORIES</div>
-                                <div class="pl-4 opacity-80">Official narrative vs hidden pain</div>
-                                <div class="text-red-400 font-bold mt-3">PHASE 2: TRIGGER EVENT ANALYSIS</div>
-                                <div class="pl-4 opacity-80">What caused this RFP NOW?</div>
-                                <div class="text-amber-400 font-bold mt-3">PHASE 3: SECTION-BY-SECTION AUTHORSHIP</div>
-                                <div class="pl-4 opacity-80">Who actually wrote each section?</div>
-                                <div class="text-emerald-400 font-bold mt-3">PHASE 4: TRAUMA INDICATORS</div>
-                                <div class="pl-4 opacity-80">Which requirements were written from experience?</div>
-                                <div class="text-violet-400 font-bold mt-3">PHASE 5: CATEGORY ASSESSMENT</div>
-                                <div class="pl-4 opacity-80">What category will they evaluate you in?</div>
-                            </div>
-                        </div>
-                        <button onclick="copyPrompt(this, 'lib-a01')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
-                    </div>
-                </details>
-            </div>
-
-            <!-- A-02 -->
-            <div class="reveal dur-700 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                <details class="group h-full">
-                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
-                        <div class="flex items-center justify-between">
-                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-02</span>
-                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                        </div>
-                        <h3 class="text-white uppercase tracking-tight mb-0">Requirements Trauma Decoder</h3>
-                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Maps who carries each procurement scar and quantifies the cost behind rigid requirements.</p>
-                    </summary>
-                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_REQUIREMENTS]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_DECODE]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[SELLER_CAPABILITIES]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_PROFILES]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_INTEL]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-02_FORENSICS]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[I-02_WIN_THEMES]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[KNOWN_INCIDENTS]</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Forensic Proposal Psychology + Stakeholder-to-Trauma Mapping + Evaluation Psychology per Assessor + Trauma Resolution Strategy. Quantifies scar costs via G-02.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">IF G-03 → stakeholder-to-trauma mapping. IF G-02 → trauma-to-cost quantification. IF I-02 → win theme alignment to trauma weights. System 1/2 classification per evaluator.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
-                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">Seller = None → pure forensic. G-03 = None → generic trauma map. G-02 = None → qualitative only.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">PATH A: Seller Mapping · PATH B: Pure Forensic · PATH C: Full Chain (G-03+G-02+I-02)</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Kahneman · Voss · Shipley · Case Method · Kegan · Heskett · Gawande</p>
-                            </div>
-                        </div>
-                        <div class="border-t border-white/5 pt-6">
-                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
-                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
-                                <div class="text-blue-400 font-bold">PHASE 1: REQUIREMENT-BY-REQUIREMENT FORENSICS</div>
-                                <div class="pl-4 opacity-80">What happened to them?</div>
-                                <div class="text-red-400 font-bold mt-3">PHASE 2: TRAUMA SEVERITY SCORING</div>
-                                <div class="pl-4 opacity-80">Critical/High/Medium/Low per requirement</div>
-                                <div class="text-amber-400 font-bold mt-3">PHASE 3: STAKEHOLDER-TO-TRAUMA MAPPING</div>
-                                <div class="pl-4 opacity-80">Who carries this scar?</div>
-                                <div class="text-emerald-400 font-bold mt-3">PHASE 4: SYSTEM 1/2 CLASSIFICATION</div>
-                                <div class="pl-4 opacity-80">Emotional vs rational per evaluator</div>
-                                <div class="text-violet-400 font-bold mt-3">PHASE 5: TRAUMA RESOLUTION STRATEGY</div>
-                                <div class="pl-4 opacity-80">How to address each scar in the response</div>
-                            </div>
-                        </div>
-                        <button onclick="copyPrompt(this, 'lib-a02')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
-                    </div>
-                </details>
-            </div>
-
-            <!-- A-03 -->
-            <div class="reveal dur-800 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                <details class="group h-full">
-                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
-                        <div class="flex items-center justify-between">
-                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-03</span>
-                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                        </div>
-                        <h3 class="text-white uppercase tracking-tight mb-0">Stakeholder Discovery</h3>
-                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Extracts and ranks every stakeholder from RFP and meeting notes.</p>
-                    </summary>
-                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[RFP_TEXT]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_DECODE]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-01_MACRO_INTEL]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[MEETING_NOTES_CRM]</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Entity Extraction. Scans RFP, meeting notes, and macro intel to identify every stakeholder mentioned or implied. Outputs target list for G-03 profiling with role classification and priority ranking.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Entity extraction across all inputs. Classifies: Decision Maker / Influencer / Evaluator / Gatekeeper / Champion / Blocker. Prioritises by authority × influence score.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
-                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">A-01 = None → scans raw RFP only. G-01 = None → no macro context overlay.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Single path — extraction and classification</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">MEDDIC · Sphere of Influence · Gawande</p>
-                            </div>
-                        </div>
-                        <div class="border-t border-white/5 pt-6">
-                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
-                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
-                                <div class="text-blue-400 font-bold">STAKEHOLDER MAP:</div>
-                                <div class="pl-4 opacity-80">| Name/Role | Classification | Authority (0-100) | Influence (0-100) | Priority | Evidence |</div>
-                                <div class="text-red-400 font-bold mt-3">PROFILING QUEUE:</div>
-                                <div class="pl-4 opacity-80">→ Run G-03 on these people in this order</div>
-                                <div class="text-amber-400 font-bold mt-3">UNKNOWN STAKEHOLDERS:</div>
-                                <div class="pl-4 opacity-80">Roles implied but not named — HUMAN ACTION REQUIRED</div>
-                            </div>
-                        </div>
-                        <button onclick="copyPrompt(this, 'lib-a03')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
-                    </div>
-                </details>
-            </div>
-
-            <!-- A-04 -->
-            <div class="reveal dur-900 glass-panel border-t-4 border-t-violet-500/30 rounded-3xl overflow-hidden group hover:border-t-violet-400 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                <details class="group h-full">
-                    <summary class="p-6 md:p-8 flex flex-col gap-4 cursor-pointer outline-none hover:bg-white/5 transition-colors">
-                        <div class="flex items-center justify-between">
-                            <span class="text-violet-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-violet-400/30">A-04</span>
-                            <span class="text-neutral-500 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                        </div>
-                        <h3 class="text-white uppercase tracking-tight mb-0">Motivation Map</h3>
-                        <p class="text-neutral-400 leading-relaxed flex-grow font-medium">Produces motivation heat map showing who wants what and why across the buying committee.</p>
-                    </summary>
-                    <div class="p-6 md:p-8 pt-0 border-t border-white/5 space-y-6 mt-4">
-                        <div class="grid grid-cols-1 gap-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Variables</h4>
-                                <div class="flex flex-wrap gap-2 font-mono text-[10px] md:text-xs text-violet-300">
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[G-03_ALL_PROFILES]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[A-01_RFP_DECODE]</span>
-                                    <span class="glass-panel px-3 py-1.5 rounded-lg border-t border-t-white/10">[DEAL_CONTEXT]</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Architecture</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">Psychological Alignment Matrix. Maps every stakeholder's GAIN drivers, Kegan stage, and personal motivations against the deal structure. Produces motivation heat map showing who wants what and why.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Engine Logic</h4>
-                                <p class="text-xs md:text-sm text-neutral-300 leading-relaxed">IF G-03 profiles → deep motivation mapping per person. Cross-references personal drivers against deal outcomes to predict support/resistance.</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-3">Power of "NONE"</h4>
-                                <p class="text-xs md:text-sm text-red-400 border-l-2 border-red-500/50 pl-4 leading-relaxed">G-03 = None → generic role-based motivation assumptions (with warning).</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-white/5 pt-6">
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Routing</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Single path — motivation matrix generation</p>
-                            </div>
-                            <div>
-                                <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-2">Frameworks</h4>
-                                <p class="text-xs md:text-sm text-neutral-400 font-medium">Kegan · MEDDIC · Cialdini · Voss · Gawande</p>
-                            </div>
-                        </div>
-                        <div class="border-t border-white/5 pt-6">
-                            <h4 class="text-[10px] md:text-xs font-extrabold text-neutral-500 uppercase tracking-widest mb-4">Sample Output Structure</h4>
-                            <div class="glass-panel rounded-2xl p-5 md:p-6 font-mono text-[10px] md:text-xs text-neutral-300 space-y-2">
-                                <div class="text-blue-400 font-bold">MOTIVATION HEAT MAP:</div>
-                                <div class="pl-4 opacity-80">| Stakeholder | GAIN Driver | Kegan Stage | Supports Deal? | Why/Why Not | Risk If Ignored |</div>
-                                <div class="text-red-400 font-bold mt-3">COALITION ANALYSIS:</div>
-                                <div class="pl-4 opacity-80">Who forms the winning voting bloc?</div>
-                                <div class="text-amber-400 font-bold mt-3">IMMUNITY MAP:</div>
-                                <div class="pl-4 opacity-80">What unconscious commitment blocks each resistor?</div>
-                                <div class="text-emerald-400 font-bold mt-3">INFLUENCE LEVERS:</div>
-                                <div class="pl-4 opacity-80">Specific strategies that resolve resistance without confrontation</div>
-                            </div>
-                        </div>
-                        <button onclick="copyPrompt(this, 'lib-a04')" class="mt-6 w-full text-sm font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t-2 border-t-white/10 px-6 py-4 rounded-2xl hover:border-t-violet-500 hover:bg-white/10 transition-all duration-300">Copy Full Code</button>
-                    </div>
-                </details>
-            </div>
-
-        </div>
-
-        <!-- ADVANCED PROMPTS -->
-        <div class="flex items-center gap-4 mb-8 md:mb-10">
-            <div class="h-px bg-white/10 flex-1"></div>
-            <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Advanced Prompts: A-05 → A-16 (Restricted)</div>
-            <div class="h-px bg-white/10 flex-1"></div>
-        </div>
-
-        <div class="mb-8 md:mb-12 space-y-5 md:space-y-6">
-            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
-                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
-                    <div class="flex items-center gap-5">
-                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-05 → A-06</span>
-                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Authority & Deal Strategy</h3>
-                    </div>
-                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                </summary>
-                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
-                    <p class="mb-6">2 prompts: Multi-stakeholder authority mapping (formal vs informal power, decision-makers, veto holders) and deal strategy synthesis (master execution plan with timeline, milestones, and risk mitigations).</p>
-                    <div class="flex flex-wrap items-center gap-5">
-                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="engage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
-                    </div>
-                </div>
-            </details>
-
-            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
-                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
-                    <div class="flex items-center gap-5">
-                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-07 → A-09</span>
-                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Engineering & Commercial</h3>
-                    </div>
-                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                </summary>
-                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
-                    <p class="mb-6">3 prompts: Executive placemat visualiser, complexity scoping engine (requirement-by-requirement capability matching), and commercial shield (margin protection with defensive pricing strategies and negotiation boundaries).</p>
-                    <div class="flex flex-wrap items-center gap-5">
-                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="engage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
-                    </div>
-                </div>
-            </details>
-
-            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
-                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
-                    <div class="flex items-center gap-5">
-                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-10 → A-11</span>
-                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Levers & Engagement</h3>
-                    </div>
-                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                </summary>
-                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
-                    <p class="mb-6">2 prompts: Commercial lever engine (gain-share, risk pots, outcome-based pricing) and personalised engagement plans (per-stakeholder contact calendar with channel, timing, and message calibration).</p>
-                    <div class="flex flex-wrap items-center gap-5">
-                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="engage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
-                    </div>
-                </div>
-            </details>
-
-            <details class="reveal glass-panel border-t-4 border-t-amber-500/30 rounded-3xl group overflow-hidden transition-all hover:border-t-amber-400 hover:-translate-y-1 hover:shadow-2xl">
-                <summary class="p-6 md:p-8 cursor-pointer flex items-center justify-between outline-none hover:bg-white/5 transition-colors">
-                    <div class="flex items-center gap-5">
-                        <span class="text-neutral-400 font-mono font-bold text-xs md:text-sm glass-panel px-3 py-1.5 rounded-xl border-t border-t-white/10">A-12 → A-16</span>
-                        <h3 class="text-neutral-300 uppercase tracking-tight mb-0">Psychology, Culture & Human Risk</h3>
-                    </div>
-                    <span class="text-neutral-600 transform transition-transform duration-300 group-open:rotate-180">▼</span>
-                </summary>
-                <div class="p-6 md:p-8 pt-0 border-t border-white/5 text-neutral-400 leading-relaxed font-medium">
-                    <p class="mb-6">5 prompts: Psychological driver decoder, behavioural elicitation scripts, cross-stakeholder dynamics mapping, culture and values alignment, and TUPE risk mapping for outsourcing/transition deals.</p>
-                    <div class="flex flex-wrap items-center gap-5">
-                        <button disabled class="text-xs md:text-sm font-bold uppercase tracking-widest text-neutral-500 glass-panel px-6 py-3 rounded-xl opacity-70 cursor-not-allowed">RESTRICTED</button>
-                        <a href="engage.html" class="text-xs md:text-sm font-bold uppercase tracking-widest text-amber-400 hover:text-amber-300 transition-colors">Engage for Complete Access →</a>
-                    </div>
-                </div>
-            </details>
-        </div>
-
-        <!-- COPY GRID -->
-        <div class="mb-12">
-            <div class="flex items-center gap-4 mb-6 md:mb-8">
-                <div class="h-px bg-white/10 flex-1"></div>
-                <div class="text-xs md:text-sm font-extrabold tracking-widest text-white uppercase">Prompt Library — Copy Full Code</div>
-                <div class="h-px bg-white/10 flex-1"></div>
-            </div>
-
-            <p class="text-sm md:text-base text-neutral-400 mb-8 text-center font-medium">Each prompt is a multi-phase engine. Copy the full code, paste into any LLM, feed the variables.</p>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 mb-6 md:mb-8">
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
-                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-01</span>
-                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">RFP Decoder</p>
-                    <button onclick="copyPrompt(this, 'lib-a01')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
-                </div>
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
-                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-02</span>
-                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Trauma Decoder</p>
-                    <button onclick="copyPrompt(this, 'lib-a02')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
-                </div>
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
-                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-03</span>
-                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Stakeholder Discovery</p>
-                    <button onclick="copyPrompt(this, 'lib-a03')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
-                </div>
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-5 text-center hover:-translate-y-1 hover:border-t-violet-400 transition-all">
-                    <span class="text-violet-400 font-mono font-bold text-sm md:text-base block mb-2">A-04</span>
-                    <p class="text-[11px] md:text-xs text-neutral-400 mb-4 font-medium">Motivation Map</p>
-                    <button onclick="copyPrompt(this, 'lib-a04')" class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-violet-400 hover:text-white glass-panel border-t border-t-white/10 px-4 py-3 rounded-xl hover:border-t-violet-500 hover:bg-white/10 transition-all w-full">Copy</button>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-3xl p-6 md:p-8 text-center">
-                <span class="text-neutral-500 font-mono font-bold text-sm md:text-base">G-07 → G-19 · A-01 → A-16 · I-01 → I-10 · N-00 → N-11</span>
-                <span class="text-sm md:text-base text-neutral-400 block mt-3 font-medium">55 prompts total · Advanced chain restricted — <a href="engage.html" class="text-amber-400 hover:text-amber-300 transition-colors font-bold">Engage for access</a></span>
-            </div>
-
-            <!-- HIDDEN PROMPT CODE BLOCKS — PRESERVED EXACTLY FROM ORIGINAL -->
-            <div style="position:absolute;left:-9999px;top:-9999px">
-                <pre><code id="lib-a01">A-01 — RFP STRATEGIC DECODER v3.0 — The Hidden Pain
-========================================
-
-PROMPT CODE
-RFP TEXT: [Paste the RFP Executive Summary, Background, and Requirements here]
-SELLER SOLUTION: [Describe what you are selling, or type "None"]
-G-01 MACRO INTEL: [Paste G-01 output if available, or type "None"]
-G-03 PROFILES: [Paste known G-03 executive profiles, or type "None"]
-BID TEAM BRIEFING: [Any context from the sales team on why this RFP dropped now, or type "None"]
-
-OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
-CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:
-Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a .md file. Follow these rules exactly:
-
-FILENAME: The output file MUST be named:A-01_RFP_Decode_[Target_Company].md
-(Replace [Target_Company] with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
-DESTINATION FOLDER: 03_Strategy_Execution/
-FORMAT RULES:
-Begin your output with the line below EXACTLY (with the correct filename substituted):
-
-⚠️ SYSTEM SAVE PROTOCOL: Save as: A-01_RFP_Decode_[Target_Company].md → 03_Strategy_Execution/
-Everything that follows is the intelligence output in clean Markdown.
-Use proper Markdown headers (##, ###), tables, bold, and bullet points.
-Do NOT wrap your response in a code fence or markdown block — output raw Markdown directly.
-Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document.
-The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
-COPY-PASTE READY: The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
-ROLE & OBJECTIVE
-Act as a Tier-1 Proposal Strategist and Forensic Linguist. Your objective is to decode the subtext of the provided RFP. Every RFP tells two stories: the formal, sanitised requirements written by Procurement, and the bloody, urgent pain that forced the business to ask for budget. You must find the second story.THE AUTHORSHIP RULE: RFPs are Frankenstein documents. Different departments write different sections. You must identify which role (IT, Operations, Finance, Security) likely authored which block of requirements based on the language used.
-
-EXECUTION ROUTING
-PATH A: SELLER MAPPING (Seller Solution provided) → Decode the RFP and map specific wedge hooks for the Seller.
-PATH B: OBJECTIVE DECODE (Seller is "None") → Pure forensic analysis of the trigger event and hidden pain.
-PHASE 1: THE TWO STORIES
-THE OFFICIAL NARRATIVE: What does the executive summary claim they are trying to achieve? (Usually sanitised "transformation" or "modernisation" language).
-THE HIDDEN PAIN: What is the actual operational friction driving this? Read between the lines of the technical requirements. What is broken that they aren't explicitly admitting is broken?
-THE NARRATIVE GAP: Where does the official narrative conflict with the technical requirements? (e.g., They claim they want "agile transformation" but mandate a 5-year waterfall deployment plan).
-PHASE 2: TRIGGER EVENT ANALYSIS (Schwartz)
-Why did this RFP drop NOW? It wasn't written yesterday. Something broke, a deadline is looming, or an executive was hired/fired.
-If G-01 is provided, cross-reference the RFP timeline with the Regulatory Timeline or Macro Priorities.
-Output: The most likely internal Trigger Event that secured the budget for this procurement.
-
-PHASE 3: SECTION-BY-SECTION AUTHORSHIP
-Deconstruct the RFP into logical blocks based on tone and vocabulary.
-| SECTION/REQUIREMENTS | LIKELY AUTHOR (Department/Role) | THEIR PRIMARY MOTIVATION | THEIR HIDDEN FEAR |
-Example: "Requirements 4.1-4.5 (Security Standards) → Written by CISO/InfoSec → Motivation: Compliance → Fear: Being the scapegoat for a breach."
-
-PHASE 4: TRAUMA INDICATORS
-Identify the requirements that were "written in blood." These are usually overly specific, highly punitive, or strangely rigid clauses that indicate a vendor previously failed them in this exact area.
-Output as a list of Specific Requirements and the Past Trauma they indicate.
-
-PHASE 5: CATEGORY ASSESSMENT (Dunford)
-Based on the language, what competitive category does the buyer think they are purchasing? (e.g., Are they buying a strategic business system or a commodity tool?)
-If PATH A (Seller provided): Does this category favor us? If not, what category must we reframe this to in the executive summary (G-06)?
-
-PHASE 6: WEDGE HOOKS (PATH A ONLY)
-Identify 3 specific requirements where the [SELLER_SOLUTION] possesses a distinct, defensible advantage over likely competitors.
-For each, provide the "Wedge Question" — the question we must ask during Q&A or discovery that highlights our strength while exposing competitor weaknesses.
-
-PHASE 7: FORENSIC CHECKLIST (Gawande)
-□ The Hidden Pain is distinctly different from the Official Narrative.
-□ Authorship mapping assigns distinct departments to distinct sections.
-□ Trauma Indicators cite specific clauses from the provided text.
-□ Trigger Event analysis references context, not just speculation.
-□ Category Assessment explicitly names the assumed competitive category.
-
-PHASE 8: THE OPERATOR LOOP
-Ask: "Which of the 'Trauma Indicators' do you think is the most dangerous to our bid? Should we run A-02 (Trauma Decoder) on that specific requirement to build a healing strategy?"NEXT MOVES: → A-02 (Trauma Decoder) | → A-03 (Stakeholder Discovery — to find the names behind the Authorship mapping)</code></pre>
-                <pre><code id="lib-a02">A-02 — REQUIREMENTS TRAUMA DECODER v3.0 — Vulnerability Mapping
-========================================
-
-PROMPT CODE
-RFP REQUIREMENTS: [Paste specific technical/commercial requirements or SLAs that look unusually strict]
-A-01 DECODE: [Paste A-01 output if available, or type "None"]
-SELLER CAPABILITIES: [List your relevant capabilities, or type "None"]
-G-03 PROFILES: [Paste G-03 executive profiles, or type "None"]
-G-01 INTEL: [Paste G-01 Macro Intel, or type "None"]
-G-02 FORENSICS: [Paste G-02 Financial Forensics, or type "None"]
-I-02 WIN THEMES: [Paste I-02 Win Themes, or type "None"]
-KNOWN INCIDENTS: [Any known history of outages, breaches, or vendor failures at this company, or type "None"]
-
-OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
-CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:
-Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a .md file. Follow these rules exactly:
-
-FILENAME: The output file MUST be named:A-02_Trauma_Decode_[Target_Company].md
-(Replace [Target_Company] with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
-DESTINATION FOLDER: 03_Strategy_Execution/
-FORMAT RULES:
-Begin your output with the line below EXACTLY (with the correct filename substituted):
-
-⚠️ SYSTEM SAVE PROTOCOL: Save as: A-02_Trauma_Decode_[Target_Company].md → 03_Strategy_Execution/
-Everything that follows is the intelligence output in clean Markdown.
-Use proper Markdown headers (##, ###), tables, bold, and bullet points.
-Do NOT wrap your response in a code fence or markdown block — output raw Markdown directly.
-Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document.
-The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
-COPY-PASTE READY: The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
-ROLE & OBJECTIVE
-Act as a Forensic Proposal Psychologist and Risk Assessor. Your objective is to map the emotional and financial trauma behind unusually strict, rigid, or punitive requirements in an RFP. When an RFP demands "15-minute SLA on severity 1 tickets with 100% service credit penalties," they are not negotiating — they are reacting to a past failure. You must diagnose the failure, map it to the stakeholder who wears the scar, and build the healing strategy.
-
-EXECUTION ROUTING
-PATH A: SELLER MAPPING (Seller Capabilities provided) → Build specific healing strategies using Seller IP.
-PATH B: PURE FORENSIC (Seller is "None") → Diagnose trauma and score severity only.
-PATH C: FULL CHAIN (G-03 + G-02 + I-02 provided) → Map trauma to specific executives, quantify the financial cost of the past failure, and align to win themes.
-PHASE 1: REQUIREMENT-BY-REQUIREMENT FORENSICS
-For each unusually strict requirement provided, analyze:
-THE REQUIREMENT: [Quote the text]
-THE LIKELY TRAUMA: What specific vendor failure, operational outage, or compliance breach caused them to write this? If KNOWN INCIDENTS are provided, link them here.
-THE SYSTEM 1 FEAR (Kahneman): What is the emotional, knee-jerk fear driving this? (e.g., "I will be fired if the system goes down during Black Friday again.")
-THE SYSTEM 2 JUSTIFICATION: How have they rationalized this fear into a procurement metric? (e.g., "We require active-active geo-redundancy with zero RPO.")
-
-PHASE 2: TRAUMA SEVERITY SCORING
-Rank the identified traumas based on their potential to kill your deal if mishandled.
-CRITICAL: A hard veto requirement driven by recent, public, or highly costly failure.
-HIGH: Strong preference driven by internal political embarrassment.
-MEDIUM: Defensive requirement driven by standard industry risk aversion.
-LOW: Boilerplate legal/procurement text disguised as technical need.
-
-PHASE 3: STAKEHOLDER-TO-TRAUMA MAPPING (Execute if G-03 provided)
-Map the CRITICAL and HIGH traumas to specific executives from the G-03 profiles.
-Who specifically wears the scar from the past failure?
-What Kegan Stage are they operating from, and how does that dictate how they process this trauma? (e.g., A Stage 3 executive fears the social embarrassment of another failure; a Stage 4 executive fears the loss of operational control).
-Which GAIN Driver is most threatened by this trauma?
-
-PHASE 4: FINANCIAL QUANTIFICATION (Execute if G-02 provided)
-Estimate the financial cost of the past trauma. If a system outage triggered a rigid SLA requirement, use G-02 data to estimate what that outage actually cost them in EBITDA or revenue. This validates why the trauma exists and provides the baseline for the healing strategy.
-
-PHASE 5: TRAUMA HEALING STRATEGY (Execute if PATH A or PATH C)
-For each CRITICAL and HIGH trauma, build the response strategy:
-THE ACCUSATION AUDIT (Voss): How do we proactively name their fear in our proposal before they evaluate us?
-THE HEALING EVIDENCE: Which specific [SELLER_CAPABILITIES] directly soothe this trauma? What exact proof (case study, architecture diagram, SLA structure) is required?
-THE WIN THEME ALIGNMENT (If I-02 provided): Which win theme is best deployed to neutralize this specific fear?
-
-PHASE 6: FORENSIC CHECKLIST (Gawande)
-□ System 1 (emotional) and System 2 (rational) drivers are separated.
-□ Traumas are explicitly ranked by deal-kill severity.
-□ Healing strategy relies on evidence, not reassurance.
-□ If full chain: Traumas are mapped to named executives and quantified financially.
-
-PHASE 7: THE OPERATOR LOOP
-Ask: "Which of these traumas do you believe is most likely to derail our response? Should we run A-04 (Motivation Map) to see how this specific trauma impacts the overall voting coalition?"NEXT MOVES: → A-03 (Stakeholder Discovery) | → A-04 (Motivation Map) | → I-04 (Scoring Strategy)</code></pre>
-                <pre><code id="lib-a03">A-03 — STAKEHOLDER DISCOVERY v3.0 — Entity Extraction
-========================================
-
-PROMPT CODE
-RFP TEXT: [Paste the RFP Executive Summary, Background, and Evaluation Criteria, or type "None"]
-A-01 DECODE: [Paste A-01 output if available, or type "None"]
-G-01 MACRO INTEL: [Paste G-01 output if available, or type "None"]
-MEETING NOTES / CRM: [Paste raw meeting notes, CRM exports, email threads, or type "None"]
-
-OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
-CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:
-Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a .md file. Follow these rules exactly:
-
-FILENAME: The output file MUST be named:A-03_Stakeholder_Discovery_[Target_Company].md
-(Replace [Target_Company] with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
-DESTINATION FOLDER: 03_Strategy_Execution/
-FORMAT RULES:
-Begin your output with the line below EXACTLY (with the correct filename substituted):
-
-⚠️ SYSTEM SAVE PROTOCOL: Save as: A-03_Stakeholder_Discovery_[Target_Company].md → 03_Strategy_Execution/
-Everything that follows is the intelligence output in clean Markdown.
-Use proper Markdown headers (##, ###), tables, bold, and bullet points.
-Do NOT wrap your response in a code fence or markdown block — output raw Markdown directly.
-Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document.
-The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
-COPY-PASTE READY: The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
-ROLE & OBJECTIVE
-Act as a forensic intelligence analyst. Your objective is to extract every human entity (named or implied by role) from the provided texts, classify their likely role in the buying process, and prioritize them for deep psychological profiling (G-03). You are building the raw targeting list for the shadow hierarchy map.
-
-EXECUTION ROUTING
-Single Path: Entity extraction, classification, and prioritization based on available context.
-If A-01 or G-01 are missing, operate strictly on the raw RFP and CRM data, but note the reduced context.
-
-PHASE 1: ENTITY EXTRACTION & CLASSIFICATION
-Scan all provided texts. Extract every named individual AND every implied role (e.g., if the RFP mentions "approval by the InfoSec steering committee," add "InfoSec Steering Committee Lead" as an implied role).
-
-Classify each entity using MEDDIC / Sphere of Influence categories:
-- ECONOMIC BUYER (EB): Ultimate budget authority.
-- CHAMPION: Actively selling on our behalf.
-- COACH: Friendly, provides info, but lacks political capital.
-- EVALUATOR / TECHNICAL BUYER: Assesses against criteria; can say "no," but not "yes."
-- GATEKEEPER: Controls access to power (e.g., EA, Procurement Lead).
-- BLOCKER / DETRACTOR: Actively opposed or threatened by the deal.
-
-PHASE 2: THE STAKEHOLDER MAP
-Output a comprehensive table:
-| Name/Role | Classification | Authority (0-100) | Influence (0-100) | Priority (High/Med/Low) | Evidence/Source |
-
-Definitions:
-Authority: Formal org-chart power to sign or veto.
-Influence: Informal political capital to sway the decision.
-Priority: Based on Authority × Influence. High priority = immediate G-03 profiling required.
-
-PHASE 3: THE PROFILING QUEUE
-List the HIGH priority stakeholders extracted above. This is the exact list the operator must run through the G-03 Executive Intelligence prompt. Order them by potential deal impact (highest impact first).
-
-PHASE 4: UNKNOWN STAKEHOLDERS (THE BLIND SPOTS)
-Identify critical roles that *must* exist for a deal of this size/type based on the A-01 Decode or G-01 Macro Intel, but are currently missing from the CRM notes or RFP text.
-Output: "HUMAN ACTION REQUIRED: The following roles are missing from our intelligence. Find names for these titles immediately." (List 2-4 likely missing roles, e.g., VP of Cloud Infrastructure, Chief Risk Officer).
-
-PHASE 5: FORENSIC CHECKLIST (Gawande)
-□ Both named individuals and implied roles are extracted.
-□ Classifications use standard MEDDIC/Sphere of Influence terminology.
-□ Authority and Influence scores are distinct (high authority does not always equal high influence).
-□ The Profiling Queue clearly dictates next steps.
-
-PHASE 6: THE OPERATOR LOOP
-Ask: "Review the 'Unknown Stakeholders' list. Do you know who holds these roles? If yes, provide their names and I will add them to the Profiling Queue. If no, this is your immediate discovery homework."NEXT MOVES: → G-03 (Run Executive Intelligence on the Profiling Queue) | → A-04 (Motivation Map — once G-03s are complete)</code></pre>
-                <pre><code id="lib-a04">A-04 — MOTIVATION MAP v3.0 — Psychological Alignment
-========================================
-
-PROMPT CODE
-G-03 ALL PROFILES: [Paste ALL completed G-03 Executive Profiles here]
-A-01 RFP DECODE: [Paste A-01 output if available, or type "None"]
-DEAL CONTEXT: [Briefly describe the deal, the solution, and the current stage, or type "None"]
-
-OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
-CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:
-Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a .md file. Follow these rules exactly:
-
-FILENAME: The output file MUST be named:A-04_Motivation_Map_[Target_Company].md
-(Replace [Target_Company] with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
-DESTINATION FOLDER: 03_Strategy_Execution/
-FORMAT RULES:
-Begin your output with the line below EXACTLY (with the correct filename substituted):
-
-⚠️ SYSTEM SAVE PROTOCOL: Save as: A-04_Motivation_Map_[Target_Company].md → 03_Strategy_Execution/
-Everything that follows is the intelligence output in clean Markdown.
-Use proper Markdown headers (##, ###), tables, bold, and bullet points.
-Do NOT wrap your response in a code fence or markdown block — output raw Markdown directly.
-Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document.
-The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
-COPY-PASTE READY: The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
-ROLE & OBJECTIVE
-Act as a Master Political Strategist and Behavioral Economist. Your objective is to map the complex web of individual motivations, fears, and internal alliances into a coherent prediction of how the buying committee will behave. You will identify who forms the winning coalition, who will passively resist, and who will actively block.
-
-EXECUTION ROUTING
-Single Path: Psychological Alignment Matrix generation.
-If G-03 profiles are missing, the output will be severely degraded. Rely strictly on provided G-03 data. Do not hallucinate motivations not supported by the profiles.
-
-PHASE 1: THE MOTIVATION HEAT MAP
-Cross-reference every stakeholder's G-03 profile against the DEAL CONTEXT and A-01 RFP DECODE.
-Output a comprehensive table:
-| Stakeholder | Primary GAIN Driver | Kegan Stage | Supports Deal? (Yes/No/Neutral) | Why/Why Not (Specific Motivation) | Risk If Ignored (High/Med/Low) |
-
-PHASE 2: COALITION ANALYSIS
-Deconstruct the voting bloc. Deals are not won by convincing everyone; they are won by building a coalition with enough cumulative authority and influence to overcome the detractors.
-
-THE WINNING BLOC: Which specific combination of 3-4 stakeholders must align to guarantee approval?
-THE GLUE: What is the single shared business outcome or emotional driver that unites this bloc? (e.g., "Both the CIO and CFO share a Stage 4 drive for order and cost predictability").
-THE FRACTURE POINT: What issue could divide this bloc during evaluation?
-
-PHASE 3: THE IMMUNITY MAP (RESISTANCE ANALYSIS)
-Focus on the stakeholders marked as "No" or "Neutral" in the Heat Map.
-For each resistor:
-THEIR IMMUNITY: What is their unconscious competing commitment (from G-03) that forces them to resist this deal?
-THE RATIONALIZATION: What logical, business-appropriate reason will they use publicly to block the deal? (e.g., "The integration timeline is too risky" masking "I don't want to lose control of my team").
-THE NEUTRALISATION: Provide specific scripting or structural deal concessions that make their fear feel like wisdom, allowing them to save face while stepping aside.
-
-PHASE 4: THE INFLUENCE LEVERS (Cialdini)
-For the Economic Buyer and the primary Detractor identified in Phase 2/3, determine the most effective principles of influence to apply based on their profiles:
-- Reciprocity, Commitment/Consistency, Social Proof, Authority, Liking, Scarcity.
-How specifically should the sales team deploy these levers?
-
-PHASE 5: FORENSIC CHECKLIST (Gawande)
-□ Heat map explicitly states Support (Yes/No/Neutral) for every profiled stakeholder.
-□ Coalition Analysis identifies a mathematically viable winning bloc (sufficient combined Authority/Influence).
-□ Immunity Map addresses the root psychological cause of resistance, not just the stated objection.
-□ Neutralisation strategies are actionable (scripts or deal structures).
-
-PHASE 6: THE OPERATOR LOOP
-Ask: "Review the 'Winning Bloc'. Do we currently have strong, multi-threaded access to all of these individuals? If not, who is the weak link, and should we run a specific G-05 (First 15 Minutes) script to crack them?"NEXT MOVES: → A-05 (Authority Mapping — if shadow hierarchy is unclear) | → I-02 (Win Theme Architect — aligning themes to the Winning Bloc)</code></pre>
-            </div>
-        </div>
-
-        <!-- COMMON PLAYS -->
-        <div class="mb-8 md:mb-12 reveal">
-            <div class="flex items-center gap-4 mb-6 md:mb-8">
-                <div class="h-px bg-white/10 flex-1"></div>
-                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Common Plays</div>
-                <div class="h-px bg-white/10 flex-1"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-violet-400 transition-all duration-300 hover:shadow-2xl">
-                    <h3 class="text-white uppercase tracking-tight mb-3">Decode an RFP</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-6 font-medium">Strip the corporate language. Find the trigger event, the hidden pain, and who actually wrote each section. Then map the experience behind the requirements.</p>
-                    <div class="flex gap-4">
-                        <button onclick="copyPrompt(this, 'lib-a01')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-01</button>
-                        <button onclick="copyPrompt(this, 'lib-a02')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-02</button>
-                    </div>
-                </div>
-                <div class="glass-panel border-t-4 border-t-violet-500/30 rounded-3xl p-6 md:p-8 hover:-translate-y-1 hover:border-t-violet-400 transition-all duration-300 hover:shadow-2xl">
-                    <h3 class="text-white uppercase tracking-tight mb-3">Map the Buying Committee</h3>
-                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-6 font-medium">Extract every stakeholder, classify their role, then map their motivations and Kegan immunities against the deal structure.</p>
-                    <div class="flex gap-4">
-                        <button onclick="copyPrompt(this, 'lib-a03')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-03</button>
-                        <button onclick="copyPrompt(this, 'lib-a04')" class="text-xs font-bold uppercase tracking-widest text-violet-400 glass-panel hover:text-white px-5 py-3 rounded-xl border-t border-t-white/10 hover:border-t-violet-500 hover:bg-white/10 transition-all">Copy A-04</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- KNOWN LIMITATIONS -->
-        <div class="mb-8 md:mb-12">
-            <div class="flex items-center gap-4 mb-6 md:mb-8">
-                <div class="h-px bg-white/10 flex-1"></div>
-                <div class="text-xs md:text-sm font-extrabold tracking-widest text-neutral-500 uppercase">Known Limitations</div>
-                <div class="h-px bg-white/10 flex-1"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-                <div class="reveal dur-700 glass-panel border-t-4 border-t-neutral-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
-                    <h3 class="text-white mb-3">The Title Trap</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed font-medium mb-3">Believing the C-suite title equals decision-making power. Titles signify authority; mapping reveals actual political capital.</p>
-                    <div class="border-t border-white/5 pt-3">
-                        <p class="text-xs text-neutral-500 mb-0"><span class="font-bold">Countermeasure:</span> A-03 separates Authority from Influence scores. High authority ≠ high influence.</p>
-                    </div>
-                </div>
-
-                <div class="reveal dur-800 glass-panel border-t-4 border-t-neutral-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
-                    <h3 class="text-white mb-3">The Enthusiastic Coach</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed font-medium mb-3">Mistaking an enthusiastic mid-level user for a political heavyweight. If they can't arrange access to the Economic Buyer, they're a coach, not a champion.</p>
-                    <div class="border-t border-white/5 pt-3">
-                        <p class="text-xs text-neutral-500 mb-0"><span class="font-bold">Countermeasure:</span> A-04 Coalition Analysis tests whether the "champion" has enough Authority × Influence to move the deal.</p>
-                    </div>
-                </div>
-
-                <div class="reveal dur-1000 glass-panel border-t-4 border-t-neutral-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
-                    <h3 class="text-white mb-3">The Quiet Veto</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed font-medium mb-3">Ignoring the quiet stakeholder who redirects the deal via email after you leave the room. Mapping must uncover what happens when you aren't present.</p>
-                    <div class="border-t border-white/5 pt-3">
-                        <p class="text-xs text-neutral-500 mb-0"><span class="font-bold">Countermeasure:</span> A-04's Immunity Map surfaces unconscious resistance before it becomes a silent "no."</p>
-                    </div>
-                </div>
-
-                <div class="reveal dur-1100 glass-panel border-t-4 border-t-neutral-500/30 rounded-3xl p-6 hover:-translate-y-1 transition-all">
-                    <h3 class="text-white mb-3">Stale Maps</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed font-medium mb-3">Assuming political capital is static. Re-orgs happen, priorities pivot, and influence shifts. A map from Q1 is a liability in Q3.</p>
-                    <div class="border-t border-white/5 pt-3">
-                        <p class="text-xs text-neutral-500 mb-0"><span class="font-bold">Countermeasure:</span> Re-run A-03/A-04 quarterly, or whenever a stakeholder change is detected.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- BRIDGE -->
-        <div class="mb-8 md:mb-12 reveal glass-panel rounded-3xl p-8 md:p-10 text-center max-w-4xl mx-auto">
-            <p class="text-base md:text-lg text-neutral-300 font-medium leading-relaxed">
-                That's the political map. The same methodology wins the deal, builds the proposition, and makes the business exit-ready.
-            </p>
-            <a href="revenue-case.html" class="inline-flex items-center gap-2 text-base md:text-lg text-violet-400 hover:text-violet-300 font-bold transition-colors mt-4">
-                See the Revenue Case →
-            </a>
-        </div>
-
-        <!-- CTA -->
-        <div class="glass-panel rounded-2xl p-8 md:p-12 text-center mb-12 max-w-4xl mx-auto reveal">
-            <p class="text-2xl md:text-3xl font-black text-white mb-6">You already know.</p>
-            <div class="flex flex-col md:flex-row justify-center gap-6 mb-6">
-                <a href="proof.html" class="inline-flex items-center justify-center gap-3 glass-panel border-t border-t-white/10 px-8 py-4 text-white font-bold rounded-xl hover:bg-white/[0.03] transition-all">
-                    See what this produces → <span class="text-violet-400">Proof</span>
-                </a>
-                <a href="engage.html" class="inline-flex items-center gap-3 bg-amber-500/10 border border-amber-500/40 px-8 py-4 text-amber-400 font-black rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all">
-                    Request a Live Deal Diagnostic →
-                </a>
-            </div>
-            <p class="text-base text-neutral-500 font-medium">Judgment is the only £m skill left.</p>
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
-        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        <div class="flex flex-col md:flex-row items-center gap-6">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader →</a>
-            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
-        </div>
-    </footer>
-
+<div class="main">
+
+  <section class="hero reveal">
+    <div class="phase-letter">A</div>
+    <h1>Assess — <em>Map Them</em></h1>
+    <p class="hero-p"><strong>The org chart is a starting point. Map the influence.</strong> Complex deals are won by coalitions, not champions. Your CRM maps who reports to whom. GAIN maps who controls the budget and who will quietly redirect your proposal.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">16</div><div class="lbl">Engines</div></div>
+      <div class="hero-stat"><div class="val">4</div><div class="lbl">Sub-phases</div></div>
+      <div class="hero-stat"><div class="val">4</div><div class="lbl">Open</div></div>
+    </div>
+  </section>
+
+  <!-- PHASE 01: DECODE THE DEAL -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--purple)">Phase 01 — Decode the Deal</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('a-01')"><div class="pcard-id">A-01</div><div class="pcard-title">RFP Strategic Decoder v3</div><div class="pcard-cat">The Hidden Pain</div><span class="pcard-badge open">OPEN</span></div>
+      <div class="pcard" onclick="loadPrompt('a-02')"><div class="pcard-id">A-02</div><div class="pcard-title">Requirements Trauma Decoder v3</div><div class="pcard-cat">Vulnerability Mapping</div><span class="pcard-badge open">OPEN</span></div>
+      <div class="pcard" onclick="loadPrompt('a-03')"><div class="pcard-id">A-03</div><div class="pcard-title">Stakeholder Discovery</div><div class="pcard-cat">Entity Extraction</div><span class="pcard-badge open">OPEN</span></div>
+    </div>
+  </section>
+
+  <!-- PHASE 02: MAP THE BOARD -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--purple)">Phase 02 — Map the Board</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('a-04')"><div class="pcard-id">A-04</div><div class="pcard-title">Motivation Map</div><div class="pcard-cat">Psychological Alignment</div><span class="pcard-badge open">OPEN</span></div>
+      <div class="pcard" onclick="loadPrompt('a-05')"><div class="pcard-id">A-05</div><div class="pcard-title">Multi-Stakeholder Authority Map</div><div class="pcard-cat">Power Routing</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <!-- PHASE 03: DEAL STRATEGY -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--purple)">Phase 03 — Deal Strategy</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('a-06')"><div class="pcard-id">A-06</div><div class="pcard-title">Deal Strategy Synthesis</div><div class="pcard-cat">The Execution Plan</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <!-- PHASE 04: ENGINEERING -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--purple)">Phase 04 — Engineering</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('a-07')"><div class="pcard-id">A-07</div><div class="pcard-title">The Placemat Visualiser</div><div class="pcard-cat">Executive Metaphor</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-08')"><div class="pcard-id">A-08</div><div class="pcard-title">The Logic Engine</div><div class="pcard-cat">Complexity Scoping</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-09')"><div class="pcard-id">A-09</div><div class="pcard-title">The Commercial Shield</div><div class="pcard-cat">Margin Protection</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-10')"><div class="pcard-id">A-10</div><div class="pcard-title">The Commercial Lever Engine</div><div class="pcard-cat">Lever Engine</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-11')"><div class="pcard-id">A-11</div><div class="pcard-title">Personalised Engagement Plans</div><div class="pcard-cat">Engagement Plans</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-12')"><div class="pcard-id">A-12</div><div class="pcard-title">Psychological Driver Decoder</div><div class="pcard-cat">Psychology Decoder</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-13')"><div class="pcard-id">A-13</div><div class="pcard-title">HUMINT Elicitation Script</div><div class="pcard-cat">Elicitation</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-14')"><div class="pcard-id">A-14</div><div class="pcard-title">Cross-Stakeholder Dynamics</div><div class="pcard-cat">Dynamics Map</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-15')"><div class="pcard-id">A-15</div><div class="pcard-title">Culture & Values Alignment</div><div class="pcard-cat">Culture Alignment</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('a-16')"><div class="pcard-id">A-16</div><div class="pcard-title">Human Risk & TUPE Mapper v3</div><div class="pcard-cat">People Transfer</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <h2>16 engines. This is Assess.</h2>
+    <p class="cta-s">Gather builds the intelligence. Assess maps the room. Influence wins the deal. Nurture protects the contract.</p>
+    <div class="cta-btns">
+      <a href="/engage.html" class="cta-btn cta-primary">Engage for Access</a>
+    </div>
+  </section>
+
+  <footer class="footer"><p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p></footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div id="modalContent"><div class="modal-loading">Loading...</div></div>
+  </div>
 </div>
 
 <script>
-    function copyPrompt(button, textId) {
-        const text = document.getElementById(textId).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            const originalText = button.innerText;
-            button.innerText = "COPIED!";
-            button.classList.add('text-emerald-400', 'border-t-emerald-400', 'bg-white/10');
-            button.classList.remove('text-violet-400', 'hover:text-white', 'hover:border-t-violet-500');
-            setTimeout(() => {
-                button.innerText = originalText;
-                button.classList.remove('text-emerald-400', 'border-t-emerald-400', 'bg-white/10');
-                button.classList.add('text-violet-400', 'hover:text-white', 'hover:border-t-violet-500');
-            }, 2000);
-        });
-    }
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('vis');obs.unobserve(en.target)}})},{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
+  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
+})();
 
-    document.addEventListener('click', (e) => {
-        document.querySelectorAll('.radial-toggle').forEach(toggle => {
-            if (toggle.checked && !e.target.closest('.radial-menu')) toggle.checked = false;
-        });
-    });
-    document.addEventListener('scroll', () => {
-        document.querySelectorAll('.radial-toggle').forEach(toggle => { if (toggle.checked) toggle.checked = false; });
-    });
-    document.querySelectorAll('.radial-toggle').forEach(toggle => {
-        toggle.addEventListener('change', function() {
-            if (this.checked) document.querySelectorAll('.radial-toggle').forEach(other => { if (other !== this) other.checked = false; });
-        });
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('nav a').forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('text-white', 'font-bold');
-                link.classList.remove('hover:text-white');
-            }
-        });
-    });
+function loadPrompt(id){
+  var overlay=document.getElementById('modalOverlay');
+  var content=document.getElementById('modalContent');
+  content.innerHTML='<div class="modal-loading">Loading prompt...</div>';
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  var url='prompts/'+id+'.html';
+  fetch(url)
+    .then(function(r){if(!r.ok)return fetch('prompts/'+id.toUpperCase()+'.html');return r})
+    .then(function(r){if(!r.ok)throw new Error('Not found');return r.text()})
+    .then(function(html){content.innerHTML=html})
+    .catch(function(){content.innerHTML='<div class="modal-loading" style="color:var(--red)">Failed to load prompt file.<br>Check prompts/'+id+'.html exists in your repo.</div>'});
+}
+function copyPrompt(){var ta=document.getElementById("promptText");if(!ta)return;var text=ta.value||ta.textContent;navigator.clipboard.writeText(text).then(function(){var btn=document.querySelector(".copy-code-btn");if(btn){btn.textContent="Copied!";btn.style.background="var(--blue)";setTimeout(function(){btn.textContent="Copy Code";btn.style.background=""},2000)}}).catch(function(){ta.style.display="block";ta.select();document.execCommand("copy");ta.style.display="none"})}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 </script>
-
 </body>
 </html>
