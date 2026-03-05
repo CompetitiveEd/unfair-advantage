@@ -1,236 +1,286 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-gray-950 text-gray-100 font-sans">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Request a Live Deal Diagnostic. Test the GAIN methodology on a high-stakes enterprise pursuit.">
-    <title>The Diagnostic | David Matthews</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    },
-                    colors: {
-                        gray: {
-                            950: '#0a0a0a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .reveal { opacity: 0; transform: translateY(32px); transition: all 700ms ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-        .dur-700 { transition-duration: 700ms; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Engage | GAIN Protocol</title>
+<meta name="description" content="Request a Live Deal Diagnostic. Test the GAIN methodology on a high-stakes enterprise pursuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+
+/* ═══ NAV ═══ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}
+.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
+.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative;padding-bottom:2px}
+.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}
+.radial-label:hover{color:var(--text-bright)}
+.radial-label .chev{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity .2s;display:flex}
+.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}
+.radial-toggle:checked~.radial-label .chev{transform:rotate(180deg)}
+.ri{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
+.radial-toggle:checked~.radial-items .ri{opacity:1;transform:scale(1)}
+.ri:nth-child(1){transition-delay:0ms}.ri:nth-child(2){transition-delay:40ms}.ri:nth-child(3){transition-delay:80ms}.ri:nth-child(4){transition-delay:120ms}
+.ri:hover{transform:scale(1.12)!important}
+.rl{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
+.rs{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
+.rio{width:20px;height:20px;opacity:.8}
+.ril{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){
+  .nav{justify-content:flex-start;padding-left:1rem}
+  .nav-inner{display:none}
+  .nav-toggle-btn{display:block}
+  .nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}
+  .nav-inner.open .radial-menu{display:none}
+}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
+
+/* ═══ MAIN ═══ */
+.main{max-width:1000px;margin:0 auto;padding:72px 2rem 0;flex:1}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ═══ HERO ═══ */
+.hero{text-align:center;padding:2.5rem 0 1.5rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(59,130,246,.04) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,46px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:.75rem}
+.hero-p{font-size:15px;color:var(--text-dim);max-width:480px;margin:0 auto 1.25rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
+
+/* Availability strip */
+.avail{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:8px}
+.avail-dot{width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.avail-text{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:1px;font-weight:600}
+
+/* ═══ STEPS ═══ */
+.steps{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.step{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:600;display:flex;align-items:center;gap:6px}
+.step-num{color:var(--blue)}
+.step-name{color:var(--text-bright)}
+.step-arrow{color:var(--blue);font-size:14px}
+
+/* ═══ TWO-COL LAYOUT ═══ */
+.engage-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:start}
+@media(max-width:768px){.engage-grid{grid-template-columns:1fr}}
+
+/* Left column */
+.rules h2{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--text-bright);margin-bottom:.75rem}
+.rules>p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1.5rem}
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+
+/* Pipeline steps */
+.pipeline{border-left:2px solid rgba(59,130,246,.2);padding-left:1.25rem;margin-bottom:1.5rem}
+.pipe-item{position:relative;margin-bottom:1.25rem}
+.pipe-item:last-child{margin-bottom:0}
+.pipe-dot{position:absolute;left:-1.65rem;top:4px;width:10px;height:10px;background:var(--blue);border-radius:50%;border:2px solid var(--bg)}
+.pipe-item h4{font-size:13px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
+.pipe-item p{font-size:12px;color:var(--text-dim);line-height:1.6}
+
+/* Qualification */
+.qual-list{list-style:none}
+.qual-list li{position:relative;padding-left:1.25rem;font-size:13px;color:var(--text);margin-bottom:.6rem;line-height:1.6}
+.qual-list li::before{content:'→';position:absolute;left:0;color:var(--amber);font-weight:900}
+
+/* Right column — form terminal */
+.terminal{background:var(--s1);border:1px solid rgba(59,130,246,.15);border-radius:12px;overflow:hidden}
+.terminal-bar{background:rgba(30,41,59,.6);padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.terminal-dots{display:flex;gap:5px}
+.terminal-dots span{width:10px;height:10px;border-radius:50%}
+.terminal-path{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px}
+.terminal-body{padding:1.5rem}
+
+/* Form */
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
+.form-input{width:100%;background:var(--bg);border:1px solid rgba(59,130,246,.15);color:var(--text-bright);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px;border-radius:6px;transition:all .2s;outline:none}
+.form-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(59,130,246,.1);background:var(--s2)}
+.form-input::placeholder{color:#52525b}
+textarea.form-input{resize:vertical;min-height:100px}
+.form-submit{
+  width:100%;background:var(--blue);color:white;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:14px;border:none;border-radius:8px;cursor:pointer;
+  transition:all .3s;margin-top:.5rem;
+}
+.form-submit:hover{background:#2563eb;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.3)}
+
+.form-links{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem}
+.form-links a{font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);text-decoration:none;font-weight:600;letter-spacing:.5px;transition:color .2s}
+.form-links a:hover{color:#60a5fa}
+
+/* ═══ FOOTER ═══ */
+.footer{padding:2rem;border-top:1px solid var(--border);text-align:center;margin-top:3rem}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+.footer-text a:hover{color:var(--text-dim)}
+</style>
 </head>
-<body class="bg-gray-950 text-gray-100 antialiased selection:bg-blue-500 selection:text-white flex flex-col min-h-screen">
+<body>
 
-<nav class="bg-gray-800 text-green-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-4 md:gap-6 shadow-lg text-sm md:text-base font-medium">
-    <a href="newindex.html" class="hover:text-white transition-colors">Home</a>
-    <a href="newproof.html" class="hover:text-white transition-colors">Proof</a>
-    <a href="newrevenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
-
-    <div class="relative group cursor-pointer pb-1">
-        <span class="hover:text-white transition-colors flex items-center gap-1">The System ▾</span>
-        <div class="dropdown-menu absolute left-0 top-full w-52 bg-gray-800 border border-gray-700 rounded-md shadow-xl z-50 overflow-hidden">
-            <a href="newedge.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">Why It Works</a>
-            <a href="newarchitecture.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors">How It's Built</a>
-            <a href="newstory.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors border-b border-gray-700/50">The Story</a>
-            <a href="newknow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Gather [Know]</a>
-            <a href="newmap.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Assess [Map]</a>
-            <a href="newwin.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Influence [Win]</a>
-            <a href="newgrow.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400 border-b border-gray-700/50">Nurture [Grow]</a>
-            <a href="newdashboards.html" class="block px-4 py-3 hover:bg-gray-700 hover:text-white transition-colors text-gray-400">Dashboards</a>
-        </div>
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.querySelector('.nav-inner').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner">
+    <a href="/">Home</a>
+    <a href="/proof.html">Proof</a>
+    <a href="/revenue-case.html">Revenue</a>
+    <div class="radial-menu">
+      <input type="checkbox" id="gain-radial" class="radial-toggle">
+      <label for="gain-radial" class="radial-label">GAIN <span class="chev">&#9662;</span></label>
+      <div class="radial-items">
+        <a href="/know.html" class="ri"><span class="rl" style="color:#93c5fd">G</span><span class="rs" style="color:#93c5fd">Gather</span></a>
+        <a href="/map.html" class="ri"><span class="rl" style="color:#d8b4fe">A</span><span class="rs" style="color:#d8b4fe">Assess</span></a>
+        <a href="/win.html" class="ri"><span class="rl" style="color:#fcd34d">I</span><span class="rs" style="color:#fcd34d">Influence</span></a>
+        <a href="/grow.html" class="ri"><span class="rl" style="color:#6ee7b7">N</span><span class="rs" style="color:#6ee7b7">Nurture</span></a>
+      </div>
     </div>
-
-    <a href="newengage.html" class="hover:text-yellow-300 transition-colors font-bold text-yellow-400">Engage</a>
+    <div class="radial-menu">
+      <input type="checkbox" id="system-radial" class="radial-toggle">
+      <label for="system-radial" class="radial-label">System <span class="chev">&#9662;</span></label>
+      <div class="radial-items">
+        <a href="/edge.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="ril" style="color:#67e8f9">Edge</span></a>
+        <a href="/architecture.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="ril" style="color:#5eead4">Build</span></a>
+        <a href="/story.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="ril" style="color:#7dd3fc">Story</span></a>
+        <a href="/dashboards.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="ril" style="color:#a5b4fc">Dash</span></a>
+      </div>
+    </div>
+    <a href="/engage.html" class="nav-cta" style="color:var(--text-bright)!important">Engage</a>
+  </div>
 </nav>
 
-<div class="pt-20 md:pt-24 px-4 md:px-8 max-w-7xl mx-auto flex-grow w-full">
+<div class="main">
 
-    <header class="relative rounded-2xl overflow-hidden mb-16 border border-gray-800 shadow-2xl bg-gray-900">
-        <picture>
-            <source srcset="assets/images/engageme.avif" type="image/avif">
-            <img src="assets/images/engageme.webp" alt="Mapping the Deal" class="absolute inset-0 w-full h-full object-cover opacity-25 mix-blend-multiply z-0">
-        </picture>
-      <div class="relative z-10 px-6 py-10 md:py-16 text-center md:text-left
-            <span class="text-blue-500 font-bold tracking-widest uppercase text-sm mb-4 block reveal">THE DIAGNOSTIC</span>
-            <h1 class="reveal text-4xl md:text-6xl font-black tracking-tight leading-tight mb-6">
-                <span class="text-white block">ENGAGE THE ARCHITECT</span>
-            </h1>
-            
-            <p class="reveal text-lg md:text-xl text-gray-300 max-w-2xl mb-10 leading-relaxed font-semibold">
-                Test the GAIN system on your live deal.
-            </p>
+  <!-- HERO -->
+  <section class="hero reveal">
+    <h1>Engage the Architect</h1>
+    <p class="hero-p"><strong>Test the GAIN system on your live deal.</strong> I don't sell prompts. I embed revenue systems.</p>
+    <div class="avail">
+      <div class="avail-dot"></div>
+      <span class="avail-text">Currently advising two PE-backed firms. One engagement slot Q2 2026.</span>
+    </div>
+  </section>
 
-            <div class="reveal mt-4 inline-flex items-center gap-3 px-5 py-3 bg-red-950/30 border border-red-500/30 border-l-4 border-l-red-500 rounded shadow-[0_0_20px_rgba(239,68,68,0.1)]">
-                <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#ef4444]"></div>
-                <span class="font-mono text-xs text-red-300 font-bold uppercase tracking-wider">Currently advising two PE-backed firms. One engagement slot Q2 2026.</span>
-            </div>
+  <!-- STEPS -->
+  <div class="steps reveal">
+    <div class="step"><span class="step-num">01.</span><span class="step-name">The Diagnostic</span><span class="step-arrow">→</span></div>
+    <div class="step"><span class="step-num">02.</span><span class="step-name">Live Deal Assessment</span><span class="step-arrow">→</span></div>
+    <div class="step"><span class="step-num">03.</span><span class="step-name">Implementation</span></div>
+  </div>
+
+  <!-- TWO-COL -->
+  <div class="engage-grid">
+
+    <!-- LEFT: Rules -->
+    <div class="rules reveal">
+      <h2>Rules of Engagement</h2>
+      <p>If your firm has the talent but lacks the systemic governance to multiply their output in high-stakes environments, we should speak.</p>
+
+      <div class="sub-label">The 3-Step Pipeline</div>
+      <div class="pipeline">
+        <div class="pipe-item">
+          <div class="pipe-dot"></div>
+          <h4>Submit Context</h4>
+          <p>Use the terminal to outline a high-value active pursuit or stalled portfolio transformation.</p>
         </div>
-    </header>
-
-    <main class="mb-20">
-        
-        <div class="reveal mb-12 py-4 border-y border-gray-800 flex justify-center flex-wrap gap-4 md:gap-8 text-xs font-bold uppercase tracking-widest text-gray-500">
-            <div class="flex items-center gap-4">
-                <span class="text-gray-300">01. The Diagnostic</span>
-                <span class="hidden md:inline text-blue-500 font-black text-lg">&rarr;</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-gray-300">02. Live Deal Assessment</span>
-                <span class="hidden md:inline text-blue-500 font-black text-lg">&rarr;</span>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="text-gray-500">03. Implementation</span>
-            </div>
+        <div class="pipe-item">
+          <div class="pipe-dot"></div>
+          <h4>Assessment Briefing</h4>
+          <p>A 30-minute tactical review. We apply the GAIN framework live to locate your intelligence gap.</p>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-start">
-            
-            <div class="reveal dur-700">
-                <h2 class="text-2xl text-white font-black mb-6 tracking-tight">Rules of Engagement</h2>
-                <p class="text-gray-300 leading-relaxed mb-10 text-sm md:text-base">
-                    I don't sell prompts. I embed revenue systems. If your firm has the talent but lacks the systemic governance to multiply their output in high-stakes environments, we should speak.
-                </p>
-
-                <h3 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-6 border-b border-gray-800 pb-2">The 3-Step Pipeline</h3>
-                <ul class="ml-4 border-l-2 border-blue-900/50 pl-6 space-y-8 mb-10 relative">
-                    <li class="relative">
-                        <span class="absolute -left-[31px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-gray-950 shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"></span>
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide mb-1">Submit Context</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">Use the terminal to outline a high-value active pursuit or stalled portfolio transformation.</p>
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-gray-950 shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"></span>
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide mb-1">Assessment Briefing</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">A 30-minute tactical review. We apply the GAIN framework live to locate your intelligence gap.</p>
-                    </li>
-                    <li class="relative">
-                        <span class="absolute -left-[31px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-gray-950 shadow-[0_0_0_1px_rgba(59,130,246,0.5)]"></span>
-                        <h4 class="text-sm font-bold text-white uppercase tracking-wide mb-1">Execution Decision</h4>
-                        <p class="text-sm text-gray-400 leading-relaxed">You see the gap. You see the solution. You decide if you scale the system.</p>
-                    </li>
-                </ul>
-
-                <h3 class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-4">Qualification Criteria:</h3>
-                <ul class="space-y-3 text-sm text-gray-300">
-                    <li class="relative pl-5"><span class="absolute left-0 text-amber-500 font-black">&rarr;</span> PE Operating Partners seeking rapid EBITDA yield.</li>
-                    <li class="relative pl-5"><span class="absolute left-0 text-amber-500 font-black">&rarr;</span> CROs managing £20M+ portfolios transitioning to enterprise governance.</li>
-                    <li class="relative pl-5"><span class="absolute left-0 text-amber-500 font-black">&rarr;</span> Leaders recognizing that "AI adoption" without governance is liability.</li>
-                </ul>
-            </div>
-
-            <div class="reveal dur-700">
-                <div class="bg-gray-900/90 border border-blue-500/30 rounded-lg shadow-2xl overflow-hidden flex flex-col">
-                    <div class="bg-gray-800 px-4 py-3 border-b border-gray-700 flex items-center gap-4">
-                        <div class="flex gap-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                        </div>
-                        <span class="font-mono text-xs text-gray-400 tracking-widest uppercase">~/sys/diagnostic/init.sh</span>
-                    </div>
-                    
-                    <div class="p-6 md:p-8 bg-gray-900/60 flex-grow">
-                        <form action="https://formspree.io/f/xbjnqylk" method="POST" class="space-y-6">
-                            
-                            <div>
-                                <label class="block font-mono text-xs font-bold text-blue-300 tracking-widest uppercase mb-2">Executive Name</label>
-                                <input type="text" name="name" required placeholder="First Last" class="w-full bg-gray-950 border border-blue-500/20 text-gray-200 px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:bg-gray-900 transition-all shadow-inner">
-                            </div>
-                            
-                            <div>
-                                <label class="block font-mono text-xs font-bold text-blue-300 tracking-widest uppercase mb-2">Firm / Entity</label>
-                                <input type="text" name="company" required placeholder="Acme Capital / Acme Corp" class="w-full bg-gray-950 border border-blue-500/20 text-gray-200 px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:bg-gray-900 transition-all shadow-inner">
-                            </div>
-
-                            <div>
-                                <label class="block font-mono text-xs font-bold text-blue-300 tracking-widest uppercase mb-2">Secure Comm Channel</label>
-                                <input type="email" name="email" required placeholder="name@firm.com" class="w-full bg-gray-950 border border-blue-500/20 text-gray-200 px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:bg-gray-900 transition-all shadow-inner">
-                            </div>
-
-                            <div>
-                                <label class="block font-mono text-xs font-bold text-blue-300 tracking-widest uppercase mb-2">The Commercial Reality</label>
-                                <textarea name="message" required rows="5" placeholder="Describe the live deal. E.g., '£5M renewal stalling because we can't map the new CIO's influence...'" class="w-full bg-gray-950 border border-blue-500/20 text-gray-200 px-4 py-3 rounded font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:bg-gray-900 transition-all shadow-inner resize-y"></textarea>
-                            </div>
-
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold uppercase tracking-widest text-sm py-4 rounded transition-all shadow-[0_4px_14px_0_rgba(37,99,235,0.39)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] hover:-translate-y-0.5 mt-2">
-                                Initialize Briefing Sequence
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="mt-8 flex flex-wrap justify-center gap-4 text-xs font-mono">
-                    <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-300 font-bold tracking-widest transition-colors">[ Verify Track Record ]</a>
-                    <span class="text-gray-600 hidden md:inline">//</span>
-                    <a href="mailto:david@hownottogain.co.uk" class="text-gray-400 hover:text-gray-200 font-bold tracking-widest transition-colors">[ Direct Comms ]</a>
-                </div>
-            </div>
-
+        <div class="pipe-item">
+          <div class="pipe-dot"></div>
+          <h4>Execution Decision</h4>
+          <p>You see the gap. You see the solution. You decide if you scale the system.</p>
         </div>
+      </div>
 
-    </main>
+      <div class="sub-label">Qualification Criteria</div>
+      <ul class="qual-list">
+        <li>PE Operating Partners seeking rapid EBITDA yield.</li>
+        <li>CROs managing £20M+ portfolios transitioning to enterprise governance.</li>
+        <li>Leaders recognising that "AI adoption" without governance is liability.</li>
+      </ul>
+    </div>
+
+    <!-- RIGHT: Form terminal -->
+    <div class="reveal">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="terminal-dots">
+            <span style="background:var(--red)"></span>
+            <span style="background:var(--amber)"></span>
+            <span style="background:var(--green)"></span>
+          </div>
+          <span class="terminal-path">~/sys/diagnostic/init.sh</span>
+        </div>
+        <div class="terminal-body">
+          <form action="https://formspree.io/f/xbjnqylk" method="POST">
+            <div class="form-group">
+              <label class="form-label">Executive Name</label>
+              <input type="text" name="name" required placeholder="First Last" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Firm / Entity</label>
+              <input type="text" name="company" required placeholder="Acme Capital / Acme Corp" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Secure Comm Channel</label>
+              <input type="email" name="email" required placeholder="name@firm.com" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">The Commercial Reality</label>
+              <textarea name="message" required placeholder="Describe the live deal. E.g., '£5M renewal stalling because we can't map the new CIO's influence...'" class="form-input"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Initialize Briefing Sequence</button>
+          </form>
+        </div>
+      </div>
+      <div class="form-links">
+        <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank">[ Verify Track Record ]</a>
+        <a href="mailto:david@hownottogain.co.uk">[ Direct Comms ]</a>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
-<footer class="mt-auto border-t border-gray-800 bg-gray-900 pt-8 pb-12 px-4 md:px-8">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-        <a href="newindex.html" class="text-sm font-extrabold tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        
-        <div class="flex flex-col md:flex-row items-center gap-6">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-gray-300 hover:text-blue-400 transition-colors">
-                AI Is Not Your Cheerleader &rarr;
-            </a>
-            <span class="text-xs text-gray-600">No hype. Just results. &copy; 2026</span>
-        </div>
-    </div>
+<footer class="footer">
+  <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        // If it uses Tailwind utility classes instead of CSS transitions
-        entry.target.classList.remove('opacity-0', 'translate-y-8');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
 
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const currentPath = window.location.pathname;
-  document.querySelectorAll('nav a').forEach(link => {
-    if (link.getAttribute('href') === currentPath || link.getAttribute('href') === currentPath.split('/').pop()) {
-      link.classList.add('text-white', 'font-bold');
-      link.classList.remove('hover:text-white');
-    }
-  });
-});
+  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
+  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
+})();
 </script>
 </body>
 </html>

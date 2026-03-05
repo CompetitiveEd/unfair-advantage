@@ -1,626 +1,392 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="dark bg-neutral-950 text-neutral-100 antialiased">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GAIN Dashboards — rendered intelligence outputs from the GAIN Methodology. Real examples from live managed services bids.">
-    <title>Dashboards | GAIN Methodology</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: 'oklch(0.72 0.14 240)',
-                        success: 'oklch(0.78 0.13 150)',
-                        warning: 'oklch(0.75 0.15 80)',
-                        danger: 'oklch(0.68 0.16 30)',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboards | GAIN Protocol</title>
+<meta name="description" content="This is what the system actually produces. Rendered intelligence outputs from live managed services bids.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;--teal:#14b8a6;--indigo:#6366f1;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-    <style>
-        body { font-family: 'Inter', system-ui, -apple-system, sans-serif !important; }
-        html { scroll-behavior: smooth; }
-        ::selection { background-color: rgb(59 130 246 / 0.5); color: white; }
+/* ═══ NAV ═══ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}
+.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
+.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative;padding-bottom:2px}
+.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}
+.radial-label:hover{color:var(--text-bright)}
+.radial-label .chev{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity .2s;display:flex}
+.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}
+.radial-toggle:checked~.radial-label .chev{transform:rotate(180deg)}
+.ri{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
+.radial-toggle:checked~.radial-items .ri{opacity:1;transform:scale(1)}
+.ri:nth-child(1){transition-delay:0ms}.ri:nth-child(2){transition-delay:40ms}.ri:nth-child(3){transition-delay:80ms}.ri:nth-child(4){transition-delay:120ms}
+.ri:hover{transform:scale(1.12)!important}
+.rl{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}
+.rs{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
+.rio{width:20px;height:20px;opacity:.8}
+.ril{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){
+  .nav{justify-content:flex-start;padding-left:1rem}
+  .nav-inner{display:none}
+  .nav-toggle-btn{display:block}
+  .nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}
+  .nav-inner.open .radial-menu{display:none}
+}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
 
-        .reveal { opacity: 0; transform: translateY(12px) scale(0.99); transition: all 0.5s ease-out; }
-        .reveal.slide-left { transform: translateX(-12px) scale(0.99); }
-        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
-        .reveal.slide-left.active { transform: translateX(0) scale(1); }
-        .dur-600 { transition-duration: 600ms; }
-        .dur-700 { transition-duration: 700ms; }
-        .dur-800 { transition-duration: 800ms; }
-        .dur-900 { transition-duration: 900ms; }
-        .dur-1000 { transition-duration: 1000ms; }
-        .dur-1100 { transition-duration: 1100ms; }
+.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:2.5rem}
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--indigo);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase;margin:1.5rem 0 .75rem}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
 
-        .glass-panel { 
-            background: rgba(23, 23, 23, 0.4); 
-            backdrop-filter: blur(16px); 
-            -webkit-backdrop-filter: blur(16px); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 8px 32px rgba(0, 0, 0, 0.4); 
-            border-radius: 1rem;
-        }
+/* ═══ HERO ═══ */
+.hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(99,102,241,.04) 0%,transparent 70%);pointer-events:none}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5.5vw,50px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:1rem}
+.hero h1 em{color:var(--indigo);font-style:normal}
+.hero-p{font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto .5rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
+.hero-note{font-size:12px;color:#52525b;max-width:480px;margin:0 auto}
 
-        main h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; margin-bottom: 1rem; }
-        main h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 700; margin-bottom: 0.75rem; }
-        main p { font-size: 1rem; line-height: 1.5; margin-bottom: 1rem; color: #d1d5db; }
+/* ═══ DASHBOARD CARDS ═══ */
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:700px){.dash-grid{grid-template-columns:1fr}}
+.dash-card{
+  background:var(--s1);border:1px solid var(--border);border-radius:12px;
+  padding:1.25rem;cursor:pointer;transition:all .3s;position:relative;
+}
+.dash-card:hover{border-color:var(--border-h);background:var(--s2);transform:translateY(-2px)}
+.dash-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.dash-name{font-family:'Fraunces',serif;font-size:15px;font-weight:800;color:var(--text-bright);margin-bottom:4px}
+.dash-desc{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:8px}
+.dash-meta{font-family:'DM Mono',monospace;font-size:9px;color:#52525b}
+.dash-open{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;margin-top:8px;transition:color .2s}
 
-        .radial-item {
-            --tx: 0px;
-            position: absolute; top: 50%; left: 50%; 
-            width: 70px; height: 70px;
-            margin-left: -35px; margin-top: -35px;
-            background: rgba(23, 23, 23, 0.92); 
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 9999px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; font-weight: 600; text-align: center; padding: 6px;
-            opacity: 0; transform: translate(var(--tx), 0) scale(0);
-            transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            text-decoration: none;
-        }
-        .radial-item:hover { transform: translate(var(--tx), 0) scale(1.12) !important; box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
-        .radial-toggle:checked ~ .radial-items .radial-item { opacity: 1; transform: translate(var(--tx), 0) scale(1); }
+/* ═══ STRIP ═══ */
+.strip{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;padding:1rem 0;font-size:12px;color:var(--text-dim)}
+.strip strong{color:var(--text-bright);font-weight:600}
 
-        /* Dashboard excerpt mono styling */
-        .dash-mono {
-            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 12.5px;
-            line-height: 1.8;
-            background: rgba(10, 14, 23, 0.85);
-            border: 1px solid rgba(30, 41, 59, 0.5);
-            border-radius: 8px;
-            padding: 16px 20px;
-            color: #94a3b8;
-            overflow-x: auto;
-        }
-        .dash-mono .g { color: #34d399; }
-        .dash-mono .r { color: #f87171; }
-        .dash-mono .a { color: #fbbf24; }
-        .dash-mono .p { color: #a855f7; }
-        .dash-mono .c { color: #06b6d4; }
-        .dash-mono .b { color: #3b82f6; }
-        .dash-mono .w { color: #e2e8f0; font-weight: 600; }
-        .dash-mono .d { color: #64748b; }
+/* ═══ MODAL ═══ */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.8);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--bg);border:1px solid var(--border-h);border-radius:16px;
+  max-width:800px;width:100%;max-height:85vh;overflow-y:auto;
+  padding:2rem;position:relative;scrollbar-width:thin;scrollbar-color:#27272a var(--bg);
+  animation:modalIn .3s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal::-webkit-scrollbar{width:6px}.modal::-webkit-scrollbar-thumb{background:#27272a;border-radius:3px}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;transition:color .2s;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.modal-close:hover{color:var(--text-bright);background:rgba(255,255,255,.05)}
+.modal-type{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.modal-title{font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:var(--text-bright);margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:1.5rem;max-width:600px}
 
-        /* Iframe container */
-        .dash-iframe-wrap {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
-            background: #0a0e17;
-        }
-        .dash-iframe-wrap iframe {
-            width: 100%;
-            border: none;
-            background: #0a0e17;
-        }
-        .dash-iframe-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 60%, rgba(10,14,23,0.95) 100%);
-            pointer-events: none;
-        }
-    </style>
+/* Terminal in modal */
+.term{font-family:'DM Mono',monospace;font-size:11px;line-height:1.8;background:rgba(10,14,23,.85);border:1px solid rgba(30,41,59,.5);border-radius:8px;padding:14px 18px;color:#94a3b8;margin-bottom:12px;overflow-x:auto}
+.term .g{color:var(--green)}.term .r{color:var(--red)}.term .a{color:var(--amber)}.term .b{color:var(--blue)}.term .p{color:var(--purple)}.term .w{color:#e2e8f0;font-weight:600}.term .d{color:#64748b}
+
+.modal-link{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  padding:12px 24px;border-radius:8px;text-decoration:none;
+  transition:all .3s;margin-top:.5rem;
+}
+
+/* ═══ CTA ═══ */
+.cta{text-align:center;padding:2.5rem 0 4rem;border-top:1px solid var(--border)}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.cta-s{font-size:14px;color:var(--text-dim);margin-bottom:2rem}
+.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
+.cta-b:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
+.cta-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);margin-top:1.25rem}
+.cta-note a{text-decoration:none}
+
+.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+.footer-text a:hover{color:var(--text-dim)}
+</style>
 </head>
-<body class="bg-neutral-950 text-neutral-100 antialiased">
+<body>
 
-<!-- ═══════════════════════════════════════════════════════ NAV ═══════════════════════════════════════════════════════ -->
-<nav class="bg-neutral-900/80 backdrop-blur-xl border-b border-white/5 text-emerald-400 fixed top-0 left-0 right-0 z-50 p-3 flex flex-wrap justify-center items-center gap-5 md:gap-8 shadow-2xl text-sm md:text-base font-medium">
-    <a href="index.html" class="hover:text-white transition-colors">Home</a>
-    <a href="proof.html" class="hover:text-white transition-colors">Proof</a>
-    <a href="revenue-case.html" class="hover:text-white transition-colors">Revenue Case</a>
-
-    <!-- GAIN Radial -->
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="gain-radial" class="radial-toggle hidden peer" />
-        <label for="gain-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            GAIN <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="know.html" class="radial-item" style="--tx: -150px;"><span class="text-3xl font-black text-blue-400">G</span><span class="text-[10px] text-blue-300 mt-1 font-medium">Gather</span></a>
-            <a href="map.html" class="radial-item" style="--tx: -50px;"><span class="text-3xl font-black text-violet-400">A</span><span class="text-[10px] text-violet-300 mt-1 font-medium">Assess</span></a>
-            <a href="win.html" class="radial-item" style="--tx: 50px;"><span class="text-3xl font-black text-amber-400">I</span><span class="text-[10px] text-amber-300 mt-1 font-medium">Influence</span></a>
-            <a href="grow.html" class="radial-item" style="--tx: 150px;"><span class="text-3xl font-black text-emerald-400">N</span><span class="text-[10px] text-emerald-300 mt-1 font-medium">Nurture</span></a>
-        </div>
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.querySelector('.nav-inner').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner">
+    <a href="/">Home</a>
+    <a href="/proof.html">Proof</a>
+    <a href="/revenue-case.html">Revenue</a>
+    <div class="radial-menu">
+      <input type="checkbox" id="gain-radial" class="radial-toggle">
+      <label for="gain-radial" class="radial-label">GAIN <span class="chev">&#9662;</span></label>
+      <div class="radial-items">
+        <a href="/know.html" class="ri"><span class="rl" style="color:#93c5fd">G</span><span class="rs" style="color:#93c5fd">Gather</span></a>
+        <a href="/map.html" class="ri"><span class="rl" style="color:#d8b4fe">A</span><span class="rs" style="color:#d8b4fe">Assess</span></a>
+        <a href="/win.html" class="ri"><span class="rl" style="color:#fcd34d">I</span><span class="rs" style="color:#fcd34d">Influence</span></a>
+        <a href="/grow.html" class="ri"><span class="rl" style="color:#6ee7b7">N</span><span class="rs" style="color:#6ee7b7">Nurture</span></a>
+      </div>
     </div>
-
-    <!-- System Radial -->
-    <div class="relative pb-1 radial-menu">
-        <input type="checkbox" id="system-radial" class="radial-toggle hidden peer" />
-        <label for="system-radial" class="hover:text-white flex items-center gap-1.5 cursor-pointer select-none font-medium">
-            System <span class="text-xs opacity-70">▾</span>
-        </label>
-        <div class="radial-items absolute top-full left-1/2 -translate-x-1/2 mt-1 pointer-events-none peer-checked:pointer-events-auto opacity-0 peer-checked:opacity-100 transition-opacity duration-200">
-            <a href="edge.html" class="radial-item" style="--tx: -150px;"><span class="text-lg font-black text-cyan-400">⚡</span><span class="text-[9px] text-cyan-300 mt-1 font-medium leading-tight">Why It<br>Works</span></a>
-            <a href="architecture.html" class="radial-item" style="--tx: -50px;"><span class="text-lg font-black text-teal-400">◈</span><span class="text-[9px] text-teal-300 mt-1 font-medium leading-tight">How It's<br>Built</span></a>
-            <a href="story.html" class="radial-item" style="--tx: 50px;"><span class="text-lg font-black text-sky-400">◉</span><span class="text-[9px] text-sky-300 mt-1 font-medium leading-tight">The<br>Story</span></a>
-            <a href="dashboards.html" class="radial-item" style="--tx: 150px;"><span class="text-lg font-black text-indigo-400">▣</span><span class="text-[9px] text-indigo-300 mt-1 font-medium">Dashboards</span></a>
-        </div>
+    <div class="radial-menu">
+      <input type="checkbox" id="system-radial" class="radial-toggle">
+      <label for="system-radial" class="radial-label">System <span class="chev">&#9662;</span></label>
+      <div class="radial-items">
+        <a href="/edge.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="ril" style="color:#67e8f9">Edge</span></a>
+        <a href="/architecture.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="ril" style="color:#5eead4">Build</span></a>
+        <a href="/story.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="ril" style="color:#7dd3fc">Story</span></a>
+        <a href="/dashboards.html" class="ri"><svg class="rio" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="ril" style="color:#a5b4fc">Dash</span></a>
+      </div>
     </div>
-
-    <a href="engage.html" class="hover:text-amber-300 transition-colors font-bold text-amber-400">Engage</a>
+    <a href="/engage.html" class="nav-cta">Engage</a>
+  </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ HERO ═══════════════════════════════════════════════════════ -->
-<div class="pt-24 md:pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="main">
 
-    <header class="relative rounded-[2rem] overflow-hidden mb-8 md:mb-10 glass-panel border-t-4 border-t-indigo-500/30 hover:-translate-y-1 transition-all duration-500">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-        
-        <div class="relative z-10 p-8 md:p-12 flex flex-col justify-center">
-            <div class="text-xs text-neutral-400 font-mono tracking-widest uppercase mb-6 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 reveal">
-                <span class="text-white font-bold tracking-wider">The GAIN Methodology <span class="hidden sm:inline text-neutral-600 font-normal">|</span> Dashboards</span>
-                <div class="text-neutral-300 font-bold flex items-center gap-2 glass-panel px-4 py-2 rounded-full border-t border-t-white/10">
-                    Built on £183M of real repositioning.
-                </div>
-            </div>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero reveal">
+    <h1>This is what the system<br><em>actually produces.</em></h1>
+    <p class="hero-p"><strong>Not wireframes. Not concepts.</strong> Rendered intelligence outputs from a live managed services bid. Every dashboard below was generated by the GAIN prompt chain against real publicly-available data.</p>
+    <div class="hero-note">Names, values and some details have been changed. The depth of analysis has not.</div>
+  </section>
 
-            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-white mb-6 drop-shadow-lg">
-                This is what the system<br class="hidden md:block"> actually produces.
-            </h1>
-            
-            <p class="reveal text-neutral-300 max-w-2xl leading-relaxed font-medium mb-2">
-                Not wireframes. Not concepts. Rendered intelligence outputs from a live managed services bid. Every dashboard below was generated by the GAIN prompt chain against real publicly-available data.
-            </p>
-            <p class="reveal text-neutral-400 max-w-2xl leading-relaxed text-sm">
-                Names, values and some details have been changed. The depth of analysis has not.
-            </p>
-        </div>
-    </header>
-
-    <main>
-
-    <!-- ═══════════════════════════════════════════════════════ DEAL-LEVEL DASHBOARDS ═══════════════════════════════════════════════════════ -->
-    <div class="flex items-center gap-5 mb-8 reveal">
-        <div class="h-px bg-white/10 flex-1"></div>
-        <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">Deal-Level Intelligence</div>
-        <div class="h-px bg-white/10 flex-1"></div>
+  <!-- ═══ DEAL-LEVEL ═══ -->
+  <section class="section reveal">
+    <div class="sub-label">Deal-Level Intelligence</div>
+    <div class="dash-grid">
+      <div class="dash-card" style="border-top:2px solid rgba(16,185,129,.3)" onclick="openModal('modal-operational')">
+        <div class="dash-type" style="color:var(--green)">Operational Dashboard</div>
+        <div class="dash-name">Meridian Financial Services</div>
+        <div class="dash-desc">Know · Map · Win · Grow — stakeholder dossiers, influence map, disruption questions, competitive landscape.</div>
+        <div class="dash-meta">4 tabs · 7 stakeholders</div>
+        <div class="dash-open" style="color:var(--green)">View preview →</div>
+      </div>
+      <div class="dash-card" style="border-top:2px solid rgba(239,68,68,.3)" onclick="openModal('modal-diagnostic')">
+        <div class="dash-type" style="color:var(--red)">Deal Diagnostic</div>
+        <div class="dash-name">Project Atlas — Meridian</div>
+        <div class="dash-desc">Pre-mortem analysis. Five ways this deal dies, with countermeasures and go/no-go verdict.</div>
+        <div class="dash-meta">Pre-mortem + verdict</div>
+        <div class="dash-open" style="color:var(--red)">View preview →</div>
+      </div>
+      <div class="dash-card" style="border-top:2px solid rgba(59,130,246,.3)" onclick="openModal('modal-accountpack')">
+        <div class="dash-type" style="color:var(--blue)">Account Pack</div>
+        <div class="dash-name">Meridian — Full Plan</div>
+        <div class="dash-desc">Consolidated intelligence. Company macro, stakeholders, win strategy, cards to play. Replaces 40-hour account plan.</div>
+        <div class="dash-meta">All phases consolidated</div>
+        <div class="dash-open" style="color:var(--blue)">View preview →</div>
+      </div>
     </div>
 
-    <!-- ── DASHBOARD 1: GAIN OPERATIONAL DASHBOARD ── -->
-    <section class="mb-8 reveal">
-        <div class="glass-panel rounded-2xl overflow-hidden border-t-4 border-t-emerald-500/30">
-            <div class="p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div>
-                        <div class="text-xs font-extrabold tracking-widest text-emerald-400 uppercase mb-2">Operational Dashboard</div>
-                        <h2 class="text-xl md:text-2xl font-black text-white mb-2">GAIN Dashboard — Meridian Financial Services</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl mb-0">
-                            Four-tab operational dashboard. Know (stakeholder dossiers with behavioural profiles), Map (power map with structural tensions), Win (pain-to-proof matrix with disruption questions), Grow (compelled events and competitive landscape). This is the surface the sales team works from before, during and after every meeting.
-                        </p>
-                    </div>
-                    <div class="shrink-0">
-                        <span class="text-xs font-mono text-neutral-500">4 tabs · 7 stakeholders profiled</span>
-                    </div>
-                </div>
-
-                <!-- Excerpt: KNOW tab -->
-                <div class="dash-mono mb-4">
-<span class="d">▶ EXECUTIVE DOSSIER</span>
-<span class="w">Jennifer Morris</span> — Director, Operational Resilience & BCM
-Reports: Osei (CRO) · Budget: £4.2M · Team: 8 FTE · Tenure: 3.4yr
-
-<span class="d">GAIN Driver:</span>    <span class="g">ACHIEVEMENT — legacy through capability</span>
-<span class="d">Modality:</span>      Visual-Kinesthetic — show, don't tell
-<span class="d">Language:</span>      4:1 we/I — credits team always
-<span class="d">BS Detector:</span>   <span class="r">HIGH — evaluates quietly in silences</span>
-<span class="d">Tenure risk:</span>   <span class="a">3.4yr (at pattern ceiling — career-defining moment)</span>
-
-<span class="d">Core belief:</span>   <span class="w">Resilience ≠ technology. It's organisational capability.</span>
-<span class="d">Tailored:</span>      Operational empathy over technical jargon. Credit her architecture.
-                </div>
-
-                <!-- Excerpt: MAP tab -->
-                <div class="dash-mono mb-4">
-<span class="d">⚡ THE INVISIBLE BLOCKER</span>
-<span class="w">Not a person — a structural tension.</span> Hale (CIO) and Morris own overlapping
-territory. He owns "technical resilience." She owns "organisational resilience."
-The vendor who picks a side creates an internal opponent.
-
-<span class="d">Solution:</span> Dual governance — tech delivery → CIO, resilience outcomes →
-Jennifer's Steering Committee. Neither controls the other.
-<span class="g">No other bidder will propose this.</span>
-                </div>
-
-                <!-- Excerpt: WIN tab -->
-                <div class="dash-mono">
-<span class="d">⚡ THE DISRUPTION QUESTION</span>
-"Your monitoring generates 14,000 alerts a month but less than 3% need action.
-You're spending £2.8 million a year on micro-outages, trending up 12%.
-Most people treat those as separate problems. <span class="g">But is it possible the alert
-noise is actually causing the outages</span> — because your team can't see real
-signals through 13,500 false positives?"
-
-<span class="d">Let the question land. Don't offer the solution.</span>
-<span class="d">Connects two data points they haven't connected.</span>
-                </div>
-
-                <!-- Live dashboard embed -->
-                <div class="mt-6">
-                    <div class="dash-iframe-wrap" style="height: 480px;">
-                        <iframe src="dash-operational.html" style="height: 480px;" loading="lazy" title="GAIN Operational Dashboard — Meridian Financial Services"></iframe>
-                        <div class="dash-iframe-overlay"></div>
-                    </div>
-                    <div class="mt-4 text-center">
-                        <a href="dash-operational.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 font-bold transition-colors">
-                            Open full dashboard →
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── DASHBOARD 2: DEAL DIAGNOSTIC ── -->
-    <section class="mb-8 reveal dur-600">
-        <div class="glass-panel rounded-2xl overflow-hidden border-t-4 border-t-red-500/30">
-            <div class="p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div>
-                        <div class="text-xs font-extrabold tracking-widest text-red-400 uppercase mb-2">Deal Diagnostic</div>
-                        <h2 class="text-xl md:text-2xl font-black text-white mb-2">Project Atlas — Meridian Technology Group</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl mb-0">
-                            Pre-mortem analysis. Five ways this deal dies, with probability weightings, early warning indicators, and countermeasures. Also maps stakeholder sentiment, identifies intelligence gaps, and generates a verdict with go/no-go recommendation. Run this before committing bid resources.
-                        </p>
-                    </div>
-                    <div class="shrink-0">
-                        <span class="text-xs font-mono text-neutral-500">Pre-mortem + go/no-go verdict</span>
-                    </div>
-                </div>
-
-                <div class="dash-mono mb-4">
-<span class="d">DEAL VERDICT</span>
-<span class="a">PROCEED WITH CONDITIONS</span> — Win probability: <span class="a">62%</span>
-
-<span class="d">Condition 1:</span> <span class="r">Run G-03 on Richard Hale (CIO) before any direct engagement.</span>
-              CIO tension with Morris is the deal's fault line. Without a full
-              behavioural profile, dual governance positioning is a guess.
-
-<span class="d">Condition 2:</span> <span class="r">Identify Sarah Blackwell's procurement philosophy.</span>
-              Is she price-first, value-first, or risk-first?
-              This shapes the entire commercial response.
-
-<span class="d">Condition 3:</span> <span class="a">Confirm incumbent identity and rebid status.</span>
-              If the incumbent is rebidding with a rescue narrative,
-              our transformation positioning needs to account for it.
-                </div>
-
-                <div class="dash-mono">
-<span class="d">FAILURE MODE 1:</span> <span class="r">CIO Alignment Collapse (35% probability)</span>
-Hale vetoes on technical credibility gap. Helios perceived as "resilience
-company" not "technology partner." His influence weight is second only to
-Morris — and they disagree on what resilience means.
-
-<span class="d">Early warning:</span>  CIO requests separate technical deep-dive.
-<span class="d">Countermeasure:</span> Lead with Excalibur cloud migration metrics.
-               Position Preet Sandhu as technical peer to Hale.
-                </div>
-
-                <div class="mt-4 text-center">
-                    <a href="dash-deal-diagnostic.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-red-400 hover:text-red-300 font-bold transition-colors">
-                        Open full diagnostic →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── DASHBOARD 3: ACCOUNT PACK ── -->
-    <section class="mb-8 reveal dur-700">
-        <div class="glass-panel rounded-2xl overflow-hidden border-t-4 border-t-blue-500/30">
-            <div class="p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div>
-                        <div class="text-xs font-extrabold tracking-widest text-blue-400 uppercase mb-2">Account Pack</div>
-                        <h2 class="text-xl md:text-2xl font-black text-white mb-2">Meridian Financial Services — Full Account Plan</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl mb-0">
-                            Consolidated intelligence. Everything the GAIN prompt chain produces for a single account, synthesised into one operating document. Company macro, stakeholder dossiers, influence map, win strategy, competitive positioning, compelled events timeline, and next actions. This replaces the 40-hour account planning process.
-                        </p>
-                    </div>
-                    <div class="shrink-0">
-                        <span class="text-xs font-mono text-neutral-500">All phases consolidated</span>
-                    </div>
-                </div>
-
-                <div class="dash-mono mb-4">
-<span class="d">▶ COMPANY MACRO</span>
-<span class="w">Meridian Financial Services</span>
-Insurance-led multi-line FS · FCA/PRA dual-regulated · Norwich, UK
-4,200 employees · 1.2M customers · <span class="b">£847M revenue</span>
-
-<span class="d">Servers EOL:</span>     <span class="r">62%</span>
-<span class="d">7yr Inaction:</span>    <span class="r">£33-37M</span>
-<span class="d">IT Budget:</span>       <span class="a">£16.5M</span>
-<span class="d">Outage Cost/yr:</span>  <span class="r">£2.8M (+12% trend)</span>
-<span class="d">FCR:</span>             <span class="r">58%</span> (benchmark: 72%)
-<span class="d">Alert noise:</span>     <span class="a">14K/mo</span> (&lt;3% actionable)
-
-<span class="d">Narrative Gap:</span>   <span class="r">Transformation is rescue reframed as vision.</span>
-                 62% EOL, £2.8M bleed, 3.1/5 satisfaction.
-                </div>
-
-                <div class="dash-mono">
-<span class="d">▶ CARDS TO PLAY</span>
-<span class="w">Right Size:</span>   "Your CIO gets our UK MD's mobile number."
-<span class="w">Excalibur:</span>    "Almost identical — regulated FS, legacy, same scale. 9 months in."
-<span class="w">Rachel:</span>       "Ex-Deloitte, ex-Barclays. Meets Jennifer as peer."
-<span class="w">Dual Gov:</span>     "Resilience → your Steering Committee. Delivery → CIO."
-<span class="w">Realloc:</span>      "Not new money. Redirect £2.8M from failure. OPEX neutral Year 2."
-<span class="w">AI Real:</span>      "11 things in production. Not 50 demo'd."
-                </div>
-
-                <div class="mt-4 text-center">
-                    <a href="dash-account-pack-full.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 font-bold transition-colors">
-                        Open full account pack →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── DASHBOARD 4: CMO → FMO COMPARISON ── -->
-    <section class="mb-8 reveal dur-800">
-        <div class="glass-panel rounded-2xl overflow-hidden border-t-4 border-t-violet-500/30">
-            <div class="p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div>
-                        <div class="text-xs font-extrabold tracking-widest text-violet-400 uppercase mb-2">Operating Model Comparison</div>
-                        <h2 class="text-xl md:text-2xl font-black text-white mb-2">CMO → FMO — Meridian Technology Group</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl mb-0">
-                            Current-state to future-state operating model gap analysis. Scores each capability domain (service desk, infrastructure, security, monitoring, governance) against maturity benchmarks, then maps the transformation journey with specific milestones. Turns abstract "digital transformation" into measurable capability gaps.
-                        </p>
-                    </div>
-                    <div class="shrink-0">
-                        <span class="text-xs font-mono text-neutral-500">Per-domain gap analysis</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="dash-mono">
-<span class="r">CMO — Current State</span>
-
-<span class="d">Service Desk:</span>     <span class="r">42%</span> — Manual triage, no AI routing
-<span class="d">Infrastructure:</span>   <span class="r">38%</span> — 62% EOL, reactive patching
-<span class="d">Security:</span>         <span class="a">55%</span> — Perimeter-focused, no XDR
-<span class="d">Monitoring:</span>       <span class="r">31%</span> — 14K alerts, 3% actionable
-<span class="d">Governance:</span>       <span class="a">48%</span> — Siloed reporting, manual MI
-                    </div>
-                    <div class="dash-mono">
-<span class="g">FMO — Target State (Month 18)</span>
-
-<span class="d">Service Desk:</span>     <span class="g">78%</span> — AI-assisted triage, self-service
-<span class="d">Infrastructure:</span>   <span class="g">82%</span> — Cloud-first, automated patching
-<span class="d">Security:</span>         <span class="g">85%</span> — XDR + SOC integration
-<span class="d">Monitoring:</span>       <span class="g">76%</span> — AIOps, 22% actionable alerts
-<span class="d">Governance:</span>       <span class="g">80%</span> — Real-time MI, integrated dashboards
-                    </div>
-                </div>
-
-                <div class="mt-4 text-center">
-                    <a href="dash-cmo-fmo.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-violet-400 hover:text-violet-300 font-bold transition-colors">
-                        Open full comparison →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════ PORTFOLIO-LEVEL DASHBOARDS ═══════════════════════════════════════════════════════ -->
-    <div class="flex items-center gap-5 mb-8 mt-12 reveal">
-        <div class="h-px bg-white/10 flex-1"></div>
-        <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">Portfolio-Level Intelligence</div>
-        <div class="h-px bg-white/10 flex-1"></div>
+    <div class="sub-label" style="margin-top:1.5rem">Portfolio &amp; Transformation</div>
+    <div class="dash-grid">
+      <div class="dash-card" style="border-top:2px solid rgba(168,85,247,.3)" onclick="openModal('modal-cmofmo')">
+        <div class="dash-type" style="color:var(--purple)">CMO → FMO</div>
+        <div class="dash-name">Meridian — Operating Model</div>
+        <div class="dash-desc">Current-state to future-state gap analysis. Per-domain scoring with transformation milestones.</div>
+        <div class="dash-meta">5 domains scored</div>
+        <div class="dash-open" style="color:var(--purple)">View preview →</div>
+      </div>
+      <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.3)" onclick="openModal('modal-portfolio')">
+        <div class="dash-type" style="color:var(--amber)">Portfolio Triage</div>
+        <div class="dash-name">Albion Capital Partners</div>
+        <div class="dash-desc">Fund-level commercial health. 12 companies scored on pipeline, concentration, capability, process maturity.</div>
+        <div class="dash-meta">12 companies · PE view</div>
+        <div class="dash-open" style="color:var(--amber)">View preview →</div>
+      </div>
+      <div class="dash-card" style="border-top:2px solid rgba(99,102,241,.3)" onclick="window.open('diagnostic.html','_blank')">
+        <div class="dash-type" style="color:var(--indigo)">Try It</div>
+        <div class="dash-name">Diagnostic Scorecard</div>
+        <div class="dash-desc">Score your commercial execution in 2 minutes. 10 questions. Honest results.</div>
+        <div class="dash-meta">Interactive self-assessment</div>
+        <div class="dash-open" style="color:var(--indigo)">Launch →</div>
+      </div>
     </div>
+  </section>
 
-    <p class="text-neutral-300 max-w-3xl leading-relaxed mb-8 reveal">
-        The same architecture that wins individual deals repositions entire businesses for exit. The portfolio triage dashboard applies GAIN analysis across a PE fund's entire portfolio, scoring each company's commercial capability and identifying where intervention creates the most value.
-    </p>
+  <!-- ═══ STRIP ═══ -->
+  <div class="strip reveal">
+    <span><strong>Not mockups.</strong> Real system outputs.</span>
+    <span><strong>Not one-off.</strong> Dashboards update as intel deepens.</span>
+    <span><strong>Not just sales.</strong> PE partners, bid teams, transformation leads.</span>
+  </div>
 
-    <!-- ── DASHBOARD 5: PORTFOLIO TRIAGE ── -->
-    <section class="mb-8 reveal">
-        <div class="glass-panel rounded-2xl overflow-hidden border-t-4 border-t-amber-500/30">
-            <div class="p-6 md:p-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-                    <div>
-                        <div class="text-xs font-extrabold tracking-widest text-amber-400 uppercase mb-2">Portfolio Triage</div>
-                        <h2 class="text-xl md:text-2xl font-black text-white mb-2">Albion Capital Partners — 12-Company Portfolio</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl mb-0">
-                            Fund-level commercial health assessment. Scores every portfolio company across pipeline quality, account concentration risk, sales team capability, and commercial process maturity. Generates a heatmap showing where the value creation opportunity sits, and which companies need immediate intervention. This is the dashboard an operating partner opens on Monday morning.
-                        </p>
-                    </div>
-                    <div class="shrink-0">
-                        <span class="text-xs font-mono text-neutral-500">12 companies · PE operating partner view</span>
-                    </div>
-                </div>
+  <!-- ═══ CTA ═══ -->
+  <section class="cta reveal">
+    <h2>Pick one deal. We'll run the diagnostic.</h2>
+    <p class="cta-s">What it finds goes further than the deal.</p>
+    <a href="/engage.html" class="cta-b">Request a Live Diagnostic</a>
+    <div class="cta-note"><a href="/proof.html" style="color:var(--blue)">Proof</a> · <a href="/revenue-case.html" style="color:var(--blue)">Revenue Case</a> · <a href="/architecture.html" style="color:#14b8a6">Architecture</a></div>
+  </section>
 
-                <div class="dash-mono mb-4">
-<span class="d">PORTFOLIO HEALTH SUMMARY</span>
-
-<span class="g">■■■</span> Strong (3):    Excalibur Financial · Athena Insurance · Titan Logistics
-<span class="a">■■■■</span> Watch (4):    Meridian FS · Vertex Health · Prism Retail · Nova Manufacturing
-<span class="r">■■■■■</span> Critical (5): Apex Consulting · Solaris Energy · Echo Media · Quantum · Zenith
-
-<span class="d">Portfolio-wide signals:</span>
-<span class="r">→ 67% of companies have pipeline concentration &gt;40% in top 3 accounts</span>
-<span class="r">→ Average win rate: 22% (benchmark: 35%)</span>
-<span class="a">→ Only 2 of 12 have a structured account planning process</span>
-<span class="g">→ Top 3 performers share one trait: behavioural stakeholder profiling</span>
-                </div>
-
-                <div class="dash-mono">
-<span class="d">HIGHEST-VALUE INTERVENTION</span>
-
-<span class="w">Meridian Financial Services</span> — <span class="a">Watch</span>
-£47M pipeline at risk. Strong product-market fit but no structured
-pursuit methodology. Win rate: 18%. Average deal cycle: 14 months.
-<span class="g">Intervention ROI: Highest in portfolio.</span> Move from Watch → Strong
-in 6 months with GAIN deployment. Projected revenue impact: £8-12M.
-                </div>
-
-                <div class="mt-4 text-center">
-                    <a href="dash-portfolio-triage.html" target="_blank" class="inline-flex items-center gap-2 text-sm text-amber-400 hover:text-amber-300 font-bold transition-colors">
-                        Open full portfolio triage →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════ WHAT THIS MEANS ═══════════════════════════════════════════════════════ -->
-    <section class="mb-8 reveal">
-        <div class="glass-panel rounded-2xl p-6 md:p-8 border-t border-t-white/10">
-            <h2 class="text-xl md:text-2xl font-black text-white mb-4">What you're looking at</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <h3 class="text-base font-bold text-white mb-2">Not mockups</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">Every excerpt above was generated by the GAIN prompt chain against real publicly-available data. The stakeholder profiles, financial forensics, and structural tension analysis are actual system outputs.</p>
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-white mb-2">Not one-off analysis</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">These dashboards update. New intelligence feeds back in. Stakeholder profiles deepen after every meeting. The disruption question evolves as the deal progresses. The system learns what worked.</p>
-                </div>
-                <div>
-                    <h3 class="text-base font-bold text-white mb-2">Not just for sales teams</h3>
-                    <p class="text-sm text-neutral-400 leading-relaxed mb-0">The portfolio triage dashboard serves PE operating partners. The CMO→FMO comparison serves transformation leads. The deal diagnostic serves bid governance. Different users, same architecture.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════ ALL DASHBOARDS ═══════════════════════════════════════════════════════ -->
-    <section class="mb-10 reveal">
-        <div class="flex items-center gap-5 mb-6">
-            <div class="h-px bg-white/10 flex-1"></div>
-            <div class="text-xs font-extrabold tracking-widest text-neutral-500 uppercase">View Full Dashboards</div>
-            <div class="h-px bg-white/10 flex-1"></div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <a href="dash-operational.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-emerald-500/30 hover:-translate-y-1 hover:border-t-emerald-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-emerald-400 font-bold mb-2">Operational Dashboard</div>
-                <div class="text-sm text-white font-bold mb-1">Meridian Financial Services</div>
-                <div class="text-xs text-neutral-500">Know · Map · Win · Grow — 4 tabs, 7 stakeholders</div>
-                <div class="text-xs text-emerald-400/60 mt-3 font-bold group-hover:text-emerald-400 transition-colors">Open →</div>
-            </a>
-            <a href="dash-deal-diagnostic.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-red-500/30 hover:-translate-y-1 hover:border-t-red-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-red-400 font-bold mb-2">Deal Diagnostic</div>
-                <div class="text-sm text-white font-bold mb-1">Project Atlas — Meridian</div>
-                <div class="text-xs text-neutral-500">Pre-mortem, failure modes, go/no-go verdict</div>
-                <div class="text-xs text-red-400/60 mt-3 font-bold group-hover:text-red-400 transition-colors">Open →</div>
-            </a>
-            <a href="dash-account-pack.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-1 hover:border-t-blue-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-blue-400 font-bold mb-2">Account Pack</div>
-                <div class="text-sm text-white font-bold mb-1">Meridian — Summary</div>
-                <div class="text-xs text-neutral-500">Consolidated intelligence, one-page format</div>
-                <div class="text-xs text-blue-400/60 mt-3 font-bold group-hover:text-blue-400 transition-colors">Open →</div>
-            </a>
-            <a href="dash-account-pack-full.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-blue-500/30 hover:-translate-y-1 hover:border-t-blue-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-blue-400 font-bold mb-2">Account Pack — Full</div>
-                <div class="text-sm text-white font-bold mb-1">Meridian — Complete</div>
-                <div class="text-xs text-neutral-500">All sections expanded, full stakeholder detail</div>
-                <div class="text-xs text-blue-400/60 mt-3 font-bold group-hover:text-blue-400 transition-colors">Open →</div>
-            </a>
-            <a href="dash-cmo-fmo.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-violet-500/30 hover:-translate-y-1 hover:border-t-violet-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-violet-400 font-bold mb-2">CMO → FMO</div>
-                <div class="text-sm text-white font-bold mb-1">Meridian — Operating Model</div>
-                <div class="text-xs text-neutral-500">Current vs future state, per-domain scoring</div>
-                <div class="text-xs text-violet-400/60 mt-3 font-bold group-hover:text-violet-400 transition-colors">Open →</div>
-            </a>
-            <a href="dash-portfolio-triage.html" target="_blank" class="glass-panel rounded-2xl p-5 border-t-2 border-t-amber-500/30 hover:-translate-y-1 hover:border-t-amber-400 transition-all duration-300 group">
-                <div class="text-xs font-mono text-amber-400 font-bold mb-2">Portfolio Triage</div>
-                <div class="text-sm text-white font-bold mb-1">Albion Capital Partners</div>
-                <div class="text-xs text-neutral-500">12-company fund-level assessment</div>
-                <div class="text-xs text-amber-400/60 mt-3 font-bold group-hover:text-amber-400 transition-colors">Open →</div>
-            </a>
-        </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════════════ BRIDGE ═══════════════════════════════════════════════════════ -->
-    <div class="text-center mb-8 reveal">
-        <div class="flex flex-wrap justify-center gap-6 text-sm">
-            <a href="revenue-case.html" class="text-amber-400 hover:text-amber-300 font-bold transition-colors">
-                See how this scales across a fund → Revenue Case
-            </a>
-            <a href="architecture.html" class="text-teal-400 hover:text-teal-300 font-bold transition-colors">
-                How the architecture works →
-            </a>
-            <a href="proof.html" class="text-blue-400 hover:text-blue-300 font-bold transition-colors">
-                See the proof →
-            </a>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════ CTA ═══════════════════════════════════════════════════════ -->
-    <div class="glass-panel rounded-2xl p-8 md:p-12 text-center mb-12 max-w-4xl mx-auto reveal">
-        <p class="text-2xl md:text-3xl font-black text-white mb-6">Pick one deal. We'll run the diagnostic.</p>
-        <div class="flex flex-col md:flex-row justify-center gap-6 mb-6">
-            <a href="proof.html" class="inline-flex items-center justify-center gap-3 glass-panel border-t border-t-white/10 px-8 py-4 text-white font-bold rounded-xl hover:bg-white/[0.03] transition-all">
-                See what this produces → <span class="text-blue-400">Proof</span>
-            </a>
-            <a href="engage.html" class="inline-flex items-center gap-3 bg-amber-500/10 border border-amber-500/40 px-8 py-4 text-amber-400 font-black rounded-xl hover:bg-amber-500/15 hover:border-amber-400/60 transition-all">
-                Request a Live Deal Diagnostic →
-            </a>
-        </div>
-        <p class="text-base text-neutral-500 font-medium">Judgment is the only £m skill left.</p>
-    </div>
-
-    </main>
-
-    <!-- ═══════════════════════════════════════════════════════ FOOTER ═══════════════════════════════════════════════════════ -->
-    <footer class="border-t border-white/5 pt-8 pb-12 flex flex-col md:flex-row justify-between items-center gap-6">
-        <a href="index.html" class="text-sm font-black tracking-widest text-white hover:text-blue-400 transition-colors uppercase">DAVID MATTHEWS</a>
-        <div class="flex flex-col md:flex-row items-center gap-6">
-            <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" class="text-neutral-500 hover:text-white transition-colors">
-                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-neutral-400 hover:text-blue-400 transition-colors tracking-wide uppercase">AI Is Not Your Cheerleader →</a>
-            <span class="text-xs text-neutral-600 uppercase tracking-widest font-bold">No hype. Just results. © 2026</span>
-        </div>
-    </footer>
-
+  <footer class="footer">
+    <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
+  </footer>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ SCRIPTS ═══════════════════════════════════════════════════════ -->
-<script>
-document.addEventListener('click', (e) => {
-    document.querySelectorAll('.radial-toggle').forEach(toggle => {
-        if (toggle.checked && !e.target.closest('.radial-menu')) toggle.checked = false;
-    });
-});
-document.addEventListener('scroll', () => {
-    document.querySelectorAll('.radial-toggle').forEach(toggle => { if (toggle.checked) toggle.checked = false; });
-});
-document.querySelectorAll('.radial-toggle').forEach(toggle => {
-    toggle.addEventListener('change', function() {
-        if (this.checked) document.querySelectorAll('.radial-toggle').forEach(other => { if (other !== this) other.checked = false; });
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-});
-</script>
+<!-- ═══ MODALS ═══ -->
 
+<!-- Operational -->
+<div class="modal-overlay" id="modal-operational">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-type" style="color:var(--green)">Operational Dashboard</div>
+    <div class="modal-title">Meridian Financial Services</div>
+    <div class="modal-sub">Four-tab operational dashboard. Know (stakeholder dossiers), Map (power map with structural tensions), Win (disruption questions), Grow (compelled events). The surface the sales team works from.</div>
+    <div class="term">
+<span class="d">▶ EXECUTIVE DOSSIER</span>
+<span class="w">Jennifer Morris</span> — Director, Operational Resilience
+<span class="d">GAIN Driver:</span>    <span class="g">ACHIEVEMENT — legacy through capability</span>
+<span class="d">BS Detector:</span>   <span class="r">HIGH — evaluates quietly in silences</span>
+<span class="d">Core belief:</span>   <span class="w">Resilience ≠ technology. It's organisational capability.</span>
+    </div>
+    <div class="term">
+<span class="d">⚡ THE INVISIBLE BLOCKER</span>
+<span class="w">Not a person — a structural tension.</span> CIO and Morris own overlapping territory.
+<span class="g">Solution: Dual governance. No other bidder will propose this.</span>
+    </div>
+    <a href="dash-operational.html" target="_blank" class="modal-link" style="color:var(--green);border:1px solid rgba(16,185,129,.3);background:rgba(16,185,129,.06)">Open Full Dashboard →</a>
+  </div>
+</div>
+
+<!-- Deal Diagnostic -->
+<div class="modal-overlay" id="modal-diagnostic">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-type" style="color:var(--red)">Deal Diagnostic</div>
+    <div class="modal-title">Project Atlas — Meridian</div>
+    <div class="modal-sub">Pre-mortem analysis. Five ways this deal dies, with probability weightings, early warning indicators, and countermeasures. Go/no-go verdict before committing bid resources.</div>
+    <div class="term">
+<span class="d">DEAL VERDICT</span>
+<span class="a">PROCEED WITH CONDITIONS</span> — Win probability: <span class="a">62%</span>
+<span class="d">Condition 1:</span> <span class="r">Run G-03 on Richard Hale (CIO) before engagement.</span>
+<span class="d">Condition 2:</span> <span class="r">Identify Blackwell's procurement philosophy.</span>
+    </div>
+    <div class="term">
+<span class="d">FAILURE MODE 1:</span> <span class="r">CIO Alignment Collapse (35% probability)</span>
+Hale vetoes on technical credibility gap.
+<span class="d">Countermeasure:</span> Lead with Excalibur metrics. Position Sandhu as peer.
+    </div>
+    <a href="gain-deal-diagnostic.html" target="_blank" class="modal-link" style="color:var(--red);border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.06)">Open Full Diagnostic →</a>
+  </div>
+</div>
+
+<!-- Account Pack -->
+<div class="modal-overlay" id="modal-accountpack">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-type" style="color:var(--blue)">Account Pack — Full</div>
+    <div class="modal-title">Meridian Financial Services</div>
+    <div class="modal-sub">Everything the GAIN prompt chain produces for a single account. Company macro, stakeholders, win strategy, competitive positioning, next actions. Replaces the 40-hour account plan.</div>
+    <div class="term">
+<span class="w">Meridian Financial Services</span>
+Insurance-led multi-line FS · <span class="b">£847M revenue</span>
+<span class="d">Servers EOL:</span> <span class="r">62%</span>  <span class="d">Outage Cost:</span> <span class="r">£2.8M/yr (+12%)</span>
+<span class="d">Narrative Gap:</span> <span class="r">Transformation is rescue reframed as vision.</span>
+    </div>
+    <div class="term">
+<span class="d">▶ CARDS TO PLAY</span>
+<span class="w">Right Size:</span>   "Your CIO gets our UK MD's mobile number."
+<span class="w">Dual Gov:</span>     "Resilience → Steering Committee. Delivery → CIO."
+<span class="w">Realloc:</span>      "Redirect £2.8M from failure. OPEX neutral Year 2."
+    </div>
+    <a href="dash-account-pack.html" target="_blank" class="modal-link" style="color:var(--blue);border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.06)">Open Full Account Pack →</a>
+  </div>
+</div>
+
+<!-- CMO → FMO -->
+<div class="modal-overlay" id="modal-cmofmo">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-type" style="color:var(--purple)">CMO → FMO Comparison</div>
+    <div class="modal-title">Meridian Technology Group</div>
+    <div class="modal-sub">Current-state to future-state operating model gap analysis. Per-domain maturity scoring with transformation milestones.</div>
+    <div class="term" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><span class="r">CMO — Current</span><br><span class="d">Service Desk:</span> <span class="r">42%</span><br><span class="d">Infrastructure:</span> <span class="r">38%</span><br><span class="d">Security:</span> <span class="a">55%</span><br><span class="d">Monitoring:</span> <span class="r">31%</span></div>
+      <div><span class="g">FMO — Target (M18)</span><br><span class="d">Service Desk:</span> <span class="g">78%</span><br><span class="d">Infrastructure:</span> <span class="g">82%</span><br><span class="d">Security:</span> <span class="g">85%</span><br><span class="d">Monitoring:</span> <span class="g">76%</span></div>
+    </div>
+    <a href="gain-cmo-fmo-comparison.html" target="_blank" class="modal-link" style="color:var(--purple);border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.06)">Open Full Comparison →</a>
+  </div>
+</div>
+
+<!-- Portfolio Triage -->
+<div class="modal-overlay" id="modal-portfolio">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-type" style="color:var(--amber)">Portfolio Triage</div>
+    <div class="modal-title">Albion Capital Partners — 12 Companies</div>
+    <div class="modal-sub">Fund-level commercial health assessment. Pipeline quality, concentration risk, team capability, process maturity. The dashboard an operating partner opens on Monday morning.</div>
+    <div class="term">
+<span class="g">■■■</span> Strong (3)     <span class="a">■■■■</span> Watch (4)     <span class="r">■■■■■</span> Critical (5)
+
+<span class="r">→ 67% have pipeline concentration &gt;40% in top 3 accounts</span>
+<span class="r">→ Average win rate: 22% (benchmark: 35%)</span>
+<span class="g">→ Top 3 share one trait: behavioural stakeholder profiling</span>
+    </div>
+    <div class="term">
+<span class="w">Highest-Value Intervention: Meridian Financial Services</span>
+£47M pipeline at risk. Win rate: 18%.
+<span class="g">Projected revenue impact: £8-12M with GAIN deployment.</span>
+    </div>
+    <a href="gain-portfolio-triage.html" target="_blank" class="modal-link" style="color:var(--amber);border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.06)">Open Full Portfolio Triage →</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+
+  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
+  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
+})();
+
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('open')});
+  document.body.style.overflow='';
+}
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(function(overlay){
+  overlay.addEventListener('click',function(e){
+    if(e.target===this)closeModal();
+  });
+});
+// Close on Escape
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+</script>
 </body>
 </html>

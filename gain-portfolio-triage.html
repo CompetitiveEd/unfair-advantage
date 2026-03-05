@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIN Portfolio Triage | Albion Capital Partners</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#030712;--surface:#0d1117;--surface2:rgba(17,24,39,0.6);--border:#1f2937;--border2:#374151;--text:#f3f4f6;--muted:#9ca3af;--dim:#6b7280;--faint:#4b5563;--green:#10b981;--amber:#f59e0b;--orange:#f97316;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4}
+        html{scroll-behavior:smooth}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+        ::selection{background:var(--blue);color:white}
+        .mono{font-family:'JetBrains Mono',monospace}
+        .label{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+
+        /* HEADER */
+        .header{background:linear-gradient(180deg,#0f172a 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:32px 24px 24px}
+        .header-inner{max-width:1400px;margin:0 auto}
+        .header h1{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-0.02em;color:white}
+        .header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+        .meta-pills{display:flex;gap:8px;flex-wrap:wrap}
+        .meta-pill{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--muted)}
+
+        /* PORTFOLIO SUMMARY */
+        .summary-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;max-width:1400px;margin:-16px auto 0;padding:0 24px;position:relative;z-index:2}
+        .summary-cell{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+        .summary-value{font-size:26px;font-weight:900;color:white;line-height:1;margin:4px 0}
+        .summary-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+
+        /* CONTROLS */
+        .controls{max-width:1400px;margin:0 auto;padding:20px 24px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+        .filter-btn{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
+        .filter-btn:hover{border-color:var(--border2);color:white}
+        .filter-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(59,130,246,0.08)}
+        .sort-btn{margin-left:auto;font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
+        .sort-btn:hover{border-color:var(--border2);color:white}
+
+        /* MAIN */
+        .main{max-width:1400px;margin:0 auto;padding:16px 24px 40px}
+
+        /* DEAL ROWS */
+        .deal-table{width:100%;border-collapse:separate;border-spacing:0 6px}
+        .deal-row{background:var(--surface);border-radius:10px;cursor:pointer;transition:all 0.15s}
+        .deal-row:hover{background:#111827}
+        .deal-row td{padding:14px 16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);vertical-align:middle}
+        .deal-row td:first-child{border-left:1px solid var(--border);border-radius:10px 0 0 10px;border-left-width:3px}
+        .deal-row td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10px 0}
+        .deal-name{font-size:14px;font-weight:700;color:white;margin-bottom:2px}
+        .deal-company{font-size:11px;color:var(--dim)}
+        .deal-value{font-size:16px;font-weight:800;color:white}
+        .deal-sub{font-size:10px;color:var(--dim)}
+        .deal-problems{display:flex;gap:3px;flex-wrap:wrap}
+        .problem-pip{width:10px;height:10px;border-radius:2px;display:inline-block;position:relative}
+        .problem-pip:hover::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1e293b;color:white;padding:4px 8px;border-radius:4px;font-size:10px;white-space:nowrap;z-index:10;border:1px solid var(--border2)}
+        .verdict-tag{font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:5px;display:inline-block}
+        .stage-tag{font-size:10px;color:var(--dim);font-weight:500}
+        .age-tag{font-size:11px;font-weight:600}
+        .signal-strip{display:flex;gap:4px;align-items:center}
+        .signal-dot{width:6px;height:6px;border-radius:50%}
+
+        /* EXPANDED DEAL */
+        .deal-expand{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:20px 24px;margin-top:-6px;margin-bottom:6px}
+        .deal-expand.open{display:block;animation:slideDown 0.2s ease-out}
+        @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        .expand-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+        .expand-section{padding:12px;background:rgba(17,24,39,0.4);border:1px solid var(--border);border-radius:8px}
+        .expand-title{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+        .expand-item{font-size:12px;color:var(--muted);margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
+        .expand-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px}
+        .prescription-chain{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+        .rx-prompt{font-size:9px;padding:2px 6px;border-radius:3px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--blue);font-weight:600}
+
+        /* PORTFOLIO HEATMAP */
+        .heatmap-section{margin-top:32px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+        .heatmap-header{padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .heatmap-grid{display:grid;grid-template-columns:180px repeat(var(--cols),1fr);overflow-x:auto}
+        .heatmap-cell{padding:8px 6px;text-align:center;font-size:10px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .heatmap-cell-header{font-size:9px;font-weight:700;color:var(--dim);padding:10px 6px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;background:var(--surface)}
+        .heatmap-row-label{font-size:11px;font-weight:600;color:var(--muted);padding:8px 12px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;align-items:center;background:var(--surface)}
+        .heat-dot{width:14px;height:14px;border-radius:3px;display:inline-block}
+
+        /* FOOTER */
+        .dashboard-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);margin-top:48px}
+        .dashboard-footer p{font-size:10px;color:var(--faint)}
+
+        @media(max-width:900px){
+            .deal-table,.deal-table tbody,.deal-table tr,.deal-table td{display:block;width:100%}
+            .deal-row{margin-bottom:8px;border-radius:10px}
+            .deal-row td{border:none!important;border-radius:0!important;padding:8px 16px}
+            .deal-row td:first-child{border-left:3px solid!important;border-radius:10px 10px 0 0!important;padding-top:14px}
+            .deal-row td:last-child{border-radius:0 0 10px 10px!important;padding-bottom:14px}
+            .heatmap-section{overflow-x:auto}
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="header-row">
+            <div>
+                <p class="label" style="color:var(--red);margin-bottom:8px">GAIN PORTFOLIO TRIAGE</p>
+                <h1>Albion Capital Partners</h1>
+                <p style="font-size:12px;color:var(--dim);margin-top:4px">Fund III \u00b7 8 Portfolio Companies \u00b7 Combined Pipeline: \u00a3127M Reported / \u00a352M Verified</p>
+            </div>
+            <div class="meta-pills">
+                <span class="meta-pill mono">28 Feb 2026</span>
+                <span class="meta-pill" style="border-color:var(--red);color:var(--red)">Board review: 6 weeks</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="summary-strip">
+    <div class="summary-cell">
+        <div class="summary-label">Portfolio Cos</div>
+        <div class="summary-value">8</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Reported Pipeline</div>
+        <div class="summary-value" style="font-size:20px">\u00a3127M</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Verified Pipeline</div>
+        <div class="summary-value" style="font-size:20px;color:var(--red)">\u00a352M</div>
+        <div class="summary-label" style="color:var(--red)">41% real</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Kill</div>
+        <div class="summary-value" style="color:var(--red)">2</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Fix</div>
+        <div class="summary-value" style="color:var(--orange)">4</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Accelerate</div>
+        <div class="summary-value" style="color:var(--green)">2</div>
+    </div>
+    <div class="summary-cell">
+        <div class="summary-label">Avg Problems</div>
+        <div class="summary-value" style="color:var(--orange)">14</div>
+        <div class="summary-label">of 29</div>
+    </div>
+</div>
+
+<div class="controls" id="controls"></div>
+<div class="main" id="mainContent"></div>
+
+<script>
+(function(){
+    var SC = {3:"#ef4444",2:"#f97316",1:"#f59e0b",0:"#10b981","-1":"#374151"};
+    var SL = {3:"Critical",2:"At Risk",1:"Watch",0:"Healthy","-1":"None"};
+    var SBG = {3:"rgba(239,68,68,0.12)",2:"rgba(249,115,22,0.12)",1:"rgba(245,158,11,0.12)",0:"rgba(16,185,129,0.12)"};
+    var VC = {KILL:"#ef4444",FIX:"#f97316",ACCELERATE:"#10b981"};
+    var VBG = {KILL:"rgba(239,68,68,0.1)",FIX:"rgba(249,115,22,0.1)",ACCELERATE:"rgba(16,185,129,0.1)"};
+
+    // 29 problem codes for heatmap
+    var PCODES = ["1.1","1.2","1.3","1.4","1.5","1.6","1.7","2.1","2.2","2.3","2.4","2.5","2.6","2.7","2.8","2.9","2.10","3.1","3.2","3.3","3.4","3.5","3.6","3.7","3.8"];
+    var PNAMES = {"1.1":"Margin","1.2":"M&A","1.3":"Hero","1.4":"ICP","1.5":"Measure","1.6":"Vendor","1.7":"Prop Gap","2.1":"Happy Ears","2.2":"Inflation","2.3":"No-Dec","2.4":"Stkholder","2.5":"Discovery","2.6":"Cycle Drag","2.7":"Comp Blind","2.8":"Phantom","2.9":"Dead Deal","2.10":"Loss Rev","3.1":"Licence","3.2":"Cap Gap","3.3":"Account","3.4":"Hiring","3.5":"Mgr Gap","3.6":"Motivation","3.7":"Pressure","3.8":"Fear"};
+
+    var COMPANIES = [
+        { name:"Meridian Technology Group", sector:"VAR/MSP", revenue:"\u00a342M", employees:280, acquisitions:3, reported:"\u00a338M", verified:"\u00a314.2M", verifiedPct:37, verdict:"FIX", verdictDetail:"Fixable in 90 days. Kill \u00a33.4M stale deal. Margin compression + vendor addiction structural.", age:18, criticals:6, atRisk:7, watch:5, healthy:4, none:7,
+          topProblems:[{code:"1.1",s:3},{code:"1.2",s:3},{code:"1.3",s:3},{code:"1.6",s:3},{code:"2.2",s:3},{code:"2.9",s:3},{code:"1.5",s:2},{code:"1.7",s:2},{code:"2.1",s:2},{code:"2.3",s:2},{code:"2.4",s:2},{code:"2.8",s:2},{code:"3.2",s:2},{code:"3.3",s:2},{code:"1.4",s:1},{code:"2.5",s:1},{code:"2.7",s:1},{code:"2.10",s:1},{code:"3.5",s:1},{code:"3.1",s:0},{code:"3.6",s:0},{code:"3.7",s:0},{code:"3.8",s:0}],
+          chain:["G-01","G-05","G-08","A-06","A-09","A-10","I-01","N-05","N-06","N-11"] },
+
+        { name:"Citadel Networks", sector:"Cybersecurity MSP", revenue:"\u00a318M", employees:95, acquisitions:1, reported:"\u00a312M", verified:"\u00a39.8M", verifiedPct:82, verdict:"ACCELERATE", verdictDetail:"Strong execution. Pipeline clean. Expand into adjacent verticals. Cross-sell from acquisition.", age:24, criticals:0, atRisk:2, watch:4, healthy:8, none:15,
+          topProblems:[{code:"2.7",s:2},{code:"3.5",s:2},{code:"1.4",s:1},{code:"2.5",s:1},{code:"2.6",s:1},{code:"3.2",s:1},{code:"1.1",s:0},{code:"1.3",s:0},{code:"2.1",s:0},{code:"2.2",s:0},{code:"2.3",s:0},{code:"2.4",s:0},{code:"3.1",s:0},{code:"3.3",s:0}],
+          chain:["I-03","G-12","A-06","N-01","N-03"] },
+
+        { name:"Nexus Cloud Solutions", sector:"Cloud MSP", revenue:"\u00a328M", employees:160, acquisitions:2, reported:"\u00a322M", verified:"\u00a38.1M", verifiedPct:37, verdict:"FIX", verdictDetail:"Pipeline fiction is extreme. 2 sellers generate 74% of wins. Methodology training wasted. Fix accountability + pipeline hygiene.", age:14, criticals:4, atRisk:5, watch:3, healthy:3, none:14,
+          topProblems:[{code:"1.3",s:3},{code:"2.2",s:3},{code:"2.9",s:3},{code:"3.3",s:3},{code:"1.5",s:2},{code:"2.1",s:2},{code:"2.3",s:2},{code:"2.4",s:2},{code:"3.2",s:2},{code:"1.4",s:1},{code:"2.5",s:1},{code:"3.5",s:1},{code:"1.1",s:0},{code:"2.10",s:0},{code:"3.1",s:0}],
+          chain:["G-01","A-05","A-06","I-01","N-11"] },
+
+        { name:"Halcyon IT Services", sector:"Managed Print/IT", revenue:"\u00a315M", employees:72, acquisitions:0, reported:"\u00a38M", verified:"\u00a31.2M", verifiedPct:15, verdict:"KILL", verdictDetail:"Revenue declining 12% YoY. Pipeline is 85% fiction. Entire sales team selling into dying market (managed print). No transition plan to cloud/security. Margin below 20%. Recommend divestiture.", age:36, criticals:8, atRisk:4, watch:2, healthy:1, none:14,
+          topProblems:[{code:"1.1",s:3},{code:"1.3",s:3},{code:"1.4",s:3},{code:"1.6",s:3},{code:"1.7",s:3},{code:"2.2",s:3},{code:"2.3",s:3},{code:"2.9",s:3},{code:"1.5",s:2},{code:"2.1",s:2},{code:"2.4",s:2},{code:"3.2",s:2},{code:"3.3",s:1},{code:"3.5",s:1},{code:"3.1",s:0}],
+          chain:["N-11"] },
+
+        { name:"Apex Digital", sector:"Digital Agency", revenue:"\u00a39M", employees:55, acquisitions:0, reported:"\u00a36M", verified:"\u00a34.1M", verifiedPct:68, verdict:"FIX", verdictDetail:"Good product, weak commercial execution. Discovery failure driving feature-led pitches. Single-threaded on 80% of deals. Fix stakeholder mapping + discovery.", age:8, criticals:1, atRisk:4, watch:5, healthy:4, none:15,
+          topProblems:[{code:"2.4",s:3},{code:"2.1",s:2},{code:"2.5",s:2},{code:"2.8",s:2},{code:"3.2",s:2},{code:"1.3",s:1},{code:"1.7",s:1},{code:"2.3",s:1},{code:"2.7",s:1},{code:"3.3",s:1},{code:"1.1",s:0},{code:"2.2",s:0},{code:"3.1",s:0},{code:"3.6",s:0}],
+          chain:["A-03","A-04","A-05","A-12","A-13","I-02"] },
+
+        { name:"Vanguard Infra", sector:"Data Centre/Hosting", revenue:"\u00a361M", employees:310, acquisitions:4, reported:"\u00a324M", verified:"\u00a310.5M", verifiedPct:44, verdict:"FIX", verdictDetail:"M&A integration chaos. 4 CRMs. Customer overlap unknown. Cross-sell zero. Fix integration + build unified pipeline before board review.", age:20, criticals:3, atRisk:5, watch:4, healthy:4, none:13,
+          topProblems:[{code:"1.2",s:3},{code:"1.3",s:3},{code:"2.2",s:3},{code:"1.1",s:2},{code:"1.5",s:2},{code:"2.3",s:2},{code:"2.9",s:2},{code:"3.3",s:2},{code:"1.4",s:1},{code:"1.6",s:1},{code:"2.1",s:1},{code:"3.5",s:1},{code:"2.4",s:0},{code:"3.1",s:0},{code:"3.2",s:0},{code:"3.6",s:0}],
+          chain:["G-01","G-05","A-06","N-01","N-05","N-06"] },
+
+        { name:"Prism Analytics", sector:"Data/BI Consultancy", revenue:"\u00a37M", employees:38, acquisitions:0, reported:"\u00a35M", verified:"\u00a34.1M", verifiedPct:82, verdict:"ACCELERATE", verdictDetail:"Small but clean. High win rate (41%). Strong methodology application. Bottleneck is capacity not capability. Scale hiring.", age:12, criticals:0, atRisk:1, watch:3, healthy:6, none:19,
+          topProblems:[{code:"1.3",s:2},{code:"2.6",s:1},{code:"2.7",s:1},{code:"3.4",s:1},{code:"1.1",s:0},{code:"2.1",s:0},{code:"2.2",s:0},{code:"2.4",s:0},{code:"3.1",s:0},{code:"3.2",s:0}],
+          chain:["G-01","N-01","N-03"] },
+
+        { name:"Redline Comms", sector:"Unified Comms", revenue:"\u00a311M", employees:48, acquisitions:1, reported:"\u00a312M", verified:"\u00a30M", verifiedPct:0, verdict:"KILL", verdictDetail:"Pipeline is 100% fiction. \u00a312M reported, \u00a30 verifiable. Every deal fails minimum 3 qualification criteria. Sales team of 6 has made zero new logo wins in 9 months. Market shifting to Teams/Zoom. Recommend immediate restructure or divestiture.", age:30, criticals:9, atRisk:3, watch:1, healthy:0, none:16,
+          topProblems:[{code:"1.1",s:3},{code:"1.4",s:3},{code:"1.6",s:3},{code:"1.7",s:3},{code:"2.2",s:3},{code:"2.3",s:3},{code:"2.9",s:3},{code:"3.2",s:3},{code:"3.3",s:3},{code:"2.1",s:2},{code:"2.4",s:2},{code:"3.5",s:2},{code:"2.7",s:1}],
+          chain:["N-11"] }
+    ];
+
+    var activeFilter = 'ALL';
+    var sortBy = 'severity';
+    var expandedDeal = null;
+
+    function getCompanySeverity(c) {
+        return c.criticals * 4 + c.atRisk * 2 + c.watch;
+    }
+
+    function renderControls() {
+        var html = '';
+        var filters = [{k:'ALL',l:'All (8)'},{k:'KILL',l:'Kill (2)'},{k:'FIX',l:'Fix (4)'},{k:'ACCELERATE',l:'Accelerate (2)'}];
+        for (var i = 0; i < filters.length; i++) {
+            var f = filters[i];
+            html += '<button class="filter-btn' + (activeFilter === f.k ? ' active' : '') + '" data-filter="' + f.k + '">' + f.l + '</button>';
+        }
+        html += '<button class="sort-btn" id="sortBtn">\u2195 Sort: ' + (sortBy === 'severity' ? 'Severity' : sortBy === 'value' ? 'Pipeline' : 'Name') + '</button>';
+        document.getElementById('controls').innerHTML = html;
+
+        var btns = document.querySelectorAll('.filter-btn');
+        for (var j = 0; j < btns.length; j++) {
+            btns[j].addEventListener('click', function() {
+                activeFilter = this.getAttribute('data-filter');
+                expandedDeal = null;
+                render();
+            });
+        }
+        document.getElementById('sortBtn').addEventListener('click', function() {
+            sortBy = sortBy === 'severity' ? 'value' : sortBy === 'value' ? 'name' : 'severity';
+            render();
+        });
+    }
+
+    function render() {
+        renderControls();
+        var filtered = COMPANIES.filter(function(c) {
+            return activeFilter === 'ALL' || c.verdict === activeFilter;
+        });
+        var sorted = filtered.slice().sort(function(a, b) {
+            if (sortBy === 'severity') return getCompanySeverity(b) - getCompanySeverity(a);
+            if (sortBy === 'value') {
+                var av = parseInt(a.reported.replace(/[^\d]/g, ''));
+                var bv = parseInt(b.reported.replace(/[^\d]/g, ''));
+                return bv - av;
+            }
+            return a.name.localeCompare(b.name);
+        });
+
+        var html = '<table class="deal-table"><tbody>';
+        for (var i = 0; i < sorted.length; i++) {
+            var c = sorted[i];
+            var vc = VC[c.verdict];
+            var vbg = VBG[c.verdict];
+
+            // Problem pips — show top problems as coloured squares
+            var pips = '';
+            var tp = c.topProblems.slice().sort(function(a,b){ return b.s - a.s; });
+            for (var pi = 0; pi < Math.min(tp.length, 15); pi++) {
+                pips += '<span class="problem-pip" style="background:' + SC[tp[pi].s] + '" data-tip="' + tp[pi].code + ' ' + SL[tp[pi].s] + '"></span>';
+            }
+            if (tp.length > 15) pips += '<span style="font-size:10px;color:var(--dim);margin-left:4px">+' + (tp.length - 15) + '</span>';
+
+            // CRM signal dots
+            var signals = '';
+            var sigData = [{s: c.criticals > 3 ? 3 : c.criticals > 0 ? 2 : 0}, {s: c.atRisk > 3 ? 2 : c.atRisk > 0 ? 1 : 0}, {s: c.verifiedPct < 40 ? 3 : c.verifiedPct < 70 ? 1 : 0}];
+            for (var sd = 0; sd < sigData.length; sd++) {
+                signals += '<span class="signal-dot" style="background:' + SC[sigData[sd].s] + '"></span>';
+            }
+
+            html += '<tr class="deal-row" data-idx="' + i + '" style="border-left-color:' + vc + '" onclick="toggleExpand(' + i + ')">';
+            html += '<td style="border-left-color:' + vc + '!important"><div class="deal-name">' + c.name + '</div><div class="deal-company">' + c.sector + ' \u00b7 ' + c.revenue + ' \u00b7 ' + c.employees + ' ppl</div></td>';
+            html += '<td><div class="deal-value">' + c.reported + '</div><div class="deal-sub">Reported</div></td>';
+            html += '<td><div class="deal-value" style="color:' + (c.verifiedPct < 40 ? 'var(--red)' : c.verifiedPct < 70 ? 'var(--amber)' : 'var(--green)') + '">' + c.verified + '</div><div class="deal-sub">' + c.verifiedPct + '% real</div></td>';
+            html += '<td><div class="deal-problems">' + pips + '</div></td>';
+            html += '<td><span class="verdict-tag" style="color:' + vc + ';background:' + vbg + '">' + c.verdict + '</span></td>';
+            html += '<td><span class="age-tag" style="color:' + (c.age > 24 ? 'var(--red)' : c.age > 12 ? 'var(--amber)' : 'var(--muted)') + '">' + c.age + 'mo</span><div class="deal-sub">in portfolio</div></td>';
+            html += '</tr>';
+
+            // Expanded detail
+            var isOpen = expandedDeal === i;
+            html += '<tr><td colspan="6" style="padding:0;border:none"><div class="deal-expand' + (isOpen ? ' open' : '') + '" id="expand-' + i + '">';
+            html += '<div class="expand-grid">';
+
+            // Critical problems
+            html += '<div class="expand-section"><p class="expand-title">Critical + At Risk (' + (c.criticals + c.atRisk) + ')</p>';
+            var crits = c.topProblems.filter(function(p){ return p.s >= 2; });
+            for (var ci = 0; ci < crits.length; ci++) {
+                html += '<div class="expand-item"><div class="expand-dot" style="background:' + SC[crits[ci].s] + '"></div><span>' + crits[ci].code + ' ' + (PNAMES[crits[ci].code]||'') + ' \u2014 <span style="color:' + SC[crits[ci].s] + '">' + SL[crits[ci].s] + '</span></span></div>';
+            }
+            html += '</div>';
+
+            // Verdict detail
+            html += '<div class="expand-section"><p class="expand-title">Assessment</p><p style="font-size:12px;color:var(--muted);line-height:1.6">' + c.verdictDetail + '</p></div>';
+
+            // Prescription
+            html += '<div class="expand-section"><p class="expand-title">GAIN Prescription</p><div class="prescription-chain">';
+            for (var ri = 0; ri < c.chain.length; ri++) {
+                html += '<span class="rx-prompt">' + c.chain[ri] + '</span>';
+            }
+            html += '</div><p style="font-size:10px;color:var(--dim);margin-top:8px">Est. ' + (c.verdict === 'KILL' ? '1 week' : c.verdict === 'FIX' ? '60-90 days' : '30 days') + ' to resolution</p></div>';
+
+            html += '</div></div></td></tr>';
+        }
+        html += '</tbody></table>';
+
+        // Portfolio Heatmap
+        html += '<div class="heatmap-section">';
+        html += '<div class="heatmap-header"><span class="label" style="color:var(--muted)">PORTFOLIO HEATMAP \u2014 29 PROBLEMS \u00D7 8 COMPANIES</span></div>';
+        html += '<div style="overflow-x:auto"><div class="heatmap-grid" style="--cols:' + COMPANIES.length + ';min-width:' + (180 + COMPANIES.length * 60) + 'px">';
+
+        // Header row
+        html += '<div class="heatmap-cell-header"></div>';
+        for (var hi = 0; hi < COMPANIES.length; hi++) {
+            var shortName = COMPANIES[hi].name.split(' ')[0];
+            html += '<div class="heatmap-cell-header" style="writing-mode:vertical-rl;text-orientation:mixed;height:80px;padding:6px 2px;font-size:9px">' + shortName + '</div>';
+        }
+
+        // Problem rows
+        for (var pi2 = 0; pi2 < PCODES.length; pi2++) {
+            var pc = PCODES[pi2];
+            html += '<div class="heatmap-row-label"><span style="margin-right:6px;color:var(--dim);font-size:9px;font-family:JetBrains Mono,monospace">' + pc + '</span>' + (PNAMES[pc]||'') + '</div>';
+            for (var ci2 = 0; ci2 < COMPANIES.length; ci2++) {
+                var found = COMPANIES[ci2].topProblems.find(function(p){ return p.code === pc; });
+                var sv = found ? found.s : -1;
+                html += '<div class="heatmap-cell"><span class="heat-dot" style="background:' + SC[sv] + '"></span></div>';
+            }
+        }
+
+        html += '</div></div></div>';
+
+        html += '<div class="dashboard-footer"><p>GAIN Portfolio Triage \u00b7 Albion Capital Partners Fund III \u00b7 Generated 28 Feb 2026 \u00b7 David Matthews \u00b7 Confidential</p><p style="margin-top:4px">29 commercial failure patterns assessed per company. NONE is always a valid finding. KILL is always an option.</p></div>';
+
+        document.getElementById('mainContent').innerHTML = html;
+    }
+
+    window.toggleExpand = function(idx) {
+        expandedDeal = expandedDeal === idx ? null : idx;
+        render();
+    };
+
+    render();
+})();
+</script>
+
+</body>
+</html>

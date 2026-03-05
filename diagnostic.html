@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="David Matthews | GAIN Diagnostic. Score your commercial execution in 2 minutes. 10 questions. Honest results.">
+    <title>David Matthews | The Diagnostic Scorecard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #030712; --surface: rgba(17,24,39,0.6); --border: #1f2937;
+            --text: #f3f4f6; --muted: #9ca3af; --dim: #6b7280; --faint: #4b5563;
+            --green: #10b981; --amber: #f59e0b; --orange: #f97316; --red: #ef4444;
+            --blue: #3b82f6; --purple: #a855f7; --yellow: #eab308;
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+        ::selection { background: var(--blue); color: white; }
+        nav { background: #1f2937; position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 12px 16px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); font-size: 14px; font-weight: 500; }
+        nav a { color: #4ade80; text-decoration: none; transition: color 0.2s; }
+        nav a:hover { color: white; }
+        .nav-engage { color: #facc15 !important; font-weight: 700; }
+        .nav-engage:hover { color: #fef08a !important; }
+        .nav-dropdown { position: relative; cursor: pointer; color: #4ade80; }
+        .nav-dropdown-menu { display: none; position: absolute; left: 0; top: 100%; width: 210px; background: #1f2937; border: 1px solid #374151; border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); overflow: hidden; z-index: 60; }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a { display: block; padding: 10px 16px; border-bottom: 1px solid rgba(55,65,81,0.3); color: #9ca3af; }
+        .nav-dropdown-menu a:hover { background: #374151; color: white; }
+        .container { max-width: 720px; margin: 0 auto; padding: 96px 16px 40px; }
+        @media (min-width: 768px) { .container { padding: 128px 32px 60px; } }
+        .label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; }
+        h1 { font-size: clamp(28px, 5vw, 48px); font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; color: white; }
+        h2 { font-size: clamp(18px, 3vw, 24px); font-weight: 900; line-height: 1.25; color: white; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .phase { animation: fadeIn 0.35s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .q-fade-out { animation: fadeOut 0.2s ease-in forwards; }
+        @keyframes fadeOut { to { opacity: 0; transform: translateY(-8px); } }
+        .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px 0; }
+        .intro-cell { text-align: center; padding: 12px; }
+        .btn-start { display: inline-flex; align-items: center; gap: 8px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.4); padding: 14px 32px; color: #f87171; font-weight: 700; font-size: 16px; border-radius: 10px; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+        .btn-start:hover { background: rgba(239,68,68,0.15); border-color: #f87171; }
+        .progress-bar { width: 100%; height: 4px; background: #1e293b; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
+        .answer-btn { width: 100%; text-align: left; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: all 0.2s; font-family: inherit; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 12px; color: var(--text); font-size: 14px; }
+        .answer-btn:hover { background: rgba(31,41,55,0.8); border-color: #374151; }
+        .answer-dot-outer { width: 20px; height: 20px; border-radius: 50%; border: 2px solid; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+        .answer-dot-inner { width: 8px; height: 8px; border-radius: 50%; }
+        .dots { display: flex; justify-content: center; gap: 6px; margin-top: 32px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #1e293b; transition: all 0.3s; }
+        .dot.active { background: white; transform: scale(1.3); }
+        .dot.done { background: var(--dim); }
+        .score-ring { display: flex; justify-content: center; margin: 32px 0; }
+        .level-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+        .level-cell { text-align: center; padding: 16px; }
+        .level-score { font-size: 28px; font-weight: 900; color: white; margin: 4px 0; }
+        .level-bar { width: 100%; height: 6px; background: #1e293b; border-radius: 6px; overflow: hidden; margin-top: 8px; }
+        .level-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease-out; }
+        .heatmap-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; background: rgba(17,24,39,0.3); border: 1px solid rgba(31,41,55,0.4); border-radius: 8px; margin-bottom: 8px; }
+        .heatmap-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+        .heatmap-name { font-size: 13px; font-weight: 700; color: white; }
+        .heatmap-level { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 6px; border-radius: 4px; }
+        .heatmap-status { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0; margin-left: auto; }
+        .critical-box { background: rgba(127,29,29,0.15); border: 1px solid rgba(127,29,29,0.3); border-radius: 12px; padding: 20px; margin-bottom: 32px; }
+        .critical-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+        .critical-x { color: var(--red); flex-shrink: 0; margin-top: 2px; font-weight: 700; }
+        .cta-box { text-align: center; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 32px 0; }
+        .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: rgba(234,179,8,0.08); border: 1px solid rgba(234,179,8,0.4); padding: 12px 24px; color: #facc15; font-weight: 700; font-size: 14px; border-radius: 8px; text-decoration: none; transition: all 0.3s; }
+        .btn-cta:hover { background: rgba(234,179,8,0.15); border-color: #facc15; }
+        .retake { font-size: 12px; color: var(--faint); background: none; border: none; cursor: pointer; font-family: inherit; margin-top: 16px; transition: color 0.2s; }
+        .retake:hover { color: var(--muted); }
+        .divider { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+        .divider-line { flex: 1; height: 1px; background: var(--border); }
+        footer { border-top: 1px solid var(--border); padding: 24px 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-top: 64px; }
+        footer a { text-decoration: none; }
+        .footer-brand { font-size: 10px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; color: white; }
+        .footer-copy { font-size: 9px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.1em; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="newindex.html">Home</a>
+    <a href="newproof.html">Proof</a>
+    <a href="newrevenue-case.html">Revenue Case</a>
+    <div class="nav-dropdown">
+        <span>The System ▾</span>
+        <div class="nav-dropdown-menu">
+            <a href="newedge.html">Why It Works</a>
+            <a href="newarchitecture.html">How It's Built</a>
+            <a href="newstory.html">The Story</a>
+            <a href="newknow.html" style="color:#6b7280">Gather [Know]</a>
+            <a href="newmap.html" style="color:#6b7280">Assess [Map]</a>
+            <a href="newwin.html" style="color:#6b7280">Influence [Win]</a>
+            <a href="newgrow.html" style="color:#6b7280">Nurture [Grow]</a>
+        </div>
+    </div>
+    <a href="newengage.html" class="nav-engage">Engage</a>
+</nav>
+
+<div class="container">
+    <div id="app"></div>
+    <footer>
+        <a href="newindex.html" class="footer-brand">DAVID MATTHEWS</a>
+        <span class="footer-copy">No hype. Just results. &copy; 2026</span>
+    </footer>
+</div>
+
+<script>
+(function() {
+    var COLORS = { green: "#10b981", amber: "#f59e0b", orange: "#f97316", red: "#ef4444", blue: "#3b82f6", purple: "#a855f7" };
+    var SEV_COLORS = [COLORS.green, COLORS.amber, COLORS.orange, COLORS.red];
+    var SEV_LABELS = ["Healthy", "Watch", "At Risk", "Critical"];
+    var LEVEL_COLORS = { COMPANY: COLORS.blue, DEAL: COLORS.purple, PEOPLE: COLORS.amber };
+
+    var QUESTIONS = [
+        { id:1, text:"If you removed every pipeline deal with zero buyer-initiated activity in the last 30 days, what would happen to your coverage ratio?", sub:"Be honest. Not what you hope \u2014 what you know.", level:"DEAL", problem:"Pipeline Inflation", code:"2.2", answers:["Coverage would barely change \u2014 our pipeline is clean","We\u2019d lose 20-30% \u2014 some deals are stale","We\u2019d lose 40-60% \u2014 we know there\u2019s dead wood","We\u2019d be below 1x coverage \u2014 most of it is fiction"] },
+        { id:2, text:"How many of your deals last quarter were lost to \u2018no decision\u2019 \u2014 where the buyer just... didn\u2019t buy?", sub:"Not lost to a competitor. Lost to doing nothing.", level:"DEAL", problem:"No-Decision Epidemic", code:"2.3", answers:["Under 15% \u2014 we create urgency well","20-30% \u2014 it happens but it\u2019s manageable","30-50% \u2014 it\u2019s our biggest loss category","Over 50% \u2014 we lose more to inaction than to competitors"] },
+        { id:3, text:"If your top three sellers handed in their notice on Monday morning, what percentage of committed pipeline would survive 90 days?", sub:"Not the pipeline they own. The pipeline that would actually close without them.", level:"COMPANY", problem:"Hero-Dependency", code:"1.3", answers:["Most of it \u2014 we have a system, not heroes","We\u2019d lose 30-40% \u2014 a few people carry a lot","We\u2019d lose 50-70% \u2014 we\u2019re dangerously concentrated","The number would collapse \u2014 we know who the heroes are"] },
+        { id:4, text:"On your last five competitive losses, could your team describe the competitor\u2019s win strategy as clearly as the competitor could describe yours?", sub:"Not \u2018we lost on price.\u2019 The actual mechanism they used to win.", level:"DEAL", problem:"Competitive Blindness", code:"2.7", answers:["Yes \u2014 we do structured competitive analysis before every bid","On some \u2014 we understand 1-2 competitors well","Rarely \u2014 our loss reviews blame price or timing","Never \u2014 we don\u2019t know why we lose, we just know we lost"] },
+        { id:5, text:"When was the last time a frontline manager spent a full hour coaching a mid-performer using a structured framework \u2014 not closing a deal for them?", sub:"Coaching. Not forecasting. Not rescuing. Developing.", level:"PEOPLE", problem:"Accountability Vacuum", code:"3.3", answers:["This week \u2014 it\u2019s in the cadence","This month \u2014 it happens but not consistently","Can\u2019t remember \u2014 managers forecast, they don\u2019t coach","Never \u2014 our managers ARE the top sellers, they don\u2019t develop others"] },
+        { id:6, text:"Could your sellers describe your company\u2019s value proposition in one sentence \u2014 and would they all say the same thing?", sub:"Not the marketing version. What they actually say on calls.", level:"COMPANY", problem:"Proposition-Reality Gap", code:"1.7", answers:["Yes \u2014 we have a clear, consistent narrative","Similar but not identical \u2014 close enough","Different every time \u2014 depends who you ask","They\u2019d describe products, not value \u2014 we pitch features"] },
+        { id:7, text:"On your current biggest deal, how many members of the buying committee has your seller had a direct conversation with in the last 21 days?", sub:"Not \u2018met once.\u2019 Active, substantive, recent conversations.", level:"DEAL", problem:"Stakeholder Blindness", code:"2.4", answers:["4+ \u2014 we\u2019re multi-threaded across the buying centre","2-3 \u2014 we have our champion plus a couple of others","Just our champion \u2014 they\u2019re handling internal politics","I don\u2019t know \u2014 and that\u2019s the problem"] },
+        { id:8, text:"In the last 30 days, can you show me a recorded call where a rep demonstrably applied the sales methodology you trained them on?", sub:"Not in a role-play. On a live buyer call. With evidence.", level:"PEOPLE", problem:"Capability-Application Gap", code:"3.2", answers:["Yes \u2014 we review calls against methodology weekly","Probably \u2014 some reps use it, most don\u2019t consistently","No \u2014 the training was good, the application disappeared","We don\u2019t record calls / we don\u2019t have a methodology"] },
+        { id:9, text:"How many deals in your current pipeline have had the close date pushed three or more times?", sub:"Three pushes. Same deal. Still in forecast.", level:"DEAL", problem:"Dead Deal Denial", code:"2.9", answers:["None \u2014 three pushes triggers a kill review","A few \u2014 we\u2019re aware of them","Several \u2014 but they\u2019re big deals so we keep them","I\u2019d need to check \u2014 we don\u2019t track close date changes"] },
+        { id:10, text:"If your primary vendor cut their rebate programme by 50% tomorrow, what would your gross margin be?", sub:"Not revenue. Gross margin. After the vendor stops subsidising you.", level:"COMPANY", problem:"Vendor Incentive Addiction", code:"1.6", answers:["Largely unchanged \u2014 we sell value, not vendor","We\u2019d feel it \u2014 maybe 3-5 points of margin pressure","Significant impact \u2014 10+ points of margin at risk","Existential \u2014 our model depends on vendor economics"] }
+    ];
+
+    var app = document.getElementById('app');
+    var phase = 'intro';
+    var current = 0;
+    var answers = {};
+
+    function sev(pct) { return pct <= 15 ? 0 : pct <= 35 ? 1 : pct <= 60 ? 2 : 3; }
+
+    function render() {
+        if (phase === 'intro') renderIntro();
+        else if (phase === 'questions') renderQuestion();
+        else renderResults();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderIntro() {
+        app.innerHTML = '<div class="phase" style="text-align:center">' +
+            '<p class="label" style="color:var(--red);margin-bottom:16px">GAIN DIAGNOSTIC SCORECARD</p>' +
+            '<h1>HOW MUCH OF YOUR PIPELINE IS REAL?</h1>' +
+            '<p style="font-size:16px;color:var(--muted);max-width:560px;margin:16px auto 8px;line-height:1.6">10 questions. 2 minutes. No email required. Brutally honest scoring against the patterns that kill enterprise revenue.</p>' +
+            '<p style="font-size:13px;color:var(--faint)">Based on 29 commercial failure patterns identified across \u00a3183M in live portfolio execution.</p>' +
+            '<div class="intro-grid">' +
+                '<div class="card intro-cell"><div class="label" style="color:var(--blue)">Company</div><div style="font-size:10px;color:var(--dim)">3 questions</div></div>' +
+                '<div class="card intro-cell"><div class="label" style="color:var(--purple)">Deal</div><div style="font-size:10px;color:var(--dim)">5 questions</div></div>' +
+                '<div class="card intro-cell"><div class="label" style="color:var(--amber)">People</div><div style="font-size:10px;color:var(--dim)">2 questions</div></div>' +
+            '</div>' +
+            '<button class="btn-start" id="startBtn">Start the Diagnostic \u2192</button>' +
+            '<p style="font-size:11px;color:var(--faint);margin-top:16px">No data is stored. No email captured. Just the truth.</p>' +
+        '</div>';
+        document.getElementById('startBtn').addEventListener('click', function() {
+            phase = 'questions'; current = 0; answers = {}; render();
+        });
+    }
+
+    function renderQuestion() {
+        var q = QUESTIONS[current];
+        var lc = LEVEL_COLORS[q.level];
+        var pct = ((current + 1) / QUESTIONS.length) * 100;
+        var dotsHTML = '';
+        for (var i = 0; i < QUESTIONS.length; i++) {
+            var cls = 'dot';
+            if (i === current) cls += ' active';
+            else if (answers[QUESTIONS[i].id] !== undefined) cls += ' done';
+            dotsHTML += '<div class="' + cls + '"></div>';
+        }
+        var answersHTML = '';
+        for (var j = 0; j < q.answers.length; j++) {
+            answersHTML += '<button class="answer-btn" data-qid="' + q.id + '" data-score="' + j + '">' +
+                '<div class="answer-dot-outer" style="border-color:' + SEV_COLORS[j] + '">' +
+                    '<div class="answer-dot-inner" style="background:' + SEV_COLORS[j] + '"></div>' +
+                '</div>' +
+                '<span>' + q.answers[j] + '</span>' +
+            '</button>';
+        }
+        app.innerHTML = '<div class="phase" id="qc">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+                '<span class="label" style="color:var(--dim)">Question ' + (current+1) + ' of ' + QUESTIONS.length + '</span>' +
+                '<span class="label" style="color:' + lc + '">' + q.level + ' \u00b7 ' + q.code + '</span>' +
+            '</div>' +
+            '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%;background:' + lc + '"></div></div>' +
+            '<div style="margin:32px 0">' +
+                '<span class="label" style="color:' + lc + ';padding:2px 8px;border-radius:4px;border:1px solid ' + lc + '30;background:' + lc + '10">' + q.problem + '</span>' +
+                '<h2 style="margin-top:12px">' + q.text + '</h2>' +
+                '<p style="font-size:14px;color:var(--dim);font-style:italic;margin-top:8px">' + q.sub + '</p>' +
+            '</div>' +
+            '<div>' + answersHTML + '</div>' +
+            '<div class="dots">' + dotsHTML + '</div>' +
+        '</div>';
+
+        var btns = app.querySelectorAll('.answer-btn');
+        for (var k = 0; k < btns.length; k++) {
+            btns[k].addEventListener('click', function() {
+                var qid = parseInt(this.getAttribute('data-qid'));
+                var score = parseInt(this.getAttribute('data-score'));
+                answers[qid] = score;
+                var container = document.getElementById('qc');
+                container.classList.add('q-fade-out');
+                setTimeout(function() {
+                    if (current < QUESTIONS.length - 1) { current++; phase = 'questions'; }
+                    else { phase = 'results'; }
+                    render();
+                }, 220);
+            });
+        }
+    }
+
+    function renderResults() {
+        var total = 0;
+        for (var k in answers) total += answers[k];
+        var maxS = QUESTIONS.length * 3;
+        var pct = Math.round((total / maxS) * 100);
+        var health = 100 - pct;
+        var sv = sev(pct);
+
+        var levels = {};
+        var lvls = ['COMPANY','DEAL','PEOPLE'];
+        for (var li = 0; li < lvls.length; li++) {
+            var lv = lvls[li];
+            var qs = QUESTIONS.filter(function(q) { return q.level === lv; });
+            var s = 0;
+            for (var qi = 0; qi < qs.length; qi++) s += (answers[qs[qi].id] || 0);
+            var m = qs.length * 3;
+            var p = Math.round((s/m)*100);
+            levels[lv] = { health: 100-p, sev: sev(p) };
+        }
+
+        var criticals = QUESTIONS.filter(function(q) { return (answers[q.id]||0) >= 2; });
+        var circ = 2 * Math.PI * 50;
+        var dash = (health / 100) * circ;
+
+        var heatmap = '';
+        for (var hi = 0; hi < QUESTIONS.length; hi++) {
+            var hq = QUESTIONS[hi];
+            var hs = answers[hq.id] || 0;
+            var hlc = LEVEL_COLORS[hq.level];
+            heatmap += '<div class="heatmap-row">' +
+                '<div class="heatmap-dot" style="background:' + SEV_COLORS[hs] + '"></div>' +
+                '<div style="flex:1;min-width:0"><span class="heatmap-name">' + hq.problem + '</span>' +
+                '<span class="heatmap-level" style="color:' + hlc + ';background:' + hlc + '15;margin-left:8px">' + hq.level + '</span></div>' +
+                '<span class="heatmap-status" style="color:' + SEV_COLORS[hs] + '">' + SEV_LABELS[hs] + '</span></div>';
+        }
+
+        var critHTML = '';
+        if (criticals.length > 0) {
+            var items = '';
+            for (var ci = 0; ci < criticals.length; ci++) {
+                var cq = criticals[ci];
+                items += '<div class="critical-item"><span class="critical-x">\u2715</span><div><span style="font-size:14px;font-weight:700;color:white">' + cq.problem + ' (' + cq.code + ')</span><span style="font-size:12px;color:var(--dim);margin-left:8px">\u2014 ' + cq.level + ' level</span></div></div>';
+            }
+            critHTML = '<div class="critical-box"><p class="label" style="color:var(--red);margin-bottom:12px">' + criticals.length + ' CRITICAL FINDING' + (criticals.length>1?'S':'') + '</p>' + items + '</div>';
+        }
+
+        var msgs = [
+            "Your commercial execution is in strong shape. The patterns that destroy enterprise pipeline aren\u2019t showing up in your responses. The question is: are you being honest with yourself, or are you the person this diagnostic was built to catch?",
+            "You have warning signals. Nothing fatal yet, but the patterns are forming. The difference between \u2018Watch\u2019 and \u2018At Risk\u2019 is usually one bad quarter \u2014 a key seller leaving, a big deal slipping, or a competitor sharpening their approach while you stay flat.",
+            "Your pipeline is carrying significant structural risk. The problems identified above aren\u2019t isolated \u2014 they compound. Pipeline inflation masks stakeholder blindness. Hero-dependency masks accountability gaps. Each quarter you don\u2019t address this, the diagnostic gets worse.",
+            "This is a revenue architecture failure, not a sales problem. The patterns you\u2019ve identified are systemic \u2014 they exist at company, deal, and people level simultaneously. No amount of training, hiring, or CRM investment will fix this because the failures are structural."
+        ];
+
+        var ctaTitle = sv <= 1 ? "Good. Now prove it." : "You already know.";
+        var ctaSub = sv <= 1
+            ? "If your score is accurate, a full diagnostic will confirm it. If you were generous with yourself, it\u2019ll find what you missed."
+            : "The full diagnostic maps all 29 patterns, cross-references against your CRM data, and prescribes the exact fix \u2014 or tells you to kill it.";
+        var fullWarn = sv >= 2 ? '<p style="font-size:14px;color:var(--red);font-weight:700;margin-top:12px">These 10 questions cover 10 of 29 failure patterns in the full GAIN diagnostic. The full assessment maps all 29 \u2014 plus verifiable CRM signals that validate or contradict everything above.</p>' : '';
+
+        var levelHTML = '';
+        for (var lj = 0; lj < lvls.length; lj++) {
+            var ll = lvls[lj];
+            var ld = levels[ll];
+            levelHTML += '<div class="card level-cell">' +
+                '<div class="label" style="color:' + LEVEL_COLORS[ll] + '">' + ll + '</div>' +
+                '<div class="level-score">' + ld.health + '%</div>' +
+                '<div class="level-bar"><div class="level-bar-fill" style="width:' + ld.health + '%;background:' + SEV_COLORS[ld.sev] + '"></div></div>' +
+                '<div class="label" style="color:' + SEV_COLORS[ld.sev] + ';margin-top:8px;font-size:9px">' + SEV_LABELS[ld.sev] + '</div></div>';
+        }
+
+        app.innerHTML = '<div class="phase">' +
+            '<div style="text-align:center;margin-bottom:32px">' +
+                '<p class="label" style="color:var(--dim);margin-bottom:16px">DIAGNOSTIC RESULTS</p>' +
+                '<h1>YOUR COMMERCIAL HEALTH SCORE</h1>' +
+            '</div>' +
+            '<div class="score-ring">' +
+                '<svg viewBox="0 0 120 120" width="160" height="160">' +
+                    '<circle cx="60" cy="60" r="50" fill="none" stroke="#1e293b" stroke-width="8"/>' +
+                    '<circle cx="60" cy="60" r="50" fill="none" stroke="' + SEV_COLORS[sv] + '" stroke-width="8" stroke-dasharray="' + dash + ' ' + circ + '" stroke-linecap="round" transform="rotate(-90 60 60)" style="transition:stroke-dasharray 1s ease-out"/>' +
+                    '<text x="60" y="55" text-anchor="middle" fill="white" style="font-size:28px;font-weight:900;font-family:Inter">' + health + '%</text>' +
+                    '<text x="60" y="72" text-anchor="middle" fill="' + SEV_COLORS[sv] + '" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;font-family:Inter">' + SEV_LABELS[sv] + '</text>' +
+                '</svg>' +
+            '</div>' +
+            '<div class="level-grid">' + levelHTML + '</div>' +
+            '<div class="divider"><div class="divider-line"></div><span class="label" style="color:var(--dim)">Problem Detection Map</span><div class="divider-line"></div></div>' +
+            '<div style="margin-bottom:32px">' + heatmap + '</div>' +
+            critHTML +
+            '<div class="card" style="margin-bottom:32px">' +
+                '<p class="label" style="color:white;margin-bottom:12px">WHAT THIS MEANS</p>' +
+                '<p style="font-size:14px;color:#d1d5db;line-height:1.7">' + msgs[sv] + '</p>' +
+                fullWarn +
+            '</div>' +
+            '<div class="cta-box">' +
+                '<p style="font-size:20px;font-weight:900;color:white;margin-bottom:8px">' + ctaTitle + '</p>' +
+                '<p style="font-size:14px;color:var(--muted);margin-bottom:24px;max-width:480px;display:inline-block">' + ctaSub + '</p><br>' +
+                '<a href="newengage.html" class="btn-cta">Request the full diagnostic \u2192</a>' +
+                '<p style="font-size:11px;color:var(--faint);margin-top:12px">One live deal. 29 failure patterns. The truth about your pipeline.</p>' +
+            '</div>' +
+            '<div style="text-align:center"><button class="retake" id="retakeBtn">Retake the diagnostic</button></div>' +
+        '</div>';
+
+        document.getElementById('retakeBtn').addEventListener('click', function() {
+            phase = 'intro'; current = 0; answers = {}; render();
+        });
+    }
+
+    render();
+})();
+</script>
+
+</body>
+</html>

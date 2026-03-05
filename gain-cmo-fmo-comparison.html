@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIN CMO \u2192 FMO | Meridian Technology Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#030712;--surface:#0d1117;--surface2:rgba(17,24,39,0.6);--border:#1f2937;--border2:#374151;--text:#f3f4f6;--muted:#9ca3af;--dim:#6b7280;--faint:#4b5563;--green:#10b981;--amber:#f59e0b;--orange:#f97316;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4}
+        html{scroll-behavior:smooth}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+        ::selection{background:var(--blue);color:white}
+        .mono{font-family:'JetBrains Mono',monospace}
+        .label{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+
+        .header{background:linear-gradient(180deg,#0f172a 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:32px 24px 24px}
+        .header-inner{max-width:1100px;margin:0 auto}
+        .header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
+        .header h1{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-0.02em;color:white}
+        .meta-pills{display:flex;gap:8px;flex-wrap:wrap}
+        .meta-pill{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--muted)}
+
+        .main{max-width:1100px;margin:0 auto;padding:24px}
+
+        /* MODE TOGGLE */
+        .mode-toggle{display:flex;align-items:center;justify-content:center;gap:12px;margin:24px 0 32px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+        .mode-btn{font-size:13px;font-weight:700;padding:10px 24px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
+        .mode-btn:hover{border-color:var(--border2);color:white}
+        .mode-btn.active-cmo{border-color:var(--red);color:var(--red);background:rgba(239,68,68,0.06)}
+        .mode-btn.active-fmo{border-color:var(--green);color:var(--green);background:rgba(16,185,129,0.06)}
+        .mode-btn.active-gap{border-color:var(--cyan);color:var(--cyan);background:rgba(6,182,212,0.06)}
+        .mode-arrow{font-size:18px;color:var(--faint)}
+
+        /* SUMMARY STRIP */
+        .summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:28px}
+        .summary-cell{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
+        .summary-value{font-size:28px;font-weight:900;line-height:1;margin:6px 0}
+        .summary-sub{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+
+        /* DOMAIN ROWS */
+        .domain-section{margin-bottom:12px;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.2s}
+        .domain-section:hover{border-color:var(--border2)}
+        .domain-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;background:var(--surface);transition:background 0.2s}
+        .domain-header:hover{background:#111827}
+        .domain-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+        .domain-info{flex:1;min-width:0}
+        .domain-name{font-size:14px;font-weight:700;color:white}
+        .domain-count{font-size:11px;color:var(--dim)}
+        .domain-bars{display:flex;align-items:center;gap:12px;flex-shrink:0;width:280px}
+        .domain-bar-wrap{flex:1}
+        .domain-bar-label{font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+        .domain-bar{height:8px;background:#1e293b;border-radius:4px;overflow:hidden}
+        .domain-bar-fill{height:100%;border-radius:4px;transition:width 0.8s ease-out}
+        .domain-score{font-size:18px;font-weight:900;width:50px;text-align:right;flex-shrink:0}
+        .domain-rag{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+        .domain-arrow{color:var(--faint);font-size:14px;transition:transform 0.2s;flex-shrink:0}
+        .domain-section.open .domain-arrow{transform:rotate(180deg)}
+
+        /* DOMAIN DETAIL */
+        .domain-detail{display:none;padding:0 20px 20px;background:var(--surface)}
+        .domain-section.open .domain-detail{display:block;animation:fadeIn 0.25s ease-out}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media(max-width:700px){.detail-grid{grid-template-columns:1fr}.domain-bars{width:200px}}
+        .detail-col{padding:14px;border-radius:8px;border:1px solid var(--border)}
+        .detail-col-cmo{background:rgba(239,68,68,0.03);border-color:rgba(239,68,68,0.15)}
+        .detail-col-fmo{background:rgba(16,185,129,0.03);border-color:rgba(16,185,129,0.15)}
+        .detail-col-title{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px}
+        .detail-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:var(--muted);line-height:1.5}
+        .detail-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+
+        /* GAP INDICATOR */
+        .gap-strip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(6,182,212,0.04);border:1px solid rgba(6,182,212,0.15);border-radius:8px;margin-top:12px}
+        .gap-label{font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:0.08em;text-transform:uppercase}
+        .gap-bar{flex:1;height:6px;background:#1e293b;border-radius:4px;overflow:hidden}
+        .gap-bar-fill{height:100%;border-radius:4px;background:var(--cyan);transition:width 0.8s ease-out}
+        .gap-value{font-size:14px;font-weight:900;color:var(--cyan)}
+
+        /* INTERVENTION MAP */
+        .intervention-section{margin-top:32px}
+        .intervention-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+        .intervention-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;border-left:3px solid var(--blue)}
+        .intervention-phase{font-size:9px;font-weight:700;color:var(--blue);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
+        .intervention-name{font-size:13px;font-weight:700;color:white;margin-bottom:6px}
+        .intervention-desc{font-size:11px;color:var(--muted);line-height:1.5}
+        .intervention-time{font-size:10px;color:var(--dim);margin-top:8px}
+        .intervention-prompts{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+        .int-prompt{font-size:9px;padding:2px 6px;border-radius:3px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--blue);font-weight:600}
+
+        .section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+        .section-header h2{font-size:12px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
+        .section-bar{flex:1;height:1px;background:var(--border)}
+
+        .dashboard-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);margin-top:48px}
+        .dashboard-footer p{font-size:10px;color:var(--faint)}
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="header-row">
+            <div>
+                <p class="label" style="color:var(--cyan);margin-bottom:8px">GAIN TRANSFORMATION MAP</p>
+                <h1>CMO \u2192 FMO: Meridian Technology Group</h1>
+                <p style="font-size:12px;color:var(--dim);margin-top:4px">Current Mode of Operation \u2192 Future Mode of Operation \u00b7 90-Day Transformation Window</p>
+            </div>
+            <div class="meta-pills">
+                <span class="meta-pill mono">28 Feb 2026</span>
+                <span class="meta-pill" style="border-color:var(--orange);color:var(--orange)">Verdict: FIX</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="mode-toggle">
+        <button class="mode-btn active-cmo" id="btnCMO" onclick="setView('cmo')">CMO \u2014 Current State</button>
+        <span class="mode-arrow">\u2192</span>
+        <button class="mode-btn" id="btnGap" onclick="setView('gap')">Gap Analysis</button>
+        <span class="mode-arrow">\u2192</span>
+        <button class="mode-btn" id="btnFMO" onclick="setView('fmo')">FMO \u2014 Target State</button>
+    </div>
+
+    <div class="summary-row" id="summaryRow"></div>
+    <div id="domainList"></div>
+
+    <!-- INTERVENTION MAP -->
+    <div class="intervention-section">
+        <div class="section-header"><h2 style="color:var(--blue)">90-Day Intervention Sequence</h2><div class="section-bar"></div></div>
+        <div class="intervention-grid">
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 1 \u2014 Days 1-30</div>
+                <div class="intervention-name">Commercial Architecture</div>
+                <div class="intervention-desc">Fix margin structure. Map vendor rebate dependency. Build value-led pricing model. Align comp plan to margin not revenue.</div>
+                <div class="intervention-time">Domains: Revenue Architecture, Commercial Execution</div>
+                <div class="intervention-prompts"><span class="int-prompt">G-01</span><span class="int-prompt">G-08</span><span class="int-prompt">A-09</span><span class="int-prompt">A-10</span></div>
+            </div>
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 1 \u2014 Days 1-30</div>
+                <div class="intervention-name">Pipeline Purge</div>
+                <div class="intervention-desc">Audit every deal against Level 4 CRM signals. Kill \u00a323.8M of fiction. Rebuild coverage with qualified pipeline only.</div>
+                <div class="intervention-time">Domains: Pipeline Integrity, Deal Quality</div>
+                <div class="intervention-prompts"><span class="int-prompt">A-05</span><span class="int-prompt">A-06</span><span class="int-prompt">N-11</span></div>
+            </div>
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 2 \u2014 Days 30-60</div>
+                <div class="intervention-name">M&A Integration</div>
+                <div class="intervention-desc">Unify 3 CRMs. Map customer overlap (23%). Build cross-sell motion. Activate expansion playbook across acquired accounts.</div>
+                <div class="intervention-time">Domains: Integration, Expansion</div>
+                <div class="intervention-prompts"><span class="int-prompt">G-05</span><span class="int-prompt">N-01</span><span class="int-prompt">N-03</span><span class="int-prompt">N-05</span></div>
+            </div>
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 2 \u2014 Days 30-60</div>
+                <div class="intervention-name">Sales Execution Cadence</div>
+                <div class="intervention-desc">Install structured pipeline review. Stage gate criteria. Manager coaching framework. Weekly deal qualification against MEDDIC.</div>
+                <div class="intervention-time">Domains: People & Accountability, Deal Quality</div>
+                <div class="intervention-prompts"><span class="int-prompt">A-04</span><span class="int-prompt">A-05</span><span class="int-prompt">A-06</span></div>
+            </div>
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 3 \u2014 Days 60-90</div>
+                <div class="intervention-name">Competitive Intelligence</div>
+                <div class="intervention-desc">Build competitor playbooks. Win/loss analysis programme. Structured loss reviews with pattern tracking. Win review cadence.</div>
+                <div class="intervention-time">Domains: Competitive Execution, Deal Quality</div>
+                <div class="intervention-prompts"><span class="int-prompt">I-01</span><span class="int-prompt">I-03</span><span class="int-prompt">G-12</span></div>
+            </div>
+            <div class="intervention-card">
+                <div class="intervention-phase">Phase 3 \u2014 Days 60-90</div>
+                <div class="intervention-name">Proposition Rebuild</div>
+                <div class="intervention-desc">Align messaging to actual delivery capability. Build vertical-specific value narratives. Train all 24 sellers to articulate consistently.</div>
+                <div class="intervention-time">Domains: Proposition, Revenue Architecture</div>
+                <div class="intervention-prompts"><span class="int-prompt">I-02</span><span class="int-prompt">G-01</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-footer">
+        <p>GAIN Transformation Map \u00b7 Meridian Technology Group \u00b7 Generated 28 Feb 2026 \u00b7 David Matthews \u00b7 Confidential</p>
+        <p style="margin-top:4px">CMO assessed against 29 commercial failure patterns. FMO represents achievable target state at 90 days.</p>
+    </div>
+</div>
+
+<script>
+(function(){
+    var SC = {"3":"#ef4444","2":"#f97316","1":"#f59e0b","0":"#10b981"};
+    var currentView = 'cmo';
+
+    var DOMAINS = [
+        {
+            name: "Revenue Architecture",
+            color: "#3b82f6",
+            problems: ["1.1 Margin Compression","1.5 Measurement Trap","1.6 Vendor Addiction"],
+            cmo: { score: 18, rag: 3,
+                items: ["Gross margin 26% and declining (was 34%)","Comp plan rewards revenue not margin \u2014 top seller celebrated for \u00a31.8M at 14% margin","48% of gross margin from vendor rebates \u2014 Microsoft shifting model FY27","No mitigation plan for rebate cliff"]
+            },
+            fmo: { score: 72, rag: 1,
+                items: ["Margin floor of 30% enforced in deal approvals","Comp plan rebuilt: 60% revenue / 40% margin weighting","Vendor rebate dependency below 25% of gross margin","12-month mitigation plan for FY27 transition documented and tracked"]
+            }
+        },
+        {
+            name: "Pipeline Integrity",
+            color: "#a855f7",
+            problems: ["2.2 Pipeline Inflation","2.9 Dead Deal Denial","2.1 Seller Self-Deception"],
+            cmo: { score: 12, rag: 3,
+                items: ["\u00a338M reported vs \u00a314.2M verified (37% real)","8 deals with 3+ close date pushes still in forecast","\u00a33.4M 'Horizon' deal: 14 months stale, 6 pushes, 67 days silence, still at 60%","No kill review mechanism exists"]
+            },
+            fmo: { score: 78, rag: 0,
+                items: ["Pipeline verification ratio above 75%","3+ close date pushes triggers automatic kill review","Stale deal threshold: 45 days no buyer-initiated contact \u2192 review","Monthly pipeline audit against Level 4 CRM signals"]
+            }
+        },
+        {
+            name: "Deal Quality",
+            color: "#06b6d4",
+            problems: ["2.3 No-Decision","2.4 Stakeholder Blindness","2.5 Discovery","2.8 Phantom Champion"],
+            cmo: { score: 22, rag: 3,
+                items: ["56% of losses to no-decision \u2014 no urgency creation mechanism","Average 1.7 stakeholders per deal (top 10). Zero economic buyer access","Single-threaded to technical evaluator on 60% of deals","Discovery depth: 2.1 questions before product pitch on sampled calls"]
+            },
+            fmo: { score: 70, rag: 1,
+                items: ["No-decision rate below 30% via structured urgency framework","Minimum 3 stakeholders including economic buyer for deals >\u00a3100K","Champion validation checklist: authority, access, advocacy evidence required","Discovery framework enforced: business impact reached before product discussion"]
+            }
+        },
+        {
+            name: "Competitive Execution",
+            color: "#f59e0b",
+            problems: ["2.7 Competitive Blindness","2.10 Loss Review Theatre"],
+            cmo: { score: 28, rag: 2,
+                items: ["71% of competitive losses attributed to 'price' \u2014 no deeper analysis","Zero competitor strategy analysis documented for any deal","Loss reviews on 12% of closed-lost deals (4 of 34)","No win reviews conducted. Zero pattern analysis across losses"]
+            },
+            fmo: { score: 68, rag: 1,
+                items: ["Competitor playbooks for top 5 competitors maintained quarterly","All competitive losses reviewed with structured 8-question format","Win reviews on all deals >\u00a3250K \u2014 pattern analysis quarterly","Competitive intelligence shared across team monthly"]
+            }
+        },
+        {
+            name: "People & Accountability",
+            color: "#f97316",
+            problems: ["3.2 Capability Gap","3.3 Accountability Vacuum","3.5 Manager Gap"],
+            cmo: { score: 20, rag: 3,
+                items: ["\u00a3180K MEDDIC investment \u2014 zero consistent application on calls","No structured pipeline review below CRO level","Sellers self-certify stage progression. No gate criteria.","3 of 4 managers promoted from top seller. None management-trained. All default to 'taking over the deal'."]
+            },
+            fmo: { score: 75, rag: 0,
+                items: ["Weekly methodology reinforcement cadence with call review","Structured pipeline review: weekly manager, biweekly CRO","Stage gate criteria enforced \u2014 evidence required for each transition","Manager development programme in place. Coaching vs closing distinction embedded."]
+            }
+        },
+        {
+            name: "M&A Integration",
+            color: "#8b5cf6",
+            problems: ["1.2 M&A Value Leakage","1.3 Hero-Dependency"],
+            cmo: { score: 15, rag: 3,
+                items: ["3 acquisitions in 18 months. Running Salesforce + HubSpot + spreadsheets.","23% customer overlap discovered 6 months post-close \u2014 zero cross-sell activated","Integration costs 40% over budget","Top 3 sellers (of 24) generate 61% of revenue. Two are pre-acquisition with no non-compete."]
+            },
+            fmo: { score: 65, rag: 1,
+                items: ["Single CRM platform. Unified pipeline view across all entities.","Customer overlap mapped and cross-sell pipeline built (\u00a34.2M target)","Integration costs tracked to revised budget with governance cadence","Revenue concentration: no seller above 15% of total. Succession planning for top performers."]
+            }
+        },
+        {
+            name: "Proposition & Messaging",
+            color: "#ec4899",
+            problems: ["1.7 Proposition-Reality Gap","1.4 ICP Drift"],
+            cmo: { score: 32, rag: 2,
+                items: ["Website claims 'AI-powered digital transformation' \u2014 delivery is infra migration and licence resale","8 of 24 sellers cannot articulate value proposition consistently","Post-acquisition ICP undefined \u2014 marketing still targeting financial services","No vertical-specific messaging despite 4 verticals served"]
+            },
+            fmo: { score: 72, rag: 1,
+                items: ["Proposition aligned to actual delivery capability \u2014 no aspiration-reality gap","All sellers pass value proposition articulation test (consistent message)","ICP redefined for post-acquisition portfolio with vertical segmentation","Vertical-specific value narratives for financial services, healthcare, retail, public sector"]
+            }
+        },
+        {
+            name: "CRM & Intelligence",
+            color: "#14b8a6",
+            problems: ["4.x CRM Signals"],
+            cmo: { score: 10, rag: 3,
+                items: ["3 separate CRM systems \u2014 no unified view","No Level 4 signal monitoring (email, calendar, close date drift)","No automated stale deal detection","Stage progression not evidence-gated \u2014 sellers self-certify"]
+            },
+            fmo: { score: 70, rag: 1,
+                items: ["Unified CRM with standardised pipeline stages and definitions","Level 4 signal dashboard: email frequency, meeting decay, close date drift monitored weekly","Automated alerts: >30 days no buyer contact, >2 close date pushes","Stage progression requires evidence upload (meeting notes, email confirmation, stakeholder map)"]
+            }
+        }
+    ];
+
+    function getRAGColor(rag) { return SC[rag] || "#374151"; }
+
+    function renderSummary() {
+        var totalCMO = 0, totalFMO = 0, count = DOMAINS.length;
+        for (var i = 0; i < count; i++) { totalCMO += DOMAINS[i].cmo.score; totalFMO += DOMAINS[i].fmo.score; }
+        var avgCMO = Math.round(totalCMO / count);
+        var avgFMO = Math.round(totalFMO / count);
+        var avgGap = avgFMO - avgCMO;
+        var critDomains = DOMAINS.filter(function(d){ return d.cmo.rag === 3; }).length;
+
+        var html = '';
+        if (currentView === 'cmo') {
+            html += '<div class="summary-cell"><div class="summary-sub">Overall Health</div><div class="summary-value" style="color:var(--red)">' + avgCMO + '%</div><div class="summary-sub">Current state</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Critical Domains</div><div class="summary-value" style="color:var(--red)">' + critDomains + '</div><div class="summary-sub">of ' + count + '</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Worst Domain</div><div class="summary-value" style="font-size:14px;color:var(--red)">CRM</div><div class="summary-sub">10% health</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Best Domain</div><div class="summary-value" style="font-size:14px;color:var(--amber)">Proposition</div><div class="summary-sub">32% health</div></div>';
+        } else if (currentView === 'fmo') {
+            html += '<div class="summary-cell"><div class="summary-sub">Target Health</div><div class="summary-value" style="color:var(--green)">' + avgFMO + '%</div><div class="summary-sub">90-day target</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Domains at Target</div><div class="summary-value" style="color:var(--green)">0</div><div class="summary-sub">today</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Achievable in 90d</div><div class="summary-value" style="color:var(--green)">' + count + '</div><div class="summary-sub">with intervention</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Avg Target</div><div class="summary-value" style="color:var(--green)">' + avgFMO + '%</div><div class="summary-sub">per domain</div></div>';
+        } else {
+            html += '<div class="summary-cell"><div class="summary-sub">Current</div><div class="summary-value" style="color:var(--red)">' + avgCMO + '%</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Target</div><div class="summary-value" style="color:var(--green)">' + avgFMO + '%</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Gap</div><div class="summary-value" style="color:var(--cyan)">+' + avgGap + '</div><div class="summary-sub">points to close</div></div>';
+            html += '<div class="summary-cell"><div class="summary-sub">Biggest Gap</div><div class="summary-value" style="font-size:14px;color:var(--cyan)">CRM</div><div class="summary-sub">+60 points</div></div>';
+        }
+        document.getElementById('summaryRow').innerHTML = html;
+    }
+
+    function renderDomains() {
+        var html = '';
+        for (var i = 0; i < DOMAINS.length; i++) {
+            var d = DOMAINS[i];
+            var showScore, showRAG, barColor, barWidth;
+            if (currentView === 'cmo') { showScore = d.cmo.score; showRAG = d.cmo.rag; }
+            else if (currentView === 'fmo') { showScore = d.fmo.score; showRAG = d.fmo.rag; }
+            else { showScore = d.fmo.score - d.cmo.score; showRAG = null; }
+
+            var ragColor = showRAG !== null ? getRAGColor(showRAG) : 'var(--cyan)';
+
+            html += '<div class="domain-section" id="domain-' + i + '">';
+            html += '<div class="domain-header" onclick="toggleDomain(' + i + ')">';
+            html += '<div class="domain-color" style="background:' + d.color + '"></div>';
+            html += '<div class="domain-info"><div class="domain-name">' + d.name + '</div>';
+            html += '<div class="domain-count">' + d.problems.join(' \u00b7 ') + '</div></div>';
+
+            html += '<div class="domain-bars">';
+            if (currentView === 'gap') {
+                html += '<div class="domain-bar-wrap"><div class="domain-bar-label">CMO</div><div class="domain-bar"><div class="domain-bar-fill" style="width:' + d.cmo.score + '%;background:var(--red)"></div></div></div>';
+                html += '<div class="domain-bar-wrap"><div class="domain-bar-label">FMO</div><div class="domain-bar"><div class="domain-bar-fill" style="width:' + d.fmo.score + '%;background:var(--green)"></div></div></div>';
+            } else {
+                var w = currentView === 'cmo' ? d.cmo.score : d.fmo.score;
+                html += '<div class="domain-bar-wrap"><div class="domain-bar"><div class="domain-bar-fill" style="width:' + w + '%;background:' + ragColor + '"></div></div></div>';
+            }
+            html += '</div>';
+
+            if (currentView === 'gap') {
+                html += '<div class="domain-score" style="color:var(--cyan)">+' + (d.fmo.score - d.cmo.score) + '</div>';
+            } else {
+                html += '<div class="domain-rag" style="background:' + ragColor + '"></div>';
+                html += '<div class="domain-score" style="color:' + ragColor + '">' + showScore + '%</div>';
+            }
+            html += '<span class="domain-arrow">\u25BC</span>';
+            html += '</div>';
+
+            // Detail panel
+            html += '<div class="domain-detail">';
+            html += '<div class="detail-grid">';
+            html += '<div class="detail-col detail-col-cmo"><p class="detail-col-title" style="color:var(--red)">CMO \u2014 Current State (' + d.cmo.score + '%)</p>';
+            for (var ci = 0; ci < d.cmo.items.length; ci++) {
+                html += '<div class="detail-item"><div class="detail-dot" style="background:' + getRAGColor(d.cmo.rag) + '"></div>' + d.cmo.items[ci] + '</div>';
+            }
+            html += '</div>';
+            html += '<div class="detail-col detail-col-fmo"><p class="detail-col-title" style="color:var(--green)">FMO \u2014 Target State (' + d.fmo.score + '%)</p>';
+            for (var fi = 0; fi < d.fmo.items.length; fi++) {
+                html += '<div class="detail-item"><div class="detail-dot" style="background:' + getRAGColor(d.fmo.rag) + '"></div>' + d.fmo.items[fi] + '</div>';
+            }
+            html += '</div></div>';
+
+            // Gap bar
+            var gap = d.fmo.score - d.cmo.score;
+            html += '<div class="gap-strip"><span class="gap-label">Gap</span>';
+            html += '<div class="gap-bar"><div class="gap-bar-fill" style="width:' + gap + '%"></div></div>';
+            html += '<span class="gap-value">+' + gap + ' pts</span></div>';
+
+            html += '</div></div>';
+        }
+        document.getElementById('domainList').innerHTML = html;
+    }
+
+    window.setView = function(v) {
+        currentView = v;
+        document.getElementById('btnCMO').className = 'mode-btn' + (v === 'cmo' ? ' active-cmo' : '');
+        document.getElementById('btnGap').className = 'mode-btn' + (v === 'gap' ? ' active-gap' : '');
+        document.getElementById('btnFMO').className = 'mode-btn' + (v === 'fmo' ? ' active-fmo' : '');
+        renderSummary();
+        renderDomains();
+    };
+
+    window.toggleDomain = function(idx) {
+        var el = document.getElementById('domain-' + idx);
+        el.classList.toggle('open');
+    };
+
+    renderSummary();
+    renderDomains();
+})();
+</script>
+
+</body>
+</html>
