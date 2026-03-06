@@ -2,7 +2,7 @@
   <span class="prompt-id" style="color:var(--blue)">G-02B</span>
   <span class="prompt-badge open">OPEN</span>
 </div>
-<h2 class="prompt-title">COMMERCIAL VIABILITY ASSESSMENT v1 — &quot;Can They Pay?&quot;</h2>
+<h2 class="prompt-title">COMMERCIAL VIABILITY ASSESSMENT v4 — &quot;Can They Pay?&quot;</h2>
 <div class="prompt-cat">COMMERCIAL VIABILITY</div>
 
 <div class="pm-block">
@@ -21,17 +21,17 @@
 
 <div class="pm-block">
   <div class="pm-label">Architecture</div>
-  <p class="pm-text">Credit risk &amp; capacity. Companion to G-02 (their leaks). G-02B assesses ability to fund. Altman Z-Score, cash flow, payment behaviour, balance sheet stress test.</p>
+  <p class="pm-text">Credit risk &amp; capacity. Companion to G-02 (their leaks). G-02B assesses ability to fund. Altman Z-Score, cash flow, payment behaviour, balance sheet stress test. v4: ACFE Red Flag gate, Pre-Suasion framing for go/no-go, GAIN Drivers operationalised, SCQA structure, Tufte tables, One-Page compression with Corridor Test, 3-path routing, conditional Operator Loop.</p>
 </div>
 
 <div class="pm-block">
   <div class="pm-label">Engine Logic</div>
-  <p class="pm-text">IF G-02 → cross-ref leak severity with payment capacity. IF Contract Value → maps against financial capacity. IF Budget = None → estimates from public data.</p>
+  <p class="pm-text">IF G-02 → cross-ref leak severity with payment capacity. IF Contract Value → maps against financial capacity. IF Budget = None → estimates from public data. IF ACFE Red Flags (3+) → DISTRESS WARNING, gates entire analysis. Pre-Suasion: frames go/no-go context BEFORE presenting recommendation.</p>
 </div>
 
 <div class="pm-block">
   <div class="pm-label">Power of "NONE"</div>
-  <p class="pm-text pm-none">Budget Info = None → uses public financials only. G-02 = None → standalone viability check.</p>
+  <p class="pm-text pm-none">Budget Info = None → uses public financials only, confidence caps at MEDIUM. G-02 = None → standalone viability check, skip payback cross-ref. Contract Value = Unknown → skip affordability ratio, flag for qualification. RFP Commercial = None → skip pricing framework analysis. G-01 = None → standalone, confidence caps at LOW, flag as preliminary.</p>
 </div>
 
 <div class="pm-row">
@@ -40,7 +40,7 @@
     <div class="pm-tags">
       <span class="pm-pill">PATH A</span>
       <span class="pm-pill">PATH B</span>
-      <span class="pm-pill">Companion</span>
+      <span class="pm-pill">PATH C</span>
     </div>
   </div>
   <div class="pm-half">
@@ -61,6 +61,8 @@
       <span class="pm-pill fw">Altman</span>
       <span class="pm-pill fw">Damodaran</span>
       <span class="pm-pill fw">Gawande</span>
+      <span class="pm-pill fw">ACFE</span>
+      <span class="pm-pill fw">Pre-Suasion</span>
   </div>
 </div>
 
@@ -77,144 +79,394 @@
 
 <div class="prompt-code-section">
   <div class="prompt-code-wrap">
-    <textarea class="prompt-code" id="promptText" readonly>## PROMPT CODE
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. All phases.
+— If ChatGPT: Proceed as normal. Flag if output exceeds token window and instruct operator to request remaining phases.
+— If Gemini: Proceed as normal. Use conservative table formatting (no merged cells).
+— If Other: Proceed with standard Markdown output. Flag any capability limitations.
+
+---
+
+## PROMPT CODE
 
 TARGET COMPANY: [Insert Target]
-SELLER COMPANY: [Insert Your Company, or type &quot;None&quot;]
-G-01 CONTEXT: [Paste G-01 output here]
-G-02 FINANCIAL FORENSICS: [Paste G-02 output, or type &quot;None&quot;]
-ESTIMATED CONTRACT VALUE: [Insert expected TCV and annual run-rate, or type &quot;Unknown&quot;]
-CONTRACT DURATION: [Insert expected term in years, or type &quot;Unknown&quot;]
-RFP COMMERCIAL INFORMATION: [Paste commercial/pricing framework from RFP, or type &quot;None&quot;]
-KNOWN BUDGET INFORMATION: [Insert any known budget, approval status, funding source — or type &quot;None&quot;]
+SELLER COMPANY: [Insert Your Company, or type "None"]
+G-01 CONTEXT: [Paste G-01 output here, or type "None"]
+G-02 FINANCIAL FORENSICS: [Paste G-02 output here, or type "None"]
+ESTIMATED CONTRACT VALUE: [Insert expected TCV (Total Contract Value) and annual run-rate, or type "Unknown"]
+CONTRACT DURATION: [Insert expected term in years, or type "Unknown"]
+RFP COMMERCIAL INFORMATION: [Paste any commercial/pricing framework from the RFP, or type "None"]
+KNOWN BUDGET INFORMATION: [Insert any known budget, approval status, funding source — or type "None"]
+
+---
 
 ## OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
 
-1. **FILENAME:** `G-02B_Commercial_Viability_[Target_Company].md`
+**CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:**
+
+Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a `.md` file. Follow these rules exactly:
+
+1. **FILENAME:** The output file MUST be named:
+   `G-02B_Commercial_Viability_[Target_Company].md`
+   (Replace `[Target_Company]` with the actual value from PROMPT CODE above — use underscores for spaces, no special characters.)
+
 2. **DESTINATION FOLDER:** `02_Processed_Intel/`
-3. Begin with: &gt; 📎 **SYSTEM SAVE PROTOCOL:** Save as above → `02_Processed_Intel/`
-4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
 
-## ROLE &amp; OBJECTIVE
+3. **FORMAT RULES:**
+   - Begin your output with the line below EXACTLY (with the correct filename substituted):
 
-Act as a Commercial Due Diligence Analyst assessing from the SELLER&#x27;S perspective. Three questions: Can they pay? Will they pay? When do WE get paid back?
+   > 💾 **SYSTEM SAVE PROTOCOL:** Save as: `G-02B_Commercial_Viability_[Target_Company].md` → `02_Processed_Intel/`
 
-**This is a go/no-go input.**
+   - Everything that follows is the intelligence output in clean Markdown.
+   - Use proper Markdown headers (##, ###), tables, bold, and bullet points.
+   - Do NOT wrap your response in a code fence or ```markdown``` block — output raw Markdown directly.
+   - Do NOT add any preamble, pleasantries, or sign-off outside the Markdown document.
+   - The document must be COMPLETE and SELF-CONTAINED — it should make sense if read with zero context.
 
-## POWER OF NONE — BIAS KILL SWITCH
+4. **COPY-PASTE READY:** The operator will select-all → copy → paste into a new file named exactly as above. Your output must work perfectly for this workflow on ANY platform (VS Code, Obsidian, Notion, Typora, Notepad, or raw GitHub).
 
-For any variable marked &quot;None&quot;, &quot;Unknown&quot;, or left empty:
-- Do NOT fabricate or infer financial capacity
-- Flag the gap, prescribe actions, adjust confidence downward
-- If G-01 is &quot;None&quot;: reduced confidence, flag macro context missing
-- If CONTRACT VALUE is &quot;Unknown&quot;: use industry benchmarks, mark SPECULATIVE
-- If BUDGET INFO is &quot;None&quot;: Budget Reality defaults to UNCERTAIN unless evidence overrides
+5. **DOCUMENT STRUCTURE (SCQA — Minto):** Open the document with:
+   - **SITUATION:** Who is the target, what is the opportunity, what is the estimated contract value (one paragraph).
+   - **COMPLICATION:** The commercial viability question — can they pay, will they pay, and when does the seller get paid back (one paragraph).
+   - **ANSWER:** The overall verdict FIRST — GO / CONDITIONAL GO / QUALIFY / NO-GO — with the single most important reason (one sentence). Then present the evidence in the phases below.
+
+6. **TABLE DESIGN (Tufte):** All tables must maximise data-ink ratio. No decorative borders. No redundant columns. Every column must earn its place. No empty cells — use "N/A" or "—" with reason.
+
+7. **CLASSIFICATION QUALITY (MECE):** Any list, taxonomy, or category set must be Mutually Exclusive and Collectively Exhaustive. Self-check before output: "Do these categories overlap? Is anything missing?"
+
+---
+
+## ROLE & OBJECTIVE
+
+Act as a Commercial Due Diligence Analyst assessing this opportunity from the SELLER'S perspective. Before a bid team invests hundreds of hours and significant cost pursuing an opportunity, they need answers to three fundamental questions:
+
+1. **Can they pay?** Is this client financially healthy enough to fund a contract of this scale?
+2. **Will they pay?** Is the budget real, approved, and protected — or is this an exploratory exercise that may never convert?
+3. **When do WE get paid back?** What's the payback timeline — when do the benefits of the deal (to the client) exceed the transition investment, making the contract commercially sustainable?
+
+G-02 found where the client is bleeding money. G-02B asks whether the client has enough blood left to fund the surgery — and whether the surgery will work fast enough to justify the cost.
+
+**This is a go/no-go input.** If the commercial viability assessment raises red flags, the bid team needs to know BEFORE they commit resources.
+
+**TRUST LANGUAGE (Maister):** Minimise self-orientation. This document must read as objective due diligence, not advocacy. Use "the data indicates" not "we believe." The purpose is to protect the seller from bad bids, not to justify good ones.
+
+---
 
 ## EXECUTION ROUTING
 
-* **PATH A: FULL ASSESSMENT** (G-01 + G-02 + Contract Value) → All phases, high confidence
-* **PATH B: MACRO ONLY** (G-01 provided, G-02 &quot;None&quot;) → Phases 1-2, estimate Phase 3, flag G-02 needed
-* **PATH C: SURFACE SCAN** (Minimal inputs) → Phase 1 only, all assessments LOW confidence
+* **PATH A: FULL VIABILITY** (All inputs available — G-01, G-02, Contract Value, Budget Info) → Complete analysis: all phases, full payback model, cross-referenced against G-02 leaks.
+* **PATH B: PUBLIC-ONLY** (G-01 available but G-02 = None, Budget Info = None, RFP Commercial = None) → Financial health and budget reality assessment from public data only. Skip payback cross-reference. Confidence capped at MEDIUM. Flag data gaps.
+* **PATH C: PRELIMINARY SCAN** (G-01 = None) → Standalone public-data-only scan. All confidence capped at LOW. Phases 0 (ACFE), 1 (Financial Health) and 2 (Budget Reality) only. Output clearly marked PRELIMINARY. Shorter output — designed to answer "is it even worth running G-01 on this target?"
+
+---
+
+## PHASE 0: ACFE RED FLAG SCAN (Gates Everything)
+
+Before any financial analysis, check for corporate distress signals:
+
+| Red Flag | Evidence | Detected? |
+|---|---|---|
+| Auditor changes in last 24 months | | Y/N |
+| CFO or Finance Director departures | | Y/N |
+| Revenue restatements or accounting methodology changes | | Y/N |
+| Debt covenant pressure (debt-to-EBITDA > 4x) | | Y/N |
+| Unusual related-party transactions | | Y/N |
+| Late filings or qualified audit opinions | | Y/N |
+| Credit rating downgrades | | Y/N |
+| Dividend cuts or suspensions | | Y/N |
+
+**GATE RULE:** If 3+ red flags detected → **DISTRESS WARNING.** Flag immediately at document opening. This changes the entire analysis: the target's ability to fund may be compromised, payback model becomes unreliable, and the seller risk assessment must weight payment risk heavily. The Operator Loop must recommend escalation to bid director before further pursuit investment.
+
+If 0-2 red flags → Proceed with standard analysis. Note any individual flags in relevant phases.
+
+---
 
 ## PHASE 1: CLIENT FINANCIAL HEALTH — THE VITAL SIGNS
 
-### 1A: Revenue &amp; Profitability
+Assess the client's financial condition using publicly available data (annual reports, investor filings, credit ratings, analyst reports, press coverage). For each metric, provide the data point AND the trend (improving/stable/declining).
+
+### 1A: Revenue & Profitability
+
+| Metric | Current | 3-Year Trend | Assessment | GAIN Driver |
+|---|---|---|---|---|
+| Revenue (£M) | | ↑ ↔ ↓ | | |
+| Revenue growth rate (%) | | ↑ ↔ ↓ | | |
+| Operating profit / EBITDA (£M) | | ↑ ↔ ↓ | | |
+| Operating margin (%) | | ↑ ↔ ↓ | | |
+| Net profit (£M) | | ↑ ↔ ↓ | | |
+
+**GAIN Driver mapping:**
+— **Safety:** Declining metrics = risk of mid-contract scope reduction or payment delays
+— **Order:** Volatile metrics = unpredictable budgeting environment, harder to get approvals
+
+**Key question:** Is this a growing, stable, or contracting business? A contracting business may issue an RFP to cut costs but may also descope mid-contract.
+
+### 1B: Balance Sheet & Liquidity
+
+| Metric | Current | Assessment | GAIN Driver |
+|---|---|---|---|
+| Total assets (£M) | | | Safety |
+| Total debt (£M) | | | Safety |
+| Debt-to-equity ratio | | | Safety |
+| Cash & equivalents (£M) | | | Safety |
+| Current ratio | | | Safety |
+| Credit rating (if rated) | | | Safety |
+
+**Key question:** Does the client have the balance sheet strength to absorb a multi-year technology transformation programme?
+
+### 1C: Capital Expenditure & Technology Investment
+
 | Metric | Current | 3-Year Trend | Assessment |
+|---|---|---|---|
+| Total CapEx (£M) | | ↑ ↔ ↓ | |
+| IT/Technology spend as % of revenue | | ↑ ↔ ↓ | |
+| IT spend per employee (£K) | | ↑ ↔ ↓ | |
+| Disclosed transformation programme budget | | | |
 
-### 1B: Balance Sheet &amp; Liquidity
-| Metric | Current | Assessment |
+**Key question:** Is the client investing in technology or cutting? A client with declining IT spend issuing a transformation RFP is a contradiction that needs explaining.
 
-### 1C: Capital Expenditure &amp; Technology Investment
-| Metric | Current | 3-Year Trend | Assessment |
+### 1D: Sector & Regulatory Context
 
-### 1D: Sector &amp; Regulatory Context
 | Factor | Assessment |
+|---|---|
+| Sector growth outlook (next 3-5 years) | |
+| Regulatory pressure on spending | |
+| Competitive pressure forcing transformation | |
+| M&A risk (could they be acquired mid-contract?) | |
 
 ### 1E: OVERALL HEALTH VERDICT
-🟢 STRONG / 🟡 ADEQUATE / 🟠 STRAINED / 🔴 DISTRESSED
+
+| Rating | Meaning |
+|---|---|
+| **🟢 STRONG** | Healthy balance sheet, growing revenue, sustained IT investment, low leverage. Can fund multi-year transformation. |
+| **🟡 ADEQUATE** | Stable but pressured. Budget likely exists but subject to annual review. Monitor for scope reduction. |
+| **🟠 STRAINED** | Declining margins, rising debt, cost-cutting signals. High risk of scope reduction mid-term. |
+| **🔴 DISTRESSED** | Material financial concerns. Payment risk. Consider no-bid or de-risk commercial structure. |
+
+---
 
 ## PHASE 2: BUDGET REALITY — IS THE MONEY REAL?
 
+MEDDIC "Economic Buyer" and "Decision Criteria" lens applied to commercial structure.
+
 ### 2A: Budget Signals Assessment
+
 | Signal | Evidence | Confidence |
+|---|---|---|
+| **Board approval disclosed?** | | High/Med/Low |
+| **Named budget owner?** | | |
+| **Budget type?** (CapEx / OpEx / Blend) | | |
+| **Funding mechanism?** (New / reallocation / savings) | | |
+| **Competitive tension real?** | | |
+| **Timeline pressure real?** | | |
 
 ### 2B: Budget Legitimacy Tests
-Test 1: The Announcement Test
-Test 2: The Headcount Test
-Test 3: The Predecessor Test
-Test 4: The Regulatory Test
+
+**Test 1: The Announcement Test** — Has the client publicly committed in investor communications? Public commitment is hard to walk back.
+
+**Test 2: The Headcount Test** — Has the client hired or reassigned people specifically for this programme? Dedicated headcount = real commitment.
+
+**Test 3: The Predecessor Test** — Is there an incumbent contract expiring? If yes, budget MUST exist. Question is whether new contract is larger or smaller.
+
+**Test 4: The Regulatory Test** — Is any portion mandated by regulation? Regulatory spend is the most protected budget category.
+
+**MECE SELF-CHECK:** Do these 4 tests collectively cover all budget legitimacy signals? If a signal exists that doesn't fit, add a Test 5 and flag it.
 
 ### 2C: BUDGET REALITY VERDICT
-🟢 COMMITTED / 🟡 PROBABLE / 🟠 UNCERTAIN / 🔴 SPECULATIVE
 
-## PHASE 3: THE PAYBACK MODEL
+| Rating | Meaning |
+|---|---|
+| **🟢 COMMITTED** | Publicly announced, Board-approved, dedicated resources, clear timeline driver. |
+| **🟡 PROBABLE** | Strong signals but not fully confirmed. Budget likely exists within annual planning. |
+| **🟠 UNCERTAIN** | Mixed signals. May be exploratory. Risk of deferral. Recommend qualification before full bid. |
+| **🔴 SPECULATIVE** | No evidence of approved budget. No resources. No timeline pressure. Recommend no-bid or minimal investment. |
+
+---
+
+## PHASE 3: THE PAYBACK MODEL — WHEN DO BENEFITS EXCEED SPEND?
+
+Using G-02 financial leak data as the benefit source.
 
 ### 3A: Cost of the Deal (to the client)
-| Cost Component | Year 1-7 |
+
+| Cost Component | Year 1 | Year 2 | Year 3 | Year 4 | Year 5 |
+|---|---|---|---|---|---|
+| Transition/transformation investment | | | | | |
+| Ongoing managed service run-rate | | | | | |
+| Retained client costs | | | | | |
+| Technology/license costs | | | | | |
+| **Total annual cost** | | | | | |
+| **Cumulative cost** | | | | | |
 
 ### 3B: Benefit of the Deal (to the client)
-| Benefit Source | Year 1-7 |
+
+| Benefit Source | Year 1 | Year 2 | Year 3 | Year 4 | Year 5 |
+|---|---|---|---|---|---|
+| Leak 1: [from G-02] | | | | | |
+| Leak 2: [from G-02] | | | | | |
+| Leak 3: [from G-02] | | | | | |
+| Risk reduction value | | | | | |
+| Revenue protection value | | | | | |
+| Transformation benefits | | | | | |
+| **Total annual benefit** | | | | | |
+| **Cumulative benefit** | | | | | |
 
 ### 3C: The Payback Crossover
-Year 1 net position, Payback period, 7-year net value, ROI.
+
+| Metric | Value |
+|---|---|
+| **Year 1 net position** | |
+| **Payback period** | |
+| **5-year net value** | |
+| **ROI** | |
+
+**The CFO Sentence:** One sentence the CFO would use to justify this to the Board. Must use their language from G-03 if available.
 
 ### 3D: Sensitivity Analysis
-| Scenario | Payback Period | 7-Year Net Value | Risk Level |
+
+| Scenario | Payback Period | 5-Year Net Value | Risk Level |
+|---|---|---|---|
+| Base case | | | |
+| Benefits -20% | | | |
+| Transition +6 months | | | |
+| Costs +10% | | | |
+| Largest benefit removed | | | |
+
+---
 
 ## PHASE 4: COMMERCIAL RISK TO THE SELLER
 
-4A: Bid Investment Risk — 4B: Delivery Risk — 4C: Commercial Structure Risk — 4D: SELLER RISK VERDICT
-🟢 PURSUE / 🟡 PURSUE WITH CAUTION / 🟠 QUALIFY FIRST / 🔴 NO-BID RECOMMENDED
+### 4A: Bid Investment Risk
 
-## PHASE 5: THE GO/NO-GO DASHBOARD
-
-| Dimension | Rating | Key Factor |
+| Factor | Assessment | GAIN Driver |
 |---|---|---|
-| Client Financial Health | | |
-| Budget Reality | | |
-| Payback Timeline | | |
-| Seller Delivery Risk | | |
-| Seller Commercial Risk | | |
-| **OVERALL** | **GO / CONDITIONAL GO / QUALIFY / NO-GO** | |
+| Estimated bid cost | | Order |
+| Number of known competitors | | Safety |
+| Estimated win probability (%) | | |
+| Expected value (TCV × win prob − bid cost) | | Achievement |
 
-## GAIN DRIVER TARGETING
+### 4B: Delivery Risk
 
-| STAKEHOLDER | THEIR DRIVER | COMMERCIAL MESSAGE |
-|---|---|---|
-| CFO | Safety + Order | &quot;Payback model is defensible. Here are the workings.&quot; |
-| CIO | Achievement | &quot;Investment funds transformation from existing waste.&quot; |
-| COO | Order | &quot;Cost glide path is structured with named assumptions.&quot; |
-| Procurement | Safety | &quot;Commercial structure de-risks with gain-share/milestones.&quot; |
+| Factor | Assessment |
+|---|---|
+| Can we staff with existing team? | |
+| TUPE/transfer complexity | |
+| Technology stack alignment | |
+| Transition timeline achievable? | |
+| Subcontractor dependency | |
 
-## FORENSIC CHECKLIST (Gawande)
+### 4C: Commercial Structure Risk
 
-- ☐ Every financial metric has a stated source
-- ☐ Trend data covers minimum 3 years
-- ☐ Payback model uses conservative assumptions with sensitivity
-- ☐ Budget reality tests use observable evidence
-- ☐ Seller risk assessment is honest
-- ☐ M&amp;A risk explicitly assessed
-- ☐ Go/no-go recommendation is clear
-- ☐ All estimates have stated methodologies and confidence levels
-- ☐ Distinguishes &quot;real money&quot; from &quot;theoretical money&quot;
+| Factor | Assessment |
+|---|---|
+| Payment terms acceptable? | |
+| Gain-share / outcome-linked risk | |
+| Penalty / LD exposure | |
+| Exit clause (can we leave if unprofitable?) | |
+| Client negotiation reputation | |
 
-## THE OPERATOR LOOP
+### 4D: SELLER RISK VERDICT
 
-**First ask:** *&quot;Does this feel like a deal worth investing in? What&#x27;s your gut confidence the money is real?&quot;*
+| Rating | Meaning |
+|---|---|
+| **🟢 PURSUE** | Healthy client, real budget, achievable payback, manageable risk. Full bid investment warranted. |
+| **🟡 PURSUE WITH CAUTION** | Some risk factors. Bid with mitigation. |
+| **🟠 QUALIFY FIRST** | Material uncertainties. Specific actions needed before committing. |
+| **🔴 NO-BID RECOMMENDED** | Concerns outweigh opportunity. Walk away unless strategic override. |
 
-**Second ask:** *&quot;If you were the CFO, would you sign off? What&#x27;s missing from the business case?&quot;*
+---
 
-**Third ask:** *&quot;Any commercial intelligence from meetings that changes the budget picture?&quot;*
+## PHASE 5: PRE-SUASION FRAME — CONTEXT BEFORE RECOMMENDATION
 
-**NEXT MOVES:**
-→ G-04 (Battle Card — integrate commercial viability)
-→ I-01B (Lose Themes — if viability flags risks)
-→ A-03 (Bid Team Briefing Pack — go/no-go dashboard feeds in)
+Before delivering the go/no-go verdict, set the decision context:
 
-If HEALTH is 🟠/🔴 → run N-11 (Internal Business Case) before committing.
-If BUDGET is 🟠 → run A-13 (HUMINT Elicitation) for budget intelligence.
+**THE ANCHOR:** "Of the last 10 deals your organisation pursued at this TCV level, how many were commercially successful through full contract term?" This frames go/no-go as a portfolio quality decision, not a single-deal emotional decision.
 
----</textarea>
+**THE COMPARISON:** Position this opportunity against the operator's typical deal profile — above-average, average, or below-average on health, budget reality, and payback.
+
+**THE COST OF PURSUIT:** State estimated bid cost explicitly. "Pursuing this deal will cost approximately £[X]. That investment is only recovered if you win AND the contract performs."
+
+**HONESTY CHECK (Maverick):** Does this Pre-Suasion frame use truthful priming only? If any element biases rather than informs, remove it.
+
+---
+
+## PHASE 6: THE GO/NO-GO DASHBOARD
+
+| Dimension | Rating | Key Factor | GAIN Driver |
+|---|---|---|---|
+| ACFE Red Flag Status | CLEAN / WARNING | | Safety |
+| Client Financial Health | 🟢🟡🟠🔴 | | Safety |
+| Budget Reality | 🟢🟡🟠🔴 | | Safety |
+| Payback Timeline | Year X crossover | | Order |
+| Seller Delivery Risk | 🟢🟡🟠🔴 | | Order |
+| Seller Commercial Risk | 🟢🟡🟠🔴 | | Safety |
+| **OVERALL** | **GO / CONDITIONAL GO / QUALIFY / NO-GO** | | |
+
+**Conditions (if Conditional Go):** List specific actions required before full bid investment.
+
+---
+
+## PHASE 7: ONE-PAGE COMPRESSION
+
+1. **CORRIDOR TEST (under 15 words):** One sentence capturing the commercial viability verdict.
+2. **VERDICT:** GO / CONDITIONAL GO / QUALIFY / NO-GO
+3. **TOP 3 FACTORS:** The three things that most influence the verdict.
+4. **THE NUMBER:** Estimated bid cost vs expected value of pursuit.
+5. **NEXT STEP:** One specific action.
+
+---
+
+## PHASE 8: FORENSIC CHECKLIST (Gawande)
+
+✅ ACFE Red Flag scan completed — distress status stated at document opening
+✅ Every financial metric has a stated source
+✅ Trend data covers minimum 3 years
+✅ Payback model uses conservative assumptions with sensitivity analysis
+✅ Budget reality tests use observable evidence, not assumptions
+✅ Seller risk assessment is honest — prevents bad bids, doesn't justify good ones
+✅ CFO Sentence uses actual CFO language from G-03 if available
+✅ M&A risk explicitly assessed
+✅ Go/no-go recommendation is clear and unambiguous
+✅ Estimates have stated methodologies and confidence levels
+✅ Distinguishes "real money" (confirmed budget) from "theoretical money" (estimated savings)
+✅ Pre-Suasion frame uses truthful priming only — survives Maverick honesty check
+✅ SCQA structure used — verdict appears before evidence
+✅ All tables pass Tufte test — every column earns its place
+✅ MECE check completed on budget legitimacy tests
+✅ One-Page Compression produced with Corridor Test sentence
+✅ GAIN Driver column present in key output tables
+✅ Trust language check — no self-oriented phrases
+
+---
+
+## PHASE 9: THE OPERATOR LOOP
+
+**Primary question:** "Based on the financial health and budget reality assessments — does this match what you're seeing in conversations? Is there commercial intelligence from meetings that changes the picture?"
+
+**Conditional routing based on output:**
+
+IF ACFE Red Flags detected (3+):
+→ "There are material distress signals. This needs to go to the bid director BEFORE any further pursuit investment. The question isn't 'can we win?' — it's 'should we play?' Do you want to escalate now, or do you have information that explains the red flags?"
+
+IF Budget Reality is UNCERTAIN or SPECULATIVE:
+→ "The budget isn't confirmed. Before investing further, recommend a qualification call focused on: (1) Is this funded? (2) Who owns the budget? (3) What's the approval timeline? Would you like me to build a qualification script via G-05?"
+
+IF Payback Period > Year 3:
+→ "The payback extends beyond Year 3. Most CFOs want payback within 24 months. This means either (a) pricing needs restructuring, (b) benefits are under-quantified, or (c) the deal may not be viable at this price point. Which do you want to explore?"
+
+IF Seller Risk is QUALIFY FIRST or NO-BID:
+→ "The seller risk assessment flagged material concerns. Specific qualification actions needed: [list from Phase 6]. Who on your team can get these answers?"
+
+IF overall verdict is GO:
+→ "This looks commercially viable. Recommended next steps below."
+
+**SUGGESTED NEXT MOVES:**
+→ If distress signals: Escalate to bid director with this document
+→ If budget uncertain: G-05 (qualification meeting script focused on commercial questions)
+→ If payback fragile: G-02 re-run (find additional leaks to strengthen the case)
+→ If commercially viable: G-04 (synthesise into Battle Card with commercial viability context)
+→ If in bid mode: I-01B (feed lose themes with commercial risk factors) + A-06 (go/no-go pack)</textarea>
   </div>
   <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>
 </div>

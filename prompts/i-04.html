@@ -2,7 +2,7 @@
   <span class="prompt-id" style="color:var(--amber)">I-04</span>
   <span class="prompt-badge open">OPEN</span>
 </div>
-<h2 class="prompt-title">EVALUATION SCORING STRATEGY</h2>
+<h2 class="prompt-title">EVALUATION SCORING STRATEGY v4</h2>
 <div class="prompt-cat">SCORING STRATEGY</div>
 <div class="pm-block"><div class="pm-label">Variables</div><div class="pm-tags">
       <span class="pm-tag">[Evaluation Criteria &amp; Weights]</span>
@@ -27,7 +27,16 @@
 <div class="pm-row"><div class="pm-half"><div class="pm-label">Feeds From</div><p class="pm-text" style="font-size:11px">Eval criteria, I-02 + I-03, G-03 + A-01 + A-02, Seller capabilities</p></div><div class="pm-half"><div class="pm-label">Chains Into</div><p class="pm-text" style="font-size:11px">I-06 (Response depth calibration), I-07 (Self-scoring benchmark), G-04 (Battle Card — scoring alignment), Account Pack Dashboard</p></div></div>
 <div class="prompt-code-section">
   <div class="prompt-code-wrap">
-    <textarea class="prompt-code" id="promptText" readonly>## PROMPT CODE
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. All phases.
+— If ChatGPT: Proceed as normal. Flag if output exceeds token window.
+— If Gemini: Proceed as normal. Use conservative table formatting.
+— If Other: Proceed with standard Markdown. Flag any limitations.
+
+---
+
+## PROMPT CODE
 
 EVALUATION CRITERIA: [Paste scoring criteria / weighting table from RFP]
 A-01 DECODE: [Paste A-01, or type &quot;None&quot;]
@@ -44,8 +53,14 @@ INTERACTION DATA: [Meeting notes, stakeholder comments, or type &quot;None&quot;
 
 1. **FILENAME:** `I-04_Scoring_Strategy_[Company].md`
 2. **DESTINATION FOLDER:** `03_Strategy_Execution/`
-3. Begin with: &gt; 📎 **SYSTEM SAVE PROTOCOL:** Save as: `I-04_Scoring_Strategy_[Company].md` → `03_Strategy_Execution/`
+3. Begin with: &gt; 💾 **SYSTEM SAVE PROTOCOL:** Save as: `I-04_Scoring_Strategy_[Company].md` → `03_Strategy_Execution/`
 4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
+5. **DOCUMENT STRUCTURE (SCQA — Minto):** Open with:
+   - **SITUATION:** The evaluation structure — criteria, weights, evaluator panel (one paragraph).
+   - **COMPLICATION:** Where we're vulnerable in scoring — the criteria that could kill us and the evaluators who'll be hardest to win (one paragraph).
+   - **ANSWER:** The single most important scoring action FIRST — the one thing that moves the most weighted points (one sentence). Then present the full strategy.
+6. **TABLE DESIGN (Tufte):** All tables maximise data-ink ratio. Every column earns its place.
+7. **CLASSIFICATION QUALITY (MECE):** Criteria strategies (LOCK/PUSH/DEFEND/CONCEDE) must be Mutually Exclusive. Self-check.
 
 ## ROLE &amp; OBJECTIVE
 
@@ -126,32 +141,66 @@ Map each evaluator&#x27;s GAIN driver to their scoring behaviour:
 
 **INSTRUCTION TO AI:** When G-03 profiles available, map actual drivers to scoring behaviour predictions. A Safety-driven evaluator reading a PUSH section needs different evidence density than an Achievement-driven one. Calibrate response writing instructions accordingly.
 
+## PHASE 11: ONE-PAGE COMPRESSION — THE SCORING CARD
+
+1. **CORRIDOR TEST (under 15 words):** One sentence — where we win and where we're exposed in scoring.
+
+2. **SCORING HEAT MAP SUMMARY:**
+
+| CRITERION | WEIGHT | STRATEGY | GAP TO WIN | OWNER | ACTION DUE |
+|---|---|---|---|---|---|
+| | | LOCK/PUSH/DEFEND/CONCEDE | | | |
+
+3. **TOP 3 PUSH ACTIONS:** The three actions that move the most weighted points.
+4. **BIGGEST VULNERABILITY:** The criterion most likely to cost us the deal.
+5. **PREDICTED SCORE:** Our estimated weighted total vs target.
+
+This is the version the bid director uses to allocate writing effort and review resources.
+
 ## FORENSIC CHECKLIST (Gawande)
 
 - ☐ Every criterion has an assigned evaluator (known or predicted)
-- ☐ Heat map is populated with stated reasoning for each classification
+- ☐ Heat map populated with stated reasoning for each classification
 - ☐ PUSH criteria have specific anchor strategies with first-sentence scripts
 - ☐ Competitive gap analysis covers all criteria (if I-03 available)
 - ☐ Consensus meeting dynamics modelled with champion script
-- ☐ Self-audit scores are honest (not inflated)
-- ☐ +1 point actions are specific and implementable
+- ☐ Self-audit scores honest (not inflated)
+- ☐ +1 point actions specific and implementable
 - ☐ Win themes threaded across multiple criteria (not siloed)
 - ☐ Transparency windows aligned to PUSH criteria
+- ☐ SCQA structure — highest-impact scoring action before full strategy
+- ☐ All tables pass Tufte test
+- ☐ MECE check on criteria strategies (no overlapping classifications)
+- ☐ One-Page Scoring Card produced with Corridor Test
+- ☐ GAIN Driver mapping present per evaluator
 
 ## THE OPERATOR LOOP
 
-**First ask:** *&quot;Look at the heat map. How many PUSH criteria did we identify? Fewer than 3 = not enough leverage. More than 6 = spreading too thin.&quot;*
+**Primary question:** *&quot;Look at the heat map. How many PUSH criteria? Fewer than 3 = not enough leverage. More than 6 = spreading too thin.&quot;*
 
-**Second ask:** *&quot;For each PUSH criterion, do we have the evidence to justify a 5/5 score? If not, what evidence do we need and by when?&quot;*
+**Conditional routing based on output:**
 
-**Third ask:** *&quot;Model the consensus meeting in your head. Who speaks first? Who defers to whom? That dynamic determines whether our champion can hold the room.&quot;*
+IF PUSH criteria have evidence gaps:
+→ &quot;These PUSH criteria need evidence before submission: [list with gaps]. These are the highest-priority bid actions. Assign owners with deadlines NOW. A PUSH criterion without evidence becomes a DEFEND — and you lose the offensive.&quot;
 
-**NEXT MOVES:**
-→ I-A1 (Win Theme Delivery Design) → I-A2 (Bid Self-Audit) → G-05 v2 (Oral Presentation Script)
+IF competitive gap shows we trail on high-weight criteria:
+→ &quot;We trail on [criteria] which carries [X%] weight. Options: (1) Close the gap with specific evidence or methodology, (2) Shift the criteria weighting through clarification questions (Blue Ocean), (3) Accept as a lose theme (I-01B) and compensate by dominating other criteria. Which approach?&quot;
 
-If PUSH criteria have evidence gaps → these are the highest-priority bid actions. Assign owners with deadlines.
-If competitive gap shows we trail on high-weight criteria → these feed I-01B as lose themes.
-If consensus model shows our champion is outnumbered → run G-03 on swing evaluators and design targeted influence.
+IF consensus model shows champion is outnumbered:
+→ &quot;In the consensus meeting, our champion [Name/Role] is outnumbered by evaluators who favour other approaches. Options: (1) Run G-03 on swing evaluators and design targeted influence, (2) Arm the champion with specific data that shifts swing votes (Ferrazzi), (3) Build a second champion from the swing evaluators.&quot;
+
+IF self-audit reveals inflated scores:
+→ &quot;The self-audit found optimistic scoring on [criteria]. Honest assessment: we're a [X] not a [Y]. Adjusting to realistic scores changes our predicted total from [A] to [B]. This changes the strategy — we need to find [Z] more points elsewhere.&quot;
+
+IF evaluation criteria is missing or vague:
+→ &quot;⚠️ Cannot build a reliable scoring strategy without clear criteria. Request clarification from buyer. If they won't provide it, estimate from RFP section emphasis and flag all predictions as LOW confidence.&quot;
+
+**SUGGESTED NEXT MOVES:**
+→ If evidence gaps: Source evidence for PUSH criteria (highest priority)
+→ If competitive gaps: I-01B (Lose Themes) + mitigation
+→ If champion weak: G-03 on swing evaluators
+→ If ready for writing: I-06 (Response Section Drafter — calibrate depth to scoring strategy)
+→ If oral presentation: G-05 / I-09 (calibrate presentation to scoring priorities)
 </textarea>
   </div>
   <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>

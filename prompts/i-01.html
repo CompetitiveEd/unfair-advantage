@@ -2,7 +2,7 @@
   <span class="prompt-id" style="color:var(--amber)">I-01</span>
   <span class="prompt-badge open">OPEN</span>
 </div>
-<h2 class="prompt-title">DEAL PRE-MORTEM SIMULATOR v3</h2>
+<h2 class="prompt-title">DEAL PRE-MORTEM SIMULATOR v4</h2>
 <div class="prompt-cat">PRE-MORTEM</div>
 <div class="pm-block"><div class="pm-label">Variables</div><div class="pm-tags">
       <span class="pm-tag">[Deal Context / G-04 Battle Card]</span>
@@ -31,7 +31,16 @@
 <div class="pm-row"><div class="pm-half"><div class="pm-label">Feeds From</div><p class="pm-text" style="font-size:11px">G-04 + G-03 (all), I-02 + I-03 + I-04, A-01 + A-02</p></div><div class="pm-half"><div class="pm-label">Chains Into</div><p class="pm-text" style="font-size:11px">I-02 (counter scenarios), I-03 (Kill-Shot), I-01B (Lose Themes), G-06 (risk section), Account Pack Dashboard</p></div></div>
 <div class="prompt-code-section">
   <div class="prompt-code-wrap">
-    <textarea class="prompt-code" id="promptText" readonly>## PROMPT CODE
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. All phases.
+— If ChatGPT: Proceed as normal. Flag if output exceeds token window.
+— If Gemini: Proceed as normal. Use conservative table formatting.
+— If Other: Proceed with standard Markdown. Flag any limitations.
+
+---
+
+## PROMPT CODE
 
 DEAL CONTEXT: [Paste G-04 Battle Card — primary input]
 G-03 EXECUTIVE PROFILES: [Paste ALL G-03 profiles — CRITICAL for stakeholder cascade, or type &quot;None&quot;]
@@ -47,8 +56,14 @@ INTERNAL CHAMPION: [Name/Title of your advocate, or type &quot;None&quot;]
 
 1. **FILENAME:** `I-01_PreMortem_[Company].md`
 2. **DESTINATION FOLDER:** `03_Strategy_Execution/`
-3. Begin with: &gt; 📎 **SYSTEM SAVE PROTOCOL:** Save as: `I-01_PreMortem_[Company].md` → `03_Strategy_Execution/`
+3. Begin with: &gt; 💾 **SYSTEM SAVE PROTOCOL:** Save as: `I-01_PreMortem_[Company].md` → `03_Strategy_Execution/`
 4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
+5. **DOCUMENT STRUCTURE (SCQA — Minto):** Open with:
+   - **SITUATION:** The deal, current stage, intelligence available (one paragraph).
+   - **COMPLICATION:** It is 12 months from now. We lost. Here is the most likely reason (one paragraph).
+   - **ANSWER:** The single highest-probability failure scenario and the one action that prevents it FIRST (one sentence). Then present the full forensic analysis.
+6. **TABLE DESIGN (Tufte):** All tables maximise data-ink ratio. Every column earns its place.
+7. **CLASSIFICATION QUALITY (MECE):** Failure scenarios must be Mutually Exclusive (no overlapping causes) and Collectively Exhaustive (no missing failure modes). Self-check.
 
 ## ROLE &amp; OBJECTIVE
 
@@ -131,6 +146,24 @@ Map each failure scenario to the GAIN driver of the person who triggers it:
 
 **INSTRUCTION TO AI:** When G-03 profiles available, use actual GAIN drivers. Each Accusation Audit in Phase 6 must be calibrated to the trigger person&#x27;s driver — a Safety-driven blocker needs a different audit than an Achievement-driven one.
 
+## PHASE 7: ONE-PAGE COMPRESSION — THE RISK CARD
+
+1. **CORRIDOR TEST (under 15 words):** One sentence — the most likely way we lose this deal.
+
+2. **RISK SNAPSHOT:**
+
+| # | SCENARIO | PROBABILITY | TRIGGER | DEFENCE STATUS |
+|---|---|---|---|---|
+| 1 | | | | Defended / Partial / Exposed |
+| 2 | | | | |
+| 3 | | | | |
+
+3. **COMBINED LOSS PROBABILITY:** [X%]
+4. **THE ONE THING:** The single highest-impact defensive action.
+5. **DEADLINE:** By when must it happen.
+
+This is the version the bid director reviews in 60 seconds to decide resource allocation.
+
 ## FORENSIC CHECKLIST (Gawande)
 
 - ☐ Every scenario specific to THIS deal, not generic failure modes
@@ -142,23 +175,42 @@ Map each failure scenario to the GAIN driver of the person who triggers it:
 - ☐ If G-03: cascades modelled with named roles and dynamics
 - ☐ If I-04: every scenario maps to criteria with weighted impact
 - ☐ Defence actions have deadlines and owners
+- ☐ SCQA structure — highest-probability failure appears before evidence
+- ☐ All tables pass Tufte test
+- ☐ MECE check on failure scenarios — no overlaps, no gaps
+- ☐ One-Page Risk Card produced with Corridor Test
+- ☐ GAIN Driver column present in failure scenario table
 
 ## THE OPERATOR LOOP
 
-**First ask:** *&quot;Which failure scenario keeps you up at night? Let&#x27;s build the defence for that one first.&quot;*
+**Primary question:** *&quot;Which failure scenario keeps you up at night? Let&#x27;s build the defence for that one first.&quot;*
 
-**Second ask:** *&quot;What is the most irrational, purely political reason you could lose this deal? That&#x27;s often the one that actually kills it.&quot;*
+**Conditional routing based on output:**
 
-**Third ask:** *&quot;Look at the combined loss probability. If it&#x27;s above 50%, are we investing the right amount of bid resource — or should we be qualifying harder?&quot;*
+IF combined loss probability &gt; 60%:
+→ &quot;Combined loss probability exceeds 60%. Before investing more bid resource, run a formal qualification review. This deal may not be worth the pursuit cost. Options: (1) Qualify harder — get specific answers that reduce the probability, (2) Reduce bid investment to match the odds, (3) Walk away and redirect resources.&quot;
 
-**NEXT MOVES:**
-→ I-02 (Win Themes to counter failure scenarios)
-→ I-03 (Competitor Kill-Shot)
-→ I-01B (Lose Theme Architect)
+IF Champion is &quot;None&quot;:
+→ &quot;⚠️ No champion identified. The No-Decision Death scenario probability increases by 30% without an internal advocate. Identifying a champion is the single highest-value action. Run A-04 (Motivation Map) on the most engaged stakeholder to assess champion potential.&quot;
 
-If overall loss probability &gt; 60% → run A-11 (Go/No-Go Decision) before investing more.
-If Champion is &quot;None&quot; → identifying a champion is the single highest-value action.
-If top scenario is &quot;No-Decision&quot; → the buyer doesn&#x27;t have enough urgency. Re-run G-01 for cost-of-inaction evidence.
+IF top scenario is No-Decision Death:
+→ &quot;The buyer doesn't have enough urgency. The deal will stall. Re-run G-01 for cost-of-inaction evidence and use Kotter urgency principles in the next engagement.&quot;
+
+IF top scenario is Political Kill and the blocker has a strong Kegan immunity:
+→ &quot;The political kill is driven by a Kegan immunity that may be too strong to unlock. Options: (1) Reframe so choosing us doesn't threaten their assumption, (2) Navigate around them — build support with other evaluators, (3) Address it head-on with an Accusation Audit (risky but sometimes necessary).&quot;
+
+IF Antifragile Test identifies a scenario worth naming to the buyer:
+→ &quot;Scenario [X] has antifragile potential — naming it to the buyer (Accusation Audit) would actually INCREASE trust. Script: '[audit text]'. Deliver this in the next meeting before the buyer raises it themselves.&quot;
+
+IF G-03 is &quot;None&quot;:
+→ &quot;Stakeholder cascades are role-based guesses. Profile the top 3 stakeholders via G-03 to convert these from assumptions to intelligence.&quot;
+
+**SUGGESTED NEXT MOVES:**
+→ If defence needed: Build specific evidence package for top scenario
+→ If themes vulnerable: I-02 (refresh win themes against failure scenarios)
+→ If competitor threat: I-03 (Kill-Shot targeting displacement scenario)
+→ If lose themes exposed: I-01B (Lose Theme Architect)
+→ If loss probability &gt; 60%: Qualification review before further investment
 
 ---</textarea>
   </div>

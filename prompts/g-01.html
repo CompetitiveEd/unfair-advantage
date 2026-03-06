@@ -90,6 +90,8 @@
   <div class="prompt-code-wrap">
     <textarea class="prompt-code" id="promptText" readonly>## PROMPT CODE
 
+BEFORE YOU START: What AI are you running this in? (e.g., Claude, Gemini, ChatGPT, DeepSeek, Perplexity — type the name and the AI will adapt to its own capabilities)
+
 TARGET COMPANY: [Insert Target Company, or type &quot;None&quot;]
 SELLER COMPANY: [Insert Your Company/Solution, or type &quot;None&quot;]
 FOCUS AREA / DOMAIN: [Insert Domain, e.g., End User Environment, or type &quot;None&quot;]
@@ -97,23 +99,37 @@ DATA SOURCE &amp; HUMAN SIGNAL: [Type &quot;Search the web autonomously&quot;, O
 BUYER AWARENESS LEVEL: [Unaware / Problem Aware / Solution Aware / Product Aware / Most Aware — or type &quot;Unknown&quot;]
 G-02 FINANCIAL FORENSICS: [Paste G-02 output for compound re-run, or type &quot;None&quot; for first pass]
 G-03 EXECUTIVE PROFILES: [Paste G-03 output(s) for compound re-run, or type &quot;None&quot; for first pass]
+VISUAL EVIDENCE: [Paste photos of office environment, reception, events, or type &quot;None&quot;]
+
+## INTAKE LOOP — STAGED SOURCE LOADING
+
+STEP 1: State the target company and deal context.
+STEP 2: I will ask you to load sources. Attach up to 10 files per batch (documents, images, screenshots, exports).
+STEP 3: After each batch I will confirm what I received and ask: &quot;More files? YES / NO&quot;
+- YES → load next batch
+- NO → I proceed with analysis
+STEP 4: Once all sources are loaded, I execute the full engine.
+
+ACCEPTED FORMATS: PDF, images (JPG/PNG), text, CSV, HTML, LinkedIn exports, screenshots, slide decks.
 
 ## OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
 
-**CRITICAL INSTRUCTION — READ BEFORE GENERATING OUTPUT:**
+**STRUCTURE (SCQA):** All document-class output follows Situation → Complication → Question → Answer in the opening paragraphs.
 
-Your ENTIRE response must be a single, self-contained Markdown document that the operator can copy in one action and save directly as a `.md` file. Follow these rules exactly:
-
-1. **FILENAME:** `G-01_Macro_Intel_[Target_Company].md`
-2. **DESTINATION FOLDER:** `02_Processed_Intel/`
-3. Begin with: &gt; 📎 **SYSTEM SAVE PROTOCOL:** Save as: `G-01_Macro_Intel_[Target_Company].md` → `02_Processed_Intel/`
+1. **FILENAME:** G-01_Macro_Intel_[Target_Company].md
+2. **DESTINATION FOLDER:** 02_Processed_Intel/
+3. Begin with: &gt; SYSTEM SAVE PROTOCOL: Save as: G-01_Macro_Intel_[Target_Company].md → 02_Processed_Intel/
 4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
+5. **TUFTE RULE:** All tables must maximise data-ink ratio. No decorative formatting. Every column earns its place. Remove any element that doesn&#x27;t add meaning.
+6. **MECE RULE:** The 9-Pillar scan must be Mutually Exclusive (no overlap between pillars) and Collectively Exhaustive (no gap — if something doesn&#x27;t fit a pillar, the framework is incomplete). Self-check after generating.
 
 ## ROLE &amp; OBJECTIVE
 
 Act as a Tier-1 Management Consultant and OSINT Analyst. Conduct a multi-stage deep research sweep.
 
 **OBJECTIVE ANALYSIS PROTOCOL:** Do not parrot the company&#x27;s biased Annual Report. Autonomously deduce their industry and state it explicitly. Cross-reference corporate claims against domain intelligence (Bloomberg, trade journals) and Glassdoor employee sentiment. Find the friction where the CEO says &quot;Transformation&quot; but the risk register says &quot;Supply Chain Debt.&quot; Find the Narrative Gap.
+
+**BELLINGCAT TRIANGULATION RULE:** No finding is trusted from a single source. Every material claim must be corroborated from at least 2 independent sources. If only one source supports a claim, mark it as SINGLE-SOURCE and flag confidence as LOW. Sources are: (1) Company&#x27;s own materials, (2) Financial filings/data, (3) Employee sentiment (Glassdoor/LinkedIn), (4) Industry analysts/trade press, (5) Regulatory filings, (6) Job postings/hiring patterns, (7) Stakeholder public statements. A claim supported by the company&#x27;s website AND the company&#x27;s annual report = 1 source (both are company-controlled). A claim supported by the annual report AND a Glassdoor review = 2 sources (independent).
 
 **CATEGORY AWARENESS (Dunford):** Before writing any pitch angles, explicitly state what competitive category this company would place a new vendor in. If that category disadvantages us, flag it and suggest the category we should force instead.
 
@@ -128,7 +144,12 @@ For any variable marked &quot;None&quot; or left empty:
 - Prescribe specific actions to fill the gap
 - Adjust confidence rating downward proportionally
 - If TARGET COMPANY is &quot;None&quot;: abort — cannot execute without a target
-- If BUYER AWARENESS LEVEL is &quot;Unknown&quot;: default to PROBLEM AWARE and state this assumption explicitly
+- If BUYER AWARENESS LEVEL is &quot;Unknown&quot;: default to PROBLEM AWARE and state assumption
+
+**HYBRID NONE MODE:** When a dependency (G-02 or G-03) is &quot;None&quot;:
+- OPTION A: Skip that layer (fast, thinner output)
+- OPTION B: Run a lightweight version of that dependency inline (slower, richer output)
+- Ask operator: &quot;No [G-02/G-03] provided. Quick inline scan or skip? Type SCAN or SKIP.&quot;
 
 ## AWARENESS ROUTING (Schwartz)
 
@@ -160,7 +181,11 @@ Apply the specific regulatory and macroeconomic lens for this company&#x27;s ind
 8. STAKEHOLDER LANGUAGE: Specific phrases executives use repeatedly.
 9. TIMELINE &amp; DEADLINES: Fiscal year, budget cycles, compelled events.
 
-**THE BLEEDING NECKS:** Conclude Phase 1 by isolating the top 3 highest-risk pillars. Format in **BOLD**.
+**MECE SELF-CHECK:** After completing the 9 pillars, verify: (1) Does any finding appear in two pillars? If yes, assign to one and remove from the other. (2) Is there any material finding that doesn&#x27;t fit any pillar? If yes, flag it as an anomaly.
+
+**TRIANGULATION CHECK:** For each pillar, state the source count. Any pillar with only single-source findings must be flagged.
+
+**THE BLEEDING NECKS:** Conclude Phase 1 by isolating the top 3 highest-risk pillars. Format in **BOLD**. Each Bleeding Neck must be supported by 2+ independent sources (Bellingcat rule).
 
 **ANTIFRAGILITY CHECK (Taleb):** For each Bleeding Neck, assess: would this company get STRONGER or WEAKER if this risk materialised? Flag fragile positions explicitly. For each fragile position, describe the specific stress test scenario.
 
@@ -172,18 +197,18 @@ For every regulatory requirement, compliance deadline, or mandated change identi
 3. **THE CURRENT GAP:** Are they on track?
 4. **THE COMPELLED EVENT:** What procurement decision is FORCED by this deadline?
 
-Output as table: | REGULATION | HARD DATE | PENALTY | GAP STATUS | COMPELLED PROCUREMENT EVENT |
+Output as table (Tufte-clean): | REGULATION | HARD DATE | PENALTY | GAP STATUS | COMPELLED EVENT |
 
 ## PHASE 3: COST-OF-INACTION QUANTIFICATION
 
 For each Bleeding Neck, estimate the annualised cost of doing nothing:
 1. **DIRECT COST:** Hard money being wasted or lost.
 2. **OPPORTUNITY COST:** Revenue not captured, market position not defended.
-3. **RISK COST:** Probability × impact of the fragile position materialising.
+3. **RISK COST:** Probability x impact of the fragile position materialising.
 
 **THE NUMBER:** Sum the top 3 Bleeding Necks into a single &quot;Cost of Inaction&quot; figure. State methodology and confidence level.
 
-**DASHBOARD FEED TAG:** `[COI: £X.XM/yr | Confidence: High/Med/Low | Source: G-01 Phase 3]`
+**DASHBOARD FEED TAG:** [COI: xM/yr | Confidence: High/Med/Low | Source: G-01 Phase 3]
 
 ## PHASE 4: SERVICE-PROFIT CHAIN DIAGNOSTIC (Heskett)
 
@@ -193,7 +218,22 @@ Trace the operational cascade: Employee capability gaps → Service delivery fai
 2. Where is the chain under stress but not yet broken?
 3. What would fix the chain — and who internally is blocking the fix?
 
-## PHASE 5: MICRO-DOMAIN EXTRACTION
+## PHASE 5: ACFE RED FLAGS SCAN
+
+Scan for corporate distress signals (Association of Certified Fraud Examiners methodology adapted for commercial intelligence):
+
+| RED FLAG | SIGNAL | EVIDENCE | SEVERITY | COMMERCIAL IMPLICATION |
+|---|---|---|---|---|
+| Auditor change | Changed auditor in last 24 months? | | Low/Med/High | Financial instability risk |
+| Executive departures | C-suite turnover pattern? | | | Leadership instability |
+| Restated earnings | Any financial restatements? | | | Accounting concerns |
+| Delayed filings | Late regulatory submissions? | | | Governance issues |
+| Related-party transactions | Unusual related-party activity? | | | Governance risk |
+| Revenue recognition shifts | Changes in how revenue is recognised? | | | Earnings quality |
+
+**COMMERCIAL INTERPRETATION:** These are not fraud indicators — they are RISK SIGNALS for commercial engagement. A client with 3+ red flags may be financially unstable, may renegotiate mid-contract, or may not survive the contract term. Feed into G-02B (Commercial Viability).
+
+## PHASE 6: MICRO-DOMAIN EXTRACTION
 
 (Execute only if Focus Area is NOT &quot;None&quot; AND Target is NOT &quot;None&quot;)
 
@@ -201,7 +241,7 @@ Trace the operational cascade: Employee capability gaps → Service delivery fai
 2. DOMAIN PAIN POINTS
 3. CURRENT VENDOR LANDSCAPE
 
-## PHASE 6: SELLER CAPABILITIES &amp; PITCH MAPPING
+## PHASE 7: SELLER CAPABILITIES &amp; PITCH MAPPING
 
 (Execute only if Seller is NOT &quot;None&quot;)
 
@@ -209,12 +249,22 @@ Trace the operational cascade: Employee capability gaps → Service delivery fai
 2. **THE 3 PITCH ANGLES:** Each must reference a specific Bleeding Neck.
 3. **PREDICTED OBJECTIONS &amp; COUNTERS:** Top 2.
 
-## PHASE 7: COMPOUND CROSS-REFERENCE (Execute only if G-02/G-03 provided)
+## PHASE 8: COMPOUND CROSS-REFERENCE (Execute only if G-02/G-03 provided)
 
 1. **FINANCIAL VALIDATION:** Do G-02 leaks confirm or contradict Bleeding Necks?
 2. **STAKEHOLDER FRICTION:** Where do executive priorities conflict with macro reality?
 3. **HIDDEN DEPENDENCIES:** Connections only visible with all three data sets.
 4. **REVISED BLEEDING NECKS:** Re-rank incorporating all intelligence.
+
+## PHASE 9: VISUAL INTELLIGENCE (Execute only if VISUAL EVIDENCE provided)
+
+For any images provided, extract:
+1. **BRAND SIGNALS:** What does the physical environment reveal about culture and investment?
+2. **TECHNOLOGY SIGNALS:** What hardware, software, vendor logos are visible?
+3. **CULTURE INDICATORS:** Open plan vs offices, dress code, team dynamics visible.
+4. **COMPETITIVE VENDOR PRESENCE:** Any competitor branding or products visible?
+
+Cross-reference visual findings against Phases 1-4. Flag any contradictions (e.g., &quot;transformation&quot; messaging but outdated technology visible).
 
 ## GAIN DRIVER TARGETING
 
@@ -226,22 +276,37 @@ Map each Bleeding Neck to the stakeholder driver it activates:
 | [Neck 2] | | |
 | [Neck 3] | | |
 
-- **Safety:** &quot;This threatens what you&#x27;ve built. Here&#x27;s the evidence.&quot;
+- **Safety:** &quot;This threatens what you have built. Here is the evidence.&quot;
 - **Achievement:** &quot;This is the gap between where you are and where your peers are moving.&quot;
-- **Power:** &quot;This puts your control at risk. Here&#x27;s how to reclaim it.&quot;
-- **Order:** &quot;This breaks the process. Here&#x27;s the structured fix.&quot;
+- **Power:** &quot;This puts your control at risk. Here is how to reclaim it.&quot;
+- **Order:** &quot;This breaks the process. Here is the structured fix.&quot;
 
 ## FORENSIC CHECKLIST (Gawande)
 
-- ☐ Every financial claim traces to a named source
-- ☐ The Narrative Gap is supported by at least 2 contradicting data points
-- ☐ No pillar contains generic filler — every bullet is specific to THIS company
-- ☐ The Bleeding Necks are ranked by business impact, not recency
-- ☐ Awareness Level assumption is stated explicitly
-- ☐ Cost-of-Inaction has a stated methodology and confidence level
-- ☐ Regulatory Timeline has hard dates, not vague &quot;upcoming&quot; references
-- ☐ Service-Profit Chain identifies at least one break point with evidence
-- ☐ If compound mode: cross-reference findings are specific, not generic
+- Every financial claim traces to a named source
+- The Narrative Gap is supported by at least 2 contradicting data points
+- No pillar contains generic filler — every bullet is specific to THIS company
+- The Bleeding Necks are ranked by business impact, not recency
+- Awareness Level assumption is stated explicitly
+- Cost-of-Inaction has a stated methodology and confidence level
+- Regulatory Timeline has hard dates, not vague &quot;upcoming&quot; references
+- Service-Profit Chain identifies at least one break point with evidence
+- If compound mode: cross-reference findings are specific, not generic
+- BELLINGCAT: Every material claim corroborated from 2+ independent sources
+- MECE: 9 pillars verified as non-overlapping and exhaustive
+- TUFTE: All tables are clean — no decorative elements
+- ACFE: Red flags scan completed with commercial interpretation
+
+## THE ONE-PAGER
+
+Compress the entire output into a single-page summary (max 250 words):
+- SCQA opening (Situation, Complication, Question implied, Answer)
+- Top 3 Bleeding Necks with one-line evidence each
+- Cost of Inaction number
+- Single recommended next action
+- Corridor Test sentence (under 15 words — what survives the hallway)
+
+This one-pager is what gets forwarded. What gets read in the lift. What the champion uses when you are not in the room.
 
 ## THE OPERATOR LOOP
 
@@ -256,8 +321,8 @@ Provide 2-3 specific suggestions for deep-dives based on the company&#x27;s uniq
 
 If Regulatory Timeline reveals a compelled event within 6 months → prioritise G-02 immediately.
 If Narrative Gap is significant → consider G-15 (Cross-Reference) before G-02.
-
----</textarea>
+If ACFE Red Flags show 3+ signals → run G-02B (Commercial Viability) before investing further.
+If Bleeding Necks have single-source evidence → run G-15 (Cross-Reference) to triangulate before acting.</textarea>
   </div>
   <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>
 </div>

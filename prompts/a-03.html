@@ -2,7 +2,7 @@
   <span class="prompt-id" style="color:var(--purple)">A-03</span>
   <span class="prompt-badge open">OPEN</span>
 </div>
-<h2 class="prompt-title">STAKEHOLDER DISCOVERY — Entity Extraction</h2>
+<h2 class="prompt-title">STAKEHOLDER DISCOVERY v4 — Entity Extraction</h2>
 <div class="prompt-cat">STAKEHOLDER DISCOVERY</div>
 
 <div class="pm-block">
@@ -17,7 +17,7 @@
 
 <div class="pm-block">
   <div class="pm-label">Architecture</div>
-  <p class="pm-text">Entity Extraction. Scans RFP, meeting notes, and macro intel to identify every stakeholder mentioned or implied. Outputs a target list for G-03 profiling with role classification and priority ranking.</p>
+  <p class="pm-text">Entity Extraction + Role Classification + Priority Ranking. v4: FBI Linguistic analysis on source material (detect hidden priorities and stress signals), Network Analysis for hidden connections between stakeholders, SCQA structure, Tufte tables, One-Page compression with Corridor Test, Platform Adapter, conditional Operator Loop.</p>
 </div>
 
 <div class="pm-block">
@@ -48,7 +48,11 @@
 <div class="pm-block">
   <div class="pm-label">Frameworks</div>
   <div class="pm-tags">
-      <span class="pm-pill fw">MEDDIC (Champion/EB ID) Sphere of Influence Gawande (Checklist)</span>
+      <span class="pm-pill fw">MEDDIC</span>
+      <span class="pm-pill fw">Sphere of Influence</span>
+      <span class="pm-pill fw">Gawande</span>
+      <span class="pm-pill fw">FBI Linguistic</span>
+      <span class="pm-pill fw">Network Analysis</span>
   </div>
 </div>
 
@@ -65,7 +69,16 @@
 
 <div class="prompt-code-section">
   <div class="prompt-code-wrap">
-    <textarea class="prompt-code" id="promptText" readonly>## PROMPT CODE
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. All phases.
+— If ChatGPT: Proceed as normal. Flag if output exceeds token window.
+— If Gemini: Proceed as normal. Use conservative table formatting.
+— If Other: Proceed with standard Markdown. Flag any limitations.
+
+---
+
+## PROMPT CODE
 
 SOURCE MATERIAL: [Paste ALL available material — RFP, meeting notes, org chart, CRM data, LinkedIn profiles, email threads]
 A-01 RFP DECODE: [Paste A-01 output for authorship matching, or type &quot;None&quot;]
@@ -76,8 +89,14 @@ DEAL SIZE / TYPE: [Insert approximate deal value and type, e.g., &quot;£2M mana
 
 1. **FILENAME:** `A-03_Stakeholders_[Target_Company].md`
 2. **DESTINATION FOLDER:** `02_Processed_Intel/`
-3. Begin with: &gt; 📎 **SYSTEM SAVE PROTOCOL:** Save as: `A-03_Stakeholders_[Target_Company].md` → `02_Processed_Intel/`
+3. Begin with: &gt; 💾 **SYSTEM SAVE PROTOCOL:** Save as: `A-03_Stakeholders_[Target_Company].md` → `02_Processed_Intel/`
 4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
+5. **DOCUMENT STRUCTURE (SCQA — Minto):** Open with:
+   - **SITUATION:** The deal, the sources analysed, the number of stakeholders identified (one paragraph).
+   - **COMPLICATION:** The stakeholder landscape challenge — hidden vetoes, missing decision-makers, incomplete map (one paragraph).
+   - **ANSWER:** The single most important stakeholder insight FIRST — who is the real power centre and what's the biggest gap in our map (one sentence). Then present the evidence.
+6. **TABLE DESIGN (Tufte):** All tables maximise data-ink ratio. Every column earns its place.
+7. **CLASSIFICATION QUALITY (MECE):** Role classifications must be Mutually Exclusive and Collectively Exhaustive. Self-check.
 
 ## ROLE &amp; OBJECTIVE
 
@@ -134,6 +153,44 @@ Cross-reference A-01 authorship. Hidden authors not in register → add as HIDDE
 
 1. REPORTING LINES 2. EVALUATION CLUSTERS 3. THE POWER CENTRE 4. THE UNKNOWN (mentioned but unresearched = risk)
 
+## PHASE 5B: FBI LINGUISTIC SCAN ON SOURCE MATERIAL (v4 NEW)
+
+**[INTERNAL ONLY — DO NOT SHARE WITH STAKEHOLDERS]**
+
+Scan ALL source material (RFP text, meeting notes, emails, CRM data) for linguistic patterns that reveal hidden stakeholder dynamics:
+
+| SIGNAL | PATTERN | EVIDENCE | IMPLICATION |
+|---|---|---|---|
+| **Authority Language:** Who uses directive language ("will", "must", "require") vs deferential ("should", "could", "ideally")? | | | Directive = real authority. Deferential = influencer, not decider. |
+| **Stress Clusters:** Which sections show hedging, qualification, or over-specification? | | | The person who wrote these sections is under pressure on this topic. |
+| **Ownership Language:** Who uses "I" vs "we" vs "the team"? | | | "I" = personal stake. "The team" = distancing from accountability. |
+| **Repetition Signals:** Which requirements are stated multiple times across different sections? | | | Repeated = high emotional weight. Cross-ref to Phase 3 (Authorship) to find who is driving the repetition. |
+| **Absence Signals:** What topics are conspicuously NOT mentioned? | | | What's missing from an RFP is often more revealing than what's in it. |
+
+**RULES:**
+— Only flag patterns with 3+ instances.
+— This analysis informs stakeholder PRIORITY, not identity. It tells you who matters most, not who they are.
+— FBI Linguistic findings are INTERNAL INTELLIGENCE ONLY.
+
+## PHASE 5C: NETWORK ANALYSIS — HIDDEN CONNECTIONS (v4 NEW)
+
+For every stakeholder identified in Phases 1-2, check for hidden connections:
+
+| STAKEHOLDER A | STAKEHOLDER B | CONNECTION TYPE | EVIDENCE | IMPLICATION |
+|---|---|---|---|---|
+| | | Career overlap / Shared board / Academic / Conference / Social | | Alliance? Rivalry? Dependency? |
+
+**SOURCES TO CHECK:**
+— LinkedIn: shared employers, shared connections, endorsements
+— Companies House: shared directorships
+— Conference programmes: co-panellists
+— Academic: same institution, same cohort
+— CRM: who was in which meetings together, email cc patterns
+
+**KEY OUTPUT:** Hidden influence paths that the org chart doesn't show. Two stakeholders who worked together at a previous company have a pre-existing trust relationship that overrides formal hierarchy.
+
+**Bellingcat Rule:** Every connection claim must cite a verifiable source. No speculative connections.
+
 ## PHASE 6: G-03 PROFILING QUEUE
 
 | PRIORITY | NAME | TITLE | REASON | PROFILE TYPE |
@@ -154,6 +211,22 @@ Map expected GAIN drivers to key roles for engagement prioritisation:
 
 **INSTRUCTION TO AI:** These are DEFAULT driver assumptions. Once G-03 profiles are run, replace with actual drivers. Flag: *&quot;Driver mapping is based on role defaults. Run G-03 on priority stakeholders to replace with evidence-based driver assessments.&quot;*
 
+## PHASE 7: ONE-PAGE COMPRESSION — THE STAKEHOLDER MAP CARD
+
+1. **CORRIDOR TEST (under 15 words):** One sentence capturing the stakeholder landscape and the biggest gap.
+
+2. **STAKEHOLDER SNAPSHOT:**
+
+| # | NAME | ROLE | MEDDIC | PRIORITY | GAIN DRIVER (default) | PROFILED? |
+|---|---|---|---|---|---|---|
+| 1 | | | | | | Y/N |
+
+3. **THE POWER CENTRE:** Who really decides? (one sentence)
+4. **THE BIGGEST GAP:** Who is missing from this map? (one sentence)
+5. **NEXT ACTION:** One specific step.
+
+This is the version the bid director uses to allocate pursuit resources.
+
 ## FORENSIC CHECKLIST (Gawande)
 
 - ☐ Every named person in source material is captured
@@ -164,21 +237,43 @@ Map expected GAIN drivers to key roles for engagement prioritisation:
 - ☐ G-03 profiling queue prioritised with reasoning
 - ☐ Hidden influencers (mentioned once, no title) flagged
 - ☐ Expected GAIN drivers mapped per role
+- ☐ FBI Linguistic scan completed — authority language and stress clusters identified
+- ☐ FBI Linguistic findings marked INTERNAL ONLY
+- ☐ Network Analysis completed — hidden connections mapped with cited sources
+- ☐ SCQA structure — key stakeholder insight appears before evidence
+- ☐ All tables pass Tufte test
+- ☐ MECE check on role classifications
+- ☐ One-Page Stakeholder Map Card produced with Corridor Test
 
 ## THE OPERATOR LOOP
 
-**First ask:** *&quot;Validate this list against your CRM. Who have you actually MET? Anyone on this list you&#x27;ve never spoken to is an intelligence gap. Anyone NOT on this list who you&#x27;ve met is a gap in the extraction.&quot;*
+**Primary question:** *&quot;Validate this list against your CRM. Who have you actually MET? Anyone on this list you&#x27;ve never spoken to is an intelligence gap. Anyone NOT on this list who you&#x27;ve met is a gap in the extraction.&quot;*
 
-**Second ask:** *&quot;Who is the real decision-maker? Not the one with the title — the one who shapes every conversation. If you&#x27;re not sure, that&#x27;s the person we need to profile first.&quot;*
+**Conditional routing based on output:**
 
-**NEXT MOVES:**
-→ G-03 (Profile top priority stakeholders)
+IF FBI Linguistic reveals authority language from an un-profiled person:
+→ &quot;Linguistic analysis detected directive language in [section] that doesn't match any profiled stakeholder. Someone with real authority contributed to this section but isn't on our radar. This is a hidden decision-maker. Find them before proceeding.&quot;
+
+IF Network Analysis reveals hidden connection between stakeholders:
+→ &quot;[Stakeholder A] and [Stakeholder B] have a pre-existing relationship through [connection]. This may mean they'll align in evaluation — or it may mean one influences the other informally. When profiling via G-03, specifically probe this relationship.&quot;
+
+IF Network Analysis reveals connection to a competitor:
+→ &quot;[Stakeholder] has a connection to [competitor] through [evidence]. This doesn't mean bias, but it means the competitor has an informal access path we don't. Flag for G-03 profiling and consider how to address proactively.&quot;
+
+IF fewer than 3 stakeholders found:
+→ &quot;⚠️ CRITICAL: Fewer than 3 stakeholders identified. This deal has hidden vetoes. Do NOT proceed with bid preparation until more are identified. Gather org charts, meeting attendee lists, or email cc patterns.&quot;
+
+IF Economic Buyer not identified:
+→ &quot;No Economic Buyer identified. This is a CRITICAL gap. Run G-16 (NED Governance Map) to find above-the-line routes. Without knowing who holds the budget, we're bidding blind.&quot;
+
+IF Champion not identified:
+→ &quot;No Champion identified. Run A-04 (Motivation Map) on the most engaged stakeholder to assess champion potential. A deal without a champion is a deal without an insider.&quot;
+
+**SUGGESTED NEXT MOVES:**
+→ G-03 (Profile top priority stakeholders — start with Economic Buyer and Champion candidates)
 → A-05 (Authority Map when profiles complete)
 → A-14 (Cross-Stakeholder Dynamics)
-
-If fewer than 3 stakeholders found → do NOT proceed with bid preparation until more are identified.
-If Economic Buyer not identified → this is a CRITICAL gap. Run G-16 (NED Governance Map) to find above-the-line routes.
-If Champion not identified → run A-04 (Motivation Map) on the most engaged stakeholder to assess champion potential.
+→ If hidden connections found: Factor into G-03 profiling brief
 
 ---</textarea>
   </div>
