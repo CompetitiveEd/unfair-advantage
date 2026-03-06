@@ -1,262 +1,453 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The Data Room. Raw synthetic intelligence and RFP documentation powering the GAIN methodology.">
-    <title>The Data Room | David Matthews</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Reusing established McKinsey-style tight formatting */
-        .grid-2-col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-        
-        .card.compact { padding: 1.5rem; background: rgba(15,23,42,0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; display: flex; flex-direction: column; transition: all 0.2s ease; }
-        .card.compact:hover { border-color: rgba(255,255,255,0.2); }
-        .card.compact .doctrine-title { font-size: 1.1rem; font-weight: 800; color: white; margin-bottom: 0.5rem; margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em; }
-        .card.compact .doctrine-subtitle { font-size: 0.7rem; margin-bottom: 1rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
-        .card.compact .body-prose { font-size: 0.85rem; line-height: 1.5; color: #cbd5e1; flex-grow: 1; margin: 0 0 1.5rem 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Room | GAIN Protocol</title>
+<meta name="description" content="Full evidence trail. Synthetic input data, engine outputs, and live dashboards from a demonstration GAIN deployment on Meridian Financial Services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070a;--s1:#0e0e13;--s2:#141419;--border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);--text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;--blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;--teal:#14b8a6}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-        .hero-sub-behavior { font-size: 1.15rem; color: #cbd5e1; max-width: 600px; margin: 1.5rem auto 2rem auto; line-height: 1.6; }
-        
-        /* The Index Navigation */
-        .page-index-nav { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin: 0 auto 3rem auto; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; color: #64748b; }
-        .index-step { display: flex; align-items: center; gap: 1.5rem; }
-        .index-step span { color: #cbd5e1; }
-        .index-arrow { color: #3b82f6; font-size: 1rem; font-weight: 900; }
+/* ═══ NAV ═══ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative}.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-toggle:checked~.radial-label{color:var(--text-bright)}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
+.nav-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(10,10,14,.97);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:12px;padding:6px;min-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+.radial-toggle:checked~.nav-drop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-dim);transition:all .15s}
+.nd-item:hover{background:rgba(255,255,255,.04);color:var(--text-bright)}
+.nd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.nd-title{font-size:13px;font-weight:600;letter-spacing:.2px}
+.nd-sep{height:1px;background:var(--border);margin:4px 10px}
+.nd-group{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);opacity:.35;padding:8px 12px 2px}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}
+.mobile-nav{display:none;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border)}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav-divider{height:1px;background:var(--border-h);margin:4px 0}
+.mobile-nav-group{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:12px 0 4px;margin-top:4px}
+.mobile-nav a span{font-family:'Fraunces',serif;font-weight:900;font-size:16px;margin-right:6px}
+}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}.mobile-nav{display:none!important}}
 
-        .architecture-block { margin-bottom: 4rem; }
-        
-        /* Upgraded Tactical Download Buttons */
-        .dl-btn { display: inline-block; padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; text-decoration: none; align-self: flex-start; transition: all 0.2s ease; margin-top: auto; }
-        .dl-blue { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .dl-blue:hover { background: rgba(59, 130, 246, 0.4); color: white; }
-        .dl-amber { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .dl-amber:hover { background: rgba(245, 158, 11, 0.4); color: white; }
-        .dl-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .dl-red:hover { background: rgba(239, 68, 68, 0.4); color: white; }
+/* ═══ REVEAL ═══ */
+@supports (animation-timeline:view()){.reveal{opacity:0;transform:translateY(24px);animation:revealUp linear both;animation-timeline:view();animation-range:entry 0% entry 25%}@keyframes revealUp{to{opacity:1;transform:translateY(0)}}}
+@supports not (animation-timeline:view()){.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}.reveal.vis{opacity:1;transform:translateY(0)}}
 
-        @media (max-width: 900px) {
-            .grid-2-col, .grid-3-col { grid-template-columns: 1fr; }
-            .index-arrow { display: none; }
-            .index-step { justify-content: center; width: 100%; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        }
-    </style>
+/* ═══ HERO ═══ */
+.hero{text-align:center;max-width:800px;margin:0 auto;padding:80px 2rem 2rem}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--text-bright);margin-bottom:1rem}
+.hero p{font-size:15px;color:var(--text-dim);line-height:1.7;max-width:600px;margin:0 auto}
+.hero p em{color:var(--amber);font-style:normal;font-weight:600}
+
+/* ═══ ACCOUNT BANNER ═══ */
+.account-banner{max-width:900px;margin:2rem auto;padding:1.25rem 2rem;background:var(--s1);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.ab-name{font-family:'Fraunces',serif;font-size:18px;font-weight:800;color:var(--text-bright)}
+.ab-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px}
+.ab-tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:5px;background:rgba(239,68,68,.08);color:var(--red);border:1px solid rgba(239,68,68,.15)}
+
+/* ═══ SECTION ═══ */
+.section{max-width:1000px;margin:0 auto;padding:3rem 2rem 2rem}
+.section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.section-title{font-family:'Fraunces',serif;font-size:22px;font-weight:800;color:var(--text-bright)}
+.section-sub{font-size:13px;color:var(--text-dim);margin-bottom:2rem;max-width:700px;line-height:1.7}
+
+/* ═══ INPUT CARDS (PDF downloads) ═══ */
+.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:1.5rem}
+.input-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1.25rem;transition:all .25s;cursor:pointer;text-decoration:none;display:block;position:relative}
+.input-card:hover{border-color:var(--border-h);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.input-card::after{content:'PDF';position:absolute;top:12px;right:12px;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--text-dim);opacity:.4;padding:2px 6px;border:1px solid var(--border);border-radius:3px}
+.ic-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.ic-name{font-size:13px;font-weight:700;color:var(--text-bright);margin-bottom:4px;line-height:1.3;padding-right:40px}
+.ic-desc{font-size:11px;color:var(--text-dim);line-height:1.5}
+
+/* ═══ OUTPUT CARDS (on-page terminal + download) ═══ */
+.output-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:1.5rem}
+.output-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all .25s}
+.output-card:hover{border-color:var(--border-h)}
+.oc-header{padding:1rem 1.25rem .75rem;display:flex;align-items:center;gap:8px}
+.oc-id{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px}
+.oc-title{font-size:12px;font-weight:700;color:var(--text-bright);flex:1}
+.oc-term{font-family:'DM Mono',monospace;font-size:10px;line-height:1.7;color:#94a3b8;padding:0 1.25rem;max-height:120px;overflow:hidden;position:relative}
+.oc-term::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--s1))}
+.oc-foot{padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.oc-chain{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);opacity:.5}
+.oc-dl{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);text-decoration:none;letter-spacing:.5px;transition:color .2s}
+.oc-dl:hover{color:#60a5fa}
+
+/* ═══ CHAIN VISUALISATION ═══ */
+.chain-wrap{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;overflow-x:auto;margin-bottom:1.5rem}
+.chain-title{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:1rem}
+.chain-flow{display:flex;align-items:center;gap:0;flex-wrap:nowrap;min-width:max-content}
+.chain-node{padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;white-space:nowrap;border:1px solid}
+.chain-arrow{color:var(--text-dim);opacity:.3;font-size:14px;padding:0 4px;flex-shrink:0}
+.cn-g{color:var(--blue);border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.04)}
+.cn-a{color:var(--purple);border-color:rgba(168,85,247,.2);background:rgba(168,85,247,.04)}
+.cn-i{color:var(--amber);border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.04)}
+.cn-n{color:var(--green);border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.04)}
+.cn-d{color:var(--red);border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04)}
+
+/* ═══ DASHBOARD CARDS ═══ */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.dash-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:1.25rem;cursor:pointer;transition:all .25s}
+.dash-card:hover{border-color:var(--border-h);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.dc-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.dc-name{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+.dc-desc{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:.75rem}
+.dc-link{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.5px;transition:opacity .2s}
+
+/* ═══ IFRAME MODAL ═══ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:.75rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border-h);border-radius:16px;width:100%;max-width:1100px;height:90vh;position:relative;overflow:hidden;animation:modalIn .3s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:.75rem;right:.75rem;z-index:10;background:rgba(7,7,10,.8);border:1px solid var(--border-h);color:var(--text-dim);font-size:20px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;backdrop-filter:blur(8px)}
+.modal-close:hover{color:var(--text-bright);background:rgba(7,7,10,.95)}
+.modal iframe{width:100%;height:100%;border:none;border-radius:0 0 16px 16px}
+.modal-loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px}
+
+/* ═══ DIVIDER ═══ */
+.divider{max-width:1000px;margin:0 auto;height:1px;background:var(--border)}
+
+/* ═══ FOOTER ═══ */
+.footer{padding:2rem;border-top:1px solid var(--border);text-align:center;margin-top:3rem}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#52525b;letter-spacing:1px}
+.footer-text a{color:#71717a;text-decoration:none}.footer-text a:hover{color:var(--text-dim)}
+
+/* ═══ CTA ═══ */
+.cta{text-align:center;padding:4rem 2rem;border-top:1px solid var(--border);position:relative}
+.cta::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(245,158,11,.03),transparent 70%);pointer-events:none}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,32px);font-weight:900;color:var(--text-bright);margin-bottom:1rem}
+.cta p{font-size:14px;color:var(--text-dim);margin-bottom:2rem;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
+.cta-btn:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
+</style>
 </head>
-<body class="hero-compact">
+<body>
 
-    <div class="page-container content-reveal">
-        
-        <nav>
-            <a href="index.html" class="nav-brand">DAVID MATTHEWS</a>
-            <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-links"> 
-                
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">Evidence ▾</span>
-                    <div class="dropdown-content">
-                        <a href="revenue-case.html">The Revenue Case</a>
-                        <a href="proof.html">The Proof</a>
-                        <a href="story.html">The Story</a>
-                        <a href="thinking.html">The Thinking</a>
-                        <a href="data-room.html" style="color: #3b82f6;">The Data Room</a>
-                    </div>
-                </div>
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner">
+    <div class="radial-menu">
+      <input type="checkbox" id="see-radial" class="radial-toggle">
+      <label for="see-radial" class="radial-label">See It Work <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/proof.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Proof</span></a>
+        <a href="/dashboards.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">Dashboards</span></a>
+        <a href="/revenue-case.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">Revenue Case</span></a>
+        <a href="/data-room.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">Data Room</span></a>
+      </div>
+    </div>
+    <div class="radial-menu">
+      <input type="checkbox" id="hood-radial" class="radial-toggle">
+      <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:#67e8f9"></span><span class="nd-title">The Edge</span></a>
+        <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:#5eead4"></span><span class="nd-title">Architecture</span></a>
+        <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:#7dd3fc"></span><span class="nd-title">The Story</span></a>
+        <div class="nd-sep"></div>
+        <div class="nd-group">The Toolkit</div>
+        <a href="/know.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">G<span style="font-weight:400;opacity:.5;margin-left:4px">Gather</span></span></a>
+        <a href="/map.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">A<span style="font-weight:400;opacity:.5;margin-left:4px">Assess</span></span></a>
+        <a href="/win.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">I<span style="font-weight:400;opacity:.5;margin-left:4px">Influence</span></span></a>
+        <a href="/grow.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">N<span style="font-weight:400;opacity:.5;margin-left:4px">Nurture</span></span></a>
+      </div>
+    </div>
+    <a href="/engage.html" class="nav-cta">Engage</a>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-group">See It Work</div>
+    <a href="/proof.html">Proof</a><a href="/dashboards.html">Dashboards</a><a href="/revenue-case.html">Revenue Case</a><a href="/data-room.html">Data Room</a>
+    <div class="mobile-nav-group">Under the Hood</div>
+    <a href="/edge.html">The Edge</a><a href="/architecture.html">Architecture</a><a href="/story.html">The Story</a>
+    <div class="mobile-nav-group">The Toolkit</div>
+    <a href="/know.html"><span style="color:#93c5fd">G</span> Gather</a><a href="/map.html"><span style="color:#d8b4fe">A</span> Assess</a><a href="/win.html"><span style="color:#fcd34d">I</span> Influence</a><a href="/grow.html"><span style="color:#6ee7b7">N</span> Nurture</a>
+    <div class="mobile-nav-divider"></div>
+    <a href="/engage.html" style="color:var(--amber);font-weight:700">Engage →</a>
+  </div>
+</nav>
 
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">The System ▾</span>
-                    <div class="dropdown-content">
-                        <a href="thesis.html">The Thesis</a>
-                        <a href="human+ai.html">Human+AI</a>
-                        <a href="edge.html">The Edge</a>
-                        <a href="architecture.html">The Architecture</a>
-                    </div>
-                </div>
+<!-- ═══ HERO ═══ -->
+<section class="hero reveal">
+  <div class="hero-label">Data Room</div>
+  <h1>Nothing Was Made Up. Everything Is Here.</h1>
+  <p>Full evidence trail from a demonstration GAIN deployment. Synthetic data in. Engine outputs out. Dashboards generated. <em>Every input, every output, every chain — fully transparent.</em></p>
+</section>
 
-                <div class="nav-dropdown">
-                    <span class="nav-link-main">Prompt Toolkit ▾</span>
-                    <div class="dropdown-content">
-                        <a href="know.html">[G] Gather | Know them</a>
-                        <a href="map.html">[A] Assess | Map them</a>
-                        <a href="win.html">[I] Influence | Win them</a>
-                        <a href="grow.html">[N] Nurture | Grow them</a>
-                    </div>
-                </div>
-                
-                <a href="dashboards.html">Dashboards</a>
-                <a href="contact.html" class="nav-cta" style="background: #3b82f6; color: white;">Engage Me</a>
-            </div>
-        </nav>
+<!-- ═══ ACCOUNT BANNER ═══ -->
+<div class="account-banner reveal">
+  <div>
+    <div class="ab-name">Meridian Financial Services</div>
+    <div class="ab-meta">Insurance-led multi-line FS · £847M revenue · Synthetic demonstration account</div>
+  </div>
+  <div class="ab-tag">SYNTHETIC DATA</div>
+</div>
 
-        <header class="dark-header-block" style="padding-bottom: 3rem; position: relative;">
-            <picture>
-                <source srcset="assets/images/data-room.avif" type="image/avif">
-                <img src="assets/images/data-room.webp" class="hero-bg" alt="The Data Room" style="opacity: 0.45; position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;">
-            </picture>
-            <div class="hero-impact" style="position: relative; z-index: 2;">
-                <h1 class="hero-headline" style="margin-top: 2rem;">
-                    <span style="color: #ffffff; display: block;">THE DATA ROOM</span>
-                </h1>
-                
-                <p class="hero-sub-behavior">
-                    The raw, synthetic intelligence baseline. This is the £110M fictional enterprise case study used to prove the GAIN prompt architecture. Download the files and test the engine yourself.
-                </p>
-            </div>
-        </header>
+<!-- ═══ 1. INPUT DATA ═══ -->
+<div class="divider"></div>
+<section class="section reveal">
+  <div class="section-head">
+    <span class="section-dot" style="background:var(--cyan)"></span>
+    <span class="section-title">Source Data — What Went In</span>
+  </div>
+  <p class="section-sub">Every piece of data that fed the GAIN engines. Synthetic profiles, fabricated filings, mock RFP. All downloadable as PDFs — the same format you'd feed into the system for a real engagement.</p>
 
-        <main>
-            
-            <div class="container-wide reveal" style="margin-top: 2rem;">
-                <div class="page-index-nav">
-                    <div class="index-step"><span>01. The Target</span> <span class="index-arrow">→</span></div>
-                    <div class="index-step"><span>02. The Deal</span> <span class="index-arrow">→</span></div>
-                    <div class="index-step"><span>03. The Inside</span></div>
-                </div>
-            </div>
+  <div class="input-grid">
+    <a href="dataroom/meridian-company-profile.pdf" class="input-card" style="border-top:2px solid rgba(6,182,212,.2)">
+      <div class="ic-type" style="color:var(--cyan)">Company Filing</div>
+      <div class="ic-name">Meridian Financial Services — Company Profile</div>
+      <div class="ic-desc">Annual report data, board structure, strategic priorities, regulatory context. The G-01 source.</div>
+    </a>
+    <a href="dataroom/meridian-financials.pdf" class="input-card" style="border-top:2px solid rgba(59,130,246,.2)">
+      <div class="ic-type" style="color:var(--blue)">Financial Data</div>
+      <div class="ic-name">Meridian — Financial Forensics Pack</div>
+      <div class="ic-desc">Revenue, cost structure, IT spend, infrastructure age, outage costs. The G-02 source.</div>
+    </a>
+    <a href="dataroom/meridian-linkedin-morris.pdf" class="input-card" style="border-top:2px solid rgba(168,85,247,.2)">
+      <div class="ic-type" style="color:var(--purple)">LinkedIn Scrape</div>
+      <div class="ic-name">Jennifer Morris — Director, Operational Resilience</div>
+      <div class="ic-desc">Career history, posts, endorsements, network. The G-03 source for the primary champion.</div>
+    </a>
+    <a href="dataroom/meridian-linkedin-hale.pdf" class="input-card" style="border-top:2px solid rgba(168,85,247,.2)">
+      <div class="ic-type" style="color:var(--purple)">LinkedIn Scrape</div>
+      <div class="ic-name">Richard Hale — CIO</div>
+      <div class="ic-desc">Technical background, vendor preferences, organisational history. The invisible blocker.</div>
+    </a>
+    <a href="dataroom/meridian-linkedin-blackwell.pdf" class="input-card" style="border-top:2px solid rgba(168,85,247,.2)">
+      <div class="ic-type" style="color:var(--purple)">LinkedIn Scrape</div>
+      <div class="ic-name">Sarah Blackwell — Head of Procurement</div>
+      <div class="ic-desc">Procurement philosophy, career trajectory, risk appetite signals.</div>
+    </a>
+    <a href="dataroom/meridian-rfp.pdf" class="input-card" style="border-top:2px solid rgba(239,68,68,.2)">
+      <div class="ic-type" style="color:var(--red)">RFP Document</div>
+      <div class="ic-name">Project Atlas — IT Managed Services RFP</div>
+      <div class="ic-desc">Full mock RFP with evaluation criteria, scope, timeline. The A-01 source.</div>
+    </a>
+    <a href="dataroom/meridian-org-chart.pdf" class="input-card" style="border-top:2px solid rgba(245,158,11,.2)">
+      <div class="ic-type" style="color:var(--amber)">Org Structure</div>
+      <div class="ic-name">Meridian — Organisational Chart</div>
+      <div class="ic-desc">Reporting lines, committee structure, governance. The A-03/A-05 source.</div>
+    </a>
+    <a href="dataroom/meridian-glassdoor.pdf" class="input-card" style="border-top:2px solid rgba(16,185,129,.2)">
+      <div class="ic-type" style="color:var(--green)">Culture Data</div>
+      <div class="ic-name">Meridian — Glassdoor & Culture Signals</div>
+      <div class="ic-desc">Employee reviews, working patterns, management sentiment. The A-15 source.</div>
+    </a>
+  </div>
+</section>
 
-            <div class="container-wide reveal architecture-block">
-                <div class="section-divider" style="margin-bottom: 3rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label">01. THE TARGET: MERIDIAN FINANCIAL SERVICES</div>
-                    <div class="divider-line"></div>
-                </div>
+<!-- ═══ 2. CHAIN SEQUENCE ═══ -->
+<div class="divider"></div>
+<section class="section reveal">
+  <div class="section-head">
+    <span class="section-dot" style="background:var(--amber)"></span>
+    <span class="section-title">The Chain — What Ran and In What Order</span>
+  </div>
+  <p class="section-sub">This is the sequence the diagnostic prescribed for Meridian. Each engine fed the next. The architecture decided the order — the operator confirmed it.</p>
 
-                <div class="grid-3-col">
-                    <div class="card compact" style="border-top: 3px solid #3b82f6;">
-                        <span class="doctrine-subtitle">EXHIBIT 1.A — OSINT</span>
-                        <h3 class="doctrine-title">Corporate Website Scrape</h3>
-                        <p class="body-prose">Public positioning, leadership bios, investor relations data, and ESG commitments. The surface-level intelligence every competitor possesses.</p>
-                        <a href="assets/docs/Meridian-Website-Scrape.txt" download class="dl-btn dl-blue">Download .TXT ↓</a>
-                    </div>
+  <div class="chain-wrap">
+    <div class="chain-title">Diagnostic Chain → Meridian Financial Services</div>
+    <div class="chain-flow">
+      <span class="chain-node cn-d">00-A Intake</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-d">00-B Taxonomy</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-d">00-F Verdict</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-01 Macro</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-02 Financials</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-03 Morris</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-03 Hale</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-03 Blackwell</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-04 Battle Card</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-01 RFP Decode</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-02 Trauma</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-03 Stakeholders</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-04 Motivation</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-05 Authority</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-i">I-01 Pre-Mortem</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-i">I-02 Win Themes</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-n">N-00 Warning Brief</span>
+    </div>
+  </div>
 
-                    <div class="card compact" style="border-top: 3px solid #3b82f6;">
-                        <span class="doctrine-subtitle">EXHIBIT 1.B — OSINT</span>
-                        <h3 class="doctrine-title">LinkedIn Presence</h3>
-                        <p class="body-prose">Company posts, recruitment signals, employee sentiment, and departmental restructuring indicators. Critical for identifying friction.</p>
-                        <a href="assets/docs/Meridian-LinkedIn-Scrape.txt" download class="dl-btn dl-blue">Download .TXT ↓</a>
-                    </div>
+  <div class="chain-wrap" style="margin-top:12px">
+    <div class="chain-title">Alternative Chain → New Stakeholder Joins (Re-entry at G-03)</div>
+    <div class="chain-flow">
+      <span class="chain-node cn-g">G-03 New Person</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-04 Update</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-a">A-05 Update</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-g">G-05 First 15</span><span class="chain-arrow">→</span>
+      <span class="chain-node cn-i">I-01 Re-run</span>
+    </div>
+  </div>
+</section>
 
-                    <div class="card compact" style="border-top: 3px solid #3b82f6;">
-                        <span class="doctrine-subtitle">EXHIBIT 1.C — OSINT</span>
-                        <h3 class="doctrine-title">Bloomberg Terminal Alerts</h3>
-                        <p class="body-prose">Market sentiment, earnings reports, and regulatory scrutiny. Contains the vital PRA operational resilience feedback that triggers the deal.</p>
-                        <a href="assets/docs/Meridian-Bloomberg-Alerts (1).txt" download class="dl-btn dl-blue">Download .TXT ↓</a>
-                    </div>
-                </div>
-            </div>
+<!-- ═══ 3. ENGINE OUTPUTS ═══ -->
+<div class="divider"></div>
+<section class="section reveal">
+  <div class="section-head">
+    <span class="section-dot" style="background:var(--blue)"></span>
+    <span class="section-title">Engine Outputs — What Came Out</span>
+  </div>
+  <p class="section-sub">Raw intelligence reports from each engine run. Terminal-format previews below, full outputs downloadable. These are the compound engine outputs — not summaries, not templates.</p>
 
-            <div class="container-wide reveal architecture-block">
-                <div class="section-divider" style="margin-bottom: 3rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label" style="color: #f59e0b;">02. THE DEAL: COMMERCIAL DOCUMENTS</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="grid-2-col">
-                    <div class="card compact" style="border-top: 3px solid #f59e0b;">
-                        <span class="doctrine-subtitle">EXHIBIT 2.A — PRE-ENGAGEMENT</span>
-                        <h3 class="doctrine-title" style="color: #f59e0b;">CIO Pre-Briefing Letter</h3>
-                        <p class="body-prose">The informal market engagement document issued by the CIO. Outlines the "Availability, not assets" thesis and sets the expectation for outcome-linked commercial models before the formal RFP drops.</p>
-                        <a href="assets/docs/Meridian-Pre-Briefing-MFS-2026-ORT-PRE.docx" download class="dl-btn dl-amber">Download .DOCX ↓</a>
-                    </div>
-
-                    <div class="card compact" style="border-top: 3px solid #f59e0b;">
-                        <span class="doctrine-subtitle">EXHIBIT 2.B — FORMAL PROCUREMENT</span>
-                        <h3 class="doctrine-title" style="color: #f59e0b;">The RFP (MFS-2026-ORT-001)</h3>
-                        <p class="body-prose">The complete Request for Proposal. Details the 5 service towers, scoring methodology (60% technical / 30% commercial), regulatory requirements, and the demand for AI-driven operational maturity.</p>
-                        <a href="assets/docs/Meridian-RFP-MFS-2026-ORT-001-v3.docx" download class="dl-btn dl-amber">Download .DOCX ↓</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-wide reveal architecture-block">
-                <div class="section-divider" style="margin-bottom: 3rem;">
-                    <div class="divider-line"></div>
-                    <div class="divider-label" style="color: #ef4444;">03. THE INSIDE: HUMAN INTELLIGENCE</div>
-                    <div class="divider-line"></div>
-                </div>
-
-                <div class="grid-2-col">
-                    <div class="card compact" style="border-top: 3px solid #ef4444;">
-                        <span class="doctrine-subtitle">EXHIBIT 3.A — INTERNAL STRATEGY</span>
-                        <h3 class="doctrine-title" style="color: #ef4444;">Helios Bid Team Briefing</h3>
-                        <p class="body-prose">The confidential internal playbook of the fictional bidding vendor (Helios). Contains honest capability gaps, margin strategy, win themes, and competitive positioning logic. The engine room of the response.</p>
-                        <a href="assets/docs/Helios-Bid-Team-Briefing-Pack.txt" download class="dl-btn dl-red">Download .TXT ↓</a>
-                    </div>
-
-                    <div class="card compact" style="border-top: 3px solid #ef4444;">
-                        <span class="doctrine-subtitle">EXHIBIT 3.B — STAKEHOLDER PROFILING</span>
-                        <h3 class="doctrine-title" style="color: #ef4444;">Executive Dossier: The CRO</h3>
-                        <p class="body-prose">Deep psychological and professional profile of David Osei, Chief Risk Officer. Details his intense aversion to 'checkbox compliance' and how he holds the true power over the vendor selection process.</p>
-                        <a href="assets/docs/Mark Thompson CFO.docx" download class="dl-btn dl-red">Download .DOCX ↓</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-wide reveal" style="text-align: center; margin-top: 2rem; margin-bottom: 4rem; padding: 4rem 2rem; background: linear-gradient(180deg, transparent 0%, rgba(59, 130, 246, 0.1) 100%); border-radius: 8px;">
-                <h2 style="color: white; font-size: 2.25rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: -0.02em;">Now feed the engine.</h2>
-                <p class="body-prose" style="margin-bottom: 2.5rem; font-size: 0.95rem;">
-                    Take these raw files and run them through the GAIN architecture to see the intelligence synthesis in real time.
-                </p>
-                
-                <a href="know.html" style="display: inline-block; background: rgba(15,23,42,0.85); border: 1px solid rgba(59,130,246,0.4); padding: 0.85rem 1.75rem; color: white; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-radius: 6px; letter-spacing: 0.05em; backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.2s ease; text-transform: uppercase;">
-                    ENTER THE PROMPT TOOLKIT &rarr;
-                </a>
-            </div>
-
-        </main>
-
-        <footer>
-            <div class="footer-inner">
-                <a href="index.html" class="footer-brand">DAVID MATTHEWS</a>
-                <div class="footer-right">
-                    <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank" rel="noopener noreferrer" style="color: white; opacity: 0.7; margin-right: 1rem;">
-                        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle;">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/pulse/ai-you-cheerleader-your-better-judgment-unfair-david-matthews-uyvhe/" target="_blank" rel="noopener noreferrer" class="footer-link">
-                        AI Is Not Your Cheerleader →
-                    </a>
-                </div>
-            </div>
-            <div class="footer-subtle">
-                No hype. Just results. © 2026
-            </div>
-        </footer>
-
+  <div class="output-grid">
+    <div class="output-card" style="border-top:2px solid rgba(59,130,246,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--blue)">G-01</span><span class="oc-title">Macro Intelligence — Meridian</span></div>
+      <div class="oc-term">▶ BLEEDING NECK: 62% server estate EOL. Regulatory deadline: March 2027.
+▶ COST OF INACTION: £33-37M over 3 years (infrastructure failure + regulatory penalties).
+▶ BOARD MANDATE: "Operational resilience" — mentioned 14 times in annual report.
+▶ COMPETITOR INSTALLED: Fujitsu (incumbent 8 years, relationship deteriorating).</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds G-02, G-03, G-04</span><a href="dataroom/output-g01-macro.pdf" class="oc-dl">Download ↓</a></div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            if (mobileMenuToggle && navLinks) {
-                mobileMenuToggle.addEventListener('click', () => {
-                    mobileMenuToggle.classList.toggle('active');
-                    navLinks.classList.toggle('active');
-                });
-            }
-            
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(e => { 
-                    if (e.isIntersecting) e.target.classList.add('active'); 
-                });
-            }, { threshold: 0.1 });
+    <div class="output-card" style="border-top:2px solid rgba(59,130,246,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--blue)">G-02</span><span class="oc-title">Financial Forensics — Meridian</span></div>
+      <div class="oc-term">▶ IT SPEND: £47M/yr (5.5% of revenue — above sector average of 4.2%).
+▶ OUTAGE COST: £2.8M/yr (+12% YoY). Insurance claims rising.
+▶ BUDGET LANGUAGE: "Investment" not "cost" — signals board-level buy-in.
+▶ CFO SENTENCE: "Modernise infrastructure" appears in 3 board minutes.</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds G-03, G-04, A-09</span><a href="dataroom/output-g02-financials.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
 
-            document.querySelectorAll('.reveal').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    el.classList.add('active');
-                }
-                revealObserver.observe(el);
-            });
-        });
-    </script>
+    <div class="output-card" style="border-top:2px solid rgba(168,85,247,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--purple)">G-03</span><span class="oc-title">Executive Profile — Jennifer Morris</span></div>
+      <div class="oc-term">▶ GAIN DRIVER: ACHIEVEMENT — legacy through organisational capability.
+▶ KEGAN STAGE: 4→5 transition (systemic thinker, comfort with ambiguity).
+▶ BS DETECTOR: HIGH — evaluates quietly in silences.
+▶ LANDMINE: Doesn't trust vendors who lead with technology.</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds G-04, A-04, G-05</span><a href="dataroom/output-g03-morris.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
+
+    <div class="output-card" style="border-top:2px solid rgba(168,85,247,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--purple)">A-01</span><span class="oc-title">RFP Strategic Decoder — Project Atlas</span></div>
+      <div class="oc-term">▶ AUTHORSHIP: Procurement-led with CIO technical annex. Morris influence absent.
+▶ TRAUMA SIGNAL: "Proven methodology" × 7 — previous supplier made promises, didn't deliver.
+▶ HIDDEN CRITERION: Operational resilience capability not in scoring — but will decide it.
+▶ EVALUATION GAP: No weighting for cultural alignment.</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds A-02, A-03, I-04</span><a href="dataroom/output-a01-rfp.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
+
+    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--amber)">I-01</span><span class="oc-title">Deal Pre-Mortem — Meridian</span></div>
+      <div class="oc-term">▶ FAILURE MODE 1: CIO Alignment Collapse (35% probability).
+▶ FAILURE MODE 2: Procurement Price Squeeze (25% probability).
+▶ FAILURE MODE 3: Incumbent Relationship Recovery (20% probability).
+▶ VERDICT: PROCEED WITH CONDITIONS — Win probability: 62%.</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds I-02, A-06</span><a href="dataroom/output-i01-premortem.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
+
+    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--amber)">I-02</span><span class="oc-title">Win Theme Architect — Meridian</span></div>
+      <div class="oc-term">▶ THEME 1: "Resilience is organisational capability, not technology."
+▶ THEME 2: "Right-size: your CIO gets our UK MD's mobile number."
+▶ THEME 3: "Dual governance — resilience steering + CIO delivery."
+▶ ZIGZAG: Each theme reverses a lose theme from I-01B.</div>
+      <div class="oc-foot"><span class="oc-chain">→ Feeds G-05, G-06, I-05</span><a href="dataroom/output-i02-winthemes.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
+
+    <div class="output-card" style="border-top:2px solid rgba(16,185,129,.2)">
+      <div class="oc-header"><span class="oc-id" style="color:var(--green)">N-00</span><span class="oc-title">Commercial Warning Brief — Meridian</span></div>
+      <div class="oc-term">▶ PROMISE LOG: 14 commitments made during bid. 3 uncosted.
+▶ RISK: TUPE transfer of 109 staff — cultural integration not in transition plan.
+▶ LANDMINE: Morris expects quarterly board reporting. Not in contract.
+▶ HANDOVER: 7 items flagged for delivery team before Day 1.</div>
+      <div class="oc-foot"><span class="oc-chain">← Final chain output</span><a href="dataroom/output-n00-warning.pdf" class="oc-dl">Download ↓</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. DASHBOARDS ═══ -->
+<div class="divider"></div>
+<section class="section reveal">
+  <div class="section-head">
+    <span class="section-dot" style="background:var(--green)"></span>
+    <span class="section-title">Dashboards — What Got Generated</span>
+  </div>
+  <p class="section-sub">The engine outputs compiled into live intelligence dashboards. Not static PDFs — interactive HTML that updates when you re-run engines. Click to open.</p>
+
+  <div class="dash-grid">
+    <div class="dash-card" style="border-top:2px solid rgba(16,185,129,.2)" onclick="openDash('dashboard/dash-operational.html')">
+      <div class="dc-type" style="color:var(--green)">Operational Dashboard</div>
+      <div class="dc-name">Meridian — 4-Tab Intelligence Surface</div>
+      <div class="dc-desc">Know · Map · Win · Grow tabs. Stakeholder dossiers, influence map, disruption questions, competitive landscape.</div>
+      <div class="dc-link" style="color:var(--green)">Open dashboard →</div>
+    </div>
+    <div class="dash-card" style="border-top:2px solid rgba(59,130,246,.2)" onclick="openDash('dashboard/dash-account-pack.html')">
+      <div class="dc-type" style="color:var(--blue)">Account Pack</div>
+      <div class="dc-name">Meridian — Full Intelligence Pack</div>
+      <div class="dc-desc">Company macro, stakeholder grid, win strategy, cards to play, next actions. The terminal-format pack.</div>
+      <div class="dc-link" style="color:var(--blue)">Open pack →</div>
+    </div>
+    <div class="dash-card" style="border-top:2px solid rgba(239,68,68,.2)" onclick="openDash('dashboard/gain-deal-diagnostic.html')">
+      <div class="dc-type" style="color:var(--red)">Deal Diagnostic</div>
+      <div class="dc-name">Project Atlas — Pre-Mortem</div>
+      <div class="dc-desc">Five failure modes, probability weightings, countermeasures. Go/no-go verdict.</div>
+      <div class="dc-link" style="color:var(--red)">Open diagnostic →</div>
+    </div>
+    <div class="dash-card" style="border-top:2px solid rgba(168,85,247,.2)" onclick="openDash('dashboard/gain-cmo-fmo-comparison.html')">
+      <div class="dc-type" style="color:var(--purple)">CMO → FMO</div>
+      <div class="dc-name">Meridian — Operating Model Gap</div>
+      <div class="dc-desc">Current-state to future-state per domain. Maturity scoring with transformation milestones.</div>
+      <div class="dc-link" style="color:var(--purple)">Open comparison →</div>
+    </div>
+    <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.2)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
+      <div class="dc-type" style="color:var(--amber)">Portfolio Triage</div>
+      <div class="dc-name">Albion Capital Partners — Fund View</div>
+      <div class="dc-desc">12 portfolio companies scored. Pipeline, concentration, capability, process maturity.</div>
+      <div class="dc-link" style="color:var(--amber)">Open triage →</div>
+    </div>
+    <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.2)" onclick="openDash('dashboard/dash-react-accountpack.html')">
+      <div class="dc-type" style="color:var(--amber)">Interactive Account Pack</div>
+      <div class="dc-name">Meridian — Full React Dashboard</div>
+      <div class="dc-desc">The interactive version. Expandable sections, all stakeholders, complete intelligence layer.</div>
+      <div class="dc-link" style="color:var(--amber)">Open interactive →</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta reveal">
+  <h2>Seen Enough?</h2>
+  <p>This is what the system produces from synthetic data. Imagine what it does with real intelligence about your live deals.</p>
+  <a href="/engage.html" class="cta-btn">Start the Conversation</a>
+</section>
+
+<!-- ═══ IFRAME MODAL ═══ -->
+<div class="modal-overlay" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeDash()">&times;</button>
+    <div class="modal-loading" id="dashLoading">Loading...</div>
+    <iframe id="dashFrame" style="display:none" onload="document.getElementById('dashLoading').style.display='none';this.style.display='block'"></iframe>
+  </div>
+</div>
+
+<footer class="footer">
+  <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
+</footer>
+
+<script>
+function openDash(url){var m=document.getElementById('dashModal'),f=document.getElementById('dashFrame'),l=document.getElementById('dashLoading');l.style.display='flex';f.style.display='none';f.src=url;m.classList.add('open');document.body.style.overflow='hidden'}
+function closeDash(){var m=document.getElementById('dashModal'),f=document.getElementById('dashFrame');f.src='';m.classList.remove('open');document.body.style.overflow=''}
+document.getElementById('dashModal').addEventListener('click',function(e){if(e.target===this)closeDash()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
+document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
+if(!CSS.supports('animation-timeline','view()')){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(function(el){o.observe(el)})}
+</script>
 </body>
 </html>

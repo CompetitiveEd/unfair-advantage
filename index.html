@@ -32,17 +32,29 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}.nav a:hover{color:var(--text-bright)}
 .nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}.nav-logo span{color:var(--amber)}
 .nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}.nav-cta:hover{color:#fbbf24!important}
-.radial-menu{position:relative;padding-bottom:2px}.radial-toggle{display:none}
+.radial-menu{position:relative}.radial-toggle{display:none}
 .radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:.5;transition:transform .2s}
-.radial-items{position:absolute;top:100%;left:50%;transform:translateX(-50%);margin-top:6px;pointer-events:none;opacity:0;transition:opacity .2s;display:flex}.radial-toggle:checked~.radial-items{pointer-events:auto;opacity:1}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
-.radial-item{width:64px;height:64px;border-radius:50%;background:rgba(14,14,19,.95);backdrop-filter:blur(12px);border:1px solid var(--border-h);display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;opacity:0;transform:scale(0);transition:all .35s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 20px rgba(0,0,0,.5);margin:0 3px}
-.radial-toggle:checked~.radial-items .radial-item{opacity:1;transform:scale(1)}.radial-item:nth-child(1){transition-delay:0ms}.radial-item:nth-child(2){transition-delay:40ms}.radial-item:nth-child(3){transition-delay:80ms}.radial-item:nth-child(4){transition-delay:120ms}.radial-item:hover{transform:scale(1.12)!important}
-.radial-letter{font-family:'Fraunces',serif;font-size:22px;font-weight:900;line-height:1}.radial-sublabel{font-size:8px;font-weight:600;letter-spacing:.5px;margin-top:2px}
-.radial-icon{width:20px;height:20px;opacity:.8}.radial-icon-label{font-size:8px;font-weight:600;margin-top:3px;line-height:1.2;text-align:center}
+.radial-toggle:checked~.radial-label{color:var(--text-bright)}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
+.nav-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(10,10,14,.97);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:12px;padding:6px;min-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+.radial-toggle:checked~.nav-drop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-dim);transition:all .15s}
+.nd-item:hover{background:rgba(255,255,255,.04);color:var(--text-bright)}
+.nd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.nd-title{font-size:13px;font-weight:600;letter-spacing:.2px}
+.nd-sep{height:1px;background:var(--border);margin:4px 10px}
+.nd-group{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);opacity:.35;padding:8px 12px 2px}
 .nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
 .nav-inner{display:flex;align-items:center;gap:1.5rem}
-@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}.nav-inner.open{display:flex;flex-direction:column;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);gap:1rem;z-index:99}.nav-inner.open .radial-menu{display:none}}
-@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}}
+@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}
+.mobile-nav{display:none;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-nav a:hover{color:var(--text-bright)}.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav-divider{height:1px;background:var(--border-h);margin:4px 0}
+.mobile-nav-group{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:12px 0 4px;margin-top:4px}
+.mobile-nav a span{font-family:'Fraunces',serif;font-weight:900;font-size:16px;margin-right:6px}
+}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}.mobile-nav{display:none!important}}
 
 /* ═══ TICKERS ═══ */
 .tickers{padding-top:52px}
@@ -52,11 +64,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .ticker-track{display:inline-flex;animation:tickerScroll var(--speed,80s) linear infinite}.ticker:hover .ticker-track{animation-play-state:paused}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ticker-wound{background:rgba(239,68,68,.03);--speed:100s}.ticker-wound .ticker-item{padding:10px 3rem;font-size:13px;font-weight:500;color:#fca5a5;letter-spacing:.2px;font-style:italic}
-.ticker-problems{background:rgba(255,255,255,.01);--speed:60s}.ticker-problems .ticker-item{padding:8px 2.5rem;font-size:12px;font-weight:700;color:rgba(255,255,255,.45);letter-spacing:2px;text-transform:uppercase}
-.ticker-proof{background:rgba(16,185,129,.02);--speed:45s}.ticker-proof .ticker-item{padding:8px 2.5rem;font-size:12px;font-weight:600;font-family:'DM Mono',monospace;color:rgba(16,185,129,.65);letter-spacing:.5px}
 
 /* ═══ HERO ═══ */
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;padding:4rem 2rem 3rem;max-width:1200px;margin:0 auto;position:relative}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;padding:1.5rem 2rem 3rem;max-width:1200px;margin:0 auto;position:relative}
 .hero-left{display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding-top:1rem}
 .hero-right{display:flex;flex-direction:column;gap:.75rem;padding-top:.5rem}
 @media(max-width:900px){.hero{grid-template-columns:1fr;text-align:center}.hero-left{align-items:center;text-align:center}.hero-right{max-width:440px;margin:0 auto}}
@@ -148,7 +158,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .footer-text a{color:#71717a;text-decoration:none}.footer-text a:hover{color:var(--text-dim)}
 
 @media(max-width:768px){
-  .hero{padding:3rem 1.5rem 2rem}
+  .hero{padding:1.5rem 1.5rem 2rem}
   .hero-anchor{gap:.75rem}
   .ticker-wound .ticker-item{font-size:11px;padding:8px 1.5rem}
   .ticker-problems .ticker-item{font-size:10px;padding:6px 1.5rem}
@@ -161,36 +171,57 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 <!-- ═══ NAV ═══ -->
 <nav class="nav">
   <a href="/" class="nav-logo">GAIN<span>.</span></a>
-  <button class="nav-toggle-btn" onclick="document.querySelector('.nav-inner').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <button class="nav-toggle-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
   <div class="nav-inner">
-    <a href="/">Home</a>
-    <a href="/proof.html">Proof</a>
-    <a href="/revenue-case.html">Revenue</a>
     <div class="radial-menu">
-      <input type="checkbox" id="gain-radial" class="radial-toggle">
-      <label for="gain-radial" class="radial-label">GAIN <span class="chevron">&#9662;</span></label>
-      <div class="radial-items">
-        <a href="/know.html" class="radial-item"><span class="radial-letter" style="color:#93c5fd">G</span><span class="radial-sublabel" style="color:#93c5fd">Gather</span></a>
-        <a href="/map.html" class="radial-item"><span class="radial-letter" style="color:#d8b4fe">A</span><span class="radial-sublabel" style="color:#d8b4fe">Assess</span></a>
-        <a href="/win.html" class="radial-item"><span class="radial-letter" style="color:#fcd34d">I</span><span class="radial-sublabel" style="color:#fcd34d">Influence</span></a>
-        <a href="/grow.html" class="radial-item"><span class="radial-letter" style="color:#6ee7b7">N</span><span class="radial-sublabel" style="color:#6ee7b7">Nurture</span></a>
+      <input type="checkbox" id="see-radial" class="radial-toggle">
+      <label for="see-radial" class="radial-label">See It Work <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/proof.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Proof</span></a>
+        <a href="/dashboards.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">Dashboards</span></a>
+        <a href="/revenue-case.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">Revenue Case</span></a>
+        <a href="/data-room.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">Data Room</span></a>
       </div>
     </div>
     <div class="radial-menu">
-      <input type="checkbox" id="system-radial" class="radial-toggle">
-      <label for="system-radial" class="radial-label">System <span class="chevron">&#9662;</span></label>
-      <div class="radial-items">
-        <a href="/edge.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="radial-icon-label" style="color:#67e8f9">Edge</span></a>
-        <a href="/architecture.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#5eead4" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="radial-icon-label" style="color:#5eead4">Build</span></a>
-        <a href="/story.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#7dd3fc" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg><span class="radial-icon-label" style="color:#7dd3fc">Story</span></a>
-        <a href="/dashboards.html" class="radial-item"><svg class="radial-icon" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg><span class="radial-icon-label" style="color:#a5b4fc">Dash</span></a>
+      <input type="checkbox" id="hood-radial" class="radial-toggle">
+      <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:#67e8f9"></span><span class="nd-title">The Edge</span></a>
+        <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:#5eead4"></span><span class="nd-title">Architecture</span></a>
+        <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:#7dd3fc"></span><span class="nd-title">The Story</span></a>
+        <div class="nd-sep"></div>
+        <div class="nd-group">The Toolkit</div>
+        <a href="/know.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">G<span style="font-weight:400;opacity:.5;margin-left:4px">Gather</span></span></a>
+        <a href="/map.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">A<span style="font-weight:400;opacity:.5;margin-left:4px">Assess</span></span></a>
+        <a href="/win.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">I<span style="font-weight:400;opacity:.5;margin-left:4px">Influence</span></span></a>
+        <a href="/grow.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">N<span style="font-weight:400;opacity:.5;margin-left:4px">Nurture</span></span></a>
       </div>
     </div>
     <a href="/engage.html" class="nav-cta">Engage</a>
   </div>
+  <!-- Mobile flat nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-group">See It Work</div>
+    <a href="/proof.html">Proof</a>
+    <a href="/dashboards.html">Dashboards</a>
+    <a href="/revenue-case.html">Revenue Case</a>
+    <a href="/data-room.html">Data Room</a>
+    <div class="mobile-nav-group">Under the Hood</div>
+    <a href="/edge.html">The Edge</a>
+    <a href="/architecture.html">Architecture</a>
+    <a href="/story.html">The Story</a>
+    <div class="mobile-nav-group">The Toolkit</div>
+    <a href="/know.html"><span style="color:#93c5fd">G</span> Gather</a>
+    <a href="/map.html"><span style="color:#d8b4fe">A</span> Assess</a>
+    <a href="/win.html"><span style="color:#fcd34d">I</span> Influence</a>
+    <a href="/grow.html"><span style="color:#6ee7b7">N</span> Nurture</a>
+    <div class="mobile-nav-divider"></div>
+    <a href="/engage.html" style="color:var(--amber);font-weight:700">Engage →</a>
+  </div>
 </nav>
 
-<!-- ═══ TICKERS ═══ -->
+<!-- ═══ TICKER ═══ -->
 <div class="tickers">
   <div class="ticker ticker-wound"><div class="ticker-track">
     <span class="ticker-item">"40% of your pipeline hasn't had buyer activity in 45 days. That's not pipeline. That's a graveyard you've been calling a garden."</span>
@@ -210,14 +241,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     <span class="ticker-item">"We found out after we lost that the CEO's old CTO told him not to touch us. We never knew that guy existed."</span>
     <span class="ticker-item">"If Sarah leaves, we lose the West Coast. She's the only one who knows how to multi-thread into those enterprise accounts."</span>
   </div></div>
-  <div class="ticker ticker-problems"><div class="ticker-track">
-    <span class="ticker-item">Margin Compression</span><span class="ticker-item">Pipeline Inflation</span><span class="ticker-item">Hero-Dependency</span><span class="ticker-item">Discovery Failure</span><span class="ticker-item">No-Decision Epidemic</span><span class="ticker-item">Stakeholder Blindness</span><span class="ticker-item">Phantom Champion</span><span class="ticker-item">Dead Deal Denial</span><span class="ticker-item">Procurement Black Box</span><span class="ticker-item">Competitive Displacement</span><span class="ticker-item">Accountability Vacuum</span><span class="ticker-item">Fear-Driven Selling</span><span class="ticker-item">M&amp;A Value Leakage</span><span class="ticker-item">Capability Gap</span><span class="ticker-item">ICP Drift</span>
-    <span class="ticker-item">Margin Compression</span><span class="ticker-item">Pipeline Inflation</span><span class="ticker-item">Hero-Dependency</span><span class="ticker-item">Discovery Failure</span><span class="ticker-item">No-Decision Epidemic</span><span class="ticker-item">Stakeholder Blindness</span><span class="ticker-item">Phantom Champion</span><span class="ticker-item">Dead Deal Denial</span><span class="ticker-item">Procurement Black Box</span><span class="ticker-item">Competitive Displacement</span><span class="ticker-item">Accountability Vacuum</span><span class="ticker-item">Fear-Driven Selling</span><span class="ticker-item">M&amp;A Value Leakage</span><span class="ticker-item">Capability Gap</span><span class="ticker-item">ICP Drift</span>
-  </div></div>
-  <div class="ticker ticker-proof"><div class="ticker-track">
-    <span class="ticker-item">£35M → £183M · 51.3% CAGR</span><span class="ticker-item">£20M → £55M professional services · +170%</span><span class="ticker-item">67 engines · 22 frameworks · 30 failure patterns</span><span class="ticker-item">40 hours → 180 minutes · deal intelligence</span><span class="ticker-item">Kill it. Fix it. Accelerate it.</span><span class="ticker-item">Model-agnostic · Claude · GPT · Gemini · DeepSeek</span><span class="ticker-item">9 case studies built from zero · white-labelled by Tier 1 SI</span><span class="ticker-item">300-line compound engines · not 5-line prompts</span>
-    <span class="ticker-item">£35M → £183M · 51.3% CAGR</span><span class="ticker-item">£20M → £55M professional services · +170%</span><span class="ticker-item">67 engines · 22 frameworks · 30 failure patterns</span><span class="ticker-item">40 hours → 180 minutes · deal intelligence</span><span class="ticker-item">Kill it. Fix it. Accelerate it.</span><span class="ticker-item">Model-agnostic · Claude · GPT · Gemini · DeepSeek</span><span class="ticker-item">9 case studies built from zero · white-labelled by Tier 1 SI</span><span class="ticker-item">300-line compound engines · not 5-line prompts</span>
-  </div></div>
 </div>
 
 <div style="height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,.08) 30%,rgba(245,158,11,.12) 50%,rgba(245,158,11,.08) 70%,transparent);"></div>
@@ -235,27 +258,29 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
       <div class="hero-pips" id="heroPips"></div>
     </div>
     <div class="hero-anchor"><span class="eq">EQ</span><span class="dot">.</span><span class="iq">IQ</span><span class="dot">.</span><span class="ai">AI</span><span class="dot">.</span></div>
+    <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);margin-bottom:1.5rem;text-transform:uppercase">Compound Intelligence Architecture for Value Creation</p>
     <p class="hero-body">In an AI world, the only edge left is judgment. <strong>GAIN enhances that judgment.</strong><br><strong>Kill it. Fix it. Accelerate it.</strong></p>
+    <a href="/engage.html" class="hero-cta">Start the Conversation</a>
   </div>
 
   <div class="hero-right">
     <div class="dock-card" data-modal="discovery" onclick="openDash('dashboard/discovery.html')">
       <div class="dock-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg></div>
-      <div class="dock-title">Paste a Problem</div>
-      <div class="dock-desc">Drop a deal situation. Get a verdict: kill it, fix it, or accelerate it.</div>
-      <div class="dock-cta">Try it →</div>
+      <div class="dock-title">Drop a Deal. Get a Verdict.</div>
+      <div class="dock-desc">10 seconds. Rant, type, or speak — dump whatever's in your head about a stalled pursuit. The system maps it against 30 failure patterns and tells you straight: kill it, fix it, or accelerate it.</div>
+      <div class="dock-cta">Go on then →</div>
     </div>
     <div class="dock-card" data-modal="wheel" onclick="openDash('dashboard/wheel.html')">
       <div class="dock-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
-      <div class="dock-title">78 Engines. 4 Phases.</div>
-      <div class="dock-desc">See what's under the hood. The full commercial intelligence architecture.</div>
-      <div class="dock-cta">Explore →</div>
+      <div class="dock-title">63 Compound Engines. One Architecture.</div>
+      <div class="dock-desc">Gather intelligence. Assess the room. Influence the decision. Nurture the contract. Each phase has governed engines underneath — not prompts, compound systems. Any sequence, any starting point. The architecture compounds with every run.</div>
+      <div class="dock-cta">See what's underneath →</div>
     </div>
     <div class="dock-card" data-modal="dashboard" onclick="openDash('dashboard/dash-react-accountpack.html')">
       <div class="dock-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg></div>
-      <div class="dock-title">See the Output</div>
-      <div class="dock-desc">Demonstration Account Pack. Synthetic data, real methodology.</div>
-      <div class="dock-cta">Open →</div>
+      <div class="dock-title">A Deal Review That Never Stops.</div>
+      <div class="dock-desc">Not a PowerPoint. Not a one-off. Research to live dashboards in minutes — stakeholder dossiers, influence maps, disruption questions. Continuously updated as the deal moves.</div>
+      <div class="dock-cta">Open a live review →</div>
     </div>
   </div>
 </section>
@@ -319,17 +344,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     current=n;
     slides[current].classList.add('active');
     pips.children[current].classList.add('active');
-    // Set rotator height
     var rotator=document.getElementById('heroRotator');
     rotator.style.height=slides[current].offsetHeight+'px';
-    clearInterval(timer);timer=setInterval(next,6000);
   }
-  function next(){goTo((current+1)%total)}
-  // Set initial height
+  // Manual only — no auto-advance
   var rotator=document.getElementById('heroRotator');
   rotator.style.height=slides[0].offsetHeight+'px';
   window.addEventListener('resize',function(){rotator.style.height=slides[current].offsetHeight+'px'});
-  timer=setInterval(next,6000);
 })();
 
 // ═══ Iframe Modal ═══
@@ -359,7 +380,9 @@ if(!CSS.supports('animation-timeline','view()')){
 }
 
 // ═══ Mobile Nav ═══
-document.querySelector('.nav-toggle-btn').addEventListener('click',function(){document.querySelector('.nav-inner').classList.toggle('open')});
+document.querySelector('.nav-toggle-btn').addEventListener('click',function(){
+  document.getElementById('mobileNav').classList.toggle('open');
+});
 </script>
 </body>
 </html>
