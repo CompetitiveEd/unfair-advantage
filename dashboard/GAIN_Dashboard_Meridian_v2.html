@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAIN Dashboard — Meridian Financial Services</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0e17;
+    --bg-card: #111827;
+    --bg-card-hover: #1a2332;
+    --bg-accent: #1e293b;
+    --border: #1e293b;
+    --border-bright: #334155;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.08);
+    --red: #ef4444;
+    --red-bg: rgba(239,68,68,0.08);
+    --amber: #f59e0b;
+    --amber-bg: rgba(245,158,11,0.08);
+    --blue: #3b82f6;
+    --blue-bg: rgba(59,130,246,0.08);
+    --cyan: #06b6d4;
+    --cyan-bg: rgba(6,182,212,0.08);
+    --purple: #a855f7;
+    --purple-bg: rgba(168,85,247,0.08);
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'IBM Plex Sans', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-sans); font-size: 13px; line-height: 1.5; }
+
+  /* ── TOPBAR ── */
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; background: var(--bg-primary); }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .topbar-logo { font-family: var(--font-mono); font-weight: 700; font-size: 14px; color: var(--green); letter-spacing: 2px; }
+  .topbar-logo span { color: var(--text-muted); font-weight: 400; }
+  .topbar-path { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); background: var(--bg-card); padding: 4px 12px; border-radius: 4px; border: 1px solid var(--border); }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .badge { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 1px; padding: 4px 10px; border-radius: 3px; text-transform: uppercase; }
+  .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+  .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,158,11,0.2); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(59,130,246,0.2); }
+  .badge-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(168,85,247,0.2); }
+  .badge-cyan { background: var(--cyan-bg); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+  .pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,0.4)} 50%{opacity:.8;box-shadow:0 0 0 6px rgba(34,197,94,0)} }
+
+  /* ── TABS ── */
+  .nav-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--bg-primary); padding: 0 24px; }
+  .nav-tab { padding: 10px 20px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; user-select: none; }
+  .nav-tab:hover { color: var(--text-secondary); }
+  .nav-tab.active { color: var(--green); border-bottom-color: var(--green); }
+
+  /* ── PANELS ── */
+  .panel { display: none; padding: 20px 24px; }
+  .panel.active { display: block; }
+
+  /* ── SHARED ── */
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; transition: border-color 0.2s; }
+  .card:hover { border-color: var(--border-bright); }
+  .section-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+  .section-label .hl { color: var(--green); }
+  .stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid rgba(30,41,59,0.4); font-size: 12px; }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { color: var(--text-secondary); }
+  .stat-value { color: var(--text-primary); font-weight: 500; font-family: var(--font-mono); font-size: 12px; }
+  .stat-value.red { color: var(--red); }
+  .stat-value.green { color: var(--green); }
+  .stat-value.amber { color: var(--amber); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tp { padding: 8px 10px; background: var(--bg-accent); border-radius: 4px; margin-bottom: 6px; font-size: 12px; color: var(--text-primary); border-left: 3px solid var(--green); line-height: 1.5; }
+  .tp.warn { border-left-color: var(--red); background: var(--red-bg); }
+
+  /* ── KNOW TAB LAYOUT ── */
+  .know-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  .know-left { display: flex; flex-direction: column; gap: 16px; }
+  .know-right { display: flex; flex-direction: column; gap: 16px; }
+
+  /* ── COMPANY MACRO CARD ── */
+  .macro-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .macro-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+  .macro-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .macro-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .macro-stat { text-align: center; padding: 10px 8px; background: var(--bg-accent); border-radius: 6px; }
+  .macro-num { font-family: var(--font-mono); font-weight: 700; font-size: 22px; line-height: 1.2; }
+  .macro-label { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+  .bleed-bar { display: flex; gap: 6px; margin-top: 14px; }
+  .bleed-item { flex: 1; padding: 10px; background: var(--bg-accent); border-radius: 6px; border-top: 3px solid var(--red); }
+  .bleed-num { font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: var(--red); }
+  .bleed-label { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── COLLAPSIBLE ── */
+  .coll-trigger { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: var(--bg-accent); border-radius: 4px; cursor: pointer; margin-bottom: 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--text-secondary); user-select: none; transition: background .2s; }
+  .coll-trigger:hover { background: var(--bg-card-hover); }
+  .coll-arrow { transition: transform .2s; font-size: 10px; }
+  .coll-trigger.open .coll-arrow { transform: rotate(180deg); }
+  .coll-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 4px; }
+  .coll-body.open { max-height: 1200px; }
+
+  /* ── EXEC DROPDOWN ── */
+  .exec-select-wrap { margin-bottom: 14px; }
+  .exec-select { width: 100%; padding: 10px 14px; background: var(--bg-accent); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-family: var(--font-sans); font-size: 13px; font-weight: 600; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+  .exec-select:focus { outline: none; border-color: var(--green); }
+  .exec-select option { background: var(--bg-card); color: var(--text-primary); }
+  .exec-profile { display: none; }
+  .exec-profile.active { display: block; }
+  .exec-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
+  .exec-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 16px; color: white; flex-shrink: 0; }
+  .exec-name { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+  .exec-role { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* ── DO/DONT ── */
+  .dd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .do-item { padding: 6px 8px; border-radius: 4px; font-size: 11px; line-height: 1.4; background: var(--green-bg); border-left: 3px solid var(--green); }
+  .dont-item { padding: 6px 8px; border-radius: 4px; font-size: 11px; line-height: 1.4; background: var(--red-bg); border-left: 3px solid var(--red); }
+
+  /* ── MAP TAB ── */
+  .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sh-card { padding: 10px 12px; background: var(--bg-accent); border-radius: 6px; margin-bottom: 6px; border-left: 3px solid var(--text-muted); cursor: pointer; transition: background .15s; }
+  .sh-card:hover { background: var(--bg-card-hover); }
+  .sh-card.champion { border-left-color: var(--green); }
+  .sh-card.gate { border-left-color: var(--amber); }
+  .sh-card.blocker { border-left-color: var(--red); }
+  .sh-card.unknown { border-left-color: var(--text-muted); }
+  .sh-name { font-weight: 600; font-size: 13px; }
+  .sh-title { font-size: 10px; color: var(--text-muted); margin-bottom: 3px; }
+  .sh-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+  .sh-tag { font-family: var(--font-mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; }
+  .sh-quick { font-size: 11px; color: var(--text-secondary); margin-top: 6px; padding: 4px 8px; background: rgba(30,41,59,0.5); border-radius: 3px; }
+
+  /* ── WIN TAB ── */
+  .win-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .proof-tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .proof-tbl th { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--text-muted); text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--border); text-transform: uppercase; }
+  .proof-tbl td { padding: 8px 4px; border-bottom: 1px solid rgba(30,41,59,0.4); vertical-align: top; }
+  .proof-tbl .prob { color: var(--red); font-weight: 500; }
+  .proof-tbl .ev { color: var(--text-secondary); }
+  .proof-tbl .res { color: var(--green); font-weight: 500; }
+
+  /* ── GROW TAB ── */
+  .grow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .tl-item { display: flex; gap: 10px; padding: 6px 0; align-items: baseline; }
+  .tl-date { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--amber); min-width: 100px; }
+  .tl-event { font-size: 12px; color: var(--text-secondary); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .know-grid, .map-grid, .win-grid, .grow-grid { grid-template-columns: 1fr; }
+    .macro-grid { grid-template-columns: 1fr 1fr; }
+    .dd-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="topbar-logo">GAIN<span> PROTOCOL</span></div>
+    <div class="topbar-path">~/TACTICAL/HELIOS → MERIDIAN FINANCIAL SERVICES</div>
+  </div>
+  <div class="topbar-right">
+    <div style="display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;color:var(--text-secondary)"><div class="pulse"></div>COLD · FIRST MEETING</div>
+    <span class="badge badge-amber">PROBLEM AWARE</span>
+    <span class="badge badge-green">EXECUTION READY</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="nav-tabs">
+  <div class="nav-tab active" data-tab="know">Know</div>
+  <div class="nav-tab" data-tab="map">Map</div>
+  <div class="nav-tab" data-tab="win">Win</div>
+  <div class="nav-tab" data-tab="grow">Grow</div>
+</div>
+
+<!-- ════════════ KNOW ════════════ -->
+<div id="tab-know" class="panel active">
+  <div class="know-grid">
+    <div class="know-left">
+
+      <!-- UNIFIED COMPANY CARD -->
+      <div class="card">
+        <div class="macro-header">
+          <div>
+            <div class="macro-name">Meridian Financial Services</div>
+            <div class="macro-sub">Insurance-led multi-line FS · FCA/PRA dual-regulated · Norwich, UK · 4,200 employees · 1.2M customers</div>
+          </div>
+          <span class="badge badge-blue">£847M REVENUE</span>
+        </div>
+
+        <div class="macro-grid">
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--red)">62%</div>
+            <div class="macro-label">Servers EOL</div>
+          </div>
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--red)">£33-37M</div>
+            <div class="macro-label">7yr Cost of Inaction</div>
+          </div>
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--amber)">£16.5M</div>
+            <div class="macro-label">Annual IT Budget</div>
+          </div>
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--red)">£2.8M</div>
+            <div class="macro-label">Outage Cost/yr (+12%)</div>
+          </div>
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--red)">58%</div>
+            <div class="macro-label">FCR (bench: 72%)</div>
+          </div>
+          <div class="macro-stat">
+            <div class="macro-num" style="color:var(--amber)">14K</div>
+            <div class="macro-label">Alerts/mo (<3% real)</div>
+          </div>
+        </div>
+
+        <div class="coll-trigger open" onclick="tog(this)">Known Strategy & Plans <span class="coll-arrow">▼</span></div>
+        <div class="coll-body open">
+          <div class="stat-row"><span class="stat-label">Transformation</span><span class="stat-value">Meridian 2030 — Board approved, Oct 2025</span></div>
+          <div class="stat-row"><span class="stat-label">CEO North Star</span><span class="stat-value">"Availability, not assets"</span></div>
+          <div class="stat-row"><span class="stat-label">Cloud partner</span><span class="stat-value">CloudScale — announced Dec 2025</span></div>
+          <div class="stat-row"><span class="stat-label">Revenue split</span><span class="stat-value">Insurance 52% · Wealth 31% · Pensions 17%</span></div>
+          <div class="stat-row"><span class="stat-label">RFP scope</span><span class="stat-value">5+2yr managed services + resilience transformation, 5 towers, 109 FTE TUPE</span></div>
+          <div class="stat-row"><span class="stat-label">The Narrative Gap</span><span class="stat-value red">Transformation is rescue reframed as vision. 62% EOL, £2.8M bleed, 3.1/5 satisfaction.</span></div>
+        </div>
+
+        <div class="coll-trigger" onclick="tog(this)">Financial Leaks <span class="coll-arrow">▼</span></div>
+        <div class="coll-body">
+          <div class="stat-row"><span class="stat-label">Micro-outage haemorrhage</span><span class="stat-value red">£25.6M / 7yr (HIGH confidence)</span></div>
+          <div class="stat-row"><span class="stat-label">Service desk rework</span><span class="stat-value red">£2.3M / 7yr (MED-HIGH)</span></div>
+          <div class="stat-row"><span class="stat-label">Alert noise FTE waste</span><span class="stat-value red">£1.8-3.2M / 7yr (MEDIUM)</span></div>
+          <div class="stat-row"><span class="stat-label">Consumer Duty MI gap</span><span class="stat-value amber">£100-240K/yr + uncapped regulatory</span></div>
+          <div class="stat-row"><span class="stat-label">Endpoint refresh debt</span><span class="stat-value amber">£2.6-3.9M catch-up CapEx</span></div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text-muted)">21-23% of IT budget funds failure. One pound in five.</div>
+        </div>
+
+        <div class="coll-trigger" onclick="tog(this)">Regulatory Pressure <span class="coll-arrow">▼</span></div>
+        <div class="coll-body">
+          <div class="stat-row"><span class="stat-label">PRA feedback</span><span class="stat-value red">Dec 2025 — vendor concentration gaps</span></div>
+          <div class="stat-row"><span class="stat-label">Vendor assessments</span><span class="stat-value red">52 additional by Q2 2026</span></div>
+          <div class="stat-row"><span class="stat-label">ISO 22301 target</span><span class="stat-value amber">Q3 2026 (7 months)</span></div>
+          <div class="stat-row"><span class="stat-label">Consumer Duty MI</span><span class="stat-value amber">72hr manual delay — FCA PS22/9 exposure</span></div>
+        </div>
+
+        <div class="tags">
+          <span class="badge badge-red">PRA GAPS</span>
+          <span class="badge badge-red">£2.8M OPEX LEAK</span>
+          <span class="badge badge-amber">ISO 22301 Q3 2026</span>
+          <span class="badge badge-blue">MERIDIAN 2030</span>
+          <span class="badge badge-blue">CLOUDSCALE LIVE</span>
+        </div>
+      </div>
+
+      <!-- THE HOOK -->
+      <div class="card" style="border-left: 3px solid var(--green);">
+        <div class="section-label"><span class="hl">▶</span> THE HOOK — FIRST 90 SECONDS</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Cold first meeting. Share this agenda verbally before any questions:</div>
+        <div class="tp"><strong>1.</strong> "What we think we've understood about Meridian — tell me where we're wrong."</div>
+        <div class="tp"><strong>2.</strong> "Who Helios is and why we think we're relevant. Not a credentials pitch."</div>
+        <div class="tp"><strong>3.</strong> "One example where we solved a very similar problem for a regulated FS client."</div>
+        <div class="tp"><strong>4.</strong> "What matters most to you — because an RFP doesn't always say what you're really looking for."</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: MEETING CONTEXT + EXEC DOSSIER -->
+    <div class="know-right">
+
+      <!-- MEETING CONTEXT -->
+      <div class="card">
+        <div class="section-label"><span class="hl">▶</span> TODAY'S MEETING</div>
+        <div class="stat-row"><span class="stat-label">How we got here</span><span class="stat-value">RFP response — cold bid</span></div>
+        <div class="stat-row"><span class="stat-label">Prior relationship</span><span class="stat-value red">None</span></div>
+        <div class="stat-row"><span class="stat-label">Meeting type</span><span class="stat-value amber">First meeting</span></div>
+        <div class="stat-row"><span class="stat-label">Awareness</span><span class="stat-value amber">Problem Aware</span></div>
+        <div class="stat-row"><span class="stat-label">Last meeting actions</span><span class="stat-value" style="color:var(--text-muted)">N/A — new</span></div>
+        <div class="stat-row"><span class="stat-label">RFP deadline</span><span class="stat-value amber">28 Mar 2026 (31 days)</span></div>
+        <div class="stat-row"><span class="stat-label">Presentations</span><span class="stat-value">Apr-May 2026</span></div>
+      </div>
+
+      <!-- EXEC DOSSIER WITH DROPDOWN -->
+      <div class="card" style="flex:1">
+        <div class="section-label"><span class="hl">▶</span> EXECUTIVE DOSSIER</div>
+
+        <div class="exec-select-wrap">
+          <select class="exec-select" onchange="switchExec(this.value)">
+            <option value="jennifer">Jennifer Morris — Dir, Operational Resilience</option>
+            <option value="hale">Richard Hale — CIO</option>
+            <option value="thompson">Mark Thompson — CFO</option>
+            <option value="osei">David Osei — CRO</option>
+            <option value="harrison">David Harrison — COO</option>
+            <option value="chen">Andrew Chen — Head of IT Infrastructure</option>
+            <option value="blackwell">Sarah Blackwell — Head of Procurement</option>
+          </select>
+        </div>
+
+        <!-- JENNIFER MORRIS (FULL PROFILE) -->
+        <div class="exec-profile active" id="prof-jennifer">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--green),var(--cyan))">JM</div>
+            <div>
+              <div class="exec-name">Jennifer Morris</div>
+              <div class="exec-role">Director, Operational Resilience & BCM<br>Reports: Osei (CRO) · Budget: £4.2M · Team: 8 FTE · Tenure: 3.4yr</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px">
+            <span class="badge badge-green">CHAMPION</span>
+            <span class="badge badge-purple">ACHIEVEMENT</span>
+            <span class="badge badge-blue">Visual-Kinesthetic</span>
+            <span class="badge badge-cyan">HIGH EQ</span>
+          </div>
+
+          <div class="coll-trigger open" onclick="tog(this)">Psychology & Approach <span class="coll-arrow">▼</span></div>
+          <div class="coll-body open">
+            <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value green">ACHIEVEMENT — legacy through capability</span></div>
+            <div class="stat-row"><span class="stat-label">Modality</span><span class="stat-value">Visual-Kinesthetic — show, don't tell</span></div>
+            <div class="stat-row"><span class="stat-label">Language</span><span class="stat-value">4:1 we/I — credits team always</span></div>
+            <div class="stat-row"><span class="stat-label">BS Detector</span><span class="stat-value red">HIGH — evaluates quietly in silences</span></div>
+            <div class="stat-row"><span class="stat-label">Tenure risk</span><span class="stat-value amber">3.4yr (at pattern ceiling — career-defining moment)</span></div>
+          </div>
+
+          <div class="coll-trigger" onclick="tog(this)">Interests & Beliefs <span class="coll-arrow">▼</span></div>
+          <div class="coll-body">
+            <div class="stat-row"><span class="stat-label">Marathon runner</span><span class="stat-value">Brighton — endurance wiring, holds discomfort</span></div>
+            <div class="stat-row"><span class="stat-label">Architecture pride</span><span class="stat-value">Built resilience programme from scratch</span></div>
+            <div class="stat-row"><span class="stat-label">Structural choice</span><span class="stat-value">Placed resilience under CRO not CIO — deliberate</span></div>
+            <div class="stat-row"><span class="stat-label">Core belief</span><span class="stat-value">Resilience ≠ technology. It's organisational capability.</span></div>
+          </div>
+
+          <div class="coll-trigger" onclick="tog(this)">Hidden Fear (Kegan) <span class="coll-arrow">▼</span></div>
+          <div class="coll-body">
+            <div class="tp warn"><strong>L1:</strong> Can't fully embrace outsourcing — implies her approach had a ceiling.</div>
+            <div class="tp warn"><strong>L2:</strong> If vendor reports into CIO, resilience = subset of technology. Her function = overhead.</div>
+            <div class="tp"><strong>Neutralise:</strong> Dual governance. Tech ops → CIO. Resilience outcomes → her Steering Committee.</div>
+          </div>
+
+          <div class="coll-trigger" onclick="tog(this)">Relationships <span class="coll-arrow">▼</span></div>
+          <div class="coll-body">
+            <div class="stat-row"><span class="stat-label">Osei (CRO)</span><span class="stat-value green">Sponsor/boss — strong</span></div>
+            <div class="stat-row"><span class="stat-label">Thompson (CFO)</span><span class="stat-value green">Budget ally</span></div>
+            <div class="stat-row"><span class="stat-label">Hale (CIO)</span><span class="stat-value amber">Aligned/tense — disagree on "resilience"</span></div>
+            <div class="stat-row"><span class="stat-label">Harrison (COO)</span><span class="stat-value amber">Argues, performs in crisis</span></div>
+            <div class="stat-row"><span class="stat-label">Chen (IT)</span><span class="stat-value">Operational ally</span></div>
+          </div>
+
+          <div class="coll-trigger" onclick="tog(this)">Do This / Don't Do This <span class="coll-arrow">▼</span></div>
+          <div class="coll-body">
+            <div class="dd-grid">
+              <div>
+                <div class="do-item">✅ Credit her team — "your architecture"</div>
+                <div class="do-item">✅ Show scenarios, not slides</div>
+                <div class="do-item">✅ Introduce Rachel Okonkwo as peer</div>
+                <div class="do-item">✅ Propose dual governance</div>
+                <div class="do-item">✅ Reference CRO reporting structure</div>
+              </div>
+              <div>
+                <div class="dont-item">❌ Don't open with the marathon</div>
+                <div class="dont-item">❌ Don't imply her approach wasn't enough</div>
+                <div class="dont-item">❌ Don't question before credibility</div>
+                <div class="dont-item">❌ Don't fill her silences</div>
+                <div class="dont-item">❌ Don't align CIO over her or vice versa</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="coll-trigger" onclick="tog(this)">Talking Points (for Jennifer) <span class="coll-arrow">▼</span></div>
+          <div class="coll-body">
+            <div class="tp">"We think resilience and infrastructure need to be governed together but measured separately."</div>
+            <div class="tp">"Your Steering Committee governs resilience outcomes. The technology partner governs delivery. Neither controls the other."</div>
+            <div class="tp">"Rachel built our resilience practice from operational reality, not consulting frameworks — I think you'd have a peer-level conversation."</div>
+            <div class="tp">"Is it possible the alert noise is actually causing the outages — because your team can't see real signals through 13,500 false positives?"</div>
+          </div>
+        </div>
+
+        <!-- RICHARD HALE (SUMMARY) -->
+        <div class="exec-profile" id="prof-hale">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--purple),var(--blue))">RH</div>
+            <div>
+              <div class="exec-name">Richard Hale</div>
+              <div class="exec-role">Chief Information Officer<br>Owns £16.5M transformation budget</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px">
+            <span class="badge badge-purple">POWER</span>
+            <span class="badge badge-blue">Intellectual</span>
+            <span class="badge badge-amber">TECH GATE</span>
+          </div>
+          <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value purple">POWER — technology transformation credibility</span></div>
+          <div class="stat-row"><span class="stat-label">Style</span><span class="stat-value">Architectural thinker. Lead with tech depth.</span></div>
+          <div class="stat-row"><span class="stat-label">Tension</span><span class="stat-value amber">Disagrees with Jennifer on what "resilience" means</span></div>
+          <div class="stat-row"><span class="stat-label">Wants</span><span class="stat-value">Cloud migration execution. Automation maturity. Board-reportable metrics.</span></div>
+          <div style="margin-top:10px">
+            <div class="do-item" style="margin-bottom:4px">✅ "Excalibur — 35% cloud migrated in 9 months. Preet Sandhu designed it."</div>
+            <div class="dont-item">❌ Don't position resilience above technology transformation.</div>
+          </div>
+          <div class="tp warn" style="margin-top:10px"><strong>⚠ G-03 NOT RUN</strong> — Full psychological profile needed before meeting with Hale. CIO tension is the deal's fault line.</div>
+        </div>
+
+        <!-- MARK THOMPSON (SUMMARY) -->
+        <div class="exec-profile" id="prof-thompson">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--amber),var(--red))">MT</div>
+            <div>
+              <div class="exec-name">Mark Thompson</div>
+              <div class="exec-role">Chief Financial Officer<br>Budget authority · Language: "revenue protection"</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px"><span class="badge badge-amber">ORDER</span><span class="badge badge-amber">BUDGET GATE</span></div>
+          <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value amber">ORDER — financial discipline, cost glide path</span></div>
+          <div class="stat-row"><span class="stat-label">Wants</span><span class="stat-value">Clear ROI mapped to P&L. No surprises. Path to £28M savings.</span></div>
+          <div style="margin-top:10px">
+            <div class="do-item" style="margin-bottom:4px">✅ "Redirect the £2.8M from failure to prevention. Net OPEX neutral Year 2."</div>
+            <div class="dont-item">❌ Don't say anything without a number attached.</div>
+          </div>
+          <div class="tp warn" style="margin-top:10px"><strong>⚠ G-03 NOT RUN</strong> — Summary profile only. Run G-03 before any direct meeting.</div>
+        </div>
+
+        <!-- DAVID OSEI (SUMMARY) -->
+        <div class="exec-profile" id="prof-osei">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--cyan),var(--green))">DO</div>
+            <div>
+              <div class="exec-name">David Osei</div>
+              <div class="exec-role">Chief Risk Officer<br>Jennifer's boss · Ex-regulator · Risk sponsor</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px"><span class="badge badge-cyan">SAFETY</span><span class="badge badge-green">SPONSOR</span></div>
+          <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value cyan">SAFETY — regulatory protection</span></div>
+          <div class="stat-row"><span class="stat-label">Wants</span><span class="stat-value">PRA-compliant vendor risk. SS2/21 satisfaction. Substance over form.</span></div>
+          <div style="margin-top:10px">
+            <div class="do-item" style="margin-bottom:4px">✅ "Here's how we satisfy SS2/21 as a vendor."</div>
+            <div class="dont-item">❌ Don't be vague about regulatory alignment. He was a regulator.</div>
+          </div>
+          <div class="tp warn" style="margin-top:10px"><strong>⚠ G-03 NOT RUN</strong> — Summary only. Run before direct engagement.</div>
+        </div>
+
+        <!-- DAVID HARRISON (SUMMARY) -->
+        <div class="exec-profile" id="prof-harrison">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--amber),var(--purple))">DH</div>
+            <div>
+              <div class="exec-name">David Harrison</div>
+              <div class="exec-role">Chief Operating Officer<br>Ran £67M Operation Meridian · KPI-obsessed</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px"><span class="badge badge-amber">ORDER</span><span class="badge badge-red">BS-DETECTOR</span></div>
+          <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value amber">ORDER — operational pragmatism, KPI clarity</span></div>
+          <div class="stat-row"><span class="stat-label">Wants</span><span class="stat-value">Comparable transition evidence with metrics. Show the dip honestly.</span></div>
+          <div style="margin-top:10px">
+            <div class="do-item" style="margin-bottom:4px">✅ "Three TUPE transitions with pre/during/post KPIs — including the dip."</div>
+            <div class="dont-item">❌ Never say "seamless transition." He'll end the conversation.</div>
+          </div>
+          <div class="tp warn" style="margin-top:10px"><strong>⚠ G-03 NOT RUN</strong> — Summary only.</div>
+        </div>
+
+        <!-- ANDREW CHEN (SUMMARY) -->
+        <div class="exec-profile" id="prof-chen">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:linear-gradient(135deg,var(--blue),var(--cyan))">AC</div>
+            <div>
+              <div class="exec-name">Andrew Chen</div>
+              <div class="exec-role">Head of IT Infrastructure<br>10yr tenure · 109 FTE · Silent kingmaker</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px"><span class="badge badge-cyan">SAFETY</span><span class="badge badge-amber">KINGMAKER</span></div>
+          <div class="stat-row"><span class="stat-label">GAIN Driver</span><span class="stat-value cyan">SAFETY — team protection, operational reality</span></div>
+          <div class="stat-row"><span class="stat-label">Kegan fear</span><span class="stat-value red">Transformation success implies he failed for 10 years</span></div>
+          <div class="stat-row"><span class="stat-label">Wants</span><span class="stat-value">Honesty about what's hard. Realistic transition. TUPE protection for his 109.</span></div>
+          <div style="margin-top:10px">
+            <div class="do-item" style="margin-bottom:4px">✅ "Different chapter, not different verdict on the last one."</div>
+            <div class="dont-item">❌ Don't audit his decade. The 62% EOL grew on his watch.</div>
+          </div>
+          <div class="tp warn" style="margin-top:10px"><strong>⚠ G-03 NOT RUN</strong> — Summary only.</div>
+        </div>
+
+        <!-- SARAH BLACKWELL (NO DATA) -->
+        <div class="exec-profile" id="prof-blackwell">
+          <div class="exec-head">
+            <div class="exec-avatar" style="background:var(--bg-accent);border:2px dashed var(--text-muted)">?</div>
+            <div>
+              <div class="exec-name">Sarah Blackwell</div>
+              <div class="exec-role">Head of Procurement<br>Process gate · Controls evaluation</div>
+            </div>
+          </div>
+          <div class="tags" style="margin-bottom:10px"><span class="badge badge-red">NO PROFILE DATA</span><span class="badge badge-amber">PROCESS GATE</span></div>
+          <div class="tp warn"><strong>⚠ NO INTELLIGENCE</strong> — No LinkedIn data, no G-03, no known evaluation philosophy.</div>
+          <div class="tp warn"><strong>CRITICAL GAP:</strong> Is she price-first, value-first, or risk-first? This shapes the entire commercial response.</div>
+          <div class="tp"><strong>ACTION:</strong> Find her LinkedIn profile. Run G-03. Update dashboard before any interaction.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MAP ════════════ -->
+<div id="tab-map" class="panel">
+  <div class="map-grid">
+    <div>
+      <div class="section-label"><span class="hl">▶</span> POWER MAP</div>
+      <div class="card">
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Click any stakeholder → their dossier loads in the Know tab</div>
+        <div class="sh-card champion" onclick="goToExec('jennifer')">
+          <div class="sh-name">Jennifer Morris</div>
+          <div class="sh-title">Director, Operational Resilience → Osei (CRO)</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--green-bg);color:var(--green)">CHAMPION</span><span class="sh-tag" style="background:var(--purple-bg);color:var(--purple)">ACHIEVEMENT</span></div>
+          <div class="sh-quick">Opens the door. Champion coalition: Jennifer → Thompson → Osei.</div>
+        </div>
+        <div class="sh-card gate" onclick="goToExec('hale')">
+          <div class="sh-name">Richard Hale</div>
+          <div class="sh-title">CIO → Owns £16.5M budget</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--purple-bg);color:var(--purple)">POWER</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">HIGH VETO</span></div>
+          <div class="sh-quick">Tech credibility gate. Veto on technical weakness. Tension with Jennifer on "resilience."</div>
+        </div>
+        <div class="sh-card gate" onclick="goToExec('thompson')">
+          <div class="sh-name">Mark Thompson</div>
+          <div class="sh-title">CFO</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">ORDER</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">HIGH VETO</span></div>
+          <div class="sh-quick">Budget authority. Veto on commercial model. Language: "revenue protection."</div>
+        </div>
+        <div class="sh-card champion" onclick="goToExec('osei')">
+          <div class="sh-name">David Osei</div>
+          <div class="sh-title">CRO → Jennifer's boss</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--cyan-bg);color:var(--cyan)">SAFETY</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">HIGH VETO</span></div>
+          <div class="sh-quick">Risk sponsor. Ex-regulator. Veto on third-party risk maturity.</div>
+        </div>
+        <div class="sh-card gate" onclick="goToExec('harrison')">
+          <div class="sh-name">David Harrison</div>
+          <div class="sh-title">COO</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">ORDER</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">MED VETO</span></div>
+          <div class="sh-quick">Execution validator. Demands evidence. Will ask "show me three comparable transitions."</div>
+        </div>
+        <div class="sh-card gate" onclick="goToExec('chen')">
+          <div class="sh-name">Andrew Chen</div>
+          <div class="sh-title">Head of IT Infrastructure — 10yr tenure</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--cyan-bg);color:var(--cyan)">SAFETY</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">KINGMAKER</span></div>
+          <div class="sh-quick">109 FTE are his people. Silent influence. Kegan: success implies his failure.</div>
+        </div>
+        <div class="sh-card unknown" onclick="goToExec('blackwell')">
+          <div class="sh-name">Sarah Blackwell ⚠️</div>
+          <div class="sh-title">Head of Procurement</div>
+          <div class="sh-tags"><span class="sh-tag" style="background:var(--red-bg);color:var(--red)">NO DATA</span><span class="sh-tag" style="background:var(--amber-bg);color:var(--amber)">PROCESS GATE</span></div>
+          <div class="sh-quick">Controls evaluation process. Unknown philosophy. Critical intelligence gap.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label"><span class="hl">▶</span> DEAL DYNAMICS</div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="section-label" style="margin-bottom:8px"><span class="hl">⚡</span> THE INVISIBLE BLOCKER</div>
+        <div style="font-size:12px;color:var(--text-primary);line-height:1.6">
+          <strong>Not a person — a structural tension.</strong> Hale (CIO) and Morris own overlapping territory. He owns "technical resilience." She owns "organisational resilience." The vendor who picks a side creates an internal opponent. The vendor who bridges both wins.
+        </div>
+        <div class="tp" style="margin-top:10px"><strong>Solution:</strong> Dual governance — tech delivery → CIO, resilience outcomes → Jennifer's Steering Committee. Neither controls the other. No other bidder will propose this.</div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="section-label" style="margin-bottom:8px"><span class="hl">🏆</span> CHAMPION COALITION PATH</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6">
+          <strong style="color:var(--green)">Jennifer</strong> (opens door) → <strong style="color:var(--amber)">Thompson/CFO</strong> (budget) → <strong style="color:var(--cyan)">Osei/CRO</strong> (risk authority) → <strong style="color:var(--purple)">Hale/CIO</strong> (tech credibility) → <strong style="color:var(--amber)">Harrison/COO</strong> (operational validation)
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-label" style="margin-bottom:8px"><span class="hl">🛡️</span> VETO MAP</div>
+        <div class="stat-row"><span class="stat-label">Hale (CIO)</span><span class="stat-value red">HIGH — veto on tech weakness</span></div>
+        <div class="stat-row"><span class="stat-label">Thompson (CFO)</span><span class="stat-value red">HIGH — veto on commercial model</span></div>
+        <div class="stat-row"><span class="stat-label">Osei (CRO)</span><span class="stat-value red">HIGH — veto on 3rd party risk maturity</span></div>
+        <div class="stat-row"><span class="stat-label">Harrison (COO)</span><span class="stat-value amber">MEDIUM — veto on operational execution</span></div>
+        <div class="stat-row"><span class="stat-label">Blackwell (Proc)</span><span class="stat-value amber">PROCESS — veto on compliance</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ WIN ════════════ -->
+<div id="tab-win" class="panel">
+  <div class="win-grid">
+
+    <div class="card" style="grid-column: span 2">
+      <div class="section-label"><span class="hl">▶</span> THEIR PAIN → OUR PROOF</div>
+      <table class="proof-tbl">
+        <thead><tr><th>Their Problem</th><th>Our Evidence</th><th>The Result</th></tr></thead>
+        <tbody>
+          <tr><td class="prob">62% EOL servers · £2.8M outages</td><td class="ev">Excalibur Financial Group — comparable legacy estate</td><td class="res">35% cloud migrated 9mo. Zero P1 in transition.</td></tr>
+          <tr><td class="prob">58% FCR · 3.1/5 satisfaction</td><td class="ev">Excalibur — started at 54% FCR</td><td class="res">67% FCR in 6 months. 220 processes automated.</td></tr>
+          <tr><td class="prob">14K alerts/mo · <3% actionable</td><td class="ev">Helios AI Alert Noise Reduction — all FS clients</td><td class="res">67% reduction. Actionable: <3% → 22%.</td></tr>
+          <tr><td class="prob">PRA vendor concentration gaps</td><td class="ev">Excalibur PRA review + Athena virtual SOC</td><td class="res">Passed. RTO: 18hr → 4hr.</td></tr>
+          <tr><td class="prob">Consumer Duty MI · 72hr delay</td><td class="ev">MI Acceleration pilot — Excalibur</td><td class="res">48hr → 6hr. 91% exception detection.</td></tr>
+          <tr><td class="prob">109 FTE TUPE</td><td class="ev">James Fletcher — 14 transitions, all successful</td><td class="res">Zero P1 during any. Avg 7mo to BAU.</td></tr>
+          <tr><td class="prob">Ransomware / cyber resilience</td><td class="ev">Athena Insurance — incident 2022</td><td class="res">Contained 23min. No data loss. Recovery 6hr.</td></tr>
+          <tr><td class="prob">ISO 22301 cert target Q3 2026</td><td class="ev">Rachel Okonkwo — ISO 22301 Lead Auditor</td><td class="res">Fellow travellers. Helios targeting Q4 2026.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span class="hl">▶</span> CARDS TO PLAY</div>
+      <div class="tp"><strong>Right Size:</strong> "Your CIO gets our UK MD's mobile number."</div>
+      <div class="tp"><strong>Excalibur:</strong> "Almost identical — regulated FS, legacy, same scale. 9 months in."</div>
+      <div class="tp"><strong>Rachel:</strong> "Ex-Deloitte, ex-Barclays. Meets Jennifer as peer."</div>
+      <div class="tp"><strong>Dual Gov:</strong> "Resilience → your Steering Committee. Delivery → CIO. Neither controls the other."</div>
+      <div class="tp"><strong>Realloc:</strong> "Not new money. Redirect £2.8M from failure. OPEX neutral Year 2."</div>
+      <div class="tp"><strong>AI Real:</strong> "11 things in production. Not 50 demo'd."</div>
+    </div>
+
+    <div class="card">
+      <div class="section-label" style="color:var(--red)"><span style="color:var(--red)">▶</span> NEVER SAY</div>
+      <div class="tp warn">❌ "Seamless transition"</div>
+      <div class="tp warn">❌ "We're ISO 22301 certified"</div>
+      <div class="tp warn">❌ Lead with AI capabilities</div>
+      <div class="tp warn">❌ Mention French parent (unless asked)</div>
+      <div class="tp warn">❌ "We understand your challenges"</div>
+      <div class="tp warn">❌ Questions before earning credibility</div>
+    </div>
+
+    <div class="card" style="grid-column: span 2; border-left: 3px solid var(--green);">
+      <div class="section-label"><span class="hl">⚡</span> THE DISRUPTION QUESTION</div>
+      <div style="font-size:13px;color:var(--text-primary);line-height:1.7;padding:4px 0">
+        "Your monitoring generates 14,000 alerts a month but less than 3% need action. You're spending £2.8 million a year on micro-outages, trending up 12%. Most people treat those as separate problems. <strong style="color:var(--green)">But is it possible the alert noise is actually causing the outages</strong> — because your team can't see real signals through 13,500 false positives?"
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Let the question land. Don't offer the solution. Connects two data points they haven't connected.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ GROW ════════════ -->
+<div id="tab-grow" class="panel">
+  <div class="grow-grid">
+
+    <div class="card">
+      <div class="section-label"><span class="hl">▶</span> COMPELLED EVENTS</div>
+      <div class="tl-item"><span class="tl-date">28 Mar 2026</span><span class="tl-event"><strong>RFP deadline</strong> — 31 days</span></div>
+      <div class="tl-item"><span class="tl-date">Q2 2026</span><span class="tl-event"><strong>PRA 52 vendor assessments</strong></span></div>
+      <div class="tl-item"><span class="tl-date">Apr-May 2026</span><span class="tl-event"><strong>Vendor presentations</strong></span></div>
+      <div class="tl-item"><span class="tl-date">Q3 2026</span><span class="tl-event"><strong>ISO 22301 target</strong> (Meridian)</span></div>
+      <div class="tl-item"><span class="tl-date">Q4 2026</span><span class="tl-event"><strong>ISO 22301 target</strong> (Helios)</span></div>
+      <div class="tl-item"><span class="tl-date">1 Sep 2026</span><span class="tl-event"><strong>Contract signature</strong></span></div>
+      <div class="tl-item"><span class="tl-date">1 Oct 2026</span><span class="tl-event"><strong>Service commencement</strong></span></div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span class="hl">▶</span> COMPETITIVE LANDSCAPE</div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:2px">Global Outsourcer <span style="color:var(--text-muted);font-weight:400">(DXC/Kyndryl)</span></div>
+        <div style="font-size:11px;color:var(--text-secondary)">Scale + brand. But Meridian = small account. Generic. Likely offshore.</div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:2px">UK VAR/MSP <span style="color:var(--text-muted);font-weight:400">(SCC/Softcat)</span></div>
+        <div style="font-size:11px;color:var(--text-secondary)">UK presence, cost. Weaker on transformation + FS regulatory depth.</div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:2px">Indian Heritage <span style="color:var(--text-muted);font-weight:400">(Wipro/Infosys)</span></div>
+        <div style="font-size:11px;color:var(--text-secondary)">Price + automation. UK delivery depth? Cultural fit unlikely.</div>
+      </div>
+      <div style="margin-top:12px;padding:8px 10px;background:var(--green-bg);border-radius:4px;border-left:3px solid var(--green);font-size:12px">
+        <strong>Helios:</strong> "Big enough to be credible. Small enough to care. UK enough to deliver. FS enough to understand."
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-label" style="color:var(--red)"><span style="color:var(--red)">▶</span> INTELLIGENCE GAPS</div>
+      <div class="tp warn"><strong>Incumbent:</strong> Who runs the estate now? Are they rebidding?</div>
+      <div class="tp warn"><strong>CloudScale:</strong> In-scope or carved out of RFP?</div>
+      <div class="tp warn"><strong>12 IBS:</strong> Which services are PRA-designated?</div>
+      <div class="tp warn"><strong>Blackwell:</strong> No data. Procurement philosophy unknown.</div>
+    </div>
+
+    <div class="card">
+      <div class="section-label"><span class="hl">▶</span> NEXT MOVES</div>
+      <div class="tp"><strong>I-01</strong> Pre-Mortem — 5 ways this deal dies</div>
+      <div class="tp"><strong>A-01</strong> RFP Decoder — trauma signals in requirements</div>
+      <div class="tp"><strong>G-03</strong> Richard Hale — CIO profile before next meeting</div>
+      <div class="tp"><strong>G-03</strong> Sarah Blackwell — procurement philosophy</div>
+      <div class="tp"><strong>G-06</strong> Refresh — post-meeting update with actions</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Tab switching
+document.querySelectorAll('.nav-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+// Collapsible
+function tog(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+
+// Exec dropdown
+function switchExec(id){
+  document.querySelectorAll('.exec-profile').forEach(p=>p.classList.remove('active'));
+  document.getElementById('prof-'+id).classList.add('active');
+}
+
+// Click stakeholder → switch to Know tab and load their profile
+function goToExec(id){
+  // Switch tab
+  document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  document.querySelector('[data-tab="know"]').classList.add('active');
+  document.getElementById('tab-know').classList.add('active');
+  // Switch profile
+  document.querySelector('.exec-select').value = id;
+  switchExec(id);
+  // Scroll to dossier
+  document.querySelector('.exec-select').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+
+</body>
+</html>

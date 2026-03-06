@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIN Account Pack | Meridian Technology Group</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#030712;--surface:#0d1117;--s2:rgba(17,24,39,0.6);--border:#1f2937;--b2:#374151;--text:#f3f4f6;--muted:#9ca3af;--dim:#6b7280;--faint:#4b5563;--green:#10b981;--amber:#f59e0b;--orange:#f97316;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4;--pink:#ec4899}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+        ::selection{background:var(--blue);color:white}
+        .mono{font-family:'JetBrains Mono',monospace}
+        .label{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+
+        .header{background:linear-gradient(180deg,#0f172a 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:32px 24px 24px}
+        .header-inner{max-width:1200px;margin:0 auto}
+        .header h1{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-0.02em;color:white}
+        .meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+        .meta-pill{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--s2);color:var(--muted)}
+
+        .main{max-width:1200px;margin:0 auto;padding:24px}
+
+        /* NAV TABS */
+        .card-nav{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:10}
+        .nav-btn{font-size:11px;font-weight:600;padding:7px 14px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--faint);cursor:pointer;transition:all 0.2s;font-family:inherit}
+        .nav-btn:hover{border-color:var(--b2);color:var(--muted)}
+        .nav-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(59,130,246,0.06)}
+
+        /* DASHBOARD CARDS */
+        .dash-card{display:none;animation:fadeIn 0.25s ease-out}
+        .dash-card.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+        .card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+        .card-source{font-size:10px;color:var(--dim);padding:3px 8px;border:1px solid var(--border);border-radius:4px}
+        .card-updated{font-size:10px;color:var(--faint)}
+
+        .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+        .card-title{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:10px}
+
+        /* KPI STRIP */
+        .kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:16px}
+        .kpi{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center}
+        .kpi-val{font-size:22px;font-weight:900;color:white;line-height:1;margin:4px 0}
+        .kpi-lbl{font-size:9px;font-weight:700;color:var(--dim);letter-spacing:0.08em;text-transform:uppercase}
+
+        /* TWO COL */
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        @media(max-width:700px){.two-col{grid-template-columns:1fr}}
+        .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+        @media(max-width:700px){.three-col{grid-template-columns:1fr}}
+
+        /* DATA ROW */
+        .data-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(31,41,55,0.4);font-size:12px}
+        .data-row:last-child{border-bottom:none}
+        .data-label{color:var(--muted)}
+        .data-val{font-weight:600;color:white}
+
+        /* RAG DOT */
+        .rag{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;flex-shrink:0}
+
+        /* PERSON CARD */
+        .person{display:flex;gap:12px;padding:12px;border:1px solid var(--border);border-radius:8px;background:rgba(17,24,39,0.3);margin-bottom:8px}
+        .person-avatar{width:40px;height:40px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--dim);flex-shrink:0}
+        .person-name{font-size:13px;font-weight:700;color:white}
+        .person-role{font-size:11px;color:var(--dim)}
+        .person-detail{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+        /* SIGNAL */
+        .signal-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(31,41,55,0.3);font-size:12px}
+        .signal-row:last-child{border-bottom:none}
+        .signal-name{flex:1;color:var(--muted)}
+        .signal-val{color:white;font-weight:600}
+
+        /* DEAL ROW */
+        .deal-row-card{padding:12px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;border-left:3px solid;background:rgba(17,24,39,0.3)}
+        .deal-top{display:flex;justify-content:space-between;align-items:flex-start}
+        .deal-name{font-size:13px;font-weight:700;color:white}
+        .deal-val{font-size:14px;font-weight:800;color:white}
+        .deal-meta{font-size:11px;color:var(--dim);margin-top:4px}
+        .deal-flags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+        .deal-flag{font-size:9px;font-weight:600;padding:2px 6px;border-radius:3px}
+
+        /* PROMPT CHAIN */
+        .prompt-chain{display:flex;gap:6px;flex-wrap:wrap}
+        .prompt-tag{font-size:10px;padding:3px 8px;border-radius:4px;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .prompt-tag:hover{opacity:0.8}
+        .prompt-tag.gather{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--blue)}
+        .prompt-tag.assess{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);color:var(--purple)}
+        .prompt-tag.influence{background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);color:var(--pink)}
+        .prompt-tag.nurture{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);color:var(--green)}
+
+        /* TIMELINE */
+        .tl{position:relative;padding-left:20px}
+        .tl::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:2px;background:var(--border)}
+        .tl-item{position:relative;margin-bottom:12px;padding-left:16px}
+        .tl-dot{position:absolute;left:-18px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid}
+
+        .footer{text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:32px}
+        .footer p{font-size:10px;color:var(--faint)}
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <p class="label" style="color:var(--cyan);margin-bottom:8px">GAIN ACCOUNT PACK</p>
+        <h1 id="companyTitle">Meridian Technology Group</h1>
+        <div class="meta-row">
+            <span class="meta-pill">PE-Backed VAR/MSP</span>
+            <span class="meta-pill">&pound;42M Revenue</span>
+            <span class="meta-pill">280 Employees</span>
+            <span class="meta-pill mono">Updated: 28 Feb 2026</span>
+            <span class="meta-pill" style="border-color:var(--orange);color:var(--orange)">Verdict: FIX</span>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="card-nav" id="cardNav"></div>
+    <div id="cardContent"></div>
+    <div class="footer"><p>GAIN Account Pack &middot; Meridian Technology Group &middot; David Matthews &middot; Confidential</p></div>
+</div>
+
+<script>
+(function(){
+var SC={"3":"#ef4444","2":"#f97316","1":"#f59e0b","0":"#10b981"};
+var SL={"3":"Critical","2":"At Risk","1":"Watch","0":"Healthy"};
+
+var CARDS = [
+{id:"overview",label:"G-01 Company",source:"G-01 Macro Intel",color:"var(--blue)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--blue)">G-01 Company Overview</p><h2 style="font-size:18px;font-weight:800;margin-top:4px">Meridian Technology Group</h2></div><span class="card-source">G-01 Macro Intel</span></div>'+
+    '<div class="kpi-strip">'+
+    '<div class="kpi"><div class="kpi-lbl">Revenue</div><div class="kpi-val">&pound;42M</div><div class="kpi-lbl" style="color:var(--orange)">-7% YoY</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Employees</div><div class="kpi-val">280</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Acquisitions</div><div class="kpi-val">3</div><div class="kpi-lbl">in 18 months</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">In Portfolio</div><div class="kpi-val">18mo</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Board Review</div><div class="kpi-val" style="color:var(--red);font-size:16px">6 wks</div></div>'+
+    '</div>'+
+    '<div class="two-col">'+
+    '<div class="card"><p class="card-title" style="color:var(--blue)">Company Profile</p>'+
+    '<div class="data-row"><span class="data-label">Sector</span><span class="data-val">VAR / Managed Services / Cybersecurity</span></div>'+
+    '<div class="data-row"><span class="data-label">Ownership</span><span class="data-val">PE-backed (Blackstone Bridge Capital)</span></div>'+
+    '<div class="data-row"><span class="data-label">HQ</span><span class="data-val">Reading, UK</span></div>'+
+    '<div class="data-row"><span class="data-label">Entities</span><span class="data-val">Reading (MSP) + Manchester (Security) + Bristol (Cloud)</span></div>'+
+    '<div class="data-row"><span class="data-label">CRM Systems</span><span class="data-val" style="color:var(--red)">3 (Salesforce + HubSpot + Sheets)</span></div>'+
+    '<div class="data-row"><span class="data-label">ICP</span><span class="data-val" style="color:var(--amber)">Undefined post-acquisition</span></div>'+
+    '</div>'+
+    '<div class="card"><p class="card-title" style="color:var(--orange)">Key Signals</p>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Margin trajectory</span><span class="signal-val" style="color:var(--red)">34% &rarr; 26% (18 months)</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Vendor rebate dependency</span><span class="signal-val" style="color:var(--red)">48% of gross margin</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Revenue concentration</span><span class="signal-val" style="color:var(--red)">Top 3 = 61% of new biz</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">M&A integration</span><span class="signal-val" style="color:var(--red)">3 CRMs, 0 cross-sell</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--amber)"></span><span class="signal-name">Customer overlap</span><span class="signal-val" style="color:var(--amber)">23% (discovered accidentally)</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--amber)"></span><span class="signal-name">NPS trend</span><span class="signal-val" style="color:var(--amber)">62 &rarr; 48</span></div>'+
+    '</div></div>';
+}},
+
+{id:"financials",label:"G-02 Financials",source:"G-02 Financial Forensics",color:"var(--green)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--green)">G-02 Financial Forensics</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Margin &amp; Revenue Analysis</h2></div><span class="card-source">G-02</span></div>'+
+    '<div class="kpi-strip">'+
+    '<div class="kpi"><div class="kpi-lbl">Gross Margin</div><div class="kpi-val" style="color:var(--red)">26%</div><div class="kpi-lbl">was 34%</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Rebate Dependency</div><div class="kpi-val" style="color:var(--red)">48%</div><div class="kpi-lbl">of gross margin</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">If Rebates -33%</div><div class="kpi-val" style="color:var(--red)">19%</div><div class="kpi-lbl">below survival</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Revenue Trend</div><div class="kpi-val" style="color:var(--orange)">&pound;42M</div><div class="kpi-lbl">target was &pound;45M</div></div>'+
+    '</div>'+
+    '<div class="two-col">'+
+    '<div class="card"><p class="card-title" style="color:var(--green)">Revenue Breakdown</p>'+
+    '<div class="data-row"><span class="data-label">Reading (MSP)</span><span class="data-val">&pound;24M &middot; 28% margin</span></div>'+
+    '<div class="data-row"><span class="data-label">Manchester (Security)</span><span class="data-val">&pound;12M &middot; 38% margin</span></div>'+
+    '<div class="data-row"><span class="data-label">Bristol (Cloud)</span><span class="data-val">&pound;6M &middot; 22% margin</span></div>'+
+    '<div class="data-row"><span class="data-label">Blended</span><span class="data-val" style="color:var(--red)">&pound;42M &middot; 26% margin</span></div>'+
+    '</div>'+
+    '<div class="card"><p class="card-title" style="color:var(--red)">Risk Scenarios</p>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Microsoft rebate restructure (FY27)</span><span class="signal-val" style="color:var(--red)">No plan</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Hardware resale margin</span><span class="signal-val" style="color:var(--red)">12%</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--orange)"></span><span class="signal-name">Services margin (blended)</span><span class="signal-val" style="color:var(--orange)">31%</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--amber)"></span><span class="signal-name">Comp plan alignment</span><span class="signal-val" style="color:var(--amber)">Revenue only</span></div>'+
+    '</div></div>';
+}},
+
+{id:"people",label:"G-09 People",source:"G-09 Compact Profile + G-18 Belief System",color:"var(--purple)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--purple)">G-09 / G-18 Key People</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Leadership &amp; Behavioural Profile</h2></div><span class="card-source">G-09 + G-18</span></div>'+
+    '<div class="person"><div class="person-avatar">CE</div><div><div class="person-name">CEO (Reading Founder)</div><div class="person-role">Chief Executive Officer &middot; 12 years at company</div><div class="person-detail"><span class="rag" style="background:var(--amber)"></span>Technical background. Never run &pound;40M+ entity. Trusts his people &mdash; possibly too much. Behavioural driver: <strong style="color:var(--amber)">Safety / Loyalty</strong></div></div></div>'+
+    '<div class="person"><div class="person-avatar">CR</div><div><div class="person-name">CRO</div><div class="person-role">Chief Revenue Officer &middot; Joined pre-acquisition</div><div class="person-detail"><span class="rag" style="background:var(--red)"></span>Presenting false pipeline to board. Cannot produce MEDDIC examples. Dismisses competitive threat. Dismisses rebate risk. Behavioural driver: <strong style="color:var(--red)">Self-preservation / Order</strong></div></div></div>'+
+    '<div class="person"><div class="person-avatar">TS</div><div><div class="person-name">Top Seller #1</div><div class="person-role">Senior AE &middot; Reading (pre-acquisition)</div><div class="person-detail"><span class="rag" style="background:var(--red)"></span>Makes departure noises re: earn-out. ~20% of new business. No non-compete. <strong style="color:var(--red)">FLIGHT RISK</strong></div></div></div>'+
+    '<div class="person"><div class="person-avatar">MS</div><div><div class="person-name">Manchester Seller (Female)</div><div class="person-role">AE &middot; Manchester Security</div><div class="person-detail"><span class="rag" style="background:var(--green)"></span>"Probably the best seller in the whole group" &mdash; left alone post-acquisition. Not integrated into combined GTM. <strong style="color:var(--green)">UNTAPPED ASSET</strong></div></div></div>'+
+    '<div class="person"><div class="person-avatar">BC</div><div><div class="person-name">Bristol Seller-Consultant</div><div class="person-role">Technical Lead + Seller &middot; Bristol Cloud</div><div class="person-detail"><span class="rag" style="background:var(--orange)"></span>Overwhelmed: presales + delivery + sales. Pipeline impossible to maintain. <strong style="color:var(--orange)">BURNOUT RISK</strong></div></div></div>';
+}},
+
+{id:"pipeline",label:"A-06 Pipeline",source:"A-06 Deal Strategy",color:"var(--purple)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--purple)">A-06 Pipeline Overview</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Deal Portfolio &amp; Triage</h2></div><span class="card-source">A-06</span></div>'+
+    '<div class="kpi-strip">'+
+    '<div class="kpi"><div class="kpi-lbl">Reported</div><div class="kpi-val">&pound;38M</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Verified</div><div class="kpi-val" style="color:var(--red)">&pound;14.2M</div><div class="kpi-lbl" style="color:var(--red)">37% real</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Target</div><div class="kpi-val">&pound;16M</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">True Coverage</div><div class="kpi-val" style="color:var(--red)">0.9x</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Deals &gt;100K</div><div class="kpi-val">31</div></div>'+
+    '</div>'+
+    '<p class="label" style="color:var(--red);margin-bottom:8px">Kill</p>'+
+    '<div class="deal-row-card" style="border-left-color:var(--red)"><div class="deal-top"><span class="deal-name">Project Horizon</span><span class="deal-val">&pound;3.4M</span></div><div class="deal-meta">14 months &middot; 6 close date pushes &middot; Last contact: 67 days ago</div><div class="deal-flags"><span class="deal-flag" style="color:var(--red);background:rgba(239,68,68,0.1)">DEAD</span><span class="deal-flag" style="color:var(--red);background:rgba(239,68,68,0.1)">6 PUSHES</span><span class="deal-flag" style="color:var(--red);background:rgba(239,68,68,0.1)">NO CONTACT</span></div></div>'+
+    '<div class="deal-row-card" style="border-left-color:var(--red)"><div class="deal-top"><span class="deal-name">Project Atlas</span><span class="deal-val">&pound;2.1M</span></div><div class="deal-meta">9 months &middot; Phantom champion &middot; No economic buyer</div><div class="deal-flags"><span class="deal-flag" style="color:var(--red);background:rgba(239,68,68,0.1)">PHANTOM</span><span class="deal-flag" style="color:var(--red);background:rgba(239,68,68,0.1)">NO EB</span></div></div>'+
+    '<p class="label" style="color:var(--orange);margin:12px 0 8px">Fix</p>'+
+    '<div class="deal-row-card" style="border-left-color:var(--orange)"><div class="deal-top"><span class="deal-name">Logistics Infra Refresh</span><span class="deal-val">&pound;500K</span></div><div class="deal-meta">6 months &middot; Last customer email: September &middot; Still at 70%</div><div class="deal-flags"><span class="deal-flag" style="color:var(--orange);background:rgba(249,115,22,0.1)">STALE</span><span class="deal-flag" style="color:var(--orange);background:rgba(249,115,22,0.1)">STAGE INFLATION</span></div></div>'+
+    '<p class="label" style="color:var(--dim);margin:12px 0 8px">7 of 11 sampled deals: no buyer contact &gt;60 days (remaining 20 unreviewed)</p>';
+}},
+
+{id:"stakeholders",label:"A-05 Stakeholders",source:"A-05 Authority Map",color:"var(--purple)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--purple)">A-05 Stakeholder Map</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Buying Committee &mdash; Project Atlas Example</h2></div><span class="card-source">A-05</span></div>'+
+    '<div class="kpi-strip">'+
+    '<div class="kpi"><div class="kpi-lbl">Mapped</div><div class="kpi-val" style="color:var(--red)">3</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Required</div><div class="kpi-val">7-9</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Economic Buyer</div><div class="kpi-val" style="color:var(--red)">NONE</div></div>'+
+    '<div class="kpi"><div class="kpi-lbl">Champion Quality</div><div class="kpi-val" style="color:var(--red)">PHANTOM</div></div>'+
+    '</div>'+
+    '<div class="three-col">'+
+    '<div class="card" style="border-left:3px solid var(--amber)"><p class="card-title" style="color:var(--amber)">Champion</p><p style="font-size:13px;font-weight:700;color:white">Mark Davidson</p><p style="font-size:11px;color:var(--dim)">Sr Infrastructure Mgr</p><div class="signal-row"><span class="signal-name">Authority</span><span class="signal-val" style="color:var(--red)">LOW</span></div><div class="signal-row"><span class="signal-name">CIO Access</span><span class="signal-val" style="color:var(--red)">UNVERIFIED</span></div><div class="signal-row"><span class="signal-name">Last Contact</span><span class="signal-val" style="color:var(--red)">67 days</span></div></div>'+
+    '<div class="card" style="border-left:3px solid var(--dim);border-style:dashed"><p class="card-title" style="color:var(--red)">Missing: CIO</p><p style="font-size:12px;color:var(--muted)">&pound;2.1M deal. Zero access to the person who signs off the budget.</p></div>'+
+    '<div class="card" style="border-left:3px solid var(--dim);border-style:dashed"><p class="card-title" style="color:var(--red)">Missing: CFO</p><p style="font-size:12px;color:var(--muted)">No commercial stakeholder engaged. Deal requires board sign-off.</p></div>'+
+    '</div>';
+}},
+
+{id:"crm",label:"L4 CRM Signals",source:"Level 4 CRM Verification",color:"var(--cyan)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--cyan)">Level 4 CRM Signals</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Verifiable Digital Evidence</h2></div><span class="card-source">Level 4</span></div>'+
+    '<div class="three-col">'+
+    '<div class="card" style="border-top:2px solid var(--cyan)"><p class="card-title" style="color:var(--cyan)">Email Activity</p>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Engagement gap &gt;30d</span><span class="signal-val">7 of top 20</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">One-way comms</span><span class="signal-val">12 deals</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--amber)"></span><span class="signal-name">Reply asymmetry</span><span class="signal-val">Seller 2h / Buyer 6d</span></div></div>'+
+    '<div class="card" style="border-top:2px solid var(--cyan)"><p class="card-title" style="color:var(--cyan)">Meeting / Calendar</p>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Frequency decay</span><span class="signal-val">Weekly &rarr; None</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Wrong-level</span><span class="signal-val">14/20 tech only</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--amber)"></span><span class="signal-name">Ghost stakeholders</span><span class="signal-val">4 deals</span></div></div>'+
+    '<div class="card" style="border-top:2px solid var(--cyan)"><p class="card-title" style="color:var(--cyan)">CRM Audit</p>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Close date drift</span><span class="signal-val">8 deals 3+ pushes</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Stage stagnation</span><span class="signal-val">11 deals &gt;60d</span></div>'+
+    '<div class="signal-row"><span class="rag" style="background:var(--red)"></span><span class="signal-name">Activity cliff</span><span class="signal-val">5 deals zero 30d</span></div></div>'+
+    '</div>';
+}},
+
+{id:"diagnostic",label:"Full Diagnostic",source:"00-B Taxonomy Scan",color:"var(--red)",render:function(){
+    var problems = [
+        {c:"1.1",n:"Margin Compression",s:3},{c:"1.2",n:"M&A Value Leakage",s:3},{c:"1.3",n:"Hero-Dependency",s:3},
+        {c:"1.6",n:"Vendor Addiction",s:3},{c:"2.2",n:"Pipeline Inflation",s:3},{c:"2.9",n:"Dead Deal Denial",s:3},
+        {c:"1.5",n:"Measurement Trap",s:2},{c:"1.7",n:"Proposition Gap",s:2},{c:"2.1",n:"Happy Ears",s:2},
+        {c:"2.3",n:"No-Decision",s:2},{c:"2.4",n:"Stakeholder Blindness",s:2},{c:"2.8",n:"Phantom Champion",s:2},
+        {c:"3.2",n:"Capability Gap",s:2},{c:"3.3",n:"Accountability Vacuum",s:2},
+        {c:"1.4",n:"ICP Drift",s:1},{c:"2.5",n:"Discovery Failure",s:1},{c:"2.7",n:"Competitive Blind",s:1},
+        {c:"2.10",n:"Loss Review Theatre",s:1},{c:"3.5",n:"Manager Gap",s:1}
+    ];
+    var html='<div class="card-header"><div><p class="label" style="color:var(--red)">GAIN-00 Full Diagnostic</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">29-Problem Taxonomy Scan</h2></div><span class="card-source">00-B</span></div>';
+    html+='<div class="kpi-strip"><div class="kpi"><div class="kpi-lbl">Detected</div><div class="kpi-val" style="color:var(--red)">18</div><div class="kpi-lbl">of 29</div></div><div class="kpi"><div class="kpi-lbl">Critical</div><div class="kpi-val" style="color:var(--red)">6</div></div><div class="kpi"><div class="kpi-lbl">At Risk</div><div class="kpi-val" style="color:var(--orange)">7</div></div><div class="kpi"><div class="kpi-lbl">Watch</div><div class="kpi-val" style="color:var(--amber)">5</div></div></div>';
+    problems.forEach(function(p){
+        html+='<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(31,41,55,0.3)">';
+        html+='<span class="rag" style="background:'+SC[p.s]+'"></span>';
+        html+='<span class="mono" style="font-size:10px;color:var(--dim);width:30px">'+p.c+'</span>';
+        html+='<span style="flex:1;font-size:12px;color:white;font-weight:600">'+p.n+'</span>';
+        html+='<span style="font-size:9px;font-weight:700;color:'+SC[p.s]+';letter-spacing:0.08em;text-transform:uppercase">'+SL[p.s]+'</span>';
+        html+='</div>';
+    });
+    return html;
+}},
+
+{id:"prescription",label:"Prescription",source:"00-D Prescription",color:"var(--blue)",render:function(){
+    return '<div class="card-header"><div><p class="label" style="color:var(--blue)">00-D Prescription &mdash; Prompts to Run</p><h2 style="font-size:16px;font-weight:800;margin-top:4px">Intervention Sequence</h2></div><span class="card-source">00-D</span></div>'+
+    '<div class="card" style="border-left:3px solid var(--red)"><p class="label" style="color:var(--red);margin-bottom:8px">Immediate &mdash; This Week</p>'+
+    '<p style="font-size:13px;font-weight:600;color:white;margin-bottom:4px">Pipeline Purge</p><p style="font-size:11px;color:var(--muted);margin-bottom:8px">Audit every deal against L4 signals. Kill &pound;23.8M of fiction.</p>'+
+    '<div class="prompt-chain"><span class="prompt-tag assess">A-06</span><span class="prompt-tag nurture">N-11</span></div></div>'+
+
+    '<div class="card" style="border-left:3px solid var(--red)"><p style="font-size:13px;font-weight:600;color:white;margin-bottom:4px">Customer Overlap Map</p><p style="font-size:11px;color:var(--muted);margin-bottom:8px">Map 23% overlap. Build cross-sell pipeline.</p>'+
+    '<div class="prompt-chain"><span class="prompt-tag gather">G-05</span><span class="prompt-tag nurture">N-05</span><span class="prompt-tag nurture">N-01</span></div></div>'+
+
+    '<div class="card" style="border-left:3px solid var(--orange)"><p class="label" style="color:var(--orange);margin-bottom:8px">30-Day</p>'+
+    '<p style="font-size:13px;font-weight:600;color:white;margin-bottom:4px">Commercial Architecture</p><p style="font-size:11px;color:var(--muted);margin-bottom:8px">Fix margin structure. Align comp plan. Mitigate vendor dependency.</p>'+
+    '<div class="prompt-chain"><span class="prompt-tag gather">G-01</span><span class="prompt-tag gather">G-08</span><span class="prompt-tag assess">A-09</span><span class="prompt-tag assess">A-10</span></div></div>'+
+
+    '<div class="card" style="border-left:3px solid var(--orange)"><p style="font-size:13px;font-weight:600;color:white;margin-bottom:4px">Sales Execution Cadence</p><p style="font-size:11px;color:var(--muted);margin-bottom:8px">Structured reviews. Stage gates. Manager coaching framework.</p>'+
+    '<div class="prompt-chain"><span class="prompt-tag assess">A-04</span><span class="prompt-tag assess">A-05</span><span class="prompt-tag assess">A-06</span></div></div>'+
+
+    '<div class="card" style="border-left:3px solid var(--amber)"><p class="label" style="color:var(--amber);margin-bottom:8px">60-90 Day</p>'+
+    '<p style="font-size:13px;font-weight:600;color:white;margin-bottom:4px">Competitive Intelligence + Proposition Rebuild</p><p style="font-size:11px;color:var(--muted);margin-bottom:8px">Competitor playbooks. Win/loss programme. Align messaging to delivery.</p>'+
+    '<div class="prompt-chain"><span class="prompt-tag influence">I-01</span><span class="prompt-tag influence">I-03</span><span class="prompt-tag gather">G-12</span><span class="prompt-tag influence">I-02</span></div></div>'+
+
+    '<div style="text-align:center;padding:16px;border:1px solid var(--border);border-radius:10px;margin-top:16px;background:var(--surface)">'+
+    '<p style="font-size:12px;color:var(--muted)">Total: <strong style="color:white">13 prompts</strong> across 4 phases &middot; <strong style="color:white">40 hours</strong> over 8 weeks</p>'+
+    '<p style="font-size:12px;color:var(--dim);margin-top:4px">First deliverable: Verified pipeline number &mdash; Day 5</p></div>';
+}}
+];
+
+// RENDER NAV
+var navHtml='';
+CARDS.forEach(function(c,i){
+    navHtml+='<button class="nav-btn'+(i===0?' active':'')+'" data-id="'+c.id+'">'+c.label+'</button>';
+});
+document.getElementById('cardNav').innerHTML=navHtml;
+
+// RENDER FIRST CARD
+var contentHtml='';
+CARDS.forEach(function(c,i){
+    contentHtml+='<div class="dash-card'+(i===0?' active':'')+'" id="card-'+c.id+'">'+c.render()+'</div>';
+});
+document.getElementById('cardContent').innerHTML=contentHtml;
+
+// NAV SWITCHING
+document.querySelectorAll('.nav-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+        var id=this.getAttribute('data-id');
+        document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+        this.classList.add('active');
+        document.querySelectorAll('.dash-card').forEach(function(c){c.classList.remove('active')});
+        document.getElementById('card-'+id).classList.add('active');
+    });
+});
+})();
+</script>
+</body>
+</html>

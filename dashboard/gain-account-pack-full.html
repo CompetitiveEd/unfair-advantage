@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAIN Account Pack | Meridian Financial Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#030712;--sf:#0d1117;--bd:#1f2937;--b2:#374151;--tx:#f3f4f6;--mu:#9ca3af;--dm:#6b7280;--ft:#4b5563;--gn:#10b981;--am:#f59e0b;--or:#f97316;--rd:#ef4444;--bl:#3b82f6;--pu:#a855f7;--cy:#06b6d4;--pk:#ec4899}
+        body{background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+        .mono{font-family:'JetBrains Mono',monospace}
+        .lb{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+        .hdr{background:linear-gradient(180deg,#0f172a,var(--bg));border-bottom:1px solid var(--bd);padding:28px 24px 20px}
+        .hdr-in{max-width:1240px;margin:0 auto}
+        .hdr h1{font-size:clamp(18px,3vw,26px);font-weight:900;letter-spacing:-0.02em;color:white}
+        .mr{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+        .mp{font-size:10px;padding:3px 8px;border-radius:5px;border:1px solid var(--bd);background:rgba(17,24,39,0.5);color:var(--mu)}
+        .main{max-width:1240px;margin:0 auto;padding:20px}
+        .tabs{display:flex;gap:3px;margin-bottom:16px;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:10}
+        .tab{font-size:10px;font-weight:600;padding:6px 10px;border-radius:6px;border:1px solid var(--bd);background:var(--sf);color:var(--ft);cursor:pointer;transition:all 0.15s;font-family:inherit;white-space:nowrap}
+        .tab:hover{border-color:var(--b2);color:var(--mu)}
+        .tab.on{border-color:var(--bl);color:var(--bl);background:rgba(59,130,246,0.06)}
+        .pane{display:none;animation:fi 0.2s ease-out}.pane.on{display:block}
+        @keyframes fi{from{opacity:0}to{opacity:1}}
+        .cd{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:8px}
+        .cd-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:6px}
+        .src{font-size:9px;color:var(--dm);padding:2px 6px;border:1px solid var(--bd);border-radius:3px}
+        .krow{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:6px;margin-bottom:12px}
+        .kpi{background:var(--sf);border:1px solid var(--bd);border-radius:7px;padding:10px;text-align:center}
+        .kv{font-size:20px;font-weight:900;color:white;line-height:1;margin:3px 0}
+        .kl{font-size:8px;font-weight:700;color:var(--dm);letter-spacing:0.08em;text-transform:uppercase}
+        .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+        .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+        @media(max-width:700px){.g2,.g3{grid-template-columns:1fr}}
+        .dr{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(31,41,55,0.3);font-size:12px}
+        .dr:last-child{border-bottom:none}
+        .dl{color:var(--mu)}.dv{font-weight:600;color:white}
+        .rg{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;flex-shrink:0}
+        .sr{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid rgba(31,41,55,0.25);font-size:12px}
+        .sr:last-child{border-bottom:none}
+        .sn{flex:1;color:var(--mu)}.sv{color:white;font-weight:600}
+        .per{display:flex;gap:10px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:rgba(17,24,39,0.3);margin-bottom:6px}
+        .pav{width:36px;height:36px;border-radius:50%;background:var(--bd);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--dm);flex-shrink:0}
+        .pnm{font-size:12px;font-weight:700;color:white}
+        .prl{font-size:10px;color:var(--dm)}
+        .pdt{font-size:10px;color:var(--mu);margin-top:3px;line-height:1.5}
+        .dl-card{padding:10px;border:1px solid var(--bd);border-radius:7px;margin-bottom:6px;border-left:3px solid;background:rgba(17,24,39,0.3)}
+        .dl-top{display:flex;justify-content:space-between}.dl-nm{font-size:12px;font-weight:700;color:white}.dl-v{font-size:13px;font-weight:800;color:white}
+        .dl-mt{font-size:10px;color:var(--dm);margin-top:3px}
+        .dl-fl{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+        .fl{font-size:8px;font-weight:600;padding:2px 5px;border-radius:3px}
+        .pt{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:600}
+        .pt-g{background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);color:var(--bl)}
+        .pt-a{background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.2);color:var(--pu)}
+        .pt-i{background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.2);color:var(--pk)}
+        .pt-n{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);color:var(--gn)}
+        .chain{display:flex;gap:4px;flex-wrap:wrap}
+        .tbl{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+        .tbl th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);color:var(--dm);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+        .tbl td{padding:6px 8px;border-bottom:1px solid rgba(31,41,55,0.3);color:var(--mu)}
+        .tbl td:first-child{color:white;font-weight:600}
+        .bar-bg{width:100%;height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-top:4px}
+        .bar-fill{height:100%;border-radius:3px;transition:width 0.6s ease-out}
+    </style>
+</head>
+<body>
+<div class="hdr"><div class="hdr-in">
+    <p class="lb" style="color:var(--cy);margin-bottom:6px">GAIN ACCOUNT PACK &mdash; 14 DASHBOARD VIEWS</p>
+    <h1>Meridian Financial Services</h1>
+    <div class="mr">
+        <span class="mp">UK Mid-Tier Financial Services</span>
+        <span class="mp">&pound;847M Revenue</span>
+        <span class="mp">4,200 Employees</span>
+        <span class="mp">RFP: MFS-2026-ORT-001</span>
+        <span class="mp mono">TCV: &pound;95-110M</span>
+        <span class="mp" style="border-color:var(--bl);color:var(--bl)">FIX &mdash; Strategic Transformation</span>
+    </div>
+</div></div>
+<div class="main">
+<div class="tabs" id="tabs"></div>
+<div id="panes"></div>
+</div>
+<script>
+var C=[
+// ═══════ 0: EXEC OVERVIEW ═══════
+{id:"exec",lbl:"Executive Summary",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--cy)">Executive Overview &mdash; One Page</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Meridian Financial Services</h2></div></div>'+
+'<div class="krow">'+
+k("Revenue","£847M","+6.2%","var(--gn)")+k("Op Profit","£287M","+7.3%","var(--gn)")+k("IT Budget","£16.5M","/year","var(--bl)")+
+k("TCV","£95-110M","7 years","var(--bl)")+k("Cost of Inaction","£33-37M","7yr bleed","var(--rd)")+k("Competitors","3 Named","17 total","var(--or)")+'</div>'+
+
+'<div class="g2">'+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">Bleeding Necks (G-02)</p>'+
+sr("rd","Micro-outage haemorrhage","£2.8M/yr +12%")+sr("rd","62% servers beyond EOL","Critical")+sr("or","Service desk 58% FCR","vs 72% benchmark")+sr("or","14,000 alerts/mo, <3% real","Noise crisis")+sr("am","Consumer Duty MI","72hr delay")+sr("am","Device age 4.2yr","Deferred capex")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">Strategic Signals (G-01)</p>'+
+sr("bl","Meridian 2030","£82.5M over 5yr")+sr("bl","Cloud-first mandate","100% by end 2026")+sr("gn","PRA pilot selected","1 of 12 firms")+sr("am","CEO legacy programme","7 years as CEO")+sr("am","ISO 22301 target","Q3 2026")+sr("rd","Narrative gap","Aspiration vs reality")+'</div></div>'+
+
+'<div class="g3" style="margin-top:8px">'+
+'<div class="cd"><p class="lb" style="color:var(--pu);margin-bottom:8px">Power Map (G-03)</p>'+
+pm("JW","CEO Whitfield","BELIEF &mdash; Legacy programme","bl")+pm("RH","CIO Hale","POWER &mdash; Tech transformation","pu")+pm("JM","Dir Morris","ACHIEVEMENT &mdash; ISO & resilience","gn")+pm("MT","CFO Thompson","ORDER &mdash; Cost glide path","am")+pm("DO","CRO Osei","SAFETY &mdash; Regulatory shield","rd")+pm("DH","COO Harrison","ORDER &mdash; Execution evidence","am")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--pk);margin-bottom:8px">Win Threats (I-01)</p>'+
+sr("rd","#1 Execution doubt","35% — Chen/Harrison")+sr("or","#2 Political kill","25% — Osei veto")+sr("am","#3 No-decision","20% — programme stalls")+sr("am","#4 Competitive loss","12% — Fortis/Saraswati")+sr("ft","#5 Commercial gap","8% — gain-share fail")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">Post-Win Expansion (N-01)</p>'+
+sr("gn","TUPE Month 6","97/109 transferred")+sr("gn","NPS +38","Q1 QBR CEO attended")+sr("bl","Cloud Wave 1","40% on track")+sr("am","Expansion signals","4 identified")+sr("am","Adjacent towers","Security, Data, CX")+'</div></div>'+
+
+'<div class="cd" style="margin-top:8px;border-color:rgba(239,68,68,0.3)"><p class="lb" style="color:var(--rd);margin-bottom:8px">The Headline (G-04)</p>'+
+'<p style="font-size:13px;color:var(--tx);line-height:1.6">21-23% of Meridian\'s £16.5M IT budget is spent on waste, rework, and failure. One pound in five funds problems, not service. 7-year cost of inaction: <strong style="color:var(--rd)">£33-37M</strong> before regulatory penalties. The CEO says "availability not assets" but 62% of servers are beyond end-of-life. Meridian 2030 is a technical debt rescue reframed as strategic transformation. The vendor who understands this duality wins.</p></div>';
+}},
+
+// ═══════ 1: G-01 MACRO INTEL ═══════
+{id:"g01",lbl:"G-01 Company Intel",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--bl)">G-01 Macro Business Intelligence</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">9-Pillar Analysis</h2></div><span class="src">G-01 Macro Intel</span></div>'+
+'<div class="krow">'+k("Revenue","£847M","+6.2% YoY","var(--gn)")+k("Op Profit","£287M","+7.3%","var(--gn)")+k("GWP","£3.1bn","+8.2%","var(--gn)")+k("AUM","£14.2bn","+6.1%","var(--bl)")+k("ROE","14.7%","up from 11.2%","var(--gn)")+k("Solvency","168%",">150% target","var(--gn)")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">Strategic Priorities</p>'+
+sr("bl","Meridian 2030","Board-approved Oct 2025")+sr("bl","5 pillars","Resilience, Automation, Cloud, Cost, CX")+sr("bl","Investment","£16.5M/yr &times; 5 years = £82.5M")+sr("am","Target savings","£28M annual run-rate")+sr("rd","ISO 22301","Q3 2026 deadline")+sr("rd","Cloud migration","100% by end 2026")+'</div>'+
+
+'<div class="g2">'+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">The Narrative Gap</p>'+
+'<table class="tbl"><tr><th>Metric</th><th>Current</th><th>Benchmark</th></tr>'+
+'<tr><td>Servers beyond EOL</td><td style="color:var(--rd)">62%</td><td>0%</td></tr>'+
+'<tr><td>Service desk FCR</td><td style="color:var(--or)">58%</td><td>72%</td></tr>'+
+'<tr><td>Employee IT satisfaction</td><td style="color:var(--or)">3.1/5.0</td><td>Lowest function</td></tr>'+
+'<tr><td>Device age</td><td style="color:var(--am)">4.2 years</td><td>~3 years</td></tr>'+
+'<tr><td>Alert volume</td><td style="color:var(--rd)">14,000/mo</td><td><3% actionable</td></tr>'+
+'<tr><td>Consumer Duty MI</td><td style="color:var(--rd)">72hr delay</td><td>Real-time</td></tr>'+
+'<tr><td>Micro-outage cost</td><td style="color:var(--rd)">£2.8M/yr</td><td>+12% YoY</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">Competitive Position</p>'+
+sr("gn","PRA pilot","1 of 12 selected")+sr("gn","Insurance Times","5-star 2025")+sr("gn","Combined ratio","94.2% (strong)")+sr("bl","Market cap","~£3.3bn")+sr("bl","Analyst sentiment","3/4 Buy")+
+'<p style="font-size:10px;color:var(--dm);margin-top:8px;font-style:italic">"Meridian 2030 is not a growth programme. It is a technical debt rescue reframed as strategic transformation."</p></div></div>';
+}},
+
+// ═══════ 2: G-02 FINANCIALS ═══════
+{id:"g02",lbl:"G-02 Financials",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--gn)">G-02 Financial Forensics</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Finding the Money</h2></div><span class="src">G-02</span></div>'+
+'<div class="krow">'+k("IT Budget","£16.5M","/year","var(--bl)")+k("Waste","21-23%","of IT budget","var(--rd)")+k("7yr Inaction","£33-37M","cumulative","var(--rd)")+k("Outage Cost","£2.8M","+12% YoY","var(--rd)")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">5 Financial Leaks</p>'+
+'<table class="tbl"><tr><th>Leak</th><th>Annual Cost</th><th>7-Year</th><th>Confidence</th></tr>'+
+'<tr><td>Micro-outage haemorrhage</td><td style="color:var(--rd)">£2.8M+</td><td style="color:var(--rd)">£25.6M</td><td>HIGH</td></tr>'+
+'<tr><td>Service desk rework</td><td style="color:var(--or)">£315-350K</td><td>£2.3M</td><td>MED-HIGH</td></tr>'+
+'<tr><td>Alert noise (FTE waste)</td><td style="color:var(--or)">£220-455K</td><td>£1.9M</td><td>MEDIUM</td></tr>'+
+'<tr><td>Consumer Duty MI gap</td><td style="color:var(--am)">£100-240K</td><td>Uncapped</td><td>MEDIUM</td></tr>'+
+'<tr><td>Endpoint refresh deferral</td><td style="color:var(--am)">£150-250K</td><td>£3.6-5.7M</td><td>MEDIUM</td></tr>'+
+'</table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">The CFO&rsquo;s Language</p>'+
+'<p style="font-size:12px;color:var(--mu);line-height:1.6">CFO Mark Thompson frames everything as revenue protection, OPEX reallocation, and EBITDA impact. He built the 3-tier commercial architecture: baseline margin, gain-share, innovation fund. He doesn\'t buy &ldquo;transformation&rdquo; &mdash; he buys measurable cost reduction with clear attribution.</p></div>';
+}},
+
+// ═══════ 3: G-03 KEY PEOPLE ═══════
+{id:"g03",lbl:"G-03 People",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pu)">G-03 Executive Intelligence</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">8 Stakeholder Profiles</h2></div><span class="src">G-03 v2</span></div>'+
+
+pe("JW","James Whitfield","CEO &middot; 7 years &middot; Meridian 2030 is his legacy","BELIEF","bl",
+"North Star: &lsquo;Availability, not assets.&rsquo; Board-approved £82.5M programme. High personal stakes. Names Jennifer Morris as one of three &lsquo;demonstrably competent leaders.&rsquo; Market is pricing in transformation success.")+
+
+pe("RH","Richard Hale","CIO &middot; Cloud-first mandate &middot; AIOps ambition","POWER","pu",
+"Owns technical resilience (infra redundancy, failure isolation). Overlapping territory with Morris. Wants proof that £16.5M investment delivers measurable modernisation. Trauma: vendors who demo well but can&rsquo;t execute.")+
+
+pe("JM","Jennifer Morris","Dir Organisational Resilience &middot; Our champion","ACHIEVEMENT","gn",
+"Chairs Resilience Steering Committee (CFO, CRO, COO attend). £4.2M budget. ISO 22301 programme lead. 3.4yr tenure pattern &mdash; exit depends on ISO + RFP outcomes. The vendor who amplifies her architecture wins. <strong style='color:var(--gn)'>KEY CHAMPION</strong>")+
+
+pe("MT","Mark Thompson","CFO &middot; Commercial architecture designer","ORDER","am",
+"Built 3-tier model: baseline margin, gain-share, innovation fund. Speaks P&L only. &lsquo;Revenue protection, OPEX reallocation, EBITDA impact.&rsquo; CPI-1% indexation. No surprises.")+
+
+pe("DO","David Osei","CRO &middot; Structural veto power","SAFETY","rd",
+"Holds veto on any vendor >£1M. Parallel governance process, NOT in Blackwell&rsquo;s scoring. PRA SS2/21 compliance. Will ask: &lsquo;Show me YOUR third-party risk management &mdash; not a document, show me how.&rsquo; <strong style='color:var(--rd)'>BLOCKER RISK</strong>")+
+
+pe("DH","David Harrison","COO &middot; Execution evidence required","ORDER","am",
+"&lsquo;Show me three TUPE transitions >100 FTE in regulated FS with maintained KPIs.&rsquo; Brutally honest in 1:1, diplomatic in groups. Will independently assess and tell Whitfield directly.")+
+
+pe("AC","Andrew Chen","Head of IT Infrastructure &middot; 109 FTE at risk","SAFETY","rd",
+"Manages 2,000+ servers across 5 sites. His team is the TUPE population. &lsquo;Fix it before it breaks.&rsquo; Will test operational credibility: &lsquo;What happened to incident rate in Week 3?&rsquo; Protection instinct = evaluation lens.")+
+
+pe("SB","Sarah Blackwell","Head of Procurement &middot; Process gatekeeper","PROCESS","dm",
+"Runs the formal evaluation. 47 mandatory requirements. 40% technical, 25% commercial, 20% transition, 15% cultural. Her role is process integrity, not advocacy. NEUTRAL but powerful.");
+}},
+
+// ═══════ 4: G-04 BATTLE CARD ═══════
+{id:"g04",lbl:"G-04 Battle Card",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pk)">G-04 Battle Card</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Intel into Ammunition</h2></div><span class="src">G-04</span></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">Vulnerability Architecture</p>'+
+'<table class="tbl"><tr><th>Bleeding Neck</th><th>Financial Leak</th><th>Annual Bleed</th><th>7-Year</th></tr>'+
+'<tr><td>Technical debt emergency</td><td>Outage + Rework + Noise</td><td style="color:var(--rd)">£3.3-3.6M</td><td style="color:var(--rd)">£29.7M</td></tr>'+
+'<tr><td>PRA regulatory exposure</td><td>Consumer Duty MI</td><td style="color:var(--or)">£100-240K</td><td>Uncapped</td></tr>'+
+'<tr><td>Endpoint deferral</td><td>Refresh catch-up</td><td style="color:var(--am)">£150-250K</td><td>£3.6-5.7M</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">Human Lock &mdash; GAIN Drivers per Stakeholder</p>'+
+'<table class="tbl"><tr><th>Person</th><th>Driver</th><th>What Deal Must Deliver</th></tr>'+
+'<tr><td>Morris</td><td style="color:var(--gn)">Achievement</td><td>ISO acceleration. Dual governance. Peer engagement.</td></tr>'+
+'<tr><td>Hale</td><td style="color:var(--pu)">Power</td><td>Cloud execution. AIOps maturity. Board-reportable metrics.</td></tr>'+
+'<tr><td>Thompson</td><td style="color:var(--am)">Order</td><td>Clear ROI vs £2.8M bleed. Cost glide path. No surprises.</td></tr>'+
+'<tr><td>Osei</td><td style="color:var(--rd)">Safety</td><td>PRA-compliant from day one. No new regulatory surface.</td></tr>'+
+'<tr><td>Harrison</td><td style="color:var(--am)">Order</td><td>Zero disruption to 4,000 daily settlements. Evidence only.</td></tr>'+
+'<tr><td>Chen</td><td style="color:var(--rd)">Safety</td><td>92% TUPE retention. Honest EOL assessment. Team protection.</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--or);margin-bottom:8px">Shadow Hierarchy &mdash; The Invisible Blocker</p>'+
+'<p style="font-size:12px;color:var(--mu);line-height:1.6">The blocker is not a person &mdash; it\'s a structural tension. CIO Hale owns "technical resilience." Morris owns "organisational resilience." The vendor that picks a side creates an opponent. The vendor that bridges both wins.</p></div>';
+}},
+
+// ═══════ 5: G-05 FIRST 15 ═══════
+{id:"g05",lbl:"G-05 First 15",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--bl)">G-05 First 15 Minutes</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Opening Engagement Strategy</h2></div><span class="src">G-05</span></div>'+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">The Duality Frame</p>'+
+'<p style="font-size:12px;color:var(--mu);line-height:1.6">"Your CEO says <em>availability, not assets</em>. Your investor relations page says 62% of servers are beyond end-of-life. Both are true simultaneously. Meridian 2030 is a rescue mission reframed as strategic transformation &mdash; and that\'s smart leadership. We\'re the only bidder who will say that out loud."</p></div>'+
+
+'<div class="g2">'+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">5 Things to Say</p>'+
+sr("gn","","&lsquo;We read your annual report as a forensic accountant, not a salesperson&rsquo;")+
+sr("gn","","&lsquo;62% EOL is not a problem &mdash; it\'s an opportunity disguised as technical debt&rsquo;")+
+sr("gn","","&lsquo;We know the £2.8M micro-outage number. We know it\'s growing 12%&rsquo;")+
+sr("gn","","&lsquo;ISO 22301 by Q3 is achievable if the partner understands resilience, not just uptime&rsquo;")+
+sr("gn","","&lsquo;Ask us what happened to incident rates in Week 3 of our last transition&rsquo;")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">5 Things Never to Say</p>'+
+sr("rd","","&lsquo;We\'re a trusted partner&rsquo; (prove it)")+
+sr("rd","","&lsquo;We\'ll transform your infrastructure&rsquo; (that\'s the problem framing)")+
+sr("rd","","&lsquo;Our AI platform is best-in-class&rsquo; (triggers Hale\'s AI fatigue)")+
+sr("rd","","&lsquo;We have 200+ TUPE transfers&rsquo; (without retention data)")+
+sr("rd","","&lsquo;We understand your challenges&rsquo; (show don\'t tell)")+'</div></div>';
+}},
+
+// ═══════ 6: A-01 RFP DECODE ═══════
+{id:"a01",lbl:"A-01 RFP Decode",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pu)">A-01 RFP Strategic Decoder</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Reading Between the Lines</h2></div><span class="src">A-01</span></div>'+
+'<div class="krow">'+k("Requirements","47","mandatory","var(--bl)")+k("Evaluation","40/25/20/15","T/C/Tr/Cu","var(--bl)")+k("Contract","7 years","+3 option","var(--bl)")+k("Vendors","17","past pre-brief","var(--or)")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--pu);margin-bottom:8px">What the RFP Says vs What It Means</p>'+
+'<table class="tbl"><tr><th>RFP Says</th><th>Actually Means</th></tr>'+
+'<tr><td>"Outcome-linked pricing"</td><td>They want gain-share, not T&M. CFO\'s architecture.</td></tr>'+
+'<tr><td>"Innovation fund (5%)"</td><td>They\'re buying continuous improvement, not static service</td></tr>'+
+'<tr><td>"Resilience First pillar"</td><td>Morris\'s agenda baked into procurement requirements</td></tr>'+
+'<tr><td>"Maintained KPIs during transition"</td><td>Harrison\'s #1 fear. Previous vendor transition was traumatic</td></tr>'+
+'<tr><td>"Third-party risk management"</td><td>Osei wrote this section. His veto criteria.</td></tr>'+
+'<tr><td>"Cultural alignment (15%)"</td><td>15% of score for culture = they\'ve been burned by culture mismatch before</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">3 Hidden Requirements</p>'+
+sr("rd","","Dual governance model (Morris + Hale) &mdash; not in RFP but structurally required")+
+sr("or","","TUPE week-by-week plan with retention evidence &mdash; Harrison will ask for this in orals")+
+sr("am","","PRA SS2/21 vendor risk self-assessment &mdash; Osei will conduct separately from scoring")+'</div>';
+}},
+
+// ═══════ 7: A-02 TRAUMA DECODE ═══════
+{id:"a02",lbl:"A-02 Trauma",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pu)">A-02 Requirements Trauma Decoder</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">What Burned Them Before</h2></div><span class="src">A-02</span></div>'+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">Trauma Signals in the RFP</p>'+
+'<table class="tbl"><tr><th>Requirement Pattern</th><th>Trauma It Reveals</th><th>Who Carries It</th></tr>'+
+'<tr><td>"Maintained KPIs during transition"</td><td style="color:var(--rd)">Previous transition caused service degradation</td><td>Harrison / Chen</td></tr>'+
+'<tr><td>TUPE &gt;100 FTE specific references</td><td style="color:var(--rd)">Staff were poorly handled in past transfer</td><td>Chen (protective)</td></tr>'+
+'<tr><td>Cultural alignment weighted 15%</td><td style="color:var(--or)">Previous vendor had culture mismatch</td><td>Whitfield</td></tr>'+
+'<tr><td>"AI as baseline not differentiator"</td><td style="color:var(--am)">Vendors oversold AI, underdelivered</td><td>Hale (burned)</td></tr>'+
+'<tr><td>Innovation fund ring-fenced 5%</td><td style="color:var(--am)">Previous vendor did nothing after Year 1</td><td>Thompson</td></tr>'+
+'<tr><td>Dual governance model</td><td style="color:var(--am)">Previous vendor chose a side (tech vs resilience)</td><td>Morris / Hale</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">How to Heal Each Trauma</p>'+
+sr("bl","Transition","Week-by-week plan. Named people. Reference with KPI data through transition.")+
+sr("bl","TUPE","92% retention stat. Retention bonus programme. &lsquo;Your people are the asset.&rsquo;")+
+sr("bl","Culture","Embed named team from Day 1. No rotation. All bid team in delivery.")+
+sr("bl","AI","&lsquo;11 in production, measured, referenceable.&rsquo; Not demo, production.")+
+sr("bl","Innovation","Contractual commitment. Quarterly reporting. Visible pipeline.")+'</div>';
+}},
+
+// ═══════ 8: A-05 STAKEHOLDER MAP ═══════
+{id:"a05",lbl:"A-05 Stakeholders",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pu)">A-05 Multi-Stakeholder Authority Map</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Buying Committee &amp; Power Dynamics</h2></div><span class="src">A-05</span></div>'+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">Formal vs Shadow Authority</p>'+
+'<table class="tbl"><tr><th>Person</th><th>Formal Role</th><th>Real Power</th><th>Access</th></tr>'+
+'<tr><td>Whitfield (CEO)</td><td>Final signoff</td><td style="color:var(--bl)">Delegates but veto on culture</td><td style="color:var(--gn)">Via Morris</td></tr>'+
+'<tr><td>Hale (CIO)</td><td>Technical evaluation lead</td><td style="color:var(--pu)">Shapes TC-01/TC-02 scores</td><td style="color:var(--gn)">Direct</td></tr>'+
+'<tr><td>Morris (Dir Resilience)</td><td>Steering Committee chair</td><td style="color:var(--gn)">Peer to C-suite in CEO\'s mind</td><td style="color:var(--gn)">Champion</td></tr>'+
+'<tr><td>Thompson (CFO)</td><td>Commercial evaluation</td><td style="color:var(--am)">Built the pricing architecture</td><td style="color:var(--gn)">Direct</td></tr>'+
+'<tr><td>Osei (CRO)</td><td>Risk assessment</td><td style="color:var(--rd)">STRUCTURAL VETO &gt;£1M</td><td style="color:var(--am)">Via Morris</td></tr>'+
+'<tr><td>Harrison (COO)</td><td>Transition assessment</td><td style="color:var(--am)">Tells Whitfield directly</td><td style="color:var(--am)">Via orals</td></tr>'+
+'<tr><td>Chen (Head IT)</td><td>Operational assessment</td><td style="color:var(--or)">Can kill deal bottom-up</td><td style="color:var(--am)">Via Hale</td></tr>'+
+'<tr><td>Blackwell (Procurement)</td><td>Process owner</td><td style="color:var(--dm)">Neutral gatekeeper</td><td style="color:var(--gn)">Direct</td></tr></table></div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">Kill Paths (How We Lose)</p>'+
+sr("rd","Bottom-up","Chen doubts execution &rarr; tells Hale &rarr; Hale adjusts score &rarr; Harrison confirms &rarr; Whitfield pauses")+
+sr("rd","Political","Win evaluation but Osei vetoes on risk grounds (parallel process, outside scoring)")+
+sr("or","Structural","Pick Morris OR Hale side on resilience definition &rarr; create internal opponent")+'</div>';
+}},
+
+// ═══════ 9: I-01 PRE-MORTEM ═══════
+{id:"i01",lbl:"I-01 Pre-Mortem",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pk)">I-01 Deal Pre-Mortem Simulator</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">It is Feb 2027. You Lost. Here\'s How.</h2></div><span class="src">I-01</span></div>'+
+
+fl("1","Execution Doubt","35%","rd","Chen/Harrison plant irreversible doubt. Can\'t answer: &lsquo;What happened in Week 3?&rsquo; TUPE plan too high-level. Evidence doesn\'t match claim. Deal dies bottom-up.",
+"Prepare Week 3 incident data. Week-by-week TUPE plan with names. Chen-specific operational proof.")+
+
+fl("2","Political Kill","25%","or","Win tech + commercial. Osei blocks via parallel risk assessment. &lsquo;Annual testing is insufficient for a firm managing £14.2B.&rsquo; Board defers.",
+"Pre-brief Osei via Morris. Demonstrate REAL risk management, not document. PRA-specific examples.")+
+
+fl("3","No Decision","20%","am","Meridian 2030 stalls due to board risk appetite. Budget frozen. Programme deferred 12 months. Nobody wins.",
+"Create urgency: £2.8M/yr bleed growing 12%. Every month of delay costs £233K. ISO deadline at risk.")+
+
+fl("4","Competitive Displacement","12%","am","Fortis wins on TUPE evidence (200+ transfers). Or Saraswati wins on AIOps demo. Brand confidence gap.",
+"Reframe from volume to outcomes (retention). Compete on production not platform. Reference bridging.")+
+
+fl("5","Commercial Misalignment","8%","ft","Gain-share baseline disputed. Thompson&rsquo;s architecture doesn&rsquo;t match our model. Commercial negotiation collapses.",
+"Mirror Thompson\'s exact 3-tier model. Accept CPI-1%. Let him build the architecture.");
+}},
+
+// ═══════ 10: I-02 WIN THEMES ═══════
+{id:"i02",lbl:"I-02 Win Themes",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pk)">I-02 Win Theme Architect</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">How We Win This Deal</h2></div><span class="src">I-02</span></div>'+
+'<div class="cd" style="border-left:3px solid var(--gn)"><p class="lb" style="color:var(--gn);margin-bottom:6px">Theme 1: Duality</p>'+
+'<p style="font-size:12px;color:white;font-weight:600">&ldquo;We understand Meridian 2030 is both rescue and transformation &mdash; and we\'re the only bidder who\'ll say that.&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu);margin-top:4px">Resonates with: Whitfield (honesty), Hale (technical reality), Chen (operational truth)</p></div>'+
+
+'<div class="cd" style="border-left:3px solid var(--bl)"><p class="lb" style="color:var(--bl);margin-bottom:6px">Theme 2: People as Asset</p>'+
+'<p style="font-size:12px;color:white;font-weight:600">&ldquo;109 people aren\'t a cost to transition. They\'re the asset we\'re inheriting. 92% retention.&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu);margin-top:4px">Resonates with: Chen (protection), Harrison (evidence), Whitfield (culture)</p></div>'+
+
+'<div class="cd" style="border-left:3px solid var(--pu)"><p class="lb" style="color:var(--pu);margin-bottom:6px">Theme 3: Production Not Platform</p>'+
+'<p style="font-size:12px;color:white;font-weight:600">&ldquo;11 AI capabilities in production. Measured. Referenceable. Not demo, not POC.&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu);margin-top:4px">Resonates with: Hale (anti-demo fatigue), Thompson (measurable), Harrison (evidence)</p></div>'+
+
+'<div class="cd" style="border-left:3px solid var(--am)"><p class="lb" style="color:var(--am);margin-bottom:6px">Theme 4: Dual Governance</p>'+
+'<p style="font-size:12px;color:white;font-weight:600">&ldquo;We don\'t pick sides between technical and organisational resilience. We bridge both.&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu);margin-top:4px">Resonates with: Morris (authority preserved), Hale (tech respected), Osei (governance)</p></div>';
+}},
+
+// ═══════ 11: I-03 COMPETITOR INTEL ═══════
+{id:"i03",lbl:"I-03 Competitors",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pk)">I-03 Competitor Kill-Shot Logic</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Make Them Irrelevant</h2></div><span class="src">I-03</span></div>'+
+
+'<div class="cd" style="border-left:3px solid var(--rd)"><p class="lb" style="color:var(--rd);margin-bottom:6px">Fortis Global &mdash; &ldquo;Scale-first global delivery&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu)">£4.2B, 42K people, 60/40 UK/India, Gartner Leader, 40+ FS refs</p>'+
+sr("rd","Danger","Harrison: &lsquo;Show me three&rsquo; &mdash; they can. We can\'t match on volume.")+
+sr("gn","Counter","Reframe to outcomes: &lsquo;Ask how many stayed at 12 months.&rsquo;")+
+sr("rd","Danger","Whitfield: Board confidence in brand they know.")+
+sr("gn","Counter","Champion coalition: Morris + Thompson advocate internally.")+'</div>'+
+
+'<div class="cd" style="border-left:3px solid var(--or)"><p class="lb" style="color:var(--or);margin-bottom:6px">Saraswati Digital &mdash; &ldquo;Offshore-leveraged automation&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu)">$12B, 180K people, 25/75 UK/India, strongest AIOps, 3 top-10 bank refs</p>'+
+sr("rd","Danger","Hale: AIOps demo genuinely impresses. May score TC-02 higher.")+
+sr("gn","Counter","Production not platform: &lsquo;How many in production at UK FS client today?&rsquo;")+
+sr("rd","Danger","72% TUPE retention &mdash; still credible.")+
+sr("gn","Counter","92% vs 72% = 19 more people kept. &lsquo;Every person who leaves takes knowledge.&rsquo;")+'</div>'+
+
+'<div class="cd" style="border-left:3px solid var(--am)"><p class="lb" style="color:var(--am);margin-bottom:6px">Nexus Technology &mdash; &ldquo;Tech-first reseller&rdquo;</p>'+
+'<p style="font-size:11px;color:var(--mu)">£1.8B, 5.2K UK, 95% UK, only 4 genuine managed services contracts</p>'+
+sr("gn","Assessment","Weakest competitor. 45 FTE max TUPE. Chen\'s BS detector fires. Not a real threat.")+'</div>';
+}},
+
+// ═══════ 12: I-04 SCORING ═══════
+{id:"i04",lbl:"I-04 Scoring",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--pk)">I-04 Evaluation Scoring Strategy</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Where to Win the Points</h2></div><span class="src">I-04</span></div>'+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">Scoring Weights &amp; Strategy</p>'+
+'<table class="tbl"><tr><th>Category</th><th>Weight</th><th>Our Target</th><th>Strategy</th></tr>'+
+'<tr><td>Technical (TC-01 to TC-04)</td><td>40%</td><td style="color:var(--gn)">Score 4+/5</td><td>Excalibur reference. Production metrics. Chen-proof execution detail.</td></tr>'+
+'<tr><td>Commercial (CM-01 to CM-03)</td><td>25%</td><td style="color:var(--gn)">Score 5/5</td><td>Mirror Thompson\'s architecture exactly. CPI-1%. Gain-share baseline.</td></tr>'+
+'<tr><td>Transition (TR-01 to TR-03)</td><td>20%</td><td style="color:var(--am)">Score 3-4/5</td><td>Vulnerable area. Week-by-week plan. Retention data. Named people.</td></tr>'+
+'<tr><td>Cultural (CU-01 to CU-02)</td><td>15%</td><td style="color:var(--gn)">Score 4+/5</td><td>All bid team in delivery. Rachel/Morris peer relationship. No rotation.</td></tr></table></div>'+
+
+'<div class="g2">'+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">Where We Win Points</p>'+
+sr("gn","Commercial","Thompson\'s architecture is our architecture")+
+sr("gn","Cultural","Named team continuity, no rotation policy")+
+sr("gn","Resilience","Morris + Rachel = dual governance")+
+sr("gn","Risk","Osei alignment via genuine framework")+'</div>'+
+'<div class="cd"><p class="lb" style="color:var(--rd);margin-bottom:8px">Where We Lose Points</p>'+
+sr("rd","TUPE volume","14 transitions vs Fortis 200+")+
+sr("or","Brand","Unknown vs Gartner Leader")+
+sr("am","Scale","Mid-tier vs global delivery models")+'</div></div>';
+}},
+
+// ═══════ 13: N-01 EXPANSION ═══════
+{id:"n01",lbl:"N-01 Expansion",fn:function(){
+return '<div class="cd-h"><div><p class="lb" style="color:var(--gn)">N-01 Expansion Signal Scan</p><h2 style="font-size:16px;font-weight:800;margin-top:4px;color:white">Post-Win &mdash; Month 6 Forward</h2></div><span class="src">N-01</span></div>'+
+'<div class="krow">'+k("NPS","+ 38","Month 6","var(--gn)")+k("TUPE","97/109","transferred","var(--gn)")+k("Cloud Wave 1","40%","on track","var(--bl)")+k("Expansion","4","signals","var(--am)")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--gn);margin-bottom:8px">Relationship Health (Month 6)</p>'+
+sr("gn","Delivery","Zero P1 during transition. KPIs maintained.")+
+sr("gn","Commercial","Milestone payments on schedule. No disputes.")+
+sr("gn","Champion","Morris using our work in her Board presentations")+
+sr("gn","CEO","Whitfield attended Q1 QBR personally")+
+sr("am","Strategic","In tech strategy room. Not yet in business strategy room.")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--bl);margin-bottom:8px">4 Expansion Signals</p>'+
+sr("bl","Security tower","Not in original scope. Hale exploring. £3-5M annual.")+
+sr("bl","Data &amp; analytics","Meridian 2030 Pillar 2. Natural extension. £2-4M.")+
+sr("bl","Customer experience","Digital front-end modernisation. Insurance online portal.")+
+sr("am","International","Small European operation. Early stage. Monitor.")+'</div>'+
+
+'<div class="cd"><p class="lb" style="color:var(--or);margin-bottom:8px">Timing</p>'+
+'<p style="font-size:12px;color:var(--mu);line-height:1.6">Month 6: seed ideas. Month 12 (transition complete): formalise proposals. Earn-the-right gate PASSED but expansion proposals are premature before steady state.</p></div>';
+}}
+];
+
+// ═══ HELPERS ═══
+function k(l,v,s,c){return '<div class="kpi"><div class="kl">'+l+'</div><div class="kv" style="color:'+c+'">'+v+'</div><div class="kl"'+(s.indexOf('+')==0||s.indexOf('-')==0?' style="color:'+c+'"':'')+'>'+s+'</div></div>';}
+function sr(c,n,v){return '<div class="sr"><span class="rg" style="background:var(--'+c+')"></span><span class="sn">'+n+'</span><span class="sv">'+v+'</span></div>';}
+function pm(a,n,d,c){return '<div style="display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(31,41,55,0.3)"><div class="pav" style="width:28px;height:28px;font-size:10px">'+a+'</div><div><span style="font-size:11px;font-weight:700;color:white">'+n+'</span><br><span style="font-size:10px;color:var(--'+c+')">'+d+'</span></div></div>';}
+function pe(a,n,r,d,c,t){return '<div class="per"><div class="pav">'+a+'</div><div style="flex:1"><div class="pnm">'+n+'</div><div class="prl">'+r+'</div><div style="margin-top:3px"><span style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;background:var(--'+c+')20;color:var(--'+c+');border:1px solid var(--'+c+')30">'+d+'</span></div><div class="pdt">'+t+'</div></div></div>';}
+function fl(n,t,p,c,desc,counter){return '<div class="cd" style="border-left:3px solid var(--'+c+')"><div style="display:flex;justify-content:space-between"><p style="font-size:13px;font-weight:700;color:white">#'+n+': '+t+'</p><span style="font-size:12px;font-weight:800;color:var(--'+c+')">'+p+'</span></div><p style="font-size:11px;color:var(--mu);margin:6px 0;line-height:1.5">'+desc+'</p><p style="font-size:11px;color:var(--gn);line-height:1.5"><strong>Counter:</strong> '+counter+'</p></div>';}
+
+// ═══ RENDER ═══
+var th='',ph='';
+C.forEach(function(c,i){
+    th+='<button class="tab'+(i===0?' on':'')+'" data-i="'+i+'">'+c.lbl+'</button>';
+    ph+='<div class="pane'+(i===0?' on':'')+'" id="p-'+i+'">'+c.fn()+'</div>';
+});
+document.getElementById('tabs').innerHTML=th;
+document.getElementById('panes').innerHTML=ph;
+document.querySelectorAll('.tab').forEach(function(t){
+    t.addEventListener('click',function(){
+        var i=this.getAttribute('data-i');
+        document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on')});
+        this.classList.add('on');
+        document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on')});
+        document.getElementById('p-'+i).classList.add('on');
+    });
+});
+</script>
+<div style="text-align:center;padding:20px;border-top:1px solid var(--bd);margin-top:24px"><p style="font-size:10px;color:var(--ft)">GAIN Account Pack &middot; Meridian Financial Services &middot; 14 Views &middot; David Matthews &middot; Confidential</p></div>
+</body>
+</html>
