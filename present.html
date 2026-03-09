@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[P] Present — Show Them | GAIN Protocol</title>
+<meta name="description" content="GAIN Present Phase. 11 production engines. Dashboards, board packs, case studies, presentations, stakeholder maps, and pursuit plans.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
+  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
+  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
+  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
+@media(min-width:768px){.nav{gap:2.5rem}}
+.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}.nav a:hover{color:var(--text-bright)}
+.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}.nav-logo span{color:var(--amber)}
+.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
+.radial-menu{position:relative}.radial-toggle{display:none}
+.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:.5;transition:transform .2s}
+.radial-toggle:checked~.radial-label{color:var(--text-bright)}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
+.nav-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(10,10,14,.97);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:12px;padding:6px;min-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+.radial-toggle:checked~.nav-drop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-dim);transition:all .15s}
+.nd-item:hover{background:rgba(255,255,255,.04);color:var(--text-bright)}
+.nd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.nd-title{font-size:13px;font-weight:600;letter-spacing:.2px}
+.nd-sep{height:1px;background:var(--border);margin:4px 10px}
+.nd-group{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);opacity:.35;padding:8px 12px 2px}
+.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
+.nav-inner{display:flex;align-items:center;gap:1.5rem}
+@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}
+.mobile-nav{display:none;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
+.mobile-nav.open{display:flex}
+.mobile-nav a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border)}
+.mobile-nav a:last-child{border-bottom:none}
+.mobile-nav-divider{height:1px;background:var(--border-h);margin:4px 0}
+.mobile-nav-group{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:12px 0 4px;margin-top:4px}
+.mobile-nav a span{font-family:'Fraunces',serif;font-weight:900;font-size:16px;margin-right:6px}
+}
+@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}.mobile-nav{display:none!important}}
+
+.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:2rem}
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+.hero{text-align:center;padding:3rem 0 2rem;position:relative}
+.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(239,68,68,.05) 0%,transparent 70%);pointer-events:none}
+.hero .phase-letter{font-family:'Fraunces',serif;font-size:72px;font-weight:900;color:var(--red);opacity:.15;line-height:1;margin-bottom:-10px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,44px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:.5rem}
+.hero h1 em{color:var(--red);font-style:normal}
+.hero-p{font-size:14px;color:var(--text-dim);max-width:540px;margin:0 auto .75rem;line-height:1.7}
+.hero-p strong{color:var(--text-bright);font-weight:600}
+.hero-stats{display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;margin-top:1rem}
+.hero-stat{text-align:center}
+.hero-stat .val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--red);line-height:1}
+.hero-stat .lbl{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:.5px;margin-top:4px}
+
+.prompt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.pcard{background:var(--s1);border:1px solid var(--border);border-top:2px solid rgba(239,68,68,.2);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .3s}
+.pcard:hover{border-color:var(--border-h);background:var(--s2);transform:translateY(-2px)}
+.pcard-id{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--red);margin-bottom:2px}
+.pcard-title{font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3;margin-bottom:3px}
+.pcard-cat{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);margin-bottom:6px}
+.pcard-badge{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px}
+.pcard-badge.open{color:var(--green);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+.pcard-badge.restricted{color:var(--amber);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)}
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border-h);border-radius:16px;max-width:750px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative;animation:modalIn .3s ease;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal::-webkit-scrollbar{width:6px}.modal::-webkit-scrollbar-thumb{background:#27272a;border-radius:3px}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s}
+.modal-close:hover{color:var(--text-bright);background:rgba(255,255,255,.05)}
+.modal-loading{text-align:center;padding:3rem;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:12px}
+
+.prompt-header{display:flex;align-items:center;gap:10px;margin-bottom:.5rem}
+.prompt-id{font-family:'DM Mono',monospace;font-size:14px;font-weight:700}
+.prompt-badge{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;padding:3px 10px;border-radius:5px;letter-spacing:.5px}
+.prompt-badge.open{color:var(--green);background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2)}
+.prompt-badge.restricted{color:var(--amber);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15)}
+.prompt-title{font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:var(--text-bright);margin-bottom:.25rem}
+.prompt-cat{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:.75rem}
+.pm-block{margin-bottom:.75rem}
+.pm-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:.35rem}
+.pm-text{font-size:13px;color:var(--text);line-height:1.65;margin:0}
+.pm-none{color:var(--red);font-size:12px;border-left:2px solid rgba(239,68,68,.3);padding-left:10px}
+.pm-tags{display:flex;flex-wrap:wrap;gap:4px}
+.pm-tag{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:5px;background:var(--s1);border:1px solid var(--border);color:var(--text-dim)}
+.pm-tag.chain{color:var(--red);border-color:rgba(239,68,68,.2)}
+.pm-pill{font-family:'DM Mono',monospace;font-size:9px;padding:3px 8px;border-radius:4px;background:var(--s1);border:1px solid var(--border);color:var(--text-dim)}
+.pm-pill.driver{color:var(--red);border-color:rgba(239,68,68,.2)}
+.pm-pill.fw{color:var(--cyan);border-color:rgba(6,182,212,.15)}
+.pm-row{display:flex;gap:1rem;margin-bottom:.75rem}
+.pm-half{flex:1}
+@media(max-width:600px){.pm-row{flex-direction:column}}
+.prompt-restricted-section{margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem}
+.restricted-code-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:#27272a;color:#71717a;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px;border:1px solid rgba(255,255,255,.06);border-radius:8px;cursor:pointer;transition:all .3s}
+.restricted-code-btn:hover{background:#3f3f46;color:var(--amber);border-color:rgba(245,158,11,.2)}
+.prompt-code-section{margin-top:1rem;border-top:1px solid var(--border);padding-top:.75rem}
+.prompt-code-wrap{display:none}
+.copy-code-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--green);color:var(--bg);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:14px;border:none;border-radius:8px;cursor:pointer;transition:all .3s}
+.copy-code-btn:hover{background:#34d399;transform:translateY(-1px)}
+.prompt-code{width:100%;min-height:200px;background:rgba(10,14,23,.85);border:1px solid rgba(30,41,59,.5);border-radius:8px;padding:16px;font-family:"DM Mono",monospace;font-size:11px;line-height:1.7;color:#94a3b8;resize:vertical;outline:none}
+
+.cta{text-align:center;padding:2rem 0 4rem;border-top:1px solid var(--border)}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(22px,4vw,34px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
+.cta-s{font-size:14px;color:var(--text-dim);margin-bottom:1.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .3s}
+.cta-primary{background:var(--amber);color:var(--bg)}.cta-primary:hover{background:#fbbf24;transform:translateY(-2px)}
+
+.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
+.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
+.footer-text a{color:#52525b;text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">GAIN<span>.</span></a>
+  <button class="nav-toggle-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="nav-inner">
+    <div class="radial-menu">
+      <input type="checkbox" id="see-radial" class="radial-toggle">
+      <label for="see-radial" class="radial-label">See It Work <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/proof.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Proof</span></a>
+        <a href="/dashboards.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">Dashboards</span></a>
+        <a href="/revenue-case.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">Revenue Case</span></a>
+        <a href="/data-room.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">Data Room</span></a>
+      </div>
+    </div>
+    <div class="radial-menu">
+      <input type="checkbox" id="hood-radial" class="radial-toggle">
+      <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
+      <div class="nav-drop">
+        <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:#67e8f9"></span><span class="nd-title">The Edge</span></a>
+        <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:#5eead4"></span><span class="nd-title">Architecture</span></a>
+        <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:#7dd3fc"></span><span class="nd-title">The Story</span></a>
+        <div class="nd-sep"></div>
+        <div class="nd-group">The Toolkit</div>
+        <a href="/know.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">G<span style="font-weight:400;opacity:.5;margin-left:4px">Gather</span></span></a>
+        <a href="/map.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">A<span style="font-weight:400;opacity:.5;margin-left:4px">Assess</span></span></a>
+        <a href="/win.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">I<span style="font-weight:400;opacity:.5;margin-left:4px">Influence</span></span></a>
+        <a href="/grow.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">N<span style="font-weight:400;opacity:.5;margin-left:4px">Nurture</span></span></a>
+        <a href="/present.html" class="nd-item"><span class="nd-dot" style="background:var(--red)"></span><span class="nd-title">P<span style="font-weight:400;opacity:.5;margin-left:4px">Present</span></span></a>
+      </div>
+    </div>
+    <a href="/engage.html" class="nav-cta">Engage</a>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-group">See It Work</div>
+    <a href="/proof.html">Proof</a><a href="/dashboards.html">Dashboards</a><a href="/revenue-case.html">Revenue Case</a><a href="/data-room.html">Data Room</a>
+    <div class="mobile-nav-group">Under the Hood</div>
+    <a href="/edge.html">The Edge</a><a href="/architecture.html">Architecture</a><a href="/story.html">The Story</a>
+    <div class="mobile-nav-group">The Toolkit</div>
+    <a href="/know.html"><span style="color:#93c5fd">G</span> Gather</a><a href="/map.html"><span style="color:#d8b4fe">A</span> Assess</a><a href="/win.html"><span style="color:#fcd34d">I</span> Influence</a><a href="/grow.html"><span style="color:#6ee7b7">N</span> Nurture</a><a href="/present.html"><span style="color:#fca5a5">P</span> Present</a>
+    <div class="mobile-nav-divider"></div>
+    <a href="/engage.html" style="color:var(--amber);font-weight:700">Engage &rarr;</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <section class="hero reveal">
+    <div class="phase-letter">P</div>
+    <h1>Present &mdash; <em>Show Them</em></h1>
+    <p class="hero-p"><strong>Intelligence without a deliverable is a conversation you had with yourself.</strong><br>This is where it becomes something you can hand over.</p>
+    <p style="font-size:13px;color:var(--text-dim);max-width:520px;margin:0 auto .75rem;line-height:1.6">11 production engines. All restricted. The factory floor behind the GAIN chain.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="val">11</div><div class="lbl">Engines</div></div>
+      <div class="hero-stat"><div class="val">0</div><div class="lbl">Open Access</div></div>
+      <div class="hero-stat"><div class="val">3</div><div class="lbl">Production Phases</div></div>
+    </div>
+    <div style="margin-top:1rem"><a href="/engage.html" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);text-decoration:none;letter-spacing:1px;font-weight:600">Request a diagnostic &rarr;</a></div>
+  </section>
+
+  <!-- PHASE 01: DOCUMENTS & PLANS -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--red)">Documents &amp; Plans</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('p-01')"><div class="pcard-id">P-01</div><div class="pcard-title">Dashboard Builder v1</div><div class="pcard-cat">Audit, Build, or Compress</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-02')"><div class="pcard-id">P-02</div><div class="pcard-title">Account Plan Document v1</div><div class="pcard-cat">Structured Account Plan</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-03')"><div class="pcard-id">P-03</div><div class="pcard-title">Board Pack Generator v1</div><div class="pcard-cat">Board-Ready Document</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-04')"><div class="pcard-id">P-04</div><div class="pcard-title">Case Study Builder v1</div><div class="pcard-cat">The Proof Factory</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-05')"><div class="pcard-id">P-05</div><div class="pcard-title">One-Pager Generator v1</div><div class="pcard-cat">Compress Any Output</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <!-- PHASE 02: VISUALISATION & COMMUNICATION -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--red)">Visualisation &amp; Communication</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('p-06')"><div class="pcard-id">P-06</div><div class="pcard-title">Stakeholder Map Visualiser v1</div><div class="pcard-cat">Influence Diagram</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-07')"><div class="pcard-id">P-07</div><div class="pcard-title">Issue Register / Risk Dashboard v1</div><div class="pcard-cat">Risk Dashboard</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-08')"><div class="pcard-id">P-08</div><div class="pcard-title">Presentation Auditor / Builder v1</div><div class="pcard-cat">Audit or Create Decks</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-09')"><div class="pcard-id">P-09</div><div class="pcard-title">Communication Style Analyser v1</div><div class="pcard-cat">Voice Profiling</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <!-- PHASE 03: ORCHESTRATION -->
+  <section class="section reveal">
+    <div class="sl" style="color:var(--red)">Orchestration</div>
+    <div class="prompt-grid">
+      <div class="pcard" onclick="loadPrompt('p-10')"><div class="pcard-id">P-10</div><div class="pcard-title">Diagnostic Output Formatter v1</div><div class="pcard-cat">Scale Depth to Audience</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+      <div class="pcard" onclick="loadPrompt('p-11')"><div class="pcard-id">P-11</div><div class="pcard-title">Opportunity Pursuit Plan v2</div><div class="pcard-cat">The Living Deal Dashboard</div><span class="pcard-badge restricted">RESTRICTED</span></div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:1.5rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6">11 production engines. Dashboards, board packs, case studies, presentations, stakeholder maps, voice profiling, and living pursuit plans. The factory floor that turns GAIN intelligence into deliverables your leadership can hold.</p>
+    <h2>11 engines. Intelligence becomes output.</h2>
+    <p class="cta-s">Gather finds it. Assess maps it. Influence wins it. Nurture grows it. Present delivers it.</p>
+    <div class="cta-btns">
+      <a href="/engage.html" class="cta-btn cta-primary">Engage for Access</a>
+    </div>
+  </section>
+
+  <footer class="footer"><p class="footer-text">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> &middot; GAIN Protocol</p></footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div id="modalContent"><div class="modal-loading">Loading...</div></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('vis');obs.unobserve(en.target)}})},{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
+  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
+})();
+
+function loadPrompt(id){
+  var overlay=document.getElementById('modalOverlay');
+  var content=document.getElementById('modalContent');
+  content.innerHTML='<div class="modal-loading">Loading prompt...</div>';
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  var url='prompts/'+id+'.html';
+  fetch(url)
+    .then(function(r){if(!r.ok)return fetch('prompts/'+id.toUpperCase()+'.html');return r})
+    .then(function(r){if(!r.ok)throw new Error('Not found');return r.text()})
+    .then(function(html){content.innerHTML=html})
+    .catch(function(){content.innerHTML='<div class="modal-loading" style="color:var(--red)">Failed to load prompt file.<br>Check prompts/'+id+'.html exists in your repo.</div>'});
+}
+function copyPrompt(){var ta=document.getElementById("promptText");if(!ta)return;var text=ta.value||ta.textContent;navigator.clipboard.writeText(text).then(function(){var btn=document.querySelector(".copy-code-btn");if(btn){btn.textContent="Copied!";btn.style.background="var(--blue)";setTimeout(function(){btn.textContent="Copy Code";btn.style.background=""},2000)}}).catch(function(){ta.style.display="block";ta.select();document.execCommand("copy");ta.style.display="none"})}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
