@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 
 .lw-phase-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 3px;
   position: relative;
 }
@@ -53,7 +53,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   content: '';
   position: absolute; top: 50%; left: 5%; right: 5%;
   height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--purple), var(--amber), var(--green));
+  background: linear-gradient(90deg, var(--blue), var(--purple), var(--amber), var(--green), var(--red));
   opacity: 0.1; z-index: 0;
 }
 
@@ -65,6 +65,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   border: 1px solid transparent;
   background: var(--bg);
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
 }
 .lw-phase:hover, .lw-phase.active {
   border-color: var(--border-h);
@@ -74,13 +75,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .lw-phase[data-phase="a"].active { border-color: rgba(168,85,247,0.2); box-shadow: 0 0 30px rgba(168,85,247,0.06); }
 .lw-phase[data-phase="i"].active { border-color: rgba(245,158,11,0.2); box-shadow: 0 0 30px rgba(245,158,11,0.06); }
 .lw-phase[data-phase="n"].active { border-color: rgba(16,185,129,0.2); box-shadow: 0 0 30px rgba(16,185,129,0.06); }
+.lw-phase[data-phase="p"].active { border-color: rgba(239,68,68,0.2); box-shadow: 0 0 30px rgba(239,68,68,0.06); }
 
 .lw-letter { font-family:'Fraunces',serif; font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
 .lw-name { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:2px; }
 .lw-sub { font-size:10px; color:var(--text-dim); }
 .lw-count { font-family:'DM Mono',monospace; font-size:9px; opacity:0.4; margin-top:4px; }
 
-.lw-cluster-tray { min-height: 0; overflow: hidden; }
+.lw-cluster-tray { min-height: 0; overflow: visible; }
 
 .lw-cluster-grid {
   display: grid;
@@ -118,27 +120,30 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .lw-cluster-card[data-phase="a"]::before { background: var(--purple); }
 .lw-cluster-card[data-phase="i"]::before { background: var(--amber); }
 .lw-cluster-card[data-phase="n"]::before { background: var(--green); }
+.lw-cluster-card[data-phase="p"]::before { background: var(--red); }
 
 .lw-cl-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 .lw-cl-head svg { opacity: 0.5; flex-shrink: 0; }
 .lw-cl-name { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
 .lw-cl-count { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); }
 
+/* ── Engine panel: inline below cluster grid (not fixed/absolute) ── */
 .lw-engine-panel {
-  position: fixed; z-index: 600;
-  opacity: 0; transform: scale(0.95) translateY(4px);
-  pointer-events: none;
-  transition: all 0.2s;
-  min-width: 260px; max-width: 320px;
-  padding: 14px 16px; border-radius: 12px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 12px;
   background: rgba(10,10,14,0.98);
   border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px);
   box-shadow: 0 16px 60px rgba(0,0,0,0.8);
+  display: none;
 }
 .lw-engine-panel.show {
-  opacity: 1; transform: scale(1) translateY(0);
-  pointer-events: auto;
+  display: block;
+  animation: epFadeIn 0.2s ease;
+}
+@keyframes epFadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 640px) {
@@ -148,6 +153,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
   .lw-sub { display: none; }
   .lw-cluster-grid { grid-template-columns: 1fr 1fr; }
 }
+
+@media (max-width: 420px) {
+  .lw-phase-bar { grid-template-columns: repeat(5, 1fr); gap: 1px; }
+  .lw-letter { font-size: 20px; }
+  .lw-name { font-size: 7px; letter-spacing: 0.5px; }
+  .lw-count { font-size: 8px; }
+  .lw-phase { padding: 1rem 0.25rem; }
+}
+
 /* ─── Mobile Wheel Accordion ─── */
 .mobile-wheel {
   display: none;
@@ -359,7 +373,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
         <div class="lw-letter" style="color:var(--blue)">G</div>
         <div class="lw-name" style="color:#93c5fd">Gather</div>
         <div class="lw-sub">Know Them</div>
-        <div class="lw-count">21 engines</div>
+        <div class="lw-count">22 engines</div>
       </div>
       <div class="lw-phase" data-phase="a">
         <div class="lw-letter" style="color:var(--purple)">A</div>
@@ -379,40 +393,27 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
         <div class="lw-sub">Grow Them</div>
         <div class="lw-count">13 engines</div>
       </div>
+      <div class="lw-phase" data-phase="p">
+        <div class="lw-letter" style="color:var(--red)">P</div>
+        <div class="lw-name" style="color:#fca5a5">Present</div>
+        <div class="lw-sub">Show Them</div>
+        <div class="lw-count">9 engines</div>
+      </div>
     </div>
 
     <div class="lw-cluster-tray" id="lwClusterTray">
       <div class="lw-cluster-grid" id="lwClusterGrid"></div>
+      <div class="lw-engine-panel" id="lwEnginePanel"></div>
     </div>
-
-    <div class="lw-engine-panel" id="lwEnginePanel"></div>
 
   </div>
 </section>
 <div class="mobile-wheel" id="mobileWheel"></div>
 </div>
-<!-- Engine & Hub detail panels (positioned fixed, outside flow) -->
-<div class="eng-panel" id="engPanel"></div>
-<div class="hub-panel" id="hubPanel">
-    <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p>.</p>
-  <p></p>
-  <div class="hub-verdict">Verdict: Kill it. Fix it. Accelerate it.</div>
-</div>
 
 <!-- ═══════════════ JAVASCRIPT ═══════════════ -->
 <script>
-// ── Wheel Data: 67 engines across 17 clusters ──
+// ── Wheel Data: 71 engines across 19 clusters ──
 const DATA = {
   g:{color:'#93c5fd',bg:'rgba(59,130,246,0.08)',clusters:[
     {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-8"/></svg>',name:'Company Intel',count:5,engines:[
@@ -436,11 +437,12 @@ const DATA = {
       {c:'G-07',t:'9-Pillar Compact',d:'Rapid 3-minute pre-meeting brief across 9 intelligence pillars'},
       {c:'G-11',t:'Slide Relevancy Audit',d:'KEEP / CUT / MODIFY / REORDER / CREATE on your deck'},
       {c:'G-21',t:'Call Planner',d:'Objective hierarchy, stakeholder prep, gap-mapped discovery'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.25-3.5 9.74-8 11-4.5-1.26-8-5.75-8-11V7z"/></svg>',name:'Quality & Evidence',count:4,engines:[
+    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.25-3.5 9.74-8 11-4.5-1.26-8-5.75-8-11V7z"/></svg>',name:'Quality & Evidence',count:5,engines:[
       {c:'G-12',t:'Pre-Mortem',d:'5 failure scenarios with pre-emptive actions and accusation audits'},
       {c:'G-13',t:'Objection Prep',d:'Per-stakeholder objections with accusation audits, pivots'},
       {c:'G-14',t:'Hallucination Check',d:'Fact-verification of any GAIN output against source material'},
-      {c:'G-20',t:'Customer Evidence Builder',d:'7-module proof factory: corridor points, champion scripts'}]}
+      {c:'G-20',t:'Customer Evidence Builder',d:'7-module proof factory: corridor points, champion scripts'},
+      {c:'G-22',t:'Strategic Intelligence Waterfall',d:'The Crown Jewel — master waterfall consolidating all intelligence streams'}]}
   ]},
   a:{color:'#d8b4fe',bg:'rgba(168,85,247,0.08)',clusters:[
     {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01"/></svg>',name:'RFP & Complexity',count:4,engines:[
@@ -499,25 +501,43 @@ const DATA = {
       {c:'N-00',t:'Warning Brief',d:'Sales-to-delivery handover — promises, exclusions, landmines'},
       {c:'N-09',t:'Board-Level Value Report',d:'Quantified value using named-process methodology'},
       {c:'N-10',t:'Continuous Intel Monitor',d:'Delta analysis against G-01 baseline — change-only flagging'}]}
+  ]},
+  p:{color:'#fca5a5',bg:'rgba(239,68,68,0.08)',clusters:[
+    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4"/></svg>',name:'Documents & Plans',count:5,engines:[
+      {c:'P-01',t:'Dashboard Builder',d:'Audit, build, or compress — operational dashboard generation'},
+      {c:'P-02',t:'Account Plan Document',d:'Structured account plan — strategy to single document'},
+      {c:'P-03',t:'Board Pack Generator',d:'Board-ready document — executive summary to governance pack'},
+      {c:'P-04',t:'Case Study Builder',d:'The proof factory — structured case study from delivery data'},
+      {c:'P-05',t:'One-Pager Generator',d:'Compress any output — single-page executive brief'}]},
+    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Visualisation & Communication',count:4,engines:[
+      {c:'P-06',t:'Stakeholder Map Visualiser',d:'Influence diagram — power, alignment, engagement mapping'},
+      {c:'P-07',t:'Issue Register / Risk Dashboard',d:'Risk dashboard — live tracking, escalation triggers'},
+      {c:'P-08',t:'Presentation Auditor / Builder',d:'Audit or create decks — scoring-aware slide generation'},
+      {c:'P-09',t:'Communication Style Analyser',d:'Voice profiling — stakeholder-calibrated messaging'}]}
   ]}
 };
 
-// ── Phase positions and cluster angles ──
-// Linear wheel interaction — no POS/OFFSETS needed
+// ── Detect touch device ──
+var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
 // ── Linear Wheel Interaction ──
 var lwGrid = document.getElementById('lwClusterGrid');
 var lwEngPanel = document.getElementById('lwEnginePanel');
 var lwActivePhase = null;
-var lwClearTimer = null;
+var lwActiveCluster = null;
 
+// On desktop: hover opens phase, click toggles
+// On touch: tap opens/closes phase (no hover confusion)
 document.querySelectorAll('.lw-phase').forEach(function(node) {
-  node.addEventListener('mouseenter', function() {
-    var p = node.dataset.phase;
-    if (lwActivePhase === p) return;
-    lwSetActive(p);
-  });
-  node.addEventListener('click', function() {
+  if (!isTouch) {
+    node.addEventListener('mouseenter', function() {
+      var p = node.dataset.phase;
+      if (lwActivePhase === p) return;
+      lwSetActive(p);
+    });
+  }
+  node.addEventListener('click', function(e) {
+    e.preventDefault();
     var p = node.dataset.phase;
     if (lwActivePhase === p) { lwClearActive(); } else { lwSetActive(p); }
   });
@@ -525,7 +545,8 @@ document.querySelectorAll('.lw-phase').forEach(function(node) {
 
 function lwSetActive(phase) {
   lwActivePhase = phase;
-  if (lwEngPanel) lwEngPanel.classList.remove('show');
+  lwActiveCluster = null;
+  lwEngPanel.classList.remove('show');
   document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
   var el = document.querySelector('.lw-phase[data-phase="' + phase + '"]');
   if (el) el.classList.add('active');
@@ -545,12 +566,26 @@ function lwSetActive(phase) {
         '<span class="lw-cl-name" style="color:' + d.color + '">' + cl.name + '</span></div>' +
         '<div class="lw-cl-count">' + cl.count + ' engines</div>';
 
-      card.addEventListener('mouseenter', function() { lwShowEngines(cl, d.color, card); });
-      card.addEventListener('mouseleave', function() {
-        lwClearTimer = setTimeout(function() {
-          if (lwEngPanel && !lwEngPanel.matches(':hover')) lwEngPanel.classList.remove('show');
-        }, 120);
+      // Click to show engines inline (works on both touch and desktop)
+      card.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (lwActiveCluster === cl) {
+          lwEngPanel.classList.remove('show');
+          lwActiveCluster = null;
+        } else {
+          lwShowEnginesInline(cl, d.color);
+          lwActiveCluster = cl;
+        }
       });
+
+      // Desktop hover also works
+      if (!isTouch) {
+        card.addEventListener('mouseenter', function() {
+          lwShowEnginesInline(cl, d.color);
+          lwActiveCluster = cl;
+        });
+      }
+
       lwGrid.appendChild(card);
     });
     requestAnimationFrame(function() { lwGrid.classList.add('show'); });
@@ -559,35 +594,24 @@ function lwSetActive(phase) {
 
 function lwClearActive() {
   lwActivePhase = null;
+  lwActiveCluster = null;
   document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
   if (lwGrid) lwGrid.classList.remove('show');
-  if (lwEngPanel) lwEngPanel.classList.remove('show');
+  lwEngPanel.classList.remove('show');
   setTimeout(function() { if (lwGrid) lwGrid.innerHTML = ''; }, 300);
 }
 
-function lwShowEngines(cl, color, fromEl) {
-  clearTimeout(lwClearTimer);
-  var r = fromEl.getBoundingClientRect();
-  var panelW = 300, gap = 10;
+function lwShowEnginesInline(cl, color) {
+  lwEngPanel.classList.remove('show');
 
   lwEngPanel.innerHTML =
     '<div class="eng-title" style="color:' + color + '">' + cl.icon + ' ' + cl.name + ' \u2014 ' + cl.count + ' Engines</div>' +
     cl.engines.map(function(e) { return '<div class="eng-item"><strong>' + e.c + '</strong> ' + e.t + '<span class="desc">' + e.d + '</span></div>'; }).join('');
 
-  var left = r.left + (r.width / 2) - (panelW / 2);
-  var top = r.bottom + gap;
-  if (left < 10) left = 10;
-  if (left + panelW > window.innerWidth - 10) left = window.innerWidth - panelW - 10;
-  if (top + 300 > window.innerHeight) { top = r.top - gap - 300; if (top < 10) top = r.bottom + gap; }
-
-  lwEngPanel.style.left = left + 'px';
-  lwEngPanel.style.top = top + 'px';
-  lwEngPanel.classList.add('show');
-}
-
-if (lwEngPanel) {
-  lwEngPanel.addEventListener('mouseenter', function() { clearTimeout(lwClearTimer); });
-  lwEngPanel.addEventListener('mouseleave', function() { lwEngPanel.classList.remove('show'); });
+  // Show it inline (it's now inside the tray, not fixed-position)
+  requestAnimationFrame(function() {
+    lwEngPanel.classList.add('show');
+  });
 }
 
 // ── Click outside to close ──
@@ -612,10 +636,11 @@ if (!CSS.supports('animation-timeline', 'view()')) {
 
 // ── Mobile Wheel Accordion (built from same DATA object) ──
 const PHASE_META = {
-  g: { letter: 'G', name: 'Gather', sub: 'Know Them', count: 21, color: '#3b82f6', light: '#93c5fd' },
+  g: { letter: 'G', name: 'Gather', sub: 'Know Them', count: 22, color: '#3b82f6', light: '#93c5fd' },
   a: { letter: 'A', name: 'Assess', sub: 'Map Them', count: 16, color: '#a855f7', light: '#d8b4fe' },
   i: { letter: 'I', name: 'Influence', sub: 'Win Them', count: 11, color: '#f59e0b', light: '#fcd34d' },
-  n: { letter: 'N', name: 'Nurture', sub: 'Grow Them', count: 13, color: '#10b981', light: '#6ee7b7' }
+  n: { letter: 'N', name: 'Nurture', sub: 'Grow Them', count: 13, color: '#10b981', light: '#6ee7b7' },
+  p: { letter: 'P', name: 'Present', sub: 'Show Them', count: 9, color: '#ef4444', light: '#fca5a5' }
 };
 
 function buildMobileWheel() {
@@ -665,7 +690,6 @@ function buildMobileWheel() {
 }
 
 // ── Spring-like height animation using Web Animations API ──
-// Easing: cubic-bezier(0.32, 0.72, 0, 1.0) — slight overshoot, fast decel (Apple-like)
 const SPRING_EASE = 'cubic-bezier(0.32, 0.72, 0, 1.0)';
 
 function animateHeight(el, from, to, duration, onDone) {
@@ -691,7 +715,6 @@ function toggleMWPhase(header) {
     const c = p.querySelector('.mw-clusters');
     const h = c.scrollHeight;
     p.classList.remove('open');
-    // Close any open clusters inside
     p.querySelectorAll('.mw-cluster.open').forEach(cl => {
       cl.classList.remove('open');
       cl.querySelector('.mw-engines').style.height = '0px';
@@ -700,17 +723,14 @@ function toggleMWPhase(header) {
   });
 
   if (wasOpen) {
-    // Closing this phase
     const h = clusters.scrollHeight;
     phase.classList.remove('open');
-    // Close nested clusters
     phase.querySelectorAll('.mw-cluster.open').forEach(cl => {
       cl.classList.remove('open');
       cl.querySelector('.mw-engines').style.height = '0px';
     });
     animateHeight(clusters, h, 0, 250);
   } else {
-    // Opening this phase
     phase.classList.add('open');
     clusters.style.height = 'auto';
     const targetH = clusters.scrollHeight;
@@ -739,7 +759,6 @@ function toggleMWCluster(header) {
       animateHeight(engines, 0, targetH, 300);
     });
 
-    // Also update parent .mw-clusters height to accommodate
     const parentClusters = cluster.closest('.mw-clusters');
     if (parentClusters && parentClusters.style.height !== 'auto') {
       parentClusters.style.height = 'auto';
@@ -748,67 +767,6 @@ function toggleMWCluster(header) {
 }
 
 buildMobileWheel();
-
-// ── Hero rotation — Apple TV style ──
-(function(){
-  const rotator = document.getElementById('heroRotator');
-  const slides = rotator.querySelectorAll('.hero-slide');
-  const pipsContainer = document.getElementById('heroPips');
-  let current = 0;
-  let timer;
-
-  // Calculate max height of all slides
-  function setHeight() {
-    let maxH = 0;
-    slides.forEach(s => {
-      s.style.visibility = 'visible';
-      s.style.position = 'relative';
-      s.style.opacity = '0';
-      const h = s.offsetHeight;
-      if (h > maxH) maxH = h;
-      s.style.position = 'absolute';
-      s.style.visibility = 'hidden';
-      s.style.opacity = '';
-    });
-    rotator.style.height = maxH + 'px';
-    // Make active slide visible
-    slides[current].style.visibility = 'visible';
-  }
-  setHeight();
-  window.addEventListener('resize', setHeight);
-
-  // Build pips
-  slides.forEach((_, i) => {
-    const pip = document.createElement('button');
-    pip.className = 'hero-pip' + (i === 0 ? ' active' : '');
-    pip.setAttribute('aria-label', 'Slide ' + (i + 1));
-    pip.addEventListener('click', () => goTo(i));
-    pipsContainer.appendChild(pip);
-  });
-
-  function goTo(n) {
-    slides[current].classList.remove('active');
-    slides[current].style.visibility = 'hidden';
-    pipsContainer.children[current].classList.remove('active');
-    current = n;
-    slides[current].classList.add('active');
-    slides[current].style.visibility = 'visible';
-    pipsContainer.children[current].classList.add('active');
-    clearInterval(timer);
-    timer = setInterval(next, 5000);
-  }
-
-  function next() {
-    goTo((current + 1) % slides.length);
-  }
-
-  timer = setInterval(next, 5000);
-
-  // Pause on hover
-  rotator.addEventListener('mouseenter', () => clearInterval(timer));
-  rotator.addEventListener('mouseleave', () => { timer = setInterval(next, 5000); });
-})();
-
 </script>
 </body>
 </html>
