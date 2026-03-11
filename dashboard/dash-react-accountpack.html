@@ -94,203 +94,205 @@ const { useState } = React;
 // ─── MERIDIAN DATA (In production, this comes from compiled GAIN outputs) ───
 const ACCOUNT = {
   name: "Meridian Financial Services",
-  sector: "Financial Services & Insurance",
+  sector: "Insurance-Led Multi-Line FS · FCA/PRA Dual-Regulated · LSE: MFS.L",
   seller: "Helios Technology Group",
-  dealValue: "£95-110M",
-  acv: "£13.6-15.7M",
-  term: "7 Years",
-  tcv7yr: "£95-110M TCV (7yr)",
+  dealValue: "£115M",
+  acv: "£16.4M/yr",
+  term: "7 Years (5+2 with Year 5 break)",
+  tcv7yr: "£115M TCV (7yr)",
   status: "LIVE BID",
   submissionDate: "28 March 2026",
-  lastUpdated: "26 Feb 2026",
-  winProbability: 68,
-  serviceDescription: "Full-scope IT Managed Services including infrastructure management, cloud hosting & migration, service desk, end-user computing support, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff from incumbent provider.",
+  lastUpdated: "March 2026",
+  winProbability: 32,
+  rfp: "MFS-2026-ORT-001",
+  tupe: "109 FTE",
+  serviceDescription: "Full-scope IT Outsourcing covering infrastructure management, cloud hosting & migration, service desk, end-user computing, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff. Tower 4 Operational Resilience is standalone within scope.",
   nonStandard: [
-    "Integrated Operational Resilience capability (aligned to ISO 22301 certification journey)",
-    "AIOps predictive incident management embedded from Day 1",
-    "60/40 Gain-Share mechanism on automation savings above agreed baselines",
-    "2% ring-fenced Innovation Fund (£106K/yr) with joint governance",
-    "10% Risk Pot (£530K) held back against SLA performance — released at M6/M12",
+    "50/50 Gain-Share mechanism — £905K FY25 actual payout evidenced (PROVEN)",
+    "15% At-Risk SLAs accepted — reflects extreme buyer distrust of vendor capability",
+    "2% Innovation Fund (£2.3M) — ONLY direct revenue path for Helios standalone",
+    "Regulatory Rescue framing: Helios as PRA SS1/21 remediation partner, not IT outsourcer",
+    "SIAM-as-a-Service managing Tesseract — positions Helios above incumbent not against it",
   ],
-  dealType: "Competitive outsource — full IT infrastructure managed services renewal. Incumbent displaced.",
-  clientSummary: "Meridian Financial Services is a £2.1B revenue UK-based financial services and insurance group. ~8,400 employees across 12 UK offices. Regulated by PRA/FCA. Midmarket FS — large enough for complex infrastructure, small enough that relationships matter.",
-  clientHistory: "Founded 1987 as specialist commercial insurance underwriter. Expanded into retail financial services (2004) and wealth management (2012). Listed on LSE since 1998. Survived 2008 via conservative risk culture. Current CEO Whitfield appointed 2019 from Aviva.",
-  clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Reinsurance",
-  bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026.",
+  dealType: "Boardroom panic-buy disguised as transformation RFP. 62% EOL estate. PRA SS1/21 warning active. ISO 22301 Q3 hard deadline. EY audit has frozen all IT CAPEX — only active budget is £2.3M innovation fund inside this RFP.",
+  clientSummary: "Meridian Financial Services plc (LSE: MFS.L) is a £847M revenue UK-based insurance-led financial services group. ~8,000+ employees across UK offices. FCA/PRA dual-regulated. GWP £3.1bn, ROE 14.7%. IT budget of £16.5M frozen by Board Audit Committee via EY audit.",
+  clientHistory: "Insurance-led group spanning Commercial Insurance, Retail Financial Services, Wealth Management, and Pensions. Midmarket FS — large enough for complex infrastructure outsource, small enough that relationships matter. Sir Anthony Pemberton (Audit Chair, former PRA CEO) is the ultimate veto holder.",
+  clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Pensions",
+  bidPhase: "Clarification window: 14 Mar 2026. Submission: 28 Mar 2026 (HARD). Q3 2026: ISO 22301 certification deadline. Dec 2026: 90-day stabilisation / 50% payment gate.",
+  verdict: "KILL £2.5M standalone software deal — pivot to £115M RFP. Board Audit Committee has frozen all IT CAPEX via EY audit. Only active budget: £2.3M innovation fund inside RFP MFS-2026-ORT-001.",
 };
 
 const G01_MACRO = {
-  revenue: "£2.1B (FY2025)",
-  employees: "8,400",
-  techSpend: "£82.5M transformation programme",
-  targetSavings: "£28M annual by Year 5",
-  serverEOL: "62% estate end-of-life",
-  microOutageCost: "£2.8M/yr",
+  revenue: "£847M (FY25, +6.2% YoY)",
+  opProfit: "£287M",
+  margin: "7.8% (↓220bp vs peer Oakstone)",
+  employees: "8,000+",
+  gwp: "£3.1bn",
+  roe: "14.7%",
+  itBudget: "£16.5M — FROZEN (EY audit lockdown)",
+  marketCap: "~£3.3bn (LSE: MFS.L)",
+  serverEOL: "62% of total estate",
+  microOutageCost: "£2.8M/yr (+12% this year)",
   alertNoise: "14,000 alerts/mo (<3% actionable)",
-  fcr: "58% first-call resolution",
-  commsBlackout: "47-min in Alpha stress test",
+  fcr: "58% first-call resolution (bench: 72%)",
+  isoGaps: "34 non-conformities (Q3 hard deadline)",
+  praStatus: "PRA SS1/21 warning ACTIVE",
+  costOfInaction: "£13.8–19.8M Year 1 alone",
   strategicPriorities: [
-    { label: "100% DC Exit", deadline: "2026", severity: "critical" },
-    { label: "ISO 22301 Certification", deadline: "Q4 2026", severity: "critical" },
-    { label: "4-Hour RTO (Lloyd's)", deadline: "Mandated", severity: "high" },
-    { label: "PRA Compliance Gaps", deadline: "Dec 2025", severity: "critical" },
-    { label: "Consumer Duty MI", deadline: "Ongoing", severity: "medium" },
+    { label: "ISO 22301 Certification", deadline: "Q3 2026", severity: "critical" },
+    { label: "PRA SS1/21 Remediation", deadline: "ACTIVE WARNING", severity: "critical" },
+    { label: "EOL Estate Modernisation", deadline: "62% servers EOL", severity: "critical" },
+    { label: "Alert Noise Reduction", deadline: "14K/mo → <4.5K target", severity: "high" },
+    { label: "FCR Improvement", deadline: "58% → 72% benchmark", severity: "high" },
+    { label: "EY Audit Resolution", deadline: "IT CAPEX frozen", severity: "critical" },
   ],
 };
 
 const G02_FINANCIALS = {
-  costOfInaction: "£8.3M/yr",
-  wasteIdentified: "£33-37M over contract",
-  microOutages: "£2.8M annual hard cost",
-  falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
-  consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
-  praVendors: "+52 vendors by Q2 2026 → +2,000 FTE hours",
-  heliosValue: "£12-15M cumulative 5yr savings",
+  costOfInaction: "£13.8–19.8M Year 1",
+  wasteIdentified: "£2.8M annual outage bleed alone",
+  microOutages: "£2.8M/yr (+12%) annual hard cost",
+  falseAlerts: "13,580 false alerts/mo → <3% actionable → FTE waste",
+  isoNonConformities: "34 non-conformities → Q3 certification at risk",
+  praExposure: "SS1/21 warning active → board-level regulatory liability",
+  heliosValue: "Self-funding: £2.8M outage bleed funds innovation + bonuses via gain-share",
+  gainShareProven: "£905K FY25 actual gain-share payout — PROVEN evidence",
+  atRisk: "15% at-risk SLAs accepted — £17.25M at performance stake over 7yr",
+  innovationFund: "£2.3M innovation fund (2%) — only active budget available",
 };
 
 const STAKEHOLDERS = [
   {
-    id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite",
-    status: "unknown", authority: 95, influence: 90,
-    gainDriver: "Power", kegan: "Stage 4 (Self-Authoring)",
-    summary: "25yr FS veteran. Board-facing. Burned by £67M 'Operation Meridian' failure. Won't tolerate another Big Bang.",
-    trigger: "Board confidence, brand protection, regulatory clean sheet",
-    avoid: "Vendor hype, over-promising, anything resembling Operation Meridian",
-    modality: "Visual — executive summaries, dashboards, one-page briefs",
-  },
-  {
-    id: "hale", name: "Richard Hale", role: "CIO", level: "C-Suite",
-    status: "established", authority: 85, influence: 80,
-    gainDriver: "Achievement", kegan: "Stage 4→5 (Self-Transforming)",
-    summary: "Technical architect turned CIO. Intellectually curious. Wants AI as baseline, not differentiator. Frustrated by 'last 28%' legacy apps.",
-    trigger: "Architectural thinking, production evidence, intellectual depth",
-    avoid: "Feature lists, vendor hype, demo-ware without production proof",
-    modality: "Read/Write — technical papers, architecture diagrams, data",
+    id: "pemberton", name: "Sir Anthony Pemberton", role: "Audit Chair", level: "Board",
+    status: "unknown", authority: 100, influence: 100,
+    gainDriver: "Safety (Legacy)", kegan: "Stage 5 (Self-Transforming)",
+    summary: "Former PRA CEO. Knighted 2019. Ultimate veto holder. Personally embarrassed by PRA SS1/21 warnings. Furious. Directs CFO Thompson via Board Audit Committee. Used EY audit to freeze CIO's entire CAPEX budget.",
+    trigger: "Immutable audit-grade evidence to satisfy SS1/21. Named PRA framework. Excalibur (£45M) + Athena (£38M) reference pack.",
+    avoid: "Buzzwords (Agile, Transformation, Synergy). Technical acronyms. Aspirational roadmaps. Anything resembling 'tech fluff'.",
+    modality: "Read/Write — regulatory frameworks, board-level evidence packs, peer references",
   },
   {
     id: "thompson", name: "Mark Thompson", role: "CFO", level: "C-Suite",
-    status: "targeted", authority: 88, influence: 30,
-    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Zenith Insurance alumnus. Burned by a managed services deal that over-promised savings. Demands 'show me the workings.'",
-    trigger: "Named-process cost methodology, first-number rigour, audit trail",
-    avoid: "Directional numbers, unattributed savings, missing baselines",
-    modality: "Read/Write — spreadsheets, financial models, named attribution",
+    status: "targeted", authority: 100, influence: 90,
+    gainDriver: "Safety (Margin/ROE)", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Economic buyer. Brought EY in deliberately to freeze CIO Nicholas Reid's budget. ROE bonus structure. Walked out of last vendor meeting. Manages via audit weapon. Must map £2.8M OPEX bleed to 15% at-risk provisions.",
+    trigger: "£2.8M OPEX bleed mapped to at-risk provisions. Named-process cost methodology. ROE impact. First-number rigour with audit trail.",
+    avoid: "Directional numbers. Transformation vision. Anything that sounds like cost without return. Unattributed savings.",
+    modality: "Read/Write — financial models, named attribution, spreadsheets, audit trail",
   },
   {
-    id: "osei", name: "Daniel Osei", role: "CRO", level: "C-Suite",
-    status: "targeted", authority: 82, influence: 70,
-    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Board-level risk officer. Dual governance model (formal + informal). Kill phrase: 'checkbox compliance.' Veto power over any vendor.",
-    trigger: "Genuine risk culture, forward-looking intelligence, tested frameworks",
-    avoid: "Checkbox compliance, theoretical frameworks, untested DR plans",
+    id: "osei", name: "David Osei", role: "CRO", level: "C-Suite",
+    status: "targeted", authority: 90, influence: 95,
+    gainDriver: "Safety (Regulatory)", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Former PRA supervisor. Only C-suite who can authorise £1M+ bypassing CFO freeze via regulatory mandate. Pemberton's 'eyes and ears' on operational risk. Kill phrase: 'checkbox compliance.' Deploy Rachel Okonkwo as peer reference opener.",
+    trigger: "Rachel Okonkwo (PRA peer reference). Genuine risk culture. Forward-looking intelligence. Tested frameworks. Excalibur PRA case.",
+    avoid: "Checkbox compliance. Theoretical frameworks. Untested DR plans. Generic resilience language.",
     modality: "Auditory/Kinesthetic → Data Visual when presenting to Board",
   },
   {
-    id: "morris", name: "Jennifer Morris", role: "Dir, Operational Resilience", level: "Senior",
-    status: "champion", authority: 60, influence: 85,
-    gainDriver: "Achievement", kegan: "Stage 3→4",
-    summary: "14+ yrs resilience/risk. Chairs Resilience Steering Committee. Our identified champion. Reduced incident response 47%. Leads ISO 22301.",
-    trigger: "Peer credibility (Rachel), resilience depth, practical frameworks",
-    avoid: "Talking down, theoretical-only approaches, ignoring her expertise",
+    id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior",
+    status: "established", authority: 80, influence: 85,
+    gainDriver: "Order (Process)", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Controls £115M RFP. Non-circumvention zero-tolerance. RFP gatekeeper. Fair but firm. Process guardian. Access pathway to Pemberton. Must be respected — any end-running will trigger immediate disqualification.",
+    trigger: "Clean documentation. Transparent pricing. Structured process. Compliance matrices. No surprises.",
+    avoid: "End-running procurement. Pricing games. Last-minute surprises. Going around her to executives.",
+    modality: "Read/Write — structured documents, compliance matrices, transparent pricing",
+  },
+  {
+    id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite",
+    status: "unknown", authority: 100, influence: 85,
+    gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Visionary facade. Cannot override Audit Chair Pemberton. Board-facing distracted leader. Verbal promise risk: Tom Hadley told him Helios would 'absorb first £250K of transition overruns' — NOT in signed contract. Must resolve before signature.",
+    trigger: "Board confidence. Brand protection. Regulatory clean sheet. Strategic transformation narrative (carefully framed).",
+    avoid: "Technical detail. Anything resembling past failures. Commitments not in contract.",
+    modality: "Visual — executive summaries, dashboards, one-page briefs",
+  },
+  {
+    id: "morris", name: "Jennifer Morris", role: "Dir. Operational Resilience", level: "Senior",
+    status: "champion", authority: 30, influence: 80,
+    gainDriver: "Order (ISO/PRA)", kegan: "Stage 3→4",
+    summary: "Powerless champion — cannot sign POs. 21 weeks to Q3 ISO deadline. 34 non-conformities. Manual spreadsheets. Leads ISO 22301. Arm her with business case for Osei — she is the conduit to the regulatory mandate channel. Willingness to refer: 9/10.",
+    trigger: "Peer credibility (Rachel Okonkwo). Resilience depth. Practical frameworks. ISO 22301 shared certification journey.",
+    avoid: "Talking down to her. Theoretical-only approaches. Ignoring her expertise. Making her feel powerless.",
     modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Osei",
   },
   {
+    id: "reid", name: "Nicholas Reid", role: "CIO", level: "C-Suite",
+    status: "targeted", authority: 4, influence: 70,
+    gainDriver: "Safety (Survival)", kegan: "Stage 3 (Socialised Mind)",
+    summary: "BIGGEST SABOTAGE RISK. Budget frozen (authority: 4/100). Faking MTTR logs. Tesseract loyalty (3x at Oakstone). Will actively undermine. Frame HIO as 'forward-looking baseline capture' not transparency audit. Offer 'SIAM as a Service' managing Tesseract — makes him the hero.",
+    trigger: "Governance Shield narrative. HIO as 'Log Protection Layer'. SIAM positioning — he manages Tesseract, Helios manages him.",
+    avoid: "Transparency audit framing. Challenging his past metrics publicly. Anything that threatens his survival narrative.",
+    modality: "Needs to feel in control — give him a role, not a threat",
+  },
+  {
     id: "chen", name: "Andrew Chen", role: "Head of IT Infrastructure", level: "Operational",
-    status: "targeted", authority: 20, influence: 75,
-    gainDriver: "Safety", kegan: "Stage 3 (Socialised Mind)",
-    summary: "15yr Meridian veteran. His team IS the TUPE cohort. Protective. BS detector is extreme — vendor corporate language triggers shutdown.",
-    trigger: "People-first language, honest gaps, retention data, respect for his team",
-    avoid: "Corporate language, dismissing his team's expertise, AI-replaces-people framing",
+    status: "targeted", authority: 20, influence: 60,
+    gainDriver: "Affiliation & Safety", kegan: "Stage 3 (Socialised Mind)",
+    summary: "15yr Meridian veteran. His team IS the 109 TUPE cohort. Exhausted — 14K alerts/mo. Swing voter. Extreme BS detector — corporate language triggers shutdown. Open with HIO dropping 14K to 4.5K alerts in 6 months, zero config from his team in first 30 days.",
+    trigger: "People-first language. Honest gaps. Retention data. Respect for his team. Zero-config promise. Alert noise reduction evidence.",
+    avoid: "Corporate language. Dismissing his team's expertise. AI-replaces-people framing. Vendor theatre.",
     modality: "Kinesthetic — site visits, meeting his team, showing not telling",
-  },
-  {
-    id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior",
-    status: "established", authority: 50, influence: 20,
-    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Process guardian. Controls access to Whitfield. Fair but firm. Values structured compliance, transparent pricing, no procurement theatre.",
-    trigger: "Clean documentation, transparent pricing, structured process",
-    avoid: "End-running procurement, pricing games, last-minute surprises",
-    modality: "Read/Write — structured documents, compliance matrices",
-  },
-  {
-    id: "harrison", name: "Neil Harrison", role: "Head of IT Service Management", level: "Operational",
-    status: "established", authority: 30, influence: 50,
-    gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)",
-    summary: "ITIL practitioner. Wants 'three examples' for everything. Scored highest on evidence density. Will ask about TUPE transfer volume.",
-    trigger: "Operational specificity, maintained KPIs, three examples minimum",
-    avoid: "High-level phases without cases, vague transition plans",
-    modality: "Read/Write — case studies, operational metrics, process maps",
   },
 ];
 
 const COMPETITORS = [
   {
-    name: "Fortis Global Services",
-    label: "Scale-first global delivery model",
-    revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+",
+    name: "Tesseract Tech",
+    label: "Incumbent loyalty — 3x Oakstone deployments with CIO Reid",
+    revenue: "Undisclosed", model: "UK-focused", tupeRecord: "Managed current 109 FTE",
+    dangerRating: "CRITICAL",
+    dangerWith: ["Nicholas Reid (loyalty)", "Andrew Chen (familiarity)"],
+    weakness: "Managed the 62% EOL estate for 10 years — owns the problem, not the solution. Faking MTTR logs exposes them to audit.",
+    killQuestion: "How will you provide independent audit evidence for the 62% EOL estate you've managed for 10 years — and why has FCR not improved above 58% under your tenure?",
+  },
+  {
+    name: "Global SIs (Tier 1)",
+    label: "Brand recognition — Pemberton 'too small' veto risk for Helios",
+    revenue: "£bn scale", model: "Global delivery", tupeRecord: "High volume",
     dangerRating: "HIGH",
-    dangerWith: ["Whitfield (brand)", "Harrison (TUPE volume)"],
-    weakness: "78% post-TUPE retention (vs Helios 92%), 18-24mo leadership rotation",
-    killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?",
-  },
-  {
-    name: "Saraswati Digital",
-    label: "Offshore-leveraged automation platform",
-    revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS",
-    dangerRating: "MEDIUM",
-    dangerWith: ["Hale (automation depth)", "Thompson (lowest price)"],
-    weakness: "72% post-TUPE retention, cultural fit gap, limited UK FS regulatory depth",
-    killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, capability, outcome.",
-  },
-  {
-    name: "Nexus Technology Partners",
-    label: "Technology-first reseller model",
-    revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal",
-    dangerRating: "LOW",
-    dangerWith: ["Hale (tech partnerships)"],
-    weakness: "No managed services pedigree, product-led not service-led",
-    killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services.",
+    dangerWith: ["Sir Anthony Pemberton (brand)", "Mark Thompson (scale comfort)"],
+    weakness: "No named UK-based Op Resilience practice lead. Cannot personally defend ISO 22301 audit in Q3. Generic FS regulatory depth.",
+    killQuestion: "Name the specific UK-based Operational Resilience practice lead who will personally defend your ISO 22301 certification audit in Q3 2026 — not a global centre of excellence.",
   },
 ];
 
 const WIN_THEMES = [
-  { id: 1, label: "Operational Resilience as Competitive Advantage", strength: "fortress", owner: "Jennifer/Osei" },
-  { id: 2, label: "People-First Transition (Anti-TUPE Horror)", strength: "fortress", owner: "Chen/Harrison" },
-  { id: 3, label: "AI in Production, Not Presentation", strength: "strong", owner: "Hale" },
-  { id: 4, label: "Named-Process Cost Glide Path", strength: "critical_gap", owner: "Thompson" },
-  { id: 5, label: "Proximity Creates Accountability", strength: "strong", owner: "Whitfield" },
+  { id: 1, label: "The Regulatory Rescue", strength: "fortress", owner: "Osei/Pemberton", detail: "We are a regulatory remediation partner that happens to manage your technology. Evidence: Excalibur PRA framework (£45M client, PROVEN)." },
+  { id: 2, label: "Self-Funding Resilience", strength: "fortress", owner: "Thompson", detail: "Fund 2% innovation fund + bonuses from £2.8M outage bleed. Evidence: £905K FY25 gain-share paid (PROVEN)." },
+  { id: 3, label: "The Governance Shield", strength: "strong", owner: "Reid/Chen", detail: "HIO = 'forward-looking baseline capture' not transparency threat. Makes Reid the hero. Evidence: HIO Audit Layer (PROVEN)." },
+  { id: 4, label: "SIAM-as-a-Service", strength: "strong", owner: "Reid", detail: "Helios manages Tesseract. Reid keeps his vendor relationship. Neutralises biggest sabotage risk." },
+  { id: 5, label: "Category Reframe", strength: "critical_gap", owner: "Blackwell/Pemberton", detail: "IT Outsourcer → 'FS Regulatory & Resilience Partner'. Must land in every Pemberton touchpoint or we lose Channel 2 governance veto." },
 ];
 
 const SCORING = {
-  helios: 3.85, target: 4.65, fortis: 3.55, saraswati: 3.40,
+  helios: 4.15, target: 4.80, tesseract: 3.30, globalSI: 3.55,
   criteria: [
-    { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
-    { code: "TC-02", label: "Automation & AI", weight: 5.4, helios: 3, fortis: 3, saraswati: 5, strategy: "DEFEND" },
+    { code: "TC-04", label: "Op Resilience / ISO 22301", weight: 5.4, helios: 5, fortis: 2, saraswati: 3, strategy: "LOCK" },
+    { code: "CC-02", label: "50:50 Gain-Share", weight: 7.2, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
+    { code: "CC-03", label: "15% At-Risk Accept", weight: 4.8, helios: 5, fortis: 3, saraswati: 4, strategy: "LOCK" },
+    { code: "IF-01", label: "Oral Scenario (Live)", weight: 15.0, helios: 4, fortis: 4, saraswati: 3, strategy: "PUSH" },
+    { code: "TC-01", label: "Infrastructure Baseline", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
+    { code: "TC-02", label: "Automation & AIOps", weight: 5.4, helios: 4, fortis: 3, saraswati: 4, strategy: "DEFEND" },
     { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
-    { code: "TC-04", label: "Resilience & DR", weight: 5.4, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
     { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-    { code: "CC-01", label: "Cost Glide Path", weight: 9.6, helios: 2, fortis: 3, saraswati: 4, strategy: "CRITICAL" },
-    { code: "CC-02", label: "Pricing Model", weight: 7.2, helios: 4, fortis: 3, saraswati: 3, strategy: "PUSH" },
-    { code: "CC-04", label: "Compliance", weight: 2.4, helios: 5, fortis: 4, saraswati: 3, strategy: "LOCK" },
-    { code: "IF-01", label: "Informal Session", weight: 15, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
+    { code: "CC-01", label: "Commercial Model", weight: 9.6, helios: 4, fortis: 3, saraswati: 4, strategy: "PUSH" },
   ],
 };
 
 const EXPANSION = [
-  { signal: "ISO 22301 → Resilience Expansion", timing: "Mo 6-9", revenue: "£800K-1.2M/yr", champion: "Jennifer", gate: "green" },
-  { signal: "DEFENSIVE: Application Discovery", timing: "Mo 6-9", revenue: "£50-80K → £2-4M/yr", champion: "Hale", gate: "green" },
-  { signal: "FinOps Advisory", timing: "Mo 9-12", revenue: "£200-400K/yr", champion: "Thompson", gate: "green" },
-  { signal: "Managed SOC / MDR", timing: "Mo 12-18", revenue: "£1.5-2.5M/yr", champion: "Jennifer→Osei", gate: "amber" },
-  { signal: "Process Automation (beyond IT)", timing: "Mo 18-24", revenue: "£500K-1M/yr", champion: "Harrison", gate: "amber" },
-  { signal: "Renewal + Portfolio Bundle", timing: "Mo 24-30", revenue: "Protect base + expand to £140-160M", champion: "Thompson", gate: "future" },
+  { signal: "ISO 22301 Remediation-as-a-Service (Tower 4 Extension)", timing: "Mo 0–90", revenue: "£1.2M OPEX", champion: "Morris", gate: "green", adkar: "GO (19/25)" },
+  { signal: "DORA Advisory", timing: "Mo 3–6", revenue: "£250K", champion: "Osei", gate: "amber", adkar: "BUILD (13/25)" },
+  { signal: "Recovery Orchestration / HIO Full Deployment", timing: "Mo 6–12", revenue: "£2.2M", champion: "Reid/Chen", gate: "amber", adkar: "WAIT (12/25)" },
+  { signal: "Renewal + Portfolio Bundle", timing: "Mo 24–30", revenue: "Protect £115M base", champion: "Thompson", gate: "future", adkar: "FUTURE" },
 ];
 
 const FAILURE_SCENARIOS = [
-  { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
-  { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
-  { id: 3, label: "Competitive Displacement", probability: "20%", trigger: "Fortis delivers 'show me three' to Harrison before we plant retention question" },
-  { id: 4, label: "Champion Isolation", probability: "15%", trigger: "Jennifer's advocacy neutralised by Osei's risk veto" },
-  { id: 5, label: "Silent No", probability: "20%", trigger: "Whitfield never engages, Board defaults to safe brand (Fortis)" },
+  { id: 1, label: "CIO Survival Sabotage", probability: "75%", trigger: "Reid actively undermines via Tesseract loyalty. Kill: Frame HIO as 'Log Protection Layer'. Pitch 'SIAM as a Service' managing Tesseract." },
+  { id: 2, label: "Vendor Loyalty Override (Tesseract)", probability: "60%", trigger: "Morris/Osei must mandate 'Tool-Agnostic Observability' before Tesseract plants retention narrative with Reid." },
+  { id: 3, label: "Audit Chair 'Too Small' Veto", probability: "45%", trigger: "Pemberton vetoes Helios on scale grounds. Defence: Lead every Pemberton session with Excalibur (£45M) + Athena (£38M)." },
+  { id: 4, label: "Jelly Stall / Ghost Ship", probability: "40%", trigger: "Budget freeze creates inertia. Reframe as 'PRA Remediation Project' — mandatory not strategic." },
+  { id: 5, label: "Comp-Driven Year 1 Inertia", probability: "35%", trigger: "Thompson blocks on Year 1 margin impact. Accept 50% deferred payment. Lead with 'Net-Zero Year 1'." },
 ];
 
 // ─── UTILITY COMPONENTS ───
@@ -382,7 +384,7 @@ function GAINAccountPack() {
               </span>
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight">{ACCOUNT.name}</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Seller: {ACCOUNT.seller} · {ACCOUNT.sector} · {ACCOUNT.term} term · ACV: {ACCOUNT.acv} · TCV: {ACCOUNT.tcv7yr}</p>
+            <p className="text-xs text-gray-500 mt-0.5">Seller: {ACCOUNT.seller} · {ACCOUNT.sector} · {ACCOUNT.term} · ACV: {ACCOUNT.acv} · RFP: {ACCOUNT.rfp} · TUPE: {ACCOUNT.tupe}</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
@@ -392,7 +394,7 @@ function GAINAccountPack() {
             <div className="w-16 h-16 relative">
               <svg viewBox="0 0 36 36" className="w-16 h-16 transform -rotate-90">
                 <circle cx="18" cy="18" r="15" fill="none" stroke="#1e293b" strokeWidth="3" />
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#10b981" strokeWidth="3"
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#ef4444" strokeWidth="3"
                   strokeDasharray={`${ACCOUNT.winProbability * 0.942} 100`}
                   strokeLinecap="round" />
               </svg>
@@ -521,12 +523,12 @@ function GAINAccountPack() {
             <Section id="FINANCIALS" title="Financials" subtitle="Deal value, savings & waste">
             <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
               {[
-                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
+                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value 7yr", color: "text-white" },
                 { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
                 { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
-                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
-                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" },
+                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Year 1 alone", color: "text-red-400" },
+                { label: "Innovation Fund", value: "£2.3M", sub: "Only active budget (2%)", color: "text-emerald-400" },
+                { label: "Gain-Share Proven", value: G02_FINANCIALS.gainShareProven, sub: "FY25 actual payout", color: "text-amber-400" },
               ].map((v, i) => (
                 <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
                   <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">{v.label}</div>
@@ -553,7 +555,7 @@ function GAINAccountPack() {
                   ))}
                 </div>
                 <div className="mt-3 text-[11px] text-gray-500">
-                  Primary threat: <span className="text-red-300 font-bold">Fortis</span> on TUPE volume + brand confidence · Secondary: <span className="text-amber-300 font-bold">Saraswati</span> on automation + price
+                  Primary threat: <span className="text-red-300 font-bold">Tesseract</span> — CIO Reid loyalty (3x Oakstone) · Secondary: <span className="text-amber-300 font-bold">Global SIs</span> — Pemberton "too small" veto risk
                 </div>
               </div>
             </Section>
@@ -633,8 +635,8 @@ function GAINAccountPack() {
                 {[
                   { name: "Helios (Us)", score: SCORING.helios, color: "text-emerald-400" },
                   { name: "Target", score: SCORING.target, color: "text-blue-400" },
-                  { name: "Fortis Global", score: SCORING.fortis, color: "text-red-400" },
-                  { name: "Saraswati Digital", score: SCORING.saraswati, color: "text-amber-400" },
+                  { name: "Tesseract", score: SCORING.tesseract, color: "text-red-400" },
+                  { name: "Global SI", score: SCORING.globalSI, color: "text-amber-400" },
                 ].map((s, i) => (
                   <div key={i} className="flex items-baseline gap-2">
                     <span className={`text-2xl font-black ${s.color}`}>{s.score.toFixed(2)}</span>
@@ -650,8 +652,8 @@ function GAINAccountPack() {
                       <th className="text-left py-1.5 text-gray-500 font-bold uppercase">Criterion</th>
                       <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-16">Wt%</th>
                       <th className="text-center py-1.5 text-emerald-500 font-bold uppercase w-14">Us</th>
-                      <th className="text-center py-1.5 text-red-400 font-bold uppercase w-14">Fortis</th>
-                      <th className="text-center py-1.5 text-amber-400 font-bold uppercase w-14">Sara.</th>
+                      <th className="text-center py-1.5 text-red-400 font-bold uppercase w-14">Tesseract</th>
+                      <th className="text-center py-1.5 text-amber-400 font-bold uppercase w-14">Global SI</th>
                       <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-20">Play</th>
                     </tr>
                   </thead>
@@ -674,7 +676,7 @@ function GAINAccountPack() {
                 </table>
               </div>
               <div className="text-xs text-gray-500 text-center mt-3">
-                Lead: +{(SCORING.helios - SCORING.fortis).toFixed(2)} over Fortis (~12%) · +{(SCORING.helios - SCORING.saraswati).toFixed(2)} over Saraswati (~15%) · Healthy but not decisive
+                Lead: +{(SCORING.helios - SCORING.tesseract).toFixed(2)} over Tesseract · +{(SCORING.helios - SCORING.globalSI).toFixed(2)} over Global SI · Channel 2 governance veto remains the kill risk
               </div>
             </div>
             </Section>
@@ -735,7 +737,7 @@ function GAINAccountPack() {
                 {[
                   { label: "Revenue", value: G01_MACRO.revenue },
                   { label: "Employees", value: G01_MACRO.employees },
-                  { label: "Tech Programme", value: G01_MACRO.techSpend },
+                  { label: "Op Profit", value: G01_MACRO.opProfit },
                 ].map((s, i) => (
                   <div key={i} className="bg-gray-900 border border-gray-800 rounded p-3">
                     <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{s.label}</div>
@@ -745,10 +747,10 @@ function GAINAccountPack() {
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                 {[
-                  { label: "Server EOL", value: G01_MACRO.serverEOL, color: "text-red-400" },
+                  { label: "EOL Servers", value: G01_MACRO.serverEOL, color: "text-red-400" },
                   { label: "Alert Noise", value: G01_MACRO.alertNoise, color: "text-amber-400" },
                   { label: "FCR", value: G01_MACRO.fcr, color: "text-red-400" },
-                  { label: "Comms Blackout", value: G01_MACRO.commsBlackout, color: "text-red-400" },
+                  { label: "PRA Status", value: G01_MACRO.praStatus, color: "text-red-400" },
                 ].map((s, i) => (
                   <div key={i} className="bg-gray-900/50 border border-gray-800 rounded p-3">
                     <div className="text-[10px] text-gray-500 uppercase font-bold">{s.label}</div>
@@ -774,10 +776,10 @@ function GAINAccountPack() {
                   <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">Cost of Inaction</h4>
                   <div className="space-y-2">
                     {[
-                      { label: "Micro-outages (annual)", value: G02_FINANCIALS.microOutages },
+                      { label: "Outage bleed (annual)", value: G02_FINANCIALS.microOutages },
                       { label: "False alert waste", value: G02_FINANCIALS.falseAlerts },
-                      { label: "Consumer Duty MI", value: G02_FINANCIALS.consumerDutyMI },
-                      { label: "PRA vendor assessment", value: G02_FINANCIALS.praVendors },
+                      { label: "ISO 22301 non-conformities", value: G02_FINANCIALS.isoNonConformities },
+                      { label: "PRA SS1/21 exposure", value: G02_FINANCIALS.praExposure },
                     ].map((c, i) => (
                       <div key={i} className="flex justify-between items-start border-b border-gray-800/30 pb-2">
                         <span className="text-sm text-gray-400">{c.label}</span>
@@ -789,12 +791,12 @@ function GAINAccountPack() {
                 <div>
                   <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Helios Value Proposition</h4>
                   <div className="bg-emerald-950/20 border border-emerald-800/30 rounded p-4">
-                    <div className="text-3xl font-black text-emerald-400 mb-1">{G02_FINANCIALS.heliosValue}</div>
-                    <div className="text-xs text-gray-500 uppercase">Cumulative 5-Year Savings</div>
+                    <div className="text-3xl font-black text-emerald-400 mb-1">{G02_FINANCIALS.gainShareProven}</div>
+                    <div className="text-xs text-gray-500 uppercase">FY25 Gain-Share — PROVEN Evidence</div>
                   </div>
                   <div className="bg-gray-900 border border-gray-800 rounded p-4 mt-3">
-                    <div className="text-xl font-black text-amber-400 mb-1">{G02_FINANCIALS.wasteIdentified}</div>
-                    <div className="text-xs text-gray-500 uppercase">Total Waste Identified Over Contract</div>
+                    <div className="text-xl font-black text-amber-400 mb-1">{G02_FINANCIALS.costOfInaction}</div>
+                    <div className="text-xs text-gray-500 uppercase">Cost of Inaction — Year 1 Alone</div>
                   </div>
                 </div>
               </div>
@@ -805,6 +807,24 @@ function GAINAccountPack() {
               <div className="mb-6">
                 <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Organisation Map</h4>
                 <div className="flex flex-col items-center gap-4">
+                  {/* Board */}
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {STAKEHOLDERS.filter(s => s.level === "Board").map(s => (
+                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
+                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
+                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
+                          "bg-red-950/20 border-red-800/40 hover:border-red-600"
+                        }`}
+                      >
+                        <div className="flex items-center justify-center gap-1.5 mb-1">
+                          <StatusDot status={s.status} />
+                          <span className="text-xs font-bold text-white">{s.name.split(" ").slice(-1)[0]}</span>
+                        </div>
+                        <div className="text-[10px] text-red-400 uppercase">{s.role}</div>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="w-px h-4 bg-gray-700" />
                   {/* C-Suite */}
                   <div className="flex flex-wrap justify-center gap-3">
                     {STAKEHOLDERS.filter(s => s.level === "C-Suite").map(s => (
@@ -1080,7 +1100,7 @@ function GAINAccountPack() {
                       <th className="text-center py-2 text-gray-500 font-bold uppercase">Weight</th>
                       <th className="text-center py-2 text-gray-500 font-bold uppercase">Helios</th>
                       <th className="text-center py-2 text-gray-500 font-bold uppercase">Fortis</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Saraswati</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Global SI</th>
                       <th className="text-center py-2 text-gray-500 font-bold uppercase">Strategy</th>
                     </tr>
                   </thead>
@@ -1134,7 +1154,7 @@ function GAINAccountPack() {
           <div>
             <Section id="N-01" title="Expansion Signal Scan" subtitle="Post-win growth roadmap" defaultOpen={true}>
               <div className="mb-4 p-3 bg-emerald-950/20 border border-emerald-800/30 rounded text-sm text-emerald-300">
-                Total expansion potential: Annual run rate £13-16M → £18-25M. Realistic 60% conversion = 20-40% account growth without new procurement.
+                Immediate post-win: £1.2M ISO 22301 Remediation-as-a-Service (GO signal). 3-12 months: DORA Advisory + HIO Full Deployment (£2.45M). Long-term: Renewal protection + portfolio bundle (£115M base). All expansions require Osei/Morris champion pathway.
               </div>
               <div className="space-y-2">
                 {EXPANSION.map((e, i) => (
@@ -1170,12 +1190,12 @@ function GAINAccountPack() {
             <Section id="N-01c" title="Account Health (Simulated Mo 6)" subtitle="Earn-the-right assessment">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {[
-                  { dim: "Delivery Performance", status: "green", detail: "97/109 TUPE'd, zero P1" },
-                  { dim: "Relationship Quality", status: "green", detail: "NPS +38, Whitfield at Q1 QBR" },
-                  { dim: "Team Stability", status: "green", detail: "Daniel, Rachel, Preet all in-role" },
-                  { dim: "Commercial Health", status: "green", detail: "Milestones on schedule" },
-                  { dim: "Strategic Alignment", status: "amber", detail: "In tech room, not Board room yet" },
-                  { dim: "Champion Health", status: "green", detail: "Jennifer using Rachel's framework at Board" },
+                  { dim: "Alert Stabilisation", status: "green", detail: "HIO: 14K → 4.5K alerts in 30 days, zero Chen team config" },
+                  { dim: "Rachel Okonkwo Alignment", status: "green", detail: "Trusted advisor to Morris — PRA peer pathway active" },
+                  { dim: "EOL Audit (Week 1)", status: "amber", detail: "Independent EOL audit complete — documented before first SLA report" },
+                  { dim: "CIO Kubler-Ross", status: "amber", detail: "Reid in Denial/Anger — Data Cleansing narrative holding" },
+                  { dim: "Tom Hadley Promise", status: "amber", detail: "£250K verbal overrun promise NOT in contract — resolve before signature" },
+                  { dim: "Champion Health", status: "green", detail: "Morris arming Osei with business case — regulatory mandate channel open" },
                 ].map((h, i) => (
                   <div key={i} className={`p-3 rounded border ${
                     h.status === "green" ? "bg-emerald-950/10 border-emerald-800/30" : "bg-amber-950/10 border-amber-800/30"
