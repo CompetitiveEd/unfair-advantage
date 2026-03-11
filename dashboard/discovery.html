@@ -1,9 +1,1047 @@
-# Discovery Tool — Fixes Applied (v5.2)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paste a Problem | GAIN Diagnostic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&family=Fraunces:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07070a;--s1:#0e0e13;--s2:#141419;--border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);--text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;--blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+::selection{background:var(--blue);color:white}
+.mono{font-family:'DM Mono',monospace}
+.section-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;justify-content:center}
 
-## FIX 1: ENGINES map in rapid test (bottom script)
-### OLD:
-```js
-const ENGINES = {
+/* ═══ DISCOVERY FULL SESSION — scoped styles ═══ */
+
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--bg:#030712;--surface:#0d1117;--s2:rgba(17,24,39,0.6);--border:#1f2937;--b2:#374151;--text:#f3f4f6;--muted:#9ca3af;--dim:#6b7280;--faint:#4b5563;--green:#10b981;--amber:#f59e0b;--orange:#f97316;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
+        ::selection{background:var(--blue);color:white}
+        .mono{font-family:'JetBrains Mono',monospace}
+        .label{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+        .container{max-width:860px;margin:0 auto;padding:32px 20px 60px}
+        h1{font-size:clamp(22px,4vw,32px);font-weight:900;letter-spacing:-0.02em;color:white;line-height:1.1}
+        h2{font-size:15px;font-weight:800;color:white}
+        input[type=text],textarea,select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:inherit;font-size:13px;width:100%;transition:border-color 0.2s}
+        input:focus,textarea:focus,select:focus{outline:none;border-color:var(--blue)}
+        textarea{resize:vertical;line-height:1.7}
+        textarea::placeholder,input::placeholder{color:var(--faint)}
+        select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+        .field{margin-bottom:16px}.field label{display:block;font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px}
+        .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media(max-width:600px){.field-row{grid-template-columns:1fr}}
+        .btn{font-size:13px;font-weight:700;padding:10px 24px;border-radius:8px;border:1px solid;cursor:pointer;transition:all 0.2s;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+        .btn-blue{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.4);color:var(--blue)}
+        .btn-blue:hover{background:rgba(59,130,246,0.2)}
+        .btn-green{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.4);color:var(--green)}
+        .btn-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
+        .btn-ghost:hover{border-color:var(--b2);color:white}
+        .disc-phase{display:none;animation:fadeIn 0.3s ease-out}.disc-phase.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        .phase-nav{display:flex;gap:4px;margin:24px 0;flex-wrap:wrap}
+        .disc-pnb{font-size:11px;font-weight:600;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--faint);cursor:pointer;transition:all 0.2s;font-family:inherit}
+        .disc-pnb:hover{border-color:var(--b2);color:var(--muted)}.disc-pnb.active{border-color:var(--blue);color:var(--blue);background:rgba(59,130,246,0.06)}
+        .entry-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+        @media(max-width:600px){.entry-grid{grid-template-columns:1fr}}
+        .entry-card{padding:20px;border-radius:12px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all 0.2s;text-align:center}
+        .entry-card:hover{border-color:var(--b2);background:#111827}
+        .entry-icon{font-size:32px;margin-bottom:8px}.entry-title{font-size:14px;font-weight:700;color:white;margin-bottom:4px}
+        .entry-desc{font-size:11px;color:var(--dim);line-height:1.5}
+        .rank-card{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:6px;cursor:pointer;transition:all 0.15s}
+        .rank-card:hover{border-color:var(--b2)}.rank-card.selected{border-color:var(--blue);background:rgba(59,130,246,0.04)}
+        .rank-check{width:20px;height:20px;border:2px solid var(--b2);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+        .rank-card.selected .rank-check{background:var(--blue);border-color:var(--blue)}
+        .rank-card.selected .rank-check::after{content:'\2713';color:white;font-size:11px;font-weight:700}
+        .score-panel{display:none;margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+        .score-panel.active{display:block}
+        .score-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding:10px;border-radius:8px;border:1px solid var(--border)}
+        .score-name{flex:1;font-size:13px;font-weight:600;color:white}
+        .score-slider{width:120px;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--border);outline:none}
+        .score-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);cursor:pointer}
+        .score-value{width:40px;text-align:center;font-size:18px;font-weight:900;color:var(--blue)}
+        .mic-btn{width:48px;height:48px;border-radius:50%;border:2px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0}
+        .mic-btn:hover{border-color:var(--red);color:var(--red)}
+        .mic-btn.recording{border-color:var(--red);background:rgba(239,68,68,0.1);color:var(--red);animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.3)}50%{box-shadow:0 0 0 16px rgba(239,68,68,0)}}
+        .detected-strip{margin-top:12px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+        .det-title{font-size:9px;font-weight:700;color:var(--cyan);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
+        .det-pills{display:flex;gap:6px;flex-wrap:wrap}
+        .det-pill{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;display:inline-flex;align-items:center;gap:5px}
+        .sig-boxes{display:inline-flex;gap:1px;margin-left:2px}
+        .sig-box{width:6px;height:10px;border:1px solid;border-radius:1px;opacity:0.3}
+        .sig-box.filled{opacity:1}
+        .drill-card{margin-bottom:14px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);border-left:3px solid var(--purple)}
+        .divider{display:flex;align-items:center;gap:12px;margin:20px 0}.divider-line{flex:1;height:1px;background:var(--border)}
+        .output-section{margin-top:24px;padding:24px;border:2px solid var(--border);border-radius:16px;background:var(--surface)}
+        .copy-btn{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-family:inherit}
+        .copy-btn:hover{border-color:var(--b2);color:white}
+        .copy-btn.copied{border-color:var(--green);color:var(--green)}
+    
+#discFullSession { display:none; border:1px solid var(--border); border-radius:12px; margin-top:12px; overflow:hidden; }
+#discFullSession .container { max-width:100%; padding:24px 20px 40px; }
+#discFullSession h1 { font-size:clamp(18px,3vw,26px); }
+</style>
+</head>
+<body>
+<div style="padding:2rem;">
+<div>
+  <div style="max-width:860px;margin:0 auto;">
+    <div class="section-label">Try It</div>
+    <h2 style="font-family:'Fraunces',serif;font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);text-align:center;margin-bottom:0.5rem;">Tell Me What's Going On</h2>
+    <p style="font-size:14px;color:var(--text-dim);text-align:center;margin-bottom:2rem;">Multiple ways in. Paste a rant, describe a problem, or just dump some notes. The system maps it to failure patterns and tells you where to start.</p>
+
+    <!-- RAPID TEST MODE -->
+    <div id="discoveryDemo" style="padding:20px;border:2px solid var(--red);border-radius:12px;background:rgba(239,68,68,0.03);margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <span style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.15em;text-transform:uppercase;">RAPID TEST MODE</span>
+          <span style="font-size:11px;color:var(--text-dim);margin-left:8px;">Paste anything. Hit Run. See the diagnostic.</span>
+        </div>
+        <button onclick="switchToFullSession()" style="font-size:10px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-family:inherit;">Full Session &#x2192;</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <label style="font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:4px;">Company (optional)</label>
+          <input type="text" id="discCompany" placeholder="e.g. Nexus Digital" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:inherit;font-size:13px;">
+        </div>
+        <div>
+          <label style="font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:4px;">Contact (optional)</label>
+          <input type="text" id="discContact" placeholder="e.g. Marcus Holt, CRO" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:inherit;font-size:13px;">
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:4px;">Paste the rant / transcript / notes / war story</label>
+        <textarea id="discInput" rows="8" placeholder="Dump anything here:&#10;&#10;• A voice note transcript&#10;• A meeting rant&#10;• CRM notes&#10;• An email chain&#10;• Literally anything — the system finds the signal in the noise" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:inherit;font-size:13px;resize:vertical;line-height:1.7;"></textarea>
+      </div>
+      <!-- Live detection pills -->
+      <div id="discLivePills" style="display:none;margin-bottom:12px;padding:12px 16px;border:1px solid var(--border);border-radius:10px;background:var(--s1);">
+        <div style="font-size:9px;font-weight:700;color:#06b6d4;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">LIVE DETECTION — problems found as you type</div>
+        <div id="discPillsContent" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button onclick="runDiscoveryDiagnostic()" style="font-size:14px;font-weight:700;padding:12px 32px;border-radius:8px;border:1px solid rgba(59,130,246,0.4);background:rgba(59,130,246,0.1);color:#3b82f6;cursor:pointer;font-family:inherit;">Run Diagnostic</button>
+        <button onclick="clearDiscovery()" style="font-size:13px;font-weight:700;padding:10px 24px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;font-family:inherit;">Clear</button>
+        <span id="discStatus" style="font-size:11px;color:var(--text-dim);margin-left:8px;"></span>
+      </div>
+    </div>
+
+    <!-- Output panel -->
+
+    <!-- FULL SESSION INLINE -->
+    <div id="discFullSession">
+      <div style="padding:12px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.4);position:sticky;top:0;z-index:10;">
+        <span style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:0.15em;text-transform:uppercase;">GAIN-00 FULL DISCOVERY SESSION</span>
+        <button onclick="hideFullSession()" style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#a1a1aa;cursor:pointer;font-family:inherit;">&#8592; Back to Quick Test</button>
+      </div>
+      <div class="container" style="font-family:'DM Sans',system-ui,sans-serif;">
+        <div class="container">
+    <p class="label" style="color:var(--red);margin-bottom:12px">GAIN-00 DISCOVERY SESSION</p>
+    <h1>Tell Me What's Going On</h1>
+    <p style="font-size:14px;color:var(--muted);margin:12px 0 0">Multiple ways in. The system maps everything to the diagnostic behind the scenes.</p>
+
+    <!-- DEMO MODE PANEL -->
+    <div id="disc-demoPanel" style="display:none;margin:20px 0;padding:20px;border:2px solid var(--red);border-radius:12px;background:rgba(239,68,68,0.03)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div>
+                <span class="label" style="color:var(--red)">⚡ RAPID TEST MODE</span>
+                <span style="font-size:11px;color:var(--dim);margin-left:8px">Paste anything. Hit Run. See the diagnostic.</span>
+            </div>
+            <button class="btn btn-ghost" onclick="showFullSession()" style="font-size:10px;padding:6px 12px">Switch to Full Session →</button>
+        </div>
+        <div class="field-row" style="margin-bottom:12px">
+            <div class="field" style="margin-bottom:0"><label>Company (optional)</label><input type="text" id="disc-demoCompany" placeholder="e.g. Nexus Digital"></div>
+            <div class="field" style="margin-bottom:0"><label>Contact (optional)</label><input type="text" id="disc-demoContact" placeholder="e.g. Marcus Holt, CRO"></div>
+        </div>
+        <div class="field" style="margin-bottom:12px">
+            <label>Paste the rant / transcript / notes / war story</label>
+            <textarea id="disc-demoInput" rows="8" placeholder="Dump anything here:&#10;&#10;• A voice note transcript&#10;• A meeting rant&#10;• CRM notes&#10;• An email chain&#10;• A Grok-generated test persona&#10;• Literally anything — the system finds the signal in the noise"></textarea>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btn-blue" onclick="discRunDemo()" style="font-size:14px;padding:12px 32px">⚡ Run Diagnostic</button>
+            <button class="btn btn-ghost" onclick="discClearDemo()">Clear</button>
+            <span id="disc-demoStatus" style="font-size:11px;color:var(--dim);margin-left:8px"></span>
+        </div>
+        <div id="disc-demoPills" style="margin-top:12px;display:none">
+            <span class="label" style="color:var(--cyan);margin-bottom:6px;display:block">LIVE DETECTION — problems found as you type</span>
+            <div id="disc-demoDetected" class="det-pills" style="flex-wrap:wrap;gap:6px;display:flex"></div>
+        </div>
+    </div>
+
+    <div class="disc-phase-nav" id="disc-phaseNav" style="display:none">
+        <button class="disc-pnb active" data-disc-phase="context">1. Context</button>
+        <button class="disc-pnb" data-disc-phase="identify">2. Identify</button>
+        <button class="disc-pnb" data-disc-phase="drill">3. Dig Deeper</button>
+        <button class="disc-pnb" data-disc-phase="output">4. Output</button>
+    </div>
+    <!-- PHASE 1: CONTEXT -->
+    <div class="disc-phase active" id="disc-phase-context">
+        <h2 style="margin-bottom:16px">Set the Scene</h2>
+        <div class="field-row">
+            <div class="field"><label>Company</label><input type="text" id="disc-ctxCompany" placeholder="e.g. Fortis Group Services"></div>
+            <div class="field"><label>Contact</label><input type="text" id="disc-ctxContact" placeholder="e.g. Richard Ellison"></div>
+        </div>
+        <div class="field-row">
+            <div class="field"><label>Their Role</label>
+                <select id="disc-ctxRole"><option value="">Select...</option><option>PE Operating Partner</option><option>PE Board Member</option><option>CEO</option><option>CRO / Sales Director</option><option>CFO</option><option>COO</option><option>MD</option><option>VP Sales</option></select>
+            </div>
+            <div class="field"><label>Board Review / Deadline</label><input type="text" id="disc-ctxDeadline" placeholder="e.g. 8 weeks, Q2 exit, none"></div>
+        </div>
+        <div class="field"><label>What does success look like for them?</label>
+            <textarea id="disc-ctxSuccess" rows="2" placeholder="Their words: 'Clean exit at 8x' or 'Hit £50M' or 'Stop the bleeding'"></textarea></div>
+        <div class="field"><label>What scares them most?</label>
+            <textarea id="disc-ctxFear" rows="2" placeholder="Their words: 'Pipeline is fiction' or 'Top sellers might leave'"></textarea></div>
+        <div style="text-align:right;margin-top:12px">
+            <button class="btn btn-blue" onclick="discGoPhase('identify')">Next: Identify Problems &#8594;</button>
+        </div>
+    </div>
+
+    <!-- PHASE 2: IDENTIFY -->
+    <div class="disc-phase" id="disc-phase-identify">
+        <h2 style="margin-bottom:8px">How Do They Want to Tell You?</h2>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:16px">Pick the entry point that matches the conversation. Switch anytime.</p>
+        <div class="entry-grid">
+            <div class="entry-card" onclick="discShowEntry('rank')">
+                <div class="entry-icon">&#9745;</div>
+                <div class="entry-title">Pick &amp; Score</div>
+                <div class="entry-desc">Choose 3 problems. Score them to 11. Forced prioritisation.</div>
+            </div>
+            <div class="entry-card" onclick="discShowEntry('wheel')">
+                <div class="entry-icon">&#9934;</div>
+                <div class="entry-title">Problem Wheel</div>
+                <div class="entry-desc">Visual wheel. Pick what's at the top. Drill with "why?"</div>
+            </div>
+            <div class="entry-card" onclick="discShowEntry('talk')">
+                <div class="entry-icon">&#128483;</div>
+                <div class="entry-title">Free Talk</div>
+                <div class="entry-desc">"Tell me what you want to stop happening." Type or speak.</div>
+            </div>
+            <div class="entry-card" onclick="discShowEntry('story')">
+                <div class="entry-icon">&#128214;</div>
+                <div class="entry-title">War Story</div>
+                <div class="entry-desc">"Tell me about a deal that went wrong." Cause and effect.</div>
+            </div>
+        </div>
+
+        <!-- RANK ENTRY -->
+        <div id="disc-entry-rank" style="display:none">
+            <div class="divider"><div class="divider-line"></div><span class="label" style="color:var(--blue)">Pick 3 &#8212; Score to 11</span><div class="divider-line"></div></div>
+            <p style="font-size:12px;color:var(--dim);margin-bottom:12px">Tick exactly 3. Scores must add to 11, all different. 7/3/1 tells us something very different from 5/4/2.</p>
+            <div id="disc-rankList"></div>
+            <div class="score-panel" id="disc-scorePanel"></div>
+        </div>
+
+        <!-- WHEEL ENTRY -->
+        <div id="disc-entry-wheel" style="display:none">
+            <div class="divider"><div class="divider-line"></div><span class="label" style="color:var(--purple)">The Problem Wheel</span><div class="divider-line"></div></div>
+            <p style="font-size:12px;color:var(--dim);margin-bottom:8px">Which problem is at the top of your Ferris wheel right now? Click it.</p>
+            <div id="disc-wheelContainer" style="display:flex;justify-content:center;margin:16px 0"></div>
+            <div id="disc-wheelDrill" style="display:none;margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);border-left:3px solid var(--red)">
+                <p class="label" style="color:var(--red);margin-bottom:8px">AT THE TOP OF YOUR WHEEL</p>
+                <h2 id="disc-wheelTopName" style="margin-bottom:12px"></h2>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Why is this at the top right now?</p>
+                <textarea id="disc-wheelWhy1" rows="2" placeholder="In their words..."></textarea>
+                <p style="font-size:13px;color:var(--muted);margin:12px 0 8px">And why is THAT a problem? What does it cause?</p>
+                <textarea id="disc-wheelWhy2" rows="2" placeholder="Drill deeper..."></textarea>
+                <p style="font-size:13px;color:var(--muted);margin:12px 0 8px">If you don't fix this in 90 days, what happens?</p>
+                <textarea id="disc-wheelWhy3" rows="2" placeholder="The consequence..."></textarea>
+            </div>
+        </div>
+
+        <!-- TALK ENTRY -->
+        <div id="disc-entry-talk" style="display:none">
+            <div class="divider"><div class="divider-line"></div><span class="label" style="color:var(--green)">Free Talk</span><div class="divider-line"></div></div>
+            <p style="font-size:12px;color:var(--dim);margin-bottom:12px">"Don't give me the good stuff. Tell me the problems."</p>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+                <button class="mic-btn" id="disc-micBtn" onclick="toggleVoice()">&#127897;</button>
+                <span id="disc-voiceStatus" style="font-size:11px;color:var(--dim)">Click mic for voice, or just type</span>
+            </div>
+            <textarea id="disc-talkInput" rows="10" placeholder="Type or speak freely. The system maps it.&#10;&#10;'Our pipeline is a mess, half of it is fiction...'&#10;'We bought three companies and nobody integrated them...'&#10;'My top seller is threatening to leave...'"></textarea>
+            <div class="detected-strip" id="disc-talkDetected" style="display:none">
+                <div class="det-title">Problems Detected</div>
+                <div class="det-pills" id="disc-talkPills"></div>
+            </div>
+        </div>
+
+        <!-- STORY ENTRY -->
+        <div id="disc-entry-story" style="display:none">
+            <div class="divider"><div class="divider-line"></div><span class="label" style="color:var(--amber)">War Story</span><div class="divider-line"></div></div>
+            <p style="font-size:13px;color:var(--amber);font-weight:600;margin-bottom:4px">"Tell me about a deal or situation that went wrong."</p>
+            <p style="font-size:11px;color:var(--dim);margin-bottom:12px">What happened? Who was involved? What did it cost?</p>
+            <textarea id="disc-storyInput" rows="6" placeholder="e.g. 'We had this deal with a construction company. Account team spent £400K over 18 months. No authority mapped, sponsor left, company went bust...'"></textarea>
+            <div class="field" style="margin-top:12px"><label>What CAUSED it?</label>
+                <textarea id="disc-storyCause" rows="2" placeholder="Their view on the root cause"></textarea></div>
+            <div class="field"><label>What was the EFFECT?</label>
+                <textarea id="disc-storyEffect" rows="2" placeholder="Business impact — cost, morale, repeat risk"></textarea></div>
+            <div class="detected-strip" id="disc-storyDetected" style="display:none">
+                <div class="det-title">Problems Detected in Story</div>
+                <div class="det-pills" id="disc-storyPills"></div>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:20px;justify-content:space-between">
+            <button class="btn btn-ghost" onclick="discGoPhase('context')">&#8592; Back</button>
+            <button class="btn btn-blue" onclick="discGoPhase('drill')">Dig Deeper &#8594;</button>
+        </div>
+    </div>
+    <!-- PHASE 3: DIG DEEPER -->
+    <div class="disc-phase" id="disc-phase-drill">
+        <h2 style="margin-bottom:8px">Let's Go Deeper</h2>
+        <p style="font-size:12px;color:var(--dim);margin-bottom:16px">For each identified problem: scenarios, cause and effect, the Ferris wheel drill. "Why is that a problem? And why is THAT a problem?"</p>
+        <div id="disc-drillContent"></div>
+        <div style="display:flex;gap:8px;margin-top:20px;justify-content:space-between">
+            <button class="btn btn-ghost" onclick="discGoPhase('identify')">&#8592; Back</button>
+            <button class="btn btn-green" onclick="generateOutput()">Generate 00-A Output &#8594;</button>
+        </div>
+    </div>
+
+    <!-- PHASE 4: OUTPUT -->
+    <div class="disc-phase" id="disc-phase-output">
+        <div class="output-section">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <span class="label" style="color:var(--green)">READY FOR GAIN 00-A INTAKE</span>
+                <button class="copy-btn" id="disc-copyBtn" onclick="copyOutput()">Copy to Clipboard</button>
+            </div>
+            <pre id="disc-outputContent" style="font-size:12px;color:var(--muted);line-height:1.7;white-space:pre-wrap;max-height:600px;overflow-y:auto"></pre>
+        </div>
+        <p style="font-size:12px;color:var(--dim);margin-top:16px;text-align:center">Paste this directly into GAIN 00-A INTAKE. The chain handles the rest.</p>
+        <div style="text-align:center;margin-top:16px">
+            <button class="btn btn-ghost" onclick="hideFullSession()">← Run Another Test</button>
+        </div>
+        <div style="text-align:center;padding:32px 0;margin-top:24px;border-top:1px solid var(--border)">
+            <p style="font-size:10px;color:var(--faint)">GAIN-00 Discovery Session &middot; David Matthews &middot; Confidential</p>
+        </div>
+    </div>
+
+</div>
+<script>
+(function(){
+    var P = [
+        {c:"1.1",n:"Margin Compression",l:"COMPANY",p:"Margins shrinking",k:["margin","profit","rebate","cost","pricing","losing money","vendor","incentive","margin down","points down","death march","low margin","eroding","gross margin","net margin","pricing pressure"],dq:["Walk me through the margin trend over the last 2 years","What happens to your margin if vendor rebates change?","When a deal wins, does anyone check the margin?"]},
+        {c:"1.2",n:"M&A Value Leakage",l:"COMPANY",p:"Acquisitions not integrating",k:["acquisition","merge","integrate","crm","separate","overlap","cross-sell","bought","consolidat","bolt-on","roll-up","different system","different pricing","different comp","nobody integrated","two companies","three companies"],dq:["How many separate CRM systems are running today?","Which customers buy from more than one acquired entity?","If I asked each team the combined value prop, would they match?"]},
+        {c:"1.3",n:"Hero-Dependency",l:"COMPANY",p:"Revenue depends on a few people",k:["top seller","best people","if they left","concentration","hero","depend","carry","earn-out","quit","top three","top 3","one foot out","carrying the number","recruiter","foot out the door","star seller"],dq:["What % of revenue comes from your top 3 sellers?","Are any of them unhappy — earn-out, territory, anything?","Could your #4 seller explain how your #1 seller wins?"]},
+        {c:"1.4",n:"ICP Drift",l:"COMPANY",p:"Selling to everyone",k:["ideal customer","icp","vertical","market","segment","who we sell","selling to everyone","anyone with a pulse","no focus"],dq:["If 5 sellers described your ideal customer, same answer?","Which vertical has the highest win rate?"]},
+        {c:"1.5",n:"Measurement Trap",l:"COMPANY",p:"Measuring wrong things",k:["comp plan","incentive","reward","celebrate","commission","bonus","measure","kpi","wrong metric","vanity metric","winning more deals","board keeps asking","can't even get clear numbers","finance is a mess","no real measure","black hole","no visibility","don't know which accounts"],dq:["What gets celebrated — revenue or margin?","Has anyone been penalised for a low-margin win?"]},
+        {c:"1.6",n:"Vendor Addiction",l:"COMPANY",p:"Margin depends on rebates",k:["rebate","vendor","microsoft","partner programme","programme chang","vendor incentive","back-end margin"],dq:["What % of gross margin is vendor rebates?","What happens when the programme changes?","Is there a documented mitigation plan?"]},
+        {c:"1.7",n:"Proposition Gap",l:"COMPANY",p:"Website vs reality mismatch",k:["proposition","messaging","value prop","website","what we say","narrative","brochure","pitch deck doesn't match","say one thing","commoditise","ai on every rfp","strip emotion","procurement ai","rfp commodit"],dq:["If I read your website then sat on a sales call, same story?","Can all sellers describe what you do in one sentence?"]},
+        {c:"2.1",n:"Happy Ears",l:"DEAL",p:"Hearing what they want to hear",k:["happy ear","optimis","great relationship","gone quiet","handling it","positive","confident","they love us","strong relationship","good feeling"],dq:["On your biggest deal, when did the CUSTOMER last initiate contact?","How many deals have had close dates pushed more than twice?"]},
+        {c:"2.2",n:"Pipeline Inflation",l:"DEAL",p:"Pipeline is fiction",k:["pipeline","coverage","forecast","fiction","inflat","reported","real","stale","dead wood","half of it","complete fiction","witch hunt","terrified to downgrade","won't downgrade","fantasy","fairy tale","pipeline audit"],dq:["Remove every deal with no buyer activity in 30 days — what's left?","What's the REAL coverage ratio?","Has anyone actually done a pipeline audit?"]},
+        {c:"2.3",n:"No-Decision Epidemic",l:"DEAL",p:"Losing to 'do nothing'",k:["no decision","didn't buy","do nothing","stall","delay","postpone","went quiet","black hole","eat another quarter","lost to inaction","customer did nothing","decided not to decide","kicked the can","no urgency"],dq:["Of last quarter's losses, how many were 'no decision' vs competitor?","What's your urgency creation mechanism?"]},
+        {c:"2.4",n:"Stakeholder Blindness",l:"DEAL",p:"Single-threaded selling",k:["stakeholder","single thread","champion","decision maker","buying committee","economic buyer","who signs","who's really deciding","who decides","don't know who","blind","can't see"],dq:["Top 5 deals: how many buying committee members spoken to in 3 weeks?","Has anyone met the person who signs the cheque?"]},
+        {c:"2.5",n:"Discovery Failure",l:"DEAL",p:"Pitching not listening",k:["discovery","features","demo","pitch","pain","understand","listen","question","what they're scared of","not asking","jumping to solution","show up and throw up"],dq:["How many minutes into a call before your seller talks product?","Do they reach business impact or stay technical?"]},
+        {c:"2.6",n:"Cycle Drag",l:"DEAL",p:"Deals take forever",k:["slow","long","cycle","months","dragging","velocity","stuck","forever","18 month","death march","takes forever","won't close"],dq:["Average deal cycle? Has it changed in 12 months?","Longest deal in pipeline right now — why still there?"]},
+        {c:"2.7",n:"Competitive Blindness",l:"DEAL",p:"Don't know why you lose",k:["competitor","cheaper","lost on price","competitive","beat us","win rate","can't explain why","don't know why we lost","commoditise","procurement","ai on rfp","being commoditised","race to the bottom","ai rfp scan","strip the emotion","too expensive","procurement director","force us to the bottom"],dq:["Biggest competitor's strategy for winning against you — what is it?","Could your sellers describe the competitor's pitch?"]},
+        {c:"2.8",n:"Phantom Champion",l:"DEAL",p:"Champion has no power",k:["champion","influence","authority","budget","power","can't actually","no authority","friendly but","likes us but","talks a good game","had no power","you're our guys","kept saying","champion kept"],dq:["Biggest stalled deal — does your champion have budget authority?","Has the champion taken a verifiable internal action?"]},
+        {c:"2.9",n:"Dead Deal Denial",l:"DEAL",p:"Won't kill dead deals",k:["dead deal","kill","close date","pushed","months","won't let go","still there","zombie","should have killed","hanging on"],dq:["Name a deal you know deep down isn't closing but it's still there","What would it take to formally kill it?"]},
+        {c:"2.10",n:"Loss Review Theatre",l:"DEAL",p:"Nobody learns from losses",k:["loss review","win review","learn","pattern","why we lost","debrief","nobody can explain","can't explain why","same mistakes","keep losing"],dq:["How many losses got a structured review last quarter?","What patterns have you found across your losses?"]},
+        {c:"2.11",n:"Procurement Black Box",l:"DEAL",p:"Deal dies in procurement",k:["procurement","legal","commercial","contracts","tender","compliance","process","transferred","handed over","lost visibility","black hole","no contact","gone to procurement"],dq:["What happens when the deal moves to procurement?","Do you have a relationship in their commercial team?"]},
+        {c:"3.1",n:"Licence Deficit",l:"PEOPLE",p:"Structure/retention problems",k:["left","resign","attrition","turnover","structure","contract","earn-out","foot out the door","talking to recruiters","retention","losing people","best people leave","switching between","selling and managing","owning everything","can't keep carrying","draw on my time","still end up owning","depends on me","survive without me","all depending on me"],dq:["Anyone left since the acquisition who you wish hadn't?","What drove them out?"]},
+        {c:"3.2",n:"Capability Gap",l:"PEOPLE",p:"Trained but not using it",k:["training","meddic","methodology","apply","use it","recorded call","embed","implemented","nobody changed","nobody uses","went on the course","challenger","meddicc","meddpicc","meddi","just farmers","only farmers","no account plan","no whitespace","no idea what success","lack of knowledge","wider knowledge","don't know how"],dq:["Show me one recorded call where someone uses the methodology","What's the reinforcement plan? Who checks?"]},
+        {c:"3.3",n:"Accountability Vacuum",l:"PEOPLE",p:"No one forces quality",k:["accountab","pipeline review","forecast call","self-certif","no one checks","no standard","witch hunt","get away with","no consequence","nobody challenges","not being held","wait for me","still end up owning","I still","no fire","no urgency","they all wait"],dq:["Describe your pipeline review — walk me through it","When did a manager last challenge a seller's stage and force a downgrade?"]},
+        {c:"3.4",n:"Hiring Failure",l:"PEOPLE",p:"Hiring wrong profiles",k:["hiring","recruit","wrong profile","same type","talent","wrong people","keep hiring","clone"],dq:["Ideal seller profile vs who you actually hired last year?"]},
+        {c:"3.5",n:"Manager Gap",l:"PEOPLE",p:"Managers can't manage",k:["manager","promoted","best seller","coaching","take over","personal target","rescue","player manager","can't coach","never managed","rescue deal"],dq:["How did your managers get their roles?","Do they carry targets? When a deal stalls, do they coach or take over?"]},
+        {c:"3.6",n:"Motivation Failure",l:"PEOPLE",p:"Wrong incentive structure",k:["motivat","incentive","comp plan","reward","behaviour","commission","different comp","wrong behaviour","perverse incentive"],dq:["If I read the comp plan, what behaviour would it encourage?"]},
+        {c:"3.7",n:"Pressure Spiral",l:"PEOPLE",p:"Unrealistic targets",k:["target","unrealist","pressure","panic","miss","impossible","losing my mind","board breathing","board keeps","restructure","replace me","numbers don't improve"],dq:["What % of the team hit target last year?","What happens after 2 missed quarters?"]},
+        {c:"3.8",n:"Fear-Driven Selling",l:"PEOPLE",p:"Sellers scared, discounting",k:["fear","scared","discount","give away","desperate","gaming","terrified","afraid to","won't downgrade","scared to tell","hiding","fudging"],dq:["Discounting more than a year ago?","Do they ask permission or just do it?"]}
+    ];
+    var LC = {COMPANY:"#3b82f6",DEAL:"#a855f7",PEOPLE:"#f59e0b"};
+    var state = {identified:{},scores:{},wheelTop:null,drills:{}};
+
+    // ═══════════════════════════════════════════
+    // DEMO MODE — rapid test, paste anything
+    // ═══════════════════════════════════════════
+    window.runDemo = function(){
+        var text = document.getElementById('demoInput').value.trim();
+        if(!text){document.getElementById('demoStatus').textContent='Paste something first!';return}
+
+        // Fill context from demo fields
+        var co = document.getElementById('demoCompany').value || '[Test Company]';
+        var ct = document.getElementById('demoContact').value || '[Test Contact]';
+        document.getElementById('ctxCompany').value = co;
+        document.getElementById('ctxContact').value = ct;
+        document.getElementById('ctxRole').value = 'CRO / Sales Director';
+        document.getElementById('ctxDeadline').value = 'Not specified';
+
+        // Extract fear/success from the text if possible
+        document.getElementById('ctxSuccess').value = '';
+        document.getElementById('ctxFear').value = '';
+
+        // Push text into free talk
+        document.getElementById('talkInput').value = text;
+
+        // Reset state
+        state.identified = {};
+        state.scores = {};
+        state.wheelTop = null;
+        state.drills = {};
+        hitCounts = {};
+
+        // Detect problems
+        detectProblems(text, 'talk');
+
+        // Count what was found
+        var count = Object.keys(state.identified).length;
+        document.getElementById('demoStatus').textContent = count + ' problems detected. Generating output...';
+
+        // Generate output and jump to phase 4
+        setTimeout(function(){
+            generateOutput();
+            document.getElementById('demoStatus').textContent = '✓ Done — ' + count + ' problems, output ready below.';
+        }, 300);
+    };
+
+    window.clearDemo = function(){
+        document.getElementById('demoInput').value = '';
+        document.getElementById('demoCompany').value = '';
+        document.getElementById('demoContact').value = '';
+        document.getElementById('demoStatus').textContent = '';
+        document.getElementById('disc-demoPills').style.display = 'none';
+        state.identified = {};
+        state.scores = {};
+        state.wheelTop = null;
+        state.drills = {};
+        hitCounts = {};
+    };
+
+    window.switchToFull = function(){
+        document.getElementById('disc-demoPanel').style.display = 'none';
+        document.getElementById('disc-phaseNav').style.display = 'flex';
+        discGoPhase('context');
+    };
+
+    window.backToDemo = function(){
+        document.getElementById('disc-demoPanel').style.display = 'block';
+        document.getElementById('disc-phaseNav').style.display = 'none';
+        document.querySelectorAll('.phase').forEach(function(e){e.classList.remove('active')});
+        document.getElementById('demoInput').value = '';
+        document.getElementById('demoStatus').textContent = '';
+        document.getElementById('disc-demoPills').style.display = 'none';
+        state.identified = {};
+        state.scores = {};
+        state.wheelTop = null;
+        state.drills = {};
+        hitCounts = {};
+        var full = document.getElementById('discFullSession');
+        if(full) full.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+
+    // Live detection on demo textarea
+    setTimeout(function(){
+        var demoEl = document.getElementById('demoInput');
+        if(demoEl) demoEl.addEventListener('input', function(){
+            var text = this.value;
+            if(text.length < 10) {document.getElementById('disc-demoPills').style.display='none';return}
+            // Reset and detect
+            state.identified = {};
+            hitCounts = {};
+            var lower = text.toLowerCase();
+            var found = [];
+            P.forEach(function(p){
+                var hits = 0;
+                p.k.forEach(function(kw){if(lower.indexOf(kw) >= 0) hits++});
+                if(hits > 0){found.push(p); state.identified[p.c] = true; hitCounts[p.c] = hits}
+            });
+            found.sort(function(a,b){return (hitCounts[b.c]||0) - (hitCounts[a.c]||0)});
+            var pillsDiv = document.getElementById('demoDetected');
+            var container = document.getElementById('disc-demoPills');
+            if(found.length > 0){
+                container.style.display = 'block';
+                pillsDiv.innerHTML = found.map(function(p){
+                    var h = hitCounts[p.c] || 1;
+                    var col = LC[p.l];
+                    var maxBoxes = 5;
+                    var filled = Math.min(h, maxBoxes);
+                    var boxes = '<span class="sig-boxes">';
+                    for(var i = 0; i < maxBoxes; i++){
+                        boxes += '<span class="sig-box' + (i < filled ? ' filled' : '') + '" style="border-color:' + col + '60;' + (i < filled ? 'background:' + col : '') + '"></span>';
+                    }
+                    boxes += '</span>';
+                    return '<span class="det-pill" style="color:' + col + ';border:1px solid ' + col + '40;background:' + col + '10">' + p.c + ' ' + p.n + ' ' + boxes + '</span>';
+                }).join('');
+            } else {container.style.display = 'none'}
+        });
+    }, 100);
+
+    // ═══════════════════════════════════════════
+    // CORE SYSTEM
+    // ═══════════════════════════════════════════
+
+    // NAV
+    window.goPhase = function(ph){
+        document.querySelectorAll('.phase').forEach(function(e){e.classList.remove('active')});
+        document.getElementById('disc-phase-'+ph).classList.add('active');
+        document.querySelectorAll('.pnb').forEach(function(b){b.classList.remove('active')});
+        document.querySelector('[data-disc-phase="'+ph+'"]').classList.add('active');
+        if(ph==='drill') renderDrill();
+        var full = document.getElementById('discFullSession');
+        if(full) full.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    document.querySelectorAll('.pnb').forEach(function(b){
+        b.addEventListener('click',function(){discGoPhase(this.getAttribute('data-disc-phase'))});
+    });
+
+    // ENTRY POINTS
+    window.showEntry = function(t){
+        ['rank','wheel','talk','story'].forEach(function(x){document.getElementById('disc-entry-'+x).style.display='none'});
+        document.getElementById('disc-entry-'+t).style.display='block';
+        if(t==='rank') renderRank();
+        if(t==='wheel') renderWheel();
+    };
+
+    // RANK & SCORE
+    function renderRank(){
+        var html='';
+        [{k:"COMPANY",l:"Company"},{k:"DEAL",l:"Deal"},{k:"PEOPLE",l:"People"}].forEach(function(lv){
+            var lps=P.filter(function(p){return p.l===lv.k});
+            html+='<p class="label" style="color:'+LC[lv.k]+';margin:12px 0 6px">'+lv.l+'</p>';
+            lps.forEach(function(p){
+                html+='<div class="rank-card'+(state.identified[p.c]?' selected':'')+'" data-code="'+p.c+'">';
+                html+='<div class="rank-check"></div><div><span style="font-size:13px;font-weight:600;color:white">'+p.n+'</span><br><span style="font-size:11px;color:var(--dim)">'+p.p+'</span></div></div>';
+            });
+        });
+        document.getElementById('rankList').innerHTML=html;
+        document.querySelectorAll('.rank-card').forEach(function(c){
+            c.addEventListener('click',function(){
+                var code=this.getAttribute('data-code');
+                var cnt=Object.keys(state.identified).length;
+                if(state.identified[code]) delete state.identified[code];
+                else if(cnt<3) state.identified[code]=true;
+                renderRank();
+                if(Object.keys(state.identified).length===3) renderScore();
+                else document.getElementById('scorePanel').classList.remove('active');
+            });
+        });
+    }
+    function renderScore(){
+        var codes=Object.keys(state.identified);
+        if(codes.length!==3)return;
+        if(!state.scores[codes[0]]){state.scores[codes[0]]=7;state.scores[codes[1]]=3;state.scores[codes[2]]=1}
+        var html='<p style="font-size:12px;color:var(--muted);margin-bottom:10px">Scores must add to <strong style="color:white">11</strong>, all different.</p>';
+        codes.forEach(function(c){
+            var p=P.find(function(x){return x.c===c});
+            var v=state.scores[c]||4;
+            html+='<div class="score-row"><span class="score-name">'+p.n+'</span>';
+            html+='<input type="range" class="score-slider" min="1" max="9" value="'+v+'" data-code="'+c+'">';
+            html+='<span class="score-value" id="sv-'+c+'">'+v+'</span></div>';
+        });
+        html+='<div id="disc-scoreTotal" style="text-align:center;font-size:13px;font-weight:700;margin-top:8px"></div>';
+        var sp=document.getElementById('scorePanel');
+        sp.innerHTML=html;sp.classList.add('active');
+        codes.forEach(function(c){
+            var el=sp.querySelector('[data-code="'+c+'"]');
+            el.value=state.scores[c];
+            document.getElementById('sv-'+c).textContent=state.scores[c];
+        });
+        updateTotal();
+        sp.querySelectorAll('.score-slider').forEach(function(s){
+            s.addEventListener('input',function(){
+                state.scores[this.getAttribute('data-code')]=parseInt(this.value);
+                document.getElementById('sv-'+this.getAttribute('data-code')).textContent=this.value;
+                updateTotal();
+            });
+        });
+    }
+    function updateTotal(){
+        var t=0;for(var k in state.scores)t+=state.scores[k];
+        var vals=Object.values(state.scores);var uniq=new Set(vals).size===vals.length;
+        var el=document.getElementById('scoreTotal');
+        el.innerHTML=t===11&&uniq?'<span style="color:var(--green)">&#10003; Total: 11 — Valid</span>':'<span style="color:var(--red)">&#10007; '+(t!==11?'Total is '+t+', needs 11':'Scores must be different')+'</span>';
+    }
+
+    // WHEEL
+    function renderWheel(){
+        var n=P.length,cx=220,cy=220,r=190;
+        var svg='<svg viewBox="0 0 440 440" style="max-width:440px;width:100%">';
+        svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="var(--border)" stroke-width="1"/>';
+        svg+='<circle cx="'+cx+'" cy="'+cy+'" r="35" fill="var(--surface)" stroke="var(--border)"/>';
+        svg+='<text x="'+cx+'" y="'+(cy+4)+'" text-anchor="middle" style="font-size:8px;fill:var(--dim);font-weight:600">CLICK TOP</text>';
+        for(var i=0;i<n;i++){
+            var a1=(i/n)*2*Math.PI-Math.PI/2;
+            var a2=((i+1)/n)*2*Math.PI-Math.PI/2;
+            var am=((i+0.5)/n)*2*Math.PI-Math.PI/2;
+            var x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+            var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+            var p=P[i],col=LC[p.l],isTop=state.wheelTop===p.c;
+            svg+='<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 0,1 '+x2+','+y2+' Z" fill="'+(isTop?col+'20':'transparent')+'" stroke="'+(isTop?col:'var(--border)')+'" stroke-width="'+(isTop?2:0.5)+'" data-code="'+p.c+'" style="cursor:pointer"/>';
+            var lr=r*0.75,lx=cx+lr*Math.cos(am),ly=cy+lr*Math.sin(am);
+            var short=p.n.length>12?p.n.substring(0,10)+'..':p.n;
+            var rot=am*180/Math.PI;if(rot>90&&rot<270)rot+=180;
+            svg+='<text x="'+lx+'" y="'+ly+'" transform="rotate('+rot+' '+lx+' '+ly+')" text-anchor="middle" style="font-size:6.5px;font-weight:600;fill:'+(isTop?col:'var(--dim)')+';pointer-events:none">'+short+'</text>';
+        }
+        svg+='</svg>';
+        document.getElementById('wheelContainer').innerHTML=svg;
+        document.querySelectorAll('[data-code]').forEach(function(seg){
+            if(seg.tagName==='path')seg.addEventListener('click',function(){
+                var code=this.getAttribute('data-code');
+                state.wheelTop=code;state.identified[code]=true;
+                renderWheel();
+                var p=P.find(function(x){return x.c===code});
+                document.getElementById('wheelTopName').textContent=p.n+' — "'+p.p+'"';
+                document.getElementById('wheelDrill').style.display='block';
+            });
+        });
+    }
+
+    // VOICE
+    var recog=null,isRec=false;
+    window.toggleVoice=function(){
+        if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+            document.getElementById('voiceStatus').textContent='Not supported — use Chrome or type';return}
+        if(isRec){recog.stop();return}
+        var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+        recog=new SR();recog.continuous=true;recog.interimResults=true;recog.lang='en-GB';
+        recog.onresult=function(e){
+            var t='';for(var i=0;i<e.results.length;i++)t+=e.results[i][0].transcript+' ';
+            document.getElementById('talkInput').value=t;detectProblems(t,'talk');
+        };
+        recog.onend=function(){isRec=false;document.getElementById('micBtn').classList.remove('recording');
+            document.getElementById('voiceStatus').textContent='Stopped. Click mic to resume.'};
+        recog.start();isRec=true;
+        document.getElementById('micBtn').classList.add('recording');
+        document.getElementById('voiceStatus').textContent='Listening... click mic to stop';
+        document.getElementById('voiceStatus').classList.add('active');
+    };
+
+    // DETECT PROBLEMS FROM TEXT — v2 with hit counting + emotional tone
+    var hitCounts = {};
+    function detectProblems(text,source){
+        var lower=text.toLowerCase();var found=[];
+        P.forEach(function(p){
+            var hits=0;
+            p.k.forEach(function(kw){if(lower.indexOf(kw)>=0) hits++});
+            if(hits>0){found.push(p);state.identified[p.c]=true;hitCounts[p.c]=hits}
+        });
+        // Sort by hit count (most evidence first)
+        found.sort(function(a,b){return (hitCounts[b.c]||0)-(hitCounts[a.c]||0)});
+        var container=document.getElementById(source+'Detected');
+        var pills=document.getElementById(source+'Pills');
+        if(found.length>0){
+            container.style.display='block';
+            pills.innerHTML=found.map(function(p){
+                var h=hitCounts[p.c]||1;
+                var col=LC[p.l];
+                var maxBoxes=5;
+                var filled=Math.min(h,maxBoxes);
+                var boxes='<span class="sig-boxes">';
+                for(var i=0;i<maxBoxes;i++){
+                    boxes+='<span class="sig-box'+(i<filled?' filled':'')+'" style="border-color:'+col+'60;'+(i<filled?'background:'+col:'')+'"></span>';
+                }
+                boxes+='</span>';
+                return '<span class="det-pill" style="color:'+col+';border:1px solid '+col+'40;background:'+col+'10">'+p.c+' '+p.n+' '+boxes+'</span>';
+            }).join('');
+            // Auto-suggest ranking if 4+ problems detected in free talk
+            if(source==='talk'&&found.length>=4&&!document.getElementById('rankSuggest')){
+                var suggest=document.createElement('div');
+                suggest.id='disc-rankSuggest';
+                suggest.style.cssText='margin-top:10px;padding:10px 14px;border-radius:8px;border:1px solid rgba(59,130,246,0.3);background:rgba(59,130,246,0.05);font-size:12px;color:#3b82f6';
+                suggest.innerHTML='<strong>'+found.length+' problems detected.</strong> Want to force-rank the top 3? <span style="text-decoration:underline;cursor:pointer" onclick="discShowEntry(\'rank\')">→ Go to Pick & Score</span>';
+                container.appendChild(suggest);
+            }
+        } else { container.style.display='none'; }
+    }
+
+    // EMOTIONAL TONE DETECTION — feeds into 00-A for richer context
+    var emotionKeywords = {
+        FEAR: ["terrified","scared","afraid","nervous","worried","losing my mind","can't sleep","keeps me up","what if","nightmare","dread","screwed","if one walks","not sustainable","dies quietly"],
+        ANGER: ["furious","pissed","bullshit","bloody","ridiculous","unacceptable","sick of","fed up","joke","waste of time","incompetent","fucking","same old shit","I'm done","done with this"],
+        EXHAUSTION: ["exhausted","tired","burnt out","can't keep","drained","overwhelmed","drowning","too much","not enough hours","breaking point","I'm done","can't keep carrying","not sustainable anymore","carrying everything","still the one"],
+        DENIAL: ["not that bad","we're fine","nearly there","just need","it'll come","market conditions","external","to be fair","in all honesty","we're close"],
+        URGENCY: ["board","deadline","review","weeks","running out","now or never","last chance","fired","restructure","replace","before Q","kills us","eats the","before the whole"],
+        RESIGNATION: ["been saying","nobody listens","raised this","nothing changed","what's the point","tried everything","doesn't matter","turns out","had no power","lost again","after all these years","same way","nothing changes","fizzle out"]
+    };
+    function detectTone(text){
+        var lower=text.toLowerCase();var tones={};
+        Object.keys(emotionKeywords).forEach(function(tone){
+            var hits=0;
+            emotionKeywords[tone].forEach(function(kw){if(lower.indexOf(kw)>=0) hits++});
+            if(hits>0) tones[tone]=hits;
+        });
+        return tones;
+    }
+
+    // Auto-detect on text input
+    ['talkInput','storyInput','storyCause','storyEffect'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el) el.addEventListener('input',function(){
+            var src=id.indexOf('story')>=0?'story':'talk';
+            var allText=id==='talkInput'?this.value:
+                (document.getElementById('storyInput').value+' '+document.getElementById('storyCause').value+' '+document.getElementById('storyEffect').value);
+            detectProblems(allText,src);
+        });
+    });
+
+    // DRILL DEEPER
+    function renderDrill(){
+        var codes=Object.keys(state.identified);
+        if(codes.length===0){
+            document.getElementById('drillContent').innerHTML='<p style="color:var(--dim)">No problems identified yet. Go back and pick, talk, or tell a story.</p>';return}
+        var html='';
+        codes.forEach(function(code,idx){
+            var p=P.find(function(x){return x.c===code});if(!p)return;
+            var drillData=state.drills[code]||{scenario:'',cause:'',effect:'',deeper:''};
+            html+='<div class="drill-card">';
+            html+='<p class="label" style="color:'+LC[p.l]+';margin-bottom:4px">'+p.l+' — '+p.c+'</p>';
+            html+='<h2 style="margin-bottom:12px">'+p.n+'</h2>';
+
+            // Suggested dig-deeper questions
+            if(p.dq&&p.dq.length>0){
+                html+='<p style="font-size:10px;color:var(--cyan);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">Suggested Questions</p>';
+                p.dq.forEach(function(q){html+='<p style="font-size:12px;color:var(--muted);margin-bottom:4px;padding-left:12px;border-left:2px solid var(--border)">"'+q+'"</p>'});
+            }
+
+            html+='<div class="field" style="margin-top:12px"><label>Give me a specific scenario where this happened</label>';
+            html+='<textarea rows="2" class="drill-input" data-code="'+code+'" data-field="scenario" placeholder="A specific example...">'+drillData.scenario+'</textarea></div>';
+
+            html+='<div class="field"><label>What caused it? (Their view)</label>';
+            html+='<textarea rows="2" class="drill-input" data-code="'+code+'" data-field="cause" placeholder="Root cause...">'+drillData.cause+'</textarea></div>';
+
+            html+='<div class="field"><label>What was the effect? (Business impact)</label>';
+            html+='<textarea rows="2" class="drill-input" data-code="'+code+'" data-field="effect" placeholder="Cost, consequence, fallout...">'+drillData.effect+'</textarea></div>';
+
+            html+='<div class="field"><label>And why is THAT a problem? (Ferris wheel — go one level deeper)</label>';
+            html+='<textarea rows="2" class="drill-input" data-code="'+code+'" data-field="deeper" placeholder="The problem underneath the problem...">'+drillData.deeper+'</textarea></div>';
+
+            html+='</div>';
+        });
+        document.getElementById('drillContent').innerHTML=html;
+        document.querySelectorAll('.drill-input').forEach(function(el){
+            el.addEventListener('input',function(){
+                var c=this.getAttribute('data-code'),f=this.getAttribute('data-field');
+                if(!state.drills[c])state.drills[c]={scenario:'',cause:'',effect:'',deeper:''};
+                state.drills[c][f]=this.value;
+            });
+        });
+    }
+
+    // OUTPUT
+    window.generateOutput=function(){
+        var ctx={
+            company:document.getElementById('ctxCompany').value||'[Company]',
+            contact:document.getElementById('ctxContact').value||'[Contact]',
+            role:document.getElementById('ctxRole').value||'Unknown',
+            deadline:document.getElementById('ctxDeadline').value||'Not specified',
+            success:document.getElementById('ctxSuccess').value||'',
+            fear:document.getElementById('ctxFear').value||''
+        };
+
+        // Gather all text for tone analysis
+        var allText='';
+        var talk=document.getElementById('talkInput');
+        var story=document.getElementById('storyInput');
+        var sc=document.getElementById('storyCause'),se=document.getElementById('storyEffect');
+        if(talk&&talk.value) allText+=talk.value+' ';
+        if(story&&story.value) allText+=story.value+' ';
+        if(sc&&sc.value) allText+=sc.value+' ';
+        if(se&&se.value) allText+=se.value+' ';
+        if(ctx.success) allText+=ctx.success+' ';
+        if(ctx.fear) allText+=ctx.fear+' ';
+
+        var tones=detectTone(allText);
+        var codes=Object.keys(state.identified);
+
+        // Sort by hit count for TL;DR
+        var ranked=codes.slice().sort(function(a,b){return (hitCounts[b]||0)-(hitCounts[a]||0)});
+        var top3=ranked.slice(0,3).map(function(c){var p=P.find(function(x){return x.c===c});return p?p.n:'';});
+
+        // Confidence score
+        var totalHits=0;codes.forEach(function(c){totalHits+=(hitCounts[c]||1)});
+        var confidence=codes.length>=8?'HIGH':codes.length>=5?'MEDIUM':'LOW';
+        if(totalHits>15) confidence='HIGH';
+
+        // Build output
+        var out='GAIN-00 DISCOVERY SESSION OUTPUT\n';
+        out+='Ready for 00-A INTAKE processing\n';
+        out+='================================\n\n';
+
+        // TL;DR
+        out+='TL;DR\n';
+        out+='---\n';
+        out+='Top detected: '+top3.join(', ')+'\n';
+        out+='Problems found: '+codes.length+'/24\n';
+        out+='Detection confidence: '+confidence+' ('+totalHits+' keyword signals across '+codes.length+' problems)\n';
+        if(Object.keys(tones).length>0){
+            var toneList=Object.keys(tones).sort(function(a,b){return tones[b]-tones[a]});
+            out+='Emotional tone: '+toneList.join(' + ')+'\n';
+            out+='Dominant: '+toneList[0]+' ('+tones[toneList[0]]+' signal'+(tones[toneList[0]]>1?'s':'')+')\n';
+        }
+        out+='---\n\n';
+
+        // Solvable gate — before the full output
+        var companyCount=0,dealCount=0,peopleCount=0;
+        ranked.forEach(function(c){
+            var p=P.find(function(x){return x.c===c});
+            if(p.l==='COMPANY')companyCount++;
+            if(p.l==='DEAL')dealCount++;
+            if(p.l==='PEOPLE')peopleCount++;
+        });
+        var solvable='YES';var solvableNote='';
+        if(codes.length>=15) {solvable='CONDITIONAL';solvableNote='Extensive intervention required — 15+ problems detected. Prioritise top 5 before full chain.';}
+        else if(companyCount>=5&&peopleCount>=5) {solvable='CONDITIONAL';solvableNote='Deep structural + behavioural issues. Fix people problems first or company-level fixes won\'t stick.';}
+        else if(codes.length<=3&&totalHits<6) {solvable='YES — QUICK WIN';solvableNote='Focused problem set. Targeted GAIN prompts can address this in days, not weeks.';}
+        else {solvable='YES';solvableNote='Clear structural and/or behavioural drivers identified. GAIN prompt chain addresses all detected problems.';}
+
+        out+='SOLVABLE WITH GAIN: '+solvable+'\n';
+        out+=solvableNote+'\n';
+        out+='Problem spread: '+companyCount+' Company · '+dealCount+' Deal · '+peopleCount+' People\n\n';
+
+        out+='COMPANY: '+ctx.company+'\n';
+        out+='CONTACT: '+ctx.contact+' ('+ctx.role+')\n';
+        out+='DEADLINE: '+ctx.deadline+'\n';
+        out+='DATE: '+new Date().toLocaleDateString('en-GB')+'\n\n';
+
+        if(ctx.success) out+='SUCCESS VISION (their words): "'+ctx.success+'"\n';
+        if(ctx.fear) out+='BIGGEST FEAR (their words): "'+ctx.fear+'"\n';
+        out+='\n';
+
+        // Identified problems — sorted by evidence strength with signal boxes
+        out+='PROBLEMS IDENTIFIED: '+codes.length+'\n';
+        out+='---\n';
+        ranked.forEach(function(c){
+            var p=P.find(function(x){return x.c===c});if(!p)return;
+            var h=hitCounts[c]||1;
+            var maxB=5;var filled=Math.min(h,maxB);
+            var boxes='';
+            for(var i=0;i<maxB;i++) boxes+=(i<filled?'■':'□');
+            var severity=h>=4?'CRITICAL':h>=2?'AT RISK':'WATCH';
+            out+=boxes+' '+p.c+' '+p.n+' ['+p.l+'] — '+severity+' ('+h+' signal'+(h>1?'s':'')+')';
+            if(state.scores[c]) out+=' — Score: '+state.scores[c]+'/11';
+            if(c===state.wheelTop) out+=' — TOP OF WHEEL';
+            out+='\n';
+        });
+        out+='\n';
+
+        // Scores
+        if(Object.keys(state.scores).length>0){
+            out+='FORCED RANKING (scores to 11):\n';
+            var sorted=Object.entries(state.scores).sort(function(a,b){return b[1]-a[1]});
+            sorted.forEach(function(e){
+                var p=P.find(function(x){return x.c===e[0]});
+                out+='  '+e[1]+'/11 — '+p.n+'\n';
+            });
+            out+='\n';
+        }
+
+        // Wheel drill
+        if(state.wheelTop){
+            var w1=document.getElementById('wheelWhy1'),w2=document.getElementById('wheelWhy2'),w3=document.getElementById('wheelWhy3');
+            if(w1&&w1.value){
+                out+='FERRIS WHEEL DRILL:\n';
+                out+='Why at the top: "'+w1.value+'"\n';
+                if(w2&&w2.value) out+='Why is THAT a problem: "'+w2.value+'"\n';
+                if(w3&&w3.value) out+='90-day consequence: "'+w3.value+'"\n';
+                out+='\n';
+            }
+        }
+
+        // Free talk
+        if(talk&&talk.value.trim()){
+            out+='FREE TALK TRANSCRIPT:\n';
+            out+='---\n'+talk.value.trim()+'\n---\n\n';
+        }
+
+        // War story
+        if(story&&story.value.trim()){
+            out+='WAR STORY:\n';
+            out+='---\n'+story.value.trim()+'\n---\n';
+            if(sc&&sc.value) out+='CAUSE: '+sc.value+'\n';
+            if(se&&se.value) out+='EFFECT: '+se.value+'\n';
+            out+='\n';
+        }
+
+        // Drill deeper
+        var drillCodes=Object.keys(state.drills);
+        if(drillCodes.length>0){
+            out+='DRILL DEEPER RESPONSES:\n';
+            drillCodes.forEach(function(c){
+                var p=P.find(function(x){return x.c===c});var d=state.drills[c];
+                if(!d.scenario&&!d.cause&&!d.effect&&!d.deeper)return;
+                out+='\n'+p.c+' '+p.n+':\n';
+                if(d.scenario) out+='  Scenario: "'+d.scenario+'"\n';
+                if(d.cause) out+='  Cause: "'+d.cause+'"\n';
+                if(d.effect) out+='  Effect: "'+d.effect+'"\n';
+                if(d.deeper) out+='  Deeper: "'+d.deeper+'"\n';
+            });
+            out+='\n';
+        }
+
+        // Emotional tone detail
+        if(Object.keys(tones).length>0){
+            out+='EMOTIONAL TONE ANALYSIS:\n';
+            out+='---\n';
+            Object.keys(tones).sort(function(a,b){return tones[b]-tones[a]}).forEach(function(t){
+                out+=t+': '+tones[t]+' signal'+(tones[t]>1?'s':'')+'\n';
+            });
+            out+='---\n';
+            out+='Note: Tone data helps 00-A calibrate the diagnostic. A FEARFUL contact will understate problems. An ANGRY contact will overstate them. A DENIAL contact will deflect to externals. Adjust evidence weighting accordingly.\n\n';
+        }
+
+        // Smart prompt routing — immediate actions, not a shopping list
+        // Map each problem to its FIRST prompt (the one that digs deeper)
+        var firstPrompt={
+            '1.1':['G-02','Financial Forensics','Find where margin is actually leaking'],
+            '1.2':['G-01','Macro Intel','Map what was acquired and where the overlaps are'],
+            '1.3':['G-03','Executive Profiles','Profile the heroes — who stays, who walks, why'],
+            '1.4':['G-01','Macro Intel','Define who you actually win with'],
+            '1.5':['G-02','Financial Forensics','Get the real numbers — what do you actually measure?'],
+            '1.6':['G-02','Financial Forensics','Quantify the rebate dependency'],
+            '1.7':['G-19','Narrative Gap','Map what they say vs what they actually do'],
+            '2.1':['G-03','Executive Profiles','Decode what the buyer is really saying'],
+            '2.2':['G-02','Financial Forensics','Audit the pipeline against real revenue data'],
+            '2.3':['A-04','Motivation Map','Find the urgency lever — why would they act now?'],
+            '2.4':['A-05','Authority Map','Map who really decides'],
+            '2.5':['G-05','First 15 Minutes','Restructure the opening — stop pitching, start asking'],
+            '2.6':['A-06','Deal Strategy','Identify what is actually blocking the deal'],
+            '2.7':['I-03','Competitor Kill Shot','Decode the competitor strategy you can\'t see'],
+            '2.8':['A-05','Authority Map','Verify whether your champion has real power'],
+            '2.9':['I-01','Pre-Mortem','Model the dead deal honestly — kill or revive?'],
+            '2.10':['I-01B','Lose Theme Architect','Find the patterns across your losses'],
+            '3.1':['G-03','Executive Profiles','Profile the flight risks and what keeps them'],
+            '3.2':['A-12','Psych Driver','Understand why training doesn\'t stick'],
+            '3.3':['A-09','Commercial Shield','Build the accountability framework that\'s missing'],
+            '3.4':['G-10','Hiring Signals','Decode what you actually need vs what you keep hiring'],
+            '3.5':['A-12','Psych Driver','Assess whether managers can actually manage'],
+            '3.6':['A-10','Lever Engine','Redesign the comp structure driving wrong behaviour'],
+            '3.7':['A-04','Motivation Map','Map what the pressure is actually creating'],
+            '3.8':['A-04','Motivation Map','Decode what\'s driving the fear']
+        };
+
+        // Get top 5 problems (highest signal count)
+        var top5=ranked.slice(0,5);
+        // Get the immediate prompts for top 5 (deduplicated)
+        var immediatePrompts={};
+        var immediateList=[];
+        top5.forEach(function(c){
+            var fp=firstPrompt[c];
+            if(fp&&!immediatePrompts[fp[0]]){
+                immediatePrompts[fp[0]]=true;
+                immediateList.push({code:c,prompt:fp[0],name:fp[1],why:fp[2]});
+            }
+        });
+
+        // After-meeting prompts: next layer for top 5
+        var afterMap={
+            '1.1':'A-09 Commercial Shield — protect margin going forward',
+            '1.2':'G-15 Cross-Reference — find what they claim vs what\'s real',
+            '1.3':'A-04 Motivation Map — what keeps them vs what loses them',
+            '1.4':'A-06 Deal Strategy — focus the pipeline on ICP',
+            '1.5':'A-10 Lever Engine — redesign what gets measured',
+            '1.6':'A-09 Commercial Shield — build rebate-independent margin',
+            '1.7':'I-08 Commercial Narrative — rebuild the story',
+            '2.1':'A-13 HUMINT Elicitation — questions that cut through happy ears',
+            '2.2':'A-06 Deal Strategy — qualify properly, kill what\'s dead',
+            '2.3':'G-08 Budget Cycle — find the compelled event',
+            '2.4':'A-14 Cross-Stakeholder Dynamics — map alliances and rivalries',
+            '2.5':'A-04 Motivation Map — understand what to ask about',
+            '2.6':'A-08 Logic Engine — map decision complexity',
+            '2.7':'G-04 Battle Card — build competitive ammunition',
+            '2.8':'G-03 Executive Profiles — profile the champion deeply',
+            '2.9':'A-06 Deal Strategy — kill or revive decision framework',
+            '2.10':'I-04 Evaluation Scoring — understand why you lost on criteria',
+            '3.1':'A-16 TUPE Map — map the people risk properly',
+            '3.2':'A-11 Engagement Plans — personalised reinforcement plan',
+            '3.3':'A-10 Lever Engine — metrics that force quality',
+            '3.4':'A-15 Culture Alignment — are you hiring for the wrong culture?',
+            '3.5':'A-11 Engagement Plans — manager development plans',
+            '3.6':'A-09 Commercial Shield — align incentives to outcomes',
+            '3.7':'N-00 Warning Brief — flag the risk to leadership',
+            '3.8':'A-09 Commercial Shield — remove the need to discount'
+        };
+
+        out+='WHAT TO DO NEXT\n';
+        out+='===============\n\n';
+
+        out+='IMMEDIATE — Run these before the first proper meeting:\n';
+        out+='---\n';
+        immediateList.forEach(function(item,idx){
+            out+=(idx+1)+'. '+item.prompt+' '+item.name+'\n';
+            out+='   Why: '+item.why+'\n';
+            out+='   Triggered by: '+item.code+' ('+P.find(function(x){return x.c===item.code}).n+')\n';
+        });
+        out+='\n';
+
+        out+='AFTER FIRST MEETING — Deepen the diagnosis:\n';
+        out+='---\n';
+        top5.forEach(function(c){
+            if(afterMap[c]){
+                out+=c+' → '+afterMap[c]+'\n';
+            }
+        });
+        out+='\n';
+
+        out+='THEN — Feed everything into 00-A INTAKE and run the full diagnostic chain.\n';
+        out+='00-D PRESCRIPTION will map the remaining prompts based on what the chain finds.\n';
+        out+='Full library available: G-series (20) · A-series (16) · I-series (12) · N-series (12) = 60 prompts\n\n';
+
+        out+='================================\n';
+        out+='PASTE THE ABOVE INTO GAIN 00-A INTAKE.\n';
+        out+='The diagnostic chain handles the rest.\n';
+
+        document.getElementById('outputContent').textContent=out;
+        discGoPhase('output');
+    };
+
+    window.copyOutput=function(){
+        var text=document.getElementById('outputContent').textContent;
+        navigator.clipboard.writeText(text).then(function(){
+            var btn=document.getElementById('copyBtn');
+            btn.textContent='Copied!';btn.classList.add('copied');
+            setTimeout(function(){btn.textContent='Copy to Clipboard';btn.classList.remove('copied')},2000);
+        });
+    };
+})();
+</script>
+      </div>
+    </div>
+
+
+    <div id="discOutput" style="display:none;border:2px solid rgba(16,185,129,0.3);border-radius:12px;background:var(--s1);overflow:hidden;">
+      <div style="padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <span style="font-size:9px;font-weight:700;color:#10b981;letter-spacing:0.15em;text-transform:uppercase;">GAIN-00 DISCOVERY OUTPUT</span>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">Ready for 00-A INTAKE processing</div>
+        </div>
+        <button onclick="copyDiscOutput()" id="discCopyBtn" style="font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--s1);color:var(--text-dim);cursor:pointer;font-family:inherit;">Copy to Clipboard</button>
+      </div>
+      <pre id="discOutputText" style="padding:20px 24px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);line-height:1.7;white-space:pre-wrap;max-height:500px;overflow-y:auto;margin:0;"></pre>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Discovery Session Rapid Test JS -->
+<script>
+(function(){
+  const P = [
+    {c:"1.1",n:"Margin Erosion",l:"COMPANY",k:["margin","erosion","rebate","discount","shrink","profit","cost","leaking","bleeding","give away","free"]},
+    {c:"1.2",n:"Post-Acquisition Drift",l:"COMPANY",k:["acqui","merge","integration","bought","m&a","bolt-on","synerg","portfolio","combined","two companies","three companies"]},
+    {c:"1.3",n:"Hero Dependency",l:"COMPANY",k:["hero","one person","key man","if they leave","carries","single point","dependent","star seller","top performer","relied on"]},
+    {c:"1.4",n:"ICP Drift",l:"COMPANY",k:["icp","ideal customer","wrong market","wrong segment","anyone who'll buy","spray and pray","no focus","identity"]},
+    {c:"1.5",n:"Measurement Void",l:"COMPANY",k:["measure","kpi","metric","dashboard","reporting","don't know","can't tell","no visibility","flying blind"]},
+    {c:"1.6",n:"Rebate Dependency",l:"COMPANY",k:["rebate","vendor fund","co-op","marketing fund","dependent on","without the rebate"]},
+    {c:"1.7",n:"Proposition Gap",l:"COMPANY",k:["proposition","value prop","messaging","positioning","what do you actually do","can't articulate","elevator","why us"]},
+    {c:"2.1",n:"Discovery Failure",l:"DEAL",k:["discovery","qualification","didn't ask","happy ears","told us what","assumed","didn't qualify","no pain"]},
+    {c:"2.2",n:"Pipeline Fiction",l:"DEAL",k:["pipeline","fiction","inflated","padded","optimistic","forecast","commit","hope","50% that's","stalled","dead deal","ghost"]},
+    {c:"2.3",n:"No Compelled Event",l:"DEAL",k:["compelled","urgency","no deadline","no pressure","nice to have","next year","someday","budget","no event"]},
+    {c:"2.4",n:"Authority Blindness",l:"DEAL",k:["authority","decision","who decides","wrong person","no power","can't sign","above their","budget holder","real buyer"]},
+    {c:"2.5",n:"Pitch Not Discovery",l:"DEAL",k:["pitch","present","slide","demo","features","showed them","talked at","didn't listen","deck"]},
+    {c:"2.6",n:"Procurement Blindness",l:"DEAL",k:["procurement","rfp","tender","legal","contract","stuck in","black box","compliance","redline"]},
+    {c:"2.7",n:"Competitive Blindness",l:"DEAL",k:["competitor","incumbent","rival","losing to","beat us","cheaper","displaced","alternative","other vendor"]},
+    {c:"2.8",n:"Phantom Champion",l:"DEAL",k:["champion","sponsor","advocate","fan not","friendly but","no power","likes us","enthusiast","internal coach"]},
+    {c:"2.9",n:"Dead Deal Denial",l:"DEAL",k:["dead deal","won't let go","zombie","should have killed","still in pipeline","no activity","dark","silent","went quiet","ghosted"]},
+    {c:"2.10",n:"Repeat Loss Pattern",l:"DEAL",k:["keep losing","same way","pattern","again and again","third time","always lose","never learn","deja vu"]},
+    {c:"2.11",n:"Procurement Black Box",l:"DEAL",k:["procurement","legal","commercial","contracts","tender","compliance","process","transferred","handed over","lost visibility","black hole"]},
+    {c:"3.1",n:"Flight Risk",l:"PEOPLE",k:["leaving","resign","flight risk","poach","headhunt","looking around","offer","handed in","notice","unhappy","quit"]},
+    {c:"3.2",n:"Skill Collapse",l:"PEOPLE",k:["skill","training","capability","can't","don't know how","never trained","upskill","gap","incompetent","struggle"]},
+    {c:"3.3",n:"Accountability Void",l:"PEOPLE",k:["accountability","nobody owns","finger point","blame","whose job","no consequence","gets away","culture"]},
+    {c:"3.4",n:"Hiring Failure",l:"PEOPLE",k:["hiring","recruit","wrong profile","same type","talent","wrong people","keep hiring","clone"]},
+    {c:"3.5",n:"Manager Gap",l:"PEOPLE",k:["manager","promoted","best seller","coaching","take over","personal target","rescue","player manager","can't coach"]},
+    {c:"3.6",n:"Motivation Failure",l:"PEOPLE",k:["motivat","incentive","comp plan","reward","behaviour","commission","different comp","wrong behaviour"]},
+    {c:"3.7",n:"Pressure Spiral",l:"PEOPLE",k:["target","unrealist","pressure","panic","miss","impossible","losing my mind","board breathing","restructure"]},
+    {c:"3.8",n:"Fear-Driven Selling",l:"PEOPLE",k:["fear","scared","discount","give away","desperate","gaming","terrified","afraid to","hiding","fudging"]}
+  ];
+  const LC = {COMPANY:"#3b82f6",DEAL:"#a855f7",PEOPLE:"#f59e0b"};
+  const ENGINES = {
     "1.1":"G-02 Financial Forensics","1.2":"A-14 M&A Integration Audit","1.3":"A-05 Authority Map",
     "1.4":"G-01 Macro Intel","1.5":"A-09 Pipeline Audit","1.6":"G-02 Financial Forensics",
     "1.7":"I-02 Win Theme Builder","2.1":"G-05 First 15 Minutes","2.2":"A-09 Pipeline Audit",
@@ -13,69 +1051,138 @@ const ENGINES = {
     "3.2":"I-07 Coaching Script","3.3":"A-05 Authority Map","3.4":"G-03 Executive Intelligence",
     "3.5":"I-07 Coaching Script","3.6":"G-02 Financial Forensics","3.7":"I-01 Pre-Mortem",
     "3.8":"I-01 Pre-Mortem"
-};
-```
+  };
 
-### NEW:
-```js
-const ENGINES = {
-    "1.1":"G-02 Financial Forensics — find where margin is leaking",
-    "1.2":"G-01 Macro Intel — map acquisitions and integration gaps",
-    "1.3":"G-03 Executive Intelligence — profile the heroes, flight risk assessment",
-    "1.4":"G-01 Macro Intel — define ICP from win/loss patterns",
-    "1.5":"G-02 Financial Forensics — get the real numbers behind the dashboard",
-    "1.6":"G-02 Financial Forensics — quantify the rebate dependency",
-    "1.7":"G-19 Narrative Gap Finder — map what they say vs what they do",
-    "2.1":"G-03 Executive Intelligence — decode what the buyer is really saying",
-    "2.2":"G-02 Financial Forensics — audit pipeline against revenue reality",
-    "2.3":"G-08 Budget Cycle Predictor — find the compelled event",
-    "2.4":"A-05 Authority Map — map who really decides",
-    "2.5":"G-05 First 15 Minutes — restructure the opening",
-    "2.6":"A-14 Cross-Stakeholder Dynamics — map the procurement relationship system",
-    "2.7":"I-03 Competitor Kill-Shot — decode the competitor strategy",
-    "2.8":"A-05 Authority Map — verify champion has real power",
-    "2.9":"I-01 Pre-Mortem — model the dead deal honestly",
-    "2.10":"I-01B Lose Theme Architect — find the loss patterns",
-    "2.11":"A-14 Cross-Stakeholder Dynamics — map what happens inside procurement",
-    "3.1":"G-03 Executive Intelligence — profile flight risks",
-    "3.2":"A-04 Motivation Map — understand why training doesn't stick",
-    "3.3":"G-03B Compound Assimilator — map the accountability structure across people",
-    "3.4":"G-10 Hiring Signal Decoder — decode what you actually need vs what you hire",
-    "3.5":"A-04 Motivation Map — assess whether managers can manage",
-    "3.6":"A-04 Motivation Map — map what the comp plan actually incentivises",
-    "3.7":"I-01 Pre-Mortem — model what the pressure is creating",
-    "3.8":"A-04 Motivation Map — decode what's driving the fear"
-};
-```
+  function detect(text){
+    const lower = text.toLowerCase();
+    const found = [];
+    const hits = {};
+    P.forEach(p => {
+      let h = 0;
+      p.k.forEach(kw => { if(lower.indexOf(kw) >= 0) h++ });
+      if(h > 0){ found.push(p); hits[p.c] = h; }
+    });
+    found.sort((a,b) => (hits[b.c]||0) - (hits[a.c]||0));
+    return {found, hits};
+  }
 
-## FIX 2: Add 2.11 to rapid test P array
-Add after 2.10:
-```js
-{c:"2.11",n:"Procurement Black Box",l:"DEAL",k:["procurement","legal","commercial","contracts","tender","compliance","process","transferred","handed over","lost visibility","black hole","no contact","gone to procurement"]},
-```
+  // Live detection as user types
+  setTimeout(function(){
+    var el = document.getElementById('discInput');
+    if(!el) return;
+    el.addEventListener('input', function(){
+      var text = this.value;
+      if(text.length < 10){ document.getElementById('discLivePills').style.display='none'; return; }
+      var r = detect(text);
+      var container = document.getElementById('discLivePills');
+      var pills = document.getElementById('discPillsContent');
+      if(r.found.length > 0){
+        container.style.display = 'block';
+        pills.innerHTML = r.found.map(function(p){
+          return '<span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;color:'+LC[p.l]+';border:1px solid '+LC[p.l]+'40;background:'+LC[p.l]+'10">'+p.c+' '+p.n+'</span>';
+        }).join('');
+      } else { container.style.display='none'; }
+    });
+  }, 100);
 
-## FIX 3: Output text counts
-### OLD:
-```
-'Full library available: G-series (20) · A-series (16) · I-series (12) · N-series (12) = 60 prompts\n\n';
-```
-### NEW:
-```
-'Full library available: G-series (25) · A-series (17) · I-series (12) · N-series (13) · P-series (10) = 77 engines\n\n';
-```
+  window.runDiscoveryDiagnostic = function(){
+    var text = document.getElementById('discInput').value.trim();
+    if(!text){ document.getElementById('discStatus').textContent='Paste something first.'; return; }
+    var company = document.getElementById('discCompany').value || '[Not provided]';
+    var contact = document.getElementById('discContact').value || '[Not provided]';
+    var r = detect(text);
 
-## FIX 4: firstPrompt map in full session — corrections
-### Changes:
-- 1.2: Change from "G-15 Cross-Reference" to "G-01 Macro Intel — map what was acquired"
-- 2.6: Change from "A-06 Deal Strategy" to "A-14 Cross-Stakeholder Dynamics — map the blockers"  
-- 2.11: Add: "A-14 Cross-Stakeholder Dynamics — map what happens inside procurement"
-- 3.3: Change from "A-09 Commercial Shield" to "G-03B Compound Assimilator — map accountability across people"
-- 3.4: Change from "G-10 Hiring Signals" to "G-10 Hiring Signal Decoder — decode what you actually need"
-- 3.5: Change from "A-12 Psych Driver" to "A-04 Motivation Map — assess manager capability"
+    if(r.found.length === 0){
+      document.getElementById('discStatus').textContent = 'No patterns detected. Add more detail.';
+      return;
+    }
 
-## FIX 5: afterMap in full session — corrections
-### Changes:
-- 2.6: Change to "A-14 Cross-Stakeholder Dynamics — map what's blocking the deal"
-- 2.11: Add: "G-03B Compound Assimilator — map the procurement team politics"
-- 3.3: Change to "G-03B Compound Assimilator — map accountability across the team"
-- 3.5: Change to "A-11 Engagement Plans — per-manager development approach"
+    var co=0, de=0, pe=0;
+    r.found.forEach(function(p){ if(p.l==='COMPANY')co++; if(p.l==='DEAL')de++; if(p.l==='PEOPLE')pe++; });
+    var conf = r.found.length >= 8 ? 'HIGH' : r.found.length >= 5 ? 'MEDIUM' : 'LOW';
+
+    // Build structured output (same format as gain-00 discovery session)
+    var out = '============================================================\n';
+    out += 'GAIN-00 DISCOVERY SESSION OUTPUT\n';
+    out += '============================================================\n\n';
+    out += 'Company:     ' + company + '\n';
+    out += 'Contact:     ' + contact + '\n';
+    out += 'Patterns:    ' + r.found.length + ' detected (' + co + ' Company, ' + de + ' Deal, ' + pe + ' People)\n';
+    out += 'Confidence:  ' + conf + '\n';
+    out += 'Source:      Free-text paste (' + text.split(/\s+/).length + ' words)\n\n';
+    out += '------------------------------------------------------------\n';
+    out += 'FAILURE PATTERNS DETECTED (ranked by signal strength)\n';
+    out += '------------------------------------------------------------\n\n';
+
+    r.found.forEach(function(p, i){
+      var h = r.hits[p.c] || 1;
+      var sev = h >= 4 ? 'CRITICAL' : h >= 2 ? 'HIGH' : 'MEDIUM';
+      out += (i+1) + '. [' + p.c + '] ' + p.n.toUpperCase() + '  (' + p.l + ')\n';
+      out += '   Severity: ' + sev + ' (' + h + ' keyword matches)\n';
+      if(ENGINES[p.c]) out += '   Prescribed Engine: ' + ENGINES[p.c] + '\n';
+      out += '\n';
+    });
+
+    out += '------------------------------------------------------------\n';
+    out += 'RECOMMENDED FIRST-RUN ENGINES\n';
+    out += '------------------------------------------------------------\n\n';
+
+    var seen = {};
+    var engineList = [];
+    r.found.slice(0,5).forEach(function(p){
+      var eng = ENGINES[p.c];
+      if(eng && !seen[eng]){ seen[eng]=true; engineList.push({engine:eng, reason:p.c + ' ' + p.n}); }
+    });
+    engineList.forEach(function(e,i){
+      out += (i+1) + '. ' + e.engine + '\n';
+      out += '   Triggered by: ' + e.reason + '\n\n';
+    });
+
+    out += '============================================================\n';
+    out += 'READY FOR 00-A INTAKE PROCESSING\n';
+    out += '============================================================\n';
+
+    document.getElementById('discOutputText').textContent = out;
+    document.getElementById('discOutput').style.display = 'block';
+    document.getElementById('discStatus').textContent = r.found.length + ' patterns. Output ready.';
+    document.getElementById('discOutput').scrollIntoView({behavior:'smooth', block:'nearest'});
+  };
+
+  function showFullSession(){
+    document.getElementById("discoveryDemo").style.display = "none";
+    var fs = document.getElementById("discFullSession");
+    if(fs) { fs.style.display = "block"; fs.scrollIntoView({behavior:"smooth", block:"start"}); }
+  }
+  function hideFullSession(){
+    document.getElementById("discoveryDemo").style.display = "block";
+    var fs = document.getElementById("discFullSession");
+    if(fs) fs.style.display = "none";
+  }
+
+  window.switchToFullSession = function(){
+    showFullSession();
+  };
+  window.backToQuickTest = function(){
+    hideFullSession();
+  };
+
+  window.clearDiscovery = function(){
+    document.getElementById('discInput').value = '';
+    document.getElementById('discCompany').value = '';
+    document.getElementById('discContact').value = '';
+    document.getElementById('discStatus').textContent = '';
+    document.getElementById('discLivePills').style.display = 'none';
+    document.getElementById('discOutput').style.display = 'none';
+  };
+
+  window.copyDiscOutput = function(){
+    var text = document.getElementById('discOutputText').textContent;
+    navigator.clipboard.writeText(text).then(function(){
+      document.getElementById('discCopyBtn').textContent = 'Copied!';
+      setTimeout(function(){ document.getElementById('discCopyBtn').textContent = 'Copy to Clipboard'; }, 2000);
+    });
+  };
+})();
+</script>
+
+</body></html>
