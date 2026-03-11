@@ -10,370 +10,99 @@
 :root{--bg:#07070a;--s1:#0e0e13;--s2:#141419;--s3:#1a1a21;--border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);--text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;--blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--glass:rgba(14,14,19,0.85)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding:0}
-
-.hero-right .dock-meta {
-  display: none;
-}
-
-@media (max-width: 900px) {
-  .hero-right .dock-card {
-    grid-template-columns: 40px 1fr;
-  }
-}
-
-
-/* ═══════════════════════════════════════════════
-   LINEAR WHEEL — Phase bar + cluster grid
-   ═══════════════════════════════════════════════ */
-
-.lw-hub {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  margin-bottom: 10px;
-}
-.lw-hub-dot {
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  background: radial-gradient(circle at 35% 35%, #1f1f23, #0a0a0c);
-  border: 1.5px solid rgba(239,68,68,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600;
-  color: white; letter-spacing: 1px;
-}
-.lw-hub-text { font-size: 12px; color: var(--text-dim); }
-
-.lw-phase-bar {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 3px;
-  position: relative;
-}
-.lw-phase-bar::before {
-  content: '';
-  position: absolute; top: 50%; left: 5%; right: 5%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--blue), var(--purple), var(--amber), var(--green), var(--red));
-  opacity: 0.1; z-index: 0;
-}
-
-.lw-phase {
-  position: relative; z-index: 1;
-  display: flex; flex-direction: column; align-items: center;
-  padding: 1.25rem 0.5rem;
-  cursor: pointer; border-radius: 12px;
-  border: 1px solid transparent;
-  background: var(--bg);
-  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-  -webkit-tap-highlight-color: transparent;
-}
-.lw-phase:hover, .lw-phase.active {
-  border-color: var(--border-h);
-  background: var(--s1);
-}
-.lw-phase[data-phase="g"].active { border-color: rgba(59,130,246,0.2); box-shadow: 0 0 30px rgba(59,130,246,0.06); }
-.lw-phase[data-phase="a"].active { border-color: rgba(168,85,247,0.2); box-shadow: 0 0 30px rgba(168,85,247,0.06); }
-.lw-phase[data-phase="i"].active { border-color: rgba(245,158,11,0.2); box-shadow: 0 0 30px rgba(245,158,11,0.06); }
-.lw-phase[data-phase="n"].active { border-color: rgba(16,185,129,0.2); box-shadow: 0 0 30px rgba(16,185,129,0.06); }
-.lw-phase[data-phase="p"].active { border-color: rgba(239,68,68,0.2); box-shadow: 0 0 30px rgba(239,68,68,0.06); }
-
-.lw-letter { font-family:'Fraunces',serif; font-size:32px; font-weight:900; line-height:1; margin-bottom:4px; }
-.lw-name { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:2px; }
-.lw-sub { font-size:10px; color:var(--text-dim); }
-.lw-count { font-family:'DM Mono',monospace; font-size:9px; opacity:0.4; margin-top:4px; }
-
-.lw-cluster-tray { min-height: 0; overflow: visible; }
-
-.lw-cluster-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 8px;
-  padding: 12px 0 0;
-  opacity: 0; transform: translateY(-8px);
-  transition: all 0.3s ease;
-}
-.lw-cluster-grid.show { opacity: 1; transform: translateY(0); }
-
-.lw-cluster-card {
-  background: var(--s1);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 14px;
-  cursor: pointer;
-  transition: all 0.25s;
-  position: relative;
-}
-.lw-cluster-card:hover {
-  border-color: var(--border-h);
-  background: var(--s2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-}
-.lw-cluster-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; border-radius: 10px 10px 0 0;
-  opacity: 0; transition: opacity 0.25s;
-}
-.lw-cluster-card:hover::before { opacity: 1; }
-.lw-cluster-card[data-phase="g"]::before { background: var(--blue); }
-.lw-cluster-card[data-phase="a"]::before { background: var(--purple); }
-.lw-cluster-card[data-phase="i"]::before { background: var(--amber); }
-.lw-cluster-card[data-phase="n"]::before { background: var(--green); }
-.lw-cluster-card[data-phase="p"]::before { background: var(--red); }
-
-.lw-cl-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
-.lw-cl-head svg { opacity: 0.5; flex-shrink: 0; }
-.lw-cl-name { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-.lw-cl-count { font-family:'DM Mono',monospace; font-size:10px; color:var(--text-dim); }
-
-/* ── Engine panel: inline below cluster grid (not fixed/absolute) ── */
-.lw-engine-panel {
-  margin-top: 8px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: rgba(10,10,14,0.98);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 16px 60px rgba(0,0,0,0.8);
-  display: none;
-}
-.lw-engine-panel.show {
-  display: block;
-  animation: epFadeIn 0.2s ease;
-}
-@keyframes epFadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 640px) {
-  .lw-phase-bar { gap: 2px; }
-  .lw-letter { font-size: 24px; }
-  .lw-name { font-size: 8px; }
-  .lw-sub { display: none; }
-  .lw-cluster-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 420px) {
-  .lw-phase-bar { grid-template-columns: repeat(5, 1fr); gap: 1px; }
-  .lw-letter { font-size: 20px; }
-  .lw-name { font-size: 7px; letter-spacing: 0.5px; }
-  .lw-count { font-size: 8px; }
-  .lw-phase { padding: 1rem 0.25rem; }
-}
-
-/* ─── Mobile Wheel Accordion ─── */
-.mobile-wheel {
-  display: none;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-  .mobile-wheel { display: block; }
-}
-
-.mw-phase {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  transition: border-color 0.3s;
-}
-.mw-phase.open { border-color: var(--border-h); }
-
-.mw-phase-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  cursor: pointer;
-  background: var(--s1);
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  transition: background 0.1s;
-}
-.mw-phase-header:active { background: rgba(255,255,255,0.03); transform: scale(0.99); }
-
-.mw-letter {
-  font-family: 'Fraunces', serif;
-  font-size: 28px;
-  font-weight: 900;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid;
-  flex-shrink: 0;
-}
-
-.mw-phase-info { flex: 1; }
-.mw-phase-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-bright);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.mw-phase-sub {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-top: 2px;
-}
-.mw-phase-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--text-dim);
-  flex-shrink: 0;
-}
-
-.mw-chevron {
-  font-size: 16px;
-  color: var(--text-dim);
-  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1.0);
-  flex-shrink: 0;
-}
-.mw-phase.open .mw-chevron { transform: rotate(180deg); }
-
-.mw-clusters {
-  height: 0;
-  overflow: hidden;
-  background: var(--bg);
-  will-change: height;
-}
-
-.mw-clusters-inner {
-  opacity: 0;
-  transform: translateY(-6px);
-  transition: opacity 0.25s ease 0.08s, transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.02) 0.05s;
-}
-.mw-phase.open .mw-clusters-inner {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.mw-cluster {
-  border-top: 1px solid var(--border);
-}
-
-.mw-cluster-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 18px 14px 28px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
-  transition: background 0.15s;
-}
-.mw-cluster-header:active { background: rgba(255,255,255,0.02); }
-
-.mw-cl-icon { font-size: 15px; }
-.mw-cl-name {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  flex: 1;
-}
-.mw-cl-count {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  color: var(--text-dim);
-}
-.mw-cl-chevron {
-  font-size: 12px;
-  color: var(--text-dim);
-  transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.02);
-}
-.mw-cluster.open .mw-cl-chevron { transform: rotate(180deg); }
-
-.mw-engines {
-  height: 0;
-  overflow: hidden;
-  will-change: height;
-}
-
-.mw-engines-inner {
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.2s ease 0.06s, transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.02) 0.04s;
-}
-.mw-cluster.open .mw-engines-inner {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.mw-engine {
-  padding: 12px 18px 12px 46px;
-  border-top: 1px solid rgba(255,255,255,0.02);
-}
-.mw-engine-code {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-bright);
-}
-.mw-engine-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  margin-left: 6px;
-}
-.mw-engine-desc {
-  font-size: 11px;
-  color: var(--text-dim);
-  margin-top: 3px;
-  line-height: 1.5;
-}
-
-/* ═══════════════════════════════════════════════
-   LAUNCHER DOCK — Three cards, click to expand
-   ═══════════════════════════════════════════════ */
-
-.dock-section {
-  padding: 3rem 2rem;
-  border-top: 1px solid var(--border);
-}
-
-.dock-grid {
-  max-width: 960px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-
-@media (max-width: 768px) {
-  .dock-grid { grid-template-columns: 1fr; max-width: 400px; }
-}
-
-
+.hero-right .dock-meta{display:none}
+@media(max-width:900px){.hero-right .dock-card{grid-template-columns:40px 1fr}}
+.lw-hub{display:flex;align-items:center;gap:12px;padding:10px 0;margin-bottom:10px}
+.lw-hub-dot{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:radial-gradient(circle at 35% 35%,#1f1f23,#0a0a0c);border:1.5px solid rgba(239,68,68,0.2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:white;letter-spacing:1px}
+.lw-hub-text{font-size:12px;color:var(--text-dim)}
+.lw-phase-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;position:relative}
+.lw-phase-bar::before{content:'';position:absolute;top:50%;left:5%;right:5%;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple),var(--amber),var(--green),var(--red));opacity:0.1;z-index:0}
+.lw-phase{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:1.25rem 0.5rem;cursor:pointer;border-radius:12px;border:1px solid transparent;background:var(--bg);transition:all 0.3s cubic-bezier(0.2,0.9,0.3,1);-webkit-tap-highlight-color:transparent}
+.lw-phase:hover,.lw-phase.active{border-color:var(--border-h);background:var(--s1)}
+.lw-phase[data-phase="g"].active{border-color:rgba(59,130,246,0.2);box-shadow:0 0 30px rgba(59,130,246,0.06)}
+.lw-phase[data-phase="a"].active{border-color:rgba(168,85,247,0.2);box-shadow:0 0 30px rgba(168,85,247,0.06)}
+.lw-phase[data-phase="i"].active{border-color:rgba(245,158,11,0.2);box-shadow:0 0 30px rgba(245,158,11,0.06)}
+.lw-phase[data-phase="n"].active{border-color:rgba(16,185,129,0.2);box-shadow:0 0 30px rgba(16,185,129,0.06)}
+.lw-phase[data-phase="p"].active{border-color:rgba(239,68,68,0.2);box-shadow:0 0 30px rgba(239,68,68,0.06)}
+.lw-letter{font-family:'Fraunces',serif;font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+.lw-name{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
+.lw-sub{font-size:10px;color:var(--text-dim)}
+.lw-count{font-family:'DM Mono',monospace;font-size:9px;opacity:0.4;margin-top:4px}
+.lw-cluster-tray{min-height:0;overflow:visible}
+.lw-cluster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;padding:12px 0 0;opacity:0;transform:translateY(-8px);transition:all 0.3s ease}
+.lw-cluster-grid.show{opacity:1;transform:translateY(0)}
+.lw-cluster-card{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all 0.25s;position:relative}
+.lw-cluster-card:hover{border-color:var(--border-h);background:var(--s2);transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.3)}
+.lw-cluster-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:10px 10px 0 0;opacity:0;transition:opacity 0.25s}
+.lw-cluster-card:hover::before{opacity:1}
+.lw-cluster-card[data-phase="g"]::before{background:var(--blue)}
+.lw-cluster-card[data-phase="a"]::before{background:var(--purple)}
+.lw-cluster-card[data-phase="i"]::before{background:var(--amber)}
+.lw-cluster-card[data-phase="n"]::before{background:var(--green)}
+.lw-cluster-card[data-phase="p"]::before{background:var(--red)}
+.lw-cl-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.lw-cl-head svg{opacity:0.5;flex-shrink:0}
+.lw-cl-name{font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.lw-cl-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim)}
+.lw-engine-panel{margin-top:8px;padding:14px 16px;border-radius:12px;background:rgba(10,10,14,0.98);border:1px solid rgba(255,255,255,0.08);box-shadow:0 16px 60px rgba(0,0,0,0.8);display:none}
+.lw-engine-panel.show{display:block;animation:epFadeIn 0.2s ease}
+@keyframes epFadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){.lw-phase-bar{gap:2px}.lw-letter{font-size:24px}.lw-name{font-size:8px}.lw-sub{display:none}.lw-cluster-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.lw-phase-bar{grid-template-columns:repeat(5,1fr);gap:1px}.lw-letter{font-size:20px}.lw-name{font-size:7px;letter-spacing:0.5px}.lw-count{font-size:8px}.lw-phase{padding:1rem 0.25rem}}
+.mobile-wheel{display:none;max-width:500px;margin:0 auto}
+@media(max-width:768px){.mobile-wheel{display:block}}
+.mw-phase{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color 0.3s}
+.mw-phase.open{border-color:var(--border-h)}
+.mw-phase-header{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;background:var(--s1);-webkit-tap-highlight-color:transparent;user-select:none;transition:background 0.1s}
+.mw-phase-header:active{background:rgba(255,255,255,0.03);transform:scale(0.99)}
+.mw-letter{font-family:'Fraunces',serif;font-size:28px;font-weight:900;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid;flex-shrink:0}
+.mw-phase-info{flex:1}
+.mw-phase-name{font-size:14px;font-weight:700;color:var(--text-bright);letter-spacing:1px;text-transform:uppercase}
+.mw-phase-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.mw-phase-count{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim);flex-shrink:0}
+.mw-chevron{font-size:16px;color:var(--text-dim);transition:transform 0.35s cubic-bezier(0.32,0.72,0,1.0);flex-shrink:0}
+.mw-phase.open .mw-chevron{transform:rotate(180deg)}
+.mw-clusters{height:0;overflow:hidden;background:var(--bg);will-change:height}
+.mw-clusters-inner{opacity:0;transform:translateY(-6px);transition:opacity 0.25s ease 0.08s,transform 0.3s cubic-bezier(0.2,0.9,0.3,1.02) 0.05s}
+.mw-phase.open .mw-clusters-inner{opacity:1;transform:translateY(0)}
+.mw-cluster{border-top:1px solid var(--border)}
+.mw-cluster-header{display:flex;align-items:center;gap:10px;padding:14px 18px 14px 28px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:background 0.15s}
+.mw-cluster-header:active{background:rgba(255,255,255,0.02)}
+.mw-cl-icon{font-size:15px}
+.mw-cl-name{font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;flex:1}
+.mw-cl-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim)}
+.mw-cl-chevron{font-size:12px;color:var(--text-dim);transition:transform 0.35s cubic-bezier(0.2,0.9,0.3,1.02)}
+.mw-cluster.open .mw-cl-chevron{transform:rotate(180deg)}
+.mw-engines{height:0;overflow:hidden;will-change:height}
+.mw-engines-inner{opacity:0;transform:translateY(-4px);transition:opacity 0.2s ease 0.06s,transform 0.25s cubic-bezier(0.2,0.9,0.3,1.02) 0.04s}
+.mw-cluster.open .mw-engines-inner{opacity:1;transform:translateY(0)}
+.mw-engine{padding:12px 18px 12px 46px;border-top:1px solid rgba(255,255,255,0.02)}
+.mw-engine-code{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--text-bright)}
+.mw-engine-title{font-size:13px;font-weight:600;color:var(--text);margin-left:6px}
+.mw-engine-desc{font-size:11px;color:var(--text-dim);margin-top:3px;line-height:1.5}
+.dock-section{padding:3rem 2rem;border-top:1px solid var(--border)}
+.dock-grid{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+@media(max-width:768px){.dock-grid{grid-template-columns:1fr;max-width:400px}}
 .eng-title{font-size:11px;font-weight:700;margin-bottom:8px;letter-spacing:0.5px}
 .eng-item{font-size:11px;color:var(--text-dim);margin-bottom:6px;line-height:1.5;padding-left:8px;border-left:2px solid var(--border)}
 .eng-item strong{color:var(--text-bright);font-weight:700;margin-right:4px}
 .eng-item .desc{display:block;font-size:10px;opacity:0.6;margin-top:1px}
-
 </style>
 </head>
 <body>
 <div style="max-width:920px;margin:0 auto;padding:24px;">
 <section class="wheel-section reveal inline-hidden" id="sect-wheel">
   <div style="padding:1.5rem 2rem 2rem;max-width:920px;margin:0 auto;">
-
     <div class="lw-hub">
       <div class="lw-hub-dot">00</div>
-      <div class="lw-hub-text">Diagnostic reads your situation → prescribes where to start across <strong style="color:var(--amber)">74 engines</strong></div>
+      <div class="lw-hub-text">Diagnostic reads your situation → prescribes where to start across <strong style="color:var(--amber)">77 engines</strong></div>
     </div>
-
     <div class="lw-phase-bar" id="lwPhaseBar">
       <div class="lw-phase" data-phase="g">
         <div class="lw-letter" style="color:var(--blue)">G</div>
         <div class="lw-name" style="color:#93c5fd">Gather</div>
         <div class="lw-sub">Know Them</div>
-        <div class="lw-count">23 engines</div>
+        <div class="lw-count">25 engines</div>
       </div>
       <div class="lw-phase" data-phase="a">
         <div class="lw-letter" style="color:var(--purple)">A</div>
@@ -397,380 +126,23 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
         <div class="lw-letter" style="color:var(--red)">P</div>
         <div class="lw-name" style="color:#fca5a5">Present</div>
         <div class="lw-sub">Show Them</div>
-        <div class="lw-count">9 engines</div>
+        <div class="lw-count">10 engines</div>
       </div>
     </div>
-
     <div class="lw-cluster-tray" id="lwClusterTray">
       <div class="lw-cluster-grid" id="lwClusterGrid"></div>
       <div class="lw-engine-panel" id="lwEnginePanel"></div>
     </div>
-
   </div>
 </section>
 <div class="mobile-wheel" id="mobileWheel"></div>
 </div>
-
-<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
 <script>
-// ── Wheel Data: 74 engines across 20 clusters ──
-const DATA = {
-  g:{color:'#93c5fd',bg:'rgba(59,130,246,0.08)',clusters:[
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-8"/></svg>',name:'Company Intel',count:5,engines:[
-      {c:'G-01',t:'Macro Intel',d:'10-K signals, board mandates, bleeding necks, competitive landscape'},
-      {c:'G-02',t:'Financial Forensics',d:'Named-process cost methodology, P&L language, cost of inaction'},
-      {c:'G-08',t:'Budget Cycle Predictor',d:'Maps FYE to budget phases, timing windows, urgency triggers'},
-      {c:'G-15',t:'Cross-Reference Engine',d:'Narrative gaps between website, financials, individuals'},
-      {c:'G-17',t:'Source Scraping Protocol',d:'Operator checklist for gathering all source material'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20v-1a7 7 0 0114 0v1"/></svg>',name:'Stakeholder Psych',count:4,engines:[
-      {c:'G-03',t:'Executive Intelligence',d:'Kegan stage, GAIN driver, decision architecture, modality'},
-      {c:'G-09',t:'Compact Profile',d:'Quick cheat sheet — one question, one landmine per person'},
-      {c:'G-18',t:'Belief System Decoder',d:'Core conviction, decision triggers, trust architecture'},
-      {c:'G-16',t:'NED Governance Map',d:'Board committees, NED influence scoring, warm intro network'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>',name:'Competitive Intel',count:3,engines:[
-      {c:'G-04',t:'Battle Card',d:'Status Quo Disruptor questions, stakeholder-specific intelligence'},
-      {c:'G-10',t:'Hiring Signal Decoder',d:'Hidden mandate and headcount cost from job descriptions'},
-      {c:'G-19',t:'Narrative Gap Finder',d:'Contradictions between strategy and execution'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l4 10H4z"/><path d="M12 12v10M8 22h8"/></svg>',name:'Meeting Prep',count:5,engines:[
-      {c:'G-05',t:'First 15 Minutes',d:'Meeting scripts calibrated to stakeholder psychology'},
-      {c:'G-06',t:'Narrative Lock',d:'Single controlling narrative tested against all stakeholders'},
-      {c:'G-07',t:'9-Pillar Compact',d:'Rapid 3-minute pre-meeting brief across 9 intelligence pillars'},
-      {c:'G-11',t:'Slide Relevancy Audit',d:'KEEP / CUT / MODIFY / REORDER / CREATE on your deck'},
-      {c:'G-21',t:'Call Planner',d:'Objective hierarchy, stakeholder prep, gap-mapped discovery'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.25-3.5 9.74-8 11-4.5-1.26-8-5.75-8-11V7z"/></svg>',name:'Quality & Evidence',count:5,engines:[
-      {c:'G-12',t:'Pre-Mortem',d:'5 failure scenarios with pre-emptive actions and accusation audits'},
-      {c:'G-13',t:'Objection Prep',d:'Per-stakeholder objections with accusation audits, pivots'},
-      {c:'G-14',t:'Hallucination Check',d:'Fact-verification of any GAIN output against source material'},
-      {c:'G-20',t:'Customer Evidence Builder',d:'7-module proof factory: corridor points, champion scripts'},
-      {c:'G-22',t:'Strategic Intelligence Waterfall',d:'The Crown Jewel — master waterfall consolidating all intelligence streams'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>',name:'Penetration',count:1,engines:[
-      {c:'G-23',t:'Approach Architect',d:'Attack vector design — medium, format, sensory triggers, bespoke landing pages, QR codes, psychological framing to get the meeting'}]}
-  ]},
-  a:{color:'#d8b4fe',bg:'rgba(168,85,247,0.08)',clusters:[
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01"/></svg>',name:'RFP & Complexity',count:4,engines:[
-      {c:'A-01',t:'RFP Strategic Decoder',d:'Authorship analysis, trauma archaeology, criteria weighting'},
-      {c:'A-02',t:'Trauma Decoder',d:'Organisational wounds — past failures shaping requirements'},
-      {c:'A-08',t:'Logic Engine',d:'Complexity scoping, silent killer detection, decision trees'},
-      {c:'A-16',t:'TUPE Mapper',d:'People transfer risk, fear factors, institutional DNA'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',name:'Power & Influence',count:4,engines:[
-      {c:'A-03',t:'Stakeholder Discovery',d:'Entity extraction from all sources, missing person gap analysis'},
-      {c:'A-05',t:'Authority Map',d:'Formal vs informal power, winning coalition, blocker neutralisation'},
-      {c:'A-14',t:'Cross-Stakeholder Dynamics',d:'Alliance/tension mapping, coalition modelling'},
-      {c:'A-15',t:'Culture & Values',d:'Stated vs real culture, working style compatibility'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',name:'Psychology & Motive',count:5,engines:[
-      {c:'A-04',t:'Motivation Map',d:'Per-stakeholder Black Swan, hidden drivers, Kegan immunity'},
-      {c:'A-12',t:'Psych Driver Decoder',d:'6 Human Drivers + GAIN Driver cross-reference'},
-      {c:'A-13',t:'HUMINT Elicitation',d:'Conversational intel questions — modality-calibrated'},
-      {c:'A-11',t:'Engagement Plans',d:'Per-stakeholder cards: hook, value drop, calibrated ask'},
-      {c:'A-04B',t:'Panel Intelligence Synthesis',d:'Feeds A-01 through A-04 + G-03 profiles — who reads what section, calibrated to their psychology, trauma, and hidden drivers'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',name:'Commercial',count:4,engines:[
-      {c:'A-06',t:'Deal Strategy Synthesis',d:'Master execution plan — timeline, milestones, risk register'},
-      {c:'A-07',t:'Placemat Visualiser',d:'Single-page FROM / TO / BRIDGE with client language'},
-      {c:'A-09',t:'Commercial Shield',d:'Margin protection — black hole risks, defensive definitions'},
-      {c:'A-10',t:'Lever Engine',d:'Commercial variables, trade-off matrix, stakeholder-matched levers'}]}
-  ]},
-  i:{color:'#fcd34d',bg:'rgba(245,158,11,0.08)',clusters:[
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',name:'Win Strategy',count:4,engines:[
-      {c:'I-01',t:'Pre-Mortem',d:'Deep failure forensics with stakeholder cascade modelling'},
-      {c:'I-01B',t:'Lose Theme Architect',d:'Reverse-engineer why you LOSE — inoculation targets'},
-      {c:'I-02',t:'Win Theme Architect',d:'Zigzag: Lose → Win → Evidence → Verification Question'},
-      {c:'I-03',t:'Competitor Kill-Shot',d:'Ghost objections, verification questions as displacement weapons'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5z"/></svg>',name:'Narrative & Proposal',count:3,engines:[
-      {c:'I-05',t:'4-Act Executive Summary',d:'Context → Complication → Resolution → Proof'},
-      {c:'I-06',t:'Response Section Drafter',d:'Scoring-aware, trauma-aware, evaluator-calibrated'},
-      {c:'I-08',t:'Commercial Narrative',d:'Pricing story, cost-of-inaction reframe, the CFO sentence'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H2M22 5h-7M16 5a2 2 0 11-4 0 2 2 0 014 0zM15 19H2M22 19h-1M20 19a2 2 0 11-4 0 2 2 0 014 0zM12 12H2M22 12h-4M14 12a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',name:'Scoring & Audit',count:2,engines:[
-      {c:'I-04',t:'Evaluation Scoring',d:'LOCK / PUSH / CRITICAL / DEFEND per criterion'},
-      {c:'I-07',t:"Devil's Advocate",d:'Self-scoring, evidence audit, competitor shadow-scoring'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Performance',count:3,engines:[
-      {c:'I-09',t:'Orals Choreography',d:'Speaker allocation, evaluator attention map, Q&A prep'},
-      {c:'I-10',t:'Pursuit Storyboard',d:'Full timeline, backward-pass, GAIN chain status, gates'},
-      {c:'I-11',t:'Panel Dynamics Simulator',d:'Room read — models group behaviour from A-14 relationship map + attendee list. Who dominates, who defers, what you can\'t say in front of whom'}]}
-  ]},
-  n:{color:'#6ee7b7',bg:'rgba(16,185,129,0.08)',clusters:[
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>',name:'Growth & Expansion',count:4,engines:[
-      {c:'N-01',t:'Expansion Signal Scan',d:'Whitespace analysis, expansion signals from delivery data'},
-      {c:'N-02',t:'Referral Mapper',d:'Stakeholder referral willingness, cross-sell bridges'},
-      {c:'N-03',t:'90-Day Campaign',d:'Week-by-week expansion plan with qualification checkpoints'},
-      {c:'N-04',t:'Expansion Qualifier',d:'Per-letter MEDDIC scoring, Go/No-Go, pursuit cost vs return'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',name:'Defence & Risk',count:4,engines:[
-      {c:'N-05',t:'Account Health Dashboard',d:'4-dimension score, early warnings, churn prediction'},
-      {c:'N-06',t:'Renewal Risk Audit',d:'18-month assessment — value delivered vs promised'},
-      {c:'N-07',t:'New Leader Protocol',d:'New stakeholder profile, competitor bias check, 30-day plan'},
-      {c:'N-08',t:'Threat Detection Scan',d:'Competitive, political, commercial, delivery dimensions'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>',name:'Campaign & Orchestration',count:2,engines:[
-      {c:'N-12',t:'Campaign Choreography',d:'Multi-touch multi-stakeholder engagement, milestone gates'},
-      {c:'N-11',t:'Internal Business Case',d:'Honest pursue / park / walk recommendation with ROI'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',name:'Value & Reporting',count:3,engines:[
-      {c:'N-00',t:'Warning Brief',d:'Sales-to-delivery handover — promises, exclusions, landmines'},
-      {c:'N-09',t:'Board-Level Value Report',d:'Quantified value using named-process methodology'},
-      {c:'N-10',t:'Continuous Intel Monitor',d:'Delta analysis against G-01 baseline — change-only flagging'}]}
-  ]},
-  p:{color:'#fca5a5',bg:'rgba(239,68,68,0.08)',clusters:[
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4"/></svg>',name:'Documents & Plans',count:5,engines:[
-      {c:'P-01',t:'Dashboard Builder',d:'Audit, build, or compress — operational dashboard generation'},
-      {c:'P-02',t:'Account Plan Document',d:'Structured account plan — strategy to single document'},
-      {c:'P-03',t:'Board Pack Generator',d:'Board-ready document — executive summary to governance pack'},
-      {c:'P-04',t:'Case Study Builder',d:'The proof factory — structured case study from delivery data'},
-      {c:'P-05',t:'One-Pager Generator',d:'Compress any output — single-page executive brief'}]},
-    {icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Visualisation & Communication',count:4,engines:[
-      {c:'P-06',t:'Stakeholder Map Visualiser',d:'Influence diagram — power, alignment, engagement mapping'},
-      {c:'P-07',t:'Issue Register / Risk Dashboard',d:'Risk dashboard — live tracking, escalation triggers'},
-      {c:'P-08',t:'Presentation Auditor / Builder',d:'Audit or create decks — scoring-aware slide generation'},
-      {c:'P-09',t:'Communication Style Analyser',d:'Voice profiling — stakeholder-calibrated messaging'}]}
-  ]}
-};
-
-// ── Detect touch device ──
-var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-// ── Linear Wheel Interaction ──
-var lwGrid = document.getElementById('lwClusterGrid');
-var lwEngPanel = document.getElementById('lwEnginePanel');
-var lwActivePhase = null;
-var lwActiveCluster = null;
-
-// On desktop: hover opens phase, click toggles
-// On touch: tap opens/closes phase (no hover confusion)
-document.querySelectorAll('.lw-phase').forEach(function(node) {
-  if (!isTouch) {
-    node.addEventListener('mouseenter', function() {
-      var p = node.dataset.phase;
-      if (lwActivePhase === p) return;
-      lwSetActive(p);
-    });
-  }
-  node.addEventListener('click', function(e) {
-    e.preventDefault();
-    var p = node.dataset.phase;
-    if (lwActivePhase === p) { lwClearActive(); } else { lwSetActive(p); }
-  });
-});
-
-function lwSetActive(phase) {
-  lwActivePhase = phase;
-  lwActiveCluster = null;
-  lwEngPanel.classList.remove('show');
-  document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
-  var el = document.querySelector('.lw-phase[data-phase="' + phase + '"]');
-  if (el) el.classList.add('active');
-
-  var d = DATA[phase];
-  if (!lwGrid) return;
-  lwGrid.classList.remove('show');
-
-  setTimeout(function() {
-    lwGrid.innerHTML = '';
-    d.clusters.forEach(function(cl, idx) {
-      var card = document.createElement('div');
-      card.className = 'lw-cluster-card';
-      card.dataset.phase = phase;
-      card.innerHTML =
-        '<div class="lw-cl-head"><span style="color:' + d.color + '">' + cl.icon + '</span>' +
-        '<span class="lw-cl-name" style="color:' + d.color + '">' + cl.name + '</span></div>' +
-        '<div class="lw-cl-count">' + cl.count + ' engines</div>';
-
-      // Click to show engines inline (works on both touch and desktop)
-      card.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (lwActiveCluster === cl) {
-          lwEngPanel.classList.remove('show');
-          lwActiveCluster = null;
-        } else {
-          lwShowEnginesInline(cl, d.color);
-          lwActiveCluster = cl;
-        }
-      });
-
-      // Desktop hover also works
-      if (!isTouch) {
-        card.addEventListener('mouseenter', function() {
-          lwShowEnginesInline(cl, d.color);
-          lwActiveCluster = cl;
-        });
-      }
-
-      lwGrid.appendChild(card);
-    });
-    requestAnimationFrame(function() { lwGrid.classList.add('show'); });
-  }, 80);
-}
-
-function lwClearActive() {
-  lwActivePhase = null;
-  lwActiveCluster = null;
-  document.querySelectorAll('.lw-phase').forEach(function(n) { n.classList.remove('active'); });
-  if (lwGrid) lwGrid.classList.remove('show');
-  lwEngPanel.classList.remove('show');
-  setTimeout(function() { if (lwGrid) lwGrid.innerHTML = ''; }, 300);
-}
-
-function lwShowEnginesInline(cl, color) {
-  lwEngPanel.classList.remove('show');
-
-  lwEngPanel.innerHTML =
-    '<div class="eng-title" style="color:' + color + '">' + cl.icon + ' ' + cl.name + ' \u2014 ' + cl.count + ' Engines</div>' +
-    cl.engines.map(function(e) { return '<div class="eng-item"><strong>' + e.c + '</strong> ' + e.t + '<span class="desc">' + e.d + '</span></div>'; }).join('');
-
-  // Show it inline (it's now inside the tray, not fixed-position)
-  requestAnimationFrame(function() {
-    lwEngPanel.classList.add('show');
-  });
-}
-
-// ── Click outside to close ──
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.lw-phase-bar') && !e.target.closest('.lw-cluster-tray') && !e.target.closest('.lw-engine-panel')) {
-    lwClearActive();
-  }
-});
-
-// ── Scroll reveal fallback for browsers without scroll-driven animations ──
-if (!CSS.supports('animation-timeline', 'view()')) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
-
-// ── Mobile Wheel Accordion (built from same DATA object) ──
-const PHASE_META = {
-  g: { letter: 'G', name: 'Gather', sub: 'Know Them', count: 23, color: '#3b82f6', light: '#93c5fd' },
-  a: { letter: 'A', name: 'Assess', sub: 'Map Them', count: 17, color: '#a855f7', light: '#d8b4fe' },
-  i: { letter: 'I', name: 'Influence', sub: 'Win Them', count: 12, color: '#f59e0b', light: '#fcd34d' },
-  n: { letter: 'N', name: 'Nurture', sub: 'Grow Them', count: 13, color: '#10b981', light: '#6ee7b7' },
-  p: { letter: 'P', name: 'Present', sub: 'Show Them', count: 9, color: '#ef4444', light: '#fca5a5' }
-};
-
-function buildMobileWheel() {
-  const container = document.getElementById('mobileWheel');
-  if (!container) return;
-
-  let html = '';
-  for (const [key, phase] of Object.entries(DATA)) {
-    const meta = PHASE_META[key];
-    html += `<div class="mw-phase" data-mw-phase="${key}">
-      <div class="mw-phase-header" onclick="toggleMWPhase(this)">
-        <div class="mw-letter" style="color:${meta.light};border-color:${meta.color}30;background:radial-gradient(circle,${meta.color}15,${meta.color}05)">${meta.letter}</div>
-        <div class="mw-phase-info">
-          <div class="mw-phase-name" style="color:${meta.light}">${meta.name}</div>
-          <div class="mw-phase-sub">${meta.sub}</div>
-        </div>
-        <div class="mw-phase-count">${meta.count} engines</div>
-        <div class="mw-chevron">&#x25BE;</div>
-      </div>
-      <div class="mw-clusters"><div class="mw-clusters-inner">`;
-
-    for (const cl of phase.clusters) {
-      html += `<div class="mw-cluster">
-        <div class="mw-cluster-header" onclick="toggleMWCluster(this)">
-          <span class="mw-cl-icon">${cl.icon}</span>
-          <span class="mw-cl-name" style="color:${meta.light}">${cl.name}</span>
-          <span class="mw-cl-count">${cl.count}</span>
-          <span class="mw-cl-chevron">&#x25BE;</span>
-        </div>
-        <div class="mw-engines"><div class="mw-engines-inner">`;
-
-      for (const eng of cl.engines) {
-        html += `<div class="mw-engine">
-          <span class="mw-engine-code" style="color:${meta.light}">${eng.c}</span>
-          <span class="mw-engine-title">${eng.t}</span>
-          <div class="mw-engine-desc">${eng.d}</div>
-        </div>`;
-      }
-
-      html += `</div></div></div>`;
-    }
-
-    html += `</div></div></div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-// ── Spring-like height animation using Web Animations API ──
-const SPRING_EASE = 'cubic-bezier(0.32, 0.72, 0, 1.0)';
-
-function animateHeight(el, from, to, duration, onDone) {
-  const anim = el.animate(
-    [{ height: from + 'px' }, { height: to + 'px' }],
-    { duration, easing: SPRING_EASE, fill: 'forwards' }
-  );
-  anim.onfinish = () => {
-    el.style.height = to === 0 ? '0px' : 'auto';
-    anim.cancel();
-    if (onDone) onDone();
-  };
-}
-
-function toggleMWPhase(header) {
-  const phase = header.parentElement;
-  const wasOpen = phase.classList.contains('open');
-  const clusters = phase.querySelector('.mw-clusters');
-
-  // Close all other phases
-  document.querySelectorAll('.mw-phase.open').forEach(p => {
-    if (p === phase) return;
-    const c = p.querySelector('.mw-clusters');
-    const h = c.scrollHeight;
-    p.classList.remove('open');
-    p.querySelectorAll('.mw-cluster.open').forEach(cl => {
-      cl.classList.remove('open');
-      cl.querySelector('.mw-engines').style.height = '0px';
-    });
-    animateHeight(c, h, 0, 280);
-  });
-
-  if (wasOpen) {
-    const h = clusters.scrollHeight;
-    phase.classList.remove('open');
-    phase.querySelectorAll('.mw-cluster.open').forEach(cl => {
-      cl.classList.remove('open');
-      cl.querySelector('.mw-engines').style.height = '0px';
-    });
-    animateHeight(clusters, h, 0, 250);
-  } else {
-    phase.classList.add('open');
-    clusters.style.height = 'auto';
-    const targetH = clusters.scrollHeight;
-    clusters.style.height = '0px';
-    requestAnimationFrame(() => {
-      animateHeight(clusters, 0, targetH, 350);
-    });
-  }
-}
-
-function toggleMWCluster(header) {
-  const cluster = header.parentElement;
-  const engines = cluster.querySelector('.mw-engines');
-  const wasOpen = cluster.classList.contains('open');
-
-  if (wasOpen) {
-    const h = engines.scrollHeight;
-    cluster.classList.remove('open');
-    animateHeight(engines, h, 0, 220);
-  } else {
-    cluster.classList.add('open');
-    engines.style.height = 'auto';
-    const targetH = engines.scrollHeight;
-    engines.style.height = '0px';
-    requestAnimationFrame(() => {
-      animateHeight(engines, 0, targetH, 300);
-    });
-
-    const parentClusters = cluster.closest('.mw-clusters');
-    if (parentClusters && parentClusters.style.height !== 'auto') {
-      parentClusters.style.height = 'auto';
-    }
-  }
-}
-
-buildMobileWheel();
+const DATA={g:{color:'#93c5fd',bg:'rgba(59,130,246,0.08)',clusters:[{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-8"/></svg>',name:'Company Intel',count:6,engines:[{c:'G-01',t:'Macro Intel',d:'13-pillar framework, BPF Seed, CEO comp, risk persistence, bleeding necks'},{c:'G-02',t:'Financial Forensics',d:'P&L Waterfall, peer benchmarking, credit trajectory, cost of inaction'},{c:'G-02B',t:'Commercial Viability',d:'Credit risk, debt capacity, ACFE red flags, can-they-pay gate'},{c:'G-08',t:'Budget Cycle Predictor',d:'Fiscal position, compelled event stack, CEO comp cycle, BPF timing'},{c:'G-15',t:'Cross-Reference Engine',d:'Narrative gaps between website, financials, individuals'},{c:'G-17',t:'Source Scraping Protocol',d:'Operator checklist for gathering all source material'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20v-1a7 7 0 0114 0v1"/></svg>',name:'Stakeholder Psych',count:5,engines:[{c:'G-03',t:'Executive Intelligence',d:'Kegan stage, GAIN driver, comp-driven behaviour, vendor loyalty, executive playbook'},{c:'G-03B',t:'Compound Assimilator',d:'Reads ACROSS profiles \u2014 coalitions, fault lines, shadow hierarchy, Kegan conflicts, swing voters'},{c:'G-09',t:'Compact Profile',d:'Quick cheat sheet \u2014 one question, one landmine per person'},{c:'G-18',t:'Belief System Decoder',d:'NLP meta-programs, core convictions, risk architecture, trust equation, pitch prediction'},{c:'G-16',t:'NED Governance Map',d:'Board committees, NED influence scoring, warm intro network'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>',name:'Competitive Intel',count:3,engines:[{c:'G-04',t:'Battle Card',d:'Status Quo Disruptor questions, stakeholder-specific intelligence'},{c:'G-10',t:'Hiring Signal Decoder',d:'Hidden mandate and headcount cost from job descriptions'},{c:'G-19',t:'Narrative Gap Finder',d:'BPF Jelly gaps, comp-strategy gaps, risk persistence, blueprint gaps'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2h8l4 10H4z"/><path d="M12 12v10M8 22h8"/></svg>',name:'Meeting Prep',count:5,engines:[{c:'G-05',t:'First 15 Minutes',d:'Meeting scripts calibrated to stakeholder psychology'},{c:'G-06',t:'Narrative Lock',d:'Single controlling narrative tested against all stakeholders'},{c:'G-07',t:'9-Pillar Compact',d:'Rapid 3-minute pre-meeting brief across 9 intelligence pillars'},{c:'G-11',t:'Slide Relevancy Audit',d:'KEEP / CUT / MODIFY / REORDER / CREATE on your deck'},{c:'G-21',t:'Call Planner',d:'7-module meeting architect \u2014 objectives, dialogue arc, stakeholder cards, discovery, objection pre-load'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M12 3l8 4v5c0 5.25-3.5 9.74-8 11-4.5-1.26-8-5.75-8-11V7z"/></svg>',name:'Quality & Evidence',count:5,engines:[{c:'G-12',t:'Pre-Mortem',d:'5 failure scenarios with pre-emptive actions and accusation audits'},{c:'G-13',t:'Objection Prep',d:'Per-stakeholder objections with accusation audits, pivots'},{c:'G-14',t:'Hallucination Check',d:'Fact-verification of any GAIN output against source material'},{c:'G-20',t:'Customer Evidence Builder',d:'G-22 alignment, 00-D proof check, comp-calibrated evidence, vendor displacement'},{c:'G-22',t:'Strategic Intelligence Waterfall',d:'The Crown Jewel \u2014 668-line master waterfall, 6 sections, 14 frameworks, sector auto-detect'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>',name:'Penetration',count:1,engines:[{c:'G-23',t:'Approach Architect',d:'Attack vector design \u2014 medium, format, sensory triggers, bespoke landing pages, psychological framing'}]}]},a:{color:'#d8b4fe',bg:'rgba(168,85,247,0.08)',clusters:[{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4M8 13h.01M8 17h.01"/></svg>',name:'RFP & Complexity',count:4,engines:[{c:'A-01',t:'RFP Strategic Decoder',d:'Authorship analysis, RFP reality check, budget sanity, sponsor incentive'},{c:'A-02',t:'Trauma Decoder',d:'Organisational wounds \u2014 past failures shaping requirements'},{c:'A-08',t:'Logic Engine',d:'Complexity scoping, silent killer detection, decision trees'},{c:'A-16',t:'TUPE Mapper',d:'People transfer risk, fear factors, institutional DNA'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',name:'Power & Influence',count:4,engines:[{c:'A-03',t:'Stakeholder Discovery',d:'Entity extraction from all sources, missing person gap analysis'},{c:'A-05',t:'Authority Map',d:'Formal vs informal power, shadow decision-makers, veto map, real approval chain'},{c:'A-14',t:'Cross-Stakeholder Dynamics',d:'Two-layer engine \u2014 static relationship map + live cross-meeting contamination, borrowed authority, narrative consistency'},{c:'A-15',t:'Culture & Values',d:'Stated vs real culture, working style compatibility'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',name:'Psychology & Motive',count:5,engines:[{c:'A-04',t:'Motivation Map',d:'Per-stakeholder Black Swan, hidden drivers, Kegan immunity'},{c:'A-04B',t:'Panel Intelligence Synthesis',d:'Evaluator-to-section routing \u2014 who reads what, calibrated to psychology, trauma, comp'},{c:'A-12',t:'Psych Driver Decoder',d:'6 Human Drivers + GAIN Driver cross-reference'},{c:'A-13',t:'HUMINT Elicitation',d:'Conversational intel questions \u2014 modality-calibrated'},{c:'A-11',t:'Engagement Plans',d:'Per-stakeholder cards: hook, value drop, calibrated ask'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>',name:'Commercial',count:4,engines:[{c:'A-06',t:'Deal Strategy Synthesis',d:'Master execution plan \u2014 timeline, milestones, risk register'},{c:'A-07',t:'Placemat Visualiser',d:'Single-page FROM / TO / BRIDGE with client language'},{c:'A-09',t:'Commercial Shield',d:'Margin protection \u2014 black hole risks, defensive definitions'},{c:'A-10',t:'Lever Engine',d:'Commercial variables, trade-off matrix, stakeholder-matched levers'}]}]},i:{color:'#fcd34d',bg:'rgba(245,158,11,0.08)',clusters:[{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',name:'Win Strategy',count:4,engines:[{c:'I-01',t:'Pre-Mortem',d:'10 failure scenarios incl comp-inertia, vendor loyalty, jelly stall \u2014 cascade modelling'},{c:'I-01B',t:'Lose Theme Architect',d:'Vendor loyalty + comp misalignment as lose themes \u2014 information shadow, priority matrix'},{c:'I-02',t:'Win Theme Architect',d:'Zigzag: Lose \u2192 Win \u2192 Evidence \u2192 Verification Question + Harvard frameworks'},{c:'I-03',t:'Competitor Kill-Shot',d:'Ghost objections, verification questions as displacement weapons'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5z"/></svg>',name:'Narrative & Proposal',count:3,engines:[{c:'I-05',t:'4-Act Executive Summary',d:'Context \u2192 Complication \u2192 Resolution \u2192 Proof'},{c:'I-06',t:'Response Section Drafter',d:'Scoring-aware, trauma-aware, evaluator-calibrated'},{c:'I-08',t:'Commercial Narrative',d:'Pricing story, cost-of-inaction reframe, the CFO sentence'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H2M22 5h-7M16 5a2 2 0 11-4 0 2 2 0 014 0zM15 19H2M22 19h-1M20 19a2 2 0 11-4 0 2 2 0 014 0zM12 12H2M22 12h-4M14 12a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',name:'Scoring & Audit',count:2,engines:[{c:'I-04',t:'Evaluation Scoring',d:'LOCK / PUSH / CRITICAL / DEFEND per criterion'},{c:'I-07',t:"Devil's Advocate",d:'Self-scoring, evidence audit, competitor shadow-scoring'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Performance',count:3,engines:[{c:'I-09',t:'Orals Choreography',d:'Speaker allocation, evaluator attention map, Q&A prep'},{c:'I-10',t:'Pursuit Storyboard',d:'Full timeline, backward-pass, GAIN chain status, gates'},{c:'I-11',t:'Panel Dynamics Simulator',d:'Room read \u2014 models group behaviour, dominance, deference, energy prediction, danger map, Q&A threat matrix'}]}]},n:{color:'#6ee7b7',bg:'rgba(16,185,129,0.08)',clusters:[{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>',name:'Growth & Expansion',count:4,engines:[{c:'N-01',t:'Expansion Signal Scan',d:'Whitespace analysis, expansion signals from delivery data'},{c:'N-02',t:'Referral Mapper',d:'Stakeholder referral willingness, cross-sell bridges'},{c:'N-03',t:'90-Day Campaign',d:'Week-by-week expansion plan with qualification checkpoints'},{c:'N-04',t:'Expansion Qualifier',d:'Per-letter MEDDIC scoring, Go/No-Go, pursuit cost vs return'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',name:'Defence & Risk',count:4,engines:[{c:'N-05',t:'Account Health Dashboard',d:'4-dimension score, early warnings, churn prediction'},{c:'N-06',t:'Renewal Risk Audit',d:'18-month assessment \u2014 value delivered vs promised'},{c:'N-07',t:'New Leader Protocol',d:'New stakeholder profile, competitor bias check, 30-day plan'},{c:'N-08',t:'Threat Detection Scan',d:'Competitive, political, commercial, delivery dimensions'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>',name:'Campaign & Orchestration',count:2,engines:[{c:'N-12',t:'Campaign Choreography',d:'Multi-touch multi-stakeholder engagement, milestone gates'},{c:'N-11',t:'Internal Business Case',d:'Honest pursue / park / walk recommendation with ROI'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>',name:'Value & Reporting',count:3,engines:[{c:'N-00',t:'Warning Brief',d:'Sales-to-delivery handover \u2014 promises, exclusions, landmines'},{c:'N-09',t:'Board-Level Value Report',d:'Quantified value using named-process methodology'},{c:'N-10',t:'Continuous Intel Monitor',d:'Delta analysis against G-01 baseline \u2014 change-only flagging'}]}]},p:{color:'#fca5a5',bg:'rgba(239,68,68,0.08)',clusters:[{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M10 13h4M10 17h4"/></svg>',name:'Documents & Plans',count:6,engines:[{c:'P-01',t:'Dashboard Builder',d:'Audit, build, or compress \u2014 operational dashboard generation'},{c:'P-02',t:'Account Plan Document',d:'Structured account plan \u2014 strategy to single document'},{c:'P-03',t:'Board Pack Generator',d:'Board-ready document \u2014 executive summary to governance pack'},{c:'P-04',t:'Case Study Builder',d:'The proof factory \u2014 structured case study from delivery data'},{c:'P-05',t:'One-Pager Generator',d:'Compress any output \u2014 single-page executive brief'},{c:'P-10',t:'Diagnostic Output Formatter',d:'Scale depth to audience \u2014 CEO 1pg, Director 3pg, Manager 5-8pg, Analyst full'}]},{icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',name:'Visualisation & Communication',count:4,engines:[{c:'P-06',t:'Stakeholder Map Visualiser',d:'Influence diagram \u2014 power, alignment, engagement mapping'},{c:'P-07',t:'Issue Register / Risk Dashboard',d:'Risk dashboard \u2014 live tracking, escalation triggers'},{c:'P-08',t:'Presentation Auditor / Builder',d:'Audit or create decks \u2014 scoring-aware slide generation'},{c:'P-09',t:'Communication Style Analyser',d:'Voice profiling \u2014 stakeholder-calibrated messaging'}]}]}};
+var isTouch=('ontouchstart' in window)||(navigator.maxTouchPoints>0);var lwGrid=document.getElementById('lwClusterGrid');var lwEngPanel=document.getElementById('lwEnginePanel');var lwActivePhase=null;var lwActiveCluster=null;document.querySelectorAll('.lw-phase').forEach(function(node){if(!isTouch){node.addEventListener('mouseenter',function(){var p=node.dataset.phase;if(lwActivePhase===p)return;lwSetActive(p)});}node.addEventListener('click',function(e){e.preventDefault();var p=node.dataset.phase;if(lwActivePhase===p){lwClearActive();}else{lwSetActive(p);}});});function lwSetActive(phase){lwActivePhase=phase;lwActiveCluster=null;lwEngPanel.classList.remove('show');document.querySelectorAll('.lw-phase').forEach(function(n){n.classList.remove('active');});var el=document.querySelector('.lw-phase[data-phase="'+phase+'"]');if(el)el.classList.add('active');var d=DATA[phase];if(!lwGrid)return;lwGrid.classList.remove('show');setTimeout(function(){lwGrid.innerHTML='';d.clusters.forEach(function(cl,idx){var card=document.createElement('div');card.className='lw-cluster-card';card.dataset.phase=phase;card.innerHTML='<div class="lw-cl-head"><span style="color:'+d.color+'">'+cl.icon+'</span>'+'<span class="lw-cl-name" style="color:'+d.color+'">'+cl.name+'</span></div>'+'<div class="lw-cl-count">'+cl.count+' engines</div>';card.addEventListener('click',function(e){e.stopPropagation();if(lwActiveCluster===cl){lwEngPanel.classList.remove('show');lwActiveCluster=null;}else{lwShowEnginesInline(cl,d.color);lwActiveCluster=cl;}});if(!isTouch){card.addEventListener('mouseenter',function(){lwShowEnginesInline(cl,d.color);lwActiveCluster=cl;});}lwGrid.appendChild(card);});requestAnimationFrame(function(){lwGrid.classList.add('show');});},80);}function lwClearActive(){lwActivePhase=null;lwActiveCluster=null;document.querySelectorAll('.lw-phase').forEach(function(n){n.classList.remove('active');});if(lwGrid)lwGrid.classList.remove('show');lwEngPanel.classList.remove('show');setTimeout(function(){if(lwGrid)lwGrid.innerHTML='';},300);}function lwShowEnginesInline(cl,color){lwEngPanel.classList.remove('show');lwEngPanel.innerHTML='<div class="eng-title" style="color:'+color+'">'+cl.icon+' '+cl.name+' \u2014 '+cl.count+' Engines</div>'+cl.engines.map(function(e){return'<div class="eng-item"><strong>'+e.c+'</strong> '+e.t+'<span class="desc">'+e.d+'</span></div>';}).join('');requestAnimationFrame(function(){lwEngPanel.classList.add('show');});}document.addEventListener('click',function(e){if(!e.target.closest('.lw-phase-bar')&&!e.target.closest('.lw-cluster-tray')&&!e.target.closest('.lw-engine-panel')){lwClearActive();}});if(!CSS.supports('animation-timeline','view()')){const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');}});},{threshold:0.1});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));}
+const PHASE_META={g:{letter:'G',name:'Gather',sub:'Know Them',count:25,color:'#3b82f6',light:'#93c5fd'},a:{letter:'A',name:'Assess',sub:'Map Them',count:17,color:'#a855f7',light:'#d8b4fe'},i:{letter:'I',name:'Influence',sub:'Win Them',count:12,color:'#f59e0b',light:'#fcd34d'},n:{letter:'N',name:'Nurture',sub:'Grow Them',count:13,color:'#10b981',light:'#6ee7b7'},p:{letter:'P',name:'Present',sub:'Show Them',count:10,color:'#ef4444',light:'#fca5a5'}};
+function buildMobileWheel(){const container=document.getElementById('mobileWheel');if(!container)return;let html='';for(const[key,phase]of Object.entries(DATA)){const meta=PHASE_META[key];html+=`<div class="mw-phase" data-mw-phase="${key}"><div class="mw-phase-header" onclick="toggleMWPhase(this)"><div class="mw-letter" style="color:${meta.light};border-color:${meta.color}30;background:radial-gradient(circle,${meta.color}15,${meta.color}05)">${meta.letter}</div><div class="mw-phase-info"><div class="mw-phase-name" style="color:${meta.light}">${meta.name}</div><div class="mw-phase-sub">${meta.sub}</div></div><div class="mw-phase-count">${meta.count} engines</div><div class="mw-chevron">&#x25BE;</div></div><div class="mw-clusters"><div class="mw-clusters-inner">`;for(const cl of phase.clusters){html+=`<div class="mw-cluster"><div class="mw-cluster-header" onclick="toggleMWCluster(this)"><span class="mw-cl-icon">${cl.icon}</span><span class="mw-cl-name" style="color:${meta.light}">${cl.name}</span><span class="mw-cl-count">${cl.count}</span><span class="mw-cl-chevron">&#x25BE;</span></div><div class="mw-engines"><div class="mw-engines-inner">`;for(const eng of cl.engines){html+=`<div class="mw-engine"><span class="mw-engine-code" style="color:${meta.light}">${eng.c}</span><span class="mw-engine-title">${eng.t}</span><div class="mw-engine-desc">${eng.d}</div></div>`;}html+=`</div></div></div>`;}html+=`</div></div></div>`;}container.innerHTML=html;}
+const SPRING_EASE='cubic-bezier(0.32, 0.72, 0, 1.0)';function animateHeight(el,from,to,duration,onDone){const anim=el.animate([{height:from+'px'},{height:to+'px'}],{duration,easing:SPRING_EASE,fill:'forwards'});anim.onfinish=()=>{el.style.height=to===0?'0px':'auto';anim.cancel();if(onDone)onDone();};}function toggleMWPhase(header){const phase=header.parentElement;const wasOpen=phase.classList.contains('open');const clusters=phase.querySelector('.mw-clusters');document.querySelectorAll('.mw-phase.open').forEach(p=>{if(p===phase)return;const c=p.querySelector('.mw-clusters');const h=c.scrollHeight;p.classList.remove('open');p.querySelectorAll('.mw-cluster.open').forEach(cl=>{cl.classList.remove('open');cl.querySelector('.mw-engines').style.height='0px';});animateHeight(c,h,0,280);});if(wasOpen){const h=clusters.scrollHeight;phase.classList.remove('open');phase.querySelectorAll('.mw-cluster.open').forEach(cl=>{cl.classList.remove('open');cl.querySelector('.mw-engines').style.height='0px';});animateHeight(clusters,h,0,250);}else{phase.classList.add('open');clusters.style.height='auto';const targetH=clusters.scrollHeight;clusters.style.height='0px';requestAnimationFrame(()=>{animateHeight(clusters,0,targetH,350);});}}function toggleMWCluster(header){const cluster=header.parentElement;const engines=cluster.querySelector('.mw-engines');const wasOpen=cluster.classList.contains('open');if(wasOpen){const h=engines.scrollHeight;cluster.classList.remove('open');animateHeight(engines,h,0,220);}else{cluster.classList.add('open');engines.style.height='auto';const targetH=engines.scrollHeight;engines.style.height='0px';requestAnimationFrame(()=>{animateHeight(engines,0,targetH,300);});const parentClusters=cluster.closest('.mw-clusters');if(parentClusters&&parentClusters.style.height!=='auto'){parentClusters.style.height='auto';}}}buildMobileWheel();
 </script>
 </body>
 </html>
