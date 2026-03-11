@@ -1,528 +1,584 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAIN Deal Diagnostic | Project Atlas — Meridian Technology Group</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        :root{--bg:#030712;--surface:#0d1117;--surface2:rgba(17,24,39,0.6);--border:#1f2937;--border2:#374151;--text:#f3f4f6;--muted:#9ca3af;--dim:#6b7280;--faint:#4b5563;--green:#10b981;--amber:#f59e0b;--orange:#f97316;--red:#ef4444;--blue:#3b82f6;--purple:#a855f7;--cyan:#06b6d4}
-        html{scroll-behavior:smooth}
-        body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;font-size:14px}
-        ::selection{background:var(--blue);color:white}
-        .mono{font-family:'JetBrains Mono',monospace}
-        .label{font-size:9px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAIN Deal Diagnostic — Project Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f; --surface:#0e1118; --border:#1c2030; --border2:#252c3e;
+  --text:#e2e8f0; --muted:#64748b; --dim:#374151; --faint:#1e293b;
+  --green:#10b981; --amber:#f59e0b; --orange:#f97316;
+  --red:#ef4444; --blue:#3b82f6; --purple:#a78bfa; --cyan:#06b6d4;
+  --font:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;min-height:100vh;-webkit-font-smoothing:antialiased;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(239,68,68,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(239,68,68,.018) 1px,transparent 1px);background-size:44px 44px;}
+#wrap{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 0 80px;}
 
-        .header{background:linear-gradient(180deg,#0f172a 0%,var(--bg) 100%);border-bottom:1px solid var(--border);padding:32px 24px 24px}
-        .header-inner{max-width:1100px;margin:0 auto}
-        .header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px}
-        .header h1{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-0.02em;color:white}
-        .meta-pills{display:flex;gap:8px;flex-wrap:wrap}
-        .meta-pill{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--muted)}
-        .verdict-strip{display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:10px;border:1px solid;margin-top:16px}
-        .verdict-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+/* ── HEADER ── */
+.hdr{border-bottom:1px solid var(--border);display:grid;grid-template-columns:minmax(0,1fr) 560px;background:linear-gradient(180deg,rgba(239,68,68,.04) 0%,transparent 100%);}
+.hdr-l{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:22px 32px 22px 40px;border-right:1px solid var(--border);min-width:0;}
+.hdr-eyebrow{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red);font-family:var(--mono);}
+.hdr-title{font-family:var(--font);font-size:26px;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.5px;white-space:nowrap;}
+.hdr-sub{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hdr-r{display:grid;grid-template-columns:1fr 1fr;}
+.hdr-cell{padding:18px 24px;border-left:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;min-width:140px;}
+.hdr-cell:nth-child(2n+1){border-left:none;}
+.hdr-cell-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:5px;}
+.hdr-cell-val{font-family:var(--font)!important;font-weight:800!important;line-height:1.1;letter-spacing:-.5px;}
+.hdr-cell-sub{font-size:10px;color:var(--muted);margin-top:4px;font-family:var(--mono);}
 
-        .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:-16px auto 0;padding:0 24px;position:relative;z-index:2}
-        .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
-        .kpi-value{font-size:24px;font-weight:900;color:white;line-height:1;margin:4px 0}
-        .kpi-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim)}
+/* ── VERDICT BANNER ── */
+.vrd{margin:20px 40px 0;padding:14px 20px;border:1px solid rgba(239,68,68,.4);border-left:3px solid var(--red);background:rgba(239,68,68,.05);display:flex;align-items:flex-start;gap:14px;}
+.vrd-tag{font-family:var(--font);font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--red);background:rgba(239,68,68,.12);padding:4px 10px;border:1px solid rgba(239,68,68,.3);white-space:nowrap;flex-shrink:0;}
+.vrd-txt{font-size:12px;color:#cbd5e1;line-height:1.5;font-family:var(--mono);}
 
-        .main{max-width:1100px;margin:0 auto;padding:24px}
-        .section{margin-bottom:32px}
-        .section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-        .section-header h2{font-size:12px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
-        .section-bar{flex:1;height:1px;background:var(--border)}
+/* ── KPI ROW ── */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;margin:20px 40px 0;border:1px solid var(--border);background:var(--border);}
+.kpi{background:var(--surface);padding:13px 15px;text-align:center;}
+.kpi-l{font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:4px;}
+.kpi-v{font-family:var(--font)!important;font-size:22px;font-weight:800!important;color:#fff;letter-spacing:-.5px;line-height:1;}
+.kpi-s{font-size:9px;color:var(--muted);font-family:var(--mono);margin-top:3px;}
 
-        .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+/* ── TABS ── */
+.tabs{display:flex;margin:26px 40px 0;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.tab{padding:10px 18px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;font-family:var(--mono);}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--red);border-bottom-color:var(--red);}
 
-        /* STAKEHOLDER MAP */
-        .smap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
-        .smap-card{border-left:3px solid;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;position:relative}
-        .smap-name{font-size:14px;font-weight:700;color:white}
-        .smap-title{font-size:11px;color:var(--dim);margin-bottom:8px}
-        .smap-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-        .smap-label{font-size:10px;color:var(--dim)}
-        .smap-val{font-size:10px;font-weight:600}
-        .smap-bar{height:4px;background:#1e293b;border-radius:4px;overflow:hidden;margin-top:2px}
-        .smap-bar-fill{height:100%;border-radius:4px}
-        .smap-badge{position:absolute;top:10px;right:10px;font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;border-radius:3px}
-        .smap-warning{font-size:10px;color:var(--red);margin-top:8px;display:flex;align-items:flex-start;gap:4px}
+/* ── CONTENT ── */
+.content{padding:26px 40px 0;}
+.tab-pane{display:none;}
+.tab-pane.on{display:block;animation:fadeIn .2s ease-out;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 
-        /* EVIDENCE AUDIT */
-        .evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-        .evidence-card{padding:14px 16px;border-left:3px solid}
-        .evidence-claim{font-size:13px;font-weight:600;color:white;margin-bottom:4px}
-        .evidence-status{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
-        .evidence-detail{font-size:12px;color:var(--muted);line-height:1.5}
+/* ── SECTION ── */
+.sec{margin-bottom:18px;border:1px solid var(--border);}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;cursor:pointer;background:rgba(255,255,255,.02);user-select:none;}
+.sec-hd:hover{background:rgba(255,255,255,.035);}
+.sec-id{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:2px;font-family:var(--mono);}
+.sec-title{font-family:var(--font);font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px;}
+.sec-sub{font-size:10px;color:var(--muted);margin-top:1px;display:block;font-family:var(--mono);}
+.sec-body{padding:17px;border-top:1px solid var(--border);}
+.tog{font-size:15px;color:var(--muted);transition:.15s;}
+.tog.o{transform:rotate(180deg);}
 
-        /* TIMELINE */
-        .timeline{position:relative;padding-left:24px}
-        .timeline::before{content:'';position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--border)}
-        .tl-item{position:relative;margin-bottom:16px;padding-left:20px}
-        .tl-dot{position:absolute;left:-20px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid}
-        .tl-date{font-size:10px;font-weight:600;color:var(--dim);margin-bottom:2px}
-        .tl-event{font-size:13px;color:var(--muted);line-height:1.5}
-        .tl-flag{font-size:10px;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:4px}
+/* ── BADGE ── */
+.bdg{display:inline-block;padding:2px 8px;font-size:9px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;border:1px solid;border-radius:2px;font-family:var(--mono);}
+.bdg-r{color:#fca5a5;border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.1);}
+.bdg-a{color:#fcd34d;border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.1);}
+.bdg-g{color:#6ee7b7;border-color:rgba(16,185,129,.4);background:rgba(16,185,129,.1);}
+.bdg-b{color:#93c5fd;border-color:rgba(59,130,246,.4);background:rgba(59,130,246,.1);}
+.bdg-o{color:#fdba74;border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.1);}
+.bdg-gr{color:#9ca3af;border-color:rgba(156,163,175,.3);background:rgba(156,163,175,.07);}
 
-        /* CRM SIGNALS */
-        .crm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
-        .crm-card{border-top:2px solid var(--cyan);padding:14px 16px}
-        .crm-signal{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-        .crm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .crm-name{font-size:12px;font-weight:600;color:white}
-        .crm-value{font-size:11px;color:var(--muted)}
-        .crm-divider{height:1px;background:var(--border);margin:8px 0}
+/* ── STAKEHOLDER CARDS ── */
+.smap{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:11px;}
+.sc{border:1px solid var(--border);padding:15px;background:rgba(255,255,255,.02);position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.sc-missing{border-style:dashed;background:rgba(239,68,68,.02);}
+.sc-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px;}
+.sc-role{font-size:10px;color:var(--muted);margin-bottom:10px;font-family:var(--mono);}
+.sc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.sc-lbl{font-size:10px;color:var(--muted);font-family:var(--mono);}
+.sc-val{font-size:10px;font-weight:700;}
+.sc-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin:3px 0 8px;}
+.sc-bar-f{height:100%;border-radius:2px;}
+.sc-warn{font-size:10px;color:var(--red);margin-top:8px;line-height:1.5;font-family:var(--mono);}
+.sc-badge{position:absolute;top:10px;right:10px;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;font-family:var(--mono);}
 
-        /* PROBLEM DETECTION */
-        .prob-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px}
-        .prob-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(17,24,39,0.3);border:1px solid rgba(31,41,55,0.4);border-radius:8px}
-        .prob-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-        .prob-name{font-size:12px;font-weight:700;color:white}
-        .prob-code{font-size:9px;color:var(--dim);margin-left:4px}
-        .prob-status{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-left:auto;flex-shrink:0}
+/* ── EVIDENCE ── */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+.ev-card{padding:14px 16px;border:1px solid var(--border);border-left:3px solid;background:rgba(255,255,255,.015);}
+.ev-claim{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;}
+.ev-status{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;font-family:var(--mono);}
+.ev-detail{font-size:11px;color:var(--muted);line-height:1.6;font-family:var(--mono);}
 
-        /* PRESCRIPTION */
-        .rx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-        .rx-card{padding:14px 16px;border-left:3px solid var(--blue)}
-        .rx-step{font-size:9px;font-weight:700;color:var(--blue);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px}
-        .rx-name{font-size:13px;font-weight:700;color:white;margin-bottom:4px}
-        .rx-desc{font-size:11px;color:var(--muted);line-height:1.5}
-        .rx-time{font-size:10px;color:var(--dim);margin-top:6px}
+/* ── TIMELINE ── */
+.tl{position:relative;padding-left:28px;}
+.tl::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1px;background:var(--border);}
+.tl-item{position:relative;margin-bottom:18px;padding-left:16px;}
+.tl-dot{position:absolute;left:-21px;top:3px;width:12px;height:12px;border-radius:50%;border:2px solid;}
+.tl-date{font-size:10px;font-weight:600;color:var(--muted);margin-bottom:3px;font-family:var(--mono);}
+.tl-event{font-size:12px;color:#94a3b8;line-height:1.6;}
+.tl-flag{font-size:10px;font-weight:700;margin-top:5px;font-family:var(--mono);}
 
-        /* VERDICT */
-        .verdict-section{margin-top:40px;padding:28px;border-radius:16px;border:2px solid;text-align:center}
-        .verdict-label2{font-size:11px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
-        .verdict-title{font-size:clamp(24px,4vw,36px);font-weight:900;color:white;margin-bottom:12px}
-        .verdict-text{font-size:14px;color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto 20px}
+/* ── CRM ── */
+.crm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;}
+.crm-card{border:1px solid var(--border);border-top:2px solid var(--cyan);padding:14px 16px;background:rgba(255,255,255,.015);}
+.crm-sig{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.crm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.crm-name{font-size:12px;font-weight:700;color:#fff;}
+.crm-val{font-size:11px;color:var(--muted);font-family:var(--mono);line-height:1.5;margin-bottom:8px;}
+.crm-div{height:1px;background:var(--border);margin:8px 0;}
 
-        .dashboard-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);margin-top:48px}
-        .dashboard-footer p{font-size:10px;color:var(--faint)}
+/* ── PROBLEMS ── */
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
+.prob-item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border:1px solid var(--border);background:rgba(255,255,255,.01);}
+.prob-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.prob-name{font-size:12px;font-weight:700;color:#fff;}
+.prob-code{font-size:9px;color:var(--muted);font-family:var(--mono);margin-left:5px;}
+.prob-detail{font-size:11px;color:var(--muted);margin-top:3px;font-family:var(--mono);line-height:1.5;}
+.prob-status{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;flex-shrink:0;font-family:var(--mono);}
 
-        .tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
-        .tab{font-size:11px;font-weight:600;padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
-        .tab:hover{border-color:var(--border2);color:white}
-        .tab.active{border-color:var(--blue);color:var(--blue);background:rgba(59,130,246,0.08)}
-        .tab-content{display:none}
-        .tab-content.active{display:block;animation:fadeIn 0.25s ease-out}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* ── PRESCRIPTION ── */
+.rx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
+.rx-card{padding:14px 16px;border:1px solid var(--border);border-left:3px solid var(--blue);background:rgba(255,255,255,.015);}
+.rx-step{font-size:9px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;font-family:var(--mono);}
+.rx-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;}
+.rx-desc{font-size:11px;color:var(--muted);line-height:1.6;font-family:var(--mono);}
+.rx-time{font-size:10px;color:var(--muted);margin-top:8px;font-family:var(--mono);border-top:1px solid var(--border);padding-top:6px;}
 
-        @media(max-width:640px){
-            .smap-grid,.evidence-grid,.crm-grid,.prob-list,.rx-grid{grid-template-columns:1fr}
-            .kpi-row{grid-template-columns:repeat(3,1fr)}
-        }
-    </style>
+/* ── FINAL VERDICT ── */
+.final-vrd{margin:32px 40px 0;padding:32px;border:2px solid rgba(239,68,68,.4);background:rgba(239,68,68,.03);text-align:center;}
+.fv-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:10px;font-family:var(--mono);}
+.fv-title{font-family:var(--font);font-size:clamp(26px,4vw,40px);font-weight:900;color:#fff;margin-bottom:14px;letter-spacing:-.5px;}
+.fv-text{font-size:13px;color:var(--muted);line-height:1.8;max-width:680px;margin:0 auto 20px;font-family:var(--mono);}
+
+/* ── FOOTER ── */
+.ftr{margin:48px 40px 0;border-top:1px solid var(--border);padding-top:14px;text-align:center;}
+.ftr span{font-size:10px;color:#2d3a4d;font-family:var(--mono);}
+
+@media(max-width:700px){
+  .hdr{grid-template-columns:1fr;}
+  .hdr-r{grid-template-columns:1fr 1fr;}
+  .kpis{grid-template-columns:repeat(3,1fr);}
+  .tabs,.content,.kpis,.vrd,.final-vrd,.ftr{padding-left:16px;padding-right:16px;margin-left:0;margin-right:0;}
+}
+</style>
 </head>
 <body>
+<div id="wrap">
 
-<div class="header">
-    <div class="header-inner">
-        <div class="header-row">
-            <div>
-                <p class="label" style="color:var(--red);margin-bottom:8px">GAIN DEAL DIAGNOSTIC</p>
-                <h1>Project Atlas</h1>
-                <p style="font-size:12px;color:var(--dim);margin-top:4px">Meridian Technology Group → National Grid Property Services · Infrastructure Modernisation · £2.1M TCV</p>
-            </div>
-            <div class="meta-pills">
-                <span class="meta-pill mono">28 Feb 2026</span>
-                <span class="meta-pill mono">In pipeline: 9 months</span>
-                <span class="meta-pill" style="border-color:var(--red);color:var(--red)">Stage: Negotiation (self-reported)</span>
-            </div>
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-l">
+      <span class="hdr-eyebrow">GAIN DEAL DIAGNOSTIC · G-01→N-11 · MERIDIAN TECHNOLOGY GROUP</span>
+      <div class="hdr-title">Project Atlas</div>
+      <div class="hdr-sub">National Grid Property Services · Infrastructure Modernisation · £2.1M TCV · Stage: Negotiation (self-reported)</div>
+    </div>
+    <div class="hdr-r">
+      <div class="hdr-cell">
+        <div class="hdr-cell-label">Deal Value</div>
+        <div class="hdr-cell-val" style="font-size:26px;color:#fff;">£2.1M</div>
+        <div class="hdr-cell-sub">TCV · unvalidated by buyer</div>
+      </div>
+      <div class="hdr-cell">
+        <div class="hdr-cell-label">Status</div>
+        <div style="margin-bottom:6px;display:flex;align-items:center;gap:8px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ef4444;box-shadow:0 0 6px #ef4444;animation:pulse 1.5s ease-in-out infinite;"></span>
+          <span class="bdg bdg-r">KILL VERDICT</span>
         </div>
-        <div class="verdict-strip" style="border-color:var(--red);background:rgba(239,68,68,0.04)">
-            <div class="verdict-dot" style="background:var(--red)"></div>
-            <div>
-                <span style="font-size:12px;font-weight:800;color:var(--red);letter-spacing:0.1em;text-transform:uppercase">VERDICT: KILL</span>
-                <span style="font-size:12px;color:var(--muted);margin-left:12px">9 months in pipeline. 6 close date pushes. No economic buyer access. Champion has no authority. Evidence contradicts every seller claim. Kill and redeploy presales capacity.</span>
-            </div>
-        </div>
+        <div class="hdr-cell-sub">Generated: 28 Feb 2026</div>
+      </div>
+      <div class="hdr-cell">
+        <div class="hdr-cell-label">GAIN Probability</div>
+        <div class="hdr-cell-val" style="font-size:28px;color:#ef4444;">4%</div>
+        <div class="hdr-cell-sub">Self-assessed: 60% · Evidence: 4%</div>
+      </div>
+      <div class="hdr-cell">
+        <div class="hdr-cell-label">Days in Pipeline</div>
+        <div class="hdr-cell-val" style="font-size:28px;color:#ef4444;">274</div>
+        <div class="hdr-cell-sub">6 close date pushes · 67 days silence</div>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="kpi-row">
-    <div class="kpi">
-        <div class="kpi-label">Deal Value</div>
-        <div class="kpi-value">£2.1M</div>
-        <div class="kpi-label">TCV</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">In Pipeline</div>
-        <div class="kpi-value" style="color:var(--red)">274</div>
-        <div class="kpi-label">days</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">Close Date Pushes</div>
-        <div class="kpi-value" style="color:var(--red)">6</div>
-        <div class="kpi-label">≥3 = dead deal</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">Stakeholders Mapped</div>
-        <div class="kpi-value" style="color:var(--orange)">3</div>
-        <div class="kpi-label">of est. 7-9</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">Last Buyer Contact</div>
-        <div class="kpi-value" style="color:var(--red)">67</div>
-        <div class="kpi-label">days ago</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">Seller Probability</div>
-        <div class="kpi-value">60%</div>
-        <div class="kpi-label">self-assessed</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-label">GAIN Probability</div>
-        <div class="kpi-value" style="color:var(--red)">4%</div>
-        <div class="kpi-label">evidence-based</div>
-    </div>
-</div>
+  <!-- VERDICT BANNER -->
+  <div class="vrd">
+    <span class="vrd-tag">⚠ VERDICT: KILL</span>
+    <div class="vrd-txt">9 months in pipeline. 6 close date pushes. No economic buyer access. Champion has no authority. Evidence contradicts every seller claim. <strong style="color:#fca5a5;">Kill and redeploy presales capacity.</strong></div>
+  </div>
 
-<div class="main">
+  <!-- KPI ROW -->
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-l">Close Date Pushes</div><div class="kpi-v" style="color:#ef4444;">6</div><div class="kpi-s">≥3 = dead deal</div></div>
+    <div class="kpi"><div class="kpi-l">Last Buyer Contact</div><div class="kpi-v" style="color:#ef4444;">67d</div><div class="kpi-s">ago (23 Dec 2025)</div></div>
+    <div class="kpi"><div class="kpi-l">Stakeholders Mapped</div><div class="kpi-v" style="color:#f97316;">3</div><div class="kpi-s">of est. 7–9</div></div>
+    <div class="kpi"><div class="kpi-l">Economic Buyer</div><div class="kpi-v" style="color:#ef4444;">NONE</div><div class="kpi-s">CIO never contacted</div></div>
+    <div class="kpi"><div class="kpi-l">MEDDIC Score</div><div class="kpi-v" style="color:#ef4444;">1/30</div><div class="kpi-s">Min viable: 12/30</div></div>
+    <div class="kpi"><div class="kpi-l">Seller Probability</div><div class="kpi-v" style="color:#f59e0b;">60%</div><div class="kpi-s">self-assessed</div></div>
+    <div class="kpi"><div class="kpi-l">Presales Sunk Cost</div><div class="kpi-v" style="color:#ef4444;">£40K</div><div class="kpi-s">~160 hours</div></div>
+    <div class="kpi"><div class="kpi-l">CRM Signals RED</div><div class="kpi-v" style="color:#ef4444;">8/9</div><div class="kpi-s">Level 4 verification</div></div>
+  </div>
 
-    <!-- TABS -->
-    <div class="tabs" id="tabs">
-        <button class="tab active" data-tab="stakeholders">Stakeholder Map</button>
-        <button class="tab" data-tab="evidence">Evidence Audit</button>
-        <button class="tab" data-tab="timeline">Deal Timeline</button>
-        <button class="tab" data-tab="crm">CRM Signals</button>
-        <button class="tab" data-tab="problems">Problems Detected</button>
-        <button class="tab" data-tab="prescription">Prescription</button>
-    </div>
+  <!-- TABS -->
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-tab="stakeholders">Stakeholder Map</button>
+    <button class="tab" data-tab="evidence">Evidence Audit</button>
+    <button class="tab" data-tab="timeline">Deal Timeline</button>
+    <button class="tab" data-tab="crm">CRM Signals</button>
+    <button class="tab" data-tab="problems">Problems Detected</button>
+    <button class="tab" data-tab="prescription">Prescription</button>
+  </div>
+
+  <div class="content">
 
     <!-- STAKEHOLDER MAP -->
-    <div class="tab-content active" id="tab-stakeholders">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--purple)">Buying Committee — Mapped vs Required</h2><div class="section-bar"></div><span class="label" style="color:var(--red)">3 of 7-9 identified</span></div>
-            <div class="smap-grid">
-                <div class="smap-card card" style="border-left-color:var(--amber)">
-                    <div class="smap-badge" style="color:var(--amber);background:rgba(245,158,11,0.1)">CHAMPION</div>
-                    <div class="smap-name">Mark Davidson</div>
-                    <div class="smap-title">Senior Infrastructure Manager</div>
-                    <div class="smap-row"><span class="smap-label">Authority</span><span class="smap-val" style="color:var(--red)">LOW</span></div>
-                    <div class="smap-bar"><div class="smap-bar-fill" style="width:20%;background:var(--red)"></div></div>
-                    <div class="smap-row" style="margin-top:8px"><span class="smap-label">Access to CIO</span><span class="smap-val" style="color:var(--red)">UNVERIFIED</span></div>
-                    <div class="smap-row"><span class="smap-label">Budget holder</span><span class="smap-val" style="color:var(--red)">NO</span></div>
-                    <div class="smap-row"><span class="smap-label">Last contact</span><span class="smap-val" style="color:var(--red)">67 days</span></div>
-                    <div class="smap-warning">⚠ Phantom Champion: No evidence of internal advocacy. No budget authority. No CIO relationship verified. Seller reports "he's handling it internally."</div>
-                </div>
-
-                <div class="smap-card card" style="border-left-color:var(--dim)">
-                    <div class="smap-badge" style="color:var(--dim);background:rgba(107,114,128,0.1)">EVALUATOR</div>
-                    <div class="smap-name">Sarah Chen</div>
-                    <div class="smap-title">Technical Architect</div>
-                    <div class="smap-row"><span class="smap-label">Authority</span><span class="smap-val" style="color:var(--amber)">NONE — Technical only</span></div>
-                    <div class="smap-bar"><div class="smap-bar-fill" style="width:10%;background:var(--amber)"></div></div>
-                    <div class="smap-row" style="margin-top:8px"><span class="smap-label">Role in decision</span><span class="smap-val">Requirements validation</span></div>
-                    <div class="smap-row"><span class="smap-label">Last contact</span><span class="smap-val" style="color:var(--amber)">34 days</span></div>
-                </div>
-
-                <div class="smap-card card" style="border-left-color:var(--dim)">
-                    <div class="smap-badge" style="color:var(--dim);background:rgba(107,114,128,0.1)">PERIPHERAL</div>
-                    <div class="smap-name">James Okonkwo</div>
-                    <div class="smap-title">Service Desk Manager</div>
-                    <div class="smap-row"><span class="smap-label">Authority</span><span class="smap-val" style="color:var(--red)">NONE</span></div>
-                    <div class="smap-bar"><div class="smap-bar-fill" style="width:5%;background:var(--red)"></div></div>
-                    <div class="smap-row" style="margin-top:8px"><span class="smap-label">Role in decision</span><span class="smap-val">End-user input only</span></div>
-                    <div class="smap-row"><span class="smap-label">Last contact</span><span class="smap-val" style="color:var(--red)">91 days</span></div>
-                </div>
-
-                <!-- MISSING STAKEHOLDERS -->
-                <div class="smap-card card" style="border-left-color:var(--red);border-style:dashed;background:rgba(239,68,68,0.02)">
-                    <div class="smap-badge" style="color:var(--red);background:rgba(239,68,68,0.1)">MISSING</div>
-                    <div class="smap-name" style="color:var(--red)">CIO / IT Director</div>
-                    <div class="smap-title">Economic Buyer — NOT IDENTIFIED</div>
-                    <div class="smap-warning">⚠ £2.1M infrastructure deal. Zero access to the person who signs off the budget. This alone is a kill signal.</div>
-                </div>
-
-                <div class="smap-card card" style="border-left-color:var(--red);border-style:dashed;background:rgba(239,68,68,0.02)">
-                    <div class="smap-badge" style="color:var(--red);background:rgba(239,68,68,0.1)">MISSING</div>
-                    <div class="smap-name" style="color:var(--red)">CFO / Finance</div>
-                    <div class="smap-title">Commercial approver — NOT IDENTIFIED</div>
-                    <div class="smap-warning">⚠ No commercial stakeholder engaged. Deal value requires board-level sign-off. No access path identified.</div>
-                </div>
-
-                <div class="smap-card card" style="border-left-color:var(--orange);border-style:dashed;background:rgba(249,115,22,0.02)">
-                    <div class="smap-badge" style="color:var(--orange);background:rgba(249,115,22,0.1)">MISSING</div>
-                    <div class="smap-name" style="color:var(--orange)">Procurement</div>
-                    <div class="smap-title">Process gatekeeper — NOT ENGAGED</div>
-                    <div class="smap-warning">⚠ Seller claims deal is in "Negotiation" stage but no procurement contact established.</div>
-                </div>
-
-                <div class="smap-card card" style="border-left-color:var(--orange);border-style:dashed;background:rgba(249,115,22,0.02)">
-                    <div class="smap-badge" style="color:var(--orange);background:rgba(249,115,22,0.1)">MISSING</div>
-                    <div class="smap-name" style="color:var(--orange)">Incumbent Provider</div>
-                    <div class="smap-title">Current vendor relationship — UNKNOWN</div>
-                    <div class="smap-warning">⚠ No competitive intelligence. Don't know who the incumbent is. Don't know if this is a displacement or greenfield.</div>
-                </div>
-            </div>
+    <div class="tab-pane on" id="tab-stakeholders">
+      <div class="sec" style="border:none;margin-bottom:0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
+          <div>
+            <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#a78bfa;font-family:var(--mono);">BUYING COMMITTEE</span>
+            <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Mapped vs Required</div>
+          </div>
+          <span class="bdg bdg-r">3 of 7–9 identified</span>
         </div>
+        <div class="smap">
+
+          <!-- Mark Davidson -->
+          <div class="sc" style="border-left:3px solid #f59e0b;">
+            <div class="sc-badge" style="color:#f59e0b;background:rgba(245,158,11,.1);">CHAMPION</div>
+            <div class="sc-name">Mark Davidson</div>
+            <div class="sc-role">Senior Infrastructure Manager</div>
+            <div class="sc-row"><span class="sc-lbl">Authority</span><span class="sc-val" style="color:#ef4444;">LOW</span></div>
+            <div class="sc-bar"><div class="sc-bar-f" style="width:20%;background:#ef4444;"></div></div>
+            <div class="sc-row"><span class="sc-lbl">Access to CIO</span><span class="sc-val" style="color:#ef4444;">UNVERIFIED</span></div>
+            <div class="sc-row"><span class="sc-lbl">Budget holder</span><span class="sc-val" style="color:#ef4444;">NO</span></div>
+            <div class="sc-row"><span class="sc-lbl">Last contact</span><span class="sc-val" style="color:#ef4444;">67 days</span></div>
+            <div class="sc-warn">⚠ Phantom Champion: No evidence of internal advocacy. No budget authority. No CIO relationship verified. Seller reports "he's handling it internally."</div>
+          </div>
+
+          <!-- Sarah Chen -->
+          <div class="sc" style="border-left:3px solid var(--muted);">
+            <div class="sc-badge" style="color:var(--muted);background:rgba(107,114,128,.1);">EVALUATOR</div>
+            <div class="sc-name">Sarah Chen</div>
+            <div class="sc-role">Technical Architect</div>
+            <div class="sc-row"><span class="sc-lbl">Authority</span><span class="sc-val" style="color:#f59e0b;">NONE — Technical only</span></div>
+            <div class="sc-bar"><div class="sc-bar-f" style="width:10%;background:#f59e0b;"></div></div>
+            <div class="sc-row"><span class="sc-lbl">Role in decision</span><span class="sc-val">Requirements validation</span></div>
+            <div class="sc-row"><span class="sc-lbl">Last contact</span><span class="sc-val" style="color:#f59e0b;">34 days</span></div>
+          </div>
+
+          <!-- James Okonkwo -->
+          <div class="sc" style="border-left:3px solid var(--muted);">
+            <div class="sc-badge" style="color:var(--muted);background:rgba(107,114,128,.1);">PERIPHERAL</div>
+            <div class="sc-name">James Okonkwo</div>
+            <div class="sc-role">Service Desk Manager</div>
+            <div class="sc-row"><span class="sc-lbl">Authority</span><span class="sc-val" style="color:#ef4444;">NONE</span></div>
+            <div class="sc-bar"><div class="sc-bar-f" style="width:5%;background:#ef4444;"></div></div>
+            <div class="sc-row"><span class="sc-lbl">Role in decision</span><span class="sc-val">End-user input only</span></div>
+            <div class="sc-row"><span class="sc-lbl">Last contact</span><span class="sc-val" style="color:#ef4444;">91 days</span></div>
+          </div>
+
+          <!-- CIO MISSING -->
+          <div class="sc sc-missing" style="border-left:3px solid #ef4444;">
+            <div class="sc-badge" style="color:#ef4444;background:rgba(239,68,68,.1);">MISSING</div>
+            <div class="sc-name" style="color:#ef4444;">CIO / IT Director</div>
+            <div class="sc-role">Economic Buyer — NOT IDENTIFIED</div>
+            <div class="sc-warn">⚠ £2.1M infrastructure deal. Zero access to the person who signs off the budget. This alone is a kill signal.</div>
+          </div>
+
+          <!-- CFO MISSING -->
+          <div class="sc sc-missing" style="border-left:3px solid #ef4444;">
+            <div class="sc-badge" style="color:#ef4444;background:rgba(239,68,68,.1);">MISSING</div>
+            <div class="sc-name" style="color:#ef4444;">CFO / Finance</div>
+            <div class="sc-role">Commercial Approver — NOT IDENTIFIED</div>
+            <div class="sc-warn">⚠ No commercial stakeholder engaged. Deal value requires board-level sign-off. No access path identified.</div>
+          </div>
+
+          <!-- Procurement MISSING -->
+          <div class="sc sc-missing" style="border-left:3px solid #f97316;">
+            <div class="sc-badge" style="color:#f97316;background:rgba(249,115,22,.1);">MISSING</div>
+            <div class="sc-name" style="color:#f97316;">Procurement</div>
+            <div class="sc-role">Process Gatekeeper — NOT ENGAGED</div>
+            <div class="sc-warn">⚠ Seller claims "Negotiation" stage but no procurement contact established. Commercial terms never discussed.</div>
+          </div>
+
+          <!-- Incumbent MISSING -->
+          <div class="sc sc-missing" style="border-left:3px solid #f97316;">
+            <div class="sc-badge" style="color:#f97316;background:rgba(249,115,22,.1);">MISSING</div>
+            <div class="sc-name" style="color:#f97316;">Incumbent Provider</div>
+            <div class="sc-role">Current Vendor Relationship — UNKNOWN</div>
+            <div class="sc-warn">⚠ No competitive intelligence. Don't know who the incumbent is. Displacement or greenfield: unknown.</div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <!-- EVIDENCE AUDIT -->
-    <div class="tab-content" id="tab-evidence">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--orange)">Seller Claims vs Verifiable Evidence</h2><div class="section-bar"></div></div>
-            <div class="evidence-grid">
-                <div class="card evidence-card" style="border-left-color:var(--red)">
-                    <div class="evidence-claim">"Deal is in Negotiation stage"</div>
-                    <div class="evidence-status" style="color:var(--red)">CONTRADICTED</div>
-                    <div class="evidence-detail">No procurement contact. No commercial terms exchanged. No RFP/ITT issued. No budget confirmed. Last buyer contact 67 days ago. This deal is not in negotiation — it's in stall.</div>
-                </div>
-                <div class="card evidence-card" style="border-left-color:var(--red)">
-                    <div class="evidence-claim">"Champion is handling internal politics"</div>
-                    <div class="evidence-status" style="color:var(--red)">UNVERIFIABLE</div>
-                    <div class="evidence-detail">Champion (Mark Davidson) is a Senior Infrastructure Manager. No evidence of CIO access. No evidence of internal meetings about this project. No email forwards or calendar invites showing internal advocacy. Champion has not responded to last 3 emails.</div>
-                </div>
-                <div class="card evidence-card" style="border-left-color:var(--red)">
-                    <div class="evidence-claim">"60% probability — we'll close Q1"</div>
-                    <div class="evidence-status" style="color:var(--red)">CONTRADICTED</div>
-                    <div class="evidence-detail">Close date pushed 6 times. Q1 is the 4th committed close quarter. No buyer-initiated activity in 67 days. MEDDIC scoring: M=0, E=0, D=0, D=1, I=0, C=0. Evidence-based probability: 4%.</div>
-                </div>
-                <div class="card evidence-card" style="border-left-color:var(--red)">
-                    <div class="evidence-claim">"It's a £2.1M deal"</div>
-                    <div class="evidence-status" style="color:var(--orange)">UNVALIDATED</div>
-                    <div class="evidence-detail">Value based on seller's scoping estimate. No customer-confirmed budget. No commercial proposal submitted. No pricing discussion with any budget holder. Value is hypothetical.</div>
-                </div>
-                <div class="card evidence-card" style="border-left-color:var(--amber)">
-                    <div class="evidence-claim">"They need to modernise — it's urgent"</div>
-                    <div class="evidence-status" style="color:var(--amber)">PARTIAL</div>
-                    <div class="evidence-detail">Infrastructure age confirmed via technical discovery (5yr+ Windows Server 2016 estate). But no business case exists. No cost-of-inaction quantified. No board mandate. Urgency is seller-perceived, not buyer-confirmed.</div>
-                </div>
-                <div class="card evidence-card" style="border-left-color:var(--green)">
-                    <div class="evidence-claim">"We've done a technical assessment"</div>
-                    <div class="evidence-status" style="color:var(--green)">VERIFIED</div>
-                    <div class="evidence-detail">Technical assessment completed May 2025. 47-page report delivered. Sarah Chen confirmed value of assessment. However: assessment was 9 months ago and no commercial action has followed.</div>
-                </div>
-            </div>
+    <div class="tab-pane" id="tab-evidence">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
+        <div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f97316;font-family:var(--mono);">EVIDENCE AUDIT</span>
+          <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Seller Claims vs Verifiable Evidence</div>
         </div>
+      </div>
+      <div class="ev-grid">
+        <div class="ev-card" style="border-left-color:#ef4444;">
+          <div class="ev-claim">"Deal is in Negotiation stage"</div>
+          <div class="ev-status" style="color:#ef4444;">CONTRADICTED</div>
+          <div class="ev-detail">No procurement contact. No commercial terms exchanged. No RFP/ITT issued. No budget confirmed. Last buyer contact 67 days ago. This deal is not in negotiation — it's in stall.</div>
+        </div>
+        <div class="ev-card" style="border-left-color:#ef4444;">
+          <div class="ev-claim">"Champion is handling internal politics"</div>
+          <div class="ev-status" style="color:#ef4444;">UNVERIFIABLE</div>
+          <div class="ev-detail">Mark Davidson is a Senior Infrastructure Manager. No evidence of CIO access. No evidence of internal meetings about this project. No email forwards or calendar invites showing internal advocacy. Champion has not responded to last 3 emails.</div>
+        </div>
+        <div class="ev-card" style="border-left-color:#ef4444;">
+          <div class="ev-claim">"60% probability — we'll close Q1"</div>
+          <div class="ev-status" style="color:#ef4444;">CONTRADICTED</div>
+          <div class="ev-detail">Close date pushed 6 times. Q1 is the 4th committed close quarter. No buyer-initiated activity in 67 days. MEDDIC scoring: M=0, E=0, D=0, D=1, I=0, C=0. Evidence-based probability: 4%.</div>
+        </div>
+        <div class="ev-card" style="border-left-color:#ef4444;">
+          <div class="ev-claim">"It's a £2.1M deal"</div>
+          <div class="ev-status" style="color:#f97316;">UNVALIDATED</div>
+          <div class="ev-detail">Value based on seller's scoping estimate. No customer-confirmed budget. No commercial proposal submitted. No pricing discussion with any budget holder. Value is hypothetical.</div>
+        </div>
+        <div class="ev-card" style="border-left-color:#f59e0b;">
+          <div class="ev-claim">"They need to modernise — it's urgent"</div>
+          <div class="ev-status" style="color:#f59e0b;">PARTIAL</div>
+          <div class="ev-detail">Infrastructure age confirmed via technical discovery (5yr+ Windows Server 2016 estate). But no business case exists. No cost-of-inaction quantified. No board mandate. Urgency is seller-perceived, not buyer-confirmed.</div>
+        </div>
+        <div class="ev-card" style="border-left-color:#10b981;">
+          <div class="ev-claim">"We've done a technical assessment"</div>
+          <div class="ev-status" style="color:#10b981;">VERIFIED</div>
+          <div class="ev-detail">Technical assessment completed May 2025. 47-page report delivered. Sarah Chen confirmed value. However: assessment was 9 months ago and no commercial action has followed.</div>
+        </div>
+      </div>
     </div>
 
     <!-- TIMELINE -->
-    <div class="tab-content" id="tab-timeline">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--cyan)">Deal Timeline — 274 Days</h2><div class="section-bar"></div></div>
-            <div class="timeline">
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--green);background:var(--green)"></div>
-                    <div class="tl-date">1 Jun 2025</div>
-                    <div class="tl-event">Deal created. Source: inbound from Mark Davidson after conference meeting. Initial scoping call completed. Seller excited — "big opportunity."</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--green);background:var(--green)"></div>
-                    <div class="tl-date">18 Jun 2025</div>
-                    <div class="tl-event">Technical assessment started. Sarah Chen engaged. Site visit to data centre. 3 days of technical discovery.</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--green);background:var(--green)"></div>
-                    <div class="tl-date">14 Jul 2025</div>
-                    <div class="tl-event">Technical assessment delivered. 47-page report. Sarah Chen: "Very thorough, exactly what we needed."</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--amber);background:var(--amber)"></div>
-                    <div class="tl-date">Aug 2025</div>
-                    <div class="tl-event">Silence. Seller emails Mark Davidson twice. No response for 3 weeks. Eventually: "Sorry, been busy — will pick up after summer."</div>
-                    <div class="tl-flag" style="color:var(--amber)">⚠ First warning signal. Buyer disengagement post-assessment.</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--amber);background:var(--amber)"></div>
-                    <div class="tl-date">15 Sep 2025</div>
-                    <div class="tl-event">Close date pushed from Sep to Nov. Seller: "They just need more time internally." No evidence of internal process.</div>
-                    <div class="tl-flag" style="color:var(--amber)">⚠ Close date push #1</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--orange);background:var(--orange)"></div>
-                    <div class="tl-date">3 Nov 2025</div>
-                    <div class="tl-event">Close date pushed to Dec. Seller moved deal to "Negotiation" stage despite no commercial discussion. Manager didn't challenge.</div>
-                    <div class="tl-flag" style="color:var(--orange)">⚠ Close date push #2. Stage inflation.</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--orange);background:var(--orange)"></div>
-                    <div class="tl-date">18 Dec 2025</div>
-                    <div class="tl-event">Close date pushed to Jan. Seller asked to present at CIO's quarterly review. CIO cancelled meeting. Seller: "Just a scheduling issue."</div>
-                    <div class="tl-flag" style="color:var(--red)">⚠ Close date push #3. CIO won't meet. ≥3 pushes = DEAD DEAL threshold.</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--red);background:var(--red)"></div>
-                    <div class="tl-date">14 Jan 2026</div>
-                    <div class="tl-event">Close date pushed to Feb. Mark Davidson: "Budget cycle pushed everything to new FY." No evidence of budget allocation in any year.</div>
-                    <div class="tl-flag" style="color:var(--red)">⚠ Close date push #4</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--red);background:var(--red)"></div>
-                    <div class="tl-date">7 Feb 2026</div>
-                    <div class="tl-event">Close date pushed to Mar. Seller: "Final approvals in progress." No evidence of any approval process. No procurement. No commercial terms.</div>
-                    <div class="tl-flag" style="color:var(--red)">⚠ Close date push #5</div>
-                </div>
-                <div class="tl-item">
-                    <div class="tl-dot" style="border-color:var(--red);background:var(--red)"></div>
-                    <div class="tl-date">24 Feb 2026</div>
-                    <div class="tl-event">Close date pushed to Q2. Still at 60% probability. Still in forecast. Last email from Mark Davidson: 23 Dec 2025. Last buyer-initiated contact: 14 Jul 2025 (the assessment delivery).</div>
-                    <div class="tl-flag" style="color:var(--red)">⚠ Close date push #6. 67 days silence. Last buyer-initiated contact: 229 days ago.</div>
-                </div>
-            </div>
+    <div class="tab-pane" id="tab-timeline">
+      <div style="margin-bottom:13px;">
+        <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono);">DEAL TIMELINE</span>
+        <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">274 Days — A Chronology of Disengagement</div>
+      </div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#10b981;background:#10b981;"></div>
+          <div class="tl-date">1 Jun 2025</div>
+          <div class="tl-event">Deal created. Source: inbound from Mark Davidson after conference meeting. Initial scoping call completed. Seller excited — "big opportunity."</div>
         </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#10b981;background:#10b981;"></div>
+          <div class="tl-date">18 Jun 2025</div>
+          <div class="tl-event">Technical assessment started. Sarah Chen engaged. Site visit to data centre. 3 days of technical discovery.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#10b981;background:#10b981;"></div>
+          <div class="tl-date">14 Jul 2025</div>
+          <div class="tl-event">Technical assessment delivered. 47-page report. Sarah Chen: "Very thorough, exactly what we needed." <span style="color:#64748b;">→ Last buyer-initiated contact on record.</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#f59e0b;background:#f59e0b;"></div>
+          <div class="tl-date">Aug 2025</div>
+          <div class="tl-event">Silence. Seller emails Mark Davidson twice. No response for 3 weeks. Eventually: "Sorry, been busy — will pick up after summer."</div>
+          <div class="tl-flag" style="color:#f59e0b;">⚠ First warning signal. Buyer disengagement post-assessment.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#f59e0b;background:#f59e0b;"></div>
+          <div class="tl-date">15 Sep 2025</div>
+          <div class="tl-event">Close date pushed from Sep to Nov. Seller: "They just need more time internally." No evidence of internal process.</div>
+          <div class="tl-flag" style="color:#f59e0b;">⚠ Close date push #1</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#f97316;background:#f97316;"></div>
+          <div class="tl-date">3 Nov 2025</div>
+          <div class="tl-event">Close date pushed to Dec. Seller moved deal to "Negotiation" stage despite no commercial discussion. Manager didn't challenge.</div>
+          <div class="tl-flag" style="color:#f97316;">⚠ Close date push #2. Stage inflation.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#f97316;background:#f97316;"></div>
+          <div class="tl-date">18 Dec 2025</div>
+          <div class="tl-event">Close date pushed to Jan. Seller asked to present at CIO's quarterly review. CIO cancelled meeting. Seller: "Just a scheduling issue."</div>
+          <div class="tl-flag" style="color:#ef4444;">⚠ Close date push #3. CIO won't meet. ≥3 pushes = DEAD DEAL threshold crossed.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#ef4444;background:#ef4444;"></div>
+          <div class="tl-date">14 Jan 2026</div>
+          <div class="tl-event">Close date pushed to Feb. Mark Davidson: "Budget cycle pushed everything to new FY." No evidence of budget allocation in any year.</div>
+          <div class="tl-flag" style="color:#ef4444;">⚠ Close date push #4</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#ef4444;background:#ef4444;"></div>
+          <div class="tl-date">7 Feb 2026</div>
+          <div class="tl-event">Close date pushed to Mar. Seller: "Final approvals in progress." No evidence of any approval process. No procurement. No commercial terms.</div>
+          <div class="tl-flag" style="color:#ef4444;">⚠ Close date push #5</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="border-color:#ef4444;background:#ef4444;"></div>
+          <div class="tl-date">24 Feb 2026</div>
+          <div class="tl-event">Close date pushed to Q2. Still at 60% probability. Still in forecast. Last email from Mark Davidson: 23 Dec 2025. Last buyer-initiated contact: 14 Jul 2025 — the assessment delivery. <span style="color:#ef4444;font-weight:700;">229 days ago.</span></div>
+          <div class="tl-flag" style="color:#ef4444;">⚠ Close date push #6. 67 days seller silence. 229 days since buyer-initiated contact. DEAD DEAL.</div>
+        </div>
+      </div>
     </div>
 
     <!-- CRM SIGNALS -->
-    <div class="tab-content" id="tab-crm">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--cyan)">Level 4 — CRM Verification Signals</h2><div class="section-bar"></div><span class="label" style="color:var(--red)">8 of 9 signals RED</span></div>
-            <div class="crm-grid">
-                <div class="card crm-card">
-                    <p class="label" style="color:var(--cyan);margin-bottom:10px">Email Activity</p>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Last buyer email</span></div>
-                    <div class="crm-value">23 Dec 2025 (67 days) — reply to seller chase, not buyer-initiated</div>
-                    <div class="crm-divider"></div>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">One-way communication</span></div>
-                    <div class="crm-value">Seller sent 14 emails since Oct. Buyer replied to 3. Ratio: 4.7:1</div>
-                    <div class="crm-divider"></div>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Response time asymmetry</span></div>
-                    <div class="crm-value">Seller avg reply: 2 hours. Buyer avg reply: 11 days.</div>
-                </div>
-
-                <div class="card crm-card">
-                    <p class="label" style="color:var(--cyan);margin-bottom:10px">Meeting / Calendar</p>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Meeting frequency</span></div>
-                    <div class="crm-value">Jun-Jul: weekly. Aug-Sep: biweekly. Oct-Dec: monthly. Jan-Feb: ZERO.</div>
-                    <div class="crm-divider"></div>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Engagement level</span></div>
-                    <div class="crm-value">All meetings with Infrastructure Manager or Tech Architect. Zero exec-level meetings. CIO cancelled only invite.</div>
-                    <div class="crm-divider"></div>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--amber)"></div><span class="crm-name">Ghost stakeholders</span></div>
-                    <div class="crm-value">James Okonkwo in CRM but never attended a meeting or responded to an email.</div>
-                </div>
-
-                <div class="card crm-card">
-                    <p class="label" style="color:var(--cyan);margin-bottom:10px">CRM Audit Trail</p>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Close date drift</span></div>
-                    <div class="crm-value">6 pushes: Sep → Nov → Dec → Jan → Feb → Q2. Threshold: ≥3 = DEAD.</div>
-                    <div class="crm-divider"></div>
-                    <div class="crm-signal"><div class="crm-dot" style="background:var(--red)"></div><span class="crm-name">Stage vs evidence</span></div>
-                    <div class="crm-value">"Negotiation" stage. MEDDIC score: 1/30. Should be "Discovery" or "Qualification" at best.</div>
-                </div>
-            </div>
+    <div class="tab-pane" id="tab-crm">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;">
+        <div>
+          <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono);">LEVEL 4 — CRM VERIFICATION</span>
+          <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Signal Analysis</div>
         </div>
+        <span class="bdg bdg-r">8 of 9 signals RED</span>
+      </div>
+      <div class="crm-grid">
+        <div class="crm-card">
+          <p style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono);margin-bottom:10px;">Email Activity</p>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Last buyer email</span></div>
+          <div class="crm-val">23 Dec 2025 (67 days) — reply to seller chase, not buyer-initiated</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">One-way communication</span></div>
+          <div class="crm-val">Seller sent 14 emails since Oct. Buyer replied to 3. Ratio: 4.7:1</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Response time asymmetry</span></div>
+          <div class="crm-val">Seller avg reply: 2 hours. Buyer avg reply: 11 days.</div>
+        </div>
+        <div class="crm-card">
+          <p style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono);margin-bottom:10px;">Meeting / Calendar</p>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Meeting frequency collapse</span></div>
+          <div class="crm-val">Jun–Jul: weekly. Aug–Sep: biweekly. Oct–Dec: monthly. Jan–Feb: ZERO.</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Exec-level engagement</span></div>
+          <div class="crm-val">All meetings with Infrastructure Manager or Tech Architect. Zero exec meetings. CIO cancelled only invite.</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#f59e0b;"></div><span class="crm-name">Ghost stakeholders</span></div>
+          <div class="crm-val">James Okonkwo in CRM but never attended a meeting or responded to an email.</div>
+        </div>
+        <div class="crm-card">
+          <p style="font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono);margin-bottom:10px;">CRM Audit Trail</p>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Close date drift</span></div>
+          <div class="crm-val">6 pushes: Sep → Nov → Dec → Jan → Feb → Q2. Threshold: ≥3 = DEAD.</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Stage vs evidence gap</span></div>
+          <div class="crm-val">"Negotiation" stage. MEDDIC score: 1/30. Should be "Discovery" or "Qualification" at best.</div>
+          <div class="crm-div"></div>
+          <div class="crm-sig"><div class="crm-dot" style="background:#ef4444;"></div><span class="crm-name">Manager challenge failure</span></div>
+          <div class="crm-val">6 close date pushes accepted without challenge. Deal allowed to inflate in forecast unchecked.</div>
+        </div>
+      </div>
     </div>
 
     <!-- PROBLEMS DETECTED -->
-    <div class="tab-content" id="tab-problems">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--red)">Problem Detection — This Deal</h2><div class="section-bar"></div></div>
-            <div class="prob-list" id="probList"></div>
-        </div>
+    <div class="tab-pane" id="tab-problems">
+      <div style="margin-bottom:13px;">
+        <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#ef4444;font-family:var(--mono);">PROBLEM DETECTION</span>
+        <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">Taxonomy Scan — This Deal</div>
+      </div>
+      <div class="prob-grid" id="probGrid"></div>
     </div>
 
     <!-- PRESCRIPTION -->
-    <div class="tab-content" id="tab-prescription">
-        <div class="section">
-            <div class="section-header"><h2 style="color:var(--blue)">GAIN Prescription — If You Choose to Fix (Not Recommended)</h2><div class="section-bar"></div></div>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">The recommended verdict is <strong style="color:var(--red)">KILL</strong>. However, if the commercial decision is to attempt rescue, this is the minimum required intervention chain. Time to complete: 3 weeks. If any gate fails, revert to KILL.</p>
-            <div class="rx-grid">
-                <div class="card rx-card">
-                    <div class="rx-step">Step 1 — Week 1</div>
-                    <div class="rx-name">A-05: Authority Map</div>
-                    <div class="rx-desc">Rebuild the buying committee. Identify CIO, CFO, and Procurement. If no path to economic buyer within 5 business days → KILL.</div>
-                    <div class="rx-time">GATE: Economic buyer identified Y/N</div>
-                </div>
-                <div class="card rx-card">
-                    <div class="rx-step">Step 2 — Week 1</div>
-                    <div class="rx-name">A-06: Deal Strategy</div>
-                    <div class="rx-desc">Requalify against MEDDIC. Current score: 1/30. If requalification doesn't reach 12/30 minimum → KILL.</div>
-                    <div class="rx-time">GATE: MEDDIC score ≥12 Y/N</div>
-                </div>
-                <div class="card rx-card">
-                    <div class="rx-step">Step 3 — Week 2</div>
-                    <div class="rx-name">G-01: Company Teardown</div>
-                    <div class="rx-desc">Full intelligence refresh on National Grid Property Services. Board changes, budget cycles, competitive landscape. Build urgency case from outside-in.</div>
-                    <div class="rx-time">Materials: Annual report, Companies House, LinkedIn</div>
-                </div>
-                <div class="card rx-card">
-                    <div class="rx-step">Step 4 — Week 2</div>
-                    <div class="rx-name">I-01: Pre-Mortem</div>
-                    <div class="rx-desc">Run failure forensics. Why would this deal die? Answer: it already has. The pre-mortem either surfaces a rescue path or confirms the kill.</div>
-                    <div class="rx-time">GATE: Viable rescue path identified Y/N</div>
-                </div>
-                <div class="card rx-card">
-                    <div class="rx-step">Step 5 — Week 3</div>
-                    <div class="rx-name">A-13: HUMINT Elicitation</div>
-                    <div class="rx-desc">If gates 1-4 pass: deploy structured elicitation to access CIO via alternative path. Mark Davidson is not the route. Find another.</div>
-                    <div class="rx-time">GATE: CIO meeting secured Y/N</div>
-                </div>
-                <div class="card rx-card" style="border-left-color:var(--red)">
-                    <div class="rx-step" style="color:var(--red)">Final Gate</div>
-                    <div class="rx-name">N-11: Pursue / Walk</div>
-                    <div class="rx-desc">If any gate above returned NO: this deal is dead. Formally kill it, remove from pipeline, reallocate £40K presales capacity to a deal that can win.</div>
-                    <div class="rx-time">Any gate failure = KILL. No exceptions.</div>
-                </div>
-            </div>
+    <div class="tab-pane" id="tab-prescription">
+      <div style="margin-bottom:13px;">
+        <span style="font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#3b82f6;font-family:var(--mono);">GAIN PRESCRIPTION</span>
+        <div style="font-family:var(--font);font-size:15px;font-weight:700;color:#fff;margin-top:2px;">If You Choose to Fix — Not Recommended</div>
+      </div>
+      <div style="padding:12px 14px;border:1px solid rgba(239,68,68,.3);background:rgba(239,68,68,.04);margin-bottom:14px;font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.6;">
+        The recommended verdict is <strong style="color:#ef4444;">KILL</strong>. If the commercial decision is to attempt rescue, this is the minimum required intervention. Time: 3 weeks. If any gate fails, revert to KILL immediately.
+      </div>
+      <div class="rx-grid">
+        <div class="rx-card">
+          <div class="rx-step">Step 1 — Week 1</div>
+          <div class="rx-name">A-05: Authority Map</div>
+          <div class="rx-desc">Rebuild the buying committee. Identify CIO, CFO, and Procurement. If no path to economic buyer within 5 business days → KILL.</div>
+          <div class="rx-time">GATE: Economic buyer identified Y/N</div>
         </div>
+        <div class="rx-card">
+          <div class="rx-step">Step 2 — Week 1</div>
+          <div class="rx-name">A-06: Deal Strategy</div>
+          <div class="rx-desc">Requalify against MEDDIC. Current score: 1/30. If requalification doesn't reach 12/30 minimum → KILL.</div>
+          <div class="rx-time">GATE: MEDDIC score ≥12 Y/N</div>
+        </div>
+        <div class="rx-card">
+          <div class="rx-step">Step 3 — Week 2</div>
+          <div class="rx-name">G-01: Company Teardown</div>
+          <div class="rx-desc">Full intelligence refresh on National Grid Property Services. Board changes, budget cycles, competitive landscape. Build urgency case from outside-in.</div>
+          <div class="rx-time">Materials: Annual report, Companies House, LinkedIn</div>
+        </div>
+        <div class="rx-card">
+          <div class="rx-step">Step 4 — Week 2</div>
+          <div class="rx-name">I-01: Pre-Mortem</div>
+          <div class="rx-desc">Run failure forensics. Why would this deal die? Answer: it already has. The pre-mortem either surfaces a rescue path or confirms the kill.</div>
+          <div class="rx-time">GATE: Viable rescue path identified Y/N</div>
+        </div>
+        <div class="rx-card">
+          <div class="rx-step">Step 5 — Week 3</div>
+          <div class="rx-name">A-13: HUMINT Elicitation</div>
+          <div class="rx-desc">If gates 1–4 pass: deploy structured elicitation to access CIO via alternative path. Mark Davidson is not the route. Find another.</div>
+          <div class="rx-time">GATE: CIO meeting secured Y/N</div>
+        </div>
+        <div class="rx-card" style="border-left-color:#ef4444;">
+          <div class="rx-step" style="color:#ef4444;">Final Gate</div>
+          <div class="rx-name">N-11: Pursue / Walk</div>
+          <div class="rx-desc">If any gate above returned NO: this deal is dead. Formally kill it, remove from pipeline, reallocate £40K presales capacity to a deal that can win.</div>
+          <div class="rx-time" style="color:#ef4444;">Any gate failure = KILL. No exceptions.</div>
+        </div>
+      </div>
     </div>
 
-    <!-- VERDICT -->
-    <div class="verdict-section" style="border-color:var(--red);background:rgba(239,68,68,0.03)">
-        <p class="verdict-label2" style="color:var(--red)">GAIN DEAL DIAGNOSTIC VERDICT</p>
-        <p class="verdict-title">KILL THIS DEAL</p>
-        <p class="verdict-text">Project Atlas has consumed 274 days of pipeline, an estimated £40K in presales time, and occupies a £2.1M slot in the forecast that is actively deceiving the board. The seller believes it's at 60%. The evidence says 4%. Every CRM signal is red. The champion has no authority. The economic buyer has never been contacted. Six close date pushes. This is not a stalled deal — it's a dead deal that nobody has been brave enough to kill.</p>
-        <p style="font-size:15px;font-weight:700;color:var(--red);margin-bottom:16px">Would you bet your personal bonus that this closes?</p>
-        <p style="font-size:12px;color:var(--dim)">Recommended action: Formal kill. Pipeline reduction: £2.1M. Presales capacity recovered: ~160 hours. Forecast accuracy improvement: immediate.</p>
-    </div>
+  </div><!-- /content -->
 
-    <div class="dashboard-footer">
-        <p>GAIN Deal Diagnostic · Project Atlas · Meridian Technology Group · Generated 28 Feb 2026 · David Matthews · Confidential</p>
-        <p style="margin-top:4px">Evidence-based assessment. NONE is always a valid finding. KILL is always an option.</p>
-    </div>
-</div>
+  <!-- FINAL VERDICT -->
+  <div class="final-vrd">
+    <p class="fv-label">GAIN DEAL DIAGNOSTIC VERDICT</p>
+    <p class="fv-title">KILL THIS DEAL</p>
+    <p class="fv-text">Project Atlas has consumed 274 days of pipeline, an estimated £40K in presales time, and occupies a £2.1M slot in the forecast that is actively deceiving the board. The seller believes it's at 60%. The evidence says 4%. Every CRM signal is red. The champion has no authority. The economic buyer has never been contacted. Six close date pushes. This is not a stalled deal — it's a dead deal that nobody has been brave enough to kill.</p>
+    <p style="font-size:15px;font-weight:700;color:#ef4444;margin-bottom:14px;font-family:var(--font);">Would you bet your personal bonus that this closes?</p>
+    <p style="font-size:12px;color:var(--muted);font-family:var(--mono);">Recommended action: Formal kill. Pipeline reduction: £2.1M. Presales capacity recovered: ~160 hours. Forecast accuracy improvement: immediate.</p>
+  </div>
+
+  <div class="ftr">
+    <span>GAIN Deal Diagnostic · Project Atlas · Meridian Technology Group → National Grid Property Services · Generated 28 Feb 2026 · David Matthews · Confidential · Evidence-based assessment. NONE is always a valid finding. KILL is always an option.</span>
+  </div>
+
+</div><!-- /wrap -->
+
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}</style>
 
 <script>
 (function(){
-    var SC = {"3":"#ef4444","2":"#f97316","1":"#f59e0b","0":"#10b981","-1":"#374151"};
-    var SL = {"3":"Critical","2":"At Risk","1":"Watch","0":"Healthy","-1":"None"};
+  var SC = {"3":"#ef4444","2":"#f97316","1":"#f59e0b","0":"#10b981","-1":"#374151"};
+  var SL = {"3":"Critical","2":"At Risk","1":"Watch","0":"Healthy","-1":"None"};
 
-    var dealProblems = [
-        {code:"2.9",name:"Dead Deal Denial",s:3,detail:"6 close date pushes. 274 days. 67 days silence."},
-        {code:"2.8",name:"Phantom Champion",s:3,detail:"Champion has no budget authority and no verified CIO access."},
-        {code:"2.4",name:"Stakeholder Blindness",s:3,detail:"3 of 7-9 stakeholders identified. Zero economic buyer access."},
-        {code:"2.1",name:"Seller Self-Deception",s:3,detail:"60% self-assessed vs 4% evidence-based probability."},
-        {code:"2.2",name:"Pipeline Inflation",s:3,detail:"£2.1M in forecast with no commercial validation."},
-        {code:"2.3",name:"No-Decision Epidemic",s:2,detail:"Buyer has made no decision in 9 months. No urgency created."},
-        {code:"2.5",name:"Discovery Failure",s:2,detail:"Technical discovery done. Zero business impact or motivation discovery."},
-        {code:"2.7",name:"Competitive Blindness",s:2,detail:"Don't know who the incumbent is or if this is competitive."},
-        {code:"3.3",name:"Accountability Vacuum",s:2,detail:"Manager never challenged stage inflation or close date pushes."},
-        {code:"3.2",name:"Capability-Application Gap",s:1,detail:"MEDDIC trained but zero application on this deal."},
-        {code:"2.10",name:"Loss Review Theatre",s:1,detail:"When this dies, it will be blamed on 'timing' not seller failure."},
-        {code:"2.11",name:"Procurement Black Box",s:0,detail:"Commercial process has not yet transferred to procurement."},
-        {code:"3.5",name:"Manager Capability Gap",s:1,detail:"Manager let this deal survive 6 close date pushes unchallenged."}
-    ];
+  var problems = [
+    {code:"2.9",name:"Dead Deal Denial",s:3,detail:"6 close date pushes. 274 days. 67 days silence."},
+    {code:"2.8",name:"Phantom Champion",s:3,detail:"Champion has no budget authority and no verified CIO access."},
+    {code:"2.4",name:"Stakeholder Blindness",s:3,detail:"3 of 7–9 stakeholders identified. Zero economic buyer access."},
+    {code:"2.1",name:"Seller Self-Deception",s:3,detail:"60% self-assessed vs 4% evidence-based probability."},
+    {code:"2.2",name:"Pipeline Inflation",s:3,detail:"£2.1M in forecast with no commercial validation."},
+    {code:"2.3",name:"No-Decision Epidemic",s:2,detail:"Buyer has made no decision in 9 months. No urgency created."},
+    {code:"2.5",name:"Discovery Failure",s:2,detail:"Technical discovery done. Zero business impact or motivation discovery."},
+    {code:"2.7",name:"Competitive Blindness",s:2,detail:"Don't know who the incumbent is or if this is competitive."},
+    {code:"3.3",name:"Accountability Vacuum",s:2,detail:"Manager never challenged stage inflation or close date pushes."},
+    {code:"3.2",name:"Capability-Application Gap",s:1,detail:"MEDDIC trained but zero application on this deal."},
+    {code:"2.10",name:"Loss Review Theatre",s:1,detail:"When this dies, it will be blamed on 'timing' not seller failure."},
+    {code:"2.11",name:"Procurement Black Box",s:0,detail:"Commercial process has not yet transferred to procurement."},
+    {code:"3.5",name:"Manager Capability Gap",s:1,detail:"Manager let this deal survive 6 close date pushes unchallenged."},
+  ];
 
-    // Render problems tab
-    var probHTML = '';
-    for (var i = 0; i < dealProblems.length; i++) {
-        var p = dealProblems[i];
-        probHTML += '<div class="prob-item">';
-        probHTML += '<div class="prob-dot" style="background:' + SC[p.s] + '"></div>';
-        probHTML += '<div style="flex:1"><span class="prob-name">' + p.name + '</span><span class="prob-code">' + p.code + '</span>';
-        probHTML += '<div style="font-size:11px;color:var(--muted);margin-top:2px">' + p.detail + '</div></div>';
-        probHTML += '<span class="prob-status" style="color:' + SC[p.s] + '">' + SL[p.s] + '</span>';
-        probHTML += '</div>';
-    }
-    document.getElementById('probList').innerHTML = probHTML;
+  var html = '';
+  for (var i = 0; i < problems.length; i++) {
+    var p = problems[i];
+    html += '<div class="prob-item">';
+    html += '<div class="prob-dot" style="background:' + SC[p.s] + ';"></div>';
+    html += '<div style="flex:1"><div><span class="prob-name">' + p.name + '</span><span class="prob-code">' + p.code + '</span></div>';
+    html += '<div class="prob-detail">' + p.detail + '</div></div>';
+    html += '<span class="prob-status" style="color:' + SC[p.s] + ';">' + SL[p.s] + '</span>';
+    html += '</div>';
+  }
+  document.getElementById('probGrid').innerHTML = html;
 
-    // Tab switching
-    var tabs = document.querySelectorAll('.tab');
-    for (var t = 0; t < tabs.length; t++) {
-        tabs[t].addEventListener('click', function() {
-            var target = this.getAttribute('data-tab');
-            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-            this.classList.add('active');
-            var contents = document.querySelectorAll('.tab-content');
-            for (var j = 0; j < contents.length; j++) contents[j].classList.remove('active');
-            document.getElementById('tab-' + target).classList.add('active');
-        });
-    }
+  // Tabs
+  var tabs = document.querySelectorAll('.tab');
+  for (var t = 0; t < tabs.length; t++) {
+    tabs[t].addEventListener('click', function(){
+      var id = this.getAttribute('data-tab');
+      document.querySelectorAll('.tab').forEach(function(el){ el.classList.remove('on'); });
+      document.querySelectorAll('.tab-pane').forEach(function(el){ el.classList.remove('on'); });
+      this.classList.add('on');
+      document.getElementById('tab-' + id).classList.add('on');
+    });
+  }
 })();
 </script>
-
 </body>
 </html>
