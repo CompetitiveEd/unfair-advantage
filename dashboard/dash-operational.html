@@ -12,7 +12,6 @@
 </head>
 <body>
 <div id="gain-dashboard-root"></div>
-<!-- React + Tailwind CDN for dashboard (loaded after page CSS to avoid conflicts) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
@@ -27,218 +26,287 @@
 <script type="text/babel" data-type="module">
 const { useState } = React;
 
-// ─── MERIDIAN DATA (In production, this comes from compiled GAIN outputs) ───
+// ─── MERIDIAN DATA — compiled from full GAIN chain G-01 → N-01 ───
+
 const ACCOUNT = {
   name: "Meridian Financial Services",
-  sector: "Financial Services & Insurance",
+  sector: "Financial Services · Insurance · Wealth · Pensions",
   seller: "Helios Technology Group",
-  dealValue: "£95-110M",
-  acv: "£13.6-15.7M",
-  term: "7 Years",
-  tcv7yr: "£95-110M TCV (7yr)",
+  dealValue: "£110–120M",
+  acv: "£15.7–17.1M",
+  term: "7 Years (5+2 with Year 5 break)",
+  tcv7yr: "£115M TCV (7yr)",
   status: "LIVE BID",
   submissionDate: "28 March 2026",
-  lastUpdated: "26 Feb 2026",
-  winProbability: 68,
-  serviceDescription: "Full-scope IT Managed Services including infrastructure management, cloud hosting & migration, service desk, end-user computing support, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff from incumbent provider.",
+  lastUpdated: "March 2026",
+  winProbability: 32,
+  serviceDescription: "Full-scope Managed IT Services covering 5 towers: Infrastructure & Cloud Operations (42 FTE), Network & Security (18 FTE), End User Services / Service Desk (35 FTE), Operational Resilience & BCM (8 FTE), Service Integration & Vendor Management / SIAM (6 FTE). TUPE transfer of 109 in-scope staff. 8,200 managed endpoints.",
   nonStandard: [
-    "Integrated Operational Resilience capability (aligned to ISO 22301 certification journey)",
-    "AIOps predictive incident management embedded from Day 1",
-    "60/40 Gain-Share mechanism on automation savings above agreed baselines",
-    "2% ring-fenced Innovation Fund (£106K/yr) with joint governance",
-    "10% Risk Pot (£530K) held back against SLA performance — released at M6/M12",
+    "Integrated Operational Resilience (Tower 4) — aligned to ISO 22301 certification journey, Q3 2026",
+    "HIO AIOps — predictive incident management targeting 70% alert reduction from 14,000/mo",
+    "50:50 Gain-Share on automation savings above agreed baselines",
+    "2% ring-fenced Innovation Fund (£2.3M) — use-it-or-lose-it annual basis",
+    "15% At-Risk revenue provisions — released at M6/M12 subject to SLA performance",
+    "50% deferred transition payment — held 90 days pending satisfactory stabilisation",
   ],
-  dealType: "Competitive outsource — full IT infrastructure managed services renewal. Incumbent displaced.",
-  clientSummary: "Meridian Financial Services is a £2.1B revenue UK-based financial services and insurance group. ~8,400 employees across 12 UK offices. Regulated by PRA/FCA. Midmarket FS — large enough for complex infrastructure, small enough that relationships matter.",
-  clientHistory: "Founded 1987 as specialist commercial insurance underwriter. Expanded into retail financial services (2004) and wealth management (2012). Listed on LSE since 1998. Survived 2008 via conservative risk culture. Current CEO Whitfield appointed 2019 from Aviva.",
-  clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Reinsurance",
-  bidPhase: "Pre-submission — clarification window open. RFP received January 2026. Submission deadline 28 March 2026. Go-live targeted September 2026.",
+  dealType: "Competitive outsource — 7-year managed services. Displacement of fragmented incumbent estate (Tesseract Tech primary).",
+  clientSummary: "Meridian Financial Services plc (LSE: MFS.L) is a mid-tier UK financial services group. £847M revenue, £14.2bn AUM, 1.2M customers, 8,000+ employees across 5 UK offices. Dual-regulated FCA/PRA. 12 designated Important Business Services under PS21/3.",
+  clientHistory: "Founded 1987 from consortium of regional insurance underwriters. Expanded into retail FS (2004) and wealth management (2012). Listed LSE 1998. Current CEO Whitfield appointed 2019. FY25: Revenue £847M (+6.2%), GWP £3.1bn (+8.2%), Op Profit £287M. Share price 415p, market cap ~£3.3bn.",
+  clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Corporate Pensions",
+  bidPhase: "Pre-submission — clarification window open. RFP ref MFS-2026-ORT-001 issued Feb 2026. Submission deadline 28 March 2026. Target contract signature 1 September 2026. Service commencement 1 October 2026.",
 };
 
 const G01_MACRO = {
-  revenue: "£2.1B (FY2025)",
-  employees: "8,400",
-  techSpend: "£82.5M transformation programme",
-  targetSavings: "£28M annual by Year 5",
+  revenue: "£847M (FY2025, +6.2% YoY)",
+  employees: "8,000+",
+  techBudget: "£16.5M/yr (Meridian 2030 — FROZEN by EY audit)",
+  targetSavings: "£28M annual savings by Year 5 (Cost Glide Path)",
   serverEOL: "62% estate end-of-life",
-  microOutageCost: "£2.8M/yr",
-  alertNoise: "14,000 alerts/mo (<3% actionable)",
-  fcr: "58% first-call resolution",
-  commsBlackout: "47-min in Alpha stress test",
+  microOutageCost: "£2.8M/yr (+12% YoY)",
+  alertVolume: "14,000 alerts/mo (<3% actionable)",
+  fcr: "58% FCR (vs 72% industry benchmark)",
+  incidentGap: "47-min latency in incident command activation (stress test)",
+  coi: "£30.8M/yr · £92.4M over 3 years",
+  bleedingNecks: [
+    { label: "Audit Paralysis", detail: "EY audit freezing CIO CAPEX. Transformation is a ghost ship.", severity: "critical" },
+    { label: "PRA Compliance Cliff", detail: "Q3 ISO 22301 deadline. 34 non-conformities (12 major). Formal SS1/21 warnings.", severity: "critical" },
+    { label: "£2.8M Outage Bleed", detail: "62% EOL servers, micro-outages +12% YoY, directly threatening CFO's 14.7% ROE.", severity: "high" },
+  ],
   strategicPriorities: [
-    { label: "100% DC Exit", deadline: "2026", severity: "critical" },
-    { label: "ISO 22301 Certification", deadline: "Q4 2026", severity: "critical" },
-    { label: "4-Hour RTO (Lloyd's)", deadline: "Mandated", severity: "high" },
-    { label: "PRA Compliance Gaps", deadline: "Dec 2025", severity: "critical" },
-    { label: "Consumer Duty MI", deadline: "Ongoing", severity: "medium" },
+    { label: "RFP Submission", deadline: "28 Mar 2026", severity: "critical" },
+    { label: "ISO 22301 Certification", deadline: "Q3 2026", severity: "critical" },
+    { label: "PRA SS1/21 Compliance", deadline: "Overdue", severity: "critical" },
+    { label: "DC Exit / Cloud Migration", deadline: "End 2026", severity: "high" },
+    { label: "EY Capitalisation Audit", deadline: "Active Now", severity: "critical" },
   ],
 };
 
 const G02_FINANCIALS = {
-  costOfInaction: "£8.3M/yr",
-  wasteIdentified: "£33-37M over contract",
-  microOutages: "£2.8M annual hard cost",
-  falseAlerts: "13,580/mo → 2-3 FTE wasted (£150-200K)",
-  consumerDutyMI: "72-hour manual cycle (£3-4.5K/cycle)",
-  praVendors: "+52 vendors by Q2 2026 → +2,000 FTE hours",
-  heliosValue: "£12-15M cumulative 5yr savings",
+  revenue: "£847M",
+  opProfit: "£287M",
+  roe: "14.7%",
+  margin: "Compressed — 220bps behind peer Oakstone",
+  costOfInaction: "£30.8M/yr",
+  microOutages: "£2.8M/yr direct OPEX bleed",
+  yearOneRisk: "£13.8M–£19.8M (transition failure + CR fees if EOL estate unmapped)",
+  innovationFund: "£2.3M (2% of £115M RFP — use-it-or-lose-it)",
+  atRiskRevenue: "£1.4M per major outage (15% at-risk provision)",
+  rfpLevers: [
+    { clause: "50:50 Gain-Share", meaning: "Internal budget tapped — vendors must self-fund ROI", play: "Show £905K FY25 gain-share proof to Thompson" },
+    { clause: "15% At-Risk SLAs", meaning: "Extreme vendor distrust from prior failures", play: "Our automated mapping is the SI's insurance policy" },
+    { clause: "2% Innovation Fund", meaning: "£2.3M ring-fenced, must be spent", play: "This is our target budget — become designated Innovation Fund spend" },
+    { clause: "50% Deferred Payment", meaning: "Zero trust in transition delivery", play: "Accept terms. Lead with Net-Zero Year 1 model." },
+  ],
 };
 
 const STAKEHOLDERS = [
   {
     id: "whitfield", name: "James Whitfield", role: "CEO", level: "C-Suite",
-    status: "unknown", authority: 95, influence: 90,
-    gainDriver: "Power", kegan: "Stage 4 (Self-Authoring)",
-    summary: "25yr FS veteran. Board-facing. Burned by £67M 'Operation Meridian' failure. Won't tolerate another Big Bang.",
-    trigger: "Board confidence, brand protection, regulatory clean sheet",
-    avoid: "Vendor hype, over-promising, anything resembling Operation Meridian",
-    modality: "Visual — executive summaries, dashboards, one-page briefs",
-  },
-  {
-    id: "hale", name: "Richard Hale", role: "CIO", level: "C-Suite",
-    status: "established", authority: 85, influence: 80,
-    gainDriver: "Achievement", kegan: "Stage 4→5 (Self-Transforming)",
-    summary: "Technical architect turned CIO. Intellectually curious. Wants AI as baseline, not differentiator. Frustrated by 'last 28%' legacy apps.",
-    trigger: "Architectural thinking, production evidence, intellectual depth",
-    avoid: "Feature lists, vendor hype, demo-ware without production proof",
-    modality: "Read/Write — technical papers, architecture diagrams, data",
+    status: "unknown", authority: 100, influence: 85,
+    gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Architect of Meridian 2030. 'Availability, not assets' is his public mantra. LTIP 75% weighted toward EBITDA expansion — his bonus is destroyed if the EY audit forces Citadel to OPEX. Under increasing board pressure. Using distancing language re: CIO in public briefings.",
+    trigger: "Operational proof that protects the Meridian 2030 narrative. Quick wins he can show the Chairman.",
+    avoid: "Telling him he can bypass his Audit Chair. Promising another Big Bang transformation.",
+    modality: "Visual — executive summaries, one-page briefs, iPad dashboards",
+    oneThing: "He needs a vendor who gives him a political win he can show Pemberton.",
+    landmine: "Assuming CEO authority overrides the frozen IT budget.",
   },
   {
     id: "thompson", name: "Mark Thompson", role: "CFO", level: "C-Suite",
-    status: "targeted", authority: 88, influence: 30,
+    status: "targeted", authority: 100, influence: 90,
     gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Zenith Insurance alumnus. Burned by a managed services deal that over-promised savings. Demands 'show me the workings.'",
-    trigger: "Named-process cost methodology, first-number rigour, audit trail",
-    avoid: "Directional numbers, unattributed savings, missing baselines",
-    modality: "Read/Write — spreadsheets, financial models, named attribution",
+    summary: "Former EY Senior Manager — deliberately brought his old firm in to reclassify IT CAPEX as OPEX. ROE at 14.7%, bonus 70% tied to EBITDA. Walked out of last vendor meeting mid-sentence. Has frozen all OPEX > £50K pending Audit Committee review. Nickname in Canary Wharf: 'The Mortician'.",
+    trigger: "Named-process OPEX reduction. Audit-grade ROI. The £2.8M outage bleed quantified and eliminated. Self-funding commercial model.",
+    avoid: "Any mention of 'transformation vision.' Net-new OPEX requests. Soft savings without named FTE reductions.",
+    modality: "Read/Write — financial models, spreadsheets, named attribution",
+    oneThing: "Micro-outages are destroying his Return on Equity. Fix them or he will not sign.",
+    landmine: "Pitching transformation investment in a year where he's fighting a margin war.",
   },
   {
-    id: "osei", name: "Daniel Osei", role: "CRO", level: "C-Suite",
-    status: "targeted", authority: 82, influence: 70,
-    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Board-level risk officer. Dual governance model (formal + informal). Kill phrase: 'checkbox compliance.' Veto power over any vendor.",
-    trigger: "Genuine risk culture, forward-looking intelligence, tested frameworks",
-    avoid: "Checkbox compliance, theoretical frameworks, untested DR plans",
-    modality: "Auditory/Kinesthetic → Data Visual when presenting to Board",
+    id: "pemberton", name: "Sir Anthony Pemberton", role: "NED · Audit/Risk Chair", level: "Board",
+    status: "unknown", authority: 100, influence: 100,
+    gainDriver: "Safety", kegan: "Stage 5 (Self-Transforming)",
+    summary: "Former Deputy Governor & CEO of the PRA. Knighted 2019. 40-year career (Arthur Andersen, KPMG 2008 crisis, PRA 2015-2020). Personally furious about MFS receiving PRA warnings from his former colleagues. Commissioned the EY audit. Told CFO to 'forensically dismantle the IT department's capitalised fantasies.' The ultimate veto.",
+    trigger: "Audit-grade evidence. Immutable compliance maps. Regulatory certainty. Short definitive sentences with zero jargon.",
+    avoid: "Buzzwords: Agile, Transformation, Synergy. Technical acronyms. Aspirational roadmaps. Anything that looks like 'CEO tech fluff'.",
+    modality: "Auditory/Read — board-quality written briefs, compliance evidence packs",
+    oneThing: "He views the PRA warning as a personal embarrassment. He wants governance certainty, not technology.",
+    landmine: "The word 'Transformation' or 'Agile' in his presence.",
   },
   {
-    id: "morris", name: "Jennifer Morris", role: "Dir, Operational Resilience", level: "Senior",
-    status: "champion", authority: 60, influence: 85,
-    gainDriver: "Achievement", kegan: "Stage 3→4",
-    summary: "14+ yrs resilience/risk. Chairs Resilience Steering Committee. Our identified champion. Reduced incident response 47%. Leads ISO 22301.",
-    trigger: "Peer credibility (Rachel), resilience depth, practical frameworks",
-    avoid: "Talking down, theoretical-only approaches, ignoring her expertise",
-    modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Osei",
+    id: "osei", name: "David Osei", role: "Chief Risk Officer", level: "C-Suite",
+    status: "targeted", authority: 90, influence: 95,
+    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
+    summary: "26-year risk career. 8 years as PRA Supervisor. Former Deloitte Risk Partner. Rebuilt Meridian's risk framework from scratch — dismantled 35% of old policies as 'compliance artefacts.' Imperturbable. Approval required for any vendor >£1M. Pemberton's 'eyes and ears' on risk. The Compliance Backdoor — can out-leverage the CFO if given PRA-aligned evidence.",
+    trigger: "Immutable dependency mapping evidence. Evidence-based human intervention tools. Proof that clears PRA Section 166 warning.",
+    avoid: "Automated checkbox compliance tools. Fear-mongering. Calling it a 'technology' not a 'regulatory' solution.",
+    modality: "Read/Write — evidence packs, quantified risk frameworks, audit-grade data",
+    oneThing: "He used to be the regulator. He knows exactly what the PRA wants to see.",
+    landmine: "Pitching a tool that 'automates' risk rather than 'illuminates' it.",
+  },
+  {
+    id: "morris", name: "Jennifer Morris", role: "Dir, Organisational Resilience", level: "Senior",
+    status: "champion", authority: 30, influence: 80,
+    gainDriver: "Order", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Primary champion. 15+ years resilience. Chairs Resilience Steering Committee (attended by CFO, CRO, COO). Reports to Osei. Owns the 47-minute gap problem. Running entire resilience posture on Excel spreadsheet. 21 weeks from Q3 ISO 22301 deadline with 34 non-conformities. Explicitly asked to hide software cost from CIO — proving zero economic authority. Our Internal Spy.",
+    trigger: "Peer credibility. Frame our tool as enhancement to her framework, not a replacement. Help her pass Q3 ISO. Position Rachel Okonkwo as her co-author.",
+    avoid: "Telling her we 'replace' her manual tiering spreadsheets. Treating her as the economic buyer.",
+    modality: "Auditory/Kinesthetic — practical frameworks, peer collaboration",
+    oneThing: "She is terrified of failing Q3 ISO 22301 because the IT team won't support her.",
+    landmine: "Assuming she can sign a £2.5M PO. She cannot.",
+  },
+  {
+    id: "reid", name: "Nicholas Reid", role: "Chief Information Officer", level: "C-Suite",
+    status: "blocker", authority: 4, influence: 70,
+    gainDriver: "Safety (Survival)", kegan: "Stage 3 (Socialised/Self-Protective)",
+    summary: "14 months in post. Hired from Oakstone where he delivered £150M 'Project Zenith' with Tesseract Tech. Brought Tesseract to his last 3 roles. Budget frozen by CFO/EY audit. Ordering team to fake MTTR logs (leaked memo). Trying to backdoor Tesseract into the £115M RFP. Will actively sabotage any tool that provides 'radical transparency' into the IT estate. Dead man walking financially.",
+    trigger: "A face-saving narrative. Position HIO as 'CIO Governance Shield' not 'Systemic Transparency.' Give him plausible deniability.",
+    avoid: "Any pitch that provides transparency into the IT estate. Mentioning Tesseract. Competing with him.",
+    modality: "Kinesthetic — needs to feel control",
+    oneThing: "He has zero financial power. His survival depends on hiding the 62% EOL state. Do not expose him.",
+    landmine: "Pitching a tool that provides 'radical transparency' — it will expose his faked metrics.",
+  },
+  {
+    id: "blackwell", name: "Sarah Blackwell", role: "Group Procurement Director", level: "Senior",
+    status: "established", authority: 80, influence: 85,
+    gainDriver: "Order", kegan: "Stage 4 (Self-Authoring)",
+    summary: "Sole point of contact for RFP MFS-2026-ORT-001. Strict non-circumvention rule — any vendor attempting to backdoor the RFP risks immediate disqualification. Process-driven gatekeeper to the only active IT budget at the bank. Controls the £115M flow.",
+    trigger: "Clean commercial structure. Transparent pricing. Natively accept the 15% at-risk and 50:50 gain-share terms.",
+    avoid: "End-running procurement. Contacting executives directly about the RFP without her authorisation.",
+    modality: "Read/Write — structured compliance matrices, commercial documents",
+    oneThing: "She doesn't care how your software works; she cares how it mathematically protects the 15% at-risk SLAs.",
+    landmine: "Any direct vendor-to-exec RFP contact without her knowledge.",
   },
   {
     id: "chen", name: "Andrew Chen", role: "Head of IT Infrastructure", level: "Operational",
-    status: "targeted", authority: 20, influence: 75,
-    gainDriver: "Safety", kegan: "Stage 3 (Socialised Mind)",
-    summary: "15yr Meridian veteran. His team IS the TUPE cohort. Protective. BS detector is extreme — vendor corporate language triggers shutdown.",
-    trigger: "People-first language, honest gaps, retention data, respect for his team",
-    avoid: "Corporate language, dismissing his team's expertise, AI-replaces-people framing",
-    modality: "Kinesthetic — site visits, meeting his team, showing not telling",
+    status: "targeted", authority: 20, influence: 60,
+    gainDriver: "Affiliation & Safety", kegan: "Stage 3 (Socialised)",
+    summary: "10+ year Meridian veteran. Manages 2,000+ servers, 450TB storage, 42-FTE service desk. 62% EOL estate. 14,000 alerts/month. FCR at 58%. Ordered by CIO to manipulate incident logs (leaked memo). TUPE cohort lead — highly protective of his team. BS detector is extreme. Will shut down on any corporate language.",
+    trigger: "People-first language. Honest acknowledgement of alert fatigue. Show immediate workload reduction. Respect for his team's expertise.",
+    avoid: "Corporate language. Claiming AI 'replaces' his engineers. Deploying anything that requires weeks of configuration.",
+    modality: "Kinesthetic — site visits, practical demos, meeting his team",
+    oneThing: "He needs 14,000 alerts suppressed to ~4,500 before he will trust anything.",
+    landmine: "Framing as AI automation replacing jobs.",
   },
   {
-    id: "blackwell", name: "Sarah Blackwell", role: "Procurement Director", level: "Senior",
-    status: "established", authority: 50, influence: 20,
-    gainDriver: "Safety", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Process guardian. Controls access to Whitfield. Fair but firm. Values structured compliance, transparent pricing, no procurement theatre.",
-    trigger: "Clean documentation, transparent pricing, structured process",
-    avoid: "End-running procurement, pricing games, last-minute surprises",
-    modality: "Read/Write — structured documents, compliance matrices",
-  },
-  {
-    id: "harrison", name: "Neil Harrison", role: "Head of IT Service Management", level: "Operational",
-    status: "established", authority: 30, influence: 50,
+    id: "harrison", name: "David Harrison", role: "Chief Operating Officer", level: "C-Suite",
+    status: "targeted", authority: 85, influence: 75,
     gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)",
-    summary: "ITIL practitioner. Wants 'three examples' for everything. Scored highest on evidence density. Will ask about TUPE transfer volume.",
-    trigger: "Operational specificity, maintained KPIs, three examples minimum",
-    avoid: "High-level phases without cases, vague transition plans",
-    modality: "Read/Write — case studies, operational metrics, process maps",
+    summary: "28yr ops career. Led £67M 'Operation Meridian' (2020-2023). Reduced incident response 34%, operational friction 41%. Straight shooter — admitted December hardware failure publicly. Values pragmatism over vision. Uses 'pragmatic' and 'reality' frequently. Known conflict with Morris over resilience planning scope. Execution anchor.",
+    trigger: "API latency data. Proven operational metrics. Show how tool reduces 'operational friction' — his favourite phrase.",
+    avoid: "High-level strategy without execution details. Resilience planning that ignores operational reality.",
+    modality: "Read/Write — operational metrics, process maps, case studies with hard numbers",
+    oneThing: "He is the execution anchor. If your tool adds 100ms to a transaction check, it's a non-starter.",
+    landmine: "Designing for edge cases instead of everyday operational reality.",
   },
 ];
 
+const G03B_COALITION = {
+  shadowHierarchy: [
+    { node: "Sir Anthony Pemberton", role: "Sets regulatory risk tolerance / Ultimate Veto", level: 0 },
+    { node: "Mark Thompson", role: "Enforces capital freeze via EY audit", level: 1 },
+    { node: "Sarah Blackwell", role: "Controls £115M RFP flow", level: 2 },
+    { node: "James Whitfield", role: "The visionary facade — cannot override Audit Chair", level: 3 },
+    { node: "Nicholas Reid", role: "The failing IT operator — actively blocked", level: 4 },
+  ],
+  parallelAxis: { node: "David Osei", role: "Operates parallel — answers directly to Pemberton on risk. Only exec who can out-leverage CFO." },
+  winningCoalition: [
+    { member: "David Osei (CRO)", role: "Sponsor / Approver", why: "SAFETY — Must answer to Pemberton and PRA", need: "Immutable proof we map the 52 critical vendors" },
+    { member: "Jennifer Morris", role: "Advocate / Internal Spy", why: "ORDER — Needs to pass ISO 22301", need: "Technical business case to hand to Osei" },
+    { member: "Mark Thompson", role: "Financial Unlock", why: "SAFETY — Wants OPEX relief", need: "Proof our tool cuts the £2.8M outage bleed" },
+    { member: "Sarah Blackwell", role: "Contract Vehicle", why: "ORDER — Enforcing RFP commercial rules", need: "Proof our tool guarantees SI's 15% at-risk SLAs" },
+  ],
+  blockingCoalition: [
+    { member: "Nicholas Reid (CIO)", role: "Saboteur", why: "Fears transparency will expose his faked MTTR metrics" },
+    { member: "Sir Anthony Pemberton", role: "Ultimate Veto", why: "Will kill any project framed as CEO tech fluff" },
+  ],
+  faultLine: "THE TRANSPARENCY TRAP: Morris wants full mapping. Reid is hiding failures. Our tool discovering the 62% EOL state the CIO is hiding could trigger sabotage. Frame all discovery as 'baseline data required for the £115M SI transition.' Never call it an audit.",
+  corridorTest: "CIO is faking metrics to survive a CFO capital freeze. Sell compliance to the CRO or embed in the £115M RFP. Bypass the CIO entirely.",
+};
+
 const COMPETITORS = [
   {
-    name: "Fortis Global Services",
+    name: "Tesseract Tech",
+    label: "Low-risk incumbent — CIO's preferred vendor",
+    revenue: "Not disclosed", model: "UK-based", tupeRecord: "Extensive",
+    dangerRating: "CRITICAL",
+    dangerWith: ["Reid (3x deployments at Oakstone)", "Potentially Chen (existing relationships)"],
+    weakness: "Cannot provide independent audit evidence for the 62% EOL estate they've managed for 10 years. Incumbent = complicit in the cover-up.",
+    killQuestion: "How exactly will you provide independent audit-grade evidence for the 62% EOL estate you've managed for 10 years without triggering the PRA's third-party concentration risk concerns?",
+  },
+  {
+    name: "Global SIs (Tier-1)",
     label: "Scale-first global delivery model",
-    revenue: "£4.2B", model: "60/40 UK/India", tupeRecord: "200+",
+    revenue: "£4B+", model: "UK/Offshore", tupeRecord: "200+ transfers",
     dangerRating: "HIGH",
-    dangerWith: ["Whitfield (brand)", "Harrison (TUPE volume)"],
-    weakness: "78% post-TUPE retention (vs Helios 92%), 18-24mo leadership rotation",
-    killQuestion: "What was post-TUPE retention at 12 months for your last 3 UK FS transfers?",
-  },
-  {
-    name: "Saraswati Digital",
-    label: "Offshore-leveraged automation platform",
-    revenue: "$12B", model: "25/75 UK/India", tupeRecord: "Limited UK FS",
-    dangerRating: "MEDIUM",
-    dangerWith: ["Hale (automation depth)", "Thompson (lowest price)"],
-    weakness: "72% post-TUPE retention, cultural fit gap, limited UK FS regulatory depth",
-    killQuestion: "How many AI capabilities are in production at a UK FS client today? Name client, capability, outcome.",
-  },
-  {
-    name: "Nexus Technology Partners",
-    label: "Technology-first reseller model",
-    revenue: "£1.8B", model: "UK-centric", tupeRecord: "Minimal",
-    dangerRating: "LOW",
-    dangerWith: ["Hale (tech partnerships)"],
-    weakness: "No managed services pedigree, product-led not service-led",
-    killQuestion: "Name 3 managed service transitions above 50 FTE you've completed in regulated financial services.",
+    dangerWith: ["Pemberton (brand / balance sheet)", "Whitfield (credibility)"],
+    weakness: "Cannot name a UK-based Op Resilience practice lead. Rotation culture destroys relationship continuity. No senior attention for a £115M mid-tier account.",
+    killQuestion: "Name the UK-based Operational Resilience practice lead who will personally defend the ISO 22301 audit in Q3. What percentage of their time is allocated to Meridian?",
   },
 ];
 
 const WIN_THEMES = [
-  { id: 1, label: "Operational Resilience as Competitive Advantage", strength: "fortress", owner: "Jennifer/Osei" },
-  { id: 2, label: "People-First Transition (Anti-TUPE Horror)", strength: "fortress", owner: "Chen/Harrison" },
-  { id: 3, label: "AI in Production, Not Presentation", strength: "strong", owner: "Hale" },
-  { id: 4, label: "Named-Process Cost Glide Path", strength: "critical_gap", owner: "Thompson" },
-  { id: 5, label: "Proximity Creates Accountability", strength: "strong", owner: "Whitfield" },
+  { id: 1, label: "The Regulatory Rescue", type: "FORTRESS", owner: "Osei / Pemberton", driver: "Safety", evidence: "Excalibur PRA framework (PROVEN)", detail: "We are not an IT outsourcer; we are a regulatory remediation partner that happens to manage your technology. We clear the PRA Section 166 warning on Day 1." },
+  { id: 2, label: "Self-Funding Resilience", type: "ATTACK", owner: "Thompson (CFO)", driver: "Safety/Order", evidence: "£905K FY25 gain-share payouts (PROVEN)", detail: "We fund our own engagement from the £2.8M micro-outage bleed. Net-Zero Year 1. The CFO's OPEX target is our commercial baseline." },
+  { id: 3, label: "The Governance Shield", type: "DEFENSIVE", owner: "Reid / Chen", driver: "Safety", evidence: "HIO Audit Layer (PROVEN)", detail: "HIO is not a transparency tool — it is a CIO Governance Shield. It gives Reid plausible deniability and Chen's team breathing room." },
 ];
 
-const SCORING = {
-  helios: 3.85, target: 4.65, fortis: 3.55, saraswati: 3.40,
-  criteria: [
-    { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
-    { code: "TC-02", label: "Automation & AI", weight: 5.4, helios: 3, fortis: 3, saraswati: 5, strategy: "DEFEND" },
-    { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
-    { code: "TC-04", label: "Resilience & DR", weight: 5.4, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
-    { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-    { code: "CC-01", label: "Cost Glide Path", weight: 9.6, helios: 2, fortis: 3, saraswati: 4, strategy: "CRITICAL" },
-    { code: "CC-02", label: "Pricing Model", weight: 7.2, helios: 4, fortis: 3, saraswati: 3, strategy: "PUSH" },
-    { code: "CC-04", label: "Compliance", weight: 2.4, helios: 5, fortis: 4, saraswati: 3, strategy: "LOCK" },
-    { code: "IF-01", label: "Informal Session", weight: 15, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-  ],
-};
-
-const EXPANSION = [
-  { signal: "ISO 22301 → Resilience Expansion", timing: "Mo 6-9", revenue: "£800K-1.2M/yr", champion: "Jennifer", gate: "green" },
-  { signal: "DEFENSIVE: Application Discovery", timing: "Mo 6-9", revenue: "£50-80K → £2-4M/yr", champion: "Hale", gate: "green" },
-  { signal: "FinOps Advisory", timing: "Mo 9-12", revenue: "£200-400K/yr", champion: "Thompson", gate: "green" },
-  { signal: "Managed SOC / MDR", timing: "Mo 12-18", revenue: "£1.5-2.5M/yr", champion: "Jennifer→Osei", gate: "amber" },
-  { signal: "Process Automation (beyond IT)", timing: "Mo 18-24", revenue: "£500K-1M/yr", champion: "Harrison", gate: "amber" },
-  { signal: "Renewal + Portfolio Bundle", timing: "Mo 24-30", revenue: "Protect base + expand to £140-160M", champion: "Thompson", gate: "future" },
+const LOSE_THEMES = [
+  { rank: 1, theme: "CIO Survival Sabotage", criterion: "TC-01/TC-02 (35%)", shadow: "HIDDEN", stakeholder: "N. Reid", conversion: "REFRAME — make Reid the hero", probability: "75%" },
+  { rank: 2, theme: "Year 1 Margin Impact", criterion: "CC-04 (10%)", shadow: "SUSPECTED", stakeholder: "M. Thompson", conversion: "COMPENSATE — 50% deferred, Net-Zero Y1", probability: "35%" },
+  { rank: 3, theme: "ISO 22301 Gap", criterion: "TC-04 (20%)", shadow: "EXPOSED", stakeholder: "J. Morris", conversion: "MITIGATE — 'Parallel Certification Journey'", probability: "40%" },
+  { rank: 4, theme: "Sovereign Scale Fear", criterion: "CC-05 (10%)", shadow: "PROJECTED", stakeholder: "A. Pemberton", conversion: "EVIDENCE — Excalibur £45M + Athena £38M", probability: "45%" },
+  { rank: 5, theme: "Staff Disruption (TUPE)", criterion: "TC-06 (10%)", shadow: "SUSPECTED", stakeholder: "HR (Unknown)", conversion: "PRE-EMPT — identify HR/Change lead", probability: "25%" },
 ];
 
 const FAILURE_SCENARIOS = [
-  { id: 1, label: "Execution Doubt", probability: "25%", trigger: "Chen→Hale doubt cascade on transition capability" },
-  { id: 2, label: "Commercial Collapse", probability: "20%", trigger: "Thompson rejects gain-share without named-process evidence" },
-  { id: 3, label: "Competitive Displacement", probability: "20%", trigger: "Fortis delivers 'show me three' to Harrison before we plant retention question" },
-  { id: 4, label: "Champion Isolation", probability: "15%", trigger: "Jennifer's advocacy neutralised by Osei's risk veto" },
-  { id: 5, label: "Silent No", probability: "20%", trigger: "Whitfield never engages, Board defaults to safe brand (Fortis)" },
+  { id: 1, label: "CIO Survival Sabotage", probability: "75%", trigger: "Reid blocks site access to prevent HIO exposing faked MTTR logs", defence: "Frame HIO as 'Log Protection Layer'. Give Reid a Data Cleansing narrative." },
+  { id: 2, label: "Vendor Loyalty Override", probability: "60%", trigger: "RFP clarifications start using Tesseract-specific technical terms", defence: "Use Morris to get Osei to mandate 'Tool-Agnostic Observability' in Tower 5." },
+  { id: 3, label: "Audit Chair Veto", probability: "45%", trigger: "Pemberton deems Helios 'too small' for £115M contract", defence: "Lead every session with Excalibur (£45M) and Athena (£38M) PRA references." },
+  { id: 4, label: "Jelly Stall", probability: "40%", trigger: "March 28 deadline slips; 'Meridian 2030' logo disappears from internal slides", defence: "Reframe bid as PRA Remediation — mandatory, not strategic." },
+  { id: 5, label: "Comp-Driven Inertia", probability: "35%", trigger: "Thompson pushes for phased tower approach, descopes Tower 4", defence: "Accept 50% deferred. Accept Net-Zero Year 1 model. Do not fight on commercial terms." },
 ];
+
+const EXPANSION = [
+  { signal: "ISO 22301 Remediation-as-a-Service", timing: "0-90 days", revenue: "£1.2M (OPEX)", champion: "Jennifer Morris", gate: "green", adkar: "GO (19/25)", action: "Rachel Okonkwo 1:1 with Morris this week" },
+  { signal: "DORA Advisory", timing: "3-6 months", revenue: "£250K (Advisory)", champion: "David Osei", gate: "amber", adkar: "BUILD (13/25)", action: "Briefing paper to Osei — PRA alumni framing" },
+  { signal: "Recovery Automation (HIO Orchestration)", timing: "6-12 months", revenue: "£2.2M (Project)", champion: "Andrew Chen", gate: "future", adkar: "WAIT (12/25)", action: "Demo after ops stabilised — Chen needs breathing room first" },
+];
+
+const REFERRALS = [
+  { contact: "Jennifer Morris", target: "HR / Change Team", connection: "Peer / TUPE Stakeholder", willingness: 9, value: "HIGH" },
+  { contact: "David Osei", target: "Legal / DPO", connection: "Direct Oversight", willingness: 8, value: "HIGH" },
+  { contact: "Sir Anthony Pemberton", target: "FTSE 250 Boards", connection: "Multi-NED seats", willingness: 6, value: "SUPREME (wait for Q2 Green QBR)" },
+  { contact: "Nicholas Reid", target: "Any referral", connection: "N/A", willingness: 1, value: "DO NOT ASK" },
+];
+
+// ─── SCORING ───
+const SCORING = {
+  helios: 3.52, target: 4.65, tesseract: 3.80, globalSI: 3.60,
+  criteria: [
+    { code: "TC-01", label: "Infrastructure & Cloud", weight: 12.6, helios: 3, tesseract: 5, globalSI: 4, strategy: "PUSH" },
+    { code: "TC-02", label: "Automation & AI (HIO)", weight: 5.4, helios: 4, tesseract: 3, globalSI: 3, strategy: "LOCK" },
+    { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, tesseract: 4, globalSI: 4, strategy: "PUSH" },
+    { code: "TC-04", label: "Resilience & BCM (Tower 4)", weight: 20.0, helios: 5, tesseract: 2, globalSI: 3, strategy: "LOCK" },
+    { code: "TC-06", label: "People & Culture", weight: 10.0, helios: 4, tesseract: 3, globalSI: 3, strategy: "LOCK" },
+    { code: "CC-01", label: "OPEX / Cost Glide Path", weight: 9.6, helios: 2, tesseract: 3, globalSI: 3, strategy: "CRITICAL" },
+    { code: "CC-02", label: "Gain-Share / At-Risk Model", weight: 7.2, helios: 5, tesseract: 2, globalSI: 3, strategy: "LOCK" },
+    { code: "CC-05", label: "Scale / Brand", weight: 9.6, helios: 2, tesseract: 4, globalSI: 5, strategy: "CRITICAL" },
+    { code: "IF-01", label: "Informal / Oral Session", weight: 15.0, helios: 4, tesseract: 3, globalSI: 3, strategy: "LOCK" },
+  ],
+};
 
 // ─── UTILITY COMPONENTS ───
 
 const StatusDot = ({ status }) => {
   const colors = {
     champion: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]",
-    established: "bg-emerald-500",
+    established: "bg-blue-400",
     targeted: "bg-amber-400",
-    unknown: "bg-blue-400",
+    unknown: "bg-gray-500",
+    blocker: "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]",
   };
-  return <span className={`inline-block w-2.5 h-2.5 rounded-full ${colors[status] || colors.unknown}`} />;
+  return <span className={`inline-block w-2.5 h-2.5 rounded-full shrink-0 ${colors[status] || colors.unknown}`} />;
 };
 
 const Badge = ({ children, color = "blue" }) => {
@@ -249,6 +317,7 @@ const Badge = ({ children, color = "blue" }) => {
     amber: "bg-amber-950/60 border-amber-600/40 text-amber-300",
     purple: "bg-purple-950/60 border-purple-600/40 text-purple-300",
     gray: "bg-gray-800/60 border-gray-600/40 text-gray-400",
+    orange: "bg-orange-950/60 border-orange-600/40 text-orange-300",
   };
   return (
     <span className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border rounded ${styles[color]}`}>
@@ -262,7 +331,7 @@ const ScoreBar = ({ score, max = 5 }) => {
   const color = score >= 4 ? "bg-emerald-500" : score >= 3 ? "bg-amber-400" : "bg-red-500";
   return (
     <div className="flex items-center gap-2">
-      <div className="w-20 h-2 bg-gray-800 rounded-full overflow-hidden">
+      <div className="w-16 h-1.5 bg-gray-800 rounded-full overflow-hidden">
         <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
       </div>
       <span className="text-xs font-bold text-white">{score}</span>
@@ -270,16 +339,16 @@ const ScoreBar = ({ score, max = 5 }) => {
   );
 };
 
-const Section = ({ id, title, subtitle, children, defaultOpen = false }) => {
+const Section = ({ id, title, subtitle, children, defaultOpen = false, accent }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="mb-4 border border-gray-800 rounded-lg overflow-hidden">
+    <div className={`mb-4 border rounded-lg overflow-hidden ${accent ? `border-l-2 border-${accent}-600/60 border-gray-800` : "border-gray-800"}`}>
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-5 py-4 bg-gray-900/80 hover:bg-gray-900 transition-colors text-left"
       >
         <div>
-          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">{id}</span>
+          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block font-mono">{id}</span>
           <span className="text-base font-extrabold text-white">{title}</span>
           {subtitle && <span className="text-xs text-gray-500 ml-3">{subtitle}</span>}
         </div>
@@ -297,11 +366,12 @@ function GAINAccountPack() {
   const [selectedPerson, setSelectedPerson] = useState(null);
 
   const tabs = [
-    { id: "exec", label: "Exec Summary", desc: "5-min steering board view" },
-    { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
-    { id: "assess", label: "A | Map", desc: "RFP decode & bid intelligence" },
-    { id: "influence", label: "I | Win", desc: "Strategy, scoring & competition" },
-    { id: "nurture", label: "N | Grow", desc: "Post-win expansion & health" },
+    { id: "exec", label: "Exec Summary", desc: "Situation & people" },
+    { id: "gather", label: "G | Know", desc: "Macro, financial & stakeholder intel" },
+    { id: "coalition", label: "G-03B | Map", desc: "Power topology & coalition" },
+    { id: "assess", label: "A | Decode", desc: "RFP decode & trauma signals" },
+    { id: "influence", label: "I | Win", desc: "Win/lose themes & scoring" },
+    { id: "nurture", label: "N | Grow", desc: "Warning brief & expansion" },
   ];
 
   return (
@@ -311,27 +381,33 @@ function GAINAccountPack() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">GAIN Account Pack</span>
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">GAIN Account Pack · G-01→N-01</span>
               <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-950/40 border border-red-600/30 rounded text-[10px] font-bold text-red-300 uppercase tracking-wider">
                 <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
                 {ACCOUNT.status}
               </span>
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight">{ACCOUNT.name}</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Seller: {ACCOUNT.seller} · {ACCOUNT.sector} · {ACCOUNT.term} term · ACV: {ACCOUNT.acv} · TCV: {ACCOUNT.tcv7yr}</p>
+            <p className="text-xs text-gray-500 mt-0.5">Seller: {ACCOUNT.seller} · {ACCOUNT.sector} · {ACCOUNT.term} · Submission: {ACCOUNT.submissionDate}</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <div className="text-right">
-              <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Win Probability</div>
-              <div className="text-3xl font-black text-white">{ACCOUNT.winProbability}%</div>
+              <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold font-mono">Win Probability</div>
+              <div className="text-3xl font-black text-red-400">{ACCOUNT.winProbability}%</div>
+              <div className="text-[9px] text-gray-600 font-mono">Base 40% − 8% adjustments</div>
             </div>
             <div className="w-16 h-16 relative">
               <svg viewBox="0 0 36 36" className="w-16 h-16 transform -rotate-90">
                 <circle cx="18" cy="18" r="15" fill="none" stroke="#1e293b" strokeWidth="3" />
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#10b981" strokeWidth="3"
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#ef4444" strokeWidth="3"
                   strokeDasharray={`${ACCOUNT.winProbability * 0.942} 100`}
                   strokeLinecap="round" />
               </svg>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold font-mono">TCV</div>
+              <div className="text-2xl font-black text-white">{ACCOUNT.dealValue}</div>
+              <div className="text-[10px] text-gray-500">ACV {ACCOUNT.acv}</div>
             </div>
           </div>
         </div>
@@ -342,12 +418,9 @@ function GAINAccountPack() {
         <div className="max-w-7xl mx-auto flex gap-0">
           {tabs.map((t) => (
             <button key={t.id} onClick={() => setActiveTab(t.id)}
-              className={`px-5 py-3 text-left border-b-2 transition-all shrink-0 ${
-                activeTab === t.id
-                  ? "border-blue-500 bg-blue-950/20"
-                  : "border-transparent hover:bg-gray-900/50 hover:border-gray-700"
-              }`}
-            >
+              className={`px-4 py-3 text-left border-b-2 transition-all shrink-0 ${
+                activeTab === t.id ? "border-blue-500 bg-blue-950/20" : "border-transparent hover:bg-gray-900/50 hover:border-gray-700"
+              }`}>
               <span className={`text-xs font-bold block ${activeTab === t.id ? "text-blue-400" : "text-gray-500"}`}>{t.label}</span>
               <span className="text-[10px] text-gray-600">{t.desc}</span>
             </button>
@@ -358,28 +431,35 @@ function GAINAccountPack() {
       {/* ─── CONTENT ─── */}
       <div className="max-w-7xl mx-auto px-6 py-6">
 
-        {/* ════════════════════════════════════════════════ */}
-        {/* EXEC SUMMARY TAB */}
-        {/* ════════════════════════════════════════════════ */}
+        {/* ════ EXEC SUMMARY ════ */}
         {activeTab === "exec" && (
           <div>
-            {/* What Is This Deal */}
-            <Section id="BRIEF" title="The Client & Opportunity" subtitle={ACCOUNT.dealType} defaultOpen={false}>
+            {/* Verdict banner */}
+            <div className="mb-4 p-4 bg-red-950/20 border border-red-800/40 rounded-lg">
+              <div className="flex items-start gap-3">
+                <span className="text-red-500 text-2xl mt-0.5">⚠</span>
+                <div>
+                  <div className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1 font-mono">00-F Verdict · KILL → PIVOT</div>
+                  <p className="text-sm text-red-200 font-bold mb-1">The £2.5M standalone software deal is dead. Kill the Q2 forecast. Pivot to the £115M RFP.</p>
+                  <p className="text-xs text-gray-400 leading-relaxed">CFO walked out. CIO dropped off call. Procurement dark 45 days. Board Audit Committee has frozen all cloud CAPEX. The only live budget is the <span className="text-white font-bold">£115M managed services RFP MFS-2026-ORT-001</span> — submission deadline 28 March 2026.</p>
+                </div>
+              </div>
+            </div>
+
+            <Section id="BRIEF" title="The Deal & Opportunity" subtitle={ACCOUNT.dealType} defaultOpen={true}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">The Client</h4>
                   <p className="text-sm text-gray-300 leading-relaxed mb-2">{ACCOUNT.clientSummary}</p>
                   <p className="text-xs text-gray-500 leading-relaxed mb-3">{ACCOUNT.clientHistory}</p>
                   <div className="flex flex-wrap gap-2">
-                    {ACCOUNT.clientDomains.split(", ").map((d, i) => (
-                      <Badge key={i} color="blue">{d}</Badge>
-                    ))}
+                    {ACCOUNT.clientDomains.split(", ").map((d, i) => <Badge key={i} color="blue">{d}</Badge>)}
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Service Description</h4>
+                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Service Scope</h4>
                   <p className="text-sm text-gray-300 leading-relaxed mb-3">{ACCOUNT.serviceDescription}</p>
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2 mt-4">Non-Standard / Differentiators</h4>
+                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2 mt-4">Differentiators / Non-Standard</h4>
                   <div className="space-y-1.5">
                     {ACCOUNT.nonStandard.map((n, i) => (
                       <div key={i} className="flex items-start gap-2 text-sm">
@@ -392,21 +472,20 @@ function GAINAccountPack() {
               </div>
             </Section>
 
-            {/* Stakeholder Intelligence */}
-            <Section id="PEOPLE" title="Stakeholder Intelligence" subtitle={`${STAKEHOLDERS.length} profiles mapped`}>
+            <Section id="PEOPLE" title="Stakeholder Map" subtitle={`${STAKEHOLDERS.length} profiles mapped — click to expand`} defaultOpen={true}>
               <div className="flex flex-wrap gap-2 mb-4">
                 {STAKEHOLDERS.map(s => (
                   <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
                     className={`border rounded-lg px-3 py-2 text-center transition-all cursor-pointer ${
                       selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
                       s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
+                      s.status === "blocker" ? "bg-red-950/20 border-red-600/40" :
                       "bg-gray-900 border-gray-800 hover:border-gray-600"
                     }`}>
                     <div className="flex items-center gap-1.5">
                       <StatusDot status={s.status} />
-                      <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                      <span className="text-[9px] text-gray-500 uppercase">{s.role}</span>
-                      {s.status === "champion" && <Badge color="green">★</Badge>}
+                      <span className="text-xs font-bold text-white">{s.name.split(" ").slice(-1)[0]}</span>
+                      <span className="text-[9px] text-gray-500 uppercase">{s.role.split(" ")[0]}</span>
                     </div>
                   </button>
                 ))}
@@ -420,12 +499,12 @@ function GAINAccountPack() {
                       <StatusDot status={p.status} />
                       <span className="text-base font-bold text-white">{p.name}</span>
                       <span className="text-xs text-gray-500">{p.role}</span>
-                      <Badge color={p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue"}>{p.status}</Badge>
+                      <Badge color={p.status === "champion" ? "green" : p.status === "blocker" ? "red" : p.status === "established" ? "blue" : p.status === "targeted" ? "amber" : "gray"}>{p.status}</Badge>
                       <Badge color="purple">{p.gainDriver}</Badge>
                       <Badge color="gray">{p.kegan}</Badge>
                     </div>
                     <p className="text-sm text-gray-300 leading-relaxed mb-3">{p.summary}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-3">
                       <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
                         <div className="text-[10px] text-emerald-400 uppercase font-bold mb-1">Triggers</div>
                         <div className="text-xs text-gray-300">{p.trigger}</div>
@@ -434,143 +513,407 @@ function GAINAccountPack() {
                         <div className="text-[10px] text-red-400 uppercase font-bold mb-1">Avoid</div>
                         <div className="text-xs text-gray-300">{p.avoid}</div>
                       </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-blue-400 uppercase font-bold mb-1">Modality</div>
-                        <div className="text-xs text-gray-300">{p.modality}</div>
+                      <div className="bg-red-950/20 border border-red-800/30 rounded p-3">
+                        <div className="text-[10px] text-red-400 uppercase font-bold mb-1">The One Landmine</div>
+                        <div className="text-xs text-red-200">{p.landmine}</div>
+                      </div>
+                      <div className="bg-blue-950/20 border border-blue-800/30 rounded p-3">
+                        <div className="text-[10px] text-blue-400 uppercase font-bold mb-1">The One Thing</div>
+                        <div className="text-xs text-blue-200">{p.oneThing}</div>
                       </div>
                     </div>
-                    <div className="flex gap-4 mt-3 text-[11px] font-mono text-gray-500">
+                    <div className="flex gap-4 text-[11px] font-mono text-gray-500">
                       <span>Authority: {p.authority}/100</span>
                       <span>Influence: {p.influence}/100</span>
+                      <span>Modality: {p.modality.split(" —")[0]}</span>
                     </div>
                   </div>
                 );
               })()}
-              <div className="flex items-center gap-3 mt-3 text-[9px] font-mono text-gray-600">
+              <div className="flex items-center gap-4 mt-3 text-[9px] font-mono text-gray-600">
                 <span className="flex items-center gap-1"><StatusDot status="champion" /> Champion</span>
                 <span className="flex items-center gap-1"><StatusDot status="established" /> Established</span>
                 <span className="flex items-center gap-1"><StatusDot status="targeted" /> Targeted</span>
                 <span className="flex items-center gap-1"><StatusDot status="unknown" /> Unknown</span>
-              </div>
-            </Section>
-
-            <Section id="FINANCIALS" title="Financials" subtitle="Deal value, savings & waste">
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-              {[
-                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value", color: "text-white" },
-                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
-                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Meridian's annual waste", color: "text-red-400" },
-                { label: "Helios Value", value: G02_FINANCIALS.heliosValue, sub: "5yr cumulative savings", color: "text-emerald-400" },
-                { label: "Waste Identified", value: G02_FINANCIALS.wasteIdentified, sub: "Over contract term", color: "text-amber-400" },
-              ].map((v, i) => (
-                <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">{v.label}</div>
-                  <div className={`text-xl font-black ${v.color}`}>{v.value}</div>
-                  <div className="text-[10px] text-gray-600 mt-0.5">{v.sub}</div>
-                </div>
-              ))}
-            </div>
-            </Section>
-
-            <Section id="COMP" title="Competition" subtitle="3 competitors profiled">
-              <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-red-400 uppercase tracking-widest mb-3">Competition</h3>
-                <div className="space-y-2">
-                  {COMPETITORS.map((c, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-800/30 last:border-0">
-                      <Badge color={c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green"}>{c.dangerRating}</Badge>
-                      <div className="flex-1">
-                        <span className="text-sm font-bold text-white">{c.name}</span>
-                        <span className="text-[11px] text-gray-500 ml-2">{c.revenue}</span>
-                      </div>
-                      <span className="text-[10px] text-gray-500 italic hidden md:block">"{c.label}"</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-3 text-[11px] text-gray-500">
-                  Primary threat: <span className="text-red-300 font-bold">Fortis</span> on TUPE volume + brand confidence · Secondary: <span className="text-amber-300 font-bold">Saraswati</span> on automation + price
-                </div>
+                <span className="flex items-center gap-1"><StatusDot status="blocker" /> Blocker</span>
               </div>
             </Section>
 
             <Section id="TIMELINE" title="Where We Are" subtitle={ACCOUNT.bidPhase}>
-              <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-blue-400 uppercase tracking-widest mb-3">Where We Are</h3>
-                <p className="text-sm text-gray-400 mb-3">{ACCOUNT.bidPhase}</p>
-                <div className="space-y-2">
-                  {[
-                    { phase: "RFP Received", date: "Jan 2026", done: true },
-                    { phase: "Clarification Window", date: "1-14 Mar", active: true },
-                    { phase: "Submission Deadline", date: "28 Mar", hard: true },
-                    { phase: "Evaluation & Orals", date: "Apr-May" },
-                    { phase: "Preferred Bidder", date: "Jun 2026" },
-                    { phase: "Go-Live / TUPE Day 1", date: "Sep 2026" },
-                  ].map((m, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse" : m.hard ? "bg-red-500" : "bg-gray-600"}`} />
-                      <span className={`text-sm flex-1 ${m.done ? "text-gray-500" : m.active ? "text-blue-300 font-bold" : "text-white"}`}>{m.phase}</span>
-                      <span className={`text-xs ${m.hard ? "text-red-400 font-bold" : "text-gray-500"}`}>{m.date}</span>
-                      {m.hard && <Badge color="red">Hard</Badge>}
-                      {m.active && <Badge color="blue">Now</Badge>}
-                      {m.done && <Badge color="gray">Done</Badge>}
+              <div className="space-y-2">
+                {[
+                  { phase: "RFP Issued (MFS-2026-ORT-001)", date: "Feb 2026", done: true },
+                  { phase: "Clarification Question Deadline", date: "7 Mar", hard: true },
+                  { phase: "Submission Deadline", date: "28 Mar 2026", hard: true },
+                  { phase: "Evaluation & Oral Presentations", date: "Apr–May 2026", active: true },
+                  { phase: "Preferred Bidder", date: "Jun 2026" },
+                  { phase: "Contract Signature", date: "1 Sep 2026" },
+                  { phase: "Service Commencement / TUPE Day 1", date: "1 Oct 2026" },
+                  { phase: "ISO 22301 Audit", date: "Q3 2026", hard: true },
+                ].map((m, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className={`w-2 h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse" : m.hard ? "bg-red-500" : "bg-gray-600"}`} />
+                    <span className={`text-sm flex-1 ${m.done ? "text-gray-500 line-through" : m.hard ? "text-red-300 font-bold" : m.active ? "text-blue-300 font-bold" : "text-white"}`}>{m.phase}</span>
+                    <span className={`text-xs ${m.hard ? "text-red-400 font-bold" : "text-gray-500"}`}>{m.date}</span>
+                    {m.hard && <Badge color="red">Hard</Badge>}
+                    {m.active && <Badge color="blue">Now</Badge>}
+                    {m.done && <Badge color="gray">Done</Badge>}
+                  </div>
+                ))}
+              </div>
+            </Section>
+          </div>
+        )}
+
+        {/* ════ G | KNOW ════ */}
+        {activeTab === "gather" && (
+          <div>
+            <Section id="G-01" title="Macro Intelligence" subtitle="The 3 Bleeding Necks" defaultOpen={true}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                {G01_MACRO.bleedingNecks.map((n, i) => (
+                  <div key={i} className={`p-4 rounded-lg border ${n.severity === "critical" ? "bg-red-950/15 border-red-800/40" : "bg-amber-950/15 border-amber-800/40"}`}>
+                    <div className={`text-[10px] font-bold uppercase tracking-widest mb-1 font-mono ${n.severity === "critical" ? "text-red-400" : "text-amber-400"}`}>Bleeding Neck #{i+1}</div>
+                    <div className="text-sm font-bold text-white mb-1">{n.label}</div>
+                    <p className="text-xs text-gray-400">{n.detail}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                {[
+                  { label: "Micro-Outage Cost", value: G01_MACRO.microOutageCost, color: "text-red-400" },
+                  { label: "EOL Server Estate", value: G01_MACRO.serverEOL, color: "text-red-400" },
+                  { label: "Alert Volume/mo", value: G01_MACRO.alertVolume, color: "text-amber-400" },
+                  { label: "Cost of Inaction", value: G01_MACRO.coi, color: "text-red-400" },
+                ].map((v, i) => (
+                  <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 uppercase font-bold mb-1 font-mono">{v.label}</div>
+                    <div className={`text-lg font-black ${v.color}`}>{v.value}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-2">
+                <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Strategic Priorities & Deadlines</div>
+                {G01_MACRO.strategicPriorities.map((p, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className={`w-2 h-2 rounded-full shrink-0 ${p.severity === "critical" ? "bg-red-500" : "bg-amber-400"}`} />
+                    <span className="text-sm text-white flex-1">{p.label}</span>
+                    <span className={`text-xs font-bold font-mono ${p.severity === "critical" ? "text-red-400" : "text-amber-400"}`}>{p.deadline}</span>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section id="G-02" title="Financial Forensics" subtitle="The CFO's war & the RFP financial levers">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                {[
+                  { label: "Revenue (FY25)", value: G02_FINANCIALS.revenue, color: "text-white" },
+                  { label: "Operating Profit", value: G02_FINANCIALS.opProfit, color: "text-white" },
+                  { label: "Return on Equity", value: G02_FINANCIALS.roe, color: "text-amber-400" },
+                  { label: "Year 1 Risk (if EOL unmapped)", value: G02_FINANCIALS.yearOneRisk, color: "text-red-400" },
+                ].map((v, i) => (
+                  <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-3">
+                    <div className="text-[10px] text-gray-500 uppercase font-bold mb-1 font-mono">{v.label}</div>
+                    <div className={`text-base font-black ${v.color}`}>{v.value}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mb-4 p-3 bg-amber-950/20 border border-amber-800/30 rounded text-sm text-amber-200">
+                <span className="font-bold">CFO Weapon:</span> Thompson brought former employer EY to reclassify IT CAPEX as OPEX. Every £ of Project Citadel that moves to OPEX destroys Whitfield's EBITDA bonus. That is why the budget is frozen.
+              </div>
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">RFP Commercial Levers — How to Exploit Them</div>
+              <div className="space-y-2">
+                {G02_FINANCIALS.rfpLevers.map((l, i) => (
+                  <div key={i} className="grid grid-cols-3 gap-2 p-3 bg-gray-900/50 border border-gray-800 rounded text-xs">
+                    <span className="font-bold text-white">{l.clause}</span>
+                    <span className="text-gray-400">{l.meaning}</span>
+                    <span className="text-emerald-400">{l.play}</span>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          </div>
+        )}
+
+        {/* ════ G-03B | COALITION MAP ════ */}
+        {activeTab === "coalition" && (
+          <div>
+            <div className="mb-4 p-3 bg-blue-950/20 border border-blue-800/30 rounded text-sm text-blue-200">
+              <span className="font-bold font-mono text-blue-400">G-03B COMPOUND ASSIMILATOR —</span> Political topology synthesised from all 8 G-03 stakeholder profiles. This runs after all individual profiles complete.
+            </div>
+
+            <Section id="G-03B-SHADOW" title="Shadow Hierarchy" subtitle="Who actually controls the £115M" defaultOpen={true}>
+              <div className="space-y-2 mb-4">
+                {G03B_COALITION.shadowHierarchy.map((n, i) => (
+                  <div key={i} className="flex items-center gap-3" style={{ paddingLeft: `${n.level * 24}px` }}>
+                    {i > 0 && <span className="text-gray-600 font-mono text-xs">→</span>}
+                    <div className={`flex-1 p-3 rounded-lg border ${i === 0 ? "bg-red-950/20 border-red-800/40" : i === 4 ? "bg-gray-900/30 border-gray-800/40 opacity-50" : "bg-gray-900/50 border-gray-800"}`}>
+                      <span className={`font-bold text-sm ${i === 0 ? "text-red-300" : i === 4 ? "text-gray-500" : "text-white"}`}>{n.node}</span>
+                      <span className="text-xs text-gray-500 ml-2">{n.role}</span>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
+              <div className="p-3 bg-emerald-950/20 border border-emerald-800/30 rounded">
+                <span className="text-[10px] font-bold text-emerald-400 uppercase font-mono">Parallel Axis (operates outside the hierarchy)</span>
+                <p className="text-sm text-emerald-200 mt-1"><span className="font-bold">{G03B_COALITION.parallelAxis.node}</span> — {G03B_COALITION.parallelAxis.role}</p>
               </div>
             </Section>
 
-            <Section id="WEDGE" title="Positioning Wedge" subtitle="How we position against competition">
-              <div className="bg-gray-900/60 border border-blue-900/30 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-blue-400 uppercase tracking-widest mb-3">The Positioning Wedge</h3>
-                <p className="text-sm text-gray-300 leading-relaxed mb-3">
-                  Meridian has been burned by £67M "Operation Meridian" promises. <span className="text-white font-bold">Do not sell a Big Bang.</span>
-                </p>
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  Helios sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that 
-                  <span className="text-white font-bold"> their CIO gets our UK MD's mobile number.</span>
-                </p>
-                <div className="flex gap-3 mt-4 text-[11px] font-mono text-gray-500">
-                  <span>UK Headcount: 1,800</span>
-                  <span>·</span>
-                  <span>FS Contracts: 6 Active</span>
-                </div>
+            <Section id="G-03B-WIN" title="Winning Coalition" subtitle="Minimum viable — 4 of 8 stakeholders" defaultOpen={true}>
+              <div className="mb-3 text-xs text-gray-500">The Compliance/Margin Alliance — bypass the CIO entirely</div>
+              <div className="space-y-2">
+                {G03B_COALITION.winningCoalition.map((m, i) => (
+                  <div key={i} className="grid grid-cols-4 gap-3 p-3 bg-emerald-950/10 border border-emerald-800/30 rounded text-xs">
+                    <span className="font-bold text-emerald-300">{m.member}</span>
+                    <span className="text-gray-400">{m.role}</span>
+                    <span className="text-gray-300">{m.why}</span>
+                    <span className="text-amber-300">{m.need}</span>
+                  </div>
+                ))}
               </div>
             </Section>
 
-            <Section id="ACTIONS" title="Critical Actions Before Submission" subtitle="3 actions, +0.47 weighted points">
-              <div className="bg-gray-900/60 border border-red-900/30 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-red-400 uppercase tracking-widest mb-3">Critical Actions Before Submission</h3>
-                <div className="space-y-3">
-                  {[
-                    { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.19-0.29 pts)", status: "NOT STARTED" },
-                    { action: "Build Meridian Infrastructure Transition Blueprint", impact: "TC-03/TC-01 protection (+0.05-0.13 pts)", status: "NOT STARTED" },
-                    { action: "Rehearse live scenario (Chen's alert methodology)", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" },
-                  ].map((a, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <span className="text-red-500 mt-0.5 shrink-0">✕</span>
-                      <div>
-                        <div className="text-sm font-bold text-white">{a.action}</div>
-                        <div className="text-[11px] text-gray-500">{a.impact}</div>
-                      </div>
+            <Section id="G-03B-BLOCK" title="Blocking Coalition" subtitle="Know your enemies">
+              <div className="space-y-2 mb-4">
+                {G03B_COALITION.blockingCoalition.map((m, i) => (
+                  <div key={i} className="grid grid-cols-3 gap-3 p-3 bg-red-950/10 border border-red-800/30 rounded text-xs">
+                    <span className="font-bold text-red-300">{m.member}</span>
+                    <span className="text-gray-400">{m.role}</span>
+                    <span className="text-red-200">{m.why}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="p-4 bg-amber-950/20 border border-amber-800/30 rounded">
+                <div className="text-[10px] font-bold text-amber-400 uppercase tracking-widest mb-2 font-mono">The Fault Line</div>
+                <p className="text-sm text-amber-200">{G03B_COALITION.faultLine}</p>
+              </div>
+            </Section>
+
+            <Section id="G-03B-POWER" title="Power Topology Table" subtitle="Formal vs informal authority">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-800">
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Stakeholder</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Formal</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Informal</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Implication</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: "James Whitfield", formal: "High (CEO)", informal: "Medium (Checked by Audit)", impl: "Cannot force IT spending if CFO and Audit Chair object." },
+                      { name: "Sir Anthony Pemberton", formal: "High (Audit Chair)", informal: "Supreme (Ultimate Veto)", impl: "True apex predator. His regulatory fear drives the CFO's lockdown." },
+                      { name: "Mark Thompson", formal: "High (CFO)", informal: "High (Capital Gatekeeper)", impl: "Owns the math. Weaponized the EY audit." },
+                      { name: "Nicholas Reid", formal: "High (CIO)", informal: "Low (Frozen)", impl: "Dead man walking. Cannot sign a PO." },
+                      { name: "David Osei", formal: "High (CRO)", informal: "High (Regulatory Shield)", impl: "Only exec who can authorize £1M+ spend bypassing CFO freeze." },
+                      { name: "Sarah Blackwell", formal: "Medium (Procurement)", informal: "High (RFP Gatekeeper)", impl: "Controls the £115M flow." },
+                      { name: "Jennifer Morris", formal: "Low (Director)", informal: "Medium (Backed by CRO)", impl: "Has operational truth and CRO's ear. Cannot buy anything." },
+                      { name: "Andrew Chen", formal: "Low (Infra Head)", informal: "Low (Operational Victim)", impl: "Holds technical truth but suppressed by CIO." },
+                    ].map((r, i) => (
+                      <tr key={i} className="border-b border-gray-800/30">
+                        <td className="py-2 font-bold text-white">{r.name}</td>
+                        <td className="py-2 text-center text-gray-300">{r.formal}</td>
+                        <td className="py-2 text-center text-gray-300">{r.informal}</td>
+                        <td className="py-2 text-gray-400">{r.impl}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+
+            <div className="p-4 bg-gray-900 border border-gray-700 rounded-lg">
+              <div className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-2 font-mono">G-03B Corridor Test</div>
+              <p className="text-sm text-white font-bold">{G03B_COALITION.corridorTest}</p>
+              <p className="text-xs text-gray-500 mt-2">Next Action: Arm Morris/Osei with the regulatory business case, then execute A-01 on the £115M RFP.</p>
+            </div>
+          </div>
+        )}
+
+        {/* ════ A | DECODE ════ */}
+        {activeTab === "assess" && (
+          <div>
+            <Section id="A-01" title="RFP Strategic Decoder" subtitle="MFS-2026-ORT-001 — what it really is" defaultOpen={true}>
+              <div className="mb-3 p-3 bg-red-950/20 border border-red-800/30 rounded text-sm text-red-200">
+                <span className="font-bold">Reality Check:</span> This RFP is not a transformation project. It is a boardroom panic button designed by Procurement and the Audit Committee to shift £115M of IT risk off the balance sheet and bypass the failing CIO.
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs mb-4">
+                  <thead>
+                    <tr className="border-b border-gray-800">
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Explicit Requirement</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Implicit Signal</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Risk</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Probable Author</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { req: "15% At-Risk SLA Penalties", signal: "Extreme distrust of vendor capability", risk: "HIGH", author: "Blackwell / Thompson" },
+                      { req: "50:50 Gain-Share Model", signal: "Internal budget tapped out; vendors must self-fund ROI", risk: "HIGH", author: "Thompson (CFO)" },
+                      { req: "Tower 4: Op Res & BCM (standalone)", signal: "IT and Resilience fundamentally disconnected", risk: "CRITICAL", author: "Morris / Osei" },
+                      { req: "Collaborative SIAM (Tower 5)", signal: "Architecture board gridlocked; they need a referee", risk: "MED", author: "Reid (CIO)" },
+                      { req: "2% Innovation Fund (use-it-or-lose-it)", signal: "Legacy estate dying but no internal capital to fix it", risk: "MED", author: "Blackwell" },
+                      { req: "50% Deferred Transition Payment", signal: "Zero trust in IT delivery from Finance", risk: "HIGH", author: "Thompson / Blackwell" },
+                    ].map((r, i) => (
+                      <tr key={i} className="border-b border-gray-800/30">
+                        <td className="py-2 font-bold text-white">{r.req}</td>
+                        <td className="py-2 text-gray-400">{r.signal}</td>
+                        <td className={`py-2 text-center font-bold font-mono ${r.risk === "CRITICAL" ? "text-red-400" : r.risk === "HIGH" ? "text-amber-400" : "text-gray-400"}`}>{r.risk}</td>
+                        <td className="py-2 text-gray-300">{r.author}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+
+            <Section id="A-02" title="Requirements Trauma Decoder" subtitle="The scar tissue behind each requirement">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs mb-4">
+                  <thead>
+                    <tr className="border-b border-gray-800">
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Stakeholder</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Trauma</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Kübler-Ross Stage</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Evidence</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { who: "Nicholas Reid (CIO)", trauma: "62% EOL Estate / Faked Metrics", kr: "Denial / Bargaining", evidence: "Faking MTTR logs; pushing Tesseract" },
+                      { who: "Mark Thompson (CFO)", trauma: "£2.8M Outage Bleed", kr: "Anger", evidence: "Fired PwC for EY; froze all CAPEX" },
+                      { who: "Jennifer Morris", trauma: "PRA Warning / 34 ISO Gaps", kr: "Bargaining", evidence: "Built strict Tower 4 requirements; asking to hide cost" },
+                      { who: "Andrew Chen", trauma: "14,000 Alerts / 58% FCR", kr: "Depression", evidence: "Explicitly says: 'We can't code our way out of aging copper'" },
+                    ].map((r, i) => (
+                      <tr key={i} className="border-b border-gray-800/30">
+                        <td className="py-2 font-bold text-white">{r.who}</td>
+                        <td className="py-2 text-red-300">{r.trauma}</td>
+                        <td className="py-2 text-center text-amber-300 font-mono">{r.kr}</td>
+                        <td className="py-2 text-gray-400">{r.evidence}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+
+            <Section id="A-03" title="Stakeholder Register" subtitle="MEDDIC roles · authority · influence">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-800">
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Name</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Title</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">MEDDIC Role</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Authority</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Influence</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { name: "Sir Anthony Pemberton", title: "Audit Chair", meddic: "Ultimate Veto", auth: 10, inf: 10 },
+                      { name: "Mark Thompson", title: "CFO", meddic: "Economic Buyer", auth: 10, inf: 9 },
+                      { name: "David Osei", title: "CRO", meddic: "Economic Influencer", auth: 9, inf: 9 },
+                      { name: "Sarah Blackwell", title: "Procurement Dir", meddic: "Gatekeeper", auth: 8, inf: 7 },
+                      { name: "Jennifer Morris", title: "Dir. Resilience", meddic: "Champion", auth: 5, inf: 8 },
+                      { name: "Nicholas Reid", title: "CIO", meddic: "Tech Evaluator (HOSTILE)", auth: 4, inf: 6 },
+                      { name: "Andrew Chen", title: "Head of Infra", meddic: "User / Tech Eval", auth: 3, inf: 6 },
+                      { name: "James Whitfield", title: "CEO", meddic: "Sponsor (Checked)", auth: 9, inf: 7 },
+                    ].map((r, i) => (
+                      <tr key={i} className="border-b border-gray-800/30">
+                        <td className="py-2 font-bold text-white">{r.name}</td>
+                        <td className="py-2 text-gray-400">{r.title}</td>
+                        <td className="py-2 text-gray-300">{r.meddic}</td>
+                        <td className="py-2 text-center font-bold font-mono text-amber-300">{r.auth}/10</td>
+                        <td className="py-2 text-center font-bold font-mono text-blue-300">{r.inf}/10</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-3 p-2 bg-amber-950/20 border border-amber-800/30 rounded text-xs text-amber-300">
+                <span className="font-bold">Missing:</span> No named HR/TUPE Lead (TC-06 = 10% of scoring). No named CISO. No named Legal Counsel. Find HR/Change Lead before submission.
+              </div>
+            </Section>
+          </div>
+        )}
+
+        {/* ════ I | WIN ════ */}
+        {activeTab === "influence" && (
+          <div>
+            <Section id="I-02" title="Win Themes" subtitle="The Regulatory Rescue" defaultOpen={true}>
+              <div className="mb-3 p-3 bg-blue-950/20 border border-blue-800/30 rounded text-sm text-blue-200">
+                <span className="font-bold">Category Reframe:</span> Default = IT Outsourcer (Body Shop). Target = FS Regulatory & Resilience Partner. Reframe: <span className="text-white font-bold">"We are not a technology outsourcer; we are a regulatory remediation partner that happens to manage your technology."</span>
+              </div>
+              <div className="space-y-3">
+                {WIN_THEMES.map((t, i) => (
+                  <div key={i} className="p-4 bg-gray-900/50 border border-gray-800 rounded-lg">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge color={t.type === "FORTRESS" ? "green" : t.type === "ATTACK" ? "red" : "blue"}>{t.type}</Badge>
+                      <span className="text-sm font-bold text-white">{t.label}</span>
+                      <span className="text-xs text-gray-500 ml-auto">→ {t.owner}</span>
                     </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-2 bg-red-950/30 border border-red-800/30 rounded text-[11px] text-red-300 font-bold text-center">
-                  Combined impact: +0.29 to +0.47 weighted points → moves score from 3.85 to 4.14-4.32
-                </div>
+                    <p className="text-xs text-gray-300 mb-1">{t.detail}</p>
+                    <div className="text-[10px] text-emerald-400 font-mono">Evidence: {t.evidence}</div>
+                  </div>
+                ))}
               </div>
             </Section>
 
-            {/* Score Snapshot */}
-            <Section id="SCORING" title="Competitive Scoring Position" subtitle="Helios 3.85 vs Target 4.65">
-            <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
+            <Section id="I-01B" title="Lose Theme Analysis" subtitle="What kills this deal">
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-gray-800">
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase w-8">Rank</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Lose Theme</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Probability</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Shadow</th>
+                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Conversion Play</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {LOSE_THEMES.map((t, i) => (
+                      <tr key={i} className="border-b border-gray-800/30">
+                        <td className="py-2 text-center font-bold text-white">#{t.rank}</td>
+                        <td className="py-2 font-bold text-white">{t.theme}</td>
+                        <td className={`py-2 text-center font-bold font-mono ${parseInt(t.probability) >= 60 ? "text-red-400" : parseInt(t.probability) >= 40 ? "text-amber-400" : "text-gray-400"}`}>{t.probability}</td>
+                        <td className="py-2 text-center"><Badge color={t.shadow === "HIDDEN" ? "red" : t.shadow === "EXPOSED" ? "amber" : "gray"}>{t.shadow}</Badge></td>
+                        <td className="py-2 text-emerald-300">{t.conversion}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Section>
+
+            <Section id="I-01" title="Pre-Mortem: Failure Scenarios" subtitle="Combined loss probability: 68%">
+              <div className="mb-3 p-3 bg-red-950/20 border border-red-800/30 rounded text-xs text-red-300">
+                <span className="font-bold font-mono">Base Rate: 40%</span> + 28% Evidence Adjustment (CIO hostility, faked metrics, Tesseract loyalty, CFO margin panic) = <span className="font-bold text-red-200 text-sm">68% Combined Loss Probability</span>
+              </div>
+              <div className="space-y-3">
+                {FAILURE_SCENARIOS.map((s, i) => (
+                  <div key={i} className="p-3 bg-gray-900/50 border border-gray-800 rounded-lg">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-sm font-bold font-mono ${parseInt(s.probability) >= 60 ? "text-red-400" : parseInt(s.probability) >= 40 ? "text-amber-400" : "text-gray-400"}`}>{s.probability}</span>
+                      <span className="text-sm font-bold text-white">{s.label}</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mb-1">Trigger: {s.trigger}</p>
+                    <p className="text-xs text-emerald-400">Defence: {s.defence}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section id="SCORING" title="Competitive Scoring Position" subtitle="Helios vs Tesseract vs Global SI">
               <div className="flex flex-wrap items-baseline gap-6 mb-4">
                 {[
-                  { name: "Helios (Us)", score: SCORING.helios, color: "text-emerald-400" },
-                  { name: "Target", score: SCORING.target, color: "text-blue-400" },
-                  { name: "Fortis Global", score: SCORING.fortis, color: "text-red-400" },
-                  { name: "Saraswati Digital", score: SCORING.saraswati, color: "text-amber-400" },
+                  { name: "Helios (Us)", score: SCORING.helios, color: "text-blue-400" },
+                  { name: "Target", score: SCORING.target, color: "text-emerald-400" },
+                  { name: "Tesseract (Incumbent)", score: SCORING.tesseract, color: "text-red-400" },
+                  { name: "Global SI", score: SCORING.globalSI, color: "text-amber-400" },
                 ].map((s, i) => (
                   <div key={i} className="flex items-baseline gap-2">
                     <span className={`text-2xl font-black ${s.color}`}>{s.score.toFixed(2)}</span>
@@ -578,459 +921,26 @@ function GAINAccountPack() {
                   </div>
                 ))}
               </div>
-              {/* Inline scoring table for exec */}
-              <div className="overflow-x-auto mt-4">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-800">
-                      <th className="text-left py-1.5 text-gray-500 font-bold uppercase">Criterion</th>
-                      <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-16">Wt%</th>
-                      <th className="text-center py-1.5 text-emerald-500 font-bold uppercase w-14">Us</th>
-                      <th className="text-center py-1.5 text-red-400 font-bold uppercase w-14">Fortis</th>
-                      <th className="text-center py-1.5 text-amber-400 font-bold uppercase w-14">Sara.</th>
-                      <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-20">Play</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SCORING.criteria.map(c => (
-                      <tr key={c.code} className="border-b border-gray-800/20">
-                        <td className="py-1.5 text-gray-300">{c.label}</td>
-                        <td className="py-1.5 text-center text-gray-400">{c.weight}%</td>
-                        <td className={`py-1.5 text-center font-bold ${c.helios >= 4 ? "text-emerald-400" : c.helios >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.helios}</td>
-                        <td className={`py-1.5 text-center font-bold ${c.fortis >= 4 ? "text-emerald-400" : c.fortis >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.fortis}</td>
-                        <td className={`py-1.5 text-center font-bold ${c.saraswati >= 4 ? "text-emerald-400" : c.saraswati >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.saraswati}</td>
-                        <td className="py-1.5 text-center">
-                          <span className={`text-[10px] font-bold uppercase ${
-                            c.strategy === "LOCK" ? "text-emerald-400" : c.strategy === "PUSH" ? "text-blue-400" : c.strategy === "CRITICAL" ? "text-red-400" : "text-amber-400"
-                          }`}>{c.strategy}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="text-xs text-gray-500 text-center mt-3">
-                Lead: +{(SCORING.helios - SCORING.fortis).toFixed(2)} over Fortis (~12%) · +{(SCORING.helios - SCORING.saraswati).toFixed(2)} over Saraswati (~15%) · Healthy but not decisive
-              </div>
-            </div>
-            </Section>
-
-            {/* Failure Scenarios */}
-            <Section id="PREMORTEM" title="Pre-Mortem: How We Lose" subtitle="5 failure scenarios identified">
-            <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-              <h3 className="text-sm font-bold text-amber-400 uppercase tracking-widest mb-3">Pre-Mortem: How We Lose</h3>
-              <div className="space-y-2">
-                {FAILURE_SCENARIOS.map((f) => (
-                  <div key={f.id} className="flex items-center gap-3 py-2 border-b border-gray-800/50 last:border-0">
-                    <span className="text-xs font-bold text-gray-500 w-8 shrink-0">#{f.id}</span>
-                    <span className="text-sm font-bold text-white flex-1">{f.label}</span>
-                    <Badge color={parseInt(f.probability) >= 25 ? "red" : "amber"}>{f.probability}</Badge>
-                    <span className="text-[11px] text-gray-500 hidden md:block max-w-xs truncate">{f.trigger}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* GATHER TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "gather" && (
-          <div>
-            <Section id="WHO" title="Who Is Meridian?" subtitle={ACCOUNT.sector} defaultOpen={true}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-3">{ACCOUNT.clientSummary}</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">{ACCOUNT.clientHistory}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Business Domains</h4>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {ACCOUNT.clientDomains.split(", ").map((d, i) => (
-                      <Badge key={i} color="blue">{d}</Badge>
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                      <div className="text-[10px] text-gray-500 uppercase font-bold">Revenue</div>
-                      <div className="text-lg font-bold text-white">{G01_MACRO.revenue}</div>
-                    </div>
-                    <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                      <div className="text-[10px] text-gray-500 uppercase font-bold">Employees</div>
-                      <div className="text-lg font-bold text-white">{G01_MACRO.employees}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="G-01" title="Macro Strategy Radar" subtitle={G01_MACRO.revenue} defaultOpen={false}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {[
-                  { label: "Revenue", value: G01_MACRO.revenue },
-                  { label: "Employees", value: G01_MACRO.employees },
-                  { label: "Tech Programme", value: G01_MACRO.techSpend },
-                ].map((s, i) => (
-                  <div key={i} className="bg-gray-900 border border-gray-800 rounded p-3">
-                    <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{s.label}</div>
-                    <div className="text-lg font-bold text-white">{s.value}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                {[
-                  { label: "Server EOL", value: G01_MACRO.serverEOL, color: "text-red-400" },
-                  { label: "Alert Noise", value: G01_MACRO.alertNoise, color: "text-amber-400" },
-                  { label: "FCR", value: G01_MACRO.fcr, color: "text-red-400" },
-                  { label: "Comms Blackout", value: G01_MACRO.commsBlackout, color: "text-red-400" },
-                ].map((s, i) => (
-                  <div key={i} className="bg-gray-900/50 border border-gray-800 rounded p-3">
-                    <div className="text-[10px] text-gray-500 uppercase font-bold">{s.label}</div>
-                    <div className={`text-sm font-bold ${s.color}`}>{s.value}</div>
-                  </div>
-                ))}
-              </div>
-              <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Strategic Priorities</h4>
-              <div className="space-y-2">
-                {G01_MACRO.strategicPriorities.map((p, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <Badge color={p.severity === "critical" ? "red" : p.severity === "high" ? "amber" : "blue"}>{p.severity}</Badge>
-                    <span className="text-sm text-white font-semibold">{p.label}</span>
-                    <span className="text-[11px] text-gray-500">{p.deadline}</span>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="G-02" title="Financial Forensics" subtitle="Where the money leaks">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">Cost of Inaction</h4>
-                  <div className="space-y-2">
-                    {[
-                      { label: "Micro-outages (annual)", value: G02_FINANCIALS.microOutages },
-                      { label: "False alert waste", value: G02_FINANCIALS.falseAlerts },
-                      { label: "Consumer Duty MI", value: G02_FINANCIALS.consumerDutyMI },
-                      { label: "PRA vendor assessment", value: G02_FINANCIALS.praVendors },
-                    ].map((c, i) => (
-                      <div key={i} className="flex justify-between items-start border-b border-gray-800/30 pb-2">
-                        <span className="text-sm text-gray-400">{c.label}</span>
-                        <span className="text-sm font-bold text-red-300">{c.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Helios Value Proposition</h4>
-                  <div className="bg-emerald-950/20 border border-emerald-800/30 rounded p-4">
-                    <div className="text-3xl font-black text-emerald-400 mb-1">{G02_FINANCIALS.heliosValue}</div>
-                    <div className="text-xs text-gray-500 uppercase">Cumulative 5-Year Savings</div>
-                  </div>
-                  <div className="bg-gray-900 border border-gray-800 rounded p-4 mt-3">
-                    <div className="text-xl font-black text-amber-400 mb-1">{G02_FINANCIALS.wasteIdentified}</div>
-                    <div className="text-xs text-gray-500 uppercase">Total Waste Identified Over Contract</div>
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="G-03" title="Stakeholder Intelligence" subtitle={`${STAKEHOLDERS.length} profiles mapped`}>
-              {/* Org Chart */}
-              <div className="mb-6">
-                <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Organisation Map</h4>
-                <div className="flex flex-col items-center gap-4">
-                  {/* C-Suite */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "C-Suite").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="w-px h-4 bg-gray-700" />
-                  {/* Senior */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "Senior").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                        {s.status === "champion" && <Badge color="green">Champion</Badge>}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="w-px h-4 bg-gray-700" />
-                  {/* Operational */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "Operational").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Person Detail */}
-              {selectedPerson && (() => {
-                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
-                if (!p) return null;
-                return (
-                  <div className="bg-gray-900 border border-blue-800/40 rounded-lg p-5 mt-4 animate-[fadeIn_0.2s_ease-out]">
-                    <div className="flex items-center gap-3 mb-4">
-                      <StatusDot status={p.status} />
-                      <h4 className="text-lg font-bold text-white">{p.name}</h4>
-                      <Badge color={p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue"}>
-                        {p.status}
-                      </Badge>
-                      <Badge color="purple">{p.gainDriver}</Badge>
-                    </div>
-                    <p className="text-sm text-gray-300 mb-4 leading-relaxed">{p.summary}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-emerald-400 uppercase font-bold mb-1">Triggers</div>
-                        <div className="text-xs text-gray-300">{p.trigger}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-red-400 uppercase font-bold mb-1">Avoid</div>
-                        <div className="text-xs text-gray-300">{p.avoid}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-blue-400 uppercase font-bold mb-1">Modality / Kegan</div>
-                        <div className="text-xs text-gray-300">{p.modality}</div>
-                        <div className="text-[10px] text-gray-500 mt-1">{p.kegan}</div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4 mt-4 text-[11px] font-mono text-gray-500">
-                      <span>Authority: {p.authority}/100</span>
-                      <span>Influence: {p.influence}/100</span>
-                    </div>
-                  </div>
-                );
-              })()}
-
-              {/* Authority Matrix (text-based) */}
-              <div className="mt-6">
-                <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Authority vs Influence Map</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-gray-800">
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">Name</th>
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">Role</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Status</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Authority</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Influence</th>
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">GAIN Driver</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {STAKEHOLDERS.sort((a, b) => b.authority - a.authority).map(s => (
-                        <tr key={s.id} className="border-b border-gray-800/30 hover:bg-gray-900/50 cursor-pointer" onClick={() => setSelectedPerson(s.id)}>
-                          <td className="py-2 font-bold text-white">{s.name}</td>
-                          <td className="py-2 text-gray-400">{s.role}</td>
-                          <td className="py-2 text-center"><StatusDot status={s.status} /></td>
-                          <td className="py-2 text-center">
-                            <div className="inline-flex items-center gap-1">
-                              <div className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${s.authority}%` }} />
-                              </div>
-                              <span className="text-gray-400 w-6 text-right">{s.authority}</span>
-                            </div>
-                          </td>
-                          <td className="py-2 text-center">
-                            <div className="inline-flex items-center gap-1">
-                              <div className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-amber-500 rounded-full" style={{ width: `${s.influence}%` }} />
-                              </div>
-                              <span className="text-gray-400 w-6 text-right">{s.influence}</span>
-                            </div>
-                          </td>
-                          <td className="py-2"><Badge color={s.gainDriver === "Power" ? "red" : s.gainDriver === "Achievement" ? "blue" : "amber"}>{s.gainDriver}</Badge></td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* ASSESS TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "assess" && (
-          <div>
-            <Section id="A-01" title="RFP Decode" subtitle="What the document actually says" defaultOpen={true}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Evaluation Architecture</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Written Submission</span>
-                      <span className="font-bold text-white">60%</span>
-                    </div>
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Oral Presentation</span>
-                      <span className="font-bold text-white">25%</span>
-                    </div>
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Informal Assessment</span>
-                      <span className="font-bold text-white">15%</span>
-                    </div>
-                  </div>
-                  <div className="mt-3 p-2 bg-amber-950/20 border border-amber-800/30 rounded text-[11px] text-amber-300">
-                    + Risk Governance Overlay (Osei): Not scored but has VETO power over entire evaluation
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">Trauma Signatures (A-02)</h4>
-                  <div className="space-y-2">
-                    {[
-                      "Operation Meridian failure (£67M) — Big Bang PTSD",
-                      "Athena Insurance incident — 23-min response, 47-min comms blackout",
-                      "Zenith managed services — over-promised, under-delivered savings",
-                      "Current incumbent FCR at 58% — service delivery exhaustion",
-                    ].map((t, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm">
-                        <span className="text-red-500 mt-0.5 shrink-0">▸</span>
-                        <span className="text-gray-300">{t}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="A-02" title="Bid Timeline" subtitle="Key dates and compression zones">
-              <div className="space-y-3">
-                {[
-                  { phase: "Clarification Window", date: "1-14 March", status: "active" },
-                  { phase: "Submission Deadline", date: "28 March 2026", status: "hard" },
-                  { phase: "Technical Evaluation", date: "April 2026", status: "upcoming" },
-                  { phase: "Oral Presentations", date: "May 2026", status: "upcoming" },
-                  { phase: "Preferred Bidder", date: "June 2026", status: "upcoming" },
-                  { phase: "Contract Signature", date: "July 2026", status: "upcoming" },
-                  { phase: "TUPE Transfer Day 1", date: "September 2026", status: "upcoming" },
-                ].map((m, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className={`w-2 h-2 rounded-full shrink-0 ${m.status === "hard" ? "bg-red-500" : m.status === "active" ? "bg-emerald-500 animate-pulse" : "bg-gray-600"}`} />
-                    <span className="text-sm font-bold text-white w-48">{m.phase}</span>
-                    <span className="text-sm text-gray-400">{m.date}</span>
-                    {m.status === "hard" && <Badge color="red">Hard Deadline</Badge>}
-                    {m.status === "active" && <Badge color="green">Now</Badge>}
-                  </div>
-                ))}
-              </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* INFLUENCE TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "influence" && (
-          <div>
-            <Section id="I-02" title="Win Themes" subtitle="5 themes, zigzag positioning" defaultOpen={true}>
-              <div className="space-y-3">
-                {WIN_THEMES.map(t => (
-                  <div key={t.id} className={`flex items-center gap-4 p-3 rounded border ${
-                    t.strength === "fortress" ? "border-emerald-800/40 bg-emerald-950/10" :
-                    t.strength === "critical_gap" ? "border-red-800/40 bg-red-950/10" :
-                    "border-gray-800 bg-gray-900/30"
-                  }`}>
-                    <span className="text-lg font-black text-gray-600 w-8">#{t.id}</span>
-                    <div className="flex-1">
-                      <span className="text-sm font-bold text-white">{t.label}</span>
-                      <span className="text-[11px] text-gray-500 ml-2">Owner: {t.owner}</span>
-                    </div>
-                    <Badge color={t.strength === "fortress" ? "green" : t.strength === "critical_gap" ? "red" : "blue"}>
-                      {t.strength === "fortress" ? "FORTRESS" : t.strength === "critical_gap" ? "CRITICAL GAP" : "STRONG"}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="I-03" title="Competitor Intelligence" subtitle="3 competitors profiled">
-              <div className="space-y-4">
-                {COMPETITORS.map((c, i) => (
-                  <div key={i} className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Badge color={c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green"}>{c.dangerRating}</Badge>
-                      <span className="text-sm font-bold text-white">{c.name}</span>
-                      <span className="text-[11px] text-gray-500 italic">"{c.label}"</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                      <div><span className="text-gray-500">Revenue:</span> <span className="text-white font-bold">{c.revenue}</span></div>
-                      <div><span className="text-gray-500">Model:</span> <span className="text-white">{c.model}</span></div>
-                      <div><span className="text-gray-500">TUPE Record:</span> <span className="text-white">{c.tupeRecord}</span></div>
-                      <div><span className="text-gray-500">Dangerous with:</span> <span className="text-amber-300">{c.dangerWith.join(", ")}</span></div>
-                    </div>
-                    <div className="text-xs text-gray-400 mb-2"><span className="text-red-400 font-bold">Weakness:</span> {c.weakness}</div>
-                    <div className="bg-blue-950/20 border border-blue-800/30 rounded p-2 text-xs">
-                      <span className="text-blue-400 font-bold">Verification Question: </span>
-                      <span className="text-gray-300 italic">"{c.killQuestion}"</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="I-04" title="Evaluation Scoring Strategy" subtitle="Criterion-level competitive analysis">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs">
                   <thead>
                     <tr className="border-b border-gray-800">
                       <th className="text-left py-2 text-gray-500 font-bold uppercase">Criterion</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Weight</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Helios</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Fortis</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Saraswati</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Strategy</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase w-12">Wt%</th>
+                      <th className="text-center py-2 text-blue-400 font-bold uppercase w-20">Helios</th>
+                      <th className="text-center py-2 text-red-400 font-bold uppercase w-20">Tesseract</th>
+                      <th className="text-center py-2 text-amber-400 font-bold uppercase w-20">Global SI</th>
+                      <th className="text-center py-2 text-gray-500 font-bold uppercase w-20">Play</th>
                     </tr>
                   </thead>
                   <tbody>
                     {SCORING.criteria.map(c => (
-                      <tr key={c.code} className="border-b border-gray-800/30">
-                        <td className="py-2">
-                          <span className="text-gray-500 font-mono mr-2">{c.code}</span>
-                          <span className="text-white font-semibold">{c.label}</span>
-                        </td>
-                        <td className="py-2 text-center text-white font-bold">{c.weight}%</td>
-                        <td className="py-2 text-center"><ScoreBar score={c.helios} /></td>
-                        <td className="py-2 text-center"><ScoreBar score={c.fortis} /></td>
-                        <td className="py-2 text-center"><ScoreBar score={c.saraswati} /></td>
+                      <tr key={c.code} className="border-b border-gray-800/20">
+                        <td className="py-2 text-gray-300">{c.label}</td>
+                        <td className="py-2 text-center text-gray-400">{c.weight}%</td>
+                        <td className="py-2"><ScoreBar score={c.helios} /></td>
+                        <td className="py-2"><ScoreBar score={c.tesseract} /></td>
+                        <td className="py-2"><ScoreBar score={c.globalSI} /></td>
                         <td className="py-2 text-center">
                           <Badge color={c.strategy === "LOCK" ? "green" : c.strategy === "PUSH" ? "blue" : c.strategy === "CRITICAL" ? "red" : "amber"}>
                             {c.strategy}
@@ -1041,46 +951,79 @@ function GAINAccountPack() {
                   </tbody>
                 </table>
               </div>
-              <div className="mt-4 grid grid-cols-4 gap-2 text-center">
-                <div className="p-2 bg-emerald-950/20 border border-emerald-800/30 rounded">
-                  <div className="text-[10px] text-emerald-400 font-bold uppercase">Lock</div>
-                  <div className="text-xs text-gray-400">4 criteria · 26.4%</div>
-                </div>
-                <div className="p-2 bg-blue-950/20 border border-blue-800/30 rounded">
-                  <div className="text-[10px] text-blue-400 font-bold uppercase">Push</div>
-                  <div className="text-xs text-gray-400">3 criteria · 25.2%</div>
-                </div>
-                <div className="p-2 bg-red-950/20 border border-red-800/30 rounded">
-                  <div className="text-[10px] text-red-400 font-bold uppercase">Critical</div>
-                  <div className="text-xs text-gray-400">1 criterion · 9.6%</div>
-                </div>
-                <div className="p-2 bg-amber-950/20 border border-amber-800/30 rounded">
-                  <div className="text-[10px] text-amber-400 font-bold uppercase">Defend</div>
-                  <div className="text-xs text-gray-400">1 criterion · 5.4%</div>
-                </div>
+              <div className="mt-3 p-3 bg-red-950/20 border border-red-800/30 rounded text-xs text-red-300">
+                <span className="font-bold">Two Critical Gaps:</span> CC-01 Cost Glide Path (must show named-process OPEX elimination model) and CC-05 Scale/Brand (must lead with Excalibur £45M + Athena £38M every session with Pemberton).
+              </div>
+            </Section>
+
+            <Section id="COMPETITION" title="Competitor Intelligence" subtitle="Tesseract is the existential threat">
+              <div className="space-y-3">
+                {COMPETITORS.map((c, i) => (
+                  <div key={i} className={`p-4 rounded-lg border ${c.dangerRating === "CRITICAL" ? "bg-red-950/15 border-red-800/40" : "bg-amber-950/10 border-amber-800/30"}`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Badge color={c.dangerRating === "CRITICAL" ? "red" : c.dangerRating === "HIGH" ? "amber" : "green"}>{c.dangerRating}</Badge>
+                      <span className="text-sm font-bold text-white">{c.name}</span>
+                      <span className="text-xs text-gray-500 italic">{c.label}</span>
+                    </div>
+                    <p className="text-xs text-gray-400 mb-2">Weakness: {c.weakness}</p>
+                    <div className="p-2 bg-blue-950/20 border border-blue-800/30 rounded text-xs text-blue-200">
+                      <span className="font-bold">Kill Question:</span> {c.killQuestion}
+                    </div>
+                  </div>
+                ))}
               </div>
             </Section>
           </div>
         )}
 
-        {/* ════════════════════════════════════════════════ */}
-        {/* NURTURE TAB */}
-        {/* ════════════════════════════════════════════════ */}
+        {/* ════ N | GROW ════ */}
         {activeTab === "nurture" && (
           <div>
-            <Section id="N-01" title="Expansion Signal Scan" subtitle="Post-win growth roadmap" defaultOpen={true}>
-              <div className="mb-4 p-3 bg-emerald-950/20 border border-emerald-800/30 rounded text-sm text-emerald-300">
-                Total expansion potential: Annual run rate £13-16M → £18-25M. Realistic 60% conversion = 20-40% account growth without new procurement.
+            <Section id="N-00" title="Commercial Warning Brief" subtitle="Delivery handover — what the bid team sold vs what's real" defaultOpen={true}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                <div className="p-3 bg-red-950/20 border border-red-800/40 rounded">
+                  <div className="text-[10px] font-bold text-red-400 uppercase font-mono mb-2">The No List</div>
+                  <div className="space-y-1.5 text-xs text-gray-300">
+                    <div className="flex gap-2"><span className="text-red-400">✕</span><span>Remediation of 62% EOL hardware — CIO expects included, it is NOT</span></div>
+                    <div className="flex gap-2"><span className="text-red-400">✕</span><span>Fulfilling 34 ISO non-conformities — Morris expects Helios does the work, not just tools</span></div>
+                    <div className="flex gap-2"><span className="text-red-400">✕</span><span>Legacy Tesseract license fees — clearly excluded but CIO will try to bundle</span></div>
+                  </div>
+                </div>
+                <div className="p-3 bg-amber-950/20 border border-amber-800/40 rounded">
+                  <div className="text-[10px] font-bold text-amber-400 uppercase font-mono mb-2">Landmines</div>
+                  <div className="space-y-1.5 text-xs text-gray-300">
+                    <div className="flex gap-2"><span className="text-amber-400">⚠</span><span>'Seamless Cloud Migration' — contingent on client data integrity (CIO faking logs)</span></div>
+                    <div className="flex gap-2"><span className="text-amber-400">⚠</span><span>'70% Alert Reduction' — 'within 12 months' in contract, ops expects Day 1</span></div>
+                    <div className="flex gap-2"><span className="text-amber-400">⚠</span><span>Tom Hadley verbally promised £250K transition overrun absorption — NOT in contract</span></div>
+                  </div>
+                </div>
+                <div className="p-3 bg-blue-950/20 border border-blue-800/40 rounded">
+                  <div className="text-[10px] font-bold text-blue-400 uppercase font-mono mb-2">Kübler-Ross (Delivery)</div>
+                  <div className="space-y-1.5 text-xs">
+                    <div><span className="text-red-400 font-bold">Reid (Denial/Anger):</span><span className="text-gray-300"> Views Helios as threat. Will block access. Never challenge his past metrics publicly.</span></div>
+                    <div><span className="text-amber-400 font-bold">Chen (Depression):</span><span className="text-gray-300"> Team exhausted. Won't help. Give him alert suppression in Week 1.</span></div>
+                    <div><span className="text-emerald-400 font-bold">Morris (Acceptance):</span><span className="text-gray-300"> Our ONLY internal bridge. Protect at all costs.</span></div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-3 bg-red-950/20 border border-red-800/40 rounded text-sm">
+                <span className="font-bold text-red-400">The Three Things (First 30 Days): </span>
+                <span className="text-gray-300">1) Stabilize 14,000 alerts via HIO to give Chen's team breathing room. 2) Secure Rachel Okonkwo as Trusted Advisor to Morris. 3) Document actual state of 62% EOL estate BEFORE first SLA report.</span>
+              </div>
+            </Section>
+
+            <Section id="N-01" title="Expansion Signal Scan" subtitle="Post-win growth roadmap · Total addressable expansion: £3.65M+">
+              <div className="mb-3 p-3 bg-emerald-950/20 border border-emerald-800/30 rounded text-sm text-emerald-300">
+                Relationship health: <span className="font-bold">MIXED</span> — CRO and Morris are champions, CIO hostile. Fix operations before expanding. First 90 days are defensive.
               </div>
               <div className="space-y-2">
                 {EXPANSION.map((e, i) => (
                   <div key={i} className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-800 rounded">
-                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-                      e.gate === "green" ? "bg-emerald-500" : e.gate === "amber" ? "bg-amber-400" : "bg-gray-600"
-                    }`} />
+                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${e.gate === "green" ? "bg-emerald-500" : e.gate === "amber" ? "bg-amber-400" : "bg-gray-600"}`} />
                     <div className="flex-1">
                       <span className="text-sm font-bold text-white">{e.signal}</span>
-                      <div className="text-[11px] text-gray-500">Champion: {e.champion} · {e.timing}</div>
+                      <div className="text-[11px] text-gray-500">Champion: {e.champion} · {e.timing} · ADKAR: {e.adkar}</div>
+                      <div className="text-[11px] text-blue-400 mt-0.5">Action: {e.action}</div>
                     </div>
                     <span className="text-xs font-bold text-emerald-400">{e.revenue}</span>
                   </div>
@@ -1088,59 +1031,37 @@ function GAINAccountPack() {
               </div>
             </Section>
 
-            <Section id="N-01b" title="Competitive Defence" subtitle="Block Fortis encroachment">
-              <div className="bg-red-950/20 border border-red-800/30 rounded-lg p-4">
-                <h4 className="text-sm font-bold text-red-400 uppercase mb-2">Critical: Block Fortis on Application Services</h4>
-                <p className="text-sm text-gray-300 mb-3">
-                  If Fortis wins application services contract, they're inside the account with a team, a Hale relationship, and a platform to compete at renewal. Cost of inaction is existential.
-                </p>
-                <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                  <div className="text-xs font-bold text-blue-400 uppercase mb-1">Defensive Move</div>
-                  <p className="text-sm text-gray-300">
-                    Propose 90-day Application Discovery (£50-80K) as natural extension of cloud migration. Documents application dependencies, rationalisation opportunities. Makes Helios the incumbent expert before Fortis gets a meeting.
-                  </p>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="N-01c" title="Account Health (Simulated Mo 6)" subtitle="Earn-the-right assessment">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {[
-                  { dim: "Delivery Performance", status: "green", detail: "97/109 TUPE'd, zero P1" },
-                  { dim: "Relationship Quality", status: "green", detail: "NPS +38, Whitfield at Q1 QBR" },
-                  { dim: "Team Stability", status: "green", detail: "Daniel, Rachel, Preet all in-role" },
-                  { dim: "Commercial Health", status: "green", detail: "Milestones on schedule" },
-                  { dim: "Strategic Alignment", status: "amber", detail: "In tech room, not Board room yet" },
-                  { dim: "Champion Health", status: "green", detail: "Jennifer using Rachel's framework at Board" },
-                ].map((h, i) => (
-                  <div key={i} className={`p-3 rounded border ${
-                    h.status === "green" ? "bg-emerald-950/10 border-emerald-800/30" : "bg-amber-950/10 border-amber-800/30"
-                  }`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`w-2 h-2 rounded-full ${h.status === "green" ? "bg-emerald-500" : "bg-amber-400"}`} />
-                      <span className="text-xs font-bold text-white uppercase">{h.dim}</span>
+            <Section id="N-02" title="Referral Map" subtitle="Who to ask, when, and for what">
+              <div className="space-y-2">
+                {REFERRALS.map((r, i) => (
+                  <div key={i} className={`flex items-center gap-3 p-3 rounded border ${r.value === "DO NOT ASK" ? "bg-red-950/15 border-red-800/30" : "bg-gray-900/50 border-gray-800"}`}>
+                    <div className="flex-1">
+                      <span className={`text-sm font-bold ${r.value === "DO NOT ASK" ? "text-red-400" : "text-white"}`}>{r.contact}</span>
+                      <div className="text-[11px] text-gray-500">→ {r.target} · {r.connection}</div>
                     </div>
-                    <p className="text-[11px] text-gray-400">{h.detail}</p>
+                    <div className="text-right">
+                      <div className={`text-xs font-bold ${r.value === "DO NOT ASK" ? "text-red-400" : r.value.includes("SUPREME") ? "text-purple-400" : "text-emerald-400"}`}>{r.value}</div>
+                      <div className="text-[10px] text-gray-600 font-mono">Willingness: {r.willingness}/10</div>
+                    </div>
                   </div>
                 ))}
               </div>
             </Section>
           </div>
         )}
+
       </div>
 
       {/* Footer */}
-      <div className="border-t border-gray-800 px-6 py-3 text-center">
+      <div className="border-t border-gray-800 px-6 py-3 text-center mt-6">
         <span className="text-[10px] text-gray-600 font-mono">
-          GAIN Account Pack · Generated from G-01→N-01 intelligence chain · Last compiled: {ACCOUNT.lastUpdated} · GAIN Protocol © David Matthews 2026
+          GAIN Account Pack · Meridian Financial Services · Generated from G-01→N-02 intelligence chain · March 2026 · GAIN Protocol © David Matthews 2026
         </span>
       </div>
     </div>
   );
 }
 
-
-// Mount delayed until modal opens
 window.mountDashboard = function() {
   var dashRoot = document.getElementById('gain-dashboard-root');
   if (dashRoot && !dashRoot._mounted) {
@@ -1148,7 +1069,7 @@ window.mountDashboard = function() {
     dashRoot._mounted = true;
   }
 };
-// Try mount now in case element is visible, otherwise wait for modal
 setTimeout(function() { if (window.mountDashboard) window.mountDashboard(); }, 100);
 </script>
-</body></html>
+</body>
+</html>
