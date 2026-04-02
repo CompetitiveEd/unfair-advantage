@@ -1,0 +1,342 @@
+<div class="prompt-header">
+  <span class="prompt-id" style="color:var(--red)">P-01</span>
+  <span class="prompt-badge open">OPEN</span>
+</div>
+<h2 class="prompt-title">DASHBOARD BUILDER v1 — Audit, Build, or Compress</h2>
+<div class="prompt-cat">DASHBOARD BUILDER</div>
+
+<div class="pm-block">
+  <div class="pm-label">Variables</div>
+  <div class="pm-tags">
+      <span class="pm-tag">[Source GAIN Outputs]</span>
+      <span class="pm-tag">[Target Audience]</span>
+      <span class="pm-tag">[Dashboard Purpose]</span>
+      <span class="pm-tag">[Existing Dashboard] (audit mode)</span>
+      <span class="pm-tag">[Format Preference]</span>
+  </div>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Architecture</div>
+  <p class="pm-text">Production engine. Takes any GAIN outputs and compresses into audience-calibrated dashboards. Three modes: AUDIT (score existing dashboard), BUILD (create from GAIN outputs), COMPRESS (reduce any output to one-page). Tufte information design. SCQA structure. MECE classification. Audience-aware formatting.</p>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Engine Logic</div>
+  <p class="pm-text">IF existing dashboard → AUDIT mode (score and fix). IF GAIN outputs → BUILD mode (create dashboard). IF long output → COMPRESS mode (one-page). Audience determines depth: Board (headline), Director (summary), Manager (detail), Analyst (full data).</p>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Power of "NONE"</div>
+  <p class="pm-text pm-none">Source Outputs = None → cannot build, prescribe what to run. Audience = None → default to Director level. Existing Dashboard = None → BUILD mode. Format = None → default Markdown tables.</p>
+</div>
+
+<div class="pm-row">
+  <div class="pm-half">
+    <div class="pm-label">Routing</div>
+    <div class="pm-tags">
+      <span class="pm-pill">PATH A: AUDIT</span>
+      <span class="pm-pill">PATH B: BUILD</span>
+      <span class="pm-pill">PATH C: COMPRESS</span>
+    </div>
+  </div>
+  <div class="pm-half">
+    <div class="pm-label">GAIN Drivers</div>
+    <div class="pm-tags">
+      <span class="pm-pill driver">Order</span>
+      <span class="pm-pill driver">Power</span>
+      <span class="pm-pill driver">Safety</span>
+    </div>
+  </div>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Frameworks</div>
+  <div class="pm-tags">
+      <span class="pm-pill fw">Tufte</span>
+      <span class="pm-pill fw">Minto (SCQA)</span>
+      <span class="pm-pill fw">MECE</span>
+      <span class="pm-pill fw">Heath (Corridor Test)</span>
+      <span class="pm-pill fw">Gawande</span>
+  </div>
+</div>
+
+<div class="pm-row">
+  <div class="pm-half">
+    <div class="pm-label">Feeds From</div>
+    <p class="pm-text" style="font-size:11px">ANY GAIN output (G-series, A-series, I-series, N-series, 00-series). Existing dashboards for audit.</p>
+  </div>
+  <div class="pm-half">
+    <div class="pm-label">Chains Into</div>
+    <p class="pm-text" style="font-size:11px">Board packs, Account reviews, Bid reviews, Client deliverables, Internal reporting</p>
+  </div>
+</div>
+
+<div class="prompt-code-section">
+  <div class="prompt-code-wrap">
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. All modes.
+— If ChatGPT: Proceed as normal. Flag if output exceeds token window.
+— If Gemini: Proceed as normal. Use conservative table formatting (no merged cells).
+— If Other: Proceed with standard Markdown. Flag any limitations.
+
+---
+
+## PROMPT CODE
+
+MODE: [AUDIT / BUILD / COMPRESS — choose one]
+SOURCE GAIN OUTPUTS: [Paste any combination of GAIN outputs — G-01, G-02, G-03, G-04, I-01, I-02, N-01, N-05, 00-series, etc. The more you paste, the richer the dashboard.]
+EXISTING DASHBOARD: [For AUDIT mode — paste the dashboard to audit. For BUILD/COMPRESS — type "None"]
+TARGET AUDIENCE: [Board / Director / Manager / Analyst — or describe the specific person receiving this]
+DASHBOARD PURPOSE: [What decision does this dashboard support? e.g., "Bid/no-bid review", "Quarterly account review", "Deal pursuit status", "Portfolio health check"]
+FORMAT PREFERENCE: [Markdown tables / HTML / Structured text / JSON — or type "None" for default Markdown]
+AUDIENCE GAIN DRIVER: [If known — what drives the person reading this? Safety / Order / Power / Achievement — or type "None"]
+
+---
+
+## OUTPUT DIRECTIVE — MANDATORY FORMAT FOR ALL LLMs
+
+1. **FILENAME:** `P-01_Dashboard_[Purpose]_[Company].md`
+   (Replace [Purpose] with short description — e.g., "Bid_Review", "Account_Health", "Portfolio_Status")
+
+2. **DESTINATION FOLDER:** `06_Production/`
+
+3. Begin with: > 💾 **SYSTEM SAVE PROTOCOL:** Save as: `P-01_Dashboard_[Purpose]_[Company].md` → `06_Production/`
+
+4. Raw Markdown. No code fences. No preamble. Self-contained. Copy-paste ready.
+
+5. **DOCUMENT STRUCTURE (SCQA — Minto):** Every dashboard opens with:
+   - **SITUATION:** What this dashboard covers (one sentence).
+   - **COMPLICATION:** The key tension or risk (one sentence).
+   - **ANSWER:** The headline verdict or status (one sentence — this is what the reader sees first).
+   Then the dashboard panels follow.
+
+6. **TABLE DESIGN (Tufte — CRITICAL FOR THIS ENGINE):**
+   - Maximise data-ink ratio. Every pixel of ink must represent data.
+   - No decorative borders, shading, or formatting.
+   - No redundant columns. If a column can be removed without losing information, remove it.
+   - No empty cells — use "—" with reason or "N/A".
+   - Numbers aligned right. Text aligned left.
+   - Headers are lowercase except proper nouns.
+   - Use colour indicators sparingly: 🟢🟡🟠🔴 for status only, not decoration.
+
+7. **CLASSIFICATION QUALITY (MECE):** Every category, grouping, or section must be Mutually Exclusive and Collectively Exhaustive. Self-check before output.
+
+---
+
+## ROLE & OBJECTIVE
+
+Act as an Executive Information Designer. Your job is to take complex intelligence and compress it into a dashboard that enables a DECISION — not just displays data.
+
+**THE TUFTE RULE:** If you can remove an element without losing information, remove it. If you can combine two elements without losing clarity, combine them. The goal is maximum insight per square centimetre.
+
+**THE DECISION RULE:** Every panel on this dashboard must answer a question the audience is asking. If a panel doesn't support a decision, delete it.
+
+**THE AUDIENCE RULE:** The dashboard's depth, language, and structure must match the audience:
+— **Board:** Headlines only. Traffic lights. One-page maximum. Zero jargon. The Corridor Test sentence is the dashboard.
+— **Director:** Summary with key metrics. 2-3 pages. Business language. Decision-ready.
+— **Manager:** Detail with context. 3-5 pages. Operational language. Action-ready.
+— **Analyst:** Full data. No compression. Every data point. Reference-ready.
+
+---
+
+## POWER OF NONE — BIAS KILL SWITCH
+
+**Specific None handling:**
+- **SOURCE GAIN OUTPUTS is empty:** ABORT. Output: *"Cannot build a dashboard without source data. Paste any GAIN outputs — even a single G-01 or I-01 is enough to start."*
+- **TARGET AUDIENCE is "None":** Default to Director level. Flag: *"Audience not specified. Defaulting to Director level (summary + key metrics). Specify audience for better calibration."*
+- **DASHBOARD PURPOSE is vague:** Flag: *"Purpose unclear. A dashboard without a clear decision it supports is a report, not a tool. What decision does the reader need to make?"*
+- **AUDIENCE GAIN DRIVER is "None":** Use the default driver-to-audience mapping below. Flag: *"Driver not specified. Using role defaults. Provide G-03 profile or specify driver for calibration."*
+- **FORMAT PREFERENCE is "None":** Default to Markdown tables.
+
+---
+
+## EXECUTION ROUTING
+
+### PATH A: AUDIT (Existing Dashboard provided)
+
+Score the existing dashboard against the Tufte/SCQA/MECE Gold Standard, then fix it.
+
+**PHASE A1: THE AUDIT SCORECARD**
+
+| CRITERION | SCORE (1-5) | EVIDENCE | FIX |
+|---|---|---|---|
+| **DATA-INK RATIO (Tufte):** Is every visual element earning its place? | | | |
+| **DECISION SUPPORT:** Does every panel answer a question the audience is asking? | | | |
+| **SCQA STRUCTURE:** Does it open with situation, complication, answer? | | | |
+| **MECE CLASSIFICATION:** Are categories mutually exclusive and collectively exhaustive? | | | |
+| **AUDIENCE CALIBRATION:** Is the depth right for the stated audience? | | | |
+| **CORRIDOR TEST:** Can the dashboard be summarised in under 15 words? | | | |
+| **REDUNDANCY CHECK:** Are there any panels that repeat information from other panels? | | | |
+| **ACTION CLARITY:** Does the reader know what to DO after reading this? | | | |
+
+**AUDIT SCORE:** [X/40]
+— 35-40: Gold Standard. Minor tweaks only.
+— 25-34: Functional but needs polish. Specific fixes below.
+— 15-24: Needs significant restructuring.
+— Below 15: Rebuild recommended. Use PATH B.
+
+**PHASE A2: THE FIX**
+
+For each criterion scoring below 4, provide the specific fix with before/after examples.
+
+**PHASE A3: THE REBUILT DASHBOARD**
+
+Output the improved version in full.
+
+---
+
+### PATH B: BUILD (Source GAIN Outputs provided, no existing dashboard)
+
+Build a dashboard from scratch using the GAIN outputs provided.
+
+**PHASE B1: SOURCE INVENTORY**
+
+| SOURCE | TYPE | KEY DATA POINTS | DECISION IT SUPPORTS |
+|---|---|---|---|
+
+Catalogue what's available. Identify gaps.
+
+**PHASE B2: DASHBOARD ARCHITECTURE**
+
+Based on purpose and audience, select panels:
+
+**FOR BID/NO-BID REVIEW:**
+1. Deal Snapshot (from G-04)
+2. Financial Viability (from G-02/G-02B)
+3. Stakeholder Map (from G-03/A-03)
+4. Win Probability (from I-01)
+5. Competitive Position (from I-03)
+6. Scoring Position (from I-04)
+7. Verdict: GO / CONDITIONAL GO / QUALIFY / NO-GO
+
+**FOR ACCOUNT HEALTH REVIEW:**
+1. Relationship Health (from N-01/N-05)
+2. Financial Health (from G-02B/ACFE)
+3. Expansion Pipeline (from N-01)
+4. Renewal Risk (from N-06)
+5. Threat Status (from N-08)
+6. Verdict: HEALTHY / MONITOR / AT RISK / CRITICAL
+
+**FOR DEAL PURSUIT STATUS:**
+1. Deal Snapshot (from G-04)
+2. Win Theme Status (from I-02)
+3. Pre-Mortem Top Risks (from I-01)
+4. Stakeholder Alignment (from G-03/A-04)
+5. Scoring Position (from I-04)
+6. Next Actions with Deadlines
+7. Verdict: ON TRACK / NEEDS ATTENTION / AT RISK
+
+**FOR PORTFOLIO HEALTH CHECK:**
+1. Pipeline Summary (all deals)
+2. Deal-by-Deal RAG Status
+3. Combined Win Probability
+4. Resource Allocation vs Expected Value
+5. Top 3 Risks Across Portfolio
+6. Verdict: HEALTHY / OVERCOMMITTED / UNDERPERFORMING
+
+**CUSTOM:** If the purpose doesn't match the above, design panels from first principles: "What questions does the audience need answered? Each question = one panel."
+
+**PHASE B3: PANEL CONSTRUCTION**
+
+For each panel:
+
+**PANEL HEADER:** [Question this panel answers]
+
+| metric | value | status | trend | source |
+|---|---|---|---|---|
+
+**GAIN DRIVER CALIBRATION:**
+— If audience is **Safety-driven:** Lead every panel with risk indicators. Red flags first. Evidence density high.
+— If audience is **Order-driven:** Lead with structure. Clear categories. Process compliance status. Governance metrics.
+— If audience is **Power-driven:** Lead with decision options. Control indicators. "You can do X, Y, or Z."
+— If audience is **Achievement-driven:** Lead with outcomes. Progress metrics. Peer benchmarks. "You're ahead/behind on X."
+
+**PHASE B4: THE CORRIDOR TEST**
+
+Write the one sentence (under 15 words) that summarises the entire dashboard. This sentence appears at the top of the document, before the SCQA opening.
+
+**PHASE B5: THE ASSEMBLED DASHBOARD**
+
+Output the complete dashboard with all panels, SCQA opening, and Corridor Test.
+
+---
+
+### PATH C: COMPRESS (Long GAIN output → One Page)
+
+Take any GAIN output and compress to a single-page dashboard.
+
+**PHASE C1: SOURCE ANALYSIS**
+
+What is the source output? What are the key data points? What decision does it support?
+
+**PHASE C2: THE COMPRESSION**
+
+Apply the One-Page Rule:
+
+1. **CORRIDOR TEST (under 15 words):** The headline.
+2. **VERDICT / STATUS:** 🟢🟡🟠🔴 with one sentence.
+3. **KEY METRICS TABLE:** Maximum 5 rows. Only the metrics that matter.
+
+| metric | value | status |
+|---|---|---|
+
+4. **TOP 3 INSIGHTS:** The three things the reader must know.
+5. **NEXT ACTION:** One specific step.
+
+**PHASE C3: THE AUDIENCE CHECK**
+
+Is this compressed version right for the stated audience? If Board — is it truly one page? If Director — does it have enough context for a decision? If the compression lost critical nuance, flag it.
+
+---
+
+## FORENSIC CHECKLIST (Gawande)
+
+✅ Every panel answers a specific question the audience is asking
+✅ Tufte data-ink ratio maximised — no decorative elements
+✅ SCQA structure — situation, complication, answer at the top
+✅ MECE — all categories mutually exclusive and collectively exhaustive
+✅ Corridor Test sentence present and under 15 words
+✅ Audience depth calibrated — Board (1 page), Director (2-3), Manager (3-5), Analyst (full)
+✅ GAIN Driver of audience reflected in panel ordering and language
+✅ No redundant panels — each panel adds unique information
+✅ Status indicators (🟢🟡🟠🔴) used consistently with defined thresholds
+✅ Source attribution for every metric (which GAIN output it came from)
+✅ Action clarity — reader knows what to DO after reading
+✅ If AUDIT: every fix has before/after example
+✅ If BUILD: dashboard architecture matches stated purpose
+✅ If COMPRESS: one-page constraint respected, critical nuance flagged if lost
+
+---
+
+## THE OPERATOR LOOP
+
+**Primary question:** "Who is reading this dashboard, and what decision are they making? If you can't answer both in one sentence, the dashboard doesn't have a clear purpose yet."
+
+**Conditional routing based on output:**
+
+IF source data is thin (single GAIN output only):
+→ "This dashboard is based on limited intelligence. Panels marked with LOW confidence should not be used for decisions. To upgrade: run the GAIN engines listed in the gap analysis. Which ones can you run next?"
+
+IF AUDIT score is below 15:
+→ "The existing dashboard needs a full rebuild, not fixes. Recommend starting fresh with PATH B using the same source data. The current structure is working against the reader, not for them."
+
+IF audience is Board but dashboard exceeds one page:
+→ "Board-level dashboards must be one page. The current version is [X] pages. I'll compress further, but flag which panels you consider non-negotiable — everything else gets cut."
+
+IF purpose is unclear or too broad:
+→ "The dashboard purpose is too broad to be useful. A dashboard that tries to answer every question answers none of them well. Narrow to ONE decision: bid/no-bid? Account healthy? Deal on track? Then rebuild."
+
+IF GAIN Driver of audience is known and dashboard isn't calibrated:
+→ "The audience is [Driver]-driven but the dashboard leads with [wrong emphasis]. Reordering panels to lead with [correct emphasis] for maximum impact."
+
+**SUGGESTED NEXT MOVES:**
+→ If dashboard approved: Distribute to stated audience
+→ If gaps identified: Run the prescribed GAIN engines to fill data gaps
+→ If audit failed: Rebuild with PATH B
+→ If need different audience version: Re-run P-01 with different audience setting (same source data, different depth)
+→ If need presentation format: P-08 (Presentation Builder)</textarea>
+  </div>
+  <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>
+</div>

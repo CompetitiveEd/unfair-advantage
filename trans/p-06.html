@@ -1,0 +1,173 @@
+<div class="prompt-header">
+  <span class="prompt-id" style="color:var(--red)">P-06</span>
+  <span class="prompt-badge open">OPEN</span>
+</div>
+<h2 class="prompt-title">STAKEHOLDER MAP VISUALISER v1 — Influence Diagram</h2>
+<div class="prompt-cat">STAKEHOLDER MAP</div>
+
+<div class="pm-block">
+  <div class="pm-label">Variables</div>
+  <div class="pm-tags">
+      <span class="pm-tag chain">[G-03 Executive Profiles]</span>
+      <span class="pm-tag chain">[A-03 Stakeholder Discovery]</span>
+      <span class="pm-tag chain">[A-05 Authority Map]</span>
+      <span class="pm-tag">[Deal Context]</span>
+  </div>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Architecture</div>
+  <p class="pm-text">Visualisation engine. Converts G-03/A-03/A-05 intelligence into structured influence diagrams. Three modes: POWER MAP (who decides), RELATIONSHIP MAP (alliances and tensions), ENGAGEMENT MAP (action plan per person). Text-based Mermaid/ASCII or structured table output.</p>
+</div>
+
+<div class="pm-row">
+  <div class="pm-half">
+    <div class="pm-label">Routing</div>
+    <div class="pm-tags">
+      <span class="pm-pill">PATH A: POWER</span>
+      <span class="pm-pill">PATH B: RELATIONSHIP</span>
+      <span class="pm-pill">PATH C: ENGAGEMENT</span>
+    </div>
+  </div>
+  <div class="pm-half">
+    <div class="pm-label">Frameworks</div>
+    <div class="pm-tags">
+      <span class="pm-pill fw">MEDDIC</span>
+      <span class="pm-pill fw">Sphere of Influence</span>
+      <span class="pm-pill fw">MECE</span>
+      <span class="pm-pill fw">Tufte</span>
+      <span class="pm-pill fw">Gawande</span>
+    </div>
+  </div>
+</div>
+
+<div class="prompt-code-section">
+  <div class="prompt-code-wrap">
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+— If Claude: Full execution. Mermaid diagram output available.
+— If ChatGPT: Full execution. Mermaid or structured tables.
+— If Gemini: Structured tables only (Mermaid rendering inconsistent).
+— If Other: Structured tables.
+
+---
+
+## PROMPT CODE
+
+MODE: [POWER / RELATIONSHIP / ENGAGEMENT — or "ALL" for all three]
+G-03 PROFILES: [Paste ALL G-03 profiles — primary input]
+A-03 STAKEHOLDER DISCOVERY: [Paste A-03, or type "None"]
+A-05 AUTHORITY MAP: [Paste A-05, or type "None"]
+DEAL CONTEXT: [Brief — what are we pursuing with these stakeholders?]
+
+---
+
+## OUTPUT DIRECTIVE
+
+1. **FILENAME:** `P-06_Stakeholder_Map_[Company].md`
+2. **DESTINATION:** `06_Production/`
+3. SCQA opening. Tufte tables. MECE stakeholder coverage.
+4. **VISUAL FORMAT:** Output Mermaid diagram code (renders in Obsidian, VS Code, GitHub) AND a structured table version (works everywhere).
+
+---
+
+## ROLE & OBJECTIVE
+
+Act as a Political Intelligence Analyst. Convert stakeholder intelligence into visual maps that reveal the REAL power structure — not the org chart.
+
+---
+
+## POWER OF NONE
+
+- **G-03 = None:** ABORT. *"Cannot visualise stakeholders without profiles. Run G-03 first."*
+- **A-03 = None:** Build from G-03 only. Flag: *"A-03 would identify missing stakeholders."*
+- **A-05 = None:** Skip formal authority mapping. Use G-03 relational data only.
+
+---
+
+### PATH A: POWER MAP — Who Decides
+
+**THE AUTHORITY-INFLUENCE MATRIX:**
+
+| STAKEHOLDER | AUTHORITY (1-10) | INFLUENCE (1-10) | QUADRANT | ENGAGEMENT PRIORITY |
+|---|---|---|---|---|
+| | | | High Auth + High Inf = DECISION MAKER | PRIMARY |
+| | | | High Auth + Low Inf = FORMAL POWER | RESPECT |
+| | | | Low Auth + High Inf = SHADOW POWER | CRITICAL |
+| | | | Low Auth + Low Inf = PERIPHERAL | MONITOR |
+
+**MERMAID POWER DIAGRAM:**
+```mermaid
+graph TD
+    subgraph "HIGH AUTHORITY"
+    A[Name - Decision Maker] --> B[Name - Formal Power]
+    end
+    subgraph "HIGH INFLUENCE"
+    C[Name - Shadow Power] -.-> A
+    end
+```
+
+**KEY INSIGHT:** Who has authority without influence (rubber stamp) and who has influence without authority (the real power)?
+
+### PATH B: RELATIONSHIP MAP — Alliances and Tensions
+
+| STAKEHOLDER A | STAKEHOLDER B | RELATIONSHIP | DYNAMIC | IMPLICATION |
+|---|---|---|---|---|
+| | | Ally / Rival / Dependency / Gatekeeper / Mentor / Neutral | | |
+
+**MERMAID RELATIONSHIP DIAGRAM:**
+```mermaid
+graph LR
+    A[Name] -- "Ally" --> B[Name]
+    A -. "Tension" .-> C[Name]
+    B -- "Reports to" --> D[Name]
+```
+
+**KEY INSIGHT:** Where are the alliances we can leverage? Where are the tensions we must navigate?
+
+### PATH C: ENGAGEMENT MAP — Action Plan Per Person
+
+| STAKEHOLDER | STATUS | GAIN DRIVER | K-R STAGE | NEXT ACTION | OWNER | BY WHEN |
+|---|---|---|---|---|---|---|
+
+Status: Champion / Established / Developing / Cold / At Risk / Unknown / Blocker
+
+**CORRIDOR TEST:** One sentence — the single most important stakeholder action.
+
+---
+
+## FORENSIC CHECKLIST (Gawande)
+
+✅ Every profiled stakeholder appears on the map
+✅ Authority and Influence scored independently
+✅ MECE check — all quadrants populated, no stakeholder in two quadrants
+✅ Relationships cite evidence from G-03
+✅ Engagement map has specific next actions with owners and deadlines
+✅ Shadow power identified — the person with low title but high influence
+✅ Mermaid code renders correctly (test in Obsidian/VS Code)
+✅ Tufte — tables have no redundant columns
+
+---
+
+## THE OPERATOR LOOP
+
+**Primary question:** "Look at the shadow power quadrant. Who's there? That's the person who can kill this deal without anyone seeing it coming."
+
+**Conditional routing:**
+
+IF shadow power stakeholder has no G-03 profile:
+→ "The most influential person isn't profiled. Run G-03 on [title] immediately."
+
+IF no champion identified:
+→ "No champion on the map. A deal without a champion is a deal without an insider. Run A-04 (Motivation Map) on the most engaged stakeholder."
+
+IF blocker identified with strong Kegan immunity:
+→ "Blocker [Name] has a Kegan immunity that may be too strong to unlock. Options: build support around them, or address the immunity through reframing."
+
+**NEXT MOVES:**
+→ If gaps: G-03 on missing stakeholders
+→ If champion needed: A-04 (Motivation Map)
+→ If ready for action: G-05 (Meeting scripts per stakeholder)</textarea>
+  </div>
+  <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>
+</div>

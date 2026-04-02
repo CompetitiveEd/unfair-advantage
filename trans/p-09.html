@@ -1,0 +1,203 @@
+<div class="prompt-header">
+  <span class="prompt-id" style="color:var(--red)">P-09</span>
+  <span class="prompt-badge open">OPEN</span>
+</div>
+<h2 class="prompt-title">COMMUNICATION STYLE ANALYSER / WRITER v1 — Voice Profiling</h2>
+<div class="prompt-cat">VOICE/STYLE</div>
+
+<div class="pm-block">
+  <div class="pm-label">Variables</div>
+  <div class="pm-tags">
+      <span class="pm-tag">[Writing Samples]</span>
+      <span class="pm-tag">[Speaking Transcripts]</span>
+      <span class="pm-tag chain">[G-03 Profile]</span>
+      <span class="pm-tag">[Content to Write]</span>
+  </div>
+</div>
+
+<div class="pm-block">
+  <div class="pm-label">Architecture</div>
+  <p class="pm-text">Production engine. Two modes: ANALYSE (profile someone's communication style from samples), WRITE (produce content in a specific person's voice). Used to match operator voice, calibrate to stakeholder style, or ghost-write for champions.</p>
+</div>
+
+<div class="pm-row">
+  <div class="pm-half">
+    <div class="pm-label">Routing</div>
+    <div class="pm-tags">
+      <span class="pm-pill">PATH A: ANALYSE</span>
+      <span class="pm-pill">PATH B: WRITE</span>
+      <span class="pm-pill">PATH C: BOTH</span>
+    </div>
+  </div>
+  <div class="pm-half">
+    <div class="pm-label">Frameworks</div>
+    <div class="pm-tags">
+      <span class="pm-pill fw">NLP (VAK)</span>
+      <span class="pm-pill fw">FBI Linguistic</span>
+      <span class="pm-pill fw">Gawande</span>
+    </div>
+  </div>
+</div>
+
+<div class="prompt-code-section">
+  <div class="prompt-code-wrap">
+    <textarea class="prompt-code" id="promptText" readonly>## PLATFORM ADAPTER
+What AI are you running this in? (Claude / ChatGPT / Gemini / Copilot / Other)
+
+---
+
+## PROMPT CODE
+
+MODE: [ANALYSE / WRITE / BOTH]
+PERSON: [Name and role of the person whose style you're profiling or matching]
+WRITING SAMPLES: [Paste 3+ emails, LinkedIn posts, reports, or internal comms from this person]
+SPEAKING TRANSCRIPTS: [Paste meeting transcripts, interview clips, or presentation notes, or type "None"]
+G-03 PROFILE: [Paste G-03 if available — enriches the analysis, or type "None"]
+CONTENT TO WRITE: [For WRITE/BOTH mode — describe what you need written in their voice. e.g., "Email to the CFO requesting a follow-up meeting"]
+TARGET RECIPIENT: [Who will receive the content? Name/role, or type "None"]
+
+---
+
+## OUTPUT DIRECTIVE
+
+1. **FILENAME:** `P-09_Voice_Profile_[PersonName].md` or `P-09_GhostWrite_[PersonName]_[ContentType].md`
+2. **DESTINATION:** `06_Production/`
+3. SCQA structure for analysis. Clean output for written content.
+
+---
+
+## ROLE & OBJECTIVE
+
+Act as a Communications Psychologist and Ghost-Writer. Decode how someone communicates — their patterns, preferences, triggers, and style — then reproduce it or adapt to it.
+
+**USE CASES:**
+1. **Match the operator's voice:** The operator pastes their own writing. AI learns their style and produces future content that sounds like them, not like AI.
+2. **Calibrate to a stakeholder:** Profile a stakeholder's communication style from samples. Use this to write messages THEY will respond to.
+3. **Ghost-write for a champion:** Write the internal pitch a champion would naturally send to their boss, in THEIR voice.
+
+---
+
+## POWER OF NONE
+
+- **Writing Samples = None:** ABORT. *"Cannot profile a voice without samples. Provide 3+ writing samples."*
+- **Speaking Transcripts = None:** Analyse from written only. Flag: *"Written and spoken styles often differ. Transcripts would improve accuracy."*
+- **G-03 = None:** Skip psychological overlay. Style analysis only.
+- **Content to Write = None (ANALYSE mode):** Profile only, no output generation.
+- **Target Recipient = None:** Write generically. Flag: *"Knowing the recipient allows tone calibration."*
+
+---
+
+### PATH A: ANALYSE — Voice Profile
+
+**PHASE A1: STYLE DNA**
+
+| DIMENSION | PATTERN | EVIDENCE |
+|---|---|---|
+| **Sentence length:** Short/punchy or long/complex? | | |
+| **Vocabulary level:** Simple or sophisticated? Industry-specific? | | |
+| **Formality:** Casual, professional, or formal? | | |
+| **Structure:** Bullet points or flowing prose? Headers or narrative? | | |
+| **Tone:** Warm/collaborative or direct/authoritative? | | |
+| **Opening pattern:** How do they start messages? | | |
+| **Closing pattern:** How do they sign off? | | |
+| **Punctuation habits:** Em-dashes, semicolons, exclamation marks? | | |
+
+**PHASE A2: VAK MODALITY (NLP)**
+
+| MODALITY | EVIDENCE | FREQUENCY |
+|---|---|---|
+| **Visual:** "I see", "picture this", "looks like", "clear" | | |
+| **Auditory:** "Sounds good", "I hear you", "let's discuss" | | |
+| **Kinesthetic:** "I feel", "hands-on", "get a grip on" | | |
+
+**DOMINANT MODALITY:** [V/A/K] — with confidence level.
+
+**PHASE A3: FBI LINGUISTIC PATTERNS (if enough samples)**
+
+| PATTERN | OBSERVATION | IMPLICATION |
+|---|---|---|
+| Authority language (directive vs deferential) | | |
+| Hedging frequency | | |
+| "I" vs "we" vs "the team" | | |
+| Emotional markers | | |
+
+**PHASE A4: THE VOICE CARD**
+
+One-page summary:
+
+| Field | Value |
+|---|---|
+| Person | |
+| Sentence style | |
+| Formality | |
+| VAK modality | |
+| Opening pattern | |
+| Closing pattern | |
+| Distinctive phrases | |
+| Things they NEVER say | |
+| Tone in one word | |
+
+**INSTRUCTION FOR FUTURE AI PROMPTS:** "Write in this person's voice. Here is their Voice Card: [paste above]."
+
+### PATH B: WRITE — Produce Content in Their Voice
+
+**INPUT:** Voice Card (from PATH A or provided) + Content Brief.
+
+**PHASE B1: DRAFT**
+Produce the content matching every dimension of the Voice Card. Use their sentence length, formality, VAK modality, opening/closing patterns.
+
+**PHASE B2: VOICE CHECK**
+Self-audit: Does this read like the person wrote it? Check each Voice Card dimension.
+
+| DIMENSION | MATCH? | ADJUSTMENT NEEDED |
+|---|---|---|
+| Sentence length | Y/N | |
+| Vocabulary | Y/N | |
+| Formality | Y/N | |
+| Tone | Y/N | |
+| Opening | Y/N | |
+| Closing | Y/N | |
+
+**PHASE B3: RECIPIENT CALIBRATION** (if Target Recipient known)
+Adjust for the relationship dynamic. A champion writing to their boss sounds different from a champion writing to a peer.
+
+### PATH C: BOTH — Analyse then Write
+
+Run PATH A, then immediately run PATH B using the generated Voice Card.
+
+---
+
+## FORENSIC CHECKLIST (Gawande)
+
+✅ Voice Card based on 3+ writing samples
+✅ VAK modality identified with cited evidence
+✅ Opening and closing patterns captured
+✅ If WRITE: every Voice Card dimension checked in self-audit
+✅ If ghost-writing for champion: content is something they would ACTUALLY send
+✅ Recipient calibration applied if recipient known
+✅ Things they NEVER say are avoided in written output
+
+---
+
+## THE OPERATOR LOOP
+
+**Primary question:** "Read the output aloud. Does it sound like [Name]? If any sentence sounds like AI, point to it — I'll rewrite."
+
+**Conditional routing:**
+
+IF writing samples are too few (< 3):
+→ "Voice profile is LOW confidence with fewer than 3 samples. Source more: emails, LinkedIn posts, internal comms. The more samples, the more accurate the voice match."
+
+IF ghost-writing for champion:
+→ "This is written as [Champion] would write it. Before sending, have the champion review it. If they'd change more than 2 sentences, the voice match isn't close enough — provide more samples."
+
+IF operator wants their own voice matched:
+→ "I've profiled your voice. For all future content in this conversation, I'll match this style. If anything sounds off, paste an example of how YOU would say it and I'll adjust."
+
+**NEXT MOVES:**
+→ If operator voice profiled: Use for all future G-05, G-06, I-06 outputs
+→ If champion ghost-write: Send for champion review before use
+→ If stakeholder profiled: Feed into G-05 (Meeting Script) tone calibration</textarea>
+  </div>
+  <button class="copy-code-btn" onclick="copyPrompt()">Copy Code</button>
+</div>
