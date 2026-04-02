@@ -5,111 +5,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Architecture | GAIN Protocol</title>
 <meta name="description" content="Your CRM is a graveyard of dead deals. 40 hours of account planning compressed to 180 minutes. Intelligence output, influence mapping, the operating doctrine.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="master-forensic.css">
+
 <style>
-:root{
-  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
-  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
-  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
-  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;--cyan:#06b6d4;--teal:#14b8a6;
+/* Local colors for the discipline cards */
+:root {
+  --teal: #14b8a6;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-/* ═══ NAV ═══ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
-@media(min-width:768px){.nav{gap:2.5rem}}
-.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}
-.nav a:hover{color:var(--text-bright)}
-.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
-.nav-logo span{color:var(--amber)}
-.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
-.radial-menu{position:relative}.radial-toggle{display:none}
-.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:.5;transition:transform .2s}
-.radial-toggle:checked~.radial-label{color:var(--text-bright)}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
-.nav-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(10,10,14,.97);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:12px;padding:6px;min-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 20px 60px rgba(0,0,0,.7)}
-.radial-toggle:checked~.nav-drop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-.nd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-dim);transition:all .15s}
-.nd-item:hover{background:rgba(255,255,255,.04);color:var(--text-bright)}
-.nd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.nd-title{font-size:13px;font-weight:600;letter-spacing:.2px}
-.nd-sep{height:1px;background:var(--border);margin:4px 10px}
-.nd-group{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);opacity:.35;padding:8px 12px 2px}
-.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
-.nav-inner{display:flex;align-items:center;gap:1.5rem}
-@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}
-.mobile-nav{display:none;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
-.mobile-nav.open{display:flex}
-.mobile-nav a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border)}
-.mobile-nav a:last-child{border-bottom:none}
-.mobile-nav-divider{height:1px;background:var(--border-h);margin:4px 0}
-.mobile-nav-group{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:12px 0 4px;margin-top:4px}
-.mobile-nav a span{font-family:'Fraunces',serif;font-weight:900;font-size:16px;margin-right:6px}
-}
-@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}.mobile-nav{display:none!important}}
-
-/* ═══ MAIN ═══ */
 .main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
 .section{margin-bottom:2.5rem}
 .sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
-.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
-.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase;margin:1.25rem 0 .5rem;text-align:center}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--dm);letter-spacing:1.5px;text-transform:uppercase;margin:1.25rem 0 .5rem;text-align:center}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
 .reveal.vis{opacity:1;transform:translateY(0)}
 
 /* ═══ HERO ═══ */
 .hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
 .hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none}
-.hero h1{font-family:'Fraunces',serif;font-size:clamp(26px,5vw,48px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,48px);font-weight:700;color:var(--br);line-height:1.15;margin-bottom:1rem}
 .hero h1 em{color:var(--teal);font-style:normal}
-.hero-p{font-size:15px;color:var(--text-dim);max-width:580px;margin:0 auto 1.5rem;line-height:1.7}
-.hero-p strong{color:var(--text-bright);font-weight:600}
+.hero-p{font-size:15px;color:var(--dm);max-width:580px;margin:0 auto 1.5rem;line-height:1.7}
+.hero-p strong{color:var(--br);font-weight:600}
 .hero-tag{font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:1.5px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(20,184,166,.2);border-radius:6px;background:rgba(20,184,166,.04)}
 
-/* ═══ SHOWCASE ═══ */
+/* ═══ SHOWCASE & TERMINALS ═══ */
 .showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
 @media(max-width:800px){.showcase-grid{grid-template-columns:1fr}}
 .showcase-desc{padding:1.5rem}
-.showcase-desc h3{font-family:'Fraunces',serif;font-size:clamp(18px,2.5vw,24px);font-weight:800;color:var(--text-bright);margin-bottom:.75rem}
-.showcase-desc p{font-size:14px;color:var(--text);line-height:1.7}
+.showcase-desc h3{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,24px);font-weight:700;color:var(--br);margin-bottom:.75rem}
+.showcase-desc p{font-size:14px;color:var(--tx);line-height:1.7}
 .sc-tag{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;display:inline-block;margin-top:.75rem}
-.terminal{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;font-family:'DM Mono',monospace;font-size:12px;line-height:1.7;color:var(--text);overflow-x:auto}
+
+/* Terminal Styling */
+.terminal{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:1.25rem 1.5rem;font-family:'DM Mono',monospace;font-size:12px;line-height:1.7;color:var(--tx);overflow-x:auto}
 .terminal-header{font-weight:700;margin-bottom:.75rem}
 .terminal .line{margin-bottom:.35rem}
-.terminal .label{color:var(--text-dim)}.terminal .val{color:var(--text-bright)}
-.terminal .warn{color:var(--amber)}.terminal .danger{color:var(--red)}.terminal .good{color:var(--green)}.terminal .accent{color:var(--blue)}.terminal .purple{color:var(--purple)}
-.terminal .sep{border-top:1px solid var(--border);margin:.6rem 0;padding-top:.6rem}
+.terminal .label{color:var(--dm)}.terminal .val{color:var(--br)}
+.terminal .warn{color:var(--amb)}.terminal .danger{color:var(--red)}.terminal .good{color:var(--grn)}.terminal .accent{color:var(--blu)}.terminal .purple{color:var(--purple)}
+.terminal .sep{border-top:1px solid var(--bdr);margin:.6rem 0;padding-top:.6rem}
 .terminal .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.dot-green{background:var(--green)}.dot-red{background:var(--red)}.dot-amber{background:var(--amber)}
+.dot-green{background:var(--grn)}.dot-red{background:var(--red)}.dot-amber{background:var(--amb)}
 
 /* ═══ EXPAND CARDS ═══ */
 .card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .xcard{
-  background:var(--s1);border:1px solid var(--border);border-radius:10px;
+  background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
   padding:.85rem 1rem;cursor:pointer;
   transition:all .35s cubic-bezier(.32,.72,0,1);
   flex:1;min-width:110px;max-width:220px;position:relative;overflow:hidden;
 }
-.xcard:hover,.xcard.open{border-color:var(--border-h);flex:2.5;max-width:100%;background:var(--s2)}
+.xcard:hover,.xcard.open{border-color:var(--dm);flex:2.5;max-width:100%;background:var(--s2)}
 .xcard-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:3px}
-.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);line-height:1.3}
-.xcard-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:1px}
+.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);line-height:1.3}
+.xcard-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);margin-top:1px}
 .xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
 .xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:500px;opacity:1;margin-top:.6rem}
-.xcard-body p{font-size:12px;color:var(--text);line-height:1.65;margin:0 0 .35rem}
+.xcard-body p{font-size:12px;color:var(--tx);line-height:1.65;margin:0 0 .35rem}
 .xcard-body p:last-child{margin:0}
-.xcard-body .gain-app{font-size:11px;color:var(--teal);margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--border)}
-.xcard-body .counter{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);display:inline-flex;align-items:center;gap:5px;margin-top:.5rem}
+.xcard-body .gain-app{font-size:11px;color:var(--teal);margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--bdr)}
+.xcard-body .counter{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--bdr);display:inline-flex;align-items:center;gap:5px;margin-top:.5rem}
 
+/* Card Accent Colors */
 .xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
-.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--green)}.xcard[data-c="green"] .xcard-num{color:var(--green)}
-.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amber)}.xcard[data-c="amber"] .xcard-num{color:var(--amber)}
-.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blue)}.xcard[data-c="blue"] .xcard-num{color:var(--blue)}
+.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--grn)}.xcard[data-c="green"] .xcard-num{color:var(--grn)}
+.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amb)}.xcard[data-c="amber"] .xcard-num{color:var(--amb)}
+.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blu)}.xcard[data-c="blue"] .xcard-num{color:var(--blu)}
 .xcard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.25)}.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-top-color:var(--purple)}.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
 .xcard[data-c="teal"]{border-top:2px solid rgba(20,184,166,.25)}.xcard[data-c="teal"]:hover,.xcard[data-c="teal"].open{border-top-color:var(--teal)}.xcard[data-c="teal"] .xcard-num{color:var(--teal)}
-.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--text-dim)}.xcard[data-c="dim"] .xcard-num{color:var(--text-dim)}
+.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--dm)}.xcard[data-c="dim"] .xcard-num{color:var(--dm)}
 
 @media(max-width:700px){
   .card-row{flex-direction:column}
@@ -118,93 +84,65 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 }
 
 /* ═══ COMPRESSION BAR ═══ */
-.comp-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.comp-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--bdr)}
 @media(max-width:640px){.comp-bar{grid-template-columns:repeat(2,1fr)}}
-.comp-step{background:var(--s1);padding:.85rem;border-right:1px solid var(--border);transition:background .2s}
+.comp-step{background:var(--s1);padding:.85rem;border-right:1px solid var(--bdr);transition:background .2s}
 .comp-step:last-child{border-right:none}
 .comp-step:hover{background:var(--s2)}
 .comp-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;margin-bottom:3px}
-.comp-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
-.comp-desc{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:3px}
+.comp-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);margin-bottom:2px}
+.comp-desc{font-size:11px;color:var(--dm);line-height:1.5;margin-bottom:3px}
 .comp-time{font-family:'DM Mono',monospace;font-size:10px}
-.comp-scale{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);text-align:center;margin-top:.5rem;display:flex;justify-content:space-between;padding:0 .5rem}
-
-/* ═══ CTA ═══ */
-.cta{text-align:center;padding:2.5rem 0 4rem;border-top:1px solid var(--border)}
-.cta h2{font-family:'Fraunces',serif;font-size:clamp(24px,4vw,38px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem}
-.cta-s{font-size:14px;color:var(--text-dim);margin-bottom:2rem}
-.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:8px;text-decoration:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .3s}
-.cta-primary{background:var(--amber);color:var(--bg)}
-.cta-primary:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
-.cta-secondary{background:var(--s1);color:var(--text-bright);border:1px solid var(--border)}
-.cta-secondary:hover{border-color:var(--border-h);background:var(--s2)}
-.cta-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-dim)}
-.cta-note a{text-decoration:none}
-
-.footer{padding:2rem 0;border-top:1px solid var(--border);text-align:center}
-.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
-.footer-text a{color:#52525b;text-decoration:none}
-.footer-text a:hover{color:var(--text-dim)}
+.comp-scale{font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);text-align:center;margin-top:.5rem;display:flex;justify-content:space-between;padding:0 .5rem}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="/" class="nav-logo">GAIN<span>.</span></a>
-  <button class="nav-toggle-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
-  <div class="nav-inner">
-    <div class="radial-menu">
-      <input type="checkbox" id="see-radial" class="radial-toggle">
-      <label for="see-radial" class="radial-label">See It Work <span class="chevron">&#9662;</span></label>
-      <div class="nav-drop">
-        <a href="/proof.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Proof</span></a>
-        <a href="/dashboards.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">Dashboards</span></a>
-        <a href="/revenue-case.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">Revenue Case</span></a>
-        <a href="/data-room.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">Data Room</span></a>
-      </div>
-    </div>
-    <div class="radial-menu">
-      <input type="checkbox" id="hood-radial" class="radial-toggle">
-      <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
-      <div class="nav-drop">
-        <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:#67e8f9"></span><span class="nd-title">The Edge</span></a>
-        <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:#5eead4"></span><span class="nd-title">Architecture</span></a>
-        <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:#7dd3fc"></span><span class="nd-title">The Story</span></a>
-        <div class="nd-sep"></div>
-        <div class="nd-group">The Toolkit</div>
-        <a href="/know.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">G<span style="font-weight:400;opacity:.5;margin-left:4px">Gather</span></span></a>
-        <a href="/map.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">A<span style="font-weight:400;opacity:.5;margin-left:4px">Assess</span></span></a>
-        <a href="/win.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">I<span style="font-weight:400;opacity:.5;margin-left:4px">Influence</span></span></a>
-        <a href="/grow.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">N<span style="font-weight:400;opacity:.5;margin-left:4px">Nurture</span></span></a>
-      </div>
-    </div>
-    <a href="/engage.html" class="nav-cta">Engage</a>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-group">See It Work</div>
-    <a href="/proof.html">Proof</a><a href="/dashboards.html">Dashboards</a><a href="/revenue-case.html">Revenue Case</a><a href="/data-room.html">Data Room</a>
-    <div class="mobile-nav-group">Under the Hood</div>
-    <a href="/edge.html">The Edge</a><a href="/architecture.html">Architecture</a><a href="/story.html">The Story</a>
-    <div class="mobile-nav-group">The Toolkit</div>
-    <a href="/know.html"><span style="color:#93c5fd">G</span> Gather</a><a href="/map.html"><span style="color:#d8b4fe">A</span> Assess</a><a href="/win.html"><span style="color:#fcd34d">I</span> Influence</a><a href="/grow.html"><span style="color:#6ee7b7">N</span> Nurture</a>
-    <div class="mobile-nav-divider"></div>
-    <a href="/engage.html" style="color:var(--amber);font-weight:700">Engage →</a>
-  </div>
-</nav>
+<div id="master-nav-placeholder"></div>
+<script>
+    fetch('nav.html')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('master-nav-placeholder').innerHTML = data;
+        
+        // Re-bind the mobile menu button
+        const mobileBtn = document.getElementById('mobile-toggle-btn');
+        if(mobileBtn) {
+            mobileBtn.addEventListener('click', function() {
+                document.getElementById('mobileNav').classList.toggle('open');
+            });
+        }
 
-<div class="main">
+        // Re-bind the radial dropdowns
+        document.querySelectorAll('.radial-toggle').forEach(function(t){
+            t.addEventListener('change',function(){
+                if(this.checked){
+                    var s=this;
+                    document.querySelectorAll('.radial-toggle').forEach(function(o){
+                        if(o!==s) o.checked=false;
+                    });
+                }
+            });
+        });
+    })
+    .catch(error => console.error('Error loading navigation:', error));
 
-  <!-- ═══ HERO ═══ -->
+    // Global click listener to close dropdowns when clicking outside
+    document.addEventListener('click',function(e){
+        document.querySelectorAll('.radial-toggle').forEach(function(t){
+            if(t.checked && !e.target.closest('.radial-menu')) t.checked=false;
+        });
+    });
+</script>
+<div class="main" style="padding-top: 72px;">
+
   <section class="hero reveal">
-    <h1>Your CRM is a graveyard of dead deals.<br><em>Stop feeding it.</em></h1>
+    <h1>Your CRM is a graveyard of dead deals.<br><em style="color:var(--teal);">Stop feeding it.</em></h1>
     <p class="hero-p">Account plans that take 40 hours to build usually die at the first political hurdle. <strong>The GAIN Architecture compresses that into 180 minutes</strong> — generating structured intelligence and surfacing the stakeholders who are actually deciding.</p>
     <span class="hero-tag">Built on £183M of real repositioning</span>
-      <div style="margin-top:1rem"><a href="/engage.html" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);text-decoration:none;letter-spacing:1px;font-weight:600">Request a diagnostic →</a></div>
+      <div style="margin-top:1rem"><a href="engage.html" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;font-weight:600">Request a diagnostic →</a></div>
   </section>
 
-  <!-- ═══ SHOWCASE 1: INTELLIGENCE ═══ -->
   <section class="section reveal">
     <div class="sl">Intelligence Output</div>
     <div class="showcase-grid">
@@ -227,7 +165,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ SHOWCASE 2: INFLUENCE ═══ -->
   <section class="section reveal">
     <div class="sl">Influence Mapping</div>
     <div class="showcase-grid">
@@ -250,22 +187,21 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ COMPRESSION MODEL ═══ -->
   <section class="section reveal">
     <div class="sl">The Compression Model</div>
-    <p style="font-size:13px;color:var(--text-dim);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">Don't boil the ocean. Match the methodology to the deal complexity.</p>
+    <p style="font-size:13px;color:var(--dm);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">Don't boil the ocean. Match the methodology to the deal complexity.</p>
     <div class="comp-bar">
       <div class="comp-step">
-        <div class="comp-label" style="color:var(--text-dim)">Service-Led</div>
+        <div class="comp-label" style="color:var(--dm)">Service-Led</div>
         <div class="comp-title">Minimal GAIN</div>
         <div class="comp-desc">Minor projects, standard renewals. Manual execution is fine.</div>
-        <div class="comp-time" style="color:var(--text-dim)">Hours</div>
+        <div class="comp-time" style="color:var(--dm)">Hours</div>
       </div>
       <div class="comp-step">
-        <div class="comp-label" style="color:var(--blue)">Standard</div>
+        <div class="comp-label" style="color:var(--blu)">Standard</div>
         <div class="comp-title">Targeted GAIN</div>
         <div class="comp-desc">Mid-market plays. Inject Gather/Assess prompts for baseline research.</div>
-        <div class="comp-time" style="color:var(--blue)">Days</div>
+        <div class="comp-time" style="color:var(--blu)">Days</div>
       </div>
       <div class="comp-step">
         <div class="comp-label" style="color:var(--purple)">Complex</div>
@@ -283,10 +219,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     <div class="comp-scale"><span>← Manual / Services Led</span><span>Maximum AI Leverage →</span></div>
   </section>
 
-  <!-- ═══ OPERATING DOCTRINE ═══ -->
   <section class="section reveal">
     <div class="sl">The Operating Doctrine</div>
-    <p style="font-size:13px;color:var(--text-dim);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">AI is just a retrieval engine. Without a structural framework, it only retrieves noise. These are the established principles governing every prompt.</p>
+    <p style="font-size:13px;color:var(--dm);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">AI is just a retrieval engine. Without a structural framework, it only retrieves noise. These are the established principles governing every prompt.</p>
 
     <div class="sub-label">01. Behavioural Science — Decoding the Buyer</div>
     <div class="card-row" style="margin-bottom:1.25rem">
@@ -320,40 +255,27 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
-  <!-- ═══ GOVERNANCE ═══ -->
   <section class="section reveal">
     <div class="sl">Governance &amp; Adaptability</div>
     <div class="card-row">
       <div class="xcard" data-c="red"><div class="xcard-num">Risk</div><div class="xcard-title">AI Hallucination Protocol</div><div class="xcard-body"><p>LLMs fabricate when unconstrained. The governance protocol restricts output strictly to validated inputs via the 'Power of NONE'. Verifiable sourcing for all financial claims.</p><div class="counter" style="color:var(--red);border-color:rgba(239,68,68,.2)"><span style="font-size:14px">✓</span> Zero unsubstantiated claims in 200+ board documents</div></div></div>
-      <div class="xcard" data-c="green"><div class="xcard-num">Adapt</div><div class="xcard-title">Model-Agnostic by Design</div><div class="xcard-body"><p>Proprietary black-box models create vendor lock-in. GAIN leverages open-source LLM interoperability, swapping models seamlessly as the frontier advances.</p><div class="counter" style="color:var(--green);border-color:rgba(16,185,129,.2)"><span style="font-size:14px">✓</span> Model switches require zero prompt rewrites</div></div></div>
+      <div class="xcard" data-c="green"><div class="xcard-num">Adapt</div><div class="xcard-title">Model-Agnostic by Design</div><div class="xcard-body"><p>Proprietary black-box models create vendor lock-in. GAIN leverages open-source LLM interoperability, swapping models seamlessly as the frontier advances.</p><div class="counter" style="color:var(--grn);border-color:rgba(16,185,129,.2)"><span style="font-size:14px">✓</span> Model switches require zero prompt rewrites</div></div></div>
     </div>
   </section>
 
-  <!-- ═══ KNOWN LIMITATIONS ═══ -->
   <section class="section reveal">
-    <div class="sl" style="color:var(--text-dim)">Known Limitations</div>
+    <div class="sl" style="color:var(--dm)">Known Limitations</div>
     <div class="card-row">
-      <div class="xcard" data-c="dim"><div class="xcard-num">01</div><div class="xcard-title">Source Quality</div><div class="xcard-body"><p>Feed it marketing collateral instead of verified 10-Ks and raw transcripts, the outputs will be generic and useless.</p><p style="font-size:11px;color:var(--text-dim)">Countermeasure: Strict input validation at every prompt node.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">02</div><div class="xcard-title">Human Layer</div><div class="xcard-body"><p>The engine maps influence perfectly, but a human still has to walk into the room, hold eye contact, and execute.</p><p style="font-size:11px;color:var(--text-dim)">Countermeasure: Behavioural science coaching built into the methodology.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">03</div><div class="xcard-title">Compute Discipline</div><div class="xcard-body"><p>Unconstrained LLM usage burns API budget rapidly. Targeted, conditional prompts — not open-ended queries.</p><p style="font-size:11px;color:var(--text-dim)">Countermeasure: Tiered access with prompt governance per role.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">04</div><div class="xcard-title">Intelligence Decay</div><div class="xcard-body"><p>Outputs lose their edge if source feeds aren't refreshed quarterly. Stale transcripts mean stale politics.</p><p style="font-size:11px;color:var(--text-dim)">Countermeasure: Automated refresh triggers on earnings cycle.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">01</div><div class="xcard-title">Source Quality</div><div class="xcard-body"><p>Feed it marketing collateral instead of verified 10-Ks and raw transcripts, the outputs will be generic and useless.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Strict input validation at every prompt node.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">02</div><div class="xcard-title">Human Layer</div><div class="xcard-body"><p>The engine maps influence perfectly, but a human still has to walk into the room, hold eye contact, and execute.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Behavioural science coaching built into the methodology.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">03</div><div class="xcard-title">Compute Discipline</div><div class="xcard-body"><p>Unconstrained LLM usage burns API budget rapidly. Targeted, conditional prompts — not open-ended queries.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Tiered access with prompt governance per role.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">04</div><div class="xcard-title">Intelligence Decay</div><div class="xcard-body"><p>Outputs lose their edge if source feeds aren't refreshed quarterly. Stale transcripts mean stale politics.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Automated refresh triggers on earnings cycle.</p></div></div>
     </div>
   </section>
 
-  <!-- ═══ CTA ═══ -->
-  <section class="cta reveal">
-    <h2>You already know.</h2>
-    <p class="cta-s">Start with one deal. What it finds goes further than the deal.</p>
-    <div class="cta-btns">
-      <a href="/engage.html" class="cta-btn cta-primary">Request a Live Diagnostic</a>
-      <a href="/proof.html" class="cta-btn cta-secondary">See the Proof →</a>
-    </div>
-    <div class="cta-note"><a href="/revenue-case.html" style="color:var(--blue)">Revenue Case</a> · <a href="/edge.html" style="color:var(--cyan)">The Edge</a> · <a href="/story.html" style="color:#0ea5e9">The Story</a></div>
-  </section>
-
-  <footer class="footer">
-    <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
-  </footer>
+  <div style="text-align:center; padding-bottom: 40px;">
+      <a href="index.html" style="font-family:'DM Mono', monospace; font-size: 0.7rem; color: var(--dm); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">← Return to Briefing Room</a>
+  </div>
 
 </div>
 
@@ -374,9 +296,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
       });
     });
   }
-
-  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
-  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
 })();
 </script>
 </body>
