@@ -1,300 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Engage | GAIN Protocol</title>
-<meta name="description" content="Request a Live Deal Diagnostic. Test the GAIN methodology on a high-stakes enterprise pursuit.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#07070a;--s1:#0e0e13;--s2:#141419;
-  --border:rgba(255,255,255,0.04);--border-h:rgba(255,255,255,0.08);
-  --text:#d4d4d8;--text-dim:#a1a1aa;--text-bright:#fafafa;
-  --blue:#3b82f6;--purple:#a855f7;--amber:#f59e0b;--green:#10b981;--red:#ef4444;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
-
-/* ═══ NAV ═══ */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,7,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:1.5rem}
-@media(min-width:768px){.nav{gap:2.5rem}}
-.nav a{font-size:13px;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:.5px;transition:color .2s}
-.nav a:hover{color:var(--text-bright)}
-.nav-logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:3px;color:var(--text-bright);text-transform:uppercase}
-.nav-logo span{color:var(--amber)}
-.nav-cta{font-size:12px!important;font-weight:700!important;color:var(--amber)!important;letter-spacing:1px!important}
-.radial-menu{position:relative}.radial-toggle{display:none}
-.radial-label{font-size:13px;font-weight:500;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:4px;user-select:none;transition:color .2s}.radial-label:hover{color:var(--text-bright)}.radial-label .chevron{font-size:9px;opacity:.5;transition:transform .2s}
-.radial-toggle:checked~.radial-label{color:var(--text-bright)}.radial-toggle:checked~.radial-label .chevron{transform:rotate(180deg)}
-.nav-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(10,10,14,.97);backdrop-filter:blur(24px);border:1px solid var(--border-h);border-radius:12px;padding:6px;min-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 20px 60px rgba(0,0,0,.7)}
-.radial-toggle:checked~.nav-drop{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
-.nd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;text-decoration:none;color:var(--text-dim);transition:all .15s}
-.nd-item:hover{background:rgba(255,255,255,.04);color:var(--text-bright)}
-.nd-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.nd-title{font-size:13px;font-weight:600;letter-spacing:.2px}
-.nd-sep{height:1px;background:var(--border);margin:4px 10px}
-.nd-group{font-family:'DM Mono',monospace;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);opacity:.35;padding:8px 12px 2px}
-.nav-toggle-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;position:absolute;right:1rem}
-.nav-inner{display:flex;align-items:center;gap:1.5rem}
-@media(max-width:768px){.nav{justify-content:flex-start;padding-left:1rem}.nav-inner{display:none}.nav-toggle-btn{display:block}
-.mobile-nav{display:none;position:absolute;top:52px;left:0;right:0;background:rgba(7,7,10,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
-.mobile-nav.open{display:flex}
-.mobile-nav a{display:block;padding:10px 0;font-size:14px;font-weight:500;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border)}
-.mobile-nav a:last-child{border-bottom:none}
-.mobile-nav-divider{height:1px;background:var(--border-h);margin:4px 0}
-.mobile-nav-group{font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:12px 0 4px;margin-top:4px}
-.mobile-nav a span{font-family:'Fraunces',serif;font-weight:900;font-size:16px;margin-right:6px}
-}
-@media(min-width:769px){.nav-inner{display:flex!important;gap:2.5rem}.mobile-nav{display:none!important}}
-
-/* ═══ MAIN ═══ */
-.main{max-width:1000px;margin:0 auto;padding:72px 2rem 0;flex:1}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
-
-/* ═══ HERO ═══ */
-.hero{text-align:center;padding:2.5rem 0 1.5rem;position:relative}
-.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(59,130,246,.04) 0%,transparent 70%);pointer-events:none}
-.hero h1{font-family:'Fraunces',serif;font-size:clamp(28px,5vw,46px);font-weight:900;color:var(--text-bright);line-height:1.15;margin-bottom:.75rem}
-.hero-p{font-size:15px;color:var(--text-dim);max-width:480px;margin:0 auto 1.25rem;line-height:1.7}
-.hero-p strong{color:var(--text-bright);font-weight:600}
-
-/* Availability strip */
-.avail{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:8px}
-.avail-dot{width:8px;height:8px;background:var(--red);border-radius:50%;animation:pulse 2s ease infinite}
-@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
-.avail-text{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:1px;font-weight:600}
-
-/* ═══ STEPS ═══ */
-.steps{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.step{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;font-weight:600;display:flex;align-items:center;gap:6px}
-.step-num{color:var(--blue)}
-.step-name{color:var(--text-bright)}
-.step-arrow{color:var(--blue);font-size:14px}
-
-/* ═══ TWO-COL LAYOUT ═══ */
-.engage-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:start}
-@media(max-width:768px){.engage-grid{grid-template-columns:1fr}}
-
-/* Left column */
-.rules h2{font-family:'Fraunces',serif;font-size:22px;font-weight:900;color:var(--text-bright);margin-bottom:.75rem}
-.rules>p{font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1.5rem}
-.sub-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
-
-/* Pipeline steps */
-.pipeline{border-left:2px solid rgba(59,130,246,.2);padding-left:1.25rem;margin-bottom:1.5rem}
-.pipe-item{position:relative;margin-bottom:1.25rem}
-.pipe-item:last-child{margin-bottom:0}
-.pipe-dot{position:absolute;left:-1.65rem;top:4px;width:10px;height:10px;background:var(--blue);border-radius:50%;border:2px solid var(--bg)}
-.pipe-item h4{font-size:13px;font-weight:700;color:var(--text-bright);margin-bottom:2px}
-.pipe-item p{font-size:12px;color:var(--text-dim);line-height:1.6}
-
-/* Qualification */
-.qual-list{list-style:none}
-.qual-list li{position:relative;padding-left:1.25rem;font-size:13px;color:var(--text);margin-bottom:.6rem;line-height:1.6}
-.qual-list li::before{content:'→';position:absolute;left:0;color:var(--amber);font-weight:900}
-
-/* Right column — form terminal */
-.terminal{background:var(--s1);border:1px solid rgba(59,130,246,.15);border-radius:12px;overflow:hidden}
-.terminal-bar{background:rgba(30,41,59,.6);padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.terminal-dots{display:flex;gap:5px}
-.terminal-dots span{width:10px;height:10px;border-radius:50%}
-.terminal-path{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:1px}
-.terminal-body{padding:1.5rem}
-
-/* Form */
-.form-group{margin-bottom:1.25rem}
-.form-label{display:block;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
-.form-input{width:100%;background:var(--bg);border:1px solid rgba(59,130,246,.15);color:var(--text-bright);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px;border-radius:6px;transition:all .2s;outline:none}
-.form-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(59,130,246,.1);background:var(--s2)}
-.form-input::placeholder{color:#52525b}
-textarea.form-input{resize:vertical;min-height:100px}
-.form-submit{
-  width:100%;background:var(--blue);color:white;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
-  letter-spacing:1.5px;text-transform:uppercase;
-  padding:14px;border:none;border-radius:8px;cursor:pointer;
-  transition:all .3s;margin-top:.5rem;
-}
-.form-submit:hover{background:#2563eb;transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.3)}
-
-.form-links{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem}
-.form-links a{font-family:'DM Mono',monospace;font-size:10px;color:var(--blue);text-decoration:none;font-weight:600;letter-spacing:.5px;transition:color .2s}
-.form-links a:hover{color:#60a5fa}
-
-/* ═══ FOOTER ═══ */
-.footer{padding:2rem;border-top:1px solid var(--border);text-align:center;margin-top:3rem}
-.footer-text{font-family:'DM Mono',monospace;font-size:11px;color:#3f3f46;letter-spacing:1px}
-.footer-text a{color:#52525b;text-decoration:none}
-.footer-text a:hover{color:var(--text-dim)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidential Intake | HNTG</title>
+    <link rel="stylesheet" href="master-forensic.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="/" class="nav-logo">GAIN<span>.</span></a>
-  <button class="nav-toggle-btn" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu">&#9776;</button>
-  <div class="nav-inner">
-    <div class="radial-menu">
-      <input type="checkbox" id="see-radial" class="radial-toggle">
-      <label for="see-radial" class="radial-label">See It Work <span class="chevron">&#9662;</span></label>
-      <div class="nav-drop">
-        <a href="/proof.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Proof</span></a>
-        <a href="/dashboards.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">Dashboards</span></a>
-        <a href="/revenue-case.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">Revenue Case</span></a>
-        <a href="/data-room.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">Data Room</span></a>
-      </div>
-    </div>
-    <div class="radial-menu">
-      <input type="checkbox" id="hood-radial" class="radial-toggle">
-      <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
-      <div class="nav-drop">
-        <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:#67e8f9"></span><span class="nd-title">The Edge</span></a>
-        <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:#5eead4"></span><span class="nd-title">Architecture</span></a>
-        <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:#7dd3fc"></span><span class="nd-title">The Story</span></a>
-        <div class="nd-sep"></div>
-        <div class="nd-group">The Toolkit</div>
-        <a href="/know.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">G<span style="font-weight:400;opacity:.5;margin-left:4px">Gather</span></span></a>
-        <a href="/map.html" class="nd-item"><span class="nd-dot" style="background:var(--purple)"></span><span class="nd-title">A<span style="font-weight:400;opacity:.5;margin-left:4px">Assess</span></span></a>
-        <a href="/win.html" class="nd-item"><span class="nd-dot" style="background:var(--amber)"></span><span class="nd-title">I<span style="font-weight:400;opacity:.5;margin-left:4px">Influence</span></span></a>
-        <a href="/grow.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">N<span style="font-weight:400;opacity:.5;margin-left:4px">Nurture</span></span></a>
-        <a href="/present.html" class="nd-item"><span class="nd-dot" style="background:var(--red)"></span><span class="nd-title">P<span style="font-weight:400;opacity:.5;margin-left:4px">Present</span></span></a>
-     </div>
-    </div>
-    <a href="/engage.html" class="nav-cta">Engage</a>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-group">See It Work</div>
-    <a href="/proof.html">Proof</a><a href="/dashboards.html">Dashboards</a><a href="/revenue-case.html">Revenue Case</a><a href="/data-room.html">Data Room</a>
-    <div class="mobile-nav-group">Under the Hood</div>
-    <a href="/edge.html">The Edge</a><a href="/architecture.html">Architecture</a><a href="/story.html">The Story</a>
-    <div class="mobile-nav-group">The Toolkit</div>
-    <a href="/know.html"><span style="color:#93c5fd">G</span> Gather</a><a href="/map.html"><span style="color:#d8b4fe">A</span> Assess</a><a href="/win.html"><span style="color:#fcd34d">I</span> Influence</a><a href="/grow.html"><span style="color:#6ee7b7">N</span> Nurture</a>
-    <div class="mobile-nav-divider"></div>
-    <a href="/engage.html" style="color:var(--amber);font-weight:700">Engage &rarr;</a>
-  </div>
-</nav>
+    <div class="intake-container">
+        <div class="sub-head">Secure Intake Desk</div>
+        <h1 style="margin-bottom: 12px; font-size: 1.8rem;">Asset Diagnostic Request</h1>
+        <p>To initiate a pre-DD commercial forensic review or a 90-day turnaround sprint, please provide the initial asset details below. All submissions are strictly confidential.</p>
 
-<div class="main">
-
-  <!-- HERO -->
-  <section class="hero reveal">
-    <h1>Engage the Architect</h1>
-    <p class="hero-p"><strong>Test the GAIN system on your live deal.</strong> I don't sell prompts. I embed revenue systems.</p>
-    <div class="avail">
-      <div class="avail-dot"></div>
-      <span class="avail-text">Book an engagement session, use the form below</span>
-    </div>
-  </section>
-
-  <!-- STEPS -->
-  <div class="steps reveal">
-    <div class="step"><span class="step-num">01.</span><span class="step-name">The Diagnostic</span><span class="step-arrow">→</span></div>
-    <div class="step"><span class="step-num">02.</span><span class="step-name">Live Deal Assessment</span><span class="step-arrow">→</span></div>
-    <div class="step"><span class="step-num">03.</span><span class="step-name">Implementation</span></div>
-  </div>
-
-  <!-- TWO-COL -->
-  <div class="engage-grid">
-
-    <!-- LEFT: Rules -->
-    <div class="rules reveal">
-      <h2>Rules of Engagement</h2>
-      <p>If your firm has the talent but lacks the systemic governance to multiply their output in high-stakes environments, we should speak.</p>
-
-      <div class="sub-label">The 3-Step Pipeline</div>
-      <div class="pipeline">
-        <div class="pipe-item">
-          <div class="pipe-dot"></div>
-          <h4>Submit Context</h4>
-          <p>Use the terminal to outline a high-value active pursuit or stalled portfolio transformation.</p>
-        </div>
-        <div class="pipe-item">
-          <div class="pipe-dot"></div>
-          <h4>Assessment Briefing</h4>
-          <p>A 30-minute tactical review. We apply the GAIN framework live to locate your intelligence gap.</p>
-        </div>
-        <div class="pipe-item">
-          <div class="pipe-dot"></div>
-          <h4>Execution Decision</h4>
-          <p>You see the gap. You see the solution. You decide if you scale the system.</p>
-        </div>
-      </div>
-
-      <div class="sub-label">Qualification Criteria</div>
-      <ul class="qual-list">
-        <li>PE Operating Partners seeking rapid EBITDA yield.</li>
-        <li>CROs managing £20M+ portfolios transitioning to enterprise governance.</li>
-        <li>Leaders recognising that "AI adoption" without governance is liability.</li>
-      </ul>
-    </div>
-
-    <!-- RIGHT: Form terminal -->
-    <div class="reveal">
-      <div class="terminal">
-        <div class="terminal-bar">
-          <div class="terminal-dots">
-            <span style="background:var(--red)"></span>
-            <span style="background:var(--amber)"></span>
-            <span style="background:var(--green)"></span>
-          </div>
-          <span class="terminal-path">~/sys/diagnostic/init.sh</span>
-        </div>
-        <div class="terminal-body">
-          <form action="https://formsubmit.co/david@hownottogain.co.uk" method="POST">
-            <input type="hidden" name="_subject" value="GAIN Diagnostic Request">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://hownottogain.co.uk/engage.html">
-            <input type="text" name="_honey" style="display:none">
+        <form action="mailto:growth@hownottogain.co.uk?subject=Confidential%20Asset%20Diagnostic" method="POST" enctype="text/plain">
+            
             <div class="form-group">
-              <label class="form-label">Executive Name</label>
-              <input type="text" name="name" required placeholder="First Last" class="form-input">
+                <label for="fund">Sponsor / Fund Name</label>
+                <input type="text" id="fund" name="Fund_Name" required>
             </div>
+
             <div class="form-group">
-              <label class="form-label">Firm / Entity</label>
-              <input type="text" name="company" required placeholder="Acme Capital / Acme Corp" class="form-input">
+                <label for="asset">Target Asset / Portfolio Company</label>
+                <input type="text" id="asset" name="Target_Asset" required>
             </div>
+
             <div class="form-group">
-              <label class="form-label">Secure Comm Channel</label>
-              <input type="email" name="email" required placeholder="name@firm.com" class="form-input">
+                <label for="hold">Current Hold Period / Time to Exit</label>
+                <input type="text" id="hold" name="Hold_Period" placeholder="e.g., Year 4 of 5">
             </div>
+
             <div class="form-group">
-              <label class="form-label">The Commercial Reality</label>
-              <textarea name="message" required placeholder="Describe the live deal. E.g., '£5M renewal stalling because we can't map the new CIO's influence...'" class="form-input"></textarea>
+                <label for="thesis">Primary Diagnostic Focus</label>
+                <textarea id="thesis" name="Diagnostic_Focus" rows="3" placeholder="e.g., Margin compression, failed cross-sell, leadership void..."></textarea>
             </div>
-            <button type="submit" class="form-submit">Initialize Briefing Sequence</button>
-          </form>
-        </div>
-      </div>
-      <div class="form-links">
-        <a href="https://www.linkedin.com/in/david-matthews-6484722/" target="_blank">[ Verify Track Record ]</a>
-        <a href="mailto:david@hownottogain.co.uk">[ Direct Comms ]</a>
-      </div>
+
+            <button type="submit" class="btn-primary">Initiate Diagnostic</button>
+        </form>
     </div>
 
-  </div>
+    <a href="index.html" class="back-link">← Return to Briefing Room</a>
 
-</div>
-
-<footer class="footer">
-  <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
-</footer>
-
-<script>
-(function(){
-  var reveals=document.querySelectorAll('.reveal');
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
-  },{threshold:0.1});
-  reveals.forEach(function(r){obs.observe(r)});
-
-  document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
-  document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
-})();
-</script>
 </body>
 </html>
