@@ -3,243 +3,675 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Project Alpha -- GAIN Commercial Diagnostic v4.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700&family=DM+Sans:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Project Alpha Group -- GAIN Commercial Diagnostic v4.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--s1:#171921;--s2:#1e2130;--bdr:rgba(255,255,255,.08);--tx:#ebedf2;--dm:#b0b4c4;--br:#f8f9fc;--red:#e85555;--amb:#e0a040;--grn:#40b882;--blu:#5a9cf0;--pur:#9580e0;--tl:#40baa8;--pnk:#d06090;--yel:#f0d040}
+/* HIGH-LUME CONTRAST PALETTE */
+:root {
+  --bg: #020617; 
+  --s1: #0f172a; 
+  --s2: #1e293b; 
+  --bdr: rgba(255,255,255,0.15); 
+  --tx: #f1f5f9;    /* Bright Silver Text */
+  --dm: #94a3b8;    /* Luminous Slate for subtext */
+  --br: #ffffff;    /* Pure White */
+  --red: #f87171;   /* High-lume Alert Red */
+  --amb: #fbbf24;   /* High-lume Safety Gold */
+  --grn: #4ade80;   /* High-lume Neon Green */
+  --blu: #93c5fd;   /* High-lume Electric Blue */
+  --pur: #c084fc;   /* High-lume Purple */
+  --tl:  #2dd4bf;   
+  --pnk: #f472b6;   
+  --yel: #facc15;   
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;line-height:1.65;padding:0 2rem 2.5rem;max-width:1020px;margin:0 auto;font-size:15px}
+body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;line-height:1.65;padding:0 2rem 2.5rem;max-width:1020px;margin:0 auto;font-size:15px;-webkit-font-smoothing:antialiased}
 @media(max-width:768px){body{padding:0 1rem 1.5rem;font-size:14px}}
 
 /* NAV BAR */
 .nav-bar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--bdr);padding:10px 0;margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:4px}
-.nav-btn{font-family:'DM Mono',monospace;font-size:.6rem;padding:4px 8px;border-radius:4px;background:var(--s1);border:1px solid var(--bdr);color:var(--dm);cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .15s}
-.nav-btn:hover{background:var(--s2);color:var(--br);border-color:rgba(255,255,255,.15)}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;padding:6px 10px;border-radius:4px;background:var(--s1);border:1px solid var(--bdr);color:var(--dm);cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .15s}
+.nav-btn:hover{background:var(--s2);color:var(--br);border-color:rgba(255,255,255,.3)}
+.nav-btn.nav-new{border-color:rgba(250,204,21,.3);color:var(--yel)}
 
 /* PEOPLE PROFILE CARDS */
-.profile-card{padding:16px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);margin-bottom:10px}
+.profile-card{padding:16px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);margin-bottom:12px}
 .profile-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
-.profile-name{font-family:'Fraunces',serif;font-size:.95rem;font-weight:800;color:var(--br)}
-.profile-role{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--dm)}
-.profile-status{font-family:'DM Mono',monospace;font-size:.6rem;padding:2px 6px;border-radius:3px;font-weight:600}
-.ps-active{background:rgba(64,184,130,.12);color:var(--grn)}
-.ps-departed{background:rgba(232,85,85,.12);color:var(--red)}
-.ps-unknown{background:rgba(90,156,240,.12);color:var(--blu)}
-.ps-pe{background:rgba(149,128,224,.12);color:var(--pur)}
-.profile-body{font-size:.82rem;color:var(--tx);line-height:1.55}
-.profile-body strong{color:var(--br)}
+.profile-name{font-size:1.05rem;font-weight:800;color:var(--br);letter-spacing:-0.02em}
+.profile-role{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:600;color:var(--dm)}
+.profile-status{font-family:'IBM Plex Mono',monospace;font-size:.65rem;padding:4px 8px;border-radius:4px;font-weight:700;letter-spacing:1px}
+.ps-active{background:rgba(74,222,128,.15);color:var(--grn);border:1px solid rgba(74,222,128,.3)}
+.ps-departed{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.ps-unknown{background:rgba(147,197,253,.15);color:var(--blu);border:1px solid rgba(147,197,253,.3)}
+.ps-pe{background:rgba(192,132,252,.15);color:var(--pur);border:1px solid rgba(192,132,252,.3)}
+.profile-body{font-size:.85rem;color:var(--tx);line-height:1.6}
+.profile-body strong{color:var(--br);font-weight:700}
+.profile-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--bdr)}
+@media(max-width:600px){.profile-meta{grid-template-columns:1fr}}
+.pm-box{font-size:.8rem;padding:10px 12px;border-radius:6px;line-height:1.5;font-weight:500}
+.pm-trigger{background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2)}
+.pm-avoid{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2)}
+.pm-modality{background:rgba(147,197,253,.05);border:1px solid rgba(147,197,253,.2)}
+.pm-label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:4px;color:var(--br)}
 
-h1{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--br)}
+h1{font-size:2rem;font-weight:900;color:var(--br);letter-spacing:-0.03em}
 h1 span{color:var(--amb)}
-h2{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:800;color:var(--br);margin:2.5rem 0 .75rem;padding-bottom:8px;border-bottom:1px solid var(--bdr);scroll-margin-top:60px}
-[id]{scroll-margin-top:60px}
+h2{font-size:1.25rem;font-weight:800;color:var(--br);margin:3rem 0 1rem;padding-bottom:8px;border-bottom:1px solid var(--bdr);scroll-margin-top:80px;letter-spacing:-0.02em}
+[id]{scroll-margin-top:80px}
 .hdr{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--bdr)}
-.hdr-meta{font-size:.85rem;color:var(--dm);margin-top:6px}
-.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem}
-.verdict{font-family:'DM Mono',monospace;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1.5px solid var(--amb);color:var(--amb)}
+.hdr-meta{font-size:.88rem;color:var(--dm);margin-top:8px;line-height:1.6}
+.hdr-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.verdict{font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:4px;border:1.5px solid var(--amb);color:var(--amb);background:rgba(251,191,36,0.1)}
+.time-badge{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:600;padding:6px 12px;border-radius:4px;background:rgba(147,197,253,.1);border:1px solid rgba(147,197,253,.3);color:var(--blu);margin-bottom:12px}
 
 /* Entities */
-.entities{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.entities{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
 @media(max-width:600px){.entities{grid-template-columns:1fr}}
-.ent{padding:12px;border-radius:7px;background:var(--s1);border:1px solid var(--bdr);font-size:.85rem}
-.ent-name{font-weight:700;color:var(--br);margin-bottom:2px}
-.ent-detail{font-size:.75rem;color:var(--dm);line-height:1.5}
-.ent-core{border-color:var(--blu);border-width:1.5px}
-.ent-status{display:inline-block;font-family:'DM Mono',monospace;font-size:.6rem;padding:2px 6px;border-radius:3px;margin-top:4px}
-.ent-filing{background:rgba(224,160,64,.12);color:var(--amb)}
-.ent-fin{font-size:.72rem;color:var(--tx);margin-top:4px;padding-top:4px;border-top:1px solid var(--bdr)}
+.ent{padding:16px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);font-size:.88rem}
+.ent-name{font-weight:800;color:var(--br);margin-bottom:4px;font-size:1rem}
+.ent-detail{font-size:.8rem;color:var(--dm);line-height:1.5;margin-bottom:8px}
+.ent-core{border-color:var(--blu);border-width:2px;background:rgba(147,197,253,0.03)}
+.ent-status{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;padding:4px 8px;border-radius:4px;margin-bottom:8px}
+.ent-filing{background:rgba(251,191,36,.15);color:var(--amb);border:1px solid rgba(251,191,36,.3)}
+.ent-fin{font-size:.75rem;color:var(--tx);padding-top:10px;border-top:1px solid var(--bdr);font-weight:500;line-height:1.5}
+.ent-note{font-size:.85rem;color:var(--dm);margin-bottom:1.5rem;font-weight:500}
+
+/* Corridor */
+.corridor{padding:1.5rem;border-left:4px solid var(--amb);background:var(--s1);border-radius:0 8px 8px 0;margin-bottom:2rem}
+.cor-label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amb);margin-bottom:8px}
+.cor-text{font-size:1.1rem;font-weight:700;color:var(--br);line-height:1.5}
 
 /* Dropdown toggle */
-.section-toggle{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--s1);border:1px solid var(--bdr);border-radius:6px;margin-bottom:6px;font-size:.88rem;font-weight:600;color:var(--br);user-select:none}
-.section-toggle:hover{background:var(--s2)}
-.section-toggle .arrow{transition:transform .2s;color:var(--dm);font-size:.8rem}
+.section-toggle{cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px;margin-bottom:8px;font-size:.9rem;font-weight:700;color:var(--br);user-select:none}
+.section-toggle:hover{background:var(--s2);border-color:var(--dm)}
+.section-toggle .arrow{transition:transform .2s;color:var(--dm);font-size:.9rem}
 .section-toggle .arrow.open{transform:rotate(90deg)}
-.dd{display:none;margin-bottom:8px;border-radius:8px;padding:14px;font-size:.85rem;line-height:1.55}
+.dd{display:none;margin-bottom:12px;border-radius:8px;padding:16px;font-size:.88rem;line-height:1.6}
 
 /* Service-profit chain */
-.spc-row{display:flex;align-items:stretch;gap:0;margin-bottom:8px}
-@media(max-width:700px){.spc-row{flex-direction:column;gap:6px}}
-.spc-link{flex:1;padding:12px 10px;text-align:center;font-size:.85rem;font-weight:600;border:1.5px solid var(--bdr);background:var(--s1)}
+.spc-row{display:flex;align-items:stretch;gap:0;margin-bottom:12px}
+@media(max-width:700px){.spc-row{flex-direction:column;gap:8px}}
+.spc-link{flex:1;padding:14px 12px;text-align:center;font-size:.9rem;font-weight:700;border:1.5px solid var(--bdr);background:var(--s1)}
 .spc-link:first-child{border-radius:8px 0 0 8px}
 .spc-link:last-child{border-radius:0 8px 8px 0}
-.spc-break{border-color:rgba(232,85,85,.35);background:rgba(232,85,85,.08);color:var(--red)}
-.spc-stress{border-color:rgba(224,160,64,.25);background:rgba(224,160,64,.05);color:var(--amb)}
+@media(max-width:700px){.spc-link{border-radius:8px!important}}
+.spc-link small{display:block;font-size:.75rem;font-weight:500;color:var(--dm);margin-top:6px;line-height:1.4}
+.spc-break{border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.1);color:var(--red)}
+.spc-stress{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.1);color:var(--amb)}
+.spc-arr{display:flex;align-items:center;color:var(--dm);font-size:14px;padding:0 6px;font-weight:900}
+@media(max-width:700px){.spc-arr{justify-content:center;padding:4px}}
+.spc-finding{font-size:.9rem;color:var(--br);font-weight:600;padding:14px 16px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:8px}
+
+/* Acquisition trail */
+.acq-timeline{position:relative;padding-left:24px;border-left:2px solid var(--bdr);margin-bottom:2rem}
+.acq-item{position:relative;margin-bottom:20px;padding:16px;background:var(--s1);border:1px solid var(--bdr);border-radius:8px}
+.acq-item::before{content:'';position:absolute;left:-31px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--amb);border:2px solid var(--bg)}
+.acq-date{font-family:'IBM Plex Mono',monospace;font-size:.75rem;font-weight:700;color:var(--amb);margin-bottom:6px}
+.acq-name{font-weight:800;color:var(--br);font-size:1.05rem;margin-bottom:6px}
+.acq-detail{font-size:.85rem;color:var(--tx);line-height:1.6}
+.acq-outcome{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:4px;margin-top:10px}
+.acq-success{background:rgba(74,222,128,.15);color:var(--grn);border:1px solid rgba(74,222,128,.3)}
+.acq-partial{background:rgba(251,191,36,.15);color:var(--amb);border:1px solid rgba(251,191,36,.3)}
+.acq-failed{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}
 
 /* Tower grid */
-.towers{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.5rem}
+.towers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
 @media(max-width:700px){.towers{grid-template-columns:repeat(2,1fr)}}
-.tw{border-radius:8px;overflow:hidden;border:1px solid var(--bdr)}
-.tw-head{padding:8px 10px;text-align:center;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fff}
+.tw{border-radius:8px;overflow:hidden;border:1px solid var(--bdr);background:var(--s1)}
+.tw-head{padding:10px 12px;text-align:center;font-size:.75rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#000}
 .t1 .tw-head{background:var(--amb)}.t2 .tw-head{background:var(--blu)}.t3 .tw-head{background:var(--grn)}.t4 .tw-head{background:var(--red)}
-.tw-item{display:flex;align-items:center;padding:7px 10px;border-top:1px solid rgba(255,255,255,.04);font-size:.82rem;color:var(--tx);background:var(--s1);gap:6px;cursor:pointer}
+.tw-item{display:flex;align-items:center;padding:10px 12px;border-top:1px solid rgba(255,255,255,.05);font-size:.85rem;font-weight:600;color:var(--tx);gap:8px;cursor:pointer;transition:background .2s}
 .tw-item:hover{background:var(--s2)}
-.tw-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
-.tw-dot.r{background:var(--red)}.tw-dot.a{background:var(--amb)}.tw-dot.g{background:var(--grn)}.tw-dot.k{background:#4a4e5c}
+.tw-dot{width:10px;height:10px;min-width:10px;border-radius:2px;flex-shrink:0}
+.tw-dot.r{background:var(--red)}.tw-dot.a{background:var(--amb)}.tw-dot.g{background:var(--grn)}.tw-dot.k{background:var(--dm)}
+.tw-item span{flex:1}
+.tw-pri{font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:4px}
+.tw-pri.p1{background:rgba(248,113,113,.15);color:var(--red)}
+.tw-pri.p2{background:rgba(251,191,36,.15);color:var(--amb)}
+.tw-pri.p3{background:rgba(74,222,128,.15);color:var(--grn)}
+.tw-pri.dk{background:rgba(148,163,184,.15);color:var(--dm)}
+.tw-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;font-weight:600;color:var(--dm);margin-bottom:12px}
+.tw-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;vertical-align:middle;margin-right:6px}
+
+/* Three paths */
+.roads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2.5rem}
+@media(max-width:700px){.roads{grid-template-columns:1fr}}
+.road{border-radius:8px;overflow:hidden;border:1px solid var(--bdr);background:var(--s1)}
+.road-head{padding:14px 16px;font-size:1rem;font-weight:800;color:var(--br)}
+.road-1 .road-head{background:rgba(147,197,253,.1);border-bottom:2px solid var(--blu)}
+.road-2 .road-head{background:rgba(74,222,128,.1);border-bottom:2px solid var(--grn)}
+.road-3 .road-head{background:rgba(251,191,36,.1);border-bottom:2px solid var(--amb)}
+.road-body{padding:16px}
+.road-item{font-size:.88rem;line-height:1.6;margin-bottom:10px;padding-left:14px;border-left:2px solid var(--bdr);color:var(--tx)}
+.road-item strong{color:var(--br)}
+.road-val{font-size:1.1rem;font-weight:800;margin-top:12px;padding-top:10px;border-top:1px solid var(--bdr)}
+.road-1 .road-val{color:var(--blu)}.road-2 .road-val{color:var(--grn)}.road-3 .road-val{color:var(--amb)}
+.road-note{font-size:.8rem;font-weight:500;color:var(--dm);margin-top:6px}
+.road-rec{font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;padding:4px 10px;border-radius:4px;background:rgba(147,197,253,.15);color:var(--blu);display:inline-block;margin-top:8px;border:1px solid rgba(147,197,253,.3)}
+
+/* Tranches */
+.tranche{margin-bottom:1.5rem;border-radius:8px;overflow:hidden;border:1px solid var(--bdr)}
+.tr-head{padding:14px 18px;font-size:1rem;font-weight:800;color:var(--br);display:flex;justify-content:space-between;align-items:center}
+.tr-head small{font-weight:600;color:var(--dm);font-size:.85rem}
+.tr-1 .tr-head{background:rgba(248,113,113,.1);border-bottom:2px solid var(--red)}
+.tr-2 .tr-head{background:rgba(147,197,253,.1);border-bottom:2px solid var(--blu)}
+.tr-3 .tr-head{background:rgba(74,222,128,.1);border-bottom:2px solid var(--grn)}
+.tr-body{padding:20px;background:var(--s1)}
+.tr-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:12px}
+@media(max-width:600px){.tr-row{grid-template-columns:1fr}}
+.tr-label{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.tr-label-w{color:var(--red)}.tr-label-b{color:var(--grn)}
+.tr-text{font-size:.9rem;line-height:1.6}
+.tr-text strong{color:var(--br)}
+
+/* Gate */
+.gate{display:flex;align-items:center;gap:16px;padding:16px 20px;background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2);border-radius:8px;margin-bottom:2rem;font-size:.9rem}
+.gate-num{font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:900;color:var(--pur)}
+.gate-text{flex:1;color:var(--tx)}
+.gate-text strong{color:var(--br);font-weight:800}
 
 /* GAIN acceleration */
-.gain-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-@media(max-width:700px){.gain-grid{display:grid;grid-template-columns:repeat(2,1fr)}}
-.gain-card{padding:14px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr)}
-.gain-letter{font-family:'DM Mono',monospace;font-size:1.4rem;font-weight:800;margin-bottom:4px}
-.gain-time{font-size:.75rem;padding:4px 8px;border-radius:4px;display:inline-block}
-.gain-old{background:rgba(232,85,85,.08);color:var(--red)}
-.gain-new{background:rgba(64,184,130,.08);color:var(--grn)}
+.gain-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem}
+@media(max-width:700px){.gain-grid{grid-template-columns:repeat(2,1fr)}}
+.gain-card{padding:16px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr)}
+.gain-letter{font-family:'IBM Plex Mono',monospace;font-size:1.6rem;font-weight:900;margin-bottom:6px}
+.gain-title{font-size:.95rem;font-weight:800;color:var(--br);margin-bottom:8px}
+.gain-desc{font-size:.85rem;color:var(--tx);line-height:1.6;margin-bottom:12px}
+.gain-time{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.7rem;padding:4px 8px;border-radius:4px;display:inline-block;margin-top:4px}
+.gain-old{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+.gain-new{background:rgba(74,222,128,.1);color:var(--grn);border:1px solid rgba(74,222,128,.2)}
 
-.ft{border-top:1px solid var(--bdr);padding-top:12px;margin-top:2rem;text-align:center;font-size:.75rem;color:var(--dm);font-family:'DM Mono',monospace;line-height:1.8}
+/* Impact */
+.impact{display:grid;grid-template-columns:1fr 60px 1fr;gap:12px;align-items:center;margin-bottom:.5rem}
+@media(max-width:600px){.impact{grid-template-columns:1fr}}
+.imp-box{padding:20px;border-radius:8px;text-align:center;background:var(--s1);border:1px solid var(--bdr)}
+.imp-num{font-family:'IBM Plex Mono',monospace;font-size:1.8rem;font-weight:900}
+.imp-bad .imp-num{color:var(--red)}.imp-good .imp-num{color:var(--grn)}
+.imp-label{font-size:.88rem;font-weight:600;color:var(--dm);margin-top:6px;line-height:1.4}
+.imp-arr{text-align:center;font-size:1.8rem;color:var(--amb);font-weight:900}
+.imp-note{font-size:.85rem;font-weight:500;color:var(--dm);text-align:center;margin-bottom:1.5rem;font-style:italic}
+
+/* Table styles */
+table {width:100%;border-collapse:collapse;font-size:.85rem;min-width:600px;background:var(--s1);border-radius:8px;overflow:hidden;border:1px solid var(--bdr)}
+th {text-align:left;padding:12px;color:var(--dm);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;font-family:'IBM Plex Mono',monospace;background:rgba(0,0,0,.2);border-bottom:1px solid var(--bdr)}
+td {padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--tx);font-weight:500}
+.peer-note{font-size:.85rem;font-weight:500;padding:12px 16px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:6px;color:var(--tx);margin-bottom:1.5rem;line-height:1.6}
+
+.ft{border-top:1px solid var(--bdr);padding-top:16px;margin-top:3rem;text-align:center;font-size:.75rem;font-weight:600;color:var(--dm);font-family:'IBM Plex Mono',monospace;line-height:1.8;letter-spacing:1px}
 </style>
 </head>
 <body>
 
+<div class="time-badge">6 hours of AI-accelerated research from public data</div>
+
 <div class="hdr">
 <div class="hdr-row">
-<div><h1>Project Alpha <span>GAIN Commercial Diagnostic</span></h1>
-<div style="font-family:'DM Mono',monospace;font-size:.6rem;color:var(--dm);margin-bottom:2px">v4.0 GOLD STANDARD -- 165 verified findings from 20 sources (CH, LinkedIn, DeepSeek, Grok, web search, press)</div>
-<div class="hdr-meta">GAIN Protocol -- AI-powered commercial intelligence with a human edge<br>PE-backed MSP (Apex Capital Partners, majority since 2021) -- Group revenue £185.2M (declining) -- Op margin 3.5% -- ~1,200 staff -- External bank debt £305M</div></div>
+<div><h1>Project Alpha Group <span>GAIN Commercial Diagnostic</span></h1>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;color:var(--dm);margin-bottom:4px;letter-spacing:1px">v4.0 GOLD STANDARD -- 165 verified findings from 20 sources</div>
+<div class="hdr-meta">GAIN Protocol -- AI-powered commercial intelligence with a human edge<br>PE-backed MSP (Apex Capital Partners, majority since Mar 2021) -- Group revenue £182.8M (declining) -- Entity revenue £126.6M -- Operating profit £8.1M to £4.5M (-45%) -- Op margin 3.5% -- ~1,200 staff -- External bank debt £290M -- Preference shares £378M</div></div>
 <div style="text-align:right"><span class="verdict">Verdict: Fix</span></div>
 </div></div>
 
-<div style="padding:14px 16px;border-radius:6px;background:rgba(200,168,85,.03);border:1px solid rgba(200,168,85,.1);margin-bottom:12px;font-size:.82rem;color:var(--tx);line-height:1.55">
-<strong style="color:var(--br)">This is Document 3 of 3: the full evidence base.</strong> It contains 165+ verified findings from 20 public sources. Every claim in the Executive Summary (Document 1) and every step in the Solution Summary (Document 2) traces back to a numbered finding in this document. This is not designed to be read top to bottom. It is a reference library.<br><br>
-<span style="color:var(--dm)">Document 1: Executive Summary | Document 2: Solution Summary | Document 3: Full Diagnostic (you are here)</span>
+<div style="padding:16px 20px;border-radius:8px;background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);margin-bottom:16px;font-size:.85rem;color:var(--tx);line-height:1.6">
+<strong style="color:var(--br)">This is Document 3 of 3: the full evidence base.</strong> It contains 165+ verified findings from 20 public sources. Every claim in the Executive Summary (Document 1) and every step in the Solution Summary (Document 2) traces back to a numbered finding in this document or the companion audit trail. This is not designed to be read top to bottom. It is a reference library.<br><br>
+<span style="color:var(--dm);font-weight:600">Document 1: Executive Summary | Document 2: Solution Summary | Document 3: Full Diagnostic (you are here)</span>
 </div>
 
 <nav class="nav-bar" id="nav">
 <a class="nav-btn" href="#decision">Decision</a>
 <a class="nav-btn" href="#group">Group</a>
 <a class="nav-btn" href="#acquisitions">Acquisitions</a>
-<a class="nav-btn" href="#people">People Profiles</a>
+<a class="nav-btn" href="#ownership">Ownership</a>
+<a class="nav-btn nav-new" href="#people">People Profiles</a>
+<a class="nav-btn" href="#changes">Exec Changes</a>
 <a class="nav-btn" href="#financials">Financials</a>
 <a class="nav-btn" href="#peers">Peers</a>
+<a class="nav-btn nav-new" href="#competitors">Competitor Strategy</a>
 <a class="nav-btn" href="#chain">Value Chain</a>
+<a class="nav-btn" href="#proposition">Proposition</a>
+<a class="nav-btn" href="#winloss">Win/Loss</a>
+<a class="nav-btn" href="#vision">Vision</a>
 <a class="nav-btn" href="#towers">Towers</a>
+<a class="nav-btn" href="#strategy">Strategy</a>
+<a class="nav-btn" href="#programme">Programme</a>
+<a class="nav-btn" href="#worth">Value</a>
+<a class="nav-btn" href="#ceoplan">CEO Plan</a>
+<a class="nav-btn nav-new" href="#dark">Still Dark</a>
 </nav>
 
-<div id="decision" style="padding:1.25rem 1.5rem;border-left:3px solid var(--amb);background:var(--s1);border-radius:0 8px 8px 0;margin-bottom:1rem">
-<div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amb);margin-bottom:6px">The decision</div>
-<div style="font-size:1rem;font-weight:600;color:var(--br);line-height:1.5;margin-bottom:10px">Project Alpha is a £185M group where operating margin has collapsed from 12.8% to 3.5% in two years. Group revenue is declining. Cash interest coverage is 0.31x on £305M of bank debt. One acquisition has ceased trading. The remaining four are unintegrated. There is no CEO. The exit clock is not running. The survival clock is.</div>
+<div id="decision" style="padding:1.5rem;border-left:4px solid var(--amb);background:var(--s1);border-radius:0 8px 8px 0;margin-bottom:1.5rem;margin-top:1rem">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amb);margin-bottom:8px">The decision</div>
+<div style="font-size:1.05rem;font-weight:700;color:var(--br);line-height:1.6;margin-bottom:14px">Project Alpha is a £183M group where operating margin has collapsed from 12.8% to 3.5% in two years. Group revenue is declining. Cash interest coverage is 0.33x on £290M of bank debt. One acquisition (£45M) has ceased trading. The remaining four are unintegrated. There is no CEO. The exit clock is not running. The survival clock is.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+<div style="padding:16px;border-radius:8px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px">Do nothing</div>
+<div style="font-size:.85rem;color:var(--tx);line-height:1.6">Margin continues compressing below 3%. Cash interest gap widens. Bank covenant breach becomes probable. Competitors raid legacy clients. Preference shares accrue another £34M. Enterprise value falls below £290M bank debt. Equity written off.</div>
+</div>
+<div style="padding:16px;border-radius:8px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grn);margin-bottom:6px">Act now</div>
+<div style="font-size:.85rem;color:var(--tx);line-height:1.6">Recover 2 points of EBITDA margin in 90 days. Prove cross-sell across 1,800 customers. Stabilise the leadership team. Build the exit story. Exit value restored: £250-336M. The gap between doing nothing and acting is £100M+.</div>
+</div>
+</div>
 </div>
 
-<h2 id="group">The group entities</h2>
+<h2 id="group">The group</h2>
+<p style="font-size:.88rem;color:var(--dm);margin-bottom:12px;font-weight:500">27 companies registered at the same HQ address. 20 active. Three layers of PE acquisition vehicles. Only 2 statutory directors across the entire group. No CEO.</p>
+
 <div class="entities">
+
 <div class="ent ent-core">
 <div class="ent-name">Group Limited</div>
-<div class="ent-detail">Core MSP -- Incorporated 2003</div>
-<div class="ent-fin">FY25: £128.1M revenue -- £4.5M op profit (3.5%, down from 7.8%) -- Gross margin collapsed 740bps. Group: £185.2M declining. EBITDA ~£9.1M. Cash interest coverage 0.31x.</div>
+<div class="ent-detail">Core MSP -- HQ -- Incorporated May 2003<br>Companies House: [REDACTED]</div>
+<div class="ent-detail" style="color:var(--blu);font-weight:600">Directors: The CFO + The Chairman</div>
+<div class="ent-fin">FY25: £126.6M revenue (+22%) -- £4.5M op profit (3.5%, down from 7.8%). Group (Alpha Bidco): £182.8M declining. EBITDA ~£8.8M. Cash interest coverage 0.33x.</div>
 </div>
+
 <div class="ent">
 <div class="ent-name">Subsidiary A (Infra)</div>
 <div class="ent-detail">Data centre / managed services -- acquired Feb 2021</div>
+<div class="ent-detail" style="color:var(--tx)">From Legacy IT Group. Added £11M revenue. Oldest acquisition.</div>
 <span class="ent-status ent-filing">ACTIVE -- SEPARATE ENTITY</span>
+<div class="ent-fin">Directors: The CFO + The Chairman</div>
 </div>
+
 <div class="ent">
 <div class="ent-name">Subsidiary B (Cloud ERP)</div>
 <div class="ent-detail">ERP / Cloud implementations -- acquired Jul 2021</div>
-<span class="ent-status ent-filing">ACTIVE -- OWN PE STRUCTURE</span>
+<div class="ent-detail" style="color:var(--tx)">Prev. owner: Prior PE Owner. 260 staff, 540 ERP customers.</div>
+<span class="ent-status ent-filing">ACTIVE -- OWN PE STRUCTURE (4 entities)</span>
+<div class="ent-fin">Legacy ERP end-of-life forces 540 clients to migrate = guaranteed implementation revenue pipeline.</div>
 </div>
+
 <div class="ent">
 <div class="ent-name">Subsidiary C (Public Sector)</div>
 <div class="ent-detail">Cloud Infra / Public Sector consulting -- acquired Jul 2022</div>
+<div class="ent-detail" style="color:var(--tx)">From Sub C Founders. M&A Advisor brokered. 170 staff.</div>
 <span class="ent-status ent-filing">ACTIVE -- SEPARATE ENTITY</span>
+<div class="ent-fin">Public sector frameworks. Gov Dept A £74M TCV partner.</div>
 </div>
+
 <div class="ent">
 <div class="ent-name">Subsidiary D (CRM)</div>
-<div class="ent-detail">CRM Platform -- acquired Nov 2022</div>
-<span class="ent-status ent-filing" style="background:rgba(232,85,85,.15);color:var(--red)">CEASED TRADING</span>
-<div class="ent-fin">£2.4M High Court damages. Failing contracts at point of sale. Assets being transferred to other group entities.</div>
+<div class="ent-detail">CRM / Power Platform -- acquired Nov 2022 -- £45M</div>
+<div class="ent-detail" style="color:var(--red);font-weight:600">£2.4M High Court damages. CEASED TRADING FY25.</div>
+<span class="ent-status ent-filing" style="background:rgba(248,113,113,.15);color:var(--red);border-color:rgba(248,113,113,.4)">CEASED TRADING</span>
+<div class="ent-fin">FY25: Revenue £12.3M (down 32%). £45M acquisition value substantially destroyed. Assets being transferred.</div>
 </div>
+
 <div class="ent">
 <div class="ent-name">Subsidiary E (Cyber)</div>
 <div class="ent-detail">Cybersecurity consultancy -- acquired Jul 2023</div>
+<div class="ent-detail" style="color:var(--red);font-weight:600">Sub E Founder now freelance. Key person gone.</div>
 <span class="ent-status ent-filing">ACTIVE -- KEY PERSON GONE</span>
+<div class="ent-fin">30 staff at acquisition. FS sector focus. Zero security case studies on Group website. M&A capability walked out.</div>
+</div>
+
+</div>
+
+<div style="margin-top:12px;padding:16px;border-radius:8px;background:rgba(192,132,252,.05);border:1px solid rgba(192,132,252,.2)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pur);margin-bottom:8px">PE ownership chain -- 27 companies at one address</div>
+<div style="font-size:.8rem;color:var(--tx);line-height:1.6;font-family:'IBM Plex Mono',monospace">
+Apex Capital Partners ($47bn+ invested)<br>
+&nbsp;&nbsp;└─ Alpha Finance Limited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Alpha Midco Limited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Alpha Bidco Limited -- Directors: PE Principal + The CFO + The Chairman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Alpha Group Limited<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Group Holdings -- Directors: The CFO + The Chairman<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ <strong style="color:var(--br)">Group Limited</strong> -- the operating company<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Subsidiary D -- CEASED TRADING<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Subsidiary C -- active<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Subsidiary A -- active<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─ Subsidiary E -- active<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─ Subsidiary B structure (4 entities) -- active<br>
 </div>
 </div>
 
-<h2 id="acquisitions">Acquisition trail & failures</h2>
-<p style="font-size:.88rem;color:var(--tx);margin-bottom:6px"><strong style="color:var(--br)">Four acquisitions in 18 months.</strong> Apex Capital's buy-and-build thesis: bolt consulting firms onto an infrastructure annuity to create a full-service MSP. The pace was aggressive. The integration was not.</p>
+<div class="ent-note" style="margin-top:12px;padding:12px;border-left:3px solid var(--blue);background:var(--s1)">Five acquisitions under Apex Capital. Three still separate legal entities with The CFO + The Chairman as directors. Sub B has its own 4-entity PE structure inherited from Prior PE Owner. Sub E founder has left. Total: 20 active legal entities, 2 directors. The governance burden is extraordinary. Integration thesis: unproven.</div>
 
-<div class="section-toggle" onclick="tog('acq-detail')"><span>Integration Audit Data</span><span class="arrow" id="arr-acq-detail">&#9654;</span></div>
-<div class="dd" id="acq-detail" style="background:var(--s2);border:1px solid var(--bdr);padding:14px;font-size:.85rem;color:var(--tx)">
-<p><strong>Subsidiary D (CRM):</strong> Founder departed. Court awarded £2.4M against them. Failing contracts identified post-close.<br>
-<strong>Subsidiary C (Public Sector):</strong> 250+ case studies on legacy site, copyright 2017-2021 (pre-acquisition, stale). No cross-sell evidence.<br>
-<strong>Subsidiary E (Cyber):</strong> Founder now freelance. Cybersecurity consulting brain walked out. Zero security case studies on Group website.</p>
+<h2 id="acquisitions">Group acquisition trail</h2>
+<p style="font-size:.9rem;color:var(--tx);margin-bottom:12px"><strong style="color:var(--br)">Four acquisitions in 18 months, then one more.</strong> Apex Capital's buy-and-build thesis: bolt consulting firms onto an infrastructure annuity to create a full-service MSP. The pace was aggressive. The integration was not.</p>
+
+<div class="acq-timeline">
+
+<div class="acq-item">
+<div class="acq-date">FEB 2021</div>
+<div class="acq-name">Subsidiary A (Infra) -- from Legacy IT Group</div>
+<div class="acq-detail"><strong>Stated benefit:</strong> Strengthen data centre estate and geographic coverage.<br><strong>Seller context:</strong> Legacy IT Group was in financial distress. Sold Sub A to "sharpen focus around higher margin core products." Project Alpha inherited a non-core, lower-margin division the parent explicitly viewed as a drag on profitability.</div>
+<span class="acq-outcome acq-partial">PARTIAL -- revenue absorbed, geographic expansion unclear</span>
 </div>
 
-<h2 id="people">People: who runs this company</h2>
-<div style="padding:10px 14px;border-radius:6px;background:rgba(232,85,85,.06);border:1px solid rgba(232,85,85,.12);margin-bottom:12px;font-size:.85rem;color:var(--br);font-weight:600">
-The PE governance layer (Chairman, CFO) is preparing the group for sale. The operating layer (COO, CTO) is keeping the lights on. There is no CEO. The last CEO lasted 4 months. The company is not recruiting one.
+<div class="acq-item">
+<div class="acq-date">JUL 2021</div>
+<div class="acq-name">Subsidiary B (Cloud ERP) -- from Prior PE Owner</div>
+<div class="acq-detail"><strong>Stated benefit:</strong> Cloud ERP capability. 540 customers.<br><strong>Seller context:</strong> Prior PE Owner achieved 5.6x return in 3 years. Sub B Founders facilitated exit.</div>
+<span class="acq-outcome acq-partial">PARTIAL -- brand absorbed, but case studies frozen pre-2021</span>
 </div>
 
-<div class="profile-card" style="border-color:rgba(149,128,224,.25)">
+<div class="acq-item">
+<div class="acq-date">JUL 2022</div>
+<div class="acq-name">Subsidiary C (Public Sector) -- from Sub C Founders</div>
+<div class="acq-detail"><strong>Stated benefit:</strong> Cloud Infra consulting, public sector frameworks, Global Vendor credentials.<br><strong>Seller context:</strong> Sold via M&A Advisor. Stated reason: "capacity and scale."</div>
+<div class="section-toggle" onclick="tog('acq3')"><span>Detail</span><span class="arrow" id="arr-acq3">&#9654;</span></div>
+<div class="dd" id="acq3" style="background:var(--s2);border:1px solid var(--bdr);">170 staff at acquisition. 250+ case studies on legacy site across 21 pages, copyright 2017-2021 (pre-acquisition, stale). Outstanding charge created 25 Oct 2022. Subsidiary C site still live and separate from parent group site.</div>
+<span class="acq-outcome acq-partial">PARTIAL -- Gov Dept A contract won, but 250+ stale case studies, limited cross-sell</span>
+</div>
+
+<div class="acq-item">
+<div class="acq-date">NOV 2022</div>
+<div class="acq-name">Subsidiary D (CRM) -- £45M from Sub D Founder</div>
+<div class="acq-detail"><strong>Stated benefit:</strong> CRM Platform, public sector clients.<br><strong>What happened:</strong> High Court damages awarded against founder (£2.4M). Failing contracts at point of sale: Gov Dept C (described internally as "a buggar of a contract"), Regional Transport (terminated), Gov Dept B "Project Declutter" (£90K WIP write-off).</div>
+<span class="acq-outcome acq-failed">FAILED -- £2.4M damages, failing contracts, reputational damage</span>
+</div>
+
+<div class="acq-item">
+<div class="acq-date">JUL 2023</div>
+<div class="acq-name">Subsidiary E (Cyber) -- from Sub E Founder</div>
+<div class="acq-detail"><strong>Stated benefit:</strong> Cybersecurity consultancy to fill gap in enterprise security proposition.<br><strong>What happened:</strong> Founder now freelance. Key person risk realised. The M&A cyber due diligence capability that was the stated reason for the acquisition walked out.</div>
+<span class="acq-outcome acq-partial">PARTIAL -- niche and stable, but no evidence of cross-sell</span>
+</div>
+
+</div>
+
+<h2 id="ownership">Ownership & Advisory</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)">Thesis element</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Stated (2021)</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Actual (2026)</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Status</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Organic growth</td>
+<td style="padding:12px;color:var(--silver)">"Strong organic growth"</td>
+<td style="padding:12px;color:var(--silver)">Entity revenue grew but op profit fell 32.5%</td>
+<td style="padding:12px;color:var(--amb);font-weight:700">PARTIAL</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Buy-and-build</td>
+<td style="padding:12px;color:var(--silver)">"Strategic acquisitions"</td>
+<td style="padding:12px;color:var(--silver)">5 acquisitions completed</td>
+<td style="padding:12px;color:var(--grn);font-weight:700">DELIVERED</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Integration</td>
+<td style="padding:12px;color:var(--silver)">"End-to-end services"</td>
+<td style="padding:12px;color:var(--silver)">Separate brands, litigation on Sub D, 0.17% cross-sell</td>
+<td style="padding:12px;color:var(--red);font-weight:700">NOT DELIVERED</td>
+</tr>
+<tr>
+<td style="padding:12px;color:var(--br);font-weight:600">Exit readiness</td>
+<td style="padding:12px;color:var(--silver)">Implied 4-6 year hold</td>
+<td style="padding:12px;color:var(--silver)">Year 5, no exit process, margin compressing, CEO lasted 4 months</td>
+<td style="padding:12px;color:var(--red);font-weight:700">AT RISK</td>
+</tr>
+</table>
+</div>
+
+<h2 id="casestudy">Why buy-and-build fails: the academic evidence</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)">Academic finding</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Project Alpha evidence</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">What it means</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);vertical-align:top"><strong>"The further from the core, the greater the risk"</strong><br><span style="font-size:.75rem;color:var(--dm)">Bain & Company</span></td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Acquired four adjacencies: Cloud ERP, CRM, Cloud Infra consulting, Cyber.</td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Attempted adjacency at speed without the operating model to absorb it. The 0.17% cross-sell is the result.</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);vertical-align:top"><strong>"Cross-sell requires same-week sales enablement"</strong><br><span style="font-size:.75rem;color:var(--dm)">McKinsey</span></td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Cross-sell penetration: 0.17% after four years. No cross-sell comp plan.</td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Bain best practice: 100% enabled in week one. Alpha is at 0.17% in year 4. Total absence of mechanism.</td>
+</tr>
+<tr>
+<td style="padding:12px;color:var(--br);vertical-align:top"><strong>"Management team capability is the biggest risk"</strong><br><span style="font-size:.75rem;color:var(--dm)">INSEAD</span></td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Integration team: The Former Group MD (left), The Former CEO (4 months), The Former CXO (left).</td>
+<td style="padding:12px;color:var(--silver);vertical-align:top">Management team rejected the mandate. Two now run competitors. Requires new people/mandate.</td>
+</tr>
+</table>
+</div>
+
+<h2 id="people">People: who runs this company and what drives them</h2>
+
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--pur);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(192,132,252,.3)">PE governance layer -- preparing for exit</div>
+
+<div class="profile-card" style="border-color:rgba(192,132,252,.3); background: rgba(192,132,252,0.03);">
 <div class="profile-header">
-<div><span class="profile-name">The PE Chairman</span> <span class="profile-role">Chairman</span></div>
+<div><span class="profile-name">The Chairman</span> <span class="profile-role">Chairman | Director</span></div>
 <span class="profile-status ps-active">ACTIVE -- STATUTORY DIRECTOR</span>
 </div>
 <div class="profile-body">
-<strong>Career DNA:</strong> PE exit chairman. History of trebling funds and leading massive PE mergers. Process person who delivers measurable outcomes.<br>
-<strong>Triggers:</strong> EBITDA improvement quantified. Exit value impact.
+<strong>Career DNA:</strong> PE exit chairman. CEO of PE Turnaround A (trebled funds to ~£60bn). CEO of PE Turnaround B (doubled profits). C-level at Retail PLC.<br><br>
+<strong>GAIN Driver:</strong> Order / Achievement. Process person who delivers measurable outcomes. Optimises. Structures. Prepares businesses for sale.<br>
+<strong>Kegan Stage:</strong> 4 (Self-Authoring). Data-driven. Will not be swayed by sentiment.
+</div>
+<div class="profile-meta">
+<div class="pm-box pm-trigger"><span class="pm-label">Triggers</span>EBITDA improvement quantified. Exit value impact. Peer comparison. Board-ready materials.</div>
+<div class="pm-box pm-avoid"><span class="pm-label">Avoid</span>Vague strategy. Unquantified claims. Relationship-first pitching.</div>
+<div class="pm-box pm-modality"><span class="pm-label">Modality</span>Read/Write. One-page board papers. Financial models.</div>
 </div></div>
 
-<div class="profile-card" style="border-color:rgba(149,128,224,.25)">
+<div class="profile-card" style="border-color:rgba(192,132,252,.3); background: rgba(192,132,252,0.03);">
 <div class="profile-header">
-<div><span class="profile-name">The CFO</span> <span class="profile-role">Group CFO</span></div>
+<div><span class="profile-name">The CFO</span> <span class="profile-role">Group CFO | Director across all 25 entities</span></div>
 <span class="profile-status ps-active">ACTIVE -- STATUTORY DIRECTOR</span>
 </div>
 <div class="profile-body">
-<strong>Career DNA:</strong> Serial PE exit CFO. Three consecutive PE-backed companies. Resigned from previous PE role and started here one month later. Career measured in exits completed.<br>
-<strong>Triggers:</strong> Margin recovery models. Working capital optimisation.
+<strong>Career DNA:</strong> Serial PE exit CFO. Three consecutive PE-backed companies (PE-backed Firm A, PE-backed Firm B). Resigned from previous PE exit and started here one month later.<br><br>
+<strong>GAIN Driver:</strong> Achievement (financial). Career measured in exits completed. Responds to EBITDA models, deal structure.<br>
+<strong>Kegan Stage:</strong> 4 (Self-Authoring). Big4 Advisory trained. Three PE exits.
+</div>
+<div class="profile-meta">
+<div class="pm-box pm-trigger"><span class="pm-label">Triggers</span>Margin recovery models. Working capital optimisation. Exit-ready financials.</div>
+<div class="pm-box pm-avoid"><span class="pm-label">Avoid</span>Operational detail. Technology vision. Culture talk.</div>
+<div class="pm-box pm-modality"><span class="pm-label">Modality</span>Read/Write. Financial models. PE-grade investment memos.</div>
 </div></div>
 
-<div class="profile-card" style="border-color:rgba(64,184,130,.25)">
+<div class="profile-card" style="border-color:rgba(192,132,252,.3); background: rgba(192,132,252,0.03);">
 <div class="profile-header">
-<div><span class="profile-name">The COO</span> <span class="profile-role">Chief Operating Officer</span></div>
+<div><span class="profile-name">The PE Principal</span> <span class="profile-role">Director, Apex Capital Partners | Bidco director</span></div>
+<span class="profile-status ps-pe">PE PRINCIPAL -- BIDCO ONLY</span>
+</div>
+<div class="profile-body">
+<strong>Role:</strong> Founding director of Alpha Bidco. At Bidco level only -- not on operating companies. Day-to-day PE governance of the investment.
+</div>
+<div class="profile-meta">
+<div class="pm-box pm-trigger"><span class="pm-label">Triggers</span>Fund returns. Exit multiples. Portfolio performance.</div>
+<div class="pm-box pm-avoid"><span class="pm-label">Avoid</span>Operational detail. Direct pitching.</div>
+<div class="pm-box pm-modality"><span class="pm-label">Modality</span>Read/Write. Investment memos. Works through VP.</div>
+</div></div>
+
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--grn);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(74,222,128,.3)">Operating layer -- running the business</div>
+
+<div class="profile-card" style="border-color:rgba(74,222,128,.3); background: rgba(74,222,128,0.03);">
+<div class="profile-header">
+<div><span class="profile-name">The COO</span> <span class="profile-role">Chief Operating Officer | NOT a statutory director</span></div>
 <span class="profile-status ps-active">ACTIVE -- PRIMARY OUTREACH TARGET</span>
 </div>
 <div class="profile-body">
-<strong>Career DNA:</strong> Operations professional. NOT a PE hire. Internal promotion. With no CEO, this person is running day-to-day operations.<br>
-<strong>Triggers:</strong> Operational improvement frameworks. Service delivery metrics.
+<strong>Career DNA:</strong> Operations professional. NOT a PE hire. Internal promotion. 20+ years in IT service delivery.<br><br>
+<strong>Why he matters:</strong> With no CEO, no Group MD, and the CFO focused on exit preparation, the COO is the person actually running day-to-day operations.<br><br>
+<strong>GAIN Driver:</strong> Order. Career is about process, service excellence, operational outcomes.
+</div>
+<div class="profile-meta">
+<div class="pm-box pm-trigger"><span class="pm-label">Triggers</span>Operational improvement frameworks. Service delivery metrics. ITSM depth.</div>
+<div class="pm-box pm-avoid"><span class="pm-label">Avoid</span>Financial engineering. EBITDA language. "Cost cutting disguised as improvement."</div>
+<div class="pm-box pm-modality"><span class="pm-label">Modality</span>Auditory + data. Face-to-face. Operational dashboards.</div>
 </div></div>
 
-<div class="profile-card" style="border-color:rgba(232,85,85,.2)">
+<div class="profile-card" style="border-color:rgba(74,222,128,.3); background: rgba(74,222,128,0.03);">
 <div class="profile-header">
-<div><span class="profile-name">The Integration Leader</span> <span class="profile-role">Former Group MD</span></div>
-<span class="profile-status ps-departed">GONE -- NOW AT COMPETITOR (NEXUSTECH)</span>
+<div><span class="profile-name">The CTO</span> <span class="profile-role">Group CTO & CIO</span></div>
+<span class="profile-status ps-active">ACTIVE</span>
 </div>
 <div class="profile-body">
-<strong>What happened:</strong> The person specifically hired to integrate the acquisitions left for a competitor before the job was done. The Group General Counsel followed them to the same competitor 11 months later.
+<strong>Career DNA:</strong> Technology leader. "Building AI-Powered, Outcome-Led Technology Businesses."<br>
+<strong>GAIN Driver:</strong> Achievement. Building things. Forward-looking technology vision.
+</div>
+<div class="profile-meta">
+<div class="pm-box pm-trigger"><span class="pm-label">Triggers</span>Technology vision. AI capability. Platform strategy. Innovation.</div>
+<div class="pm-box pm-avoid"><span class="pm-label">Avoid</span>Operational minutiae. Cost cutting.</div>
+<div class="pm-box pm-modality"><span class="pm-label">Modality</span>Visual/Auditory. Technology demos.</div>
 </div></div>
 
-<h2 id="financials">Financial trend & Peer benchmarking</h2>
-<p style="font-size:.88rem;color:var(--br);font-weight:600;margin-bottom:8px">Revenue grew. Profit collapsed. RPE halved.</p>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(248,113,113,.3)">Departed -- what walked out the door</div>
 
-<div style="overflow-x:auto;margin-bottom:12px">
-<table style="width:100%;border-collapse:collapse;font-size:.85rem;min-width:550px">
+<div class="profile-card" style="border-color:rgba(248,113,113,.3); background: rgba(248,113,113,0.03);">
+<div class="profile-header">
+<div><span class="profile-name">The Former Group MD</span> <span class="profile-role">Integration mandate holder</span></div>
+<span class="profile-status ps-departed">GONE -- CEO OF NEXUSTECH (competitor)</span>
+</div>
+<div class="profile-body">
+<strong>What walked out:</strong> The integration capability. The person specifically hired to make 5 acquisitions work as one business left before the job was done. She took her integration methodology to a competitor. The Group GC followed her 11 months later -- talent raid pattern.
+</div></div>
+
+<div class="profile-card" style="border-color:rgba(248,113,113,.3); background: rgba(248,113,113,0.03);">
+<div class="profile-header">
+<div><span class="profile-name">The Former CEO</span> <span class="profile-role">CEO -- Terminated (4 months as director)</span></div>
+<span class="profile-status ps-departed">GONE</span>
+</div>
+<div class="profile-body">
+<strong>Why it failed:</strong> Global SaaS Vendor scaling executive hired for an infrastructure MSP and consulting hybrid. The DNA mismatch was structural.<br>
+<strong>What walked out:</strong> The CEO mandate. The "next stage of growth" narrative.
+</div></div>
+
+<div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blu);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(147,197,253,.3)">Apex Capital directors -- the board behind the board</div>
+
+<div class="profile-card" style="border-color:rgba(147,197,253,.3); background: rgba(147,197,253,0.03);">
+<div class="profile-header">
+<div><span class="profile-name">PE Vice Chair</span> <span class="profile-role">Vice Chairman, Apex Capital Partners</span></div>
+<span class="profile-status ps-pe">PE SPONSOR</span>
+</div>
+<div class="profile-body">
+<strong>Boards (7 companies -- the hunting ground):</strong><br>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Alpha</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Beta</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Gamma</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Delta</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Epsilon</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(147,197,253,.1);border:1px solid var(--blu)">PortCo Zeta</span>
+<span class="pm-box" style="display:inline-block;padding:4px 8px;margin:4px;background:rgba(251,191,36,.15);border:1px solid var(--amb);color:var(--amb)">Project Alpha</span><br><br>
+<strong>Every one of these companies needs IT services. Project Alpha has zero of them as customers.</strong> The Vice Chair is the warm introduction to 6 potential accounts through shared board membership.
+</div></div>
+
+<h2 id="changes">Executive change log</h2>
+<p style="font-size:.9rem;color:var(--tx);margin-bottom:12px;font-weight:500">15+ board and C-suite changes in 18 months. The incoming CEO lasted four months. The entire architectural core departed within a 6-month window.</p>
+
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
 <tr style="border-bottom:1px solid var(--bdr)">
-<th style="text-align:left;padding:10px;color:var(--dm);font-size:.72rem;text-transform:uppercase">Company</th>
-<th style="text-align:right;padding:10px;color:var(--dm);font-size:.72rem;text-transform:uppercase">Revenue</th>
-<th style="text-align:right;padding:10px;color:var(--dm);font-size:.72rem;text-transform:uppercase">RPE (Rev per Employee)</th>
-<th style="text-align:left;padding:10px;color:var(--dm);font-size:.72rem;text-transform:uppercase">Margin</th>
-<th style="text-align:left;padding:10px;color:var(--dm);font-size:.72rem;text-transform:uppercase">Glassdoor</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Person</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Change</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Notes</th>
 </tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,.04);background:rgba(232,85,85,.04)">
-<td style="padding:10px;color:var(--br);font-weight:600">Project Alpha (Target)</td>
-<td style="text-align:right;padding:10px;color:var(--tx)">£185M</td>
-<td style="text-align:right;padding:10px;color:var(--red);font-weight:600">£139K</td>
-<td style="padding:10px;color:var(--red)">3.5% (declining)</td>
-<td style="padding:10px;color:var(--red)">2.4/5</td>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:12px;color:var(--br);font-weight:600">The Former Group MD</td><td style="padding:12px;color:var(--red);font-weight:700">DEPARTED</td><td style="padding:12px;color:var(--silver)">To CEO of NexusTech (competitor).</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:12px;color:var(--br);font-weight:600">The Former CXO</td><td style="padding:12px;color:var(--red);font-weight:700">DEPARTED</td><td style="padding:12px;color:var(--silver)">To CEO of Regional Tech Firm. "Time for a break."</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:12px;color:var(--br);font-weight:600">The Founder</td><td style="padding:12px;color:var(--red);font-weight:700">TERMINATED</td><td style="padding:12px;color:var(--silver)">Founder fully removed from statutory board.</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:12px;color:var(--br);font-weight:600">The Former CEO</td><td style="padding:12px;color:var(--red);font-weight:700">TERMINATED</td><td style="padding:12px;color:var(--silver)">CEO lasted 4 months as director. No announcement.</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)"><td style="padding:12px;color:var(--br);font-weight:600">The CFO</td><td style="padding:12px;color:var(--grn);font-weight:700">APPOINTED</td><td style="padding:12px;color:var(--silver)">Also director at Sub C. Alignment achieved.</td></tr>
+<tr><td style="padding:12px;color:var(--br);font-weight:600">The Chairman</td><td style="padding:12px;color:var(--grn);font-weight:700">APPOINTED</td><td style="padding:12px;color:var(--silver)">Chairman becomes director. "Strategic transformation."</td></tr>
+</table>
+</div>
+
+<h2 id="financials">Financial trend</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)"></th>
+<th style="text-align:right;padding:12px;color:var(--dm)">Pre-PE</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">FY23 (entity)</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">FY24 (entity)</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">Group est.</th>
 </tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,.04)">
-<td style="padding:10px;color:var(--br)">CloudCore</td>
-<td style="text-align:right;padding:10px;color:var(--tx)">£135M</td>
-<td style="text-align:right;padding:10px;color:var(--grn);font-weight:600">~£270K</td>
-<td style="padding:10px;color:var(--grn)">13.9%</td>
-<td style="padding:10px;color:var(--tx)">3.9/5</td>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Revenue</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£56.1M</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£93.7M</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£103.6M</td>
+<td style="text-align:right;padding:12px;color:var(--amb);font-weight:700">~£200M</td>
 </tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,.04)">
-<td style="padding:10px;color:var(--br)">Vector</td>
-<td style="text-align:right;padding:10px;color:var(--tx)">£142M</td>
-<td style="text-align:right;padding:10px;color:var(--grn);font-weight:600">~£180K</td>
-<td style="padding:10px;color:var(--grn)">~21%</td>
-<td style="padding:10px;color:var(--tx)">3.8/5</td>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Operating profit</td>
+<td style="text-align:right;padding:12px;color:var(--dm)">DARK</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£12.0M (12.8%)</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£8.1M (7.8%)</td>
+<td style="text-align:right;padding:12px;color:var(--red);font-weight:700">-32.5%</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Headcount</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">~282</td>
+<td style="text-align:right;padding:12px;color:var(--dm)">DARK</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">~1,150</td>
+<td style="text-align:right;padding:12px;color:var(--red);font-weight:700">+308%</td>
+</tr>
+<tr>
+<td style="padding:12px;color:var(--br);font-weight:600">RPE</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">~£199K</td>
+<td style="text-align:right;padding:12px;color:var(--dm)">DARK</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">~£90K</td>
+<td style="text-align:right;padding:12px;color:var(--red);font-weight:700">-55%</td>
+</tr>
+</table>
+</div>
+<p style="font-size:.9rem;color:var(--tx);margin-bottom:1.5rem"><strong style="color:var(--red)">RPE has halved.</strong> Pre-PE: ~£199K on 282 staff. Post-acquisitions: ~£90K on 1,150 staff. The business absorbed high-headcount consulting teams without executing operational synergies. This represents £37.4M+ in unrealised revenue based on peer RPE.</p>
+
+<h2 id="peers">Peer benchmarking</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)">Company</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">Revenue</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">RPE</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Margin / Profit</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05);background:rgba(248,113,113,.05)">
+<td style="padding:12px;color:var(--br);font-weight:700">Project Alpha (entity)</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£103.6M</td>
+<td style="text-align:right;padding:12px;color:var(--red);font-weight:700">£139K</td>
+<td style="padding:12px;color:var(--red);font-weight:600">7.8% op margin, declining</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">CloudCore</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">£135.1M</td>
+<td style="text-align:right;padding:12px;color:var(--grn);font-weight:700">~£270K</td>
+<td style="padding:12px;color:var(--grn);font-weight:600">Net profit £3.5M</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Vector</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">~£142M</td>
+<td style="text-align:right;padding:12px;color:var(--grn);font-weight:700">£167-189K</td>
+<td style="padding:12px;color:var(--dm)">DARK</td>
+</tr>
+</table>
+</div>
+
+<h2 id="competitors">Competitor Strategy Analysis</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)">Metric</th>
+<th style="text-align:left;padding:12px;color:var(--amb)">Project Alpha</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Vector</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">NexusTech</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Nova</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Op margin</td>
+<td style="padding:12px;color:var(--red);font-weight:600">3.5% (was 7.8%)</td><td style="padding:12px;color:var(--silver)">~21% adj EBITDA</td><td style="padding:12px;color:var(--silver)">Not disclosed</td><td style="padding:12px;color:var(--grn);font-weight:600">~19% EBITDA</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Vendor Status</td>
+<td style="padding:12px;color:var(--amb);font-weight:600">5 years</td><td style="padding:12px;color:var(--grn);font-weight:600">9 years + Partner of Year</td><td style="padding:12px;color:var(--silver)">Global Vendor security</td><td style="padding:12px;color:var(--silver)">Cloud ERP focus</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">CEO</td>
+<td style="padding:12px;color:var(--red);font-weight:600">NONE</td><td style="padding:12px;color:var(--silver)">Active (2022)</td><td style="padding:12px;color:var(--silver)">The Former Group MD</td><td style="padding:12px;color:var(--red);font-weight:600">FOUNDERS QUIT</td>
 </tr>
 </table>
 </div>
@@ -247,35 +679,108 @@ The PE governance layer (Chairman, CFO) is preparing the group for sale. The ope
 <h2 id="chain">Where the value chain breaks</h2>
 <div class="spc-row">
 <div class="spc-link spc-break">Employees<small>Glassdoor 2.4/5 -- 26% recommend</small></div>
-<div class="spc-link spc-stress">Service<small>Sub D: failing contracts</small></div>
-<div class="spc-link spc-stress">Proposition<small>Zero cross-sell evidence</small></div>
-<div class="spc-link spc-stress">Customers<small>0.17% penetration</small></div>
-<div class="spc-link spc-break">Profit<small>12.8% down to 3.5%</small></div>
+<div class="spc-arr">&#8594;</div>
+<div class="spc-link spc-stress">Service quality<small>Sub D: failing contracts. Sub C: stale case studies.</small></div>
+<div class="spc-arr">&#8594;</div>
+<div class="spc-link spc-stress">Proposition freshness<small>Subsidiary case studies >24 months old.</small></div>
+<div class="spc-arr">&#8594;</div>
+<div class="spc-link spc-stress">Customers<small>0.17% cross-sell penetration</small></div>
+<div class="spc-arr">&#8594;</div>
+<div class="spc-link spc-break">Profit<small>£12M to £8.1M to £4.5M</small></div>
 </div>
 
-<h2 id="towers">Tower Diagnostics</h2>
-<div class="tw-legend"><i class="tw-dot r" style="display:inline-block"></i> RED critical <i class="tw-dot a" style="display:inline-block;margin-left:8px"></i> AMBER at risk <i class="tw-dot g" style="display:inline-block;margin-left:8px"></i> GREEN healthy</div>
+<h2 id="proposition">Proposition and evidence audit</h2>
+<div style="overflow-x:auto;margin-bottom:16px">
+<table style="width:100%;border-collapse:collapse;font-size:.85rem">
+<tr style="border-bottom:1px solid var(--bdr)">
+<th style="text-align:left;padding:12px;color:var(--dm)">Website</th>
+<th style="text-align:right;padding:12px;color:var(--dm)">Case studies</th>
+<th style="text-align:left;padding:12px;color:var(--dm)">Most recent</th>
+<th style="text-align:center;padding:12px;color:var(--dm)">Shows cross-sell?</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Group (parent)</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">12 featured</td>
+<td style="padding:12px;color:var(--silver)">Jan 2026</td>
+<td style="text-align:center;padding:12px;color:var(--red);font-weight:700">No</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
+<td style="padding:12px;color:var(--br);font-weight:600">Subsidiary C</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">250+ (stale)</td>
+<td style="padding:12px;color:var(--red);font-weight:600">Pre-2022</td>
+<td style="text-align:center;padding:12px;color:var(--red);font-weight:700">No</td>
+</tr>
+<tr>
+<td style="padding:12px;color:var(--br);font-weight:600">Subsidiary D</td>
+<td style="text-align:right;padding:12px;color:var(--silver)">19</td>
+<td style="padding:12px;color:var(--red);font-weight:600">Pre-2022</td>
+<td style="text-align:center;padding:12px;color:var(--red);font-weight:700">No</td>
+</tr>
+</table>
+</div>
+
+<h2 id="towers">What the diagnostic has uncovered</h2>
+<div class="tw-legend"><i class="tw-dot r" style="background:var(--red)"></i> RED critical <i class="tw-dot a" style="background:var(--amb)"></i> AMBER at risk <i class="tw-dot g" style="background:var(--grn)"></i> GREEN healthy <i class="tw-dot k" style="background:var(--dm)"></i> DARK no data</div>
 <div class="towers">
-<div class="tw t1"><div class="tw-head">T1: People & Performance</div>
-<div class="tw-item"><span class="tw-dot r"></span><span>Staff retention</span></div>
-<div class="tw-item"><span class="tw-dot r"></span><span>Commercial leadership</span></div>
+<div class="tw t1"><div class="tw-head">T1: People</div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>Compensation</span></div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>Commercial leadership</span></div>
 </div>
 <div class="tw t2"><div class="tw-head">T2: Integration</div>
-<div class="tw-item"><span class="tw-dot r"></span><span>CRM & customer view</span></div>
-<div class="tw-item"><span class="tw-dot r"></span><span>Ops leadership vacuum</span></div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>CRM & customer view</span></div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>Ops leadership vacuum</span></div>
 </div>
-<div class="tw t3"><div class="tw-head">T3: Revenue Engine</div>
-<div class="tw-item"><span class="tw-dot r"></span><span>Cross-sell programme</span></div>
-<div class="tw-item"><span class="tw-dot r"></span><span>Evidence library</span></div>
+<div class="tw t3"><div class="tw-head">T3: Revenue</div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>Cross-sell programme</span></div>
+<div class="tw-item"><span class="tw-dot k" style="background:var(--dm)"></span><span>Pricing consistency</span></div>
 </div>
 <div class="tw t4"><div class="tw-head">T4: Exit Readiness</div>
-<div class="tw-item"><span class="tw-dot r"></span><span>EBITDA trajectory</span></div>
-<div class="tw-item"><span class="tw-dot r"></span><span>RPE vs peers</span></div>
+<div class="tw-item"><span class="tw-dot r" style="background:var(--red)"></span><span>EBITDA trajectory</span></div>
+<div class="tw-item"><span class="tw-dot g" style="background:var(--grn)"></span><span>Governance hires</span></div>
 </div>
 </div>
 
+<h2 id="strategy">Three exit stories for Apex Capital</h2>
+<div class="roads">
+<div class="road road-1"><div class="road-head">Story 2: Fix and sell whole</div><div class="road-body">
+<div class="road-item"><strong>Integrate 5 acquisitions.</strong> Recover margin to 8-10%. Prove cross-sell.</div>
+<div class="road-val">£160-288M</div><div class="road-note">Return: 0.5-1.9x depending on margin recovery</div>
+</div></div>
+<div class="road road-2"><div class="road-head">Story 4: Cloud ERP platform</div><div class="road-body">
+<div class="road-item"><strong>Reposition around 540 Cloud ERP clients.</strong> Legacy ERP EOL forces migration.</div>
+<div class="road-val">£288-336M</div><div class="road-note">Return: 1.0-1.8x.</div>
+<span class="road-rec">RESEARCH SUPPORTS THIS STORY</span>
+</div></div>
+<div class="road road-3"><div class="road-head">Story 4+: Carve-out</div><div class="road-body">
+<div class="road-item"><strong>Sell Infra separately.</strong> Then sell Cloud ERP practice. Two transactions.</div>
+<div class="road-val">£256-380M combined</div><div class="road-note">Fastest/highest-value path.</div>
+</div></div>
+</div>
+
+<h2 id="programme">Programme structure</h2>
+<div class="tranche tr-1"><div class="tr-head">Tranche 1: Stabilise<small>Days 1-30</small></div><div class="tr-body"><div class="tr-row">
+<div><div class="tr-label tr-label-w">What we fix</div><div class="tr-text"><strong>Retain the people who matter and map the customer landscape.</strong> Pulse survey in 14 days. Map the top 50 accounts by revenue. Map the 540 Cloud ERP clients for cross-sell.</div></div>
+<div><div class="tr-label tr-label-b">What it delivers</div><div class="tr-text"><strong>The plug goes in the bath.</strong> Zero critical departures. First 3-5 pursuit pods formed.</div></div>
+</div></div></div>
+
+<div class="gate"><div class="gate-num">G1</div><div class="gate-text"><strong>Gate 1 -- Day 30.</strong> Critical staff retained. Top 50 account landscape mapped. Pursuit pods formed.</div></div>
+
+<div class="tranche tr-2"><div class="tr-head">Tranche 2: Build the front line<small>Days 31-60</small></div><div class="tr-body"><div class="tr-row">
+<div><div class="tr-label tr-label-w">What we fix</div><div class="tr-text"><strong>The commercial capability that does not exist.</strong> 20 new cross-functional case studies. Cross-sell battle card. 3-6 "winner" accounts identified for strategic pursuit.</div></div>
+<div><div class="tr-label tr-label-b">What it delivers</div><div class="tr-text"><strong>The bath starts filling.</strong> Customers see one group. Bid win rates improve. Cross-sell targets identified.</div></div>
+</div></div></div>
+
+<div class="gate"><div class="gate-num">G2</div><div class="gate-text"><strong>Gate 2 -- Day 60.</strong> Battle card live. 20 case studies published. Cross-sell pilot launched on 10 named accounts.</div></div>
+
+<div class="tranche tr-3"><div class="tr-head">Tranche 3: Prove the thesis<small>Days 61-90</small></div><div class="tr-body"><div class="tr-row">
+<div><div class="tr-label tr-label-w">What we fix</div><div class="tr-text"><strong>The exit story.</strong> Cross-sell results quantified. Win rates measured and improving. Margin trajectory confirmed.</div></div>
+<div><div class="tr-label tr-label-b">What it delivers</div><div class="tr-text"><strong>The board can tell the story.</strong> Cross-sell proven. Organic growth visible. Board chooses Story 2, 4, or 4+.</div></div>
+</div></div></div>
+
+<div class="gate"><div class="gate-num">G3</div><div class="gate-text"><strong>Gate 3 -- Day 90.</strong> Cross-sell revenue closed. Win rates measured. Margin trajectory visible. Exit narrative ready.</div></div>
+
 <div class="ft">
-Project Alpha -- GAIN AI-Empowered Commercial Diagnostic -- v4.0 Gold Standard -- 165 verified findings from 20 public sources
+Project Alpha Group -- GAIN AI-Empowered Commercial Diagnostic -- v4.0 Gold Standard -- 165 verified findings from 20 sources
 </div>
 
 <script>
