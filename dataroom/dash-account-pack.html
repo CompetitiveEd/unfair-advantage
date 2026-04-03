@@ -3,1234 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GAIN Account Pack — GlobalFin Corp | Project Alpha</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#07090f; --s1:#0e1118; --border:#1c2030; --border2:#252c3e;
-  --text:#e2e8f0; --dim:#64748b; --green:#10b981; --amber:#f59e0b;
-  --red:#ef4444; --blue:#3b82f6; --purple:#a78bfa;
-  --font:'Inter',system-ui,-apple-system,sans-serif;
-  --mono:'JetBrains Mono',monospace;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{
-  background:var(--bg);color:var(--text);
-  font-family:var(--font);-webkit-font-smoothing:antialiased;
-}
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(59,130,246,.015) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(59,130,246,.015) 1px,transparent 1px);
-  background-size:44px 44px;
-}
-#gain-dashboard-root{position:relative;z-index:1;}
+<title>MISSION: GLOBALFIN CORP | Project Alpha</title>
 
-/* ── GLOBAL OVERRIDES ── */
-#gain-dashboard-root,#gain-dashboard-root *{
-  font-family:'Inter',system-ui,-apple-system,sans-serif !important;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #020617; 
+  --s1: #0f172a; 
+  --border: rgba(255,255,255,0.15);
+  --white: #ffffff;
+  --silver: #e2e8f0;
+  --dim: #94a3b8; /* Brightened for legibility */
+  --red: #ff4d4d;      
+  --gold: #fbbf24;     
+  --blue: #60a5fa;     
+  --green: #22c55e;
+  --purple: #a855f7;
 }
-#gain-dashboard-root .font-mono,
-#gain-dashboard-root [style*="monospace"],
-#gain-dashboard-root .mono{
-  font-family:'JetBrains Mono',monospace !important;
+
+body { 
+  background: var(--bg); 
+  color: var(--silver); 
+  font-family: 'Inter', sans-serif; 
+  margin: 0; 
+  -webkit-font-smoothing: antialiased; 
 }
-/* Tighten up large numbers */
-#gain-dashboard-root .text-3xl,
-#gain-dashboard-root .text-2xl,
-#gain-dashboard-root .font-black{
-  letter-spacing:-0.03em;
+
+/* OVERRIDE TAILWIND FOR HIGH CONTRAST */
+.text-white { color: var(--white) !important; }
+.text-gray-400, .text-gray-500 { color: var(--dim) !important; }
+.text-gray-300 { color: var(--silver) !important; }
+.bg-gray-900 { background-color: var(--s1) !important; }
+.border-gray-800 { border-color: var(--border) !important; }
+.font-mono { font-family: 'IBM Plex Mono', monospace !important; }
+
+/* MISSION BOX ARCHITECTURE */
+.data-box {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
-/* Header bar slight restyle */
-#gain-dashboard-root .border-b.border-gray-800.bg-gray-900\/50{
-  background:linear-gradient(180deg,rgba(59,130,246,.04) 0%,transparent 100%) !important;
-  border-bottom:1px solid #1c2030 !important;
+.data-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; width: 4px;
+  background: var(--accent, var(--blue));
 }
-/* Tab bar */
-#gain-dashboard-root .border-b.border-gray-800.bg-gray-900\/30{
-  border-bottom:1px solid #1c2030 !important;
-  background:rgba(14,17,24,.8) !important;
+.db-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent, var(--blue));
+  margin-bottom: 8px;
 }
-/* Section headers */
-#gain-dashboard-root .bg-gray-900\/80,
-#gain-dashboard-root .bg-gray-900{
-  background:#0e1118 !important;
+.db-value {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
-#gain-dashboard-root .border-gray-800{
-  border-color:#1c2030 !important;
+.db-sub {
+  font-size: 13px;
+  color: var(--dim);
+  font-weight: 600;
+  margin-top: 4px;
 }
-#gain-dashboard-root .bg-gray-950{
-  background:#07090f !important;
-}
-#gain-dashboard-root .bg-gray-950\/50{
-  background:rgba(7,9,15,.5) !important;
-}
-#gain-dashboard-root .bg-gray-800{
-  background:#1c2030 !important;
-}
-#gain-dashboard-root .text-gray-600{
-  color:#374151 !important;
-}
+
+/* BULLETS */
+.bullet-list { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.bullet { display: flex; gap: 12px; font-size: 14px; color: var(--silver); align-items: flex-start; font-weight: 500; }
+.bullet::before { content: '»'; font-weight: 900; color: var(--accent, var(--blue)); font-family: 'IBM Plex Mono', monospace; font-size: 16px; margin-top: -2px; }
+
+/* PILLS */
+.pill { display: inline-flex; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; }
+.pill-red { background: rgba(255,77,77,0.15); color: var(--red); border: 1px solid rgba(255,77,77,0.4); }
+.pill-gold { background: rgba(251,191,36,0.15); color: var(--gold); border: 1px solid rgba(251,191,36,0.4); }
+.pill-green { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.4); }
+.pill-blue { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.4); }
 </style>
 </head>
 <body>
-<div id="gain-dashboard-root" style="max-width:1100px;margin:0 auto;padding:24px;"></div>
+
+<div id="gain-dashboard-root"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com/3.4.1"></script>
-<script>
-  tailwind.config = {
-    corePlugins: { preflight: false },
-    important: '#gain-dashboard-root',
-  }
-</script>
 
-<script type="text/babel" data-type="module">
+<script type="text/babel">
 const { useState } = React;
 
-// ─── SANITIZED DATA ───
-const ACCOUNT = {
-  name: "GlobalFin Corp",
-  sector: "Insurance-Led Multi-Line FS · Dual-Regulated · LSE: GFC.L",
-  seller: "Project Alpha",
-  dealValue: "£115M",
-  acv: "£16.4M/yr",
-  term: "7 Years (5+2 with Year 5 break)",
-  tcv7yr: "£115M TCV (7yr)",
-  status: "LIVE BID",
-  submissionDate: "28 March 2026",
-  lastUpdated: "March 2026",
-  winProbability: 32,
-  rfp: "GFC-2026-ORT-001",
-  tupe: "109 FTE",
-  serviceDescription: "Full-scope IT Outsourcing covering infrastructure management, cloud hosting & migration, service desk, end-user computing, IT service management, and operational resilience. Includes TUPE transfer of ~109 staff. Tower 4 Operational Resilience is standalone within scope.",
-  nonStandard: [
-    "50/50 Gain-Share mechanism — £905K FY25 actual payout evidenced (PROVEN)",
-    "15% At-Risk SLAs accepted — reflects extreme buyer distrust of vendor capability",
-    "2% Innovation Fund (£2.3M) — ONLY direct revenue path for Project Alpha standalone",
-    "Regulatory Rescue framing: Project Alpha as Regulatory Directive remediation partner, not IT outsourcer",
-    "SIAM-as-a-Service managing LegacyTech — positions Project Alpha above incumbent not against it",
-  ],
-  dealType: "Boardroom panic-buy disguised as transformation RFP. 62% EOL estate. Regulatory warning active. ISO 22301 Q3 hard deadline. Big4 audit has frozen all IT CAPEX — only active budget is £2.3M innovation fund inside this RFP.",
-  clientSummary: "GlobalFin Corp plc (LSE: GFC.L) is a £847M revenue UK-based insurance-led financial services group. ~8,000+ employees across UK offices. Dual-regulated. GWP £3.1bn, ROE 14.7%. IT budget of £16.5M frozen by Board Audit Committee via Big4 audit.",
-  clientHistory: "Insurance-led group spanning Commercial Insurance, Retail Financial Services, Wealth Management, and Pensions. Midmarket FS — large enough for complex infrastructure outsource, small enough that relationships matter. Sir Richard Hastings (Audit Chair) is the ultimate veto holder.",
-  clientDomains: "Commercial Insurance, Retail Financial Services, Wealth Management, Pensions",
-  bidPhase: "Clarification window: 14 Mar 2026. Submission: 28 Mar 2026 (HARD). Q3 2026: ISO 22301 certification deadline. Dec 2026: 90-day stabilisation / 50% payment gate.",
-  verdict: "KILL £2.5M standalone software deal — pivot to £115M RFP. Board Audit Committee has frozen all IT CAPEX via Big4 audit. Only active budget: £2.3M innovation fund inside RFP GFC-2026-ORT-001.",
-};
+function AccountPack() {
+  const [tab, setTab] = useState('summary');
 
-const G01_MACRO = {
-  revenue: "£847M (FY25, +6.2% YoY)",
-  opProfit: "£287M",
-  margin: "7.8% (↓220bp vs Industry Benchmark)",
-  employees: "8,000+",
-  gwp: "£3.1bn",
-  roe: "14.7%",
-  itBudget: "£16.5M — FROZEN (Big4 audit lockdown)",
-  marketCap: "~£3.3bn (LSE: GFC.L)",
-  serverEOL: "62% of total estate",
-  microOutageCost: "£2.8M/yr (+12% this year)",
-  alertNoise: "14,000 alerts/mo (<3% actionable)",
-  fcr: "58% first-call resolution (bench: 72%)",
-  isoGaps: "34 non-conformities (Q3 hard deadline)",
-  praStatus: "Regulatory warning ACTIVE",
-  costOfInaction: "£13.8–19.8M Year 1 alone",
-  strategicPriorities: [
-    { label: "ISO 22301 Certification", deadline: "Q3 2026", severity: "critical" },
-    { label: "Regulatory Remediation", deadline: "ACTIVE WARNING", severity: "critical" },
-    { label: "EOL Estate Modernisation", deadline: "62% servers EOL", severity: "critical" },
-    { label: "Alert Noise Reduction", deadline: "14K/mo → <4.5K target", severity: "high" },
-    { label: "FCR Improvement", deadline: "58% → 72% benchmark", severity: "high" },
-    { label: "Big4 Audit Resolution", deadline: "IT CAPEX frozen", severity: "critical" },
-  ],
-};
-
-const G02_FINANCIALS = {
-  costOfInaction: "£13.8–19.8M Year 1",
-  wasteIdentified: "£2.8M annual outage bleed alone",
-  microOutages: "£2.8M/yr (+12%) annual hard cost",
-  falseAlerts: "13,580 false alerts/mo → <3% actionable → FTE waste",
-  isoNonConformities: "34 non-conformities → Q3 certification at risk",
-  praExposure: "Regulatory warning active → board-level liability",
-  heliosValue: "Self-funding: £2.8M outage bleed funds innovation + bonuses via gain-share",
-  gainShareProven: "£905K FY25 actual gain-share payout — PROVEN evidence",
-  atRisk: "15% at-risk SLAs accepted — £17.25M at performance stake over 7yr",
-  innovationFund: "£2.3M innovation fund (2%) — only active budget available",
-};
-
-const STAKEHOLDERS = [
-  {
-    id: "pemberton", name: "Sir Richard Hastings", role: "Audit Chair", level: "Board",
-    status: "unknown", authority: 100, influence: 100,
-    gainDriver: "Safety (Legacy)", kegan: "Stage 5 (Self-Transforming)",
-    summary: "Ultimate veto holder. Personally embarrassed by regulatory warnings. Furious. Directs CFO Thorne via Board Audit Committee. Used Big4 audit to freeze CIO's entire CAPEX budget.",
-    trigger: "Immutable audit-grade evidence. Named regulatory framework. Project Shield (£45M) + Project Aegis (£38M) reference pack.",
-    avoid: "Buzzwords (Agile, Transformation, Synergy). Technical acronyms. Aspirational roadmaps.",
-    modality: "Read/Write — regulatory frameworks, board-level evidence packs, peer references",
-  },
-  {
-    id: "thompson", name: "Marcus Thorne", role: "CFO", level: "C-Suite",
-    status: "targeted", authority: 100, influence: 90,
-    gainDriver: "Safety (Margin/ROE)", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Economic buyer. Brought Big4 in deliberately to freeze CIO's budget. ROE bonus structure. Walked out of last vendor meeting. Must map £2.8M OPEX bleed to 15% at-risk provisions.",
-    trigger: "£2.8M OPEX bleed mapped to at-risk provisions. Named-process cost methodology. First-number rigour.",
-    avoid: "Directional numbers. Transformation vision. Anything that sounds like cost without return.",
-    modality: "Read/Write — financial models, named attribution, spreadsheets",
-  },
-  {
-    id: "osei", name: "David Olowe", role: "CRO", level: "C-Suite",
-    status: "targeted", authority: 90, influence: 95,
-    gainDriver: "Safety (Regulatory)", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Former regulator. Only C-suite who can authorise £1M+ bypassing CFO freeze via regulatory mandate. Hastings' 'eyes and ears' on risk. Kill phrase: 'checkbox compliance.'",
-    trigger: "Rebecca Owen (Peer reference). Genuine risk culture. Forward-looking intelligence. Project Shield case.",
-    avoid: "Checkbox compliance. Theoretical frameworks. Generic resilience language.",
-    modality: "Auditory/Kinesthetic → Data Visual when presenting to Board",
-  },
-  {
-    id: "blackwell", name: "Sarah Blake", role: "Procurement Director", level: "Senior",
-    status: "established", authority: 80, influence: 85,
-    gainDriver: "Order (Process)", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Controls £115M RFP. Non-circumvention zero-tolerance. RFP gatekeeper. Access pathway to Hastings. Must be respected — any end-running triggers disqualification.",
-    trigger: "Clean documentation. Transparent pricing. Structured process. Compliance matrices.",
-    avoid: "End-running procurement. Pricing games. Last-minute surprises.",
-    modality: "Read/Write — structured documents, compliance matrices",
-  },
-  {
-    id: "whitfield", name: "James Whalen", role: "CEO", level: "C-Suite",
-    status: "unknown", authority: 100, influence: 85,
-    gainDriver: "Achievement", kegan: "Stage 4 (Self-Authoring)",
-    summary: "Visionary facade. Cannot override Audit Chair Hastings. Board-facing distracted leader. Verbal promise risk: told he'd get £250K transition absorbed — NOT in contract. Must resolve.",
-    trigger: "Board confidence. Brand protection. Regulatory clean sheet. Strategic transformation narrative.",
-    avoid: "Technical detail. Anything resembling past failures. Commitments not in contract.",
-    modality: "Visual — executive summaries, dashboards, one-page briefs",
-  },
-  {
-    id: "morris", name: "Jennifer Mason", role: "Dir. Operational Resilience", level: "Senior",
-    status: "champion", authority: 30, influence: 80,
-    gainDriver: "Order (ISO/PRA)", kegan: "Stage 3→4",
-    summary: "Powerless champion — cannot sign POs. 21 weeks to Q3 ISO deadline. 34 non-conformities. Leads ISO 22301. Arm her with business case for Olowe — she is the conduit to the regulatory channel.",
-    trigger: "Peer credibility. Resilience depth. Practical frameworks. ISO 22301 shared journey.",
-    avoid: "Talking down to her. Theoretical-only approaches. Ignoring her expertise.",
-    modality: "Auditory/Kinesthetic → shifts to High-Data Visual with Olowe",
-  },
-  {
-    id: "reid", name: "Nicholas Reed", role: "CIO", level: "C-Suite",
-    status: "targeted", authority: 4, influence: 70,
-    gainDriver: "Safety (Survival)", kegan: "Stage 3 (Socialised Mind)",
-    summary: "BIGGEST SABOTAGE RISK. Budget frozen (authority: 4/100). Loyalty to incumbent LegacyTech. Will actively undermine. Frame intervention as 'forward-looking baseline' not transparency audit.",
-    trigger: "Governance Shield narrative. SIAM positioning — he manages LegacyTech, Project Alpha manages him.",
-    avoid: "Transparency audit framing. Challenging his past metrics publicly.",
-    modality: "Needs to feel in control — give him a role, not a threat",
-  },
-  {
-    id: "chen", name: "Andrew Chang", role: "Head of IT Infrastructure", level: "Operational",
-    status: "targeted", authority: 20, influence: 60,
-    gainDriver: "Affiliation & Safety", kegan: "Stage 3 (Socialised Mind)",
-    summary: "15yr veteran. His team IS the 109 TUPE cohort. Exhausted — 14K alerts/mo. Swing voter. Extreme BS detector. Open with dropping 14K to 4.5K alerts in 6 months.",
-    trigger: "People-first language. Honest gaps. Retention data. Respect for his team. Zero-config promise.",
-    avoid: "Corporate language. Dismissing his team's expertise. Vendor theatre.",
-    modality: "Kinesthetic — site visits, meeting his team, showing not telling",
-  },
-];
-
-const COMPETITORS = [
-  {
-    name: "LegacyTech",
-    label: "Incumbent loyalty — 3x prior deployments with CIO Reed",
-    revenue: "Undisclosed", model: "UK-focused", tupeRecord: "Managed current 109 FTE",
-    dangerRating: "CRITICAL",
-    dangerWith: ["Nicholas Reed (loyalty)", "Andrew Chang (familiarity)"],
-    weakness: "Managed the 62% EOL estate for 10 years — owns the problem, not the solution. Faking MTTR logs exposes them to audit.",
-    killQuestion: "How will you provide independent audit evidence for the 62% EOL estate you've managed for 10 years — and why has FCR not improved above 58% under your tenure?",
-  },
-  {
-    name: "Tier 1 Global SIs",
-    label: "Brand recognition — Hastings 'too small' veto risk for us",
-    revenue: "£bn scale", model: "Global delivery", tupeRecord: "High volume",
-    dangerRating: "HIGH",
-    dangerWith: ["Sir Richard Hastings (brand)", "Marcus Thorne (scale comfort)"],
-    weakness: "No named UK-based Op Resilience practice lead. Cannot personally defend ISO 22301 audit in Q3. Generic regulatory depth.",
-    killQuestion: "Name the specific UK-based Operational Resilience practice lead who will personally defend your ISO 22301 certification audit in Q3 2026 — not a global centre of excellence.",
-  },
-];
-
-const WIN_THEMES = [
-  { id: 1, label: "The Regulatory Rescue", strength: "fortress", owner: "Olowe/Hastings", detail: "We are a regulatory remediation partner that happens to manage your technology. Evidence: Project Shield framework (£45M client, PROVEN)." },
-  { id: 2, label: "Self-Funding Resilience", strength: "fortress", owner: "Thorne", detail: "Fund 2% innovation fund + bonuses from £2.8M outage bleed. Evidence: £905K FY25 gain-share paid (PROVEN)." },
-  { id: 3, label: "The Governance Shield", strength: "strong", owner: "Reed/Chang", detail: "Intervention = 'forward-looking baseline capture' not transparency threat. Makes Reed the hero." },
-  { id: 4, label: "SIAM-as-a-Service", strength: "strong", owner: "Reed", detail: "Project Alpha manages LegacyTech. Reed keeps his vendor relationship. Neutralises biggest sabotage risk." },
-  { id: 5, label: "Category Reframe", strength: "critical_gap", owner: "Blake/Hastings", detail: "IT Outsourcer → 'FS Regulatory & Resilience Partner'. Must land in every Hastings touchpoint." },
-];
-
-const SCORING = {
-  helios: 4.15, target: 4.80, tesseract: 3.30, globalSI: 3.55,
-  criteria: [
-    { code: "TC-04", label: "Op Resilience / ISO 22301", weight: 5.4, helios: 5, fortis: 2, saraswati: 3, strategy: "LOCK" },
-    { code: "CC-02", label: "50:50 Gain-Share", weight: 7.2, helios: 5, fortis: 3, saraswati: 3, strategy: "LOCK" },
-    { code: "CC-03", label: "15% At-Risk Accept", weight: 4.8, helios: 5, fortis: 3, saraswati: 4, strategy: "LOCK" },
-    { code: "IF-01", label: "Oral Scenario (Live)", weight: 15.0, helios: 4, fortis: 4, saraswati: 3, strategy: "PUSH" },
-    { code: "TC-01", label: "Infrastructure Baseline", weight: 12.6, helios: 4, fortis: 4, saraswati: 4, strategy: "PUSH" },
-    { code: "TC-02", label: "Automation & AIOps", weight: 5.4, helios: 4, fortis: 3, saraswati: 4, strategy: "DEFEND" },
-    { code: "TC-03", label: "TUPE Transition", weight: 5.4, helios: 4, fortis: 5, saraswati: 3, strategy: "PUSH" },
-    { code: "TC-06", label: "People & Culture", weight: 3.6, helios: 5, fortis: 3, saraswati: 2, strategy: "LOCK" },
-    { code: "CC-01", label: "Commercial Model", weight: 9.6, helios: 4, fortis: 3, saraswati: 4, strategy: "PUSH" },
-  ],
-};
-
-const EXPANSION = [
-  { signal: "ISO 22301 Remediation-as-a-Service", timing: "Mo 0–90", revenue: "£1.2M OPEX", champion: "Mason", gate: "green", adkar: "GO (19/25)" },
-  { signal: "Regulatory Advisory", timing: "Mo 3–6", revenue: "£250K", champion: "Olowe", gate: "amber", adkar: "BUILD (13/25)" },
-  { signal: "Recovery Orchestration Full Deployment", timing: "Mo 6–12", revenue: "£2.2M", champion: "Reed/Chang", gate: "amber", adkar: "WAIT (12/25)" },
-  { signal: "Renewal + Portfolio Bundle", timing: "Mo 24–30", revenue: "Protect £115M base", champion: "Thorne", gate: "future", adkar: "FUTURE" },
-];
-
-const FAILURE_SCENARIOS = [
-  { id: 1, label: "CIO Survival Sabotage", probability: "75%", trigger: "Reed actively undermines via LegacyTech loyalty. Kill: Pitch 'SIAM as a Service' managing LegacyTech." },
-  { id: 2, label: "Vendor Loyalty Override", probability: "60%", trigger: "Mason/Olowe must mandate 'Tool-Agnostic Observability' before LegacyTech plants retention narrative." },
-  { id: 3, label: "Audit Chair 'Too Small' Veto", probability: "45%", trigger: "Hastings vetoes Alpha on scale grounds. Defence: Lead every session with Project Shield (£45M)." },
-  { id: 4, label: "Jelly Stall / Ghost Ship", probability: "40%", trigger: "Budget freeze creates inertia. Reframe as 'Remediation Project' — mandatory not strategic." },
-  { id: 5, label: "Comp-Driven Year 1 Inertia", probability: "35%", trigger: "Thorne blocks on Year 1 margin impact. Accept 50% deferred payment. Lead with 'Net-Zero Year 1'." },
-];
-
-// ─── UTILITY COMPONENTS ───
-
-const StatusDot = ({ status }) => {
-  const colors = {
-    champion: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]",
-    established: "bg-emerald-500",
-    targeted: "bg-amber-400",
-    unknown: "bg-blue-400",
-  };
-  return <span className={`inline-block w-2.5 h-2.5 rounded-full ${colors[status] || colors.unknown}`} />;
-};
-
-const Badge = ({ children, color = "blue" }) => {
-  const styles = {
-    blue: "bg-blue-950/60 border-blue-600/40 text-blue-300",
-    red: "bg-red-950/60 border-red-600/40 text-red-300",
-    green: "bg-emerald-950/60 border-emerald-600/40 text-emerald-300",
-    amber: "bg-amber-950/60 border-amber-600/40 text-amber-300",
-    purple: "bg-purple-950/60 border-purple-600/40 text-purple-300",
-    gray: "bg-gray-800/60 border-gray-600/40 text-gray-400",
-  };
   return (
-    <span className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border rounded ${styles[color]}`}>
-      {children}
-    </span>
-  );
-};
-
-const ScoreBar = ({ score, max = 5 }) => {
-  const pct = (score / max) * 100;
-  const color = score >= 4 ? "bg-emerald-500" : score >= 3 ? "bg-amber-400" : "bg-red-500";
-  return (
-    <div className="flex items-center gap-2">
-      <div className="w-20 h-2 bg-gray-800 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
-      </div>
-      <span className="text-xs font-bold text-white">{score}</span>
-    </div>
-  );
-};
-
-const Section = ({ id, title, subtitle, children, defaultOpen = false }) => {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="mb-4 border border-gray-800 rounded-lg overflow-hidden">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 bg-gray-900/80 hover:bg-gray-900 transition-colors text-left"
-      >
+    <div className="min-h-screen p-6 md:p-12 max-w-[1200px] mx-auto">
+      
+      {/* HEADER: MISSION CONTROL STYLE */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-8 mb-8">
         <div>
-          <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">{id}</span>
-          <span className="text-base font-extrabold text-white">{title}</span>
-          {subtitle && <span className="text-xs text-gray-500 ml-3">{subtitle}</span>}
+          <div className="font-mono text-[12px] text-[#ff4d4d] font-bold tracking-[3px] mb-3 uppercase">// MISSION UNIT: GFC-2026</div>
+          <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter mb-2">GlobalFin Corp</h1>
+          <p className="text-silver text-lg font-semibold">Strategic Expansion Map // <span className="text-[#fbbf24] uppercase">Live RFP Response</span></p>
         </div>
-        <span className={`text-gray-500 transform transition-transform duration-200 ${open ? "rotate-180" : ""}`}>▼</span>
-      </button>
-      {open && <div className="p-5 bg-gray-950/50 border-t border-gray-800">{children}</div>}
-    </div>
-  );
-};
-
-// ─── MAIN DASHBOARD ───
-
-function GAINAccountPack() {
-  const [activeTab, setActiveTab] = useState("exec");
-  const [selectedPerson, setSelectedPerson] = useState(null);
-
-  const tabs = [
-    { id: "exec", label: "Exec Summary", desc: "5-min steering board view" },
-    { id: "gather", label: "G | Know", desc: "Company & stakeholder intel" },
-    { id: "assess", label: "A | Map", desc: "RFP decode & bid intelligence" },
-    { id: "influence", label: "I | Win", desc: "Strategy, scoring & competition" },
-    { id: "nurture", label: "N | Grow", desc: "Post-win expansion & health" },
-  ];
-
-  return (
-    <div className="min-h-screen text-gray-200" style={{ fontFamily: "'Inter',system-ui,-apple-system,sans-serif" }}>
-      {/* ─── HEADER ─── */}
-      <div className="border-b border-gray-800 bg-gray-900/50 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest font-mono">GAIN Account Pack</span>
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-red-950/40 border border-red-600/30 rounded text-[10px] font-bold text-red-300 uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-                {ACCOUNT.status}
-              </span>
-            </div>
-            <h1 className="text-2xl font-black text-white tracking-tight">{ACCOUNT.name}</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Seller: {ACCOUNT.seller} · {ACCOUNT.sector} · {ACCOUNT.term} · ACV: {ACCOUNT.acv} · RFP: {ACCOUNT.rfp} · TUPE: {ACCOUNT.tupe}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
-              <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Win Probability</div>
-              <div className="text-3xl font-black text-white">{ACCOUNT.winProbability}%</div>
-            </div>
-            <div className="w-16 h-16 relative">
-              <svg viewBox="0 0 36 36" className="w-16 h-16 transform -rotate-90">
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#1e293b" strokeWidth="3" />
-                <circle cx="18" cy="18" r="15" fill="none" stroke="#ef4444" strokeWidth="3"
-                  strokeDasharray={`${ACCOUNT.winProbability * 0.942} 100`}
-                  strokeLinecap="round" />
-              </svg>
-            </div>
-          </div>
+        <div className="mt-6 md:mt-0 text-right">
+          <div className="font-mono text-[11px] text-[#94a3b8] uppercase font-bold tracking-widest mb-1">Win Probability</div>
+          <div className="text-6xl font-black text-white leading-none tracking-tighter">32%</div>
         </div>
       </div>
 
-      {/* ─── TABS ─── */}
-      <div className="border-b border-gray-800 bg-gray-900/30 px-6 overflow-x-auto">
-        <div className="max-w-7xl mx-auto flex gap-0">
-          {tabs.map((t) => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)}
-              className={`px-5 py-3 text-left border-b-2 transition-all shrink-0 ${
-                activeTab === t.id
-                  ? "border-blue-500 bg-blue-950/20"
-                  : "border-transparent hover:bg-gray-900/50 hover:border-gray-700"
-              }`}
-            >
-              <span className={`text-xs font-bold block ${activeTab === t.id ? "text-blue-400" : "text-gray-500"}`}>{t.label}</span>
-              <span className="text-[10px] text-gray-600">{t.desc}</span>
-            </button>
-          ))}
+      {/* TOP ROW: THE BOTTOM LINE */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+        <div className="data-box" style={{"--accent": "var(--red)"}}>
+          <div className="db-label">PRIMARY VERDICT</div>
+          <div className="db-value text-xl uppercase">Kill Standalone Deal</div>
+          <div className="db-sub text-red-500">Pivot to £115M Master RFP</div>
+        </div>
+        <div className="data-box" style={{"--accent": "var(--gold)"}}>
+          <div className="db-label">CONTRACT ACV</div>
+          <div className="db-value">£16.4M</div>
+          <div className="db-sub">Annual Contract Value</div>
+        </div>
+        <div className="data-box" style={{"--accent": "var(--blue)"}}>
+          <div className="db-label">TOTAL TCV (7YR)</div>
+          <div className="db-value">£115M</div>
+          <div className="db-sub">Includes 2% Innovation Fund</div>
+        </div>
+        <div className="data-box" style={{"--accent": "var(--red)"}}>
+          <div className="db-label">TRAUMA SIGNATURE</div>
+          <div className="db-value text-xl">Op. Meridian</div>
+          <div className="db-sub text-red-500">£67M historical failure PTSD</div>
         </div>
       </div>
 
-      {/* ─── CONTENT ─── */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* EXEC SUMMARY TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "exec" && (
-          <div>
-            {/* What Is This Deal */}
-            <Section id="BRIEF" title="The Client & Opportunity" subtitle={ACCOUNT.dealType} defaultOpen={false}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-2">The Client</h4>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-2">{ACCOUNT.clientSummary}</p>
-                  <p className="text-xs text-gray-500 leading-relaxed mb-3">{ACCOUNT.clientHistory}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {ACCOUNT.clientDomains.split(", ").map((d, i) => (
-                      <Badge key={i} color="blue">{d}</Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Service Description</h4>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-3">{ACCOUNT.serviceDescription}</p>
-                  <h4 className="text-xs font-bold text-amber-400 uppercase tracking-widest mb-2 mt-4">Non-Standard / Differentiators</h4>
-                  <div className="space-y-1.5">
-                    {ACCOUNT.nonStandard.map((n, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm">
-                        <span className="text-amber-400 mt-0.5 shrink-0">◆</span>
-                        <span className="text-gray-300">{n}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            {/* Stakeholder Intelligence */}
-            <Section id="PEOPLE" title="Stakeholder Intelligence" subtitle={`${STAKEHOLDERS.length} profiles mapped`}>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {STAKEHOLDERS.map(s => (
-                  <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                    className={`border rounded-lg px-3 py-2 text-center transition-all cursor-pointer ${
-                      selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                      s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
-                      "bg-gray-900 border-gray-800 hover:border-gray-600"
-                    }`}>
-                    <div className="flex items-center gap-1.5">
-                      <StatusDot status={s.status} />
-                      <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                      <span className="text-[9px] text-gray-500 uppercase">{s.role}</span>
-                      {s.status === "champion" && <Badge color="green">★</Badge>}
-                    </div>
-                  </button>
-                ))}
-              </div>
-              {selectedPerson && (() => {
-                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
-                if (!p) return null;
-                return (
-                  <div className="bg-gray-900 border border-blue-800/40 rounded-lg p-4">
-                    <div className="flex flex-wrap items-center gap-2 mb-3">
-                      <StatusDot status={p.status} />
-                      <span className="text-base font-bold text-white">{p.name}</span>
-                      <span className="text-xs text-gray-500">{p.role}</span>
-                      <Badge color={p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue"}>{p.status}</Badge>
-                      <Badge color="purple">{p.gainDriver}</Badge>
-                      <Badge color="gray">{p.kegan}</Badge>
-                    </div>
-                    <p className="text-sm text-gray-300 leading-relaxed mb-3">{p.summary}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-emerald-400 uppercase font-bold mb-1">Triggers</div>
-                        <div className="text-xs text-gray-300">{p.trigger}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-red-400 uppercase font-bold mb-1">Avoid</div>
-                        <div className="text-xs text-gray-300">{p.avoid}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-blue-400 uppercase font-bold mb-1">Modality</div>
-                        <div className="text-xs text-gray-300">{p.modality}</div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4 mt-3 text-[11px] font-mono text-gray-500">
-                      <span>Authority: {p.authority}/100</span>
-                      <span>Influence: {p.influence}/100</span>
-                    </div>
-                  </div>
-                );
-              })()}
-              <div className="flex items-center gap-3 mt-3 text-[9px] font-mono text-gray-600">
-                <span className="flex items-center gap-1"><StatusDot status="champion" /> Champion</span>
-                <span className="flex items-center gap-1"><StatusDot status="established" /> Established</span>
-                <span className="flex items-center gap-1"><StatusDot status="targeted" /> Targeted</span>
-                <span className="flex items-center gap-1"><StatusDot status="unknown" /> Unknown</span>
-              </div>
-            </Section>
-
-            <Section id="FINANCIALS" title="Financials" subtitle="Deal value, savings & waste">
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-              {[
-                { label: "TCV", value: ACCOUNT.dealValue, sub: "Total Contract Value 7yr", color: "text-white" },
-                { label: "Term", value: ACCOUNT.term, sub: "Contract Duration", color: "text-white" },
-                { label: "ACV", value: ACCOUNT.acv, sub: "Annual Contract Value", color: "text-blue-400" },
-                { label: "Cost of Inaction", value: G02_FINANCIALS.costOfInaction, sub: "Year 1 alone", color: "text-red-400" },
-                { label: "Innovation Fund", value: "£2.3M", sub: "Only active budget (2%)", color: "text-emerald-400" },
-                { label: "Gain-Share Proven", value: G02_FINANCIALS.gainShareProven, sub: "FY25 actual payout", color: "text-amber-400" },
-              ].map((v, i) => (
-                <div key={i} className="bg-gray-900/60 border border-gray-800 rounded-lg p-4">
-                  <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold mb-1">{v.label}</div>
-                  <div className={`text-xl font-black ${v.color}`}>{v.value}</div>
-                  <div className="text-[10px] text-gray-600 mt-0.5">{v.sub}</div>
-                </div>
-              ))}
-            </div>
-            </Section>
-
-            <Section id="COMP" title="Competition" subtitle="3 competitors profiled">
-              <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-red-400 uppercase tracking-widest mb-3">Competition</h3>
-                <div className="space-y-2">
-                  {COMPETITORS.map((c, i) => (
-                    <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-800/30 last:border-0">
-                      <Badge color={c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green"}>{c.dangerRating}</Badge>
-                      <div className="flex-1">
-                        <span className="text-sm font-bold text-white">{c.name}</span>
-                        <span className="text-[11px] text-gray-500 ml-2">{c.revenue}</span>
-                      </div>
-                      <span className="text-[10px] text-gray-500 italic hidden md:block">"{c.label}"</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-3 text-[11px] text-gray-500">
-                  Primary threat: <span className="text-red-300 font-bold">LegacyTech</span> — CIO Reed loyalty (3x prior deployments) · Secondary: <span className="text-amber-300 font-bold">Global SIs</span> — Hastings "too small" veto risk
-                </div>
-              </div>
-            </Section>
-
-            <Section id="TIMELINE" title="Where We Are" subtitle={ACCOUNT.bidPhase}>
-              <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-blue-400 uppercase tracking-widest mb-3">Where We Are</h3>
-                <p className="text-sm text-gray-400 mb-3">{ACCOUNT.bidPhase}</p>
-                <div className="space-y-2">
-                  {[
-                    { phase: "RFP Received", date: "Jan 2026", done: true },
-                    { phase: "Clarification Window", date: "1-14 Mar", active: true },
-                    { phase: "Submission Deadline", date: "28 Mar", hard: true },
-                    { phase: "Evaluation & Orals", date: "Apr-May" },
-                    { phase: "Preferred Bidder", date: "Jun 2026" },
-                    { phase: "Go-Live / TUPE Day 1", date: "Sep 2026" },
-                  ].map((m, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className={`w-2 h-2 rounded-full shrink-0 ${m.done ? "bg-emerald-500" : m.active ? "bg-blue-500 animate-pulse" : m.hard ? "bg-red-500" : "bg-gray-600"}`} />
-                      <span className={`text-sm flex-1 ${m.done ? "text-gray-500" : m.active ? "text-blue-300 font-bold" : "text-white"}`}>{m.phase}</span>
-                      <span className={`text-xs ${m.hard ? "text-red-400 font-bold" : "text-gray-500"}`}>{m.date}</span>
-                      {m.hard && <Badge color="red">Hard</Badge>}
-                      {m.active && <Badge color="blue">Now</Badge>}
-                      {m.done && <Badge color="gray">Done</Badge>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Section>
-
-            <Section id="WEDGE" title="Positioning Wedge" subtitle="How we position against competition">
-              <div className="bg-gray-900/60 border border-blue-900/30 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-blue-400 uppercase tracking-widest mb-3">The Positioning Wedge</h3>
-                <p className="text-sm text-gray-300 leading-relaxed mb-3">
-                  GlobalFin Corp has been burned by past "Operation Meridian" promises. <span className="text-white font-bold">Do not sell a Big Bang.</span>
-                </p>
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  Project Alpha sits in the exact gap between the Globals and the VARs. Big enough to be credible, small enough that 
-                  <span className="text-white font-bold"> their CIO gets our UK MD's mobile number.</span>
-                </p>
-                <div className="flex gap-3 mt-4 text-[11px] font-mono text-gray-500">
-                  <span>UK Headcount: 1,800</span>
-                  <span>·</span>
-                  <span>FS Contracts: 6 Active</span>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="ACTIONS" title="Critical Actions Before Submission" subtitle="3 actions, +0.47 weighted points">
-              <div className="bg-gray-900/60 border border-red-900/30 rounded-lg p-5">
-                <h3 className="text-sm font-bold text-red-400 uppercase tracking-widest mb-3">Critical Actions Before Submission</h3>
-                <div className="space-y-3">
-                  {[
-                    { action: "Build named-process cost glide path", impact: "CC-01: 2→4+ (+0.19-0.29 pts)", status: "NOT STARTED" },
-                    { action: "Build Client Infrastructure Transition Blueprint", impact: "TC-03/TC-01 protection (+0.05-0.13 pts)", status: "NOT STARTED" },
-                    { action: "Rehearse live scenario (Chang's alert methodology)", impact: "OP-02: 3→5 (+0.05 pts)", status: "NOT STARTED" },
-                  ].map((a, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <span className="text-red-500 mt-0.5 shrink-0">✕</span>
-                      <div>
-                        <div className="text-sm font-bold text-white">{a.action}</div>
-                        <div className="text-[11px] text-gray-500">{a.impact}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 p-2 bg-red-950/30 border border-red-800/30 rounded text-[11px] text-red-300 font-bold text-center">
-                  Combined impact: +0.29 to +0.47 weighted points → moves score from 3.85 to 4.14-4.32
-                </div>
-              </div>
-            </Section>
-
-            {/* Score Snapshot */}
-            <Section id="SCORING" title="Competitive Scoring Position" subtitle="Project Alpha 3.85 vs Target 4.65">
-            <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-              <div className="flex flex-wrap items-baseline gap-6 mb-4">
-                {[
-                  { name: "Project Alpha", score: SCORING.helios, color: "text-emerald-400" },
-                  { name: "Target", score: SCORING.target, color: "text-blue-400" },
-                  { name: "LegacyTech", score: SCORING.tesseract, color: "text-red-400" },
-                  { name: "Global SI", score: SCORING.globalSI, color: "text-amber-400" },
-                ].map((s, i) => (
-                  <div key={i} className="flex items-baseline gap-2">
-                    <span className={`text-2xl font-black ${s.color}`}>{s.score.toFixed(2)}</span>
-                    <span className="text-[10px] text-gray-500 uppercase font-bold">{s.name}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="overflow-x-auto mt-4">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-800">
-                      <th className="text-left py-1.5 text-gray-500 font-bold uppercase">Criterion</th>
-                      <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-16">Wt%</th>
-                      <th className="text-center py-1.5 text-emerald-500 font-bold uppercase w-14">Us</th>
-                      <th className="text-center py-1.5 text-red-400 font-bold uppercase w-14">Legacy</th>
-                      <th className="text-center py-1.5 text-amber-400 font-bold uppercase w-14">Global SI</th>
-                      <th className="text-center py-1.5 text-gray-500 font-bold uppercase w-20">Play</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SCORING.criteria.map(c => (
-                      <tr key={c.code} className="border-b border-gray-800/20">
-                        <td className="py-1.5 text-gray-300">{c.label}</td>
-                        <td className="py-1.5 text-center text-gray-400">{c.weight}%</td>
-                        <td className={`py-1.5 text-center font-bold ${c.helios >= 4 ? "text-emerald-400" : c.helios >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.helios}</td>
-                        <td className={`py-1.5 text-center font-bold ${c.fortis >= 4 ? "text-emerald-400" : c.fortis >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.fortis}</td>
-                        <td className={`py-1.5 text-center font-bold ${c.saraswati >= 4 ? "text-emerald-400" : c.saraswati >= 3 ? "text-amber-300" : "text-red-400"}`}>{c.saraswati}</td>
-                        <td className="py-1.5 text-center">
-                          <span className={`text-[10px] font-bold uppercase ${
-                            c.strategy === "LOCK" ? "text-emerald-400" : c.strategy === "PUSH" ? "text-blue-400" : c.strategy === "CRITICAL" ? "text-red-400" : "text-amber-400"
-                          }`}>{c.strategy}</span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="text-xs text-gray-500 text-center mt-3">
-                Lead: +{(SCORING.helios - SCORING.tesseract).toFixed(2)} over LegacyTech · +{(SCORING.helios - SCORING.globalSI).toFixed(2)} over Global SI · Channel 2 governance veto remains the kill risk
-              </div>
-            </div>
-            </Section>
-
-            {/* Failure Scenarios */}
-            <Section id="PREMORTEM" title="Pre-Mortem: How We Lose" subtitle="5 failure scenarios identified">
-            <div className="bg-gray-900/60 border border-gray-800 rounded-lg p-5">
-              <h3 className="text-sm font-bold text-amber-400 uppercase tracking-widest mb-3">Pre-Mortem: How We Lose</h3>
-              <div className="space-y-2">
-                {FAILURE_SCENARIOS.map((f) => (
-                  <div key={f.id} className="flex items-center gap-3 py-2 border-b border-gray-800/50 last:border-0">
-                    <span className="text-xs font-bold text-gray-500 w-8 shrink-0">#{f.id}</span>
-                    <span className="text-sm font-bold text-white flex-1">{f.label}</span>
-                    <Badge color={parseInt(f.probability) >= 25 ? "red" : "amber"}>{f.probability}</Badge>
-                    <span className="text-[11px] text-gray-500 hidden md:block max-w-xs truncate">{f.trigger}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* GATHER TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "gather" && (
-          <div>
-            <Section id="WHO" title="Who Is GlobalFin Corp?" subtitle={ACCOUNT.sector} defaultOpen={true}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-3">{ACCOUNT.clientSummary}</p>
-                  <p className="text-xs text-gray-500 leading-relaxed">{ACCOUNT.clientHistory}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Business Domains</h4>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {ACCOUNT.clientDomains.split(", ").map((d, i) => (
-                      <Badge key={i} color="blue">{d}</Badge>
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                      <div className="text-[10px] text-gray-500 uppercase font-bold">Revenue</div>
-                      <div className="text-lg font-bold text-white">{G01_MACRO.revenue}</div>
-                    </div>
-                    <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                      <div className="text-[10px] text-gray-500 uppercase font-bold">Employees</div>
-                      <div className="text-lg font-bold text-white">{G01_MACRO.employees}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="G-01" title="Macro Strategy Radar" subtitle={G01_MACRO.revenue} defaultOpen={false}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {[
-                  { label: "Revenue", value: G01_MACRO.revenue },
-                  { label: "Employees", value: G01_MACRO.employees },
-                  { label: "Op Profit", value: G01_MACRO.opProfit },
-                ].map((s, i) => (
-                  <div key={i} className="bg-gray-900 border border-gray-800 rounded p-3">
-                    <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">{s.label}</div>
-                    <div className="text-lg font-bold text-white">{s.value}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                {[
-                  { label: "EOL Servers", value: G01_MACRO.serverEOL, color: "text-red-400" },
-                  { label: "Alert Noise", value: G01_MACRO.alertNoise, color: "text-amber-400" },
-                  { label: "FCR", value: G01_MACRO.fcr, color: "text-red-400" },
-                  { label: "Regulatory Status", value: G01_MACRO.praStatus, color: "text-red-400" },
-                ].map((s, i) => (
-                  <div key={i} className="bg-gray-900/50 border border-gray-800 rounded p-3">
-                    <div className="text-[10px] text-gray-500 uppercase font-bold">{s.label}</div>
-                    <div className={`text-sm font-bold ${s.color}`}>{s.value}</div>
-                  </div>
-                ))}
-              </div>
-              <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">Strategic Priorities</h4>
-              <div className="space-y-2">
-                {G01_MACRO.strategicPriorities.map((p, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <Badge color={p.severity === "critical" ? "red" : p.severity === "high" ? "amber" : "blue"}>{p.severity}</Badge>
-                    <span className="text-sm text-white font-semibold">{p.label}</span>
-                    <span className="text-[11px] text-gray-500">{p.deadline}</span>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="G-02" title="Financial Forensics" subtitle="Where the money leaks">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">Cost of Inaction</h4>
-                  <div className="space-y-2">
-                    {[
-                      { label: "Outage bleed (annual)", value: G02_FINANCIALS.microOutages },
-                      { label: "False alert waste", value: G02_FINANCIALS.falseAlerts },
-                      { label: "ISO 22301 non-conformities", value: G02_FINANCIALS.isoNonConformities },
-                      { label: "Regulatory directive exposure", value: G02_FINANCIALS.praExposure },
-                    ].map((c, i) => (
-                      <div key={i} className="flex justify-between items-start border-b border-gray-800/30 pb-2">
-                        <span className="text-sm text-gray-400">{c.label}</span>
-                        <span className="text-sm font-bold text-red-300">{c.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Project Alpha Value Proposition</h4>
-                  <div className="bg-emerald-950/20 border border-emerald-800/30 rounded p-4">
-                    <div className="text-3xl font-black text-emerald-400 mb-1">{G02_FINANCIALS.gainShareProven}</div>
-                    <div className="text-xs text-gray-500 uppercase">FY25 Gain-Share — PROVEN Evidence</div>
-                  </div>
-                  <div className="bg-gray-900 border border-gray-800 rounded p-4 mt-3">
-                    <div className="text-xl font-black text-amber-400 mb-1">{G02_FINANCIALS.costOfInaction}</div>
-                    <div className="text-xs text-gray-500 uppercase">Cost of Inaction — Year 1 Alone</div>
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="G-03" title="Stakeholder Intelligence" subtitle={`${STAKEHOLDERS.length} profiles mapped`}>
-              {/* Org Chart */}
-              <div className="mb-6">
-                <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Organisation Map</h4>
-                <div className="flex flex-col items-center gap-4">
-                  {/* Board */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "Board").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          "bg-red-950/20 border-red-800/40 hover:border-red-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ").slice(-1)[0]}</span>
-                        </div>
-                        <div className="text-[10px] text-red-400 uppercase">{s.role}</div>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="w-px h-4 bg-gray-700" />
-                  {/* C-Suite */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "C-Suite").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="w-px h-4 bg-gray-700" />
-                  {/* Senior */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "Senior").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          s.status === "champion" ? "bg-emerald-950/20 border-emerald-600/40" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                        {s.status === "champion" && <Badge color="green">Champion</Badge>}
-                      </button>
-                    ))}
-                  </div>
-                  <div className="w-px h-4 bg-gray-700" />
-                  {/* Operational */}
-                  <div className="flex flex-wrap justify-center gap-3">
-                    {STAKEHOLDERS.filter(s => s.level === "Operational").map(s => (
-                      <button key={s.id} onClick={() => setSelectedPerson(selectedPerson === s.id ? null : s.id)}
-                        className={`border rounded-lg p-3 w-40 text-center transition-all cursor-pointer ${
-                          selectedPerson === s.id ? "bg-blue-950/40 border-blue-500" :
-                          "bg-gray-900 border-gray-800 hover:border-gray-600"
-                        }`}
-                      >
-                        <div className="flex items-center justify-center gap-1.5 mb-1">
-                          <StatusDot status={s.status} />
-                          <span className="text-xs font-bold text-white">{s.name.split(" ")[0][0]}. {s.name.split(" ")[1]}</span>
-                        </div>
-                        <div className="text-[10px] text-gray-500 uppercase">{s.role}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Person Detail */}
-              {selectedPerson && (() => {
-                const p = STAKEHOLDERS.find(s => s.id === selectedPerson);
-                if (!p) return null;
-                return (
-                  <div className="bg-gray-900 border border-blue-800/40 rounded-lg p-5 mt-4 animate-[fadeIn_0.2s_ease-out]">
-                    <div className="flex items-center gap-3 mb-4">
-                      <StatusDot status={p.status} />
-                      <h4 className="text-lg font-bold text-white">{p.name}</h4>
-                      <Badge color={p.status === "champion" ? "green" : p.status === "established" ? "green" : p.status === "targeted" ? "amber" : "blue"}>
-                        {p.status}
-                      </Badge>
-                      <Badge color="purple">{p.gainDriver}</Badge>
-                    </div>
-                    <p className="text-sm text-gray-300 mb-4 leading-relaxed">{p.summary}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-emerald-400 uppercase font-bold mb-1">Triggers</div>
-                        <div className="text-xs text-gray-300">{p.trigger}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-red-400 uppercase font-bold mb-1">Avoid</div>
-                        <div className="text-xs text-gray-300">{p.avoid}</div>
-                      </div>
-                      <div className="bg-gray-950/50 border border-gray-800 rounded p-3">
-                        <div className="text-[10px] text-blue-400 uppercase font-bold mb-1">Modality / Kegan</div>
-                        <div className="text-xs text-gray-300">{p.modality}</div>
-                        <div className="text-[10px] text-gray-500 mt-1">{p.kegan}</div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4 mt-4 text-[11px] font-mono text-gray-500">
-                      <span>Authority: {p.authority}/100</span>
-                      <span>Influence: {p.influence}/100</span>
-                    </div>
-                  </div>
-                );
-              })()}
-
-              {/* Authority Matrix (text-based) */}
-              <div className="mt-6">
-                <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Authority vs Influence Map</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr className="border-b border-gray-800">
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">Name</th>
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">Role</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Status</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Authority</th>
-                        <th className="text-center py-2 text-gray-500 font-bold uppercase">Influence</th>
-                        <th className="text-left py-2 text-gray-500 font-bold uppercase">GAIN Driver</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {STAKEHOLDERS.sort((a, b) => b.authority - a.authority).map(s => (
-                        <tr key={s.id} className="border-b border-gray-800/30 hover:bg-gray-900/50 cursor-pointer" onClick={() => setSelectedPerson(s.id)}>
-                          <td className="py-2 font-bold text-white">{s.name}</td>
-                          <td className="py-2 text-gray-400">{s.role}</td>
-                          <td className="py-2 text-center"><StatusDot status={s.status} /></td>
-                          <td className="py-2 text-center">
-                            <div className="inline-flex items-center gap-1">
-                              <div className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${s.authority}%` }} />
-                              </div>
-                              <span className="text-gray-400 w-6 text-right">{s.authority}</span>
-                            </div>
-                          </td>
-                          <td className="py-2 text-center">
-                            <div className="inline-flex items-center gap-1">
-                              <div className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-amber-500 rounded-full" style={{ width: `${s.influence}%` }} />
-                              </div>
-                              <span className="text-gray-400 w-6 text-right">{s.influence}</span>
-                            </div>
-                          </td>
-                          <td className="py-2"><Badge color={s.gainDriver === "Power" ? "red" : s.gainDriver === "Achievement" ? "blue" : "amber"}>{s.gainDriver}</Badge></td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* ASSESS TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "assess" && (
-          <div>
-            <Section id="A-01" title="RFP Decode" subtitle="What the document actually says" defaultOpen={true}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Evaluation Architecture</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Written Submission</span>
-                      <span className="font-bold text-white">60%</span>
-                    </div>
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Oral Presentation</span>
-                      <span className="font-bold text-white">25%</span>
-                    </div>
-                    <div className="flex justify-between border-b border-gray-800/30 pb-2">
-                      <span className="text-gray-400">Informal Assessment</span>
-                      <span className="font-bold text-white">15%</span>
-                    </div>
-                  </div>
-                  <div className="mt-3 p-2 bg-amber-950/20 border border-amber-800/30 rounded text-[11px] text-amber-300">
-                    + Risk Governance Overlay (Olowe): Not scored but has VETO power over entire evaluation
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-red-400 uppercase tracking-widest mb-3">Trauma Signatures (A-02)</h4>
-                  <div className="space-y-2">
-                    {[
-                      "Operation Meridian failure (£67M) — Big Bang PTSD",
-                      "Project Aegis incident — 23-min response, 47-min comms blackout",
-                      "Zenith managed services — over-promised, under-delivered savings",
-                      "Current incumbent FCR at 58% — service delivery exhaustion",
-                    ].map((t, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm">
-                        <span className="text-red-500 mt-0.5 shrink-0">▸</span>
-                        <span className="text-gray-300">{t}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="A-02" title="Bid Timeline" subtitle="Key dates and compression zones">
-              <div className="space-y-3">
-                {[
-                  { phase: "Clarification Window", date: "1-14 March", status: "active" },
-                  { phase: "Submission Deadline", date: "28 March 2026", status: "hard" },
-                  { phase: "Technical Evaluation", date: "April 2026", status: "upcoming" },
-                  { phase: "Oral Presentations", date: "May 2026", status: "upcoming" },
-                  { phase: "Preferred Bidder", date: "June 2026", status: "upcoming" },
-                  { phase: "Contract Signature", date: "July 2026", status: "upcoming" },
-                  { phase: "TUPE Transfer Day 1", date: "September 2026", status: "upcoming" },
-                ].map((m, i) => (
-                  <div key={i} className="flex items-center gap-4">
-                    <div className={`w-2 h-2 rounded-full shrink-0 ${m.status === "hard" ? "bg-red-500" : m.status === "active" ? "bg-emerald-500 animate-pulse" : "bg-gray-600"}`} />
-                    <span className="text-sm font-bold text-white w-48">{m.phase}</span>
-                    <span className="text-sm text-gray-400">{m.date}</span>
-                    {m.status === "hard" && <Badge color="red">Hard Deadline</Badge>}
-                    {m.status === "active" && <Badge color="green">Now</Badge>}
-                  </div>
-                ))}
-              </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* INFLUENCE TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "influence" && (
-          <div>
-            <Section id="I-02" title="Win Themes" subtitle="5 themes, zigzag positioning" defaultOpen={true}>
-              <div className="space-y-3">
-                {WIN_THEMES.map(t => (
-                  <div key={t.id} className={`flex items-center gap-4 p-3 rounded border ${
-                    t.strength === "fortress" ? "border-emerald-800/40 bg-emerald-950/10" :
-                    t.strength === "critical_gap" ? "border-red-800/40 bg-red-950/10" :
-                    "border-gray-800 bg-gray-900/30"
-                  }`}>
-                    <span className="text-lg font-black text-gray-600 w-8">#{t.id}</span>
-                    <div className="flex-1">
-                      <span className="text-sm font-bold text-white">{t.label}</span>
-                      <span className="text-[11px] text-gray-500 ml-2">Owner: {t.owner}</span>
-                    </div>
-                    <Badge color={t.strength === "fortress" ? "green" : t.strength === "critical_gap" ? "red" : "blue"}>
-                      {t.strength === "fortress" ? "FORTRESS" : t.strength === "critical_gap" ? "CRITICAL GAP" : "STRONG"}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="I-03" title="Competitor Intelligence" subtitle="2 competitors profiled">
-              <div className="space-y-4">
-                {COMPETITORS.map((c, i) => (
-                  <div key={i} className="bg-gray-900 border border-gray-800 rounded-lg p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <Badge color={c.dangerRating === "HIGH" ? "red" : c.dangerRating === "MEDIUM" ? "amber" : "green"}>{c.dangerRating}</Badge>
-                      <span className="text-sm font-bold text-white">{c.name}</span>
-                      <span className="text-[11px] text-gray-500 italic">"{c.label}"</span>
-                    </div>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-3">
-                      <div><span className="text-gray-500">Revenue:</span> <span className="text-white font-bold">{c.revenue}</span></div>
-                      <div><span className="text-gray-500">Model:</span> <span className="text-white">{c.model}</span></div>
-                      <div><span className="text-gray-500">TUPE Record:</span> <span className="text-white">{c.tupeRecord}</span></div>
-                      <div><span className="text-gray-500">Dangerous with:</span> <span className="text-amber-300">{c.dangerWith.join(", ")}</span></div>
-                    </div>
-                    <div className="text-xs text-gray-400 mb-2"><span className="text-red-400 font-bold">Weakness:</span> {c.weakness}</div>
-                    <div className="bg-blue-950/20 border border-blue-800/30 rounded p-2 text-xs">
-                      <span className="text-blue-400 font-bold">Verification Question: </span>
-                      <span className="text-gray-300 italic">"{c.killQuestion}"</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="I-04" title="Evaluation Scoring Strategy" subtitle="Criterion-level competitive analysis">
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-800">
-                      <th className="text-left py-2 text-gray-500 font-bold uppercase">Criterion</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Weight</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Project Alpha</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">LegacyTech</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Global SI</th>
-                      <th className="text-center py-2 text-gray-500 font-bold uppercase">Strategy</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {SCORING.criteria.map(c => (
-                      <tr key={c.code} className="border-b border-gray-800/30">
-                        <td className="py-2">
-                          <span className="text-gray-500 font-mono mr-2">{c.code}</span>
-                          <span className="text-white font-semibold">{c.label}</span>
-                        </td>
-                        <td className="py-2 text-center text-white font-bold">{c.weight}%</td>
-                        <td className="py-2 text-center"><ScoreBar score={c.helios} /></td>
-                        <td className="py-2 text-center"><ScoreBar score={c.fortis} /></td>
-                        <td className="py-2 text-center"><ScoreBar score={c.saraswati} /></td>
-                        <td className="py-2 text-center">
-                          <Badge color={c.strategy === "LOCK" ? "green" : c.strategy === "PUSH" ? "blue" : c.strategy === "CRITICAL" ? "red" : "amber"}>
-                            {c.strategy}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-4 grid grid-cols-4 gap-2 text-center">
-                <div className="p-2 bg-emerald-950/20 border border-emerald-800/30 rounded">
-                  <div className="text-[10px] text-emerald-400 font-bold uppercase">Lock</div>
-                  <div className="text-xs text-gray-400">4 criteria · 26.4%</div>
-                </div>
-                <div className="p-2 bg-blue-950/20 border border-blue-800/30 rounded">
-                  <div className="text-[10px] text-blue-400 font-bold uppercase">Push</div>
-                  <div className="text-xs text-gray-400">3 criteria · 25.2%</div>
-                </div>
-                <div className="p-2 bg-red-950/20 border border-red-800/30 rounded">
-                  <div className="text-[10px] text-red-400 font-bold uppercase">Critical</div>
-                  <div className="text-xs text-gray-400">1 criterion · 9.6%</div>
-                </div>
-                <div className="p-2 bg-amber-950/20 border border-amber-800/30 rounded">
-                  <div className="text-[10px] text-amber-400 font-bold uppercase">Defend</div>
-                  <div className="text-xs text-gray-400">1 criterion · 5.4%</div>
-                </div>
-              </div>
-            </Section>
-          </div>
-        )}
-
-        {/* ════════════════════════════════════════════════ */}
-        {/* NURTURE TAB */}
-        {/* ════════════════════════════════════════════════ */}
-        {activeTab === "nurture" && (
-          <div>
-            <Section id="N-01" title="Expansion Signal Scan" subtitle="Post-win growth roadmap" defaultOpen={true}>
-              <div className="mb-4 p-3 bg-emerald-950/20 border border-emerald-800/30 rounded text-sm text-emerald-300">
-                Immediate post-win: £1.2M ISO 22301 Remediation-as-a-Service (GO signal). 3-12 months: Regulatory Advisory + HIO Full Deployment (£2.45M). Long-term: Renewal protection + portfolio bundle (£115M base). All expansions require Olowe/Mason champion pathway.
-              </div>
-              <div className="space-y-2">
-                {EXPANSION.map((e, i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 bg-gray-900/50 border border-gray-800 rounded">
-                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-                      e.gate === "green" ? "bg-emerald-500" : e.gate === "amber" ? "bg-amber-400" : "bg-gray-600"
-                    }`} />
-                    <div className="flex-1">
-                      <span className="text-sm font-bold text-white">{e.signal}</span>
-                      <div className="text-[11px] text-gray-500">Champion: {e.champion} · {e.timing}</div>
-                    </div>
-                    <span className="text-xs font-bold text-emerald-400">{e.revenue}</span>
-                  </div>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="N-01b" title="Competitive Defence" subtitle="Block competitor encroachment">
-              <div className="bg-red-950/20 border border-red-800/30 rounded-lg p-4">
-                <h4 className="text-sm font-bold text-red-400 uppercase mb-2">Critical: Block Vector on Application Services</h4>
-                <p className="text-sm text-gray-300 mb-3">
-                  If Vector wins application services contract, they're inside the account with a team, a relationship, and a platform to compete at renewal. Cost of inaction is existential.
-                </p>
-                <div className="bg-gray-900 border border-gray-800 rounded p-3">
-                  <div className="text-xs font-bold text-blue-400 uppercase mb-1">Defensive Move</div>
-                  <p className="text-sm text-gray-300">
-                    Propose 90-day Application Discovery (£50-80K) as natural extension of cloud migration. Documents application dependencies, rationalisation opportunities. Makes Project Alpha the incumbent expert before Vector gets a meeting.
-                  </p>
-                </div>
-              </div>
-            </Section>
-
-            <Section id="N-01c" title="Account Health (Simulated Mo 6)" subtitle="Earn-the-right assessment">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {[
-                  { dim: "Alert Stabilisation", status: "green", detail: "14K → 4.5K alerts in 30 days, zero Chang team config" },
-                  { dim: "Rebecca Owen Alignment", status: "green", detail: "Trusted advisor to Mason — Regulatory peer pathway active" },
-                  { dim: "EOL Audit (Week 1)", status: "amber", detail: "Independent EOL audit complete — documented before SLA report" },
-                  { dim: "CIO Kubler-Ross", status: "amber", detail: "Reed in Denial/Anger — Data Cleansing narrative holding" },
-                  { dim: "Verbal Promise Risk", status: "amber", detail: "£250K verbal overrun promise NOT in contract — resolve before signature" },
-                  { dim: "Champion Health", status: "green", detail: "Mason arming Olowe with business case — regulatory mandate channel open" },
-                ].map((h, i) => (
-                  <div key={i} className={`p-3 rounded border ${
-                    h.status === "green" ? "bg-emerald-950/10 border-emerald-800/30" : "bg-amber-950/10 border-amber-800/30"
-                  }`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`w-2 h-2 rounded-full ${h.status === "green" ? "bg-emerald-500" : "bg-amber-400"}`} />
-                      <span className="text-xs font-bold text-white uppercase">{h.dim}</span>
-                    </div>
-                    <p className="text-[11px] text-gray-400">{h.detail}</p>
-                  </div>
-                ))}
-              </div>
-            </Section>
-          </div>
-        )}
+      {/* NAVIGATION TABS */}
+      <div className="flex gap-2 border-b border-white/10 mb-10 overflow-x-auto">
+        {[
+          { id: 'summary', label: '01 // Summary' },
+          { id: 'stakeholders', label: '02 // Topology' },
+          { id: 'strategy', label: '03 // Strategy' }
+        ].map(t => (
+          <button 
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`px-8 py-4 font-mono text-[11px] font-bold tracking-widest uppercase transition-all ${
+              tab === t.id ? "border-b-4 border-[#ff4d4d] text-white bg-white/5" : "text-[#94a3b8] hover:text-white border-b-4 border-transparent"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-gray-800 px-6 py-3 text-center">
-        <span className="text-[10px] text-gray-600 font-mono">
-          GAIN Account Pack · Generated from G-01→N-01 intelligence chain · Last compiled: {ACCOUNT.lastUpdated} · Confidential
-        </span>
+      {/* TAB CONTENT: 01 SUMMARY */}
+      {tab === 'summary' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="data-box" style={{"--accent": "var(--red)"}}>
+            <div className="db-label">CRITICAL VETO RISKS</div>
+            <div className="bullet-list">
+              <div className="bullet"><strong>Audit Chair Blocking:</strong> Sir Richard Hastings has frozen all IT spend. We MUST frame as "Regulatory Remediation", not outsourcing.</div>
+              <div className="bullet"><strong>Incumbent Sabotage:</strong> CIO loyalty to LegacyTech is 75% probability threat. Strategy: Offer "SIAM-as-a-Service" to protect him.</div>
+            </div>
+          </div>
+
+          <div className="data-box" style={{"--accent": "var(--blue)"}}>
+            <div className="db-label">IMMEDIATE ACTIONS (PRE-SUBMISSION)</div>
+            <div className="bullet-list">
+              <div className="bullet">Build named-process cost glide path <span className="pill pill-blue">+0.29 PTS</span></div>
+              <div className="bullet">Lock Client Transition Blueprint (Technical Moat).</div>
+              <div className="bullet">Live alert-methodology rehearsal with Infrastructure Lead.</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB CONTENT: 02 STAKEHOLDERS (No Paragraphs) */}
+      {tab === 'stakeholders' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div className="data-box" style={{"--accent": "var(--red)"}}>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <div className="text-white font-black text-xl">Sir Richard Hastings</div>
+                <div className="font-mono text-[11px] text-[#94a3b8] font-bold mt-1 uppercase">Audit Chair // Veto Holder</div>
+              </div>
+              <span className="pill pill-red">BLOCKER RISK</span>
+            </div>
+            <div className="bullet-list mt-2">
+              <div className="bullet"><strong>Trigger:</strong> Immutable audit-grade evidence.</div>
+              <div className="bullet"><strong>Avoid:</strong> Buzzwords (Agile, Synergy). Technical acronyms.</div>
+              <div className="bullet"><strong>Context:</strong> Personally embarrassed by regulatory warnings. Froze entire CAPEX budget.</div>
+            </div>
+          </div>
+
+          <div className="data-box" style={{"--accent": "var(--gold)"}}>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <div className="text-white font-black text-xl">Marcus Thorne</div>
+                <div className="font-mono text-[11px] text-[#94a3b8] font-bold mt-1 uppercase">Chief Financial Officer</div>
+              </div>
+              <span className="pill pill-gold">TARGETED</span>
+            </div>
+            <div className="bullet-list mt-2">
+              <div className="bullet"><strong>Trigger:</strong> £2.8M OPEX bleed mapped to at-risk provisions.</div>
+              <div className="bullet"><strong>Avoid:</strong> Transformation vision without hard ROI.</div>
+              <div className="bullet"><strong>Context:</strong> Walked out of last vendor meeting. Needs first-number rigour.</div>
+            </div>
+          </div>
+
+          <div className="data-box" style={{"--accent": "var(--green)"}}>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <div className="text-white font-black text-xl">Jennifer Mason</div>
+                <div className="font-mono text-[11px] text-[#94a3b8] font-bold mt-1 uppercase">Dir. Operational Resilience</div>
+              </div>
+              <span className="pill pill-green">CHAMPION</span>
+            </div>
+            <div className="bullet-list mt-2">
+              <div className="bullet"><strong>Trigger:</strong> Practical frameworks. ISO 22301 shared journey.</div>
+              <div className="bullet"><strong>Avoid:</strong> Theoretical-only approaches. Ignoring her expertise.</div>
+              <div className="bullet"><strong>Context:</strong> Powerless to sign POs, but acts as the conduit to the regulatory budget channel.</div>
+            </div>
+          </div>
+
+          <div className="data-box" style={{"--accent": "var(--red)"}}>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <div className="text-white font-black text-xl">Nicholas Reed</div>
+                <div className="font-mono text-[11px] text-[#94a3b8] font-bold mt-1 uppercase">Chief Information Officer</div>
+              </div>
+              <span className="pill pill-red">SABOTAGE RISK</span>
+            </div>
+            <div className="bullet-list mt-2">
+              <div className="bullet"><strong>Trigger:</strong> Governance Shield narrative. SIAM positioning.</div>
+              <div className="bullet"><strong>Avoid:</strong> Transparency audit framing. Challenging his past metrics.</div>
+              <div className="bullet"><strong>Context:</strong> Loyalty to incumbent. Will actively undermine unless made the hero.</div>
+            </div>
+          </div>
+
+        </div>
+      )}
+
+      {/* TAB CONTENT: 03 STRATEGY */}
+      {tab === 'strategy' && (
+        <div className="grid grid-cols-1 gap-8">
+          
+          <div className="data-box" style={{"--accent": "var(--blue)"}}>
+            <div className="db-label mb-6">COMPETITIVE SCORING MATRIX</div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr>
+                    <th className="font-mono text-[10px] text-[#94a3b8] uppercase font-bold py-3 border-b border-white/10">Criterion</th>
+                    <th className="font-mono text-[10px] text-[#94a3b8] uppercase font-bold py-3 border-b border-white/10">Weight</th>
+                    <th className="font-mono text-[10px] text-[#22c55e] uppercase font-bold py-3 border-b border-white/10">Project Alpha</th>
+                    <th className="font-mono text-[10px] text-[#ff4d4d] uppercase font-bold py-3 border-b border-white/10">LegacyTech</th>
+                    <th className="font-mono text-[10px] text-[#fbbf24] uppercase font-bold py-3 border-b border-white/10">Global SI</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm font-semibold">
+                  <tr>
+                    <td className="py-4 border-b border-white/5 text-white">Op Resilience / ISO 22301</td>
+                    <td className="py-4 border-b border-white/5 text-[#94a3b8]">5.4%</td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-green">5.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-red">2.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-gold">3.0</span></td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 border-b border-white/5 text-white">50:50 Gain-Share</td>
+                    <td className="py-4 border-b border-white/5 text-[#94a3b8]">7.2%</td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-green">5.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-gold">3.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-gold">3.0</span></td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 border-b border-white/5 text-white">Infrastructure Baseline</td>
+                    <td className="py-4 border-b border-white/5 text-[#94a3b8]">12.6%</td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-green">4.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-green">4.0</span></td>
+                    <td className="py-4 border-b border-white/5"><span className="pill pill-green">4.0</span></td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 text-white">Commercial Model</td>
+                    <td className="py-4 text-[#94a3b8]">9.6%</td>
+                    <td className="py-4"><span className="pill pill-green">4.0</span></td>
+                    <td className="py-4"><span className="pill pill-gold">3.0</span></td>
+                    <td className="py-4"><span className="pill pill-green">4.0</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="data-box" style={{"--accent": "var(--gold)"}}>
+              <div className="db-label">WIN THEME 01</div>
+              <div className="db-value text-xl">The Regulatory Rescue</div>
+              <div className="bullet-list">
+                <div className="bullet"><strong>Target:</strong> Audit Chair / Board</div>
+                <div className="bullet">We are a regulatory remediation partner that happens to manage technology. Avoids "outsourcer" label.</div>
+              </div>
+            </div>
+            
+            <div className="data-box" style={{"--accent": "var(--gold)"}}>
+              <div className="db-label">WIN THEME 02</div>
+              <div className="db-value text-xl">SIAM-as-a-Service</div>
+              <div className="bullet-list">
+                <div className="bullet"><strong>Target:</strong> CIO</div>
+                <div className="bullet">Project Alpha manages LegacyTech. Reed keeps his vendor relationship. Neutralises biggest sabotage risk.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )}
+
+      {/* FOOTER */}
+      <div className="mt-16 pt-6 border-t border-white/10 text-center">
+        <div className="font-mono text-[10px] text-[#94a3b8] font-bold tracking-[3px] uppercase">
+          GAIN PROTOCOL // SECURE DATABASE-DRIVEN TELEMETRY
+        </div>
       </div>
+
     </div>
   );
 }
 
-// Mount dashboard
-window.mountDashboard = function() {
-  var dashRoot = document.getElementById('gain-dashboard-root');
-  if (dashRoot && !dashRoot._mounted) {
-    ReactDOM.createRoot(dashRoot).render(React.createElement(GAINAccountPack));
-    dashRoot._mounted = true;
-  }
-};
-// Try mount now
-setTimeout(function() { if (window.mountDashboard) window.mountDashboard(); }, 100);
+const root = ReactDOM.createRoot(document.getElementById('gain-dashboard-root'));
+root.render(<AccountPack />);
 </script>
 
 </body>
