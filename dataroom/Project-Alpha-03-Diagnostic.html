@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -14,14 +14,15 @@
   --s1: #0f172a; 
   --s2: #1e293b; 
   --bdr: rgba(255,255,255,0.15); 
-  --tx: #f1f5f9;    /* Bright Silver Text */
-  --dm: #94a3b8;    /* Luminous Slate for subtext */
-  --br: #ffffff;    /* Pure White */
-  --red: #f87171;   /* High-lume Alert Red */
-  --amb: #fbbf24;   /* High-lume Safety Gold */
-  --grn: #4ade80;   /* High-lume Neon Green */
-  --blu: #93c5fd;   /* High-lume Electric Blue */
-  --pur: #c084fc;   /* High-lume Purple */
+  --tx: #f1f5f9;
+  --silver: #e2e8f0;
+  --dm: #b8c4d0;
+  --br: #ffffff;
+  --red: #f87171;
+  --amb: #fbbf24;
+  --grn: #4ade80;
+  --blu: #93c5fd;
+  --pur: #c084fc;
   --tl:  #2dd4bf;   
   --pnk: #f472b6;   
   --yel: #facc15;   
@@ -33,9 +34,9 @@ body{background:var(--bg);color:var(--tx);font-family:'Inter',sans-serif;line-he
 
 /* NAV BAR */
 .nav-bar{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--bdr);padding:10px 0;margin-bottom:2rem;display:flex;flex-wrap:wrap;gap:4px}
-.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;padding:6px 10px;border-radius:4px;background:var(--s1);border:1px solid var(--bdr);color:var(--dm);cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .15s}
+.nav-btn{font-family:'IBM Plex Mono',monospace;font-size:.65rem;font-weight:600;padding:6px 10px;border-radius:4px;background:var(--s1);border:1px solid var(--bdr);color:var(--tx);cursor:pointer;text-decoration:none;letter-spacing:.04em;transition:all .15s}
 .nav-btn:hover{background:var(--s2);color:var(--br);border-color:rgba(255,255,255,.3)}
-.nav-btn.nav-new{border-color:rgba(250,204,21,.3);color:var(--yel)}
+.nav-btn.active{background:rgba(240,191,103,.15);color:var(--amb);border-color:rgba(240,191,103,.4)}
 
 /* PEOPLE PROFILE CARDS */
 .profile-card{padding:16px;border-radius:8px;background:var(--s1);border:1px solid var(--bdr);margin-bottom:12px}
@@ -225,11 +226,11 @@ td {padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--
 <a class="nav-btn" href="#group">Group</a>
 <a class="nav-btn" href="#acquisitions">Acquisitions</a>
 <a class="nav-btn" href="#ownership">Ownership</a>
-<a class="nav-btn nav-new" href="#people">People Profiles</a>
+<a class="nav-btn" href="#people">People Profiles</a>
 <a class="nav-btn" href="#changes">Exec Changes</a>
 <a class="nav-btn" href="#financials">Financials</a>
 <a class="nav-btn" href="#peers">Peers</a>
-<a class="nav-btn nav-new" href="#competitors">Competitor Strategy</a>
+<a class="nav-btn" href="#competitors">Competitor Strategy</a>
 <a class="nav-btn" href="#chain">Value Chain</a>
 <a class="nav-btn" href="#proposition">Proposition</a>
 <a class="nav-btn" href="#winloss">Win/Loss</a>
@@ -239,7 +240,7 @@ td {padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--
 <a class="nav-btn" href="#programme">Programme</a>
 <a class="nav-btn" href="#worth">Value</a>
 <a class="nav-btn" href="#ceoplan">CEO Plan</a>
-<a class="nav-btn nav-new" href="#dark">Still Dark</a>
+<a class="nav-btn" href="#dark">Still Dark</a>
 </nav>
 
 <div id="decision" style="padding:1.5rem;border-left:4px solid var(--amb);background:var(--s1);border-radius:0 8px 8px 0;margin-bottom:1.5rem;margin-top:1rem">
@@ -329,7 +330,7 @@ Apex Capital Partners ($47bn+ invested)<br>
 </div>
 </div>
 
-<div class="ent-note" style="margin-top:12px;padding:12px;border-left:3px solid var(--blue);background:var(--s1)">Five acquisitions under Apex Capital. Three still separate legal entities with The CFO + The Chairman as directors. Sub B has its own 4-entity PE structure inherited from Prior PE Owner. Sub E founder has left. Total: 20 active legal entities, 2 directors. The governance burden is extraordinary. Integration thesis: unproven.</div>
+<div class="ent-note" style="margin-top:12px;padding:12px;border-left:3px solid var(--blu);background:var(--s1)">Five acquisitions under Apex Capital. Three still separate legal entities with The CFO + The Chairman as directors. Sub B has its own 4-entity PE structure inherited from Prior PE Owner. Sub E founder has left. Total: 20 active legal entities, 2 directors. The governance burden is extraordinary. Integration thesis: unproven.</div>
 
 <h2 id="acquisitions">Group acquisition trail</h2>
 <p style="font-size:.9rem;color:var(--tx);margin-bottom:12px"><strong style="color:var(--br)">Four acquisitions in 18 months, then one more.</strong> Apex Capital's buy-and-build thesis: bolt consulting firms onto an infrastructure annuity to create a full-service MSP. The pace was aggressive. The integration was not.</p>
@@ -796,6 +797,27 @@ function tog(id){
     setTimeout(function(){e.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
   }
 }
+
+// Scroll spy — highlights active nav button as you scroll
+const navBtns = document.querySelectorAll('.nav-btn[href^="#"]');
+const spySections = [];
+navBtns.forEach(btn => {
+  const id = btn.getAttribute('href').substring(1);
+  const el = document.getElementById(id);
+  if (el) spySections.push({ id, el, btn });
+});
+function updateNav() {
+  let current = '';
+  spySections.forEach(s => {
+    if (s.el.getBoundingClientRect().top <= 100) current = s.id;
+  });
+  navBtns.forEach(btn => btn.classList.remove('active'));
+  spySections.forEach(s => {
+    if (s.id === current) s.btn.classList.add('active');
+  });
+}
+window.addEventListener('scroll', updateNav);
+updateNav();
 </script>
 </body>
 </html>
