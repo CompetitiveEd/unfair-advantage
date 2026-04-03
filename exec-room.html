@@ -7,259 +7,244 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #030712; 
-  --s1: #111827; 
-  --border: rgba(255,255,255,0.15);
-  --border-h: rgba(255,255,255,0.3);
-  /* HIGH CONTRAST PALETTE */
-  --red: #ff4d4d;      
-  --amber: #fbbf24;    
-  --green: #22c55e;    
-  --blue: #60a5fa;     
-  --text-bright: #f8fafc; 
-  --text-dim: #cbd5e1;    
+  --bg: #020617; /* Obsidian Black */
+  --s1: #0f172a; /* Deep Navy */
+  --border: rgba(255,255,255,0.12);
+  --white: #f8fafc;
+  --silver: #cbd5e1;
+  --red: #ff4d4d;      /* High-Lume Alert */
+  --gold: #fbbf24;    /* High-Lume Safety */
+  --blue: #60a5fa;     /* High-Lume Info */
+  --green: #22c55e;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--bg); }
 body { 
   background: var(--bg); 
-  color: var(--text-dim); 
-  font-family: 'Inter', sans-serif; /* Snap to Inter Body */
-  font-size: 16px; 
-  line-height: 1.6; 
+  color: var(--silver); 
+  font-family: 'Inter', sans-serif; 
   margin: 0; 
+  -webkit-font-smoothing: antialiased;
 }
 
-.main { max-width: 1000px; margin: 0 auto; padding: 72px 2rem 0; }
-.section { margin-bottom: 4rem; }
+.main { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+.section { margin-bottom: 5rem; }
 
-.mono { font-family: 'IBM Plex Mono', monospace; }
-
+/* DATA LABELS */
 .sl { 
-  font-family: 'IBM Plex Mono', monospace; /* IBM for labels */
-  font-size: 11px; 
-  font-weight: 600; 
-  letter-spacing: 3px; 
-  text-transform: uppercase; 
-  color: var(--amber); 
-  margin-bottom: 1.5rem; 
-  display: flex; 
-  align-items: center; 
-  gap: 1rem; 
-}
-.sl::before, .sl::after { content: ''; flex: 1; height: 1px; background: var(--border-h); }
-
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity .5s, transform .5s; }
-.reveal.vis { opacity: 1; transform: translateY(0); }
-
-/* HERO */
-.hero { text-align: center; padding: 4rem 0 3rem; position: relative; }
-.hero-label { 
   font-family: 'IBM Plex Mono', monospace; 
   font-size: 11px; 
   font-weight: 600; 
-  letter-spacing: 3px; 
+  letter-spacing: 2px; 
   text-transform: uppercase; 
-  color: var(--red); 
-  margin-bottom: 1rem; 
+  color: var(--gold); 
+  margin-bottom: 2rem; 
+  display: flex; 
+  align-items: center; 
+  gap: 1.5rem; 
 }
+.sl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* HERO SECTION */
+.hero { text-align: left; padding: 4rem 0; border-bottom: 1px solid var(--border); margin-bottom: 4rem; }
 .hero h1 { 
   font-family: 'Inter', sans-serif; 
   font-weight: 900; 
-  letter-spacing: -0.05em; /* Tight PE-style tracking */
-  font-size: clamp(32px, 5vw, 64px); 
-  color: var(--text-bright); 
-  margin-bottom: 1rem; 
+  letter-spacing: -0.05em; 
+  font-size: clamp(40px, 6vw, 72px); 
+  color: var(--white); 
+  margin: 0 0 1rem; 
 }
-.hero p { font-size: 18px; color: var(--text-dim); max-width: 600px; margin: 0 auto; font-weight: 500; }
+.hero p { font-size: 20px; color: var(--silver); max-width: 700px; font-weight: 400; line-height: 1.4; }
 
-/* DASHBOARD CARDS */
-.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+/* GRID SYSTEMS */
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+
+/* MISSION CARDS */
 .dash-card { 
   background: var(--s1); 
   border: 1px solid var(--border); 
   border-radius: 12px; 
-  padding: 1.75rem; 
+  padding: 2rem; 
   cursor: pointer; 
-  transition: all .3s; 
-  position: relative; 
-  overflow: hidden; 
+  transition: all .25s ease;
+  position: relative;
+  overflow: hidden;
 }
-.dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--card-color, var(--text-dim)); opacity: 0.8; }
-.dash-card:hover { border-color: var(--text-bright); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
+.dash-card:hover { border-color: var(--white); transform: translateY(-4px); background: #1e293b; }
+.dash-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--card-color); }
 
 .dc-type { 
   font-family: 'IBM Plex Mono', monospace; 
   font-size: 10px; 
-  font-weight: 700; 
-  letter-spacing: 2px; 
-  text-transform: uppercase; 
-  margin-bottom: 8px; 
+  font-weight: 600; 
   color: var(--card-color); 
+  margin-bottom: 12px; 
+  letter-spacing: 1px;
 }
 .dc-name { 
   font-family: 'Inter', sans-serif; 
   font-size: 24px; 
   font-weight: 800; 
-  letter-spacing: -0.03em;
-  color: var(--text-bright); 
-  margin-bottom: 10px; 
+  color: var(--white); 
+  margin-bottom: 12px; 
+  letter-spacing: -0.02em;
 }
-.dc-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-.dc-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text-bright); }
+.dc-meta { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--silver); margin-bottom: 1.5rem; }
+.dc-bullet { display: flex; gap: 8px; font-size: 14px; margin-bottom: 6px; color: var(--silver); }
+.dc-bullet::before { content: '→'; color: var(--card-color); font-weight: bold; }
 
-/* BIG HERO CARD */
-.hero-card { grid-column: 1 / -1; padding: 2.5rem; border-color: rgba(255, 77, 77, 0.3); background: linear-gradient(180deg, #1e1b1b, #030712); }
-.hero-card:hover { border-color: var(--red); }
+/* THE VERDICT CARD */
+.hero-card { grid-column: 1 / -1; border-left: none; border-top: 4px solid var(--red); background: linear-gradient(180deg, #1e1b1b 0%, var(--bg) 100%); }
+.hero-card::before { display: none; }
 .hero-card .dc-name { font-size: 36px; }
-.hero-card .dc-desc { font-size: 17px; max-width: 750px; }
 
-/* PROOF CARDS */
-.proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-.proof-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; cursor: pointer; transition: all .2s; }
-.proof-card:hover { background: var(--s1); border-color: var(--text-bright); }
-.proof-card .dc-name { font-size: 20px; }
-
-/* DELIVERY BLOCK */
-.tech-block { background: var(--s1); border: 1px solid var(--border); border-left: 4px solid var(--blue); border-radius: 12px; padding: 2.5rem; }
-.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; margin-top: 2rem; }
-.tech-item h4 { 
-  font-family: 'IBM Plex Mono', monospace; 
-  font-size: 12px; 
-  font-weight: 700; 
-  color: var(--text-bright); 
-  text-transform: uppercase; 
-  letter-spacing: 1.5px; 
-  margin-bottom: 8px; 
-  border-bottom: 1px solid var(--border); 
-  padding-bottom: 4px; 
-  display: inline-block; 
+/* DELIVERY SYSTEM BLOCK */
+.tech-block { 
+  background: #020617; 
+  border: 1px solid var(--border); 
+  border-radius: 16px; 
+  padding: 3rem; 
+  display: grid; 
+  grid-template-columns: 1fr 1.5fr; 
+  gap: 40px; 
+  align-items: center;
 }
-.tech-item p { font-size: 14px; color: var(--text-dim); }
+@media(max-width: 800px){ .tech-block { grid-template-columns: 1fr; padding: 2rem; } }
+.tech-title { font-size: 32px; font-weight: 900; color: var(--white); letter-spacing: -0.04em; margin-bottom: 1rem; }
+.tech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.tech-item { padding: 16px; background: var(--s1); border-radius: 8px; border-left: 2px solid var(--blue); }
+.tech-item h4 { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--blue); margin-bottom: 4px; }
+.tech-item p { font-size: 13px; color: var(--silver); margin: 0; }
 
 /* MODAL */
-.modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); align-items: center; justify-content: center; }
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.96); backdrop-filter: blur(12px); align-items: center; justify-content: center; }
 .modal-overlay.open { display: flex; }
-.modal { background: var(--bg); border: 1px solid var(--border-h); border-radius: 16px; width: 95%; max-width: 1240px; height: 92vh; position: relative; overflow: hidden; }
-.modal-close { position: absolute; top: 1rem; right: 1rem; z-index: 10; background: #000; color: #fff; border: 1px solid #fff; width: 40px; height: 40px; cursor: pointer; border-radius: 50%; font-weight: bold; }
+.modal { background: var(--bg); border: 1px solid var(--white); border-radius: 16px; width: 96%; max-width: 1300px; height: 94vh; position: relative; overflow: hidden; }
+.modal-close { position: absolute; top: 1rem; right: 1rem; z-index: 10; background: var(--white); color: #000; border: none; width: 32px; height: 32px; cursor: pointer; border-radius: 4px; font-weight: 900; font-size: 18px; }
 iframe { width: 100%; height: 100%; border: none; }
 
-/* CTA */
+/* PILL BUTTONS */
 .cta-btn { 
   display: inline-flex; 
   align-items: center; 
-  background: var(--amber); 
+  background: var(--gold); 
   color: #000; 
-  font-family: 'Inter', sans-serif;
-  font-size: 14px; 
-  font-weight: 800; 
-  letter-spacing: 1px; 
-  text-transform: uppercase; 
-  padding: 18px 42px; 
-  border-radius: 999px; /* Pill style from mockup */
+  font-weight: 900; 
+  padding: 18px 48px; 
+  border-radius: 99px; 
   text-decoration: none; 
-  transition: .3s ease; 
+  transition: .2s; 
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
-.cta-btn:hover { background: #fff; transform: translateY(-2px); }
+.cta-btn:hover { background: var(--white); transform: scale(1.03); }
 </style>
 </head>
 <body>
 
-<div id="master-nav-placeholder"></div>
-<script>
-    fetch('nav.html').then(r => r.text()).then(d => {
-        document.getElementById('master-nav-placeholder').innerHTML = d;
-    });
-</script>
-
-<section class="hero reveal">
-  <div class="hero-label">Executive Briefing</div>
-  <h1>The Answer First.</h1>
-  <p>Decision-grade commercial diagnostics for PE firms and portfolio leaders.</p>
-</section>
-
 <div class="main">
 
+  <section class="hero reveal">
+    <div class="mono" style="color: var(--red); font-size: 12px; margin-bottom: 12px; font-weight: 700;">// GAIN EXECUTIVE COMMAND</div>
+    <h1>The Answer First.</h1>
+    <p>Zero discovery noise. Direct commercial verdicts for Private Equity Partners.</p>
+  </section>
+
   <section class="section reveal">
-    <div class="sl">The Verdict</div>
+    <div class="sl">MISSION VERDICT</div>
     <div class="dash-grid">
-      <div class="dash-card hero-card" style="--card-color: var(--red)" onclick="openDash('dataroom/Project-Alpha-01-Exec-Summary.html')">
-        <div class="dc-type">Project Alpha 01</div>
-        <div class="dc-name">The Executive Summary</div>
-        <div class="dc-desc">A definitive, board-level Go/No-Go decision pack: Divest, Remediate, or Accelerate.</div>
-        <div class="dc-link">View The Verdict &rarr;</div>
+      <div class="dash-card hero-card" onclick="openDash('dataroom/Project-Alpha-01-Exec-Summary.html')">
+        <div class="dc-type">PROJECT ALPHA // 01</div>
+        <div class="dc-name">Deal Pre-Mortem Verdict</div>
+        <div class="dc-meta">TARGET: GLOBALFIN CORP // REVENUE: £185M // EBITDA: £9.1M</div>
+        <div class="dc-bullet">The definitive Divest/Remediate/Accelerate call.</div>
+        <div class="dc-bullet">Board-ready intelligence gathered from 165+ public data points.</div>
+        <div class="dc-bullet">Quantified risk trajectory for the Investment Committee.</div>
+        <div style="margin-top: 2rem; font-weight: 900; color: var(--red); font-size: 14px;" class="mono">OPEN VERDICT →</div>
       </div>
     </div>
   </section>
 
   <section class="section reveal">
-    <div class="sl">Risk & Upside Landscape</div>
+    <div class="sl">SIGNAL & UPSIDE</div>
     <div class="dash-grid">
-      <div class="dash-card" style="--card-color: var(--amber)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
-        <div class="dc-type">Portfolio Triage</div>
-        <div class="dc-name">Fund-Level View</div>
-        <div class="dc-desc">12 portfolio companies assessed. See where the capital is bleeding across the fund.</div>
-        <div class="dc-link">View Portfolio &rarr;</div>
+      <div class="dash-card" style="--card-color: var(--gold)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
+        <div class="dc-type">FUND-LEVEL TRIAGE</div>
+        <div class="dc-name">Portfolio Risk Map</div>
+        <div class="dc-meta">12 COMPANIES // COMBINED PIPELINE: £127M</div>
+        <div class="dc-bullet">Visual cross-portfolio win-rate analysis.</div>
+        <div class="dc-bullet">Identifies where capital is bleeding across the fund.</div>
+        <div style="margin-top: 1.5rem;" class="mono">SCAN PORTFOLIO →</div>
       </div>
 
       <div class="dash-card" style="--card-color: var(--green)" onclick="openDash('dashboard/dash-account-pack.html')">
-        <div class="dc-type">Account Expansion</div>
-        <div class="dc-name">The Upside Map</div>
-        <div class="dc-desc">Where is the growth they aren't capturing? Cross-sell mapped and white space identified.</div>
-        <div class="dc-link">View Expansion Pack &rarr;</div>
+        <div class="dc-type">EXPANSION INTEL</div>
+        <div class="dc-name">Account Growth Map</div>
+        <div class="dc-meta">UNIT: GLOBALFIN // UPSIDE: £115M TCV</div>
+        <div class="dc-bullet">White space and cross-sell penetration map.</div>
+        <div class="dc-bullet">Political topology of key account stakeholders.</div>
+        <div style="margin-top: 1.5rem;" class="mono">VIEW UPSIDE →</div>
       </div>
     </div>
   </section>
 
   <section class="section reveal">
-    <div class="sl">Execution & Proof</div>
-    <div class="proof-grid">
-      <div class="dash-card proof-card" style="--card-color: var(--blue)" onclick="openDash('dataroom/Project-Alpha-02-Playbook.html')">
-        <div class="dc-type">Project Alpha 02</div>
+    <div class="sl">EXECUTION & EVIDENCE</div>
+    <div class="dash-grid">
+      <div class="dash-card" style="--card-color: var(--blue)" onclick="openDash('dataroom/Project-Alpha-02-Playbook.html')">
+        <div class="dc-type">PROJECT ALPHA // 02</div>
         <div class="dc-name">Operating Playbook</div>
-        <div class="dc-desc">The 25-step governed programme with named owners and tranche gates.</div>
-        <div class="dc-link">View Playbook &rarr;</div>
+        <div class="dc-bullet">Governed 25-step execution programme.</div>
+        <div class="dc-bullet">Named owners and milestone tranche gates.</div>
+        <div style="margin-top: 1rem;" class="mono">VIEW PLAN →</div>
       </div>
 
-      <div class="dash-card proof-card" style="--card-color: #a855f7" onclick="openDash('dataroom/Project-Alpha-03-Diagnostic.html')">
-        <div class="dc-type">Project Alpha 03</div>
+      <div class="dash-card" style="--card-color: #a855f7" onclick="openDash('dataroom/Project-Alpha-03-Diagnostic.html')">
+        <div class="dc-type">PROJECT ALPHA // 03</div>
         <div class="dc-name">Full Diagnostic</div>
-        <div class="dc-desc">165 raw findings. Zero interviews. The granular proof that the signal is real.</div>
-        <div class="dc-link">View Evidence &rarr;</div>
+        <div class="dc-bullet">165 raw findings for the diligent skeptic.</div>
+        <div class="dc-bullet">Zero-access required audit trail.</div>
+        <div style="margin-top: 1rem;" class="mono">VIEW PROOF →</div>
       </div>
     </div>
   </section>
 
   <section class="section reveal">
-    <div class="sl">The Delivery Layer</div>
+    <div class="sl">DELIVERY ARCHITECTURE</div>
     <div class="tech-block">
-      <div class="dc-type" style="color: var(--blue)">Live Telemetry</div>
-      <h3 style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 900; color: var(--text-bright); margin: 4px 0 0; letter-spacing: -0.04em;">Zero PowerPoint. Zero Lag.</h3>
-      <p style="color: var(--text-dim); margin-top: 12px; font-size: 16px;">GAIN outputs are live, portable HTML architectures generated in minutes from a private SQL infrastructure.</p>
-      
+      <div>
+        <h3 class="tech-title">Zero PowerPoint.<br>Zero Lag.</h3>
+        <p style="font-size: 16px; margin-bottom: 0;">Live, database-driven telemetry for the boardroom.</p>
+      </div>
       <div class="tech-grid">
         <div class="tech-item">
-          <h4>Dynamic</h4>
-          <p>Dashboards generated instantly after research phase. fully portable.</p>
+          <h4>DYNAMIC</h4>
+          <p>HTML-native outputs. Instantly portable.</p>
         </div>
         <div class="tech-item">
-          <h4>Private SQL</h4>
-          <p>Siloed database backend. target data is ring-fenced and secure.</p>
+          <h4>SECURE</h4>
+          <p>Siloed Private SQL database infrastructure.</p>
         </div>
         <div class="tech-item">
-          <h4>Real-Time</h4>
-          <p>When data updates, board views change instantly. Live commercial telemetry.</p>
+          <h4>REAL-TIME</h4>
+          <p>Board views update as data changes.</p>
+        </div>
+        <div class="tech-item">
+          <h4>MOBILE</h4>
+          <p>Desktop-grade intel on any executive device.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div style="text-align:center; padding: 4rem 0 5rem; border-top: 1px solid var(--border);">
-    <h2 style="font-family:'Inter', sans-serif; font-weight: 800; color: var(--text-bright); margin-bottom: 1.5rem; letter-spacing: -0.03em;">Point it at your own business.</h2>
+  <div style="text-align:center; padding: 4rem 0;">
+    <h2 style="font-size: 32px; color: var(--white); margin-bottom: 2rem; font-weight: 900; letter-spacing: -0.04em;">Point it at your own business.</h2>
     <a href="dashboard/discovery.html" class="cta-btn" onclick="event.preventDefault(); openDash(this.href);">Run Discovery Diagnostic</a>
   </div>
 
