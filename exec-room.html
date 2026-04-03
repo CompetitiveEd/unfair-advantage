@@ -63,6 +63,13 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
 .oc-term{font-family:'DM Mono',monospace;font-size:11px;line-height:1.6;color:#94a3b8;padding:1.25rem;background:rgba(0,0,0,.2)}
 .oc-term strong{color:var(--card-color, var(--text-bright))}
 
+/* ═══ DELIVERY ARCHITECTURE BLOCK ═══ */
+.tech-block { background: var(--s1); border: 1px solid var(--border); border-left: 3px solid var(--blu); border-radius: 12px; padding: 2rem; cursor: default; }
+.tech-block:hover { transform: none; box-shadow: none; border-color: var(--border); }
+.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 1.5rem; }
+.tech-item h4 { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; color: var(--text-bright); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.tech-item p { font-size: 13px; color: var(--text-dim); margin: 0; line-height: 1.5; }
+
 /* ═══ MODAL ═══ */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:.75rem}
 .modal-overlay.open{display:flex}
@@ -201,5 +208,63 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,sans
     </div>
   </section>
 
+  <section class="section reveal">
+    <div class="sl">The Delivery Layer</div>
+    <div class="tech-block">
+      <div class="dc-type" style="color: var(--blue)">Live Boardroom Intelligence</div>
+      <h3 style="font-family: 'Fraunces', serif; font-size: 26px; color: var(--text-bright); margin: 4px 0 0;">Zero PowerPoint. Zero Lag.</h3>
+      <p style="color: var(--text-dim); margin-top: 8px; max-width: 700px;">Stop waiting weeks for static slide decks. GAIN outputs are live, portable HTML architectures generated in minutes.</p>
+      
+      <div class="tech-grid">
+        <div class="tech-item">
+          <h4>Dynamic & Portable</h4>
+          <p>Dashboards and decision packs are generated instantly after the AI research phase. Fully portable, zero formatting waste.</p>
+        </div>
+        <div class="tech-item">
+          <h4>Private SQL Infrastructure</h4>
+          <p>Running on a secure, siloed database backend. Your portfolio and target data is ring-fenced and never trains public models.</p>
+        </div>
+        <div class="tech-item">
+          <h4>Real-Time MD Visibility</h4>
+          <p>When operational data updates in the SQL backend, the board views change instantly. Live commercial telemetry for the investment committee.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div style="text-align:center; padding: 4rem 0 5rem; border-top: 1px solid var(--border);">
-    <h2 style="font-family:'Fraunces', serif
+    <h2 style="font-family:'Fraunces', serif; color: var(--text-bright); margin-bottom: 1rem;">Point it at your own business.</h2>
+    <p style="color: var(--text-dim); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">You've seen what GAIN does to someone else's operation. Run the 70-minute self-assessment to see what it finds in yours.</p>
+    <a href="dashboard/discovery.html" class="cta-btn" onclick="event.preventDefault(); openDash(this.href);">Run Discovery Diagnostic</a>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeDash()">&times;</button>
+    <div class="modal-loading" id="dashLoading">Loading...</div>
+    <iframe id="dashFrame" style="display:none" onload="document.getElementById('dashLoading').style.display='none';this.style.display='block'"></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+})();
+
+function openDash(url){
+  var m=document.getElementById('dashModal'), f=document.getElementById('dashFrame'), l=document.getElementById('dashLoading');
+  l.style.display='flex'; f.style.display='none'; f.src=url; m.classList.add('open'); document.body.style.overflow='hidden';
+}
+function closeDash(){
+  var m=document.getElementById('dashModal'), f=document.getElementById('dashFrame');
+  f.src=''; m.classList.remove('open'); document.body.style.overflow='';
+}
+document.getElementById('dashModal').addEventListener('click',function(e){if(e.target===this)closeDash()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
+</script>
+</body>
+</html>
