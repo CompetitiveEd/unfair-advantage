@@ -3,24 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enter The Room | GAIN Protocol</title>
+<title>Executive Briefing | GAIN Protocol</title>
+<meta name="description" content="High-level commercial diagnostics. The executive view of margin, risk, and portfolio value creation.">
+
 <link rel="stylesheet" href="master-forensic.css">
+
 <style>
-  body { display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background: var(--bg); overflow: hidden; }
-  .enter-card { text-align: center; background: var(--s1); border: 1px solid var(--border); border-radius: 14px; padding: 3rem 2rem; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-  .enter-card h1 { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; color: var(--amber); margin-bottom: 1rem; }
-  .enter-card p { font-size: 14px; color: var(--text-dim); margin-bottom: 2rem; line-height: 1.6; }
-  .enter-btn { display: inline-flex; padding: 14px 32px; background: transparent; color: var(--text-bright); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border: 1px solid var(--border-h); border-radius: 6px; text-decoration: none; transition: all 0.3s; }
-  .enter-btn:hover { background: var(--amber); border-color: var(--amber); color: var(--bg); transform: translateY(-2px); }
+:root{--teal:#14b8a6}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+.main{max-width:1000px;margin:0 auto;padding:72px 2rem 0}
+.section{margin-bottom:4rem}
+
+.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--bdr)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ═══ HERO ═══ */
+.hero{text-align:center;padding:4rem 0 3rem;position:relative}
+.hero::before{content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);width:500px;height:250px;background:radial-gradient(ellipse,rgba(239,68,68,.05) 0%,transparent 70%);pointer-events:none}
+.hero-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--br);margin-bottom:1rem;line-height:1.1}
+.hero p{font-size:16px;color:var(--dm);line-height:1.7;max-width:600px;margin:0 auto}
+
+/* ═══ DASHBOARD CARDS ═══ */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.dash-card{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:1.75rem;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--card-color, var(--dm));opacity:0.5;transition:opacity .3s}
+.dash-card:hover{border-color:var(--dm);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.dash-card:hover::before{opacity:1}
+.dc-type{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;color:var(--card-color, var(--dm))}
+.dc-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--br);margin-bottom:8px}
+.dc-desc{font-size:13px;color:var(--dm);line-height:1.6;margin-bottom:1rem}
+.dc-link{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;color:var(--card-color, var(--dm))}
+
+/* BIG HERO CARD (The Verdict) */
+.hero-card{grid-column: 1 / -1; padding: 2.5rem; background: linear-gradient(180deg, var(--s1), var(--bg)); border-color: rgba(239,68,68,.15);}
+.hero-card:hover{border-color: var(--red);}
+.hero-card .dc-name{font-size: 28px;}
+.hero-card .dc-desc{font-size: 15px; max-width: 700px;}
+
+/* SMALLER PROOF CARDS */
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.proof-card{background: rgba(255,255,255,.01); border:1px solid var(--bdr); border-radius:10px; padding: 1.25rem; cursor:pointer; transition:all .2s;}
+.proof-card:hover{background: var(--s1); border-color: var(--dm);}
+.proof-card .dc-name{font-size: 16px;}
+.proof-card .dc-desc{font-size: 12px;}
+
+/* ═══ MODAL ═══ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:.75rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid rgba(255,255,255,0.08);border-radius:16px;width:100%;max-width:1100px;height:90vh;position:relative;overflow:hidden;animation:modalIn .3s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:.75rem;right:.75rem;z-index:10;background:rgba(7,7,10,.8);border:1px solid rgba(255,255,255,0.08);color:var(--dm);font-size:20px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;backdrop-filter:blur(8px)}
+.modal-close:hover{color:var(--br);background:rgba(7,7,10,.95)}
+.modal iframe{width:100%;height:100%;border:none;border-radius:0 0 16px 16px}
+.modal-loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--dm);font-family:'DM Mono',monospace;font-size:12px}
+
+/* CTA */
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
+.cta-btn:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
 </style>
 </head>
 <body>
 
-<div class="enter-card">
-  <h1>Connection Secured</h1>
-  <p>You are about to access the active methodology and evidence room. This environment contains synthetic data mirroring live enterprise deployments.</p>
-  <a href="data-room.html" class="enter-btn">Access Data Room</a>
+<div id="master-nav-placeholder"></div>
+<script>
+    fetch('nav.html').then(r => r.text()).then(d => {
+        document.getElementById('master-nav-placeholder').innerHTML = d;
+        const btn = document.getElementById('mobile-toggle-btn');
+        if(btn) btn.onclick = () => document.getElementById('mobileNav').classList.toggle('open');
+        document.querySelectorAll('.radial-toggle').forEach(t => {
+            t.onchange = () => { if(t.checked) document.querySelectorAll('.radial-toggle').forEach(o => { if(o!==t) o.checked=false; })}
+        });
+    });
+    document.addEventListener('click', e => { document.querySelectorAll('.radial-toggle').forEach(t => { if(t.checked && !e.target.closest('.radial-menu')) t.checked=false; })});
+</script>
+
+<section class="hero reveal">
+  <div class="hero-label">Executive Briefing</div>
+  <h1>The Answer First.</h1>
+  <p>No discovery noise. No raw data. Just the quantified risk, the margin leakage, and the definitive commercial verdict.</p>
+</section>
+
+<div class="main">
+
+  <section class="section reveal">
+    <div class="sl">The Verdict</div>
+    <div class="dash-grid">
+      <div class="dash-card hero-card" style="--card-color: var(--red)" onclick="openDash('dataroom/Node4-01-Exec-Summary.html')">
+        <div class="dc-type">Deal Pre-Mortem (Node4 01)</div>
+        <div class="dc-name">The Executive Summary</div>
+        <div class="dc-desc">The bottom line. Looks healthy inside the CRM; completely stalled outside. A definitive, board-level Go/No-Go decision pack: Divest, Remediate, or Accelerate.</div>
+        <div class="dc-link" style="margin-top: 10px; font-size: 12px;">View The Verdict &rarr;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="sl">Risk & Upside Landscape</div>
+    <div class="dash-grid">
+      <div class="dash-card" style="--card-color: var(--amber)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
+        <div class="dc-type">Portfolio Triage</div>
+        <div class="dc-name">Fund-Level View</div>
+        <div class="dc-desc">12 portfolio companies assessed. They say pipeline is healthy; the system says 22% win rate. See where the capital is bleeding across the fund.</div>
+        <div class="dc-link">View Portfolio &rarr;</div>
+      </div>
+
+      <div class="dash-card" style="--card-color: var(--grn)" onclick="openDash('dashboard/dash-account-pack.html')">
+        <div class="dc-type">Account Expansion</div>
+        <div class="dc-name">The Upside Map</div>
+        <div class="dc-desc">Where is the growth they aren't capturing? Cross-sell mapped. White space identified. The exact path to expand wallet share.</div>
+        <div class="dc-link">View Expansion Pack &rarr;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="sl">Execution & Proof</div>
+    <div class="proof-grid">
+      
+      <div class="proof-card" style="--card-color: var(--blu)" onclick="openDash('dataroom/Node4-02-Playbook.html')">
+        <div class="dc-type">Execution (Node4 02)</div>
+        <div class="dc-name">Operating Playbook</div>
+        <div class="dc-desc">The 25-step governed programme. Named owners, tranche gates, and day 1 to day 90 execution.</div>
+      </div>
+
+      <div class="proof-card" style="--card-color: var(--purple)" onclick="openDash('dataroom/Node4-03-Diagnostic.html')">
+        <div class="dc-type">Diligence (Node4 03)</div>
+        <div class="dc-name">Full Diagnostic</div>
+        <div class="dc-desc">165 raw findings. Zero interviews. The granular proof that the signal is real.</div>
+      </div>
+
+      <div class="proof-card" style="--card-color: var(--teal)" onclick="openDash('dashboard/wheel.html')">
+        <div class="dc-type">Architecture</div>
+        <div class="dc-name">The Engine (Wheel)</div>
+        <div class="dc-desc">The proprietary 5-phase compounding intelligence engine.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="text-align:center; padding: 4rem 0 5rem; border-top: 1px solid var(--bdr);">
+    <h2 style="font-family:'Playfair Display', serif; color: var(--br); margin-bottom: 1rem;">Point it at your own business.</h2>
+    <p style="color: var(--dm); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">You've seen what GAIN does to someone else's operation. Run the 70-minute self-assessment to see what it finds in yours.</p>
+    <a href="dashboard/discovery.html" class="cta-btn" onclick="event.preventDefault(); openDash(this.href);">Run Discovery Diagnostic</a>
+  </div>
+
 </div>
 
+<div class="modal-overlay" id="dashModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeDash()">&times;</button>
+    <div class="modal-loading" id="dashLoading">Loading...</div>
+    <iframe id="dashFrame" style="display:none" onload="document.getElementById('dashLoading').style.display='none';this.style.display='block'"></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+})();
+
+function openDash(url){
+  var m=document.getElementById('dashModal'), f=document.getElementById('dashFrame'), l=document.getElementById('dashLoading');
+  l.style.display='flex'; f.style.display='none'; f.src=url; m.classList.add('open'); document.body.style.overflow='hidden';
+}
+function closeDash(){
+  var m=document.getElementById('dashModal'), f=document.getElementById('dashFrame');
+  f.src=''; m.classList.remove('open'); document.body.style.overflow='';
+}
+document.getElementById('dashModal').addEventListener('click',function(e){if(e.target===this)closeDash()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
+</script>
 </body>
 </html>
