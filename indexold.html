@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAIN Protocol | Commercial Revenue Diagnostics — hownottogain.co.uk</title>
+  <meta name="description" content="Commercial x-ray, value-creation playbook and operator — in one engagement. For PE firms, portfolio leaders and CXOs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #121923; --surface-2: #182230; --surface-3: #1e2a38;
+      --text: #ecf1f7; --body: #c0c8d4; --muted: #8a95a8; --dim: #5d6a7a;
+      --line: #1e2a38; --line-2: #161f2b;
+      --primary: #86c8ff; --primary-light: #0d1f35;
+      --accent: #9be3c0; --accent-light: #0d2618;
+      --warn: #f0bf67; --warn-light: #2a2010;
+      --danger: #ff8f8f; --danger-light: #2a1010;
+      --max: 1040px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+    .mono { font-family: "IBM Plex Mono", monospace; }
+
+    /* ── HEADER ── */
+    .site-header { position: sticky; top: 0; z-index: 50; background: rgba(13,17,23,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .site-header .inner { display: flex; justify-content: space-between; align-items: center; min-height: 64px; }
+    .brand { font-family: "IBM Plex Mono", monospace; font-size: 14px; font-weight: 600; letter-spacing: 1.5px; }
+    .brand em { color: var(--danger); font-style: normal; }
+    .header-right { display: flex; gap: 10px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 16px; border-radius: 7px; font-weight: 600; font-size: 13px; border: 1px solid var(--line); transition: all .15s; cursor: pointer; font-family: Inter, sans-serif; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), #4ea3ff); color: #08111b; border-color: transparent; }
+    .btn-primary:hover { background: #a8d8ff; }
+    .btn-ghost { background: var(--surface); color: var(--muted); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--dim); }
+
+    /* ── HERO ── */
+    .hero { padding: 68px 0 52px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+    .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    h1 { font-size: clamp(32px, 4.8vw, 50px); line-height: 1.08; letter-spacing: -0.035em; font-weight: 800; margin-bottom: 20px; max-width: 20ch; }
+    .hero-copy { font-size: 17px; color: var(--body); max-width: 58ch; margin-bottom: 28px; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 0; }
+
+    /* ── FUSED PROPOSITION ── */
+    .fused { padding: 48px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .fused-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .fused-card { padding: 22px 20px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
+    .fused-card .fc-num { font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+    .fused-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .fused-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .fused-note { margin-top: 16px; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); text-align: center; padding: 12px; }
+    .fused-note strong { color: var(--body); }
+
+    /* ── SECTIONS ── */
+    .s { padding: 52px 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+    h2 { font-size: clamp(24px, 3.2vw, 34px); letter-spacing: -0.03em; line-height: 1.12; font-weight: 800; margin-bottom: 10px; }
+    .section-sub { color: var(--muted); font-size: 15px; max-width: 58ch; margin-bottom: 32px; line-height: 1.65; }
+
+    /* ── NOT / INSTEAD ── */
+    .contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .contrast-card { padding: 24px 22px; border-radius: 10px; border: 1px solid var(--line); }
+    .cc-old { background: #141c28; }
+    .cc-new { background: #0f1a22; border-color: var(--accent); }
+    .contrast-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
+    .contrast-card ul { list-style: none; padding: 0; }
+    .contrast-card li { font-size: 13px; color: var(--body); line-height: 1.6; padding: 4px 0 4px 18px; position: relative; }
+    .cc-old li::before { content: '✕'; position: absolute; left: 0; color: var(--danger); font-size: 12px; font-weight: 700; }
+    .cc-new li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* ── PROOF STORIES ── */
+    .proof-stories { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .proof-story { display: grid; grid-template-columns: 140px 1fr; gap: 22px; padding: 24px 22px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); align-items: start; }
+    .ps-metric { text-align: center; padding: 14px 0; border-radius: 8px; background: var(--surface-2); }
+    .ps-metric .big { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 2px; }
+    .ps-metric .tag { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; display: inline-block; margin-top: 4px; font-weight: 600; }
+    .tag-blue { background: #0d1f35; color: var(--primary); }
+    .tag-green { background: #0d2618; color: var(--accent); }
+    .tag-amber { background: #2a2010; color: var(--warn); }
+    .ps-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .ps-body p { font-size: 13px; color: var(--body); line-height: 1.65; margin-bottom: 8px; }
+    .ps-body .pe-lens { font-size: 12px; color: var(--muted); line-height: 1.55; padding-top: 8px; border-top: 1px solid var(--line-2); font-style: italic; }
+
+    /* ── PEOPLE ── */
+    .people-note { margin-top: 20px; padding: 20px 22px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); font-size: 14px; color: var(--body); line-height: 1.7; }
+    .people-note strong { color: var(--text); }
+
+    /* ── VERDICT ── */
+    .verdict-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .verdict-card { padding: 22px 20px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); position: relative; overflow: hidden; }
+    .verdict-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .v-kill::before { background: var(--danger); }
+    .v-fix::before { background: var(--warn); }
+    .v-acc::before { background: var(--accent); }
+    .verdict-word { font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+    .v-kill .verdict-word { color: var(--danger); }
+    .v-fix .verdict-word { color: var(--warn); }
+    .v-acc .verdict-word { color: var(--accent); }
+    .verdict-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .verdict-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── PRICING ── */
+    .pricing-card { padding: 28px 26px; border-radius: 12px; border: 1px solid var(--accent); background: #101a24; max-width: 600px; }
+    .pricing-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+    .pricing-card p { font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 12px; }
+    .pricing-card .pricing-contrast { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--dim); padding: 12px 16px; background: #0d1520; border-radius: 8px; line-height: 1.8; margin-top: 16px; }
+    .pricing-card .pricing-contrast strong { color: var(--body); }
+
+    /* ── OPERATOR ── */
+    .operator-card { padding: 24px 24px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); max-width: 680px; }
+    .operator-card p { font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 12px; }
+    .operator-card p:last-child { margin-bottom: 0; }
+    .operator-card strong { color: var(--text); }
+
+    /* ── FINAL CTA ── */
+    .final { padding: 64px 0; text-align: center; }
+    .final h2 { margin-left: auto; margin-right: auto; max-width: 18ch; }
+    .final p { color: var(--muted); font-size: 15px; max-width: 46ch; margin: 0 auto 28px; line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    .footer { padding: 20px 0 36px; border-top: 1px solid var(--line); }
+    .footer .inner { display: flex; justify-content: space-between; align-items: center; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--dim); letter-spacing: 0.02em; }
+    .footer a { color: var(--muted); }
+    .footer a:hover { color: var(--text); }
+
+    @media (max-width: 900px) {
+      .fused-grid, .verdict-grid, .contrast-grid { grid-template-columns: 1fr; }
+      .proof-story { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .site-header .inner { flex-wrap: wrap; gap: 10px; }
+      .header-right { width: 100%; }
+      .header-right .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container inner">
+      <div class="brand">GAIN<em>_</em>PROTOCOL</div>
+      <div class="header-right">
+        <a class="btn btn-ghost" href="exec-room.html">Briefing room</a>
+        <a class="btn btn-primary" href="engage.html">Request a diagnostic</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow"><span class="dot"></span> For PE partners, operating partners, CROs and boards</div>
+
+        <h1>The revenue story has stopped matching reality. We find where.</h1>
+
+        <p class="hero-copy">Most of this work starts at the same point. A board, PE sponsor or customer can feel something is off — but can't see where. Sometimes a transformation that isn't landing. Sometimes a services business growing top line while destroying margin. Sometimes a pipeline story that won't survive due diligence. The thread is always commercial: what are we promising, what are we delivering, and where is value leaking.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="exec-room.html">See a live diagnostic →</a>
+          <a class="btn btn-ghost" href="#how">How it works</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FUSED PROPOSITION ═══ -->
+    <section class="fused">
+      <div class="container">
+        <div class="fused-grid">
+          <div class="fused-card">
+            <div class="fc-num">01 — Diagnostic</div>
+            <h3>Commercial x-ray</h3>
+            <p>30 commercial failure patterns assessed from public data. Filings, accounts, director networks, hiring signals, Glassdoor — cross-referencing what the company says with what the data shows. Delivered in days.</p>
+          </div>
+          <div class="fused-card">
+            <div class="fc-num">02 — Playbook</div>
+            <h3>Value-creation plan</h3>
+            <p>Not a slide deck of recommendations. A sequenced operating plan: what's broken, what to fix first, who owns the move, what the board needs to see. KYC, KYD, win ratio, EBITDA through standardisation.</p>
+          </div>
+          <div class="fused-card">
+            <div class="fc-num">03 — Operator</div>
+            <h3>I carry out the plan</h3>
+            <p>I find the issue, diagnose it, cross-reference it, analyse it, give you the plan — and I'm still here to execute it. In the room with customers. Owning the outcome. Not handing you a to-do list and leaving.</p>
+          </div>
+        </div>
+        <div class="fused-note"><strong>PE usually needs three separate hires for this:</strong> a DD firm, an operating partner, and an exec search. This is all three, fused into one engagement.</div>
+      </div>
+    </section>
+
+    <!-- ═══ NOT THIS / THIS ═══ -->
+    <section class="s" id="how">
+      <div class="container">
+        <div class="section-label" style="color:var(--warn)">How it actually works</div>
+        <h2>Not a refresh. Not a new sales team. Not a new process.</h2>
+        <p class="section-sub">Every other consultancy sells transformation — which is code for "rip everything out and start again." That's not what this is.</p>
+
+        <div class="contrast-grid">
+          <div class="contrast-card cc-old">
+            <h3 style="color:var(--danger)">What consultancies sell</h3>
+            <ul>
+              <li>New sales team</li>
+              <li>New process for the sake of process</li>
+              <li>New propositions from scratch</li>
+              <li>18-month "transformation" programme</li>
+              <li>200 slides, then they leave</li>
+              <li>Pay for time. No outcome accountability.</li>
+            </ul>
+          </div>
+          <div class="contrast-card cc-new">
+            <h3 style="color:var(--accent)">What I actually do</h3>
+            <ul>
+              <li>Re-optimise the people already there — some leave, some stay, some change roles</li>
+              <li>Amend the propositions to ones that make commercial sense</li>
+              <li>Amend the website to say what you actually do</li>
+              <li>Weed out the bad performers — with evidence, not politics</li>
+              <li>Build a plan: KYC, KYD, win ratio, EBITDA through standardisation</li>
+              <li>Stay to carry it out. Pay on value delivered.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PROOF ═══ -->
+    <section class="s">
+      <div class="container">
+        <div class="section-label" style="color:var(--primary)">Proof</div>
+        <h2>Where the numbers come from.</h2>
+        <p class="section-sub">I come at this as a commercial leader, not a programme manager. The work starts with the revenue engine — customers, propositions, pricing, pipeline, retention, delivery — then designs whatever operating changes make it robust.</p>
+
+        <div class="proof-stories">
+
+          <div class="proof-story">
+            <div class="ps-metric">
+              <div class="big">£25M → £183M</div>
+              <span class="tag tag-blue">Portfolio</span>
+            </div>
+            <div class="ps-body">
+              <h3>Enterprise portfolio built — Computacenter</h3>
+              <p>Multiple service lines operating independently, not joined up commercially. Margin under pressure. Pipeline lacked governance. Built a unified commercial architecture across the portfolio at Computacenter: proposition, pricing model, pipeline discipline, cross-sell pathways. Same people, re-optimised. £25M to £183M.</p>
+              <div class="pe-lens">PE lens: disconnected service lines turned into a coherent commercial platform. Revenue quality and pipeline rigour transformed.</div>
+            </div>
+          </div>
+
+          <div class="proof-story">
+            <div class="ps-metric">
+              <div class="big">£20M → £54M</div>
+              <span class="tag tag-amber">Services</span>
+            </div>
+            <div class="ps-body">
+              <h3>Services business scaled, margins strengthened — Computacenter</h3>
+              <p>Services growing but margin not keeping pace. Multiple offerings without a common commercial framework. Rebuilt the proposition, pricing architecture and delivery model at Computacenter. Margin from 15% to 27%. Headcount flat. EBITDA up.</p>
+              <div class="pe-lens">PE lens: turned a top-line growth story into a profitable growth story. Margin and utilisation de-risked.</div>
+            </div>
+          </div>
+
+          <div class="proof-story">
+            <div class="ps-metric">
+              <div class="big">£9M → exit</div>
+              <span class="tag tag-green">Founder</span>
+            </div>
+            <div class="ps-body">
+              <h3>Founder dependency removed</h3>
+              <p>Business unsellable — every major customer relationship ran through one person. Embedded the commercial system around the team, not the individual. Three years to exit. 100% self-sustaining.</p>
+              <div class="pe-lens">PE lens: eliminated the single biggest blocker to enterprise value. Business became sellable.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="people-note">
+          <strong>A lot of this comes down to people.</strong> A pre-sales specialist from SCC who didn't see himself as "sales" — within a few years he was closing a £35M TCV deal. A junior from the back office, by year three owning relationships and delivering over £100M of revenue. People I've backed who now sit as MDs and UK Sales Directors. Fix the system, put the right people in the right roles, back them until they own the number.
+        </div>
+
+        <div class="people-note" style="margin-top:12px; border-color: var(--primary);">
+          <strong>Live right now:</strong> A UK technology services business is using the GAIN diagnostic to assess their target accounts before engagement — understanding the customer's commercial reality, walking in their shoes, not pitching blind. The diagnostic runs against the target's public data so the sales team sees what a sceptical board would see, before they're in the room. That's the methodology in production, not in a slide deck.
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ VERDICT ═══ -->
+    <section class="s">
+      <div class="container">
+        <div class="section-label" style="color:var(--danger)">The diagnostic output</div>
+        <h2>A verdict. Not a report.</h2>
+        <p class="section-sub">Every company assessed gets one of three outcomes. The diagnostic maps the evidence. The verdict tells you what to do with it.</p>
+
+        <div class="verdict-grid">
+          <div class="verdict-card v-kill">
+            <div class="verdict-word">Divest</div>
+            <h3>Structural failure. Revenue quality unattractive.</h3>
+            <p>Pipeline is fiction. Margin compression is structural. Stop investing capital and management time.</p>
+          </div>
+          <div class="verdict-card v-fix">
+            <div class="verdict-word">Remediate</div>
+            <h3>Fractures found. Repairable in 60–90 days.</h3>
+            <p>Pattern-matched leakage. Quantified priorities, named owners, sequenced programme. I stay to execute.</p>
+          </div>
+          <div class="verdict-card v-acc">
+            <div class="verdict-word">Accelerate</div>
+            <h3>Strong fundamentals. Expand EV.</h3>
+            <p>Commercial architecture works. Cross-sell, expansion signals, competitive positioning clear. Double down.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ COMMERCIAL MODEL ═══ -->
+    <section class="s">
+      <div class="container">
+        <div class="section-label" style="color:var(--accent)">Commercial model</div>
+        <h2>Priced on value. Not on time.</h2>
+        <p class="section-sub">I find the issue, diagnose it, build the plan, and carry it out. You pay for the outcome, not the hours.</p>
+
+        <div class="pricing-card">
+          <h3>Diagnostic + plan + execution. One engagement.</h3>
+          <p>The diagnostic surfaces what's broken and quantifies the value at stake. The plan sequences the fix. I stay to deliver it. If the diagnostic shows nothing actionable, you've spent a fraction of what a traditional DD would cost — and you have certainty.</p>
+          <p>Accept the findings or don't. But I'm the only person who will find the issue, diagnose it, cross-reference it against 30 commercial failure patterns, give you the plan, and still be here on Monday to carry it out.</p>
+          <div class="pricing-contrast">
+            <strong>Traditional DD:</strong> £250K–£500K. 6 weeks. Slides. They leave.<br>
+            <strong>GAIN Protocol:</strong> A fraction of that. Days. A verdict. I stay.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ OPERATOR ═══ -->
+    <section class="s">
+      <div class="container">
+        <div class="section-label" style="color:var(--primary)">The operator</div>
+        <h2>CRO / operating-partner. Not slide-ware consultant.</h2>
+        <div class="operator-card">
+          <p>I founded GAIN Protocol because nothing on the market did what I needed as a commercial owner. I wanted to see a business the way a buyer or sceptical board would see it — from the outside in, before anyone told me "the story".</p>
+          <p>GAIN is a commercial diagnostic methodology, now accelerated with AI, starting with the statutory record rather than internal narrative — filings, accounts, director networks, Glassdoor, hiring signals — cross-referencing what the company says with what the data shows.</p>
+          <p>Two propositions I designed remain in market — one serving 4.2M users across 70 countries, another white-labelled by a FTSE 250.</p>
+          <p><strong>Open to permanent CRO / commercial leadership, interim, advisory or operating partner roles</strong> across technology, services and financial services. Front-of-house, in the room with customers, comfortable with numbers and politics, focused on decisions not activity.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FINAL CTA ═══ -->
+    <section class="final">
+      <div class="container">
+        <h2>See the output. Judge it yourself.</h2>
+        <p>A live diagnostic against a real target. Every finding explorable. The briefing room holds up against any question — that's the point.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a class="btn btn-primary" style="min-height:44px;padding:0 24px;font-size:14px;" href="exec-room.html">Enter the briefing room →</a>
+          <a class="btn btn-ghost" style="min-height:44px;" href="engage.html">Request a diagnostic</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container inner">
+      <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="/cdn-cgi/l/email-protection#2a4e4b5c434e6a504f5a4145044945045f41"><span class="__cf_email__" data-cfemail="90f4f1e6f9f4d0eaf5e0fbf
