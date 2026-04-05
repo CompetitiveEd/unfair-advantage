@@ -9,98 +9,121 @@
 <link rel="stylesheet" href="master-forensic.css">
 
 <style>
-:root{--teal:#14b8a6}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#27272a var(--bg)}
-body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+/* ═══ LOCAL VARIABLES FOR COMPONENTS ═══ */
+:root {
+  --bg: #020617; 
+  --s1: #0f172a; 
+  --s2: #1e293b;
+  --border: rgba(255,255,255,0.15);
+  --border-h: rgba(255,255,255,0.3);
+  --text: #f1f5f9;
+  --text-dim: #cbd5e1;
+  --text-bright: #ffffff;
+  --blue: #86c8ff;
+  --purple: #c084fc;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --red: #f87171;
+  --cyan: #22d3ee;
+  --teal: #2dd4bf;
+  --indigo: #818cf8;
+}
 
-/* ═══ REVEAL ═══ */
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #334155 var(--bg); }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ═══ MAIN GRID SYNCED TO 1180PX ═══ */
+.main { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding: 100px 0 0; }
+
+/* ═══ REVEAL ANIMATIONS ═══ */
 @supports (animation-timeline:view()){.reveal{opacity:0;transform:translateY(24px);animation:revealUp linear both;animation-timeline:view();animation-range:entry 0% entry 25%}@keyframes revealUp{to{opacity:1;transform:translateY(0)}}}
 @supports not (animation-timeline:view()){.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}.reveal.vis{opacity:1;transform:translateY(0)}}
 
 /* ═══ HERO ═══ */
-.hero{text-align:center;max-width:800px;margin:0 auto;padding:80px 2rem 2rem}
-.hero-label{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--amb);margin-bottom:1rem}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:700;color:var(--br);margin-bottom:1rem}
-.hero p{font-size:15px;color:var(--dm);line-height:1.7;max-width:600px;margin:0 auto}
-.hero p em{color:var(--amb);font-style:normal;font-weight:600}
+.hero { text-align: center; max-width: 800px; margin: 0 auto; padding: 2rem 0 3rem; }
+.hero-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 1rem; }
+.hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: var(--text-bright); margin-bottom: 1rem; letter-spacing: -0.03em; line-height: 1.1; }
+.hero p { font-size: 18px; color: var(--text-dim); line-height: 1.6; max-width: 600px; margin: 0 auto; font-weight: 500; }
+.hero p em { color: var(--amber); font-style: normal; font-weight: 700; }
 
 /* ═══ ACCOUNT BANNER ═══ */
-.account-banner{max-width:900px;margin:2rem auto;padding:1.25rem 2rem;background:var(--s1);border:1px solid var(--bdr);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-.ab-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--br)}
-.ab-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--dm);letter-spacing:1px}
-.ab-tag{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:5px;background:rgba(239,68,68,.08);color:var(--red);border:1px solid rgba(239,68,68,.15)}
+.account-banner { max-width: 900px; margin: 2rem auto; padding: 1.5rem 2rem; background: var(--s1); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.ab-name { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-bright); letter-spacing: -0.01em; }
+.ab-meta { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); letter-spacing: 1px; margin-top: 4px; }
+.ab-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 6px 12px; border-radius: 6px; background: rgba(248, 113, 113, 0.08); color: var(--red); border: 1px solid rgba(248, 113, 113, 0.2); }
 
 /* ═══ SECTION ═══ */
-.section{max-width:1000px;margin:0 auto;padding:3rem 2rem 2rem}
-.section-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
-.section-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--br)}
-.section-sub{font-size:13px;color:var(--dm);margin-bottom:2rem;max-width:700px;line-height:1.7}
+.section { padding: 3rem 0; margin-bottom: 1rem; }
+.section-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.section-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.section-title { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 800; color: var(--text-bright); letter-spacing: -0.02em; }
+.section-sub { font-size: 15px; color: var(--text-dim); margin-bottom: 2rem; max-width: 700px; line-height: 1.6; }
+.divider { height: 1px; background: var(--border); margin: 2rem 0; }
 
 /* ═══ INPUT CARDS (PDF downloads) ═══ */
-.input-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:1.5rem}
-.input-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:1.25rem;transition:all .25s;cursor:pointer;text-decoration:none;display:block;position:relative}
-.input-card:hover{border-color:var(--dm);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.input-card::after{content:'↓';position:absolute;top:12px;right:12px;font-family:'DM Mono',monospace;font-size:8px;font-weight:700;letter-spacing:1px;color:var(--dm);opacity:.4;padding:2px 6px;border:1px solid var(--bdr);border-radius:3px}
-.ic-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
-.ic-name{font-size:13px;font-weight:700;color:var(--br);margin-bottom:4px;line-height:1.3;padding-right:40px}
-.ic-desc{font-size:11px;color:var(--dm);line-height:1.5}
+.input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 1.5rem; }
+.input-card { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: all .25s; cursor: pointer; text-decoration: none; display: block; position: relative; }
+.input-card:hover { border-color: var(--text-dim); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); background: var(--s2); }
+.input-card::after { content: '↓'; position: absolute; top: 16px; right: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; color: var(--text-dim); opacity: .6; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; }
+.ic-type { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.ic-name { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 800; color: var(--text-bright); margin-bottom: 6px; line-height: 1.3; padding-right: 40px; letter-spacing: -0.01em; }
+.ic-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
 
 /* ═══ OUTPUT CARDS (on-page terminal + download) ═══ */
-.output-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:1.5rem}
-.output-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;transition:all .25s}
-.output-card:hover{border-color:var(--dm)}
-.oc-header{padding:1rem 1.25rem .75rem;display:flex;align-items:center;gap:8px}
-.oc-id{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px}
-.oc-title{font-size:12px;font-weight:700;color:var(--br);flex:1}
-.oc-term{font-family:'DM Mono',monospace;font-size:10px;line-height:1.7;color:#94a3b8;padding:0 1.25rem;max-height:120px;overflow:hidden;position:relative}
-.oc-term::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,var(--s1))}
-.oc-foot{padding:.75rem 1.25rem;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between}
-.oc-chain{font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);opacity:.5}
-.oc-dl{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--blu);text-decoration:none;letter-spacing:.5px;transition:color .2s}
-.oc-dl:hover{color:#60a5fa}
+.output-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 1.5rem; }
+.output-card { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: all .25s; }
+.output-card:hover { border-color: var(--text-dim); }
+.oc-header { padding: 1.25rem 1.5rem .75rem; display: flex; align-items: center; gap: 12px; }
+.oc-id { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+.oc-title { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800; color: var(--text-bright); flex: 1; letter-spacing: -0.01em; }
+.oc-term { font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7; color: #94a3b8; padding: 0 1.5rem; max-height: 140px; overflow: hidden; position: relative; }
+.oc-term::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(transparent, var(--s1)); }
+.oc-foot { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.oc-chain { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-dim); font-weight: 500; }
+.oc-dl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); text-decoration: none; letter-spacing: .5px; transition: color .2s; }
+.oc-dl:hover { color: #a8d8ff; }
 
 /* ═══ CHAIN VISUALISATION ═══ */
-.chain-wrap{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:1.5rem 2rem;overflow-x:auto;margin-bottom:1.5rem}
-.chain-title{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amb);margin-bottom:1rem}
-.chain-flow{display:flex;align-items:center;gap:0;flex-wrap:nowrap;min-width:max-content}
-.chain-node{padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;white-space:nowrap;border:1px solid}
-.chain-arrow{color:var(--dm);opacity:.3;font-size:14px;padding:0 4px;flex-shrink:0}
-.cn-g{color:var(--blu);border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.04)}
-.cn-a{color:var(--purple);border-color:rgba(168,85,247,.2);background:rgba(168,85,247,.04)}
-.cn-i{color:var(--amb);border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.04)}
-.cn-n{color:var(--grn);border-color:rgba(16,185,129,.2);background:rgba(16,185,129,.04)}
-.cn-d{color:var(--red);border-color:rgba(239,68,68,.2);background:rgba(239,68,68,.04)}
+.chain-wrap { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; overflow-x: auto; margin-bottom: 1.5rem; }
+.chain-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 1.5rem; }
+.chain-flow { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; min-width: max-content; }
+.chain-node { padding: 8px 14px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid; }
+.chain-arrow { color: var(--text-dim); opacity: .5; font-size: 16px; padding: 0 8px; flex-shrink: 0; }
+.cn-g { color: var(--blue); border-color: rgba(134, 200, 255, .3); background: rgba(134, 200, 255, .05); }
+.cn-a { color: var(--purple); border-color: rgba(192, 132, 252, .3); background: rgba(192, 132, 252, .05); }
+.cn-i { color: var(--amber); border-color: rgba(251, 191, 36, .3); background: rgba(251, 191, 36, .05); }
+.cn-n { color: var(--green); border-color: rgba(74, 222, 128, .3); background: rgba(74, 222, 128, .05); }
 
 /* ═══ DASHBOARD CARDS ═══ */
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.dash-card{background:var(--s1);border:1px solid var(--bdr);border-radius:10px;padding:1.25rem;cursor:pointer;transition:all .25s}
-.dash-card:hover{border-color:var(--dm);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.dc-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
-.dc-name{font-size:14px;font-weight:700;color:var(--br);margin-bottom:4px}
-.dc-desc{font-size:11px;color:var(--dm);line-height:1.5;margin-bottom:.75rem}
-.dc-link{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.5px;transition:opacity .2s}
+.dash-card { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all .25s; }
+.dash-card:hover { border-color: var(--text-dim); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); background: var(--s2); }
+.dc-type { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.dc-name { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--text-bright); margin-bottom: 6px; letter-spacing: -0.01em; }
+.dc-desc { font-size: 13px; color: var(--text-dim); line-height: 1.5; margin-bottom: 1rem; }
+.dc-link { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .5px; transition: color .2s; }
 
 /* ═══ IFRAME MODAL ═══ */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:.75rem}
-.modal-overlay.open{display:flex}
-.modal{background:var(--bg);border:1px solid rgba(255,255,255,0.08);border-radius:16px;width:100%;max-width:1100px;height:90vh;position:relative;overflow:hidden;animation:modalIn .3s ease}
-@keyframes modalIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.modal-close{position:absolute;top:.75rem;right:.75rem;z-index:10;background:rgba(7,7,10,.8);border:1px solid rgba(255,255,255,0.08);color:var(--dm);font-size:20px;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:all .2s;backdrop-filter:blur(8px)}
-.modal-close:hover{color:var(--br);background:rgba(7,7,10,.95)}
-.modal iframe{width:100%;height:100%;border:none;border-radius:0 0 16px 16px}
-.modal-loading{display:flex;align-items:center;justify-content:center;height:100%;color:var(--dm);font-family:'DM Mono',monospace;font-size:12px}
-
-/* ═══ DIVIDER ═══ */
-.divider{max-width:1000px;margin:0 auto;height:1px;background:var(--bdr)}
+.modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.9); backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 1rem; }
+.modal-overlay.open { display: flex; }
+.modal { background: #020617; border: 1px solid var(--border-h); border-radius: 16px; width: 100%; max-width: 1300px; height: 94vh; position: relative; overflow: hidden; animation: modalIn .3s ease; }
+@keyframes modalIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.modal-close { position: absolute; top: 1rem; right: 1rem; z-index: 10; background: var(--text-bright); color: #000; font-weight: 900; font-size: 18px; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all .2s; border: none; }
+.modal-close:hover { transform: scale(1.05); }
+.modal iframe { width: 100%; height: 100%; border: none; border-radius: 0 0 16px 16px; }
+.modal-loading { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
 
 /* ═══ CTA ═══ */
-.cta{text-align:center;padding:4rem 2rem;border-top:1px solid var(--bdr);position:relative}
-.cta::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(245,158,11,.03),transparent 70%);pointer-events:none}
-.cta h2{font-family:'Playfair Display',serif;font-size:clamp(22px,3vw,32px);font-weight:700;color:var(--br);margin-bottom:1rem}
-.cta p{font-size:14px;color:var(--dm);margin-bottom:2rem;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7}
-.cta-btn{display:inline-flex;align-items:center;gap:10px;background:var(--amb);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:16px 36px;border-radius:8px;text-decoration:none;transition:all .3s}
-.cta-btn:hover{background:#fbbf24;transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
+.cta { text-align: center; padding: 5rem 0; border-top: 1px solid var(--border); margin-top: 3rem; }
+.cta h2 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 4vw, 48px); font-weight: 900; color: var(--text-bright); margin-bottom: .5rem; letter-spacing: -0.03em; }
+.cta p { font-size: 18px; color: var(--text-dim); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; line-height: 1.5; font-weight: 500;}
+.cta-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--amber); color: #000; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 18px 42px; border-radius: 99px; text-decoration: none; transition: all .2s; }
+.cta-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,.2); }
+
+/* ═══ FOOTER ═══ */
+.footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); margin-top: 4rem; }
+.footer-inner { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding-top: 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
+.footer a:hover { color: var(--text-bright); }
 </style>
 </head>
 <body>
@@ -111,16 +134,12 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
     .then(response => response.text())
     .then(data => {
         document.getElementById('master-nav-placeholder').innerHTML = data;
-        
-        // Re-bind the mobile menu button
-        const mobileBtn = document.getElementById('mobile-toggle-btn');
+        const mobileBtn = document.querySelector('.nav-toggle-btn');
         if(mobileBtn) {
             mobileBtn.addEventListener('click', function() {
                 document.getElementById('mobileNav').classList.toggle('open');
             });
         }
-
-        // Re-bind the radial dropdowns
         document.querySelectorAll('.radial-toggle').forEach(function(t){
             t.addEventListener('change',function(){
                 if(this.checked){
@@ -133,315 +152,343 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
         });
     })
     .catch(error => console.error('Error loading navigation:', error));
-
-    // Global click listener to close dropdowns when clicking outside
-    document.addEventListener('click',function(e){
-        document.querySelectorAll('.radial-toggle').forEach(function(t){
-            if(t.checked && !e.target.closest('.radial-menu')) t.checked=false;
-        });
-    });
 </script>
-<section class="hero reveal">
-  <div class="hero-label">Data Room</div>
-  <h1>Nothing Was Made Up. Everything Is Here.</h1>
-  <p>Full evidence trail from a demonstration GAIN deployment. Synthetic data in. Engine outputs out. Dashboards generated. <em>Every input, every output, every chain — fully transparent.</em></p>
-</section>
 
-<div class="account-banner reveal">
-  <div>
-    <div class="ab-name">Meridian Financial Services</div>
-    <div class="ab-meta">Insurance-led multi-line FS · £847M revenue · Synthetic demonstration account</div>
-  </div>
-  <div class="ab-tag">SYNTHETIC DATA</div>
-</div>
+<div class="main">
 
-<div class="divider"></div>
-<section class="section reveal">
-  <div class="section-head">
-    <span class="section-dot" style="background:var(--cyan)"></span>
-    <span class="section-title">Source Data — What Went In</span>
-  </div>
-  <p class="section-sub">Every piece of data that fed the GAIN engines. Synthetic profiles, fabricated filings, mock RFP. All downloadable — the same format you'd feed into the system for a real engagement.</p>
+  <section class="hero reveal">
+    <div class="hero-label">Data Room</div>
+    <h1>Nothing Was Made Up.<br>Everything Is Here.</h1>
+    <p>Full evidence trail from a demonstration GAIN deployment. Synthetic data in. Engine outputs out. Dashboards generated. <em>Every input, every output, every chain — fully transparent.</em></p>
+  </section>
 
-  <div class="input-grid">
-    <a href="dataroom/Meridian-RFP-MFS-2026-ORT-001-v3.docx" class="input-card" style="border-top:2px solid rgba(239,68,68,.2)">
-      <div class="ic-type" style="color:var(--red)">RFP Document</div>
-      <div class="ic-name">MFS-2026-ORT-001 — Managed IT Services RFP</div>
-      <div class="ic-desc">Full RFP for £110–120M, 7-year managed services contract. Scope, evaluation criteria, commercial structure, timeline. The A-01 source.</div>
-    </a>
-    <a href="dataroom/Meridian_Intelligence_scrape.md" class="input-card" style="border-top:2px solid rgba(6,182,212,.2)">
-      <div class="ic-type" style="color:var(--cyan)">Master Intelligence File</div>
-      <div class="ic-name">Meridian Financial Services — OSINT &amp; Market Scrape</div>
-      <div class="ic-desc">Bloomberg alerts, PRA regulatory filings, FY2025 financials, Glassdoor signals, website scrape, analyst downgrades. The G-01/G-02 source.</div>
-    </a>
-    <a href="dataroom/James_Whitfield.md" class="input-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="ic-type" style="color:var(--amb)">Stakeholder Profile</div>
-      <div class="ic-name">James Whitfield — Chief Executive Officer</div>
-      <div class="ic-desc">LinkedIn export, FT interview, CRM notes, behavioural analysis. Architect of Meridian 2030. Under board pressure for quick wins. The G-03 source.</div>
-    </a>
-    <a href="dataroom/Mark_Thompson.md" class="input-card" style="border-top:2px solid rgba(239,68,68,.2)">
-      <div class="ic-type" style="color:var(--red)">Stakeholder Profile</div>
-      <div class="ic-name">Mark Thompson — Chief Financial Officer</div>
-      <div class="ic-desc">LinkedIn export, earnings call transcript, leaked internal memo, CRM notes. Discretionary spend frozen. EBITDA-driven. The G-04 source.</div>
-    </a>
-    <a href="dataroom/NICHOLAS_REID.md" class="input-card" style="border-top:2px solid rgba(168,85,247,.2)">
-      <div class="ic-type" style="color:var(--purple)">Stakeholder Profile</div>
-      <div class="ic-name">Nicholas Reid — Chief Information Officer</div>
-      <div class="ic-desc">LinkedIn, podcast transcript, leaked Chatham House quote, Blind forum posts, CRM records, behavioural video analysis. Tesseract incumbent risk. The G-05 source.</div>
-    </a>
-    <a href="dataroom/David_Harrison.md" class="input-card" style="border-top:2px solid rgba(20,184,166,.2)">
-      <div class="ic-type" style="color:var(--teal)">Stakeholder Profile</div>
-      <div class="ic-name">David Harrison — Chief Operating Officer</div>
-      <div class="ic-desc">LinkedIn, Operations Journal interview, CRM discovery notes, colleague conflict signal. Execution anchor. API latency gatekeeper. The G-06 source.</div>
-    </a>
-    <a href="dataroom/David_Osei.md" class="input-card" style="border-top:2px solid rgba(16,185,129,.2)">
-      <div class="ic-type" style="color:var(--grn)">Stakeholder Profile</div>
-      <div class="ic-name">David Osei — Chief Risk Officer</div>
-      <div class="ic-desc">LinkedIn, thought leadership articles, internal town hall scrape, Blind forum post, CRM notes. Evidence-seeker. Former PRA supervisor. The G-07 source.</div>
-    </a>
-    <a href="dataroom/Jennifer_Norris.md" class="input-card" style="border-top:2px solid rgba(59,130,246,.2)">
-      <div class="ic-type" style="color:var(--blu)">Stakeholder Profile</div>
-      <div class="ic-name">Jennifer Morris — Director, Organisational Resilience</div>
-      <div class="ic-desc">LinkedIn, newsletter article on 47-minute gap, Blind forum, CRM notes. Primary champion. Budget blocked by CIO. Runs resilience on Excel. The G-08 source.</div>
-    </a>
-    <a href="dataroom/Andrew_Chen.md" class="input-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="ic-type" style="color:var(--amb)">Stakeholder Profile</div>
-      <div class="ic-name">Andrew Chen — Head of IT Infrastructure</div>
-      <div class="ic-desc">LinkedIn, leaked town hall recording, Blind forum, CRM notes, behavioural analysis. BS detector. 62% of servers end-of-life. Operational veto holder. The G-09 source.</div>
-    </a>
-    <a href="dataroom/Sir_Anthony_Pemberton.md" class="input-card" style="border-top:2px solid rgba(239,68,68,.2)">
-      <div class="ic-type" style="color:var(--red)">Stakeholder Profile</div>
-      <div class="ic-name">Sir Anthony Pemberton — NED &amp; Chair, Audit/Risk Committee</div>
-      <div class="ic-desc">Directors register, Sunday Times interview, Guildhall Club whispers, Glassdoor, CRM notes. Former PRA CEO. Ultimate veto. Driving the EY audit. The G-10 source.</div>
-    </a>
-  </div>
-</section>
-
-<div class="divider"></div>
-<section class="section reveal">
-  <div class="section-head">
-    <span class="section-dot" style="background:var(--amb)"></span>
-    <span class="section-title">The Chain — What Ran and In What Order</span>
-  </div>
-  <p class="section-sub">This is the sequence the diagnostic prescribed for Meridian. Each engine fed the next. The architecture decided the order — the operator confirmed it.</p>
-
-  <div class="chain-wrap">
-    <div class="chain-title">Primary Chain → Meridian Financial Services (MFS-2026-ORT-001)</div>
-    <div class="chain-flow">
-      <span class="chain-node cn-g">G-01 Macro Intel</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-02 Financials</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Pemberton</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Thompson</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Whitfield</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Reid</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Harrison</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Osei</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Morris</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g">G-03 Chen</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g" style="color:var(--amb);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06)">G-03B Compound</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-a">A-01 RFP Decode</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-i">I-01 Pre-Mortem</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-i">I-01B Lose Themes</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-i">I-02 Win Themes</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-n">N-00 Warning Brief</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-n">N-01 Expansion</span>
+  <div class="account-banner reveal">
+    <div>
+      <div class="ab-name">Meridian Financial Services</div>
+      <div class="ab-meta">Insurance-led multi-line FS · £847M revenue · Synthetic demonstration account</div>
     </div>
+    <div class="ab-tag">SYNTHETIC DATA</div>
   </div>
 
-  <div class="chain-wrap" style="margin-top:12px">
-    <div class="chain-title">G-03B Note — Why the Compound Profile Runs After All G-03s</div>
-    <div class="chain-flow">
-      <span class="chain-node cn-g">G-03 × 8 Profiles</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-g" style="color:var(--amb);border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06)">G-03B Compound Assimilator</span><span class="chain-arrow">→</span>
-      <span class="chain-node cn-a">A-01 Enriched</span>
-      <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);opacity:.5;padding:0 12px">G-03B synthesises the full stakeholder map into power topology, coalition analysis, and fault lines before the RFP decode begins. It cannot run until all individual G-03s are complete.</span>
+  <div class="divider"></div>
+  
+  <section class="section reveal">
+    <div class="section-head">
+      <span class="section-dot" style="background:var(--cyan)"></span>
+      <span class="section-title">Source Data — What Went In</span>
     </div>
-  </div>
-</section>
+    <p class="section-sub">Every piece of data that fed the GAIN engines. Synthetic profiles, fabricated filings, mock RFP. All downloadable — the same format you'd feed into the system for a real engagement.</p>
 
-<div class="divider"></div>
-<section class="section reveal">
-  <div class="section-head">
-    <span class="section-dot" style="background:var(--blu)"></span>
-    <span class="section-title">Engine Outputs — What Came Out</span>
-  </div>
-  <p class="section-sub">Raw intelligence reports from each engine run. Terminal-format previews below, full outputs downloadable. These are the compound engine outputs — not summaries, not templates.</p>
+    <div class="input-grid">
+      <a href="dataroom/Meridian-RFP-MFS-2026-ORT-001-v3.docx" class="input-card" style="border-top:4px solid var(--red)">
+        <div class="ic-type" style="color:var(--red)">RFP Document</div>
+        <div class="ic-name">MFS-2026-ORT-001 — Managed IT Services RFP</div>
+        <div class="ic-desc">Full RFP for £110–120M, 7-year managed services contract. Scope, evaluation criteria, commercial structure, timeline. The A-01 source.</div>
+      </a>
+      <a href="dataroom/Meridian_Intelligence_scrape.md" class="input-card" style="border-top:4px solid var(--cyan)">
+        <div class="ic-type" style="color:var(--cyan)">Master Intelligence File</div>
+        <div class="ic-name">Meridian Financial Services — OSINT &amp; Market Scrape</div>
+        <div class="ic-desc">Bloomberg alerts, PRA regulatory filings, FY2025 financials, Glassdoor signals, website scrape, analyst downgrades. The G-01/G-02 source.</div>
+      </a>
+      <a href="dataroom/James_Whitfield.md" class="input-card" style="border-top:4px solid var(--amber)">
+        <div class="ic-type" style="color:var(--amber)">Stakeholder Profile</div>
+        <div class="ic-name">James Whitfield — Chief Executive Officer</div>
+        <div class="ic-desc">LinkedIn export, FT interview, CRM notes, behavioural analysis. Architect of Meridian 2030. Under board pressure for quick wins. The G-03 source.</div>
+      </a>
+      <a href="dataroom/Mark_Thompson.md" class="input-card" style="border-top:4px solid var(--red)">
+        <div class="ic-type" style="color:var(--red)">Stakeholder Profile</div>
+        <div class="ic-name">Mark Thompson — Chief Financial Officer</div>
+        <div class="ic-desc">LinkedIn export, earnings call transcript, leaked internal memo, CRM notes. Discretionary spend frozen. EBITDA-driven. The G-04 source.</div>
+      </a>
+      <a href="dataroom/NICHOLAS_REID.md" class="input-card" style="border-top:4px solid var(--purple)">
+        <div class="ic-type" style="color:var(--purple)">Stakeholder Profile</div>
+        <div class="ic-name">Nicholas Reid — Chief Information Officer</div>
+        <div class="ic-desc">LinkedIn, podcast transcript, leaked Chatham House quote, Blind forum posts, CRM records, behavioural video analysis. Tesseract incumbent risk. The G-05 source.</div>
+      </a>
+      <a href="dataroom/David_Harrison.md" class="input-card" style="border-top:4px solid var(--teal)">
+        <div class="ic-type" style="color:var(--teal)">Stakeholder Profile</div>
+        <div class="ic-name">David Harrison — Chief Operating Officer</div>
+        <div class="ic-desc">LinkedIn, Operations Journal interview, CRM discovery notes, colleague conflict signal. Execution anchor. API latency gatekeeper. The G-06 source.</div>
+      </a>
+      <a href="dataroom/David_Osei.md" class="input-card" style="border-top:4px solid var(--green)">
+        <div class="ic-type" style="color:var(--green)">Stakeholder Profile</div>
+        <div class="ic-name">David Osei — Chief Risk Officer</div>
+        <div class="ic-desc">LinkedIn, thought leadership articles, internal town hall scrape, Blind forum post, CRM notes. Evidence-seeker. Former PRA supervisor. The G-07 source.</div>
+      </a>
+      <a href="dataroom/Jennifer_Norris.md" class="input-card" style="border-top:4px solid var(--blue)">
+        <div class="ic-type" style="color:var(--blue)">Stakeholder Profile</div>
+        <div class="ic-name">Jennifer Morris — Director, Organisational Resilience</div>
+        <div class="ic-desc">LinkedIn, newsletter article on 47-minute gap, Blind forum, CRM notes. Primary champion. Budget blocked by CIO. Runs resilience on Excel. The G-08 source.</div>
+      </a>
+      <a href="dataroom/Andrew_Chen.md" class="input-card" style="border-top:4px solid var(--amber)">
+        <div class="ic-type" style="color:var(--amber)">Stakeholder Profile</div>
+        <div class="ic-name">Andrew Chen — Head of IT Infrastructure</div>
+        <div class="ic-desc">LinkedIn, leaked town hall recording, Blind forum, CRM notes, behavioural analysis. BS detector. 62% of servers end-of-life. Operational veto holder. The G-09 source.</div>
+      </a>
+      <a href="dataroom/Sir_Anthony_Pemberton.md" class="input-card" style="border-top:4px solid var(--red)">
+        <div class="ic-type" style="color:var(--red)">Stakeholder Profile</div>
+        <div class="ic-name">Sir Anthony Pemberton — NED &amp; Chair, Audit/Risk Committee</div>
+        <div class="ic-desc">Directors register, Sunday Times interview, Guildhall Club whispers, Glassdoor, CRM notes. Former PRA CEO. Ultimate veto. Driving the EY audit. The G-10 source.</div>
+      </a>
+    </div>
+  </section>
 
-  <div class="output-grid">
-    <div class="output-card" style="border-top:2px solid rgba(59,130,246,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--blu)">G-01</span><span class="oc-title">Macro Intelligence — Meridian</span></div>
-      <div class="oc-term">▶ BLEEDING NECK: Audit Paralysis — EY audit freezing CIO CAPEX; transformation is a ghost ship.
+  <div class="divider"></div>
+
+  <section class="section reveal">
+    <div class="section-head">
+      <span class="section-dot" style="background:var(--amber)"></span>
+      <span class="section-title">The Chain — What Ran and In What Order</span>
+    </div>
+    <p class="section-sub">This is the sequence the diagnostic prescribed for Meridian. Each engine fed the next. The architecture decided the order — the operator confirmed it.</p>
+
+    <div class="chain-wrap">
+      <div class="chain-title">Primary Chain → Meridian Financial Services (MFS-2026-ORT-001)</div>
+      <div class="chain-flow">
+        <span class="chain-node cn-g">G-01 Macro Intel</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-02 Financials</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Pemberton</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Thompson</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Whitfield</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Reid</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Harrison</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Osei</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Morris</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g">G-03 Chen</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g" style="color:var(--amber);border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.08)">G-03B Compound</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-a">A-01 RFP Decode</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-i">I-01 Pre-Mortem</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-i">I-01B Lose Themes</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-i">I-02 Win Themes</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-n">N-00 Warning Brief</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-n">N-01 Expansion</span>
+      </div>
+    </div>
+
+    <div class="chain-wrap" style="margin-top:16px">
+      <div class="chain-title">G-03B Note — Why the Compound Profile Runs After All G-03s</div>
+      <div class="chain-flow">
+        <span class="chain-node cn-g">G-03 × 8 Profiles</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-g" style="color:var(--amber);border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.08)">G-03B Compound Assimilator</span><span class="chain-arrow">→</span>
+        <span class="chain-node cn-a">A-01 Enriched</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-dim);opacity:.7;padding:0 16px;line-height:1.5;">G-03B synthesises the full stakeholder map into power topology, coalition analysis, and fault lines before the RFP decode begins. It cannot run until all individual G-03s are complete.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section reveal">
+    <div class="section-head">
+      <span class="section-dot" style="background:var(--blue)"></span>
+      <span class="section-title">Engine Outputs — What Came Out</span>
+    </div>
+    <p class="section-sub">Raw intelligence reports from each engine run. Terminal-format previews below, full outputs downloadable. These are the compound engine outputs — not summaries, not templates.</p>
+
+    <div class="output-grid">
+      <div class="output-card" style="border-top:4px solid var(--blue)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--blue)">G-01</span><div class="oc-title">Macro Intelligence — Meridian</div></div>
+        <div class="oc-term">▶ BLEEDING NECK: Audit Paralysis — EY audit freezing CIO CAPEX; transformation is a ghost ship.
 ▶ BLEEDING NECK: PRA Compliance Cliff — Q3 ISO 22301 deadline, 34 non-conformities (12 major).
 ▶ COST OF INACTION: £30.8M/yr | £92.4M 3-year projection.
 ▶ CORRIDOR TEST: Budget frozen; they're buying £115M outsourcing, not £2.5M software.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds G-02, G-03, A-01</span><a href="dataroom/G-01_Macro_Intel_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds G-02, G-03, A-01</span><a href="dataroom/G-01_Macro_Intel_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(59,130,246,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--blu)">G-02</span><span class="oc-title">Financial Forensics — Meridian</span></div>
-      <div class="oc-term">▶ MARGIN PANIC: SG&amp;A 220bps above peer Oakstone. Micro-outage OPEX bleed £2.8M (+12% YoY).
+      <div class="output-card" style="border-top:4px solid var(--blue)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--blue)">G-02</span><div class="oc-title">Financial Forensics — Meridian</div></div>
+        <div class="oc-term">▶ MARGIN PANIC: SG&amp;A 220bps above peer Oakstone. Micro-outage OPEX bleed £2.8M (+12% YoY).
 ▶ CAPEX WAR: CFO used EY audit to reclassify IT build as OPEX — froze Reid's budget entirely.
 ▶ INNOVATION FUND: 2% of £115M RFP = £2.3M ring-fenced use-it-or-lose-it. Our target budget.
 ▶ YEAR 1 RISK: £13.8M–£19.8M if 62% EOL estate handed to SI unmapped.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, A-01, I-01</span><a href="dataroom/G-02_Financial_Forensics_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, A-01, I-01</span><a href="dataroom/G-02_Financial_Forensics_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(168,85,247,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--purple)">G-03</span><span class="oc-title">Executive Profile — Sir Anthony Pemberton</span></div>
-      <div class="oc-term">▶ GAIN DRIVER: SAFETY — protecting personal legacy; former PRA CEO embarrassed by MFS warnings.
+      <div class="output-card" style="border-top:4px solid var(--purple)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--purple)">G-03</span><div class="oc-title">Executive Profile — Sir Anthony Pemberton</div></div>
+        <div class="oc-term">▶ GAIN DRIVER: SAFETY — protecting personal legacy; former PRA CEO embarrassed by MFS warnings.
 ▶ KEGAN STAGE 5: Holds regulator + auditor + director perspectives simultaneously.
 ▶ ULTIMATE VETO: Will kill any project framed as "transformation." Wants governance certainty.
 ▶ LANDMINE: Never use "Agile," "Transformation," or aspirational roadmaps in his presence.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, I-01</span><a href="dataroom/G-03_Profile_Anthony_Pemberton.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, I-01</span><a href="dataroom/G-03_Profile_Anthony_Pemberton.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(168,85,247,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--purple)">G-03</span><span class="oc-title">Executive Profile — Mark Thompson</span></div>
-      <div class="oc-term">▶ GAIN DRIVER: SAFETY — LTIP 70% tied to EBITDA; ROE at 14.7% under threat.
+      <div class="output-card" style="border-top:4px solid var(--purple)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--purple)">G-03</span><div class="oc-title">Executive Profile — Mark Thompson</div></div>
+        <div class="oc-term">▶ GAIN DRIVER: SAFETY — LTIP 70% tied to EBITDA; ROE at 14.7% under threat.
 ▶ WEAPON: Brought in former employer EY to reclassify IT CAPEX and freeze the CIO.
 ▶ ONLY BUY: OPEX reduction + audit-grade ROI — walked out of last vendor meeting on word "innovation."
 ▶ CORRIDOR TEST: He's an auditor at war with his CIO to protect his margin-based bonus.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, I-01</span><a href="dataroom/G-03_Profile_Mark_Thompson.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds G-03B, I-01</span><a href="dataroom/G-03_Profile_Mark_Thompson.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--amb)">G-03B</span><span class="oc-title">Compound Profile — Meridian Boardroom</span></div>
-      <div class="oc-term">▶ SHADOW HIERARCHY: Pemberton → Thompson → Blackwell bypasses Whitfield → blocks Reid entirely.
+      <div class="output-card" style="border-top:4px solid var(--amber)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--amber)">G-03B</span><div class="oc-title">Compound Profile — Meridian Boardroom</div></div>
+        <div class="oc-term">▶ SHADOW HIERARCHY: Pemberton → Thompson → Blackwell bypasses Whitfield → blocks Reid entirely.
 ▶ WINNING COALITION: Osei (CRO) + Morris + Thompson + Blackwell — 4 of 8. Bypass the CIO.
 ▶ BLOCKING COALITION: Reid (saboteur) + Pemberton (veto if framed as "CEO tech fluff").
 ▶ FAULT LINE: Morris wants full mapping. Reid is hiding failures. Frame discovery as "SI baseline."</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds A-01, I-01, I-01B</span><a href="dataroom/G-03B_Compound_Profile_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds A-01, I-01, I-01B</span><a href="dataroom/G-03B_Compound_Profile_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(168,85,247,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--purple)">A-01</span><span class="oc-title">RFP Strategic Decoder — MFS-2026-ORT-001</span></div>
-      <div class="oc-term">▶ REALITY CHECK: Not a transformation RFP — a boardroom panic button to shift risk off balance sheet.
+      <div class="output-card" style="border-top:4px solid var(--purple)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--purple)">A-01</span><div class="oc-title">RFP Strategic Decoder — MFS-2026-ORT-001</div></div>
+        <div class="oc-term">▶ REALITY CHECK: Not a transformation RFP — a boardroom panic button to shift risk off balance sheet.
 ▶ 15% AT-RISK: Extreme vendor distrust. One outage = £1.4M penalty. Authored by Blackwell/Thompson.
 ▶ TOWER 4 SIGNAL: Resilience standalone tower = IT and Resilience fundamentally disconnected.
 ▶ CORRIDOR TEST: Bid to the CFO's margin panic and CRO's regulatory fears. Ignore "transformation."</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds I-01, I-01B, I-02</span><a href="dataroom/A-01_RFP_Decode_Meridian_v1.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds I-01, I-01B, I-02</span><a href="dataroom/A-01_RFP_Decode_Meridian_v1.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--amb)">I-01</span><span class="oc-title">Deal Pre-Mortem — Meridian</span></div>
-      <div class="oc-term">▶ FAILURE #1: CIO Survival Sabotage (75%) — Reid will expose tool threatens his faked MTTR metrics.
+      <div class="output-card" style="border-top:4px solid var(--amber)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--amber)">I-01</span><div class="oc-title">Deal Pre-Mortem — Meridian</div></div>
+        <div class="oc-term">▶ FAILURE #1: CIO Survival Sabotage (75%) — Reid will expose tool threatens his faked MTTR metrics.
 ▶ FAILURE #2: Vendor Loyalty Override (60%) — Reid brought Tesseract to his last 3 roles.
 ▶ FAILURE #3: Audit Chair Veto (45%) — Pemberton deems Helios "too small" for £115M.
 ▶ COMBINED LOSS PROBABILITY: 68%. Preemptive: frame HIO as "CIO Governance Shield."</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds I-01B, I-02</span><a href="dataroom/I-01_PreMortem_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds I-01B, I-02</span><a href="dataroom/I-01_PreMortem_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--amb)">I-01B</span><span class="oc-title">Lose Theme Architect — Meridian</span></div>
-      <div class="oc-term">▶ LOSE #1: CIO Survival Sabotage (TC-01/02, 35%) — REFRAME: make Reid the hero of the story.
+      <div class="output-card" style="border-top:4px solid var(--amber)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--amber)">I-01B</span><div class="oc-title">Lose Theme Architect — Meridian</div></div>
+        <div class="oc-term">▶ LOSE #1: CIO Survival Sabotage (TC-01/02, 35%) — REFRAME: make Reid the hero of the story.
 ▶ LOSE #2: Year 1 Margin Impact (CC-04, 10%) — COMPENSATE: 50% deferred payment offer.
 ▶ ANTIFRAGILE: If we win Reid by protecting him, his survival becomes dependent on us.
 ▶ CORRIDOR TEST: The CIO will sabotage unless we make him the hero. That is the one thing.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds I-02</span><a href="dataroom/I-01B_Lose_Themes_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds I-02</span><a href="dataroom/I-01B_Lose_Themes_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(245,158,11,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--amb)">I-02</span><span class="oc-title">Win Theme Architect — Meridian</span></div>
-      <div class="oc-term">▶ CATEGORY REFRAME: "We are not an IT outsourcer; we are a regulatory remediation partner."
+      <div class="output-card" style="border-top:4px solid var(--amber)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--amber)">I-02</span><div class="oc-title">Win Theme Architect — Meridian</div></div>
+        <div class="oc-term">▶ CATEGORY REFRAME: "We are not an IT outsourcer; we are a regulatory remediation partner."
 ▶ THEME 1: The Regulatory Rescue — clear the PRA Section 166 warning on Day 1 (Osei/Pemberton).
 ▶ THEME 2: Self-Funding Resilience — £905K FY25 gain-share proof. OPEX neutral (Thompson).
 ▶ THEME 3: The Governance Shield — HIO audit layer gives Reid a face-saving data narrative.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds N-00, N-01</span><a href="dataroom/I-02_Win_Themes_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds N-00, N-01</span><a href="dataroom/I-02_Win_Themes_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(16,185,129,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--grn)">N-00</span><span class="oc-title">Commercial Warning Brief — Meridian</span></div>
-      <div class="oc-term">▶ OPERATIONAL TIME BOMB: 62% EOL estate. CIO has been faking MTTR logs. Do a Truth Audit in week 1.
+      <div class="output-card" style="border-top:4px solid var(--green)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--green)">N-00</span><div class="oc-title">Commercial Warning Brief — Meridian</div></div>
+        <div class="oc-term">▶ OPERATIONAL TIME BOMB: 62% EOL estate. CIO has been faking MTTR logs. Do a Truth Audit in week 1.
 ▶ LANDMINE: Tom Hadley verbally promised to absorb first £250k of transition overruns. Not in contract.
 ▶ TUPE: 109 FTE transfer. CIO views Helios as existential threat — will block access.
 ▶ THE ONE THING: Do not challenge Reid's past metrics publicly. Give him a "Data Cleansing" exit.</div>
-      <div class="oc-foot"><span class="oc-chain">→ Feeds N-01</span><a href="dataroom/N-00_Warning_Brief_Meridian.md" class="oc-dl">Download ↓</a></div>
-    </div>
+        <div class="oc-foot"><span class="oc-chain">→ Feeds N-01</span><a href="dataroom/N-00_Warning_Brief_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
 
-    <div class="output-card" style="border-top:2px solid rgba(16,185,129,.2)">
-      <div class="oc-header"><span class="oc-id" style="color:var(--grn)">N-01</span><span class="oc-title">Expansion Signal Scan — Meridian</span></div>
-      <div class="oc-term">▶ RELATIONSHIP: MIXED — CRO and Morris are champions. CIO hostile. Fix ops before expanding.
+      <div class="output-card" style="border-top:4px solid var(--green)">
+        <div class="oc-header"><span class="oc-id" style="color:var(--green)">N-01</span><div class="oc-title">Expansion Signal Scan — Meridian</div></div>
+        <div class="oc-term">▶ RELATIONSHIP: MIXED — CRO and Morris are champions. CIO hostile. Fix ops before expanding.
 ▶ EXPANSION #1: ISO Remediation-as-a-Service — 0-90 days, Q3 deadline, £1.2M OPEX. GO NOW.
 ▶ EXPANSION #2: DORA Advisory — 3-6 months, £250k advisory. Build readiness.
 ▶ EXPANSION #3: Recovery Automation — 6-12 months, £2.2M project. Wait for ops stability.</div>
-      <div class="oc-foot"><span class="oc-chain">← Final chain output</span><a href="dataroom/N-01_Expansion_Signals_Meridian.md" class="oc-dl">Download ↓</a></div>
+        <div class="oc-foot"><span class="oc-chain">← Final chain output</span><a href="dataroom/N-01_Expansion_Signals_Meridian.md" class="oc-dl">Download ↓</a></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
-<section class="section reveal">
-  <div class="section-head">
-    <span class="section-dot" style="background:var(--grn)"></span>
-    <span class="section-title">Dashboards — What Got Generated</span>
-  </div>
-  <p class="section-sub">The engine outputs compiled into live intelligence dashboards. Not static PDFs — interactive HTML that updates when you re-run engines. Click to open.</p>
+  <div class="divider"></div>
 
-  <div class="dash-grid">
-    <div class="dash-card" style="border-top:2px solid rgba(16,185,129,.2)" onclick="openDash('dashboard/dash-operational.html')">
-      <div class="dc-type" style="color:var(--grn)">Operational Dashboard</div>
-      <div class="dc-name">Meridian — 4-Tab Intelligence Surface</div>
-      <div class="dc-desc">Know · Map · Win · Grow tabs. Stakeholder dossiers, influence map, disruption questions, competitive landscape.</div>
-      <div class="dc-link" style="color:var(--grn)">Open dashboard →</div>
+  <section class="section reveal">
+    <div class="section-head">
+      <span class="section-dot" style="background:var(--green)"></span>
+      <span class="section-title">Dashboards — What Got Generated</span>
     </div>
-    <div class="dash-card" style="border-top:2px solid rgba(59,130,246,.2)" onclick="openDash('dashboard/dash-account-pack.html')">
-      <div class="dc-type" style="color:var(--blu)">Account Pack</div>
-      <div class="dc-name">Meridian — Full Intelligence Pack</div>
-      <div class="dc-desc">Company macro, stakeholder grid, win strategy, cards to play, next actions. The terminal-format pack.</div>
-      <div class="dc-link" style="color:var(--blu)">Open pack →</div>
-    </div>
-    <div class="dash-card" style="border-top:2px solid rgba(239,68,68,.2)" onclick="openDash('dashboard/gain-deal-diagnostic.html')">
-      <div class="dc-type" style="color:var(--red)">Deal Diagnostic</div>
-      <div class="dc-name">Project Atlas — Pre-Mortem</div>
-      <div class="dc-desc">Five failure modes, probability weightings, countermeasures. Go/no-go verdict.</div>
-      <div class="dc-link" style="color:var(--red)">Open diagnostic →</div>
-    </div>
-    <div class="dash-card" style="border-top:2px solid rgba(168,85,247,.2)" onclick="openDash('dashboard/gain-cmo-fmo-comparison.html')">
-      <div class="dc-type" style="color:var(--purple)">CMO → FMO</div>
-      <div class="dc-name">Meridian — Operating Model Gap</div>
-      <div class="dc-desc">Current-state to future-state per domain. Maturity scoring with transformation milestones.</div>
-      <div class="dc-link" style="color:var(--purple)">Open comparison →</div>
-    </div>
-    <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.2)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
-      <div class="dc-type" style="color:var(--amb)">Portfolio Triage</div>
-      <div class="dc-name">Albion Capital Partners — Fund View</div>
-      <div class="dc-desc">12 portfolio companies scored. Pipeline, concentration, capability, process maturity.</div>
-      <div class="dc-link" style="color:var(--amb)">Open triage →</div>
-    </div>
-    <div class="dash-card" style="border-top:2px solid rgba(245,158,11,.2)" onclick="openDash('dashboard/dash-react-accountpack.html')">
-      <div class="dc-type" style="color:var(--amb)">Interactive Account Pack</div>
-      <div class="dc-name">Meridian — Full React Dashboard</div>
-      <div class="dc-desc">The interactive version. Expandable sections, all stakeholders, complete intelligence layer.</div>
-      <div class="dc-link" style="color:var(--amb)">Open interactive →</div>
-    </div>
-  </div>
-</section>
+    <p class="section-sub">The engine outputs compiled into live intelligence dashboards. Not static PDFs — interactive HTML that updates when you re-run engines. Click to open.</p>
 
-<section class="cta reveal">
-  <h2>Seen Enough?</h2>
-  <p>This is what the system produces from synthetic data. Imagine what it does with real intelligence about your live deals.</p>
-  <a href="/engage.html" class="cta-btn">Start the Conversation</a>
-</section>
+    <div class="dash-grid">
+      <div class="dash-card" style="border-top:4px solid var(--green)" onclick="openDash('dashboard/dash-operational.html')">
+        <div class="dc-type" style="color:var(--green)">Operational Dashboard</div>
+        <div class="dc-name">Meridian — 4-Tab Intelligence Surface</div>
+        <div class="dc-desc">Know · Map · Win · Grow tabs. Stakeholder dossiers, influence map, disruption questions, competitive landscape.</div>
+        <div class="dc-link" style="color:var(--green)">Open dashboard →</div>
+      </div>
+      <div class="dash-card" style="border-top:4px solid var(--blue)" onclick="openDash('dashboard/dash-account-pack.html')">
+        <div class="dc-type" style="color:var(--blue)">Account Pack</div>
+        <div class="dc-name">Meridian — Full Intelligence Pack</div>
+        <div class="dc-desc">Company macro, stakeholder grid, win strategy, cards to play, next actions. The terminal-format pack.</div>
+        <div class="dc-link" style="color:var(--blue)">Open pack →</div>
+      </div>
+      <div class="dash-card" style="border-top:4px solid var(--red)" onclick="openDash('dashboard/gain-deal-diagnostic.html')">
+        <div class="dc-type" style="color:var(--red)">Deal Diagnostic</div>
+        <div class="dc-name">Project Atlas — Pre-Mortem</div>
+        <div class="dc-desc">Five failure modes, probability weightings, countermeasures. Go/no-go verdict.</div>
+        <div class="dc-link" style="color:var(--red)">Open diagnostic →</div>
+      </div>
+      <div class="dash-card" style="border-top:4px solid var(--purple)" onclick="openDash('dashboard/gain-cmo-fmo-comparison.html')">
+        <div class="dc-type" style="color:var(--purple)">CMO → FMO</div>
+        <div class="dc-name">Meridian — Operating Model Gap</div>
+        <div class="dc-desc">Current-state to future-state per domain. Maturity scoring with transformation milestones.</div>
+        <div class="dc-link" style="color:var(--purple)">Open comparison →</div>
+      </div>
+      <div class="dash-card" style="border-top:4px solid var(--amber)" onclick="openDash('dashboard/gain-portfolio-triage.html')">
+        <div class="dc-type" style="color:var(--amber)">Portfolio Triage</div>
+        <div class="dc-name">Albion Capital Partners — Fund View</div>
+        <div class="dc-desc">12 portfolio companies scored. Pipeline, concentration, capability, process maturity.</div>
+        <div class="dc-link" style="color:var(--amber)">Open triage →</div>
+      </div>
+      <div class="dash-card" style="border-top:4px solid var(--amber)" onclick="openDash('dashboard/dash-react-accountpack.html')">
+        <div class="dc-type" style="color:var(--amber)">Interactive Account Pack</div>
+        <div class="dc-name">Meridian — Full React Dashboard</div>
+        <div class="dc-desc">The interactive version. Expandable sections, all stakeholders, complete intelligence layer.</div>
+        <div class="dc-link" style="color:var(--amber)">Open interactive →</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta reveal">
+    <h2>Seen Enough?</h2>
+    <p>This is what the system produces from synthetic data. Imagine what it does with real intelligence about your live deals.</p>
+    <a href="/engage.html" class="cta-btn">Start the Conversation</a>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
+    <div class="mono" style="font-size:11px;">© 2026</div>
+  </div>
+</footer>
 
 <div class="modal-overlay" id="dashModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeDash()">&times;</button>
-    <div class="modal-loading" id="dashLoading">Loading...</div>
+    <button class="modal-close" onclick="closeDash()">✕</button>
+    <div class="modal-loading" id="dashLoading">Loading dashboard...</div>
     <iframe id="dashFrame" style="display:none" onload="document.getElementById('dashLoading').style.display='none';this.style.display='block'"></iframe>
   </div>
 </div>
 
-<footer class="footer">
-  <p class="footer-text">© 2026 David Matthews · <a href="https://linkedin.com/in/davidmatthewsuk">LinkedIn</a> · GAIN Protocol</p>
-</footer>
-
 <script>
-function openDash(url){var m=document.getElementById('dashModal'),f=document.getElementById('dashFrame'),l=document.getElementById('dashLoading');l.style.display='flex';f.style.display='none';f.src=url;m.classList.add('open');document.body.style.overflow='hidden'}
-function closeDash(){var m=document.getElementById('dashModal'),f=document.getElementById('dashFrame');f.src='';m.classList.remove('open');document.body.style.overflow=''}
-document.getElementById('dashModal').addEventListener('click',function(e){if(e.target===this)closeDash()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
+(function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+})();
 
-if(!CSS.supports('animation-timeline','view()')){var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target)}})},{threshold:.1});document.querySelectorAll('.reveal').forEach(function(el){o.observe(el)})}
+function openDash(url){
+  var modal=document.getElementById('dashModal');
+  var frame=document.getElementById('dashFrame');
+  var loading=document.getElementById('dashLoading');
+  loading.style.display='flex';
+  frame.style.display='none';
+  frame.src=url;
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDash(){
+  var modal=document.getElementById('dashModal');
+  var frame=document.getElementById('dashFrame');
+  frame.src='';
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('dashModal').addEventListener('click',function(e){
+  if(e.target===this)closeDash();
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDash()});
 </script>
 </body>
 </html>
