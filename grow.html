@@ -158,6 +158,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
     })
     .catch(error => console.error('Error loading navigation:', error));
 
+    // Global click listener to close dropdowns when clicking outside
     document.addEventListener('click',function(e){
         document.querySelectorAll('.radial-toggle').forEach(function(t){
             if(t.checked && !e.target.closest('.radial-menu')) t.checked=false;
@@ -166,6 +167,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
 </script>
 
 <div class="main">
+
   <section class="hero reveal">
     <div class="phase-letter">N</div>
     <h1>Nurture — <em style="color:var(--green);">Grow Them.</em></h1>
@@ -180,14 +182,14 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
   </section>
 
   <section class="section reveal">
-    <div class="sl">Case Transfer — Handover to Custody</div>
+    <div class="sl" style="color:var(--green)">Case Transfer — Handover to Custody</div>
     <div class="prompt-grid">
       <div class="pcard" onclick="loadPrompt('n-00')"><div class="pcard-id">N-00</div><div class="pcard-title">The Commercial Warning Brief</div><div class="pcard-cat">What delivery must know before Day 1</div><span class="pcard-badge open">OPEN</span></div>
     </div>
   </section>
 
   <section class="section reveal">
-    <div class="sl">Ongoing Surveillance</div>
+    <div class="sl" style="color:var(--green)">Ongoing Surveillance</div>
     <div class="prompt-grid">
       <div class="pcard" onclick="loadPrompt('n-01')"><div class="pcard-id">N-01</div><div class="pcard-title">Internal Expansion Signal Scan v4</div><div class="pcard-cat">Expansion Signals</div><span class="pcard-badge open">OPEN</span></div>
       <div class="pcard" onclick="loadPrompt('n-02')"><div class="pcard-id">N-02</div><div class="pcard-title">Stakeholder Referral Mapper</div><div class="pcard-cat">Referral Mapper</div><span class="pcard-badge open">OPEN</span></div>
@@ -200,7 +202,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
   </section>
 
   <section class="section reveal">
-    <div class="sl">Threat Detection &amp; Evidence Review</div>
+    <div class="sl" style="color:var(--green)">Threat Detection &amp; Evidence Review</div>
     <div class="prompt-grid">
       <div class="pcard" onclick="loadPrompt('n-08')"><div class="pcard-id">N-08</div><div class="pcard-title">Threat Detection Scan</div><div class="pcard-cat">Threat Detection</div><span class="pcard-badge restricted">RESTRICTED</span></div>
       <div class="pcard" onclick="loadPrompt('n-09')"><div class="pcard-id">N-09</div><div class="pcard-title">Board-Level Value Report</div><div class="pcard-cat">Value Report</div><span class="pcard-badge restricted">RESTRICTED</span></div>
@@ -210,7 +212,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
   </section>
 
   <section class="section reveal">
-    <div class="sl">Re-Prosecution — New Pursuit</div>
+    <div class="sl" style="color:var(--green)">Re-Prosecution — New Pursuit</div>
     <div class="prompt-grid">
       <div class="pcard" onclick="loadPrompt('n-12')"><div class="pcard-id">N-12</div><div class="pcard-title">Campaign Choreography v1.0</div><div class="pcard-cat">The Pursuit Architect</div><span class="pcard-badge restricted">RESTRICTED</span></div>
     </div>
@@ -220,7 +222,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
     <p style="font-size:15px;color:var(--text-dim);margin-bottom:1.5rem;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.6">10 restricted engines. Churn prediction, threat detection, renewal risk audits, board-level value reports, expansion campaigns. The surveillance system that means you never lose an account you should have kept.</p>
     <h2>13 engines. The case never closes.</h2>
     <p class="cta-s">The investigation started with Gather. The trial was won with Influence. Nurture makes sure the conviction holds.</p>
-    <div class="cta-btns"><a href="engage.html" class="cta-btn cta-primary">Engage for Access</a></div>
+    <div class="cta-btns">
+      <a href="engage.html" class="cta-btn cta-primary">Engage for Access</a>
+    </div>
   </section>
 
 </div>
@@ -251,41 +255,65 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
 })();
 
 function loadPrompt(id){
-  var o=document.getElementById('modalOverlay'), c=document.getElementById('modalContent');
-  c.innerHTML='<div class="modal-loading">Loading...</div>';
-  o.classList.add('open');
+  var overlay=document.getElementById('modalOverlay');
+  var content=document.getElementById('modalContent');
+  content.innerHTML='<div class="modal-loading">Loading prompt...</div>';
+  overlay.classList.add('open');
   document.body.style.overflow='hidden';
-  
-  fetch('prompts/'+id+'.html')
-    .then(function(r){if(!r.ok)return fetch('prompts/'+id.toUpperCase()+'.html');return r})
-    .then(function(r){if(!r.ok)throw new Error('Not found');return r.text()})
-    .then(function(h){c.innerHTML=h})
-    .catch(function(){c.innerHTML='<div class="modal-loading" style="color:var(--red)">Failed to load prompt file.<br>Check prompts/'+id+'.html exists in your repo.</div>'})
-}
 
-function copyPrompt(){
-  var ta=document.getElementById("promptText");
-  if(!ta)return;
-  var text=ta.value||ta.textContent;
-  navigator.clipboard.writeText(text).then(function(){
-    var btn=document.querySelector(".copy-code-btn");
-    if(btn){
-      btn.textContent="Copied!";
-      btn.style.background="var(--green)";
-      setTimeout(function(){btn.textContent="Copy Code";btn.style.background=""},2000)
-    }
-  }).catch(function(){
-    ta.style.display="block";ta.select();document.execCommand("copy");ta.style.display="none"
-  })
+  // Try relative path
+  var url='prompts/'+id+'.html';
+  fetch(url)
+    .then(function(r){
+      if(!r.ok) return fetch('prompts/'+id.toUpperCase()+'.html');
+      return r;
+    })
+    .then(function(r){
+      if(!r.ok)throw new Error('Not found');
+      return r.text();
+    })
+    .then(function(html){
+      content.innerHTML=html;
+    })
+    .catch(function(){
+      content.innerHTML='<div class="modal-loading" style="color:var(--red)">Failed to load prompt file.<br>Check prompts/'+id+'.html exists in your repo.</div>';
+    });
 }
 
 function closeModal(){
   document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow=''
+  document.body.style.overflow='';
 }
 
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+document.getElementById('modalOverlay').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+
+function copyPrompt(){
+  var ta=document.getElementById('promptText');
+  if(!ta)return;
+  var text=ta.value||ta.textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    var btn=document.querySelector('.copy-code-btn');
+    if(btn){
+      btn.textContent='Copied!';
+      btn.style.background='var(--green)';
+      setTimeout(function(){btn.textContent='Copy Code';btn.style.background=''},2000)
+    }
+  }).catch(function(){
+    ta.style.display='block';
+    ta.select();
+    document.execCommand('copy');
+    ta.style.display='none';
+    var btn=document.querySelector('.copy-code-btn');
+    if(btn){
+      btn.textContent='Copied!';
+      btn.style.background='var(--green)';
+      setTimeout(function(){btn.textContent='Copy Code';btn.style.background=''},2000)
+    }
+  });
+}
 </script>
 </body>
 </html>
