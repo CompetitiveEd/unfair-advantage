@@ -43,7 +43,6 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
 .ticker-item .num { font-weight: 800; color: var(--text-bright); }
 
 /* ═══ MAIN GRID SYNCED TO 1180PX ═══ */
-/* Reduced top padding because the ticker provides a visual break */
 .main { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding: 3rem 0 0; }
 
 /* ═══ REVEAL ANIMATIONS ═══ */
@@ -51,13 +50,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
 .reveal.vis { opacity: 1; transform: translateY(0); }
 
 /* ═══ HERO ═══ */
-/* Changed align-items to 'start' so the text doesn't sink to the middle of the 4 stacked cards */
 .hero { display: grid; grid-template-columns: 1fr 360px; gap: 4rem; align-items: start; margin-bottom: 5rem; }
 @media(max-width: 900px) { .hero { grid-template-columns: 1fr; text-align: center; } }
-
-/* A slight nudge down so the text aligns beautifully with the top card */
 .hero-left { padding-top: 1.5rem; }
-
 .hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(36px, 5.5vw, 64px); font-weight: 900; color: var(--text-bright); line-height: 1.05; margin-bottom: 1rem; letter-spacing: -0.03em; }
 .hero h1 em { color: var(--green); font-style: normal; }
 .hero-sub { font-size: 18px; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.5rem; max-width: 600px; font-weight: 500; }
@@ -100,6 +95,20 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
 .dock-card[data-modal="discovery"] .dock-cta { color: var(--red); }
 .dock-card[data-modal="dashboard"] .dock-cta { color: var(--amber); }
 .dock-card[data-modal="wheel"] .dock-cta { color: var(--blue); }
+
+/* ═══ RESTORED ARCHITECTURE GRID ═══ */
+.diag-section { padding: 4rem 0; border-top: 1px solid var(--border); }
+.section-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 1.5rem; text-align: center; }
+.diag-intro { font-size: 16px; color: var(--text-dim); text-align: center; max-width: 600px; margin: 0 auto 3rem; line-height: 1.6; font-weight: 500; }
+.diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media(max-width: 900px) { .diag-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width: 500px) { .diag-grid { grid-template-columns: 1fr; } }
+.diag-item { padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: var(--s1); transition: all .3s ease; position: relative; }
+.diag-item:hover { border-color: var(--border-h); background: var(--s2); transform: translateY(-2px); }
+.diag-item-title { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--text-bright); margin-bottom: 6px; letter-spacing: -0.01em; }
+.diag-item-sub { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+.diag-arrow { position: absolute; top: 1.5rem; right: 1.5rem; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid var(--green); opacity: 0.3; transition: opacity .3s; }
+.diag-item:hover .diag-arrow { opacity: 1; }
 
 /* ═══ MODAL OVERLAY ═══ */
 .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.92); backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 1rem; }
@@ -214,13 +223,51 @@ body { background: var(--bg); color: var(--text); font-family: 'Inter', system-u
           <div class="dock-desc">Stakeholder mapping. Financial forensics. Expansion signals. No more static PowerPoints.</div>
           <div class="dock-cta">View example output</div>
       </div>
-      <div class="dock-card" data-modal="wheel" onclick="window.location.href='story.html'">
+      <div class="dock-card" data-modal="wheel" onclick="openDash('dashboard/wheel.html')">
           <div class="dock-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></div>
           <div class="dock-title">The methodology.</div>
           <div class="dock-desc">Structured five-phase commercial assessment. Intelligence gathering to account protection.</div>
           <div class="dock-cta">View methodology</div>
       </div>
   </div>
+
+  <section class="diag-section reveal">
+      <div class="section-label">The architecture</div>
+      <p class="diag-intro">Six layers. Each feeds the next. The compounding loop sharpens the entire system.</p>
+      
+      <div class="diag-grid">
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">01. Discovery</div>
+              <div class="diag-item-sub">Rapid commercial assessment. Identify the specific deal fractures.</div>
+          </div>
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">02. Gather</div>
+              <div class="diag-item-sub">Extract board mandates, financial friction, and stakeholder psychology.</div>
+          </div>
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">03. Assess</div>
+              <div class="diag-item-sub">Political mapping, RFP decoding, and deal strategy synthesis.</div>
+          </div>
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">04. Influence</div>
+              <div class="diag-item-sub">Pre-mortem simulation, win themes, and competitor kill-shots.</div>
+          </div>
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">05. Nurture</div>
+              <div class="diag-item-sub">Defend the annuity, expand the footprint, pre-empt threats.</div>
+          </div>
+          <div class="diag-item">
+              <div class="diag-arrow"></div>
+              <div class="diag-item-title">06. Present</div>
+              <div class="diag-item-sub">Dashboards, board packs, case studies, and pursuit plans.</div>
+          </div>
+      </div>
+  </section>
 
   <section class="cta-section reveal">
       <h2>Stop measuring activity.<br>Start measuring outcomes.<br><em>Feed the pig.</em></h2>
