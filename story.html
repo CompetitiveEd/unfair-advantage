@@ -9,49 +9,98 @@
 <link rel="stylesheet" href="master-forensic.css">
 
 <style>
-/* Catalyst Box */
-.catalyst{background:var(--s1);border:1px solid var(--bdr);border-top:2px solid rgba(239,68,68,.3);border-radius:14px;padding:1.75rem;max-width:800px;margin:0 auto}
-.catalyst-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem}
-.catalyst-title{font-family:'Playfair Display',serif;font-size:clamp(18px,3vw,24px);font-weight:700;color:var(--br);margin-bottom:.75rem}
-.catalyst .kicker{font-size:14px;font-weight:700;color:var(--br);margin-top:.5rem}
-.catalyst .response{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--bdr)}
-.catalyst .response-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--blu);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem}
-
-/* Expanding Cards */
-.card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
-.xcard{
-  background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
-  padding:.85rem 1rem;cursor:pointer;
-  transition:all .35s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:120px;max-width:220px;position:relative;overflow:hidden;
+/* ═══ LOCAL VARIABLES FOR COMPONENTS ═══ */
+:root {
+  --bg: #020617; 
+  --s1: #0f172a; 
+  --s2: #1e293b;
+  --border: rgba(255,255,255,0.15);
+  --border-h: rgba(255,255,255,0.3);
+  --text: #f1f5f9;
+  --text-dim: #cbd5e1;
+  --text-bright: #ffffff;
+  --blue: #86c8ff;
+  --purple: #c084fc;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --red: #f87171;
 }
-.xcard:hover,.xcard.open{border-color:var(--dm);flex:2.5;max-width:100%;background:var(--s2)}
-.xcard-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:3px}
-.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);line-height:1.3}
-.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
-.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:400px;opacity:1;margin-top:.6rem}
+
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #334155 var(--bg); }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ═══ MAIN GRID SYNCED TO 1180PX ═══ */
+.main { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding: 100px 0 0; }
+.section { margin-bottom: 4rem; }
+
+.sl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--amber); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.sl::before, .sl::after { content: ''; flex: 1; height: 1px; background: var(--border-h); }
+
+/* ═══ REVEAL ANIMATIONS ═══ */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+/* ═══ HERO ═══ */
+.hero { text-align: center; padding: 2rem 0 3.5rem; position: relative; max-width: 800px; margin: 0 auto; }
+.hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 5.5vw, 56px); font-weight: 900; color: var(--text-bright); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+.hero h1 em { color: var(--amber); font-style: normal; }
+.hero-p { font-size: 18px; color: var(--text-dim); line-height: 1.6; font-weight: 500; }
+.hero-p strong { color: var(--text-bright); font-weight: 700; }
+
+/* ═══ CATALYST BOX ═══ */
+.catalyst { background: var(--s1); border: 1px solid var(--border); border-top: 4px solid var(--red); border-radius: 16px; padding: 2.5rem; max-width: 900px; margin: 0 auto; }
+.catalyst-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: .75rem; }
+.catalyst-title { font-family: 'Inter', sans-serif; font-size: clamp(20px, 3vw, 28px); font-weight: 800; color: var(--text-bright); margin-bottom: 1rem; letter-spacing: -0.01em; line-height: 1.3; }
+.catalyst p { font-size: 15px; color: var(--text); line-height: 1.7; }
+.catalyst .kicker { font-size: 16px; font-weight: 800; color: var(--text-bright); margin-top: 1rem; }
+.catalyst .response { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.catalyst .response-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: .75rem; }
+
+/* ═══ EXPAND CARDS ═══ */
+.card-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
+.xcard { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all .35s cubic-bezier(.32,.72,0,1); flex: 1; min-width: 200px; max-width: 320px; position: relative; overflow: hidden; }
+.xcard:hover, .xcard.open { border-color: var(--border-h); flex: 2.5; max-width: 100%; background: var(--s2); }
+
+.xcard-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; opacity: .7; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+.xcard-title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-bright); line-height: 1.2; letter-spacing: -0.01em; }
+.xcard-body { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.32,.72,0,1), opacity .3s ease, margin .3s ease; margin-top: 0; }
+.xcard:hover .xcard-body, .xcard.open .xcard-body { max-height: 400px; opacity: 1; margin-top: 1rem; }
+.xcard-body p { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0; }
 
 /* Card Accent Colors */
-.xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
-.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amber)}.xcard[data-c="amber"] .xcard-num{color:var(--amber)}
-.xcard[data-c="blue"]{border-top:2px solid rgba(90,156,240,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blu)}.xcard[data-c="blue"] .xcard-num{color:var(--blu)}
-.xcard[data-c="green"]{border-top:2px solid rgba(64,184,130,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--grn)}.xcard[data-c="green"] .xcard-num{color:var(--grn)}
-.xcard[data-c="dim"]{border-top:2px solid rgba(176,180,196,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--dm)}.xcard[data-c="dim"] .xcard-num{color:var(--dm)}
+.xcard[data-c="red"] { border-top: 4px solid var(--red); }
+.xcard[data-c="red"]:hover, .xcard[data-c="red"].open { border-color: var(--red); }
+.xcard[data-c="red"] .xcard-num { color: var(--red); }
 
-/* Pipeline Tracker */
-.pipeline-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--bdr);margin-bottom:2.5rem;}
-@media(max-width:640px){.pipeline-bar{grid-template-columns:1fr}}
-.pipe-step{background:var(--s1);padding:.85rem;border-right:1px solid var(--bdr);transition:background .2s;text-align:center;position:relative}
-.pipe-step:last-child{border-right:none}
-.pipe-step:hover{background:var(--s2)}
-.pipe-num{font-family:'DM Mono',monospace;font-size:9px;color:var(--blu);letter-spacing:1px;margin-bottom:2px}
-.pipe-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);margin-bottom:2px}
-.pipe-you{font-family:'DM Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:1px}
+.xcard[data-c="amber"] { border-top: 4px solid var(--amber); }
+.xcard[data-c="amber"]:hover, .xcard[data-c="amber"].open { border-color: var(--amber); }
+.xcard[data-c="amber"] .xcard-num { color: var(--amber); }
 
-/* Helper spacing classes */
-.section{margin-bottom:2.5rem; width: 100%; max-width: 960px; margin-left: auto; margin-right: auto;}
-.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
-.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.xcard[data-c="blue"] { border-top: 4px solid var(--blue); }
+.xcard[data-c="blue"]:hover, .xcard[data-c="blue"].open { border-color: var(--blue); }
+.xcard[data-c="blue"] .xcard-num { color: var(--blue); }
+
+.xcard[data-c="green"] { border-top: 4px solid var(--green); }
+.xcard[data-c="green"]:hover, .xcard[data-c="green"].open { border-color: var(--green); }
+.xcard[data-c="green"] .xcard-num { color: var(--green); }
+
+@media(max-width:800px) { .card-row{flex-direction:column} .xcard{max-width:100%;min-width:0} .xcard:hover,.xcard.open{flex:unset} }
+
+/* ═══ PIPELINE TRACKER ═══ */
+.pipeline-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 2.5rem; }
+@media(max-width:800px) { .pipeline-bar { grid-template-columns: 1fr; border-bottom: none; } .pipe-step { border-bottom: 1px solid var(--border); border-right: none !important; } }
+.pipe-step { background: var(--s1); padding: 1.5rem; border-right: 1px solid var(--border); transition: background .2s; text-align: center; position: relative; }
+.pipe-step:last-child { border-right: none; }
+.pipe-step:hover { background: var(--s2); }
+.pipe-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; }
+.pipe-title { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--text-bright); margin-bottom: 6px; letter-spacing: -0.01em; }
+.pipe-you { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--amber); letter-spacing: 1px; }
+
+/* ═══ FOOTER ═══ */
+.footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); margin-top: 4rem; }
+.footer-inner { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding-top: 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
+.footer a:hover { color: var(--text-bright); }
 </style>
 </head>
 <body>
@@ -63,7 +112,6 @@
     .then(data => {
         document.getElementById('master-nav-placeholder').innerHTML = data;
         
-        // Re-bind the mobile menu button
         const mobileBtn = document.getElementById('mobile-toggle-btn');
         if(mobileBtn) {
             mobileBtn.addEventListener('click', function() {
@@ -71,7 +119,6 @@
             });
         }
 
-        // Re-bind the radial dropdowns
         document.querySelectorAll('.radial-toggle').forEach(function(t){
             t.addEventListener('change',function(){
                 if(this.checked){
@@ -84,15 +131,23 @@
         });
     })
     .catch(error => console.error('Error loading navigation:', error));
-</script>
-<div class="main" style="padding-top: 72px;">
 
-  <section class="section" style="text-align:center; padding-bottom: 2rem;">
-    <h1 style="font-size:clamp(28px,5.5vw,50px);">GAIN didn't start with AI.<br><em style="color:var(--gold); font-style:normal;">It started in workshop rooms.</em></h1>
-    <p style="max-width:560px; margin:0 auto; color:var(--dm);">We watched talented teams lose to inferior products because they couldn't read the political landscape. <strong>The methodology came first. The AI came twenty years later.</strong></p>
+    // Global click listener to close dropdowns when clicking outside
+    document.addEventListener('click',function(e){
+        document.querySelectorAll('.radial-toggle').forEach(function(t){
+            if(t.checked && !e.target.closest('.radial-menu')) t.checked=false;
+        });
+    });
+</script>
+
+<div class="main">
+
+  <section class="hero reveal">
+    <h1>GAIN didn't start with AI.<br><em>It started in workshop rooms.</em></h1>
+    <p class="hero-p">We watched talented teams lose to inferior products because they couldn't read the political landscape. <strong>The methodology came first. The AI came twenty years later.</strong></p>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
     <div class="sl">The Catalyst</div>
     <div class="catalyst">
       <div class="catalyst-sub">The Silent Exit</div>
@@ -106,7 +161,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
     <div class="sl">Four Rules</div>
     <div class="card-row">
       <div class="xcard" data-c="red">
@@ -132,25 +187,34 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
     <div class="sl">The Process Pipeline</div>
     <div class="pipeline-bar">
       <div class="pipe-step"><div class="pipe-num">Step 1</div><div class="pipe-title">Company Intel</div><div class="pipe-you">→ YOU →</div></div>
       <div class="pipe-step"><div class="pipe-num">Step 2</div><div class="pipe-title">Find Money</div><div class="pipe-you">→ YOU →</div></div>
       <div class="pipe-step"><div class="pipe-num">Step 3</div><div class="pipe-title">Profile People</div><div class="pipe-you">→ YOU →</div></div>
       <div class="pipe-step"><div class="pipe-num">Step 4</div><div class="pipe-title">Battle Card</div><div class="pipe-you">→ YOU →</div></div>
-      <div class="pipe-step"><div class="pipe-num">Step 5</div><div class="pipe-title">The Briefing</div><div class="pipe-you" style="color:var(--grn)">✓ READY</div></div>
+      <div class="pipe-step"><div class="pipe-num">Step 5</div><div class="pipe-title">The Briefing</div><div class="pipe-you" style="color:var(--green)">✓ READY</div></div>
     </div>
   </section>
 
-  <div style="text-align:center; padding-bottom: 40px;">
-      <a href="index.html" style="font-family:'DM Mono', monospace; font-size: 0.7rem; color: var(--dm); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">← Return to Briefing Room</a>
-  </div>
-
 </div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
+    <div class="mono" style="font-size:11px;">© 2026</div>
+  </div>
+</footer>
 
 <script>
 (function(){
+  var reveals=document.querySelectorAll('.reveal');
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
+  },{threshold:0.1});
+  reveals.forEach(function(r){obs.observe(r)});
+
   if('ontouchstart' in window){
     document.querySelectorAll('.xcard').forEach(function(card){
       card.addEventListener('click',function(){
