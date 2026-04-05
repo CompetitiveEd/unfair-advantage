@@ -9,91 +9,121 @@
 <link rel="stylesheet" href="master-forensic.css">
 
 <style>
-/* Local colors for the discipline cards */
+/* ═══ LOCAL VARIABLES FOR COMPONENTS ═══ */
 :root {
-  --teal: #14b8a6;
+  --bg: #020617; 
+  --s1: #0f172a; 
+  --s2: #1e293b;
+  --border: rgba(255,255,255,0.15);
+  --border-h: rgba(255,255,255,0.3);
+  --text: #f1f5f9;
+  --text-dim: #cbd5e1;
+  --text-bright: #ffffff;
+  --blue: #86c8ff;
+  --purple: #c084fc;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --red: #f87171;
+  --cyan: #22d3ee;
+  --teal: #2dd4bf;
 }
 
-.main{max-width:960px;margin:0 auto;padding:72px 2rem 0}
-.section{margin-bottom:2.5rem}
-.sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
-.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--bdr)}
-.sub-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--dm);letter-spacing:1.5px;text-transform:uppercase;margin:1.25rem 0 .5rem;text-align:center}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #334155 var(--bg); }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ═══ MAIN GRID SYNCED TO 1180PX ═══ */
+.main { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding: 100px 0 0; }
+.section { margin-bottom: 4rem; }
+
+.sl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+.sl::before, .sl::after { content: ''; flex: 1; height: 1px; background: var(--border-h); }
+.sub-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase; margin: 3rem 0 1.5rem; text-align: center; }
+
+/* ═══ REVEAL ANIMATIONS ═══ */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
 
 /* ═══ HERO ═══ */
-.hero{text-align:center;padding:3rem 0 2.5rem;position:relative}
-.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(20,184,166,.04) 0%,transparent 70%);pointer-events:none}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,48px);font-weight:700;color:var(--br);line-height:1.15;margin-bottom:1rem}
-.hero h1 em{color:var(--teal);font-style:normal}
-.hero-p{font-size:15px;color:var(--dm);max-width:580px;margin:0 auto 1.5rem;line-height:1.7}
-.hero-p strong{color:var(--br);font-weight:600}
-.hero-tag{font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:1.5px;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid rgba(20,184,166,.2);border-radius:6px;background:rgba(20,184,166,.04)}
+.hero { text-align: center; padding: 3rem 0 3.5rem; position: relative; }
+.hero::before { content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: 600px; height: 300px; background: radial-gradient(ellipse, rgba(45, 212, 191, 0.06) 0%, transparent 70%); pointer-events: none; }
+.hero h1 { font-family: 'Inter', sans-serif; font-size: clamp(32px, 5.5vw, 56px); font-weight: 900; color: var(--text-bright); line-height: 1.05; margin-bottom: 1.5rem; letter-spacing: -0.03em; }
+.hero h1 em { color: var(--teal); font-style: normal; }
+.hero-p { font-size: 18px; color: var(--text-dim); max-width: 680px; margin: 0 auto 2rem; line-height: 1.6; font-weight: 500; }
+.hero-p strong { color: var(--text-bright); font-weight: 700; }
+.hero-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--teal); letter-spacing: 1.5px; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 6px; background: rgba(45, 212, 191, 0.06); font-weight: 600;}
 
 /* ═══ SHOWCASE & TERMINALS ═══ */
-.showcase-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:start}
-@media(max-width:800px){.showcase-grid{grid-template-columns:1fr}}
-.showcase-desc{padding:1.5rem}
-.showcase-desc h3{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,24px);font-weight:700;color:var(--br);margin-bottom:.75rem}
-.showcase-desc p{font-size:14px;color:var(--tx);line-height:1.7}
-.sc-tag{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;padding:6px 12px;border-radius:6px;display:inline-block;margin-top:.75rem}
+.showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+@media(max-width:800px) { .showcase-grid { grid-template-columns: 1fr; } }
+.showcase-desc { padding: 1.5rem; }
+.showcase-desc h3 { font-family: 'Inter', sans-serif; font-size: clamp(20px, 2.5vw, 26px); font-weight: 800; color: var(--text-bright); margin-bottom: 1rem; letter-spacing: -0.02em; }
+.showcase-desc p { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 1rem; }
+.sc-tag { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 6px; display: inline-block; margin-top: .75rem; }
 
 /* Terminal Styling */
-.terminal{background:var(--s1);border:1px solid var(--bdr);border-radius:12px;padding:1.25rem 1.5rem;font-family:'DM Mono',monospace;font-size:12px;line-height:1.7;color:var(--tx);overflow-x:auto}
-.terminal-header{font-weight:700;margin-bottom:.75rem}
-.terminal .line{margin-bottom:.35rem}
-.terminal .label{color:var(--dm)}.terminal .val{color:var(--br)}
-.terminal .warn{color:var(--amb)}.terminal .danger{color:var(--red)}.terminal .good{color:var(--grn)}.terminal .accent{color:var(--blu)}.terminal .purple{color:var(--purple)}
-.terminal .sep{border-top:1px solid var(--bdr);margin:.6rem 0;padding-top:.6rem}
-.terminal .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
-.dot-green{background:var(--grn)}.dot-red{background:var(--red)}.dot-amber{background:var(--amb)}
+.terminal { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.7; color: var(--text); overflow-x: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.terminal-header { font-weight: 700; margin-bottom: 1rem; letter-spacing: 1px; }
+.terminal .line { margin-bottom: .4rem; }
+.terminal .label { color: var(--text-dim); }
+.terminal .val { color: var(--text-bright); }
+.terminal .warn { color: var(--amber); }
+.terminal .danger { color: var(--red); }
+.terminal .good { color: var(--green); }
+.terminal .accent { color: var(--blue); }
+.terminal .purple { color: var(--purple); }
+.terminal .sep { border-top: 1px solid var(--border); margin: .75rem 0; padding-top: .75rem; }
+.terminal .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.dot-green { background: var(--green); }
+.dot-red { background: var(--red); }
+.dot-amber { background: var(--amber); }
 
 /* ═══ EXPAND CARDS ═══ */
-.card-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.xcard{
-  background:var(--s1);border:1px solid var(--bdr);border-radius:10px;
-  padding:.85rem 1rem;cursor:pointer;
-  transition:all .35s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:110px;max-width:220px;position:relative;overflow:hidden;
-}
-.xcard:hover,.xcard.open{border-color:var(--dm);flex:2.5;max-width:100%;background:var(--s2)}
-.xcard-num{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;opacity:.4;margin-bottom:3px}
-.xcard-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);line-height:1.3}
-.xcard-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);margin-top:1px}
-.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
-.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:500px;opacity:1;margin-top:.6rem}
-.xcard-body p{font-size:12px;color:var(--tx);line-height:1.65;margin:0 0 .35rem}
-.xcard-body p:last-child{margin:0}
-.xcard-body .gain-app{font-size:11px;color:var(--teal);margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--bdr)}
-.xcard-body .counter{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--bdr);display:inline-flex;align-items:center;gap:5px;margin-top:.5rem}
+.card-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+.xcard { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all .35s cubic-bezier(.32,.72,0,1); flex: 1; min-width: 200px; max-width: 320px; position: relative; overflow: hidden; }
+.xcard:hover, .xcard.open { border-color: var(--text-dim); flex: 2.5; max-width: 100%; background: var(--s2); }
+
+.xcard-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; opacity: .7; margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+.xcard-title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 800; color: var(--text-bright); line-height: 1.2; letter-spacing: -0.01em; }
+.xcard-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.xcard-body { max-height: 0; opacity: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.32,.72,0,1), opacity .3s ease, margin .3s ease; margin-top: 0; }
+.xcard:hover .xcard-body, .xcard.open .xcard-body { max-height: 500px; opacity: 1; margin-top: 1rem; }
+.xcard-body p { font-size: 14px; color: var(--text); line-height: 1.6; margin: 0 0 .5rem; }
+.xcard-body p:last-child { margin: 0; }
+.xcard-body .gain-app { font-size: 13px; color: var(--teal); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.xcard-body .counter { font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); display: inline-flex; align-items: center; gap: 8px; margin-top: .75rem; font-weight: 600;}
 
 /* Card Accent Colors */
-.xcard[data-c="red"]{border-top:2px solid rgba(239,68,68,.25)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-top-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
-.xcard[data-c="green"]{border-top:2px solid rgba(16,185,129,.25)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-top-color:var(--grn)}.xcard[data-c="green"] .xcard-num{color:var(--grn)}
-.xcard[data-c="amber"]{border-top:2px solid rgba(245,158,11,.25)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-top-color:var(--amb)}.xcard[data-c="amber"] .xcard-num{color:var(--amb)}
-.xcard[data-c="blue"]{border-top:2px solid rgba(59,130,246,.25)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-top-color:var(--blu)}.xcard[data-c="blue"] .xcard-num{color:var(--blu)}
-.xcard[data-c="purple"]{border-top:2px solid rgba(168,85,247,.25)}.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-top-color:var(--purple)}.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
-.xcard[data-c="teal"]{border-top:2px solid rgba(20,184,166,.25)}.xcard[data-c="teal"]:hover,.xcard[data-c="teal"].open{border-top-color:var(--teal)}.xcard[data-c="teal"] .xcard-num{color:var(--teal)}
-.xcard[data-c="dim"]{border-top:2px solid rgba(161,161,170,.2)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-top-color:var(--dm)}.xcard[data-c="dim"] .xcard-num{color:var(--dm)}
+.xcard[data-c="red"]{border-top:4px solid var(--red)}.xcard[data-c="red"]:hover,.xcard[data-c="red"].open{border-color:var(--red)}.xcard[data-c="red"] .xcard-num{color:var(--red)}
+.xcard[data-c="green"]{border-top:4px solid var(--green)}.xcard[data-c="green"]:hover,.xcard[data-c="green"].open{border-color:var(--green)}.xcard[data-c="green"] .xcard-num{color:var(--green)}
+.xcard[data-c="amber"]{border-top:4px solid var(--amber)}.xcard[data-c="amber"]:hover,.xcard[data-c="amber"].open{border-color:var(--amber)}.xcard[data-c="amber"] .xcard-num{color:var(--amber)}
+.xcard[data-c="blue"]{border-top:4px solid var(--blue)}.xcard[data-c="blue"]:hover,.xcard[data-c="blue"].open{border-color:var(--blue)}.xcard[data-c="blue"] .xcard-num{color:var(--blue)}
+.xcard[data-c="purple"]{border-top:4px solid var(--purple)}.xcard[data-c="purple"]:hover,.xcard[data-c="purple"].open{border-color:var(--purple)}.xcard[data-c="purple"] .xcard-num{color:var(--purple)}
+.xcard[data-c="teal"]{border-top:4px solid var(--teal)}.xcard[data-c="teal"]:hover,.xcard[data-c="teal"].open{border-color:var(--teal)}.xcard[data-c="teal"] .xcard-num{color:var(--teal)}
+.xcard[data-c="dim"]{border-top:4px solid var(--text-dim)}.xcard[data-c="dim"]:hover,.xcard[data-c="dim"].open{border-color:var(--text-dim)}.xcard[data-c="dim"] .xcard-num{color:var(--text-dim)}
 
-@media(max-width:700px){
-  .card-row{flex-direction:column}
-  .xcard{max-width:100%;min-width:0}
-  .xcard:hover,.xcard.open{flex:unset}
+@media(max-width:800px) {
+  .card-row { flex-direction: column; }
+  .xcard { max-width: 100%; min-width: 0; }
+  .xcard:hover, .xcard.open { flex: unset; }
 }
 
 /* ═══ COMPRESSION BAR ═══ */
-.comp-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--bdr)}
-@media(max-width:640px){.comp-bar{grid-template-columns:repeat(2,1fr)}}
-.comp-step{background:var(--s1);padding:.85rem;border-right:1px solid var(--bdr);transition:background .2s}
-.comp-step:last-child{border-right:none}
-.comp-step:hover{background:var(--s2)}
-.comp-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;margin-bottom:3px}
-.comp-title{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;color:var(--br);margin-bottom:2px}
-.comp-desc{font-size:11px;color:var(--dm);line-height:1.5;margin-bottom:3px}
-.comp-time{font-family:'DM Mono',monospace;font-size:10px}
-.comp-scale{font-family:'DM Mono',monospace;font-size:9px;color:var(--dm);text-align:center;margin-top:.5rem;display:flex;justify-content:space-between;padding:0 .5rem}
+.comp-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 3rem; }
+@media(max-width:640px) { .comp-bar { grid-template-columns: repeat(2, 1fr); border-bottom: none; } .comp-step { border-bottom: 1px solid var(--border); } }
+.comp-step { background: var(--s1); padding: 1.5rem; border-right: 1px solid var(--border); transition: background .2s; }
+.comp-step:last-child { border-right: none; }
+.comp-step:hover { background: var(--s2); }
+.comp-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; text-transform: uppercase; }
+.comp-title { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--text-bright); margin-bottom: 6px; letter-spacing: -0.01em;}
+.comp-desc { font-size: 14px; color: var(--text-dim); line-height: 1.5; margin-bottom: 8px; }
+.comp-time { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
+.comp-scale { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--text-dim); text-align: center; margin-top: 1rem; display: flex; justify-content: space-between; padding: 0 1rem; }
+
+/* ═══ FOOTER ═══ */
+.footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); margin-top: 4rem; }
+.footer-inner { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding-top: 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
+.footer a:hover { color: var(--text-bright); }
 </style>
 </head>
 <body>
@@ -104,16 +134,12 @@
     .then(response => response.text())
     .then(data => {
         document.getElementById('master-nav-placeholder').innerHTML = data;
-        
-        // Re-bind the mobile menu button
-        const mobileBtn = document.getElementById('mobile-toggle-btn');
+        const mobileBtn = document.querySelector('.nav-toggle-btn');
         if(mobileBtn) {
             mobileBtn.addEventListener('click', function() {
                 document.getElementById('mobileNav').classList.toggle('open');
             });
         }
-
-        // Re-bind the radial dropdowns
         document.querySelectorAll('.radial-toggle').forEach(function(t){
             t.addEventListener('change',function(){
                 if(this.checked){
@@ -126,21 +152,15 @@
         });
     })
     .catch(error => console.error('Error loading navigation:', error));
-
-    // Global click listener to close dropdowns when clicking outside
-    document.addEventListener('click',function(e){
-        document.querySelectorAll('.radial-toggle').forEach(function(t){
-            if(t.checked && !e.target.closest('.radial-menu')) t.checked=false;
-        });
-    });
 </script>
-<div class="main" style="padding-top: 72px;">
+
+<div class="main">
 
   <section class="hero reveal">
     <h1>Your CRM is a graveyard of dead deals.<br><em style="color:var(--teal);">Stop feeding it.</em></h1>
     <p class="hero-p">Account plans that take 40 hours to build usually die at the first political hurdle. <strong>The GAIN Architecture compresses that into 180 minutes</strong> — generating structured intelligence and surfacing the stakeholders who are actually deciding.</p>
     <span class="hero-tag">Built on £183M of real repositioning</span>
-      <div style="margin-top:1rem"><a href="engage.html" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:1px;font-weight:600">Request a diagnostic →</a></div>
+    <div style="margin-top:2.5rem"><a href="/engage.html" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);text-decoration:none;letter-spacing:1px;font-weight:700">Request a diagnostic →</a></div>
   </section>
 
   <section class="section reveal">
@@ -150,7 +170,7 @@
         <h3>From Data Gathering to Behavioural Profiling</h3>
         <p>Extracts behavioural indicators, decision heuristics and communication patterns from verified sources, then constructs a tailored value proposition for each stakeholder. Same deal, different narrative for each person in the room.</p>
       </div>
-      <div class="terminal" style="border-top:2px solid rgba(59,130,246,.3)">
+      <div class="terminal" style="border-top:4px solid var(--blue)">
         <div class="terminal-header accent">[G-01 EXTRACTION: Jennifer Morris — Dir, Operational Resilience]</div>
         <div class="line"><span class="label">GAIN Driver:</span> <span class="val">ACHIEVEMENT — legacy through capability</span></div>
         <div class="line"><span class="label">Modality:</span> <span class="val">Visual-Kinesthetic — show, don't tell</span></div>
@@ -168,7 +188,7 @@
   <section class="section reveal">
     <div class="sl">Influence Mapping</div>
     <div class="showcase-grid">
-      <div class="terminal" style="border-top:2px solid rgba(168,85,247,.3)">
+      <div class="terminal" style="border-top:4px solid var(--purple)">
         <div class="terminal-header purple">[A-01 INFLUENCE MAP: 7 Stakeholders Profiled]</div>
         <div class="line"><span class="dot dot-green"></span><span class="val">Morris</span> <span class="label">— Champion. Opens door. 30% influence weight.</span></div>
         <div class="line"><span class="dot dot-red"></span><span class="val">Hale (CIO)</span> <span class="label">— Power + HIGH VETO on tech weakness.</span></div>
@@ -182,26 +202,26 @@
       <div class="showcase-desc">
         <h3>From Org Charts to Influence Maps</h3>
         <p>Standard CRMs give you titles. The GAIN Architecture maps where actual decision authority sits, where the vetoes hide, and where structural tensions between stakeholders create invisible blockers that no amount of feature-selling will overcome.</p>
-        <div class="sc-tag" style="color:var(--purple);border-color:rgba(168,85,247,.2);background:rgba(168,85,247,.04)">Surfaces vetoes and structural tensions before the first meeting</div>
+        <div class="sc-tag" style="color:var(--purple);border:1px solid rgba(192,132,252,.2);background:rgba(192,132,252,.04)">Surfaces vetoes and structural tensions before the first meeting</div>
       </div>
     </div>
   </section>
 
   <section class="section reveal">
     <div class="sl">The Compression Model</div>
-    <p style="font-size:13px;color:var(--dm);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">Don't boil the ocean. Match the methodology to the deal complexity.</p>
+    <p style="font-size:15px;color:var(--text-dim);text-align:center;max-width:700px;margin:0 auto 2rem;line-height:1.6">Don't boil the ocean. Match the methodology to the deal complexity.</p>
     <div class="comp-bar">
       <div class="comp-step">
-        <div class="comp-label" style="color:var(--dm)">Service-Led</div>
+        <div class="comp-label" style="color:var(--text-dim)">Service-Led</div>
         <div class="comp-title">Minimal GAIN</div>
         <div class="comp-desc">Minor projects, standard renewals. Manual execution is fine.</div>
-        <div class="comp-time" style="color:var(--dm)">Hours</div>
+        <div class="comp-time" style="color:var(--text-dim)">Hours</div>
       </div>
       <div class="comp-step">
-        <div class="comp-label" style="color:var(--blu)">Standard</div>
+        <div class="comp-label" style="color:var(--blue)">Standard</div>
         <div class="comp-title">Targeted GAIN</div>
         <div class="comp-desc">Mid-market plays. Inject Gather/Assess prompts for baseline research.</div>
-        <div class="comp-time" style="color:var(--blu)">Days</div>
+        <div class="comp-time" style="color:var(--blue)">Days</div>
       </div>
       <div class="comp-step">
         <div class="comp-label" style="color:var(--purple)">Complex</div>
@@ -209,7 +229,7 @@
         <div class="comp-desc">High-stakes RFPs. Heavy data synthesis saves massive manual effort.</div>
         <div class="comp-time" style="color:var(--purple)">Weeks → Days</div>
       </div>
-      <div class="comp-step" style="background:rgba(20,184,166,.03)">
+      <div class="comp-step" style="background:rgba(45,212,191,.04)">
         <div class="comp-label" style="color:var(--teal)">Strategic</div>
         <div class="comp-title">Full Ecosystem</div>
         <div class="comp-desc">Tier 1 targets. Full methodology deployed to restructure the narrative.</div>
@@ -221,17 +241,17 @@
 
   <section class="section reveal">
     <div class="sl">The Operating Doctrine</div>
-    <p style="font-size:13px;color:var(--dm);text-align:center;max-width:620px;margin:0 auto 1rem;line-height:1.6">AI is just a retrieval engine. Without a structural framework, it only retrieves noise. These are the established principles governing every prompt.</p>
+    <p style="font-size:15px;color:var(--text-dim);text-align:center;max-width:700px;margin:0 auto 2rem;line-height:1.6">AI is just a retrieval engine. Without a structural framework, it only retrieves noise. These are the established principles governing every prompt.</p>
 
     <div class="sub-label">01. Behavioural Science — Decoding the Buyer</div>
-    <div class="card-row" style="margin-bottom:1.25rem">
+    <div class="card-row" style="margin-bottom:2rem">
       <div class="xcard" data-c="purple"><div class="xcard-num">[I]</div><div class="xcard-title">Loss Aversion</div><div class="xcard-sub">Kahneman & Tversky</div><div class="xcard-body"><p>Humans feel loss twice as intensely as gain. They default to the status quo to avoid perceived risk.</p><div class="gain-app">GAIN: Win themes must neutralise the fear of transition before promising a future gain.</div></div></div>
       <div class="xcard" data-c="purple"><div class="xcard-num">[I]</div><div class="xcard-title">Psychology of Persuasion</div><div class="xcard-sub">Cialdini</div><div class="xcard-body"><p>Decisions accelerated by cognitive shortcuts: Social Proof, Authority, Scarcity, Liking, Consistency, Reciprocity.</p><div class="gain-app">GAIN: AI scans for exact peer-industry matches to trigger Social Proof in executive summaries.</div></div></div>
       <div class="xcard" data-c="purple"><div class="xcard-num">[A]</div><div class="xcard-title">NLP Meta-Programs</div><div class="xcard-sub">James & Woodsmall</div><div class="xcard-body"><p>Executives run subconscious filters (Toward/Away, Detail/Big Picture) that dictate how they process information.</p><div class="gain-app">GAIN: Decoding language patterns from LinkedIn to adapt proposal vocabulary and structure.</div></div></div>
     </div>
 
     <div class="sub-label">02. Strategic Architecture — Structuring the Deal</div>
-    <div class="card-row" style="margin-bottom:1.25rem">
+    <div class="card-row" style="margin-bottom:2rem">
       <div class="xcard" data-c="blue"><div class="xcard-num">[I]</div><div class="xcard-title">Pyramid Principle</div><div class="xcard-sub">Barbara Minto</div><div class="xcard-body"><p>Top-down communication. Start with the answer, group supporting arguments, order data beneath.</p><div class="gain-app">GAIN: "Answer First" rule. EBITDA/ROI impact in the first 50 words. No chronological storytelling.</div></div></div>
       <div class="xcard" data-c="blue"><div class="xcard-num">[I]</div><div class="xcard-title">Made to Stick</div><div class="xcard-sub">Heath & Heath</div><div class="xcard-body"><p>Ideas survive translation when Simple, Unexpected, Concrete, Credible, Emotional, and wrapped in Story.</p><div class="gain-app">GAIN: Arming champions to pass the "Corridor Test" — defend your premium in 15 seconds to a cynical CFO.</div></div></div>
       <div class="xcard" data-c="blue"><div class="xcard-num">[I]</div><div class="xcard-title">Blue Ocean Strategy</div><div class="xcard-sub">Kim & Mauborgne</div><div class="xcard-body"><p>Don't compete in existing space. Reconstruct boundaries using the Eliminate-Reduce-Raise-Create grid.</p><div class="gain-app">GAIN: Shifting RFPs from price comparisons to strategic leaps. Changing buying criteria so incumbents become irrelevant.</div></div></div>
@@ -239,7 +259,7 @@
     </div>
 
     <div class="sub-label">03. Intelligence Mapping — Navigating the Room</div>
-    <div class="card-row" style="margin-bottom:1.25rem">
+    <div class="card-row" style="margin-bottom:2rem">
       <div class="xcard" data-c="amber"><div class="xcard-num">[A]</div><div class="xcard-title">Sphere of Influence</div><div class="xcard-sub">Sandhurst Military Intel</div><div class="xcard-body"><p>Official chain of command rarely reflects how decisions are made. Power flows through informal networks.</p><div class="gain-app">GAIN: Maps informal influence to find shadow decision-makers before the competitor does.</div></div></div>
       <div class="xcard" data-c="amber"><div class="xcard-num">[G]</div><div class="xcard-title">Never Split the Difference</div><div class="xcard-sub">Chris Voss</div><div class="xcard-body"><p>Tactical empathy. Accusation Audits to defuse negatives. Calibrated Questions for illusory control.</p><div class="gain-app">GAIN: Proactively listing the buyer's worst fears about your firm before they bring them up.</div></div></div>
       <div class="xcard" data-c="amber"><div class="xcard-num">[G]</div><div class="xcard-title">MEDDIC Qualification</div><div class="xcard-sub">Dunkel & Napoli</div><div class="xcard-body"><p>Rigorous framework: Metrics, Economic Buyer, Decision Criteria/Process, Identify Pain, Champion.</p><div class="gain-app">GAIN: AI highlights exactly which MEDDIC criteria are missing from your deal thesis.</div></div></div>
@@ -258,26 +278,29 @@
   <section class="section reveal">
     <div class="sl">Governance &amp; Adaptability</div>
     <div class="card-row">
-      <div class="xcard" data-c="red"><div class="xcard-num">Risk</div><div class="xcard-title">AI Hallucination Protocol</div><div class="xcard-body"><p>LLMs fabricate when unconstrained. The governance protocol restricts output strictly to validated inputs via the 'Power of NONE'. Verifiable sourcing for all financial claims.</p><div class="counter" style="color:var(--red);border-color:rgba(239,68,68,.2)"><span style="font-size:14px">✓</span> Zero unsubstantiated claims in 200+ board documents</div></div></div>
-      <div class="xcard" data-c="green"><div class="xcard-num">Adapt</div><div class="xcard-title">Model-Agnostic by Design</div><div class="xcard-body"><p>Proprietary black-box models create vendor lock-in. GAIN leverages open-source LLM interoperability, swapping models seamlessly as the frontier advances.</p><div class="counter" style="color:var(--grn);border-color:rgba(16,185,129,.2)"><span style="font-size:14px">✓</span> Model switches require zero prompt rewrites</div></div></div>
+      <div class="xcard" data-c="red"><div class="xcard-num">Risk</div><div class="xcard-title">AI Hallucination Protocol</div><div class="xcard-body"><p>LLMs fabricate when unconstrained. The governance protocol restricts output strictly to validated inputs via the 'Power of NONE'. Verifiable sourcing for all financial claims.</p><div class="counter" style="color:var(--red);border-color:rgba(248,113,113,0.3);background:rgba(248,113,113,0.05)"><span style="font-size:16px">✓</span> Zero unsubstantiated claims in 200+ board documents</div></div></div>
+      <div class="xcard" data-c="green"><div class="xcard-num">Adapt</div><div class="xcard-title">Model-Agnostic by Design</div><div class="xcard-body"><p>Proprietary black-box models create vendor lock-in. GAIN leverages open-source LLM interoperability, swapping models seamlessly as the frontier advances.</p><div class="counter" style="color:var(--green);border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.05)"><span style="font-size:16px">✓</span> Model switches require zero prompt rewrites</div></div></div>
     </div>
   </section>
 
   <section class="section reveal">
-    <div class="sl" style="color:var(--dm)">Known Limitations</div>
+    <div class="sl" style="color:var(--text-dim)">Known Limitations</div>
     <div class="card-row">
-      <div class="xcard" data-c="dim"><div class="xcard-num">01</div><div class="xcard-title">Source Quality</div><div class="xcard-body"><p>Feed it marketing collateral instead of verified 10-Ks and raw transcripts, the outputs will be generic and useless.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Strict input validation at every prompt node.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">02</div><div class="xcard-title">Human Layer</div><div class="xcard-body"><p>The engine maps influence perfectly, but a human still has to walk into the room, hold eye contact, and execute.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Behavioural science coaching built into the methodology.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">03</div><div class="xcard-title">Compute Discipline</div><div class="xcard-body"><p>Unconstrained LLM usage burns API budget rapidly. Targeted, conditional prompts — not open-ended queries.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Tiered access with prompt governance per role.</p></div></div>
-      <div class="xcard" data-c="dim"><div class="xcard-num">04</div><div class="xcard-title">Intelligence Decay</div><div class="xcard-body"><p>Outputs lose their edge if source feeds aren't refreshed quarterly. Stale transcripts mean stale politics.</p><p style="font-size:11px;color:var(--dm)">Countermeasure: Automated refresh triggers on earnings cycle.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">01</div><div class="xcard-title">Source Quality</div><div class="xcard-body"><p>Feed it marketing collateral instead of verified 10-Ks and raw transcripts, the outputs will be generic and useless.</p><p style="font-size:13px;color:var(--text-dim);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">Countermeasure: Strict input validation at every prompt node.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">02</div><div class="xcard-title">Human Layer</div><div class="xcard-body"><p>The engine maps influence perfectly, but a human still has to walk into the room, hold eye contact, and execute.</p><p style="font-size:13px;color:var(--text-dim);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">Countermeasure: Behavioural science coaching built into the methodology.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">03</div><div class="xcard-title">Compute Discipline</div><div class="xcard-body"><p>Unconstrained LLM usage burns API budget rapidly. Targeted, conditional prompts — not open-ended queries.</p><p style="font-size:13px;color:var(--text-dim);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">Countermeasure: Tiered access with prompt governance per role.</p></div></div>
+      <div class="xcard" data-c="dim"><div class="xcard-num">04</div><div class="xcard-title">Intelligence Decay</div><div class="xcard-body"><p>Outputs lose their edge if source feeds aren't refreshed quarterly. Stale transcripts mean stale politics.</p><p style="font-size:13px;color:var(--text-dim);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">Countermeasure: Automated refresh triggers on earnings cycle.</p></div></div>
     </div>
   </section>
 
-  <div style="text-align:center; padding-bottom: 40px;">
-      <a href="index.html" style="font-family:'DM Mono', monospace; font-size: 0.7rem; color: var(--dm); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em;">← Return to Briefing Room</a>
-  </div>
-
 </div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
+    <div class="mono" style="font-size:11px;">© 2026</div>
+  </div>
+</footer>
 
 <script>
 (function(){
