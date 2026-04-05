@@ -41,7 +41,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 
 .mono{font-family:'IBM Plex Mono',monospace}
 
-/* ═══ HYBRID HEADER STYLES ═══ */
+/* ═══ HYBRID HEADER STYLES (MATCHING INDEX MOBILE LAYOUT) ═══ */
 .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; backdrop-filter: blur(14px); background: #020617e8; border-bottom: 1px solid var(--border); font-family: 'Inter', sans-serif;}
 .site-header .inner { display: flex; justify-content: space-between; align-items: center; min-height: 72px; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; }
@@ -75,26 +75,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 .nd-sep{height:1px;background:var(--border);margin:6px 12px}
 .nd-group{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);padding:10px 14px 4px}
 
-/* Mobile Nav Structure */
-.mobile-nav{display:none;position:absolute;top:72px;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border-h);padding:1rem 1.5rem;z-index:99;flex-direction:column}
-.mobile-nav.open{display:flex}
-.mobile-nav a{display:block;padding:12px 0;font-size:15px;font-weight:600;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--border)}
-.mobile-nav a:last-child{border-bottom:none}
-.mobile-nav-divider{height:1px;background:var(--border-h);margin:8px 0}
-.mobile-nav-group{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding:16px 0 6px}
-.mobile-nav a span{font-family:'Inter',sans-serif;font-weight:900;font-size:18px;margin-right:8px}
-
-@media (min-width: 1001px) {
-  .mobile-only { display: none !important; }
-}
+/* Mobile Nav Structure - Mirroring Index! */
 @media (max-width: 1000px) {
-  .header-nav { display: none; }
-  .desktop-only { display: none !important; }
-  .mobile-only { display: block !important; }
+  .header-nav { display: none; } /* Hide the text links to make room */
 }
 @media (max-width: 720px) {
-  .site-header .inner { flex-wrap: wrap; gap: 12px; }
-  .header-actions { width: 100%; justify-content: flex-end; }
+  .site-header .inner { flex-wrap: wrap; gap: 12px; padding: 12px 24px; }
+  .header-actions { width: 100%; display: flex; gap: 12px; }
+  .header-actions .btn { flex: 1; } /* This stretches the buttons 50/50 exactly like the homepage! */
 }
 
 /* ═══ MAIN ═══ */
@@ -232,10 +220,11 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 .cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s}
 .cta-b:hover{background:var(--text-bright);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
 
-.footer{padding:3rem 0;border-top:1px solid var(--border);text-align:center}
-.footer-text{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;}
-.footer-text a{color:var(--text-dim);text-decoration:none}
-.footer-text a:hover{color:var(--text-bright)}
+/* ═══ UPDATED FOOTER TO MATCH INDEX ═══ */
+.footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); }
+.footer-inner { max-width: 1000px; margin: 0 auto; padding: 18px 2rem 0; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
+.footer a:hover { color: var(--text-bright); }
 </style>
 </head>
 <body>
@@ -266,7 +255,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
         <input type="checkbox" id="hood-radial" class="radial-toggle">
         <label for="hood-radial" class="radial-label">Under the Hood <span class="chevron">&#9662;</span></label>
         <div class="nav-drop">
-          <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">The Edge</span></a>
+          <a href="/edge.html" class="nd-item"><span class="nd-dot" style="background:var(--cyan)"></span><span class="nd-title">The Edge</span></a>
           <a href="/architecture.html" class="nd-item"><span class="nd-dot" style="background:var(--green)"></span><span class="nd-title">Architecture</span></a>
           <a href="/story.html" class="nd-item"><span class="nd-dot" style="background:var(--blue)"></span><span class="nd-title">The Story</span></a>
           <div class="nd-sep"></div>
@@ -281,21 +270,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
     </nav>
 
     <div class="header-actions">
-      <a class="btn btn-secondary desktop-only" href="/full-story.html">← Full story</a>
-      <a class="btn btn-primary desktop-only" href="/engage.html">Request diagnostic</a>
-      <button class="nav-toggle-btn mobile-only" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu" style="background:transparent; border:none; color: #cbd5e1; font-size: 24px; cursor: pointer; display: none;">&#9776;</button>
+      <a class="btn btn-secondary" href="/full-story.html">← Full story</a>
+      <a class="btn btn-primary" href="/engage.html">Request diagnostic</a>
     </div>
-  </div>
-  
-  <div class="mobile-nav" id="mobileNav">
-    <div class="mobile-nav-group">See It Work</div>
-    <a href="/proof.html">Proof</a><a href="/dashboards.html">Dashboards</a><a href="/revenue-case.html">Revenue Case</a><a href="/data-room.html">Data Room</a>
-    <div class="mobile-nav-group">Under the Hood</div>
-    <a href="/edge.html">The Edge</a><a href="/architecture.html">Architecture</a><a href="/story.html">The Story</a>
-    <div class="mobile-nav-group">The Toolkit</div>
-    <a href="/know.html"><span style="color:var(--blue)">G</span> Gather</a><a href="/map.html"><span style="color:var(--purple)">A</span> Assess</a><a href="/win.html"><span style="color:var(--amber)">I</span> Influence</a><a href="/grow.html"><span style="color:var(--green)">N</span> Nurture</a>
-    <div class="mobile-nav-divider"></div>
-    <a href="/engage.html" style="color:var(--amber);font-weight:800">Engage &rarr;</a>
   </div>
 </header>
 
@@ -412,11 +389,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
     <a href="/engage.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s">Request a Live Diagnostic</a>
   </section>
 
-  <footer class="footer" style="padding:3rem 0;border-top:1px solid var(--border);text-align:center">
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">&copy; 2026 David Matthews &middot; <a href="https://linkedin.com/in/davidmatthewsuk" style="color:var(--text-dim);text-decoration:none">LinkedIn</a> &middot; GAIN Protocol</p>
-  </footer>
-
 </div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
+    <div class="mono" style="font-size:11px;">© 2026</div>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -436,6 +416,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
     });
   }
 
+  /* Dropdown Toggle Logic */
   document.addEventListener('click',function(e){document.querySelectorAll('.radial-toggle').forEach(function(t){if(t.checked&&!e.target.closest('.radial-menu'))t.checked=false})});
   document.querySelectorAll('.radial-toggle').forEach(function(t){t.addEventListener('change',function(){if(this.checked){var s=this;document.querySelectorAll('.radial-toggle').forEach(function(o){if(o!==s)o.checked=false})}})});
 })();
