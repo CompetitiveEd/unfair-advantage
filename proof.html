@@ -38,8 +38,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 
 .mono{font-family:'IBM Plex Mono',monospace}
 
-/* ═══ MAIN - NOW SYNCED TO 1180PX INDEX WIDTH ═══ */
-.main{max-width:1180px;margin:0 auto;padding:100px 16px 0}
+/* ═══ MAIN GRID SYNCED TO 1180PX ═══ */
+.main{ width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding: 100px 0 0; }
 .section{margin-bottom:4rem}
 .sl{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
 .sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
@@ -58,47 +58,21 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 .hs .num{font-family:'Inter',sans-serif;font-size:clamp(36px,5vw,52px);font-weight:900;line-height:1;letter-spacing:-0.02em}
 .hs .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:1px;margin-top:8px;text-transform:uppercase}
 
-/* ═══════════════════════════════════════
-   CASE EXPAND CARDS
-   ═══════════════════════════════════════ */
+/* ════ CASE CARDS ════ */
 .case-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-
-.casecard{
-  background:var(--s1);border:1px solid var(--border);border-radius:16px;
-  padding:1.5rem;cursor:pointer;
-  transition:all .4s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:220px;max-width:320px;position:relative;overflow:hidden;
-}
-.casecard:hover,.casecard.open{
-  border-color:var(--border-h);flex:3;max-width:100%;background:var(--s2);
-}
-
-/* Compact state: visible always */
+.casecard{background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:1.5rem;cursor:pointer;transition:all .4s cubic-bezier(.32,.72,0,1);flex:1;min-width:220px;max-width:320px;position:relative;overflow:hidden;}
+.casecard:hover,.casecard.open{border-color:var(--border-h);flex:3;max-width:100%;background:var(--s2);}
 .cc-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
 .cc-title{font-family:'Inter',sans-serif;font-size:22px;font-weight:900;color:var(--text-bright);line-height:1.2;margin-bottom:1rem;letter-spacing:-0.02em}
 .cc-metrics{display:flex;gap:8px;flex-wrap:wrap}
-.cc-met{
-  background:var(--bg);border:1px solid var(--border);border-radius:8px;
-  padding:8px 12px;text-align:center;
-}
+.cc-met{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 12px;text-align:center;}
 .cc-met .mv{font-family:'Inter',sans-serif;font-size:18px;font-weight:900;line-height:1}
 .cc-met .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:uppercase}
-
-/* Expanded state: hidden until hover/tap */
-.cc-body{
-  max-height:0;opacity:0;overflow:hidden;
-  transition:max-height .45s cubic-bezier(.32,.72,0,1),opacity .35s ease,margin .35s ease;
-  margin-top:0;
-}
-.casecard:hover .cc-body,.casecard.open .cc-body{
-  max-height:1000px;opacity:1;margin-top:1.5rem;
-}
-
+.cc-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .45s cubic-bezier(.32,.72,0,1),opacity .35s ease,margin .35s ease;margin-top:0;}
+.casecard:hover .cc-body,.casecard.open .cc-body{max-height:1000px;opacity:1;margin-top:1.5rem;}
 .cc-body .story-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
 .cc-body .story-text{font-size:15px;font-weight:500;color:var(--text);line-height:1.6;margin-bottom:1rem}
 .cc-body .story-result{font-size:14px;font-weight:700;padding:1rem;border-radius:8px;margin-top:1rem}
-
-/* Sub-details */
 .cc-sub{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
 .cc-sub-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--text-bright);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
 .cc-sub-grid{display:grid;gap:12px}
@@ -108,74 +82,25 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 .cc-sub-val{font-family:'Inter',sans-serif;font-size:24px;font-weight:900;line-height:1}
 .cc-sub-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:1px;margin-top:6px;text-transform:uppercase}
 
-/* Diagnosis blocks */
-.diag-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem}
-.diag-box h4{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
-.diag-box p{font-size:14px;font-weight:500;color:var(--text);line-height:1.6;margin:0}
+/* ACCENT COLORS */
+.casecard[data-c="blue"]{border-top:4px solid var(--blue);}.casecard[data-c="blue"] .cc-num{color:var(--blue);}.casecard[data-c="blue"] .cc-met .mv{color:var(--blue);}.casecard[data-c="blue"] .story-label{color:var(--blue);}.casecard[data-c="blue"] .story-result{color:var(--blue);background:rgba(147,197,253,.08);border:1px solid rgba(147,197,253,.2);}
+.casecard[data-c="purple"]{border-top:4px solid var(--purple);}.casecard[data-c="purple"] .cc-num{color:var(--purple);}.casecard[data-c="purple"] .cc-met .mv{color:var(--purple);}.casecard[data-c="purple"] .story-label{color:var(--purple);}.casecard[data-c="purple"] .story-result{color:var(--purple);background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2);}.casecard[data-c="purple"] .cc-sub-val{color:var(--purple);}
+.casecard[data-c="green"]{border-top:4px solid var(--green);}.casecard[data-c="green"] .cc-num{color:var(--green);}.casecard[data-c="green"] .cc-met .mv{color:var(--green);}.casecard[data-c="green"] .story-label{color:var(--green);}.casecard[data-c="green"] .story-result{color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);}
 
-/* Accent colours */
-.casecard[data-c="blue"]{border-top:4px solid var(--blue)}
-.casecard[data-c="blue"] .cc-num{color:var(--blue)}
-.casecard[data-c="blue"] .cc-met .mv{color:var(--blue)}
-.casecard[data-c="blue"] .story-label{color:var(--blue)}
-.casecard[data-c="blue"] .story-result{color:var(--blue);background:rgba(147,197,253,.08);border:1px solid rgba(147,197,253,.2)}
+@media(max-width:800px){.case-row{flex-direction:column}.casecard{max-width:100%;min-width:0}.casecard:hover,.casecard.open{flex:unset}}
 
-.casecard[data-c="purple"]{border-top:4px solid var(--purple)}
-.casecard[data-c="purple"] .cc-num{color:var(--purple)}
-.casecard[data-c="purple"] .cc-met .mv{color:var(--purple)}
-.casecard[data-c="purple"] .story-label{color:var(--purple)}
-.casecard[data-c="purple"] .story-result{color:var(--purple);background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2)}
-.casecard[data-c="purple"] .cc-sub-val{color:var(--purple)}
-
-.casecard[data-c="green"]{border-top:4px solid var(--green)}
-.casecard[data-c="green"] .cc-num{color:var(--green)}
-.casecard[data-c="green"] .cc-met .mv{color:var(--green)}
-.casecard[data-c="green"] .story-label{color:var(--green)}
-.casecard[data-c="green"] .story-result{color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
-.casecard[data-c="green"] .diag-box h4{color:var(--green)}
-
-@media(max-width:800px){
-  .case-row{flex-direction:column}
-  .casecard{max-width:100%;min-width:0}
-  .casecard:hover,.casecard.open{flex:unset}
-}
-
-/* ═══ FAILURE EXPAND CARDS ═══ */
+/* ════ FAILURE CARDS ════ */
 .card-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.xcard{
-  background:var(--s1);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;cursor:pointer;
-  transition:all .35s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:200px;max-width:320px;position:relative;overflow:hidden;
-  border-top: 4px solid var(--red);
-}
+.xcard{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:1.5rem;cursor:pointer;transition:all .35s cubic-bezier(.32,.72,0,1);flex:1;min-width:200px;max-width:320px;position:relative;overflow:hidden;border-top: 4px solid var(--red);}
 .xcard:hover,.xcard.open{border-color:var(--red);flex:2.5;max-width:100%;background:var(--s2)}
 .xcard-title{font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--text-bright);line-height:1.2;letter-spacing:-0.02em}
 .xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
 .xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:400px;opacity:1;margin-top:1rem}
-.xcard-body p{font-size:15px;font-weight:500;color:var(--text);line-height:1.6;margin:0}
-.xcard-body strong{color:var(--text-bright);font-weight:700}
+@media(max-width:800px){.card-row{flex-direction:column}.xcard{max-width:100%;min-width:0}.xcard:hover,.xcard.open{flex:unset}}
 
-@media(max-width:800px){
-  .card-row{flex-direction:column}
-  .xcard{max-width:100%;min-width:0}
-  .xcard:hover,.xcard.open{flex:unset}
-}
-
-.bc{text-align:center;margin-top:2rem}
-.bc a{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
-.bc a:hover{color:var(--text-bright);gap:12px}
-
-/* ═══ CTA ═══ */
-.cta{text-align:center;padding:4rem 0 5rem;border-top:1px solid var(--border)}
-.cta h2{font-family:'Inter',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem;letter-spacing:-0.03em}
-.cta-s{font-size:18px;font-weight:500;color:var(--text-dim);max-width:500px;margin:0 auto 2rem;line-height:1.5}
-.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s}
-.cta-b:hover{background:var(--text-bright);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
-
-/* ═══ STANDARDIZED FOOTER ═══ */
+/* ═══ FOOTER ═══ */
 .footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); }
-.footer-inner { max-width: 1180px; margin: 0 auto; padding: 18px 16px 0; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.footer-inner { width: min(calc(100% - 32px), 1180px); margin: 0 auto; padding-top: 18px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
 .footer a:hover { color: var(--text-bright); }
 </style>
@@ -209,7 +134,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
 </script>
 
 <div class="main">
-
   <section class="hero reveal">
     <h1>Strong propositions. Talented people.<br><em>Weak execution.</em></h1>
     <p class="hero-p"><strong>Judgment is the last million-pound skill.</strong> Every case below started with a deal problem. None of them ended there. 3 portfolios. Same fractures. Same methodology.</p>
@@ -218,18 +142,11 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
       <div class="hs"><div class="num" style="color:var(--purple)">£35M → £183M</div><div class="lbl">Enterprise Portfolio Repositioned</div></div>
       <div class="hs"><div class="num" style="color:var(--green)">Founder → Exit</div><div class="lbl">Dependency Eliminated</div></div>
     </div>
-    <div style="margin-top:2.5rem"><a href="/engage.html" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);text-decoration:none;letter-spacing:1px;font-weight:700;transition:color .2s">Request a diagnostic →</a></div>
-  </section>
-
-  <section class="section reveal" style="text-align:center;padding-bottom:2rem">
-    <p style="font-size:clamp(16px,2vw,20px);color:var(--text);line-height:1.6;max-width:800px;margin:0 auto;font-weight:500;">Three different businesses. Different sectors, different sizes, different problems on the surface. <strong style="color:var(--text-bright);font-weight:800;">Underneath: the same five fractures.</strong> No commercial architecture. No stakeholder intelligence. No repeatable methodology. Revenue dependent on individuals. Pipeline built on hope.</p>
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--blue);letter-spacing:2px;margin-top:1.5rem;">ONE METHODOLOGY FIXED ALL THREE</p>
   </section>
 
   <section class="section reveal">
     <div class="sl">Proof of Execution</div>
     <div class="case-row">
-
       <div class="casecard" data-c="blue">
         <div class="cc-num">Case 01</div>
         <div class="cc-title">Professional Services Repositioned</div>
@@ -240,7 +157,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
         </div>
         <div class="cc-body">
           <div class="story-label">A Proposition Built From Nothing</div>
-          <div class="story-text">No common offering. No standard cost model. Sellers avoiding the conversation. Delivery losing money on every project. One methodology gathered what existed, assessed the gaps, assembled 12 components into one proposition. Sellers lined up behind it.</div>
+          <div class="story-text">No common offering. No standard cost model. Sellers avoiding the conversation. One methodology gathered component pieces into one proposition. Sellers lined up behind it.</div>
           <div class="story-result">Profit exploded. Annuity grew. Pipeline grew. Became the core proposition of a FTSE 250. 4.2M users. 70 countries.</div>
         </div>
       </div>
@@ -254,15 +171,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
           <div class="cc-met"><div class="mv">Doubled</div><div class="ml">Margin</div></div>
         </div>
         <div class="cc-body">
-          <div class="story-label">A Business That Couldn't Deliver What It Sold</div>
-          <div class="story-text">Every project different. Every deal reactive. Delivery going wrong because nothing was standardised. One methodology rebuilt every function — sales, pre-sales, finance, governance, vendors, cost models — as one chain.</div>
+          <div class="story-label">Standardization as a Multiplier</div>
+          <div class="story-text">Every deal reactive. Delivery failing because nothing was standardized. Rebuilt sales, pre-sales, finance, governance, and cost models as one chain.</div>
           <div class="story-result">£35M → £183M. Profit doubled. 51.3% CAGR. Pipeline tripled. Annuity locked in.</div>
           <div class="cc-sub">
             <div class="cc-sub-label">The People Multiplier</div>
             <div class="cc-sub-grid g3">
               <div class="cc-sub-box"><div class="cc-sub-val">£26M</div><div class="cc-sub-lbl">Peak Per Head</div></div>
-              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-bright)">£16.6M</div><div class="cc-sub-lbl">Average Per Head</div></div>
-              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-dim)">£13M</div><div class="cc-sub-lbl">Adjusted Base</div></div>
+              <div class="cc-sub-box"><div class="cc-sub-val">£16.6M</div><div class="cc-sub-lbl">Average Per Head</div></div>
+              <div class="cc-sub-box"><div class="cc-sub-val">£13M</div><div class="cc-sub-lbl">Adjusted Base</div></div>
             </div>
           </div>
         </div>
@@ -278,54 +195,17 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
         </div>
         <div class="cc-body">
           <div class="story-label">The Multiple Changes Even If Revenue Doesn't</div>
-          <div class="story-text">Boutique technology firm. £9M revenue. Every deal won by one person. The business was unsellable — not because of revenue, but because it walked out the door every night. The valuation was the founder. Remove the founder dependency, the multiple changes overnight.</div>
-          <div class="story-result">3-year exit plan activated. Business self-sustaining. Sales team doubled. 75 of 76 target events attended. Founder making judgment calls with time to think instead of closing every deal himself.</div>
-          <div class="cc-sub">
-            <div class="cc-sub-grid g3">
-              <div class="diag-box"><h4>The Diagnosis</h4><p>No capability infrastructure. No account intelligence. No whitespace mapping. Sellers maintaining, not growing. Motivation driven by fear, not purpose. The business had revenue but no system.</p></div>
-              <div class="diag-box"><h4>The Fix</h4><p>Structural, not training. New sales leadership. Restructured finance for decision-quality data. GAIN methodology embedded. Pivot from founder-led to customer intimacy model.</p></div>
-              <div class="diag-box"><h4>The PE Lens</h4><p>Key-person risk eliminated. Repeatable revenue model in place. Sales team operates independently. Exit multiple improves on structure alone — before revenue growth even compounds.</p></div>
-            </div>
-          </div>
+          <div class="story-text">Business was unsellable because relationship walked out the door every night. Remove founder dependency, multiple changes overnight.</div>
+          <div class="story-result">3-year exit plan activated. Business self-sustaining. Sales team doubled. Founder making judgment calls with time to think.</div>
         </div>
       </div>
-
     </div>
   </section>
-
-  <section class="section reveal" style="text-align:center;padding-bottom:2rem">
-    <p style="font-size:clamp(16px,2vw,20px);color:var(--text);line-height:1.6;max-width:800px;margin:0 auto;font-weight:500;">Same five fractures. Same methodology. Three different outcomes — all positive. <strong style="color:var(--amber);font-weight:800;">The portfolios that didn't act are still where they were.</strong> Same pipeline fiction. Same hero-dependency. Same conversations about "transformation" that never transform anything.</p>
-    <div style="margin-top:2rem;padding:1.5rem;background:var(--s1);border:1px solid var(--border);border-radius:12px;display:inline-block;max-width:700px">
-      <p style="font-size:14px;color:var(--text-dim);line-height:1.6;margin:0;font-weight:500;"><span style="color:var(--green);font-weight:800">INDEPENDENT VALIDATION:</span> The Case 01 proposition was adopted and white-labelled by a FTSE 250 systems integrator. Case 02 methodology was independently reviewed during due diligence. These aren't pitch deck numbers — they survived scrutiny.</p>
-    </div>
-  </section>
-
-  <section class="section reveal">
-    <div class="sl" style="color:var(--text-dim)">Where This Breaks</div>
-    <div class="card-row">
-      <div class="xcard" data-c="dim">
-        <div class="xcard-title">The Middle Management Gap</div>
-        <div class="xcard-body"><p>The methodology relies on aligning with C-Suite financial mandates. If your team is too terrified to bypass the VP of IT or the Procurement Lead, the strategy will fail. Middle managers buy features; boards buy risk mitigation.</p></div>
-      </div>
-      <div class="xcard" data-c="dim">
-        <div class="xcard-title">The Confidence Problem</div>
-        <div class="xcard-body"><p>You can give a team the perfect AI-generated executive dossier. But if they lack the presence to walk into a boardroom and challenge a CFO's worldview, the data is useless. <strong>Tools do not equal talent.</strong></p></div>
-      </div>
-    </div>
-    <div class="bc"><a href="/revenue-case.html">Same methodology across all three — full revenue case &rarr;</a></div>
-  </section>
-
-  <section class="cta reveal" style="text-align:center;padding:5rem 0;border-top:1px solid var(--border)">
-    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:900;color:var(--text-bright);margin-bottom:1rem;letter-spacing:-0.03em">You already know.</h2>
-    <p style="font-size:18px;font-weight:500;color:var(--text-dim);max-width:500px;margin:0 auto 2rem;line-height:1.5">No pitch deck. No discovery call. A live deal diagnostic.</p>
-    <a href="/engage.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s">Request a Live Diagnostic</a>
-  </section>
-
 </div>
 
 <footer class="footer">
   <div class="footer-inner">
-    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
+    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · david@hownottogain.co.uk</div>
     <div class="mono" style="font-size:11px;">© 2026</div>
   </div>
 </footer>
@@ -337,323 +217,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-s
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
   },{threshold:0.1});
   reveals.forEach(function(r){obs.observe(r)});
-
-  if('ontouchstart' in window){
-    document.querySelectorAll('.casecard,.xcard').forEach(function(card){
-      card.addEventListener('click',function(){
-        var wasOpen=this.classList.contains('open');
-        this.parentElement.querySelectorAll('.casecard,.xcard').forEach(function(c){c.classList.remove('open')});
-        if(!wasOpen)this.classList.add('open');
-      });
-    });
-  }
-})();
-</script>
-</body>
-</html>body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-.mono{font-family:'IBM Plex Mono',monospace}
-
-/* ═══ MAIN ═══ */
-.main{max-width:1000px;margin:0 auto;padding:100px 2rem 0}
-.section{margin-bottom:4rem}
-.sl{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
-.sl::before,.sl::after{content:'';flex:1;height:1px;background:var(--border-h)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
-.reveal.vis{opacity:1;transform:translateY(0)}
-
-/* ═══ HERO ═══ */
-.hero{text-align:center;padding:3rem 0 4rem;position:relative}
-.hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(248,113,113,0.08) 0%,transparent 70%);pointer-events:none}
-.hero h1{font-family:'Inter',sans-serif;font-size:clamp(32px,5.5vw,56px);font-weight:900;color:var(--text-bright);line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.03em}
-.hero h1 em{color:var(--red);font-style:normal}
-.hero-p{font-size:18px;color:var(--text-dim);max-width:640px;margin:0 auto 3rem;line-height:1.6;font-weight:500}
-.hero-p strong{color:var(--text-bright);font-weight:700}
-.hero-stats{display:flex;justify-content:center;gap:4rem;flex-wrap:wrap}
-.hs{text-align:center}
-.hs .num{font-family:'Inter',sans-serif;font-size:clamp(36px,5vw,52px);font-weight:900;line-height:1;letter-spacing:-0.02em}
-.hs .lbl{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:1px;margin-top:8px;text-transform:uppercase}
-
-/* ═══════════════════════════════════════
-   CASE EXPAND CARDS
-   ═══════════════════════════════════════ */
-.case-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-
-.casecard{
-  background:var(--s1);border:1px solid var(--border);border-radius:16px;
-  padding:1.5rem;cursor:pointer;
-  transition:all .4s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:220px;max-width:320px;position:relative;overflow:hidden;
-}
-.casecard:hover,.casecard.open{
-  border-color:var(--border-h);flex:3;max-width:100%;background:var(--s2);
-}
-
-/* Compact state: visible always */
-.cc-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
-.cc-title{font-family:'Inter',sans-serif;font-size:22px;font-weight:900;color:var(--text-bright);line-height:1.2;margin-bottom:1rem;letter-spacing:-0.02em}
-.cc-metrics{display:flex;gap:8px;flex-wrap:wrap}
-.cc-met{
-  background:var(--bg);border:1px solid var(--border);border-radius:8px;
-  padding:8px 12px;text-align:center;
-}
-.cc-met .mv{font-family:'Inter',sans-serif;font-size:18px;font-weight:900;line-height:1}
-.cc-met .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;color:var(--text-dim);letter-spacing:1px;margin-top:4px;text-transform:uppercase}
-
-/* Expanded state: hidden until hover/tap */
-.cc-body{
-  max-height:0;opacity:0;overflow:hidden;
-  transition:max-height .45s cubic-bezier(.32,.72,0,1),opacity .35s ease,margin .35s ease;
-  margin-top:0;
-}
-.casecard:hover .cc-body,.casecard.open .cc-body{
-  max-height:1000px;opacity:1;margin-top:1.5rem;
-}
-
-.cc-body .story-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
-.cc-body .story-text{font-size:15px;font-weight:500;color:var(--text);line-height:1.6;margin-bottom:1rem}
-.cc-body .story-result{font-size:14px;font-weight:700;padding:1rem;border-radius:8px;margin-top:1rem}
-
-/* Sub-details */
-.cc-sub{margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
-.cc-sub-label{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;color:var(--text-bright);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem}
-.cc-sub-grid{display:grid;gap:12px}
-.cc-sub-grid.g3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:768px){.cc-sub-grid.g3{grid-template-columns:1fr}}
-.cc-sub-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
-.cc-sub-val{font-family:'Inter',sans-serif;font-size:24px;font-weight:900;line-height:1}
-.cc-sub-lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:1px;margin-top:6px;text-transform:uppercase}
-
-/* Diagnosis blocks */
-.diag-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem}
-.diag-box h4{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
-.diag-box p{font-size:14px;font-weight:500;color:var(--text);line-height:1.6;margin:0}
-
-/* Accent colours */
-.casecard[data-c="blue"]{border-top:4px solid var(--blue)}
-.casecard[data-c="blue"] .cc-num{color:var(--blue)}
-.casecard[data-c="blue"] .cc-met .mv{color:var(--blue)}
-.casecard[data-c="blue"] .story-label{color:var(--blue)}
-.casecard[data-c="blue"] .story-result{color:var(--blue);background:rgba(147,197,253,.08);border:1px solid rgba(147,197,253,.2)}
-
-.casecard[data-c="purple"]{border-top:4px solid var(--purple)}
-.casecard[data-c="purple"] .cc-num{color:var(--purple)}
-.casecard[data-c="purple"] .cc-met .mv{color:var(--purple)}
-.casecard[data-c="purple"] .story-label{color:var(--purple)}
-.casecard[data-c="purple"] .story-result{color:var(--purple);background:rgba(192,132,252,.08);border:1px solid rgba(192,132,252,.2)}
-.casecard[data-c="purple"] .cc-sub-val{color:var(--purple)}
-
-.casecard[data-c="green"]{border-top:4px solid var(--green)}
-.casecard[data-c="green"] .cc-num{color:var(--green)}
-.casecard[data-c="green"] .cc-met .mv{color:var(--green)}
-.casecard[data-c="green"] .story-label{color:var(--green)}
-.casecard[data-c="green"] .story-result{color:var(--green);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2)}
-.casecard[data-c="green"] .diag-box h4{color:var(--green)}
-
-@media(max-width:800px){
-  .case-row{flex-direction:column}
-  .casecard{max-width:100%;min-width:0}
-  .casecard:hover,.casecard.open{flex:unset}
-}
-
-/* ═══ FAILURE EXPAND CARDS ═══ */
-.card-row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.xcard{
-  background:var(--s1);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;cursor:pointer;
-  transition:all .35s cubic-bezier(.32,.72,0,1);
-  flex:1;min-width:200px;max-width:320px;position:relative;overflow:hidden;
-  border-top: 4px solid var(--red);
-}
-.xcard:hover,.xcard.open{border-color:var(--red);flex:2.5;max-width:100%;background:var(--s2)}
-.xcard-title{font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:var(--text-bright);line-height:1.2;letter-spacing:-0.02em}
-.xcard-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s ease,margin .3s ease;margin-top:0}
-.xcard:hover .xcard-body,.xcard.open .xcard-body{max-height:400px;opacity:1;margin-top:1rem}
-.xcard-body p{font-size:15px;font-weight:500;color:var(--text);line-height:1.6;margin:0}
-.xcard-body strong{color:var(--text-bright);font-weight:700}
-
-@media(max-width:800px){
-  .card-row{flex-direction:column}
-  .xcard{max-width:100%;min-width:0}
-  .xcard:hover,.xcard.open{flex:unset}
-}
-
-.bc{text-align:center;margin-top:2rem}
-.bc a{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
-.bc a:hover{color:var(--text-bright);gap:12px}
-
-/* ═══ CTA ═══ */
-.cta{text-align:center;padding:4rem 0 5rem;border-top:1px solid var(--border)}
-.cta h2{font-family:'Inter',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:900;color:var(--text-bright);margin-bottom:.5rem;letter-spacing:-0.03em}
-.cta-s{font-size:18px;font-weight:500;color:var(--text-dim);max-width:500px;margin:0 auto 2rem;line-height:1.5}
-.cta-b{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s}
-.cta-b:hover{background:var(--text-bright);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,158,11,.2)}
-
-/* ═══ STANDARDIZED FOOTER ═══ */
-.footer { padding: 24px 0 44px; color: #5d6a7a; font-size: 12px; border-top: 1px solid var(--border); }
-.footer-inner { max-width: 1000px; margin: 0 auto; padding: 18px 2rem 0; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.footer a { color: #8a95a8; text-decoration: none; transition: color .15s; }
-.footer a:hover { color: var(--text-bright); }
-</style>
-</head>
-<body>
-
-<div id="master-nav-placeholder"></div>
-<script>
-    fetch('nav.html')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('master-nav-placeholder').innerHTML = data;
-        const mobileBtn = document.querySelector('.nav-toggle-btn');
-        if(mobileBtn) {
-            mobileBtn.addEventListener('click', function() {
-                document.getElementById('mobileNav').classList.toggle('open');
-            });
-        }
-        document.querySelectorAll('.radial-toggle').forEach(function(t){
-            t.addEventListener('change',function(){
-                if(this.checked){
-                    var s=this;
-                    document.querySelectorAll('.radial-toggle').forEach(function(o){
-                        if(o!==s) o.checked=false;
-                    });
-                }
-            });
-        });
-    })
-    .catch(error => console.error('Error loading navigation:', error));
-</script>
-
-<div class="main">
-
-  <section class="hero reveal">
-    <h1>Strong propositions. Talented people.<br><em>Weak execution.</em></h1>
-    <p class="hero-p"><strong>Judgment is the last million-pound skill.</strong> Every case below started with a deal problem. None of them ended there. 3 portfolios. Same fractures. Same methodology.</p>
-    <div class="hero-stats">
-      <div class="hs"><div class="num" style="color:var(--blue)">£19.5M → £55M</div><div class="lbl">Professional Services Repositioned</div></div>
-      <div class="hs"><div class="num" style="color:var(--purple)">£35M → £183M</div><div class="lbl">Enterprise Portfolio Repositioned</div></div>
-      <div class="hs"><div class="num" style="color:var(--green)">Founder → Exit</div><div class="lbl">Dependency Eliminated</div></div>
-    </div>
-    <div style="margin-top:2.5rem"><a href="/engage.html" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);text-decoration:none;letter-spacing:1px;font-weight:700;transition:color .2s">Request a diagnostic →</a></div>
-  </section>
-
-  <section class="section reveal" style="text-align:center;padding-bottom:2rem">
-    <p style="font-size:clamp(16px,2vw,20px);color:var(--text);line-height:1.6;max-width:800px;margin:0 auto;font-weight:500;">Three different businesses. Different sectors, different sizes, different problems on the surface. <strong style="color:var(--text-bright);font-weight:800;">Underneath: the same five fractures.</strong> No commercial architecture. No stakeholder intelligence. No repeatable methodology. Revenue dependent on individuals. Pipeline built on hope.</p>
-    <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--blue);letter-spacing:2px;margin-top:1.5rem;">ONE METHODOLOGY FIXED ALL THREE</p>
-  </section>
-
-  <section class="section reveal">
-    <div class="sl">Proof of Execution</div>
-    <div class="case-row">
-
-      <div class="casecard" data-c="blue">
-        <div class="cc-num">Case 01</div>
-        <div class="cc-title">Professional Services Repositioned</div>
-        <div class="cc-metrics">
-          <div class="cc-met"><div class="mv">£19.5M → £55M</div><div class="ml">Revenue</div></div>
-          <div class="cc-met"><div class="mv">+170%</div><div class="ml">Growth</div></div>
-          <div class="cc-met"><div class="mv">2-in-3</div><div class="ml">Win Rate</div></div>
-        </div>
-        <div class="cc-body">
-          <div class="story-label">A Proposition Built From Nothing</div>
-          <div class="story-text">No common offering. No standard cost model. Sellers avoiding the conversation. Delivery losing money on every project. One methodology gathered what existed, assessed the gaps, assembled 12 components into one proposition. Sellers lined up behind it.</div>
-          <div class="story-result">Profit exploded. Annuity grew. Pipeline grew. Became the core proposition of a FTSE 250. 4.2M users. 70 countries.</div>
-        </div>
-      </div>
-
-      <div class="casecard" data-c="purple">
-        <div class="cc-num">Case 02</div>
-        <div class="cc-title">Enterprise Portfolio Repositioned</div>
-        <div class="cc-metrics">
-          <div class="cc-met"><div class="mv">£35M → £183M</div><div class="ml">Portfolio</div></div>
-          <div class="cc-met"><div class="mv">51.3%</div><div class="ml">CAGR</div></div>
-          <div class="cc-met"><div class="mv">Doubled</div><div class="ml">Margin</div></div>
-        </div>
-        <div class="cc-body">
-          <div class="story-label">A Business That Couldn't Deliver What It Sold</div>
-          <div class="story-text">Every project different. Every deal reactive. Delivery going wrong because nothing was standardised. One methodology rebuilt every function — sales, pre-sales, finance, governance, vendors, cost models — as one chain.</div>
-          <div class="story-result">£35M → £183M. Profit doubled. 51.3% CAGR. Pipeline tripled. Annuity locked in.</div>
-          <div class="cc-sub">
-            <div class="cc-sub-label">The People Multiplier</div>
-            <div class="cc-sub-grid g3">
-              <div class="cc-sub-box"><div class="cc-sub-val">£26M</div><div class="cc-sub-lbl">Peak Per Head</div></div>
-              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-bright)">£16.6M</div><div class="cc-sub-lbl">Average Per Head</div></div>
-              <div class="cc-sub-box"><div class="cc-sub-val" style="color:var(--text-dim)">£13M</div><div class="cc-sub-lbl">Adjusted Base</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="casecard" data-c="green">
-        <div class="cc-num">Case 03</div>
-        <div class="cc-title">Founder Dependency → Exit Runway</div>
-        <div class="cc-metrics">
-          <div class="cc-met"><div class="mv">£9M</div><div class="ml">Revenue</div></div>
-          <div class="cc-met"><div class="mv">100%</div><div class="ml">Founder-Won</div></div>
-          <div class="cc-met"><div class="mv">3-Yr</div><div class="ml">To Self-Sustaining</div></div>
-        </div>
-        <div class="cc-body">
-          <div class="story-label">The Multiple Changes Even If Revenue Doesn't</div>
-          <div class="story-text">Boutique technology firm. £9M revenue. Every deal won by one person. The business was unsellable — not because of revenue, but because it walked out the door every night. The valuation was the founder. Remove the founder dependency, the multiple changes overnight.</div>
-          <div class="story-result">3-year exit plan activated. Business self-sustaining. Sales team doubled. 75 of 76 target events attended. Founder making judgment calls with time to think instead of closing every deal himself.</div>
-          <div class="cc-sub">
-            <div class="cc-sub-grid g3">
-              <div class="diag-box"><h4>The Diagnosis</h4><p>No capability infrastructure. No account intelligence. No whitespace mapping. Sellers maintaining, not growing. Motivation driven by fear, not purpose. The business had revenue but no system.</p></div>
-              <div class="diag-box"><h4>The Fix</h4><p>Structural, not training. New sales leadership. Restructured finance for decision-quality data. GAIN methodology embedded. Pivot from founder-led to customer intimacy model.</p></div>
-              <div class="diag-box"><h4>The PE Lens</h4><p>Key-person risk eliminated. Repeatable revenue model in place. Sales team operates independently. Exit multiple improves on structure alone — before revenue growth even compounds.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="section reveal" style="text-align:center;padding-bottom:2rem">
-    <p style="font-size:clamp(16px,2vw,20px);color:var(--text);line-height:1.6;max-width:800px;margin:0 auto;font-weight:500;">Same five fractures. Same methodology. Three different outcomes — all positive. <strong style="color:var(--amber);font-weight:800;">The portfolios that didn't act are still where they were.</strong> Same pipeline fiction. Same hero-dependency. Same conversations about "transformation" that never transform anything.</p>
-    <div style="margin-top:2rem;padding:1.5rem;background:var(--s1);border:1px solid var(--border);border-radius:12px;display:inline-block;max-width:700px">
-      <p style="font-size:14px;color:var(--text-dim);line-height:1.6;margin:0;font-weight:500;"><span style="color:var(--green);font-weight:800">INDEPENDENT VALIDATION:</span> The Case 01 proposition was adopted and white-labelled by a FTSE 250 systems integrator. Case 02 methodology was independently reviewed during due diligence. These aren't pitch deck numbers — they survived scrutiny.</p>
-    </div>
-  </section>
-
-  <section class="section reveal">
-    <div class="sl" style="color:var(--text-dim)">Where This Breaks</div>
-    <div class="card-row">
-      <div class="xcard" data-c="dim">
-        <div class="xcard-title">The Middle Management Gap</div>
-        <div class="xcard-body"><p>The methodology relies on aligning with C-Suite financial mandates. If your team is too terrified to bypass the VP of IT or the Procurement Lead, the strategy will fail. Middle managers buy features; boards buy risk mitigation.</p></div>
-      </div>
-      <div class="xcard" data-c="dim">
-        <div class="xcard-title">The Confidence Problem</div>
-        <div class="xcard-body"><p>You can give a team the perfect AI-generated executive dossier. But if they lack the presence to walk into a boardroom and challenge a CFO's worldview, the data is useless. <strong>Tools do not equal talent.</strong></p></div>
-      </div>
-    </div>
-    <div class="bc"><a href="/revenue-case.html">Same methodology across all three — full revenue case &rarr;</a></div>
-  </section>
-
-  <section class="cta reveal" style="text-align:center;padding:5rem 0;border-top:1px solid var(--border)">
-    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:900;color:var(--text-bright);margin-bottom:1rem;letter-spacing:-0.03em">You already know.</h2>
-    <p style="font-size:18px;font-weight:500;color:var(--text-dim);max-width:500px;margin:0 auto 2rem;line-height:1.5">No pitch deck. No discovery call. A live deal diagnostic.</p>
-    <a href="/engage.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#000;font-family:'Inter',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:18px 42px;border-radius:99px;text-decoration:none;transition:all .2s">Request a Live Diagnostic</a>
-  </section>
-
-</div>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div>GAIN Protocol · David Matthews · <a href="https://linkedin.com/in/david-matthews-6484722">LinkedIn</a> · <a href="mailto:david@hownottogain.co.uk">david@hownottogain.co.uk</a></div>
-    <div class="mono" style="font-size:11px;">© 2026</div>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var reveals=document.querySelectorAll('.reveal');
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}});
-  },{threshold:0.1});
-  reveals.forEach(function(r){obs.observe(r)});
-
   if('ontouchstart' in window){
     document.querySelectorAll('.casecard,.xcard').forEach(function(card){
       card.addEventListener('click',function(){
